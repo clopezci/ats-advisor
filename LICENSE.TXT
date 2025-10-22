@@ -1,0 +1,16 @@
+MIT Open Educational License (adaptada para proyectos académicos)
+
+Copyright (c) 2025 Carlos Emilio López
+Universidad Internacional de Valencia (VIU)
+
+Se concede permiso gratuito a cualquier persona que obtenga una copia
+de este software y los archivos asociados, para utilizarlo con fines
+educativos, de investigación o mejora técnica, con las siguientes condiciones:
+
+1. Se debe mantener la atribución al autor y a la Universidad Internacional de Valencia (VIU).
+2. No se podrá comercializar directa o indirectamente este software sin autorización escrita.
+3. Este software se proporciona "tal cual", sin garantía expresa o implícita.
+   El autor y la universidad no se hacen responsables de ningún daño
+   derivado del uso o incapacidad de uso del software.
+
+Para consultas o autorizaciones: clopezci@hotmail.com

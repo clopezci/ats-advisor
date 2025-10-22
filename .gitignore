@@ -1,0 +1,15 @@
+# Archivos y carpetas que Git debe ignorar
+__pycache__/
+build/
+dist/
+*.spec
+*.exe
+*.zip
+*.log
+*.pyc
+env/
+.venv/
+*.pkl
+*.sqlite
+*.db
+*.bak

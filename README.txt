@@ -31,7 +31,7 @@ Incluye:
 📂 ESTRUCTURA DEL PROYECTO
 ----------------------------------------------------------
 Ruta instalada:
-C:\Users\probook\OneDrive\Documentos\ProyectosSoftware\prototipo-empleabilidad
+https://github.com/clopezci/ats-advisor/releases/tag/v1.0.0
 
 Estructura esperada:
 

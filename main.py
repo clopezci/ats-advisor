@@ -54,6 +54,9 @@ from modules.pdf_exporter import exportar_resultado_pdf
 # --- Helpers de estado (compatibles con ejecutable) ---
 import os, json, sys
 
+APP_VERSION = "V1.3 - Upd-1"
+
+
 def _user_data_dir_main():
     try:
         if getattr(sys, "frozen", False):
@@ -156,7 +159,7 @@ def limpiar_consola():
 def mostrar_menu():
     print("===============================================")
     print("   🧠 ANALIZADOR DE CV VS OFERTAS LABORALES   ")
-    print("      ATS ADVISOR - PROYECTO TFM (VIU 2025)     ")
+    print(f"      ATS ADVISOR {APP_VERSION} - PROYECTO TFM (VIU 2025)")
     print("===============================================")
     print("   Desarrollado por Carlos Emilio López          ")
     print("   Contacto: clopezci@hotmail.com                ")

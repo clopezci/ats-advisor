@@ -379,6 +379,9 @@ DETERMINERS = {"la","el","los","las","esta","este","estos","estas","una","un"}
 PREP_EXCLUDE = {"con","sin","para","por","en","de","del","al","sobre","entre","desde","hacia",
                 "hasta","bajo","tras","segun","según","durante","mediante","excepto","salvo","como"}
 
+PROTECTED = {"proyecto", "proyectos"}
+
+
 # Patrones útiles para “X de Y”, “orquestación”, etc.
 PATTERNS = [
     re.compile(r"^(gesti[oó]n|an[aá]lisis|implementaci[oó]n|modelaci[oó]n|planificaci[oó]n)\s+de\s+[\w\sáéíóúñü\-]+$"),
@@ -636,6 +639,10 @@ try:
     EXCLUDE_TERMS |= dynamic_exclude_terms(threshold=NOISE_THRESHOLD)
 except Exception:
     pass
+
+# Protección explícita de términos competenciales clave
+EXCLUDE_TERMS -= PROTECTED
+
 
 def _normalize_local_alias(texto: str) -> str:
     _ALIAS_REGEX_LOCAL = [

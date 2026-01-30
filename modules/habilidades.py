@@ -35,8 +35,10 @@
 import os
 import json
 import re
+import unicodedata
 from math import exp
 import spacy
+
 
 # ----------------------------
 # Carga robusta de spaCy (fallbacks)
@@ -65,6 +67,29 @@ STOPWORDS = set([
     "esas","eso","esos","mi","mis","tus","sus","nuestro","nuestra","nuestras","vosotros","vosotras",
     "ellos","ellas","ustedes","usted","estos","estas","lo"
 ])
+
+def _strip_accents(s: str) -> str:
+    """Elimina tildes y normaliza a forma ASCII básica."""
+    if not s:
+        return ""
+    return "".join(
+        c for c in unicodedata.normalize("NFD", s)
+        if unicodedata.category(c) != "Mn"
+    )
+
+def normalizar_simple(s: str) -> str:
+    """
+    Normaliza texto para comparaciones robustas:
+    - Minúsculas
+    - Sin tildes
+    - Sin signos raros
+    - Espacios colapsados
+    """
+    s = _strip_accents(s or "").lower()
+    s = re.sub(r"[^a-z0-9áéíóúñü\s]", " ", s)
+    s = re.sub(r"\s+", " ", s).strip()
+    return s
+
 
 # ----------------------------
 # Listas semilla (depuradas y extendidas)
@@ -119,7 +144,10 @@ exp_terms = [
     "six sigma","gestion del cambio","gestion de riesgos","gestion de la calidad","mejora continua",
     "gestion del talento","desarrollo organizacional","gestion del conocimiento","gestion del desempeño",
     "evaluacion de proyectos","gestion financiera","analisis financiero","planificacion financiera",
-    "control presupuestario","optimización de costos",
+    "control presupuestario","optimización de costos",     "planificacion estrategica",
+    "proyectos estrategicos", "proyectos estratégicos",
+    "gestion de proyectos","gestion de portafolio","innovacion tecnologica",
+    "seguridad informatica","ciberseguridad","analitica de datos","inteligencia de negocios"
 
     # Operaciones rol
     "reclutar","formar","entrenar","asegurar","garantizar","consolidar","reportar",
@@ -648,6 +676,38 @@ def detectar_nuevas_habilidades(texto_oferta, umbral_longitud=4, top_k=12):
             _noise_mark(frase)
             continue
 
+                # --- FILTRO ANTI-FRASES GENÉRICAS O DE CONTEXTO ---
+        # 1. Pronombres posesivos: "nuestro equipo", "sus funciones", "nuestros usuarios"
+        if re.search(r"\b(nuestro|nuestra|nuestros|nuestras|su|sus)\b", frase):
+            _noise_mark(frase)
+            continue
+
+        # 2. Conectores narrativos: "a través de", "gracias a", "mediante"
+        if frase.startswith(("a través", "através", "gracias a", "mediante")):
+            _noise_mark(frase)
+            continue
+
+        # 3. Cuantificadores: "varios", "tamaño medio", "gran escala", "multidisciplinar"
+        if re.search(r"\b(varios|varias|tamaño|gran|medio|multidisciplinar|altamente|cualificado)\b", frase):
+            _noise_mark(frase)
+            continue
+
+        # 4. Frases sin verbo o solo con verbos auxiliares
+        frase_doc = nlp(frase)
+        verbs = [t.lemma_.lower() for t in frase_doc if t.pos_ == "VERB"]
+        if verbs and all(v in {"ser", "estar", "tener", "haber"} for v in verbs):
+            _noise_mark(frase)
+            continue
+
+        # 5. Frases que contienen palabras NO competenciales
+        NON_SKILL_TERMS = {"equipo", "personal", "usuarios", "personas", "empresa", "organización", 
+                           "ambiente", "tamaño", "planes", "oportunidades"}
+        if any(w in NON_SKILL_TERMS for w in tokens_simple):
+            _noise_mark(frase)
+            continue
+
+
+
         tokens_simple = frase.split()
         if len(tokens_simple) < 2 or len(tokens_simple) > 8:
             continue
@@ -710,3 +770,46 @@ def detectar_nuevas_habilidades(texto_oferta, umbral_longitud=4, top_k=12):
     print("ℹ️ Ruido registrado/actualizado para exclusión dinámica.")
 
     return [c for c, _ in ordenados[:top_k]]
+
+def frase_en_texto(frase: str, texto: str) -> bool:
+    """
+    Comprueba si una 'skill' en formato de frase está realmente
+    presente en el texto (oferta o CV), de forma robusta:
+
+    - Insensible a mayúsculas/minúsculas y tildes.
+    - No exige coincidencia exacta carácter a carácter.
+    - Usa tokens clave (sin stopwords) y requiere que aparezca
+      la mayor parte de ellos en el texto.
+    """
+    if not frase or not texto:
+        return False
+
+    f = normalizar_simple(frase)
+    t = normalizar_simple(texto)
+
+    if not f or not t:
+        return False
+
+    # 1) Si la frase normalizada aparece tal cual, aceptamos
+    if f in t:
+        return True
+
+    # 2) Coincidencia por tokens clave
+    tokens = [w for w in f.split() if w not in STOPWORDS and len(w) >= 3]
+    if not tokens:
+        return False
+
+    # Contar cuántos tokens clave de la frase aparecen en el texto
+    texto_tokens = t.split()
+    hits = sum(1 for w in tokens if w in texto_tokens)
+
+    # Regla:
+    # - Si la frase tiene 1 token clave: debe aparecer 1/1
+    # - Si tiene 2 tokens: deben aparecer los 2
+    # - Si tiene 3 o más: al menos 2 y al menos la mitad redondeada hacia arriba
+    if len(tokens) == 1:
+        return hits == 1
+
+    needed = max(2, (len(tokens) + 1) // 2)
+    return hits >= needed
+

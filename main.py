@@ -51,6 +51,42 @@ from modules import carga_archivos, analisis_basico, habilidades
 from modules.analisis_basico import contiene_lista_sospechosa
 from modules.pdf_exporter import exportar_resultado_pdf
 
+# --- Helpers de estado (compatibles con ejecutable) ---
+import os, json, sys
+
+def _user_data_dir_main():
+    try:
+        if getattr(sys, "frozen", False):
+            base = os.path.join(os.environ.get("APPDATA", os.path.expanduser("~")), "ATS-Advisor")
+            os.makedirs(base, exist_ok=True)
+            return base
+    except Exception:
+        pass
+    # modo desarrollo: junto al main.py
+    return os.path.dirname(__file__)
+
+def _state_file_path():
+    return os.path.join(_user_data_dir_main(), "last_state.json")
+
+def _get_last_cv_path():
+    p = _state_file_path()
+    if os.path.exists(p):
+        try:
+            with open(p, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            return (data or {}).get("last_cv_path") or ""
+        except Exception:
+            return ""
+    return ""
+
+def _set_last_cv_path(ruta_cv):
+    try:
+        with open(_state_file_path(), "w", encoding="utf-8") as f:
+            json.dump({"last_cv_path": ruta_cv}, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
+
 # --- Detección simple de idioma (sin dependencias) ---
 EN_HINT = {
     " the ", " and ", " with ", " for ", " of ", " to ", " in ",
@@ -233,6 +269,33 @@ def main():
             time.sleep(1)
 
 
+            # --- Salvaguarda: asegurar CV antes de leerlo ---
+            if not ruta_cv or not os.path.exists(ruta_cv):
+                # Intentar recuperar del estado previo
+                ruta_recordada = _get_last_cv_path()
+                if ruta_recordada and os.path.exists(ruta_recordada):
+                    usar = input(f"\nSe encontró un CV anterior \"{os.path.basename(ruta_recordada)}\". ¿Usarlo? (s/n): ").strip().lower()
+                    if usar == "s":
+                        ruta_cv = ruta_recordada
+                        print(f"🔁 Usando CV recordado: {os.path.basename(ruta_cv)}")
+                    else:
+                        ruta_cv = None
+
+                # Si aún no hay CV, forzar carga (una sola vez)
+                if not ruta_cv:
+                    print("⚠️ Para analizar la oferta necesitas cargar tu CV.")
+                    nuevo_cv = carga_archivos.cargar_cv()
+                    if nuevo_cv:
+                        ruta_cv = nuevo_cv
+                        _set_last_cv_path(ruta_cv)
+                        print(f"✅ CV cargado y recordado: {os.path.basename(ruta_cv)}")
+                    else:
+                        print("❌ No se cargó ningún CV. Volviendo al menú...")
+                        input("Presione Enter para continuar...")
+                        continue
+
+
+
             # Chequeo de idioma de la oferta
             lang = detect_lang_simple(texto_oferta)
             if lang == "en":
@@ -319,7 +382,7 @@ def main():
                 "Ayuda a otros compartiendo esta aplicación. "
                 "¡Mucho éxito en tu búsqueda laboral! 🚀")
             # Mantener visible el mensaje antes de cerrar (10 s)
-            for i in range(6, 0, -1):
+            for i in range(3, 0, -1):
                 print(f"Esta ventana se cerrará en {i} s...  ", end="\r", flush=True)
                 time.sleep(1)
             print("\n¡Hasta pronto!")

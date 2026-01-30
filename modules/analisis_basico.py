@@ -369,8 +369,29 @@ def categorizar_texto(texto):
     for chunk in doc.noun_chunks:
         frase = _clean_chunk_text(chunk.text)
         frase = re.sub(r"[^a-záéíóúñü\s\-]", "", frase.lower()).strip()
-        if len(frase.split()) <= 1:
+        if not frase:
             continue
+
+        tokens_simple = frase.split()
+
+        # --- FILTROS ANTIRRUIDO PARA FRASES DE LA OFERTA (no son habilidades) ---
+
+        # 1) Muy cortas o muy largas → casi siempre ruido
+        if len(tokens_simple) <= 1 or len(tokens_simple) > 8:
+            continue
+
+        # 2) Pronombres posesivos: "nuestro equipo global", "nuestros usuarios", "su equipo"
+        if re.search(r"\b(nuestro|nuestra|nuestros|nuestras|su|sus)\b", frase):
+            continue
+
+        # 3) Frases que empiezan con conectores tipo "a través de..."
+        if frase.startswith(("a través", "através", "atraves", "traves de")):
+            continue
+
+        # 4) Cuantificadores genéricos al inicio: "varios proyectos", "varias tareas"
+        if tokens_simple[0] in {"varios", "varias"}:
+            continue
+
         head = chunk.root.lemma_.lower()
         if head not in HEAD_NOUNS:
             continue
@@ -387,6 +408,7 @@ def categorizar_texto(texto):
 
             if cat:
                 categorias[cat].add(frase)
+
 
 
     # 2) TOKENS (controlado)
@@ -471,6 +493,23 @@ def categorizar_texto(texto):
             depuradas.add(kt)
     categorias["tecnicas"] = depuradas
 
+
+        # ---- DEPURACIÓN FINAL: Blandas (eliminar frases claramente contextuales) ----
+    dep_blandas = set()
+    for k in categorias["blandas"]:
+        kl = (k or "").strip().lower()
+        # Frases narrativas / de contexto que no son competencias
+        if "traves de un equipo" in kl or "través de un equipo" in kl:
+            continue
+        if kl.startswith(("a través de", "através de", "atraves de")):
+            continue
+        dep_blandas.add(kl)
+    categorias["blandas"] = dep_blandas
+
+    return categorias
+
+
+
     return categorias
 
 # ----------------------------
@@ -480,7 +519,8 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
     """
     Usa el motor de reglas JSON (requirements_rules.json).
     Además, registra aprendizaje ligero en requirements_learned.json.
-    Incluye un parche para falsos positivos de 'sector manufactura'.
+    Incluye parches para falsos positivos de 'sector manufactura'
+    y para requisitos libres demasiado verborrágicos.
     """
     res = evaluate_requirements(texto_oferta, texto_cv)
 
@@ -499,12 +539,38 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
             manuf_labels = {"experiencia en sector manufactura"}
             has_strong_signal = bool(re.search(r"manufactur|planta|f[aá]bric", oferta_low))
             if not has_strong_signal:
-                res["no_cumple"] = [x for x in res["no_cumple"] if x.lower() not in manuf_labels]
+                res["no_cumple"] = [x for x in res["no_cumple"]
+                                    if x.lower() not in manuf_labels]
                 res["alerta"] = bool(res["no_cumple"])
     except Exception:
         pass
 
+    # Parche genérico: requisitos tipo "Conocimiento requerido: <frase muy larga>"
+    # se consideran "blandos" (no excluyentes). Los guardamos aparte.
+    try:
+        if res and res.get("no_cumple"):
+            duros = []
+            suaves = []
+            for tag in res["no_cumple"]:
+                txt = (tag or "").strip().lower()
+                if txt.startswith("conocimiento requerido:"):
+                    core = txt.split(":", 1)[1].strip() if ":" in txt else txt
+                    # Si el "core" tiene más de 4 palabras, probablemente es
+                    # una frase libre auto-detectada, NO un requisito duro.
+                    if len(core.split()) > 4:
+                        suaves.append(tag)
+                        continue
+                duros.append(tag)
+
+            # Guardamos por si en el futuro los quieres mostrar en otro sitio
+            res["no_cumple_soft"] = suaves
+            res["no_cumple"] = duros
+            res["alerta"] = bool(duros)
+    except Exception:
+        pass
+
     return res
+
 
 # ----------------------------
 # VALIDACIÓN PARA SUGERENCIAS FORMATIVAS
@@ -560,37 +626,65 @@ def _perfil_desalineado(cat_oferta, cat_cv,
 # ----------------------------
 # MATCHING SEMÁNTICO SUAVE
 # ----------------------------
-def _soft_match(oferta_items: set, cv_items: set, sim_thresh: float = 0.82):
+def _soft_match(oferta_items: set,
+                cv_items: set,
+                texto_cv: str = "",
+                texto_oferta: str = "",
+                sim_thresh: float = 0.82):
+    """
+    Matching suave entre skills de la oferta y del CV:
+    1) Coincidencia exacta entre items de las categorías.
+    2) Coincidencia por lemas / similitud semántica (spaCy).
+    3) NUEVO: si la frase de la oferta aparece literalmente en el texto del CV
+       (con tolerancia a espacios, signos y saltos), se considera reconocida
+       aunque no haya caído como skill categorizada en el CV.
+    """
     reconocidas = set()
     faltantes = set()
+
+    # Normalizamos el texto completo del CV una sola vez
+    cv_norm = normalizar_para_nlp((texto_cv or "").lower())
 
     for o in (oferta_items or set()):
         o_norm = (o or "").strip().lower()
         if not o_norm:
             continue
-        try:
-            doc_o = nlp(o_norm)
-        except Exception:
-            doc_o = None
 
         matched = False
-        for c in (cv_items or set()):
-            c_norm = (c or "").strip().lower()
-            if not c_norm:
-                continue
-            if o_norm == c_norm:
-                matched = True
-                break
-            if doc_o is not None:
-                if any(tok.lemma_.lower() == c_norm for tok in doc_o if tok.is_alpha):
+
+        # 1) Fallback textual GENERAL: si la frase de la oferta está en el CV, se da por válida
+        if cv_norm and _contains_phrase(cv_norm, o_norm):
+            matched = True
+        else:
+            # 2) Matching contra las skills categorizadas del CV
+            try:
+                doc_o = nlp(o_norm)
+            except Exception:
+                doc_o = None
+
+            for c in (cv_items or set()):
+                c_norm = (c or "").strip().lower()
+                if not c_norm:
+                    continue
+
+                # 2.a) Igualdad exacta de string
+                if o_norm == c_norm:
                     matched = True
                     break
-            if doc_o is not None:
-                doc_c = nlp(c_norm)
-                if getattr(doc_o, "vector_norm", 0.0) and getattr(doc_c, "vector_norm", 0.0):
-                    if doc_o.similarity(doc_c) >= sim_thresh:
+
+                # 2.b) Coincidencia por lema dentro de la frase de la oferta
+                if doc_o is not None:
+                    if any(tok.lemma_.lower() == c_norm for tok in doc_o if tok.is_alpha):
                         matched = True
                         break
+
+                # 2.c) Similitud semántica spaCy (vectores)
+                if doc_o is not None:
+                    doc_c = nlp(c_norm)
+                    if getattr(doc_o, "vector_norm", 0.0) and getattr(doc_c, "vector_norm", 0.0):
+                        if doc_o.similarity(doc_c) >= sim_thresh:
+                            matched = True
+                            break
 
         if matched:
             reconocidas.add(o)
@@ -598,6 +692,7 @@ def _soft_match(oferta_items: set, cv_items: set, sim_thresh: float = 0.82):
             faltantes.add(o)
 
     return reconocidas, faltantes
+
 
 # ----------------------------
 # MOSTRAR RESULTADOS
@@ -608,7 +703,7 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
     detalles_categorias = {}
 
     # 1) Requisitos excluyentes
-    requisitos = detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv) if texto_oferta else None
+    """requisitos = detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv) if texto_oferta else None
     if requisitos and requisitos["alerta"]:
         print("\n📋 Evaluación inicial: El perfil no cumple con requisitos clave de la oferta.")
         print("Por tanto, el sistema ATS marcaría la aplicación como 'No considerada automáticamente'.")
@@ -616,6 +711,10 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
             print(f"   ❌ {r}")
     elif requisitos:
         print("\n✅ Cumples con los requisitos principales de la oferta.")
+"""
+    # 1) Requisitos excluyentes (todavía sin imprimir, se ajustan después)
+    requisitos = detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv) if texto_oferta else None
+
 
     # --- Desalineación de dominio (si no hubo exclusión dura)
     desalineacion = {"activo": False, "razones": [], "resumen": {}}
@@ -641,7 +740,13 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
         den = len(oferta_set)
 
         if den > 0:
-            coincidencias, faltantes_raw = _soft_match(oferta_set, cv_set, sim_thresh=0.82)
+            coincidencias, faltantes_raw = _soft_match(
+                oferta_set,
+                cv_set,
+                texto_cv=texto_cv,
+                texto_oferta=texto_oferta,
+                sim_thresh=0.82
+            )
             porcentaje = len(coincidencias) / den
             total_numerador += porcentaje * peso
             total_denominador += peso
@@ -649,6 +754,7 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
             coincidencias = set()
             faltantes_raw = set()
             porcentaje = None
+
 
         # Faltantes formativos
         faltantes_scored = []
@@ -665,6 +771,37 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
             "sin_reqs": (den == 0)
         }
         sugerencias.extend(faltantes_top)
+
+
+        # --- Reconciliar requisitos excluyentes vs habilidades ya reconocidas ---
+    # Si una habilidad se reconoce en el matching semántico (p.ej. "metodologías ágiles"),
+    # no tiene sentido seguir marcándola como "no cumplida" en requisitos.
+    if requisitos:
+        # Conjunto de todas las skills reconocidas (técnicas, experiencia, blandas)
+        reconocidas_all = set()
+        for d in detalles_categorias.values():
+            for s in d.get("reconocidas", []):
+                if s:
+                    reconocidas_all.add(s.strip().lower())
+
+        if requisitos.get("no_cumple"):
+            filtrados = []
+            for tag in requisitos["no_cumple"]:
+                txt = (tag or "").strip().lower()
+                skip = False
+                for sk in reconocidas_all:
+                    if sk and sk in txt:
+                        # Ejemplo: tag = "Conocimiento requerido: metodologías ágiles"
+                        #          sk  = "metodologías ágiles"
+                        # Ya fue reconocida, no la tratamos como incumplida.
+                        skip = True
+                        break
+                if not skip:
+                    filtrados.append(tag)
+            requisitos["no_cumple"] = filtrados
+            requisitos["alerta"] = bool(filtrados)
+
+
 
     if total_denominador > 0:
         total = total_numerador / total_denominador

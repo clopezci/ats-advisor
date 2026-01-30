@@ -33,6 +33,35 @@
 # ==========================
 import os, json, re, unicodedata
 from typing import Optional, Dict, List
+import spacy  # ✅ nuevo
+
+# --- Loader perezoso de spaCy para este módulo (requisitos) ---
+_REQ_NLP = None
+
+def _get_req_nlp():
+    """
+    Carga un modelo de spaCy en español (lg/md/sm) solo una vez, y lo reutiliza.
+    Si falla todo, devuelve None y la comparación semántica se desactiva.
+    """
+    global _REQ_NLP
+    if _REQ_NLP is not None:
+        return _REQ_NLP
+    try:
+        _REQ_NLP = spacy.load("es_core_news_lg")
+    except Exception:
+        try:
+            _REQ_NLP = spacy.load("es_core_news_md")
+            print("ℹ️ [requisitos] Usando es_core_news_md (fallback).")
+        except Exception:
+            try:
+                _REQ_NLP = spacy.load("es_core_news_sm")
+                print("ℹ️ [requisitos] Usando es_core_news_sm (fallback sin vectores).")
+            except Exception:
+                _REQ_NLP = None
+                print("⚠️ [requisitos] No se pudo cargar un modelo de spaCy. Comparación semántica desactivada.")
+    return _REQ_NLP
+
+
 
 """
 BASE_DIR = os.path.dirname(__file__)
@@ -255,9 +284,26 @@ DEFAULT_RULES = {
         # Finanzas / Corporativo
         { "id":"fin_finanzas_corporativas", "label":"Conocimiento requerido: finanzas corporativas", "type":"knowledge",
           "trigger_any":["finanzas corporativas"], "cv_any":["finanzas corporativas", "corporate finance", "modelación financiera", "modelacion financiera"] },
-        { "id":"fin_niif_ifrs", "label":"Conocimiento requerido: NIIF / IFRS", "type":"knowledge",
-          "trigger_any":["niif", "ifrs", "estados financieros", "consolidación", "consolidacion", "modelación financiera", "modelacion financiera", "presupuestos", "tesorería", "tesoreria", "flujo de caja"],
-          "cv_any":["niif", "ifrs", "estados financieros", "consolidación", "consolidacion", "modelación financiera", "modelacion financiera", "presupuestos", "tesorería", "tesoreria", "flujo de caja"] },
+        { "id": "fin_niif_ifrs",
+            "label": "Conocimiento requerido: NIIF / IFRS",
+            "type": "knowledge",
+            "trigger_any": [
+                "niif",
+                "ifrs"
+            ],
+            "cv_any": [
+                "niif",
+                "ifrs",
+                "estados financieros",
+                "consolidación",
+                "consolidacion",
+                "modelación financiera",
+                "modelacion financiera",
+                "presupuestos",
+                "tesorería",
+                "tesoreria",
+                "flujo de caja"]},
+
 
         # Excel / SAP / Procesos financieros
         { "id":"tool_excel_avanzado", "label":"Conocimiento requerido: excel avanzado", "type":"tool",
@@ -702,24 +748,6 @@ def load_rules():
 
 
     # --- PATCH G: Refuerzo explícito para Enfermería (por si alguna versión del JSON no lo trae completo) ---
-    try:
-        _ensure_rule({
-            "id": "prof_enfermeria",
-            "label": "Título/Licencia en Enfermería requerido",
-            "type": "profession",
-            "trigger_any": [
-                "enfermera jefe", "enfermera líder", "enfermera lider", "enfermera coordinadora",
-                "enfermera", "enfermería", "enfermeria", "profesional de enfermería", "profesional de enfermeria"
-            ],
-            "cv_any": [
-                "enfermera", "enfermería", "enfermeria", "colegio de enfermería",
-                "licenciatura en enfermería", "rn "
-            ]
-        })
-    except Exception:
-        pass
-
-
         # Opcional: Posgrados/Conocimientos de enfermería
     try:
         _ensure_rule({
@@ -776,6 +804,20 @@ def load_rules():
     except Exception:
         pass
 
+
+        # --- PATCH LÓGICO: NIIF / IFRS solo si la oferta lo pide explícitamente ---
+    try:
+        for r in rules:
+            if r.get("id") == "fin_niif_ifrs":
+                # La oferta SOLO dispara este requisito si menciona NIIF o IFRS
+                r["trigger_any"] = ["niif", "ifrs"]
+                # Dejamos cv_any tal cual esté en el JSON o en DEFAULT_RULES
+                break
+    except Exception:
+        pass
+
+
+
     data["rules"] = rules
     return data
 
@@ -814,6 +856,63 @@ _SEP_CUT = r"[:;\.\-–—]"
 
 def _nfkc(s: str) -> str:
     return unicodedata.normalize("NFKC", s or "")
+
+def _is_requirement_context(oferta_text: str, trigger_terms: List[str]) -> bool:
+    """
+    Devuelve True si alguno de los términos de trigger aparece en un contexto
+    que claramente sugiere 'requisito' (no solo mención general).
+
+    Usa:
+      - palabras tipo: requisito, requerido, indispensable, obligatorio, debe, excluyente, etc.
+      - cercanía a cabeceras como 'Requisitos', 'Perfil requerido', etc.
+    """
+    if not oferta_text or not trigger_terms:
+        return False
+
+    oferta_low = oferta_text.lower()
+    lines = oferta_low.splitlines()
+
+    # Palabras que indican contexto de requisito/exclusión
+    req_markers = [
+        "requisito", "requisitos", "requerido", "requerida",
+        "indispensable", "imprescindible",
+        "obligatorio", "obligatoria",
+        "debe ", "deben ", "deberá", "debera",
+        "excluyente", "excluyentes",
+        "must", "must have", "se requiere", "se solicitará", "se solicitara"
+    ]
+
+    # Cabeceras típicas bajo las cuales suele listarse lo requerido
+    header_markers = [
+        "requisitos", "perfil requerido", "perfil del cargo",
+        "lo que buscamos", "lo que esperamos", "perfil del puesto"
+    ]
+
+    def line_has_any(line: str, terms: List[str]) -> bool:
+        return any(t in line for t in terms)
+
+    for idx, raw_line in enumerate(lines):
+        # ¿Esta línea contiene alguno de los triggers?
+        if not any(t in raw_line for t in trigger_terms):
+            continue
+
+        # 1) Si en la misma línea ya hay marcadores de requisito → contexto claro
+        if line_has_any(raw_line, req_markers):
+            return True
+
+        # 2) Revisar línea anterior y siguiente, por si el marcador está justo al lado
+        for j in range(max(0, idx - 1), min(len(lines) - 1, idx + 1) + 1):
+            if line_has_any(lines[j], req_markers):
+                return True
+
+        # 3) Revisar algunas líneas hacia atrás buscando una cabecera tipo "Requisitos"
+        for k in range(max(0, idx - 4), idx):
+            if line_has_any(lines[k], header_markers):
+                return True
+
+    # Si ningún patrón de contexto se cumplió, asumimos que NO es requisito excluyente
+    return False
+
 
 def _canonicalize_requirement(area_raw: str) -> str:
     """
@@ -858,6 +957,71 @@ def _cv_contains(cv_low: str, tag: str) -> bool:
     toks = [w for w in re.findall(r"[a-záéíóúñü]+", tag) if len(w) >= 3]
     hits = sum(1 for w in toks if w in cv_low)
     return hits >= 2
+
+
+
+def _semantic_requirement_match(rule: dict, cv_text: str) -> bool:
+    """
+    Verifica de forma genérica si el requisito está cubierto por el CV usando lemas.
+    Idea: si al menos un lema relevante de los 'trigger_any' de la regla
+    aparece como lema en el CV, lo consideramos cubierto aunque no haya
+    coincidencia literal con cv_any.
+
+    Ejemplo:
+      trigger_any: ["metodologías ágiles", "agile", "scrum", "kanban"]
+      CV: "proyectos ágiles", "transformación ágil"
+      => comparten el lema 'ágil' → se da por cumplido.
+    """
+    nlp = _get_req_nlp()
+    if nlp is None:
+        return False
+
+    cv_text = (cv_text or "").strip()
+    if not cv_text:
+        return False
+
+    triggers = rule.get("trigger_any", []) or []
+    if not triggers:
+        return False
+
+    try:
+        # Texto representativo del requisito (uniendo todos los triggers)
+        doc_trig = nlp(" ".join(triggers).lower())
+        # CV completo
+        doc_cv = nlp(cv_text.lower())
+    except Exception:
+        return False
+
+    if not doc_trig or not doc_cv:
+        return False
+
+    def _lemmas_relevantes(doc):
+        out = set()
+        for tok in doc:
+            if not tok.is_alpha:
+                continue
+            lem = tok.lemma_.lower()
+            # Filtramos verbos vacíos y cosas muy cortas
+            if len(lem) < 3:
+                continue
+            if lem in {"ser", "estar", "tener", "hacer", "poder", "deber"}:
+                continue
+            out.add(lem)
+        return out
+
+    lem_trig = _lemmas_relevantes(doc_trig)
+    lem_cv   = _lemmas_relevantes(doc_cv)
+
+    if not lem_trig or not lem_cv:
+        return False
+
+    inter = lem_trig.intersection(lem_cv)
+
+    # Si hay al menos un lema en común, asumimos que el dominio está presente
+    return len(inter) >= 1
+
+
+
 
 # ---------------- evaluación principal ----------------
 def evaluate_requirements(texto_oferta: str, texto_cv: str):
@@ -1195,7 +1359,20 @@ def evaluate_requirements(texto_oferta: str, texto_cv: str):
 
         # ===== Sectores / Conocimientos / Herramientas / Certs =====
         if not any_in(cv, cv_need):
+            # Intento genérico de ver si el dominio del requisito está cubierto de forma semántica
+            if _semantic_requirement_match(rule, cv):
+                # Lo damos por cumplido aunque no aparezca la frase exacta de cv_any
+                continue
+
+            # Si tampoco pasa el filtro semántico, se considera incumplido
             no_cumple.append(rule["label"])
+
+        else:
+            # Solo marcamos como requisito excluyente si el término aparece
+            # en un contexto claramente de "requisito" en la oferta.
+            if _is_requirement_context(oferta, trig):
+                no_cumple.append(rule["label"])
+
 
     # 3) Captura libre: viñetas/prefijos → CANONICALIZACIÓN
     prefixes = [ _nfkc(p).lower() for p in (cfg.get("knowledge_prefixes", []) or []) ]
@@ -1216,10 +1393,25 @@ def evaluate_requirements(texto_oferta: str, texto_cv: str):
                         extracted.append(body)
                     break
 
-        # 3b) Viñetas bajo cabeceras (solo cabeceras de conocimiento, NUNCA “responsabilidades”)
+        # 3b) Cabeceras de conocimiento:
+        #     - Capturar contenidos en la MISMA línea después de ':' (ej: "Conocimientos: X, Y, Z")
+        #     - Y luego, si existen, viñetas en las líneas siguientes.
         for i, raw in enumerate(lines):
-            low = _nfkc(raw.strip().strip(":")).lower()
+            stripped = raw.strip()
+            low = _nfkc(stripped.rstrip(":")).lower()
             if any(h in low for h in headers):
+                # --- NUEVO: contenidos en la misma línea tras ':' ---
+                if ":" in stripped:
+                    after = stripped.split(":", 1)[1].strip()
+                    if after:
+                        # Partir por comas y por ' y '
+                        parts = re.split(r",| y ", after)
+                        for p in parts:
+                            p = _nfkc(p).lower().strip(" .:;")
+                            if len(p) >= 3:
+                                extracted.append(p)
+
+                # --- EXISTENTE: viñetas en líneas siguientes ---
                 j = i + 1
                 while j < len(lines):
                     t = lines[j].rstrip()
@@ -1236,6 +1428,7 @@ def evaluate_requirements(texto_oferta: str, texto_cv: str):
                         if len(t.split()) < 2:
                             break
                     j += 1
+
 
         # Canonicalizar y validar
         canon = []

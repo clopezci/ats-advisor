@@ -28,43 +28,70 @@
 # ==========================================================
 
 
-# ==========================
-# pdf_exporter.py - Exportación de resultados (PDF si hay ReportLab; si no, TXT)
-# ==========================
-# - Importación perezosa de reportlab (evita crash si no está instalado)
-# - Fallback automático a .txt con contenido legible si falta reportlab
-#
-# Autor: Carlos Emilio López (Proyecto TFM)
-# ===========================================
-
+# ==========================================================
+#  pdf_exporter.py - Exportación de resultados (PDF si hay ReportLab; si no, TXT)
+#  Robusto para entornos sin GUI (PyInstaller/Servidor) y compatible con Inno Setup
+# ==========================================================
 import datetime
-from tkinter import filedialog, Tk
+import os, sys
 
-# ----------------------------------------------------
-# Fallback TXT (si no hay reportlab)
-# ----------------------------------------------------
-def _exportar_txt(nombre_sugerido, resultado_dict):
-    """Exporta un informe de texto plano (.txt) cuando reportlab no está disponible."""
-    root = Tk()
-    root.withdraw()
+# --- Helpers de entorno seguros para empaquetado ---
+def _user_data_dir():
     try:
-        nombre_archivo = (nombre_sugerido or "analisis_ats").replace(" ", "_").lower() + ".txt"
+        if getattr(sys, "frozen", False):
+            base = os.path.join(os.environ.get("APPDATA", os.path.expanduser("~")), "ATS-Advisor")
+            os.makedirs(base, exist_ok=True)
+            return base
+    except Exception:
+        pass
+    # modo desarrollo: junto al módulo
+    return os.path.dirname(__file__)
 
-        ruta_salida = filedialog.asksaveasfilename(
-            defaultextension=".txt",
-            filetypes=[("Text files", "*.txt")],
-            initialfile=nombre_archivo,
-            title="Guardar análisis como TXT (ReportLab no instalado)"
-        )
-    finally:
+def _safe_reports_dir():
+    base = os.path.join(_user_data_dir(), "reportes")
+    try:
+        os.makedirs(base, exist_ok=True)
+    except Exception:
+        pass
+    return base
+
+def _timestamp():
+    return datetime.datetime.now().strftime("%Y%m%d-%H%M")
+
+# ----------------------------------------------------
+# Fallback TXT (si no hay reportlab o no hay GUI)
+# ----------------------------------------------------
+def _exportar_txt(nombre_sugerido, resultado_dict, ruta_destino=None):
+    """
+    Exporta un informe de texto plano (.txt).
+    Si 'ruta_destino' viene vacío o no hay GUI, se usa carpeta segura: %APPDATA%/ATS-Advisor/reportes
+    """
+    # Intentar GUI (tkinter) sólo si no vino ruta fija
+    if not ruta_destino:
         try:
-            root.destroy()
+            # import perezoso de tkinter
+            from tkinter import filedialog, Tk
+            root = Tk(); root.withdraw()
+            try:
+                nombre_archivo = (nombre_sugerido or "analisis_ats").replace(" ", "_").lower() + ".txt"
+                ruta_destino = filedialog.asksaveasfilename(
+                    defaultextension=".txt",
+                    filetypes=[("Text files", "*.txt")],
+                    initialfile=nombre_archivo,
+                    title="Guardar análisis como TXT"
+                )
+            finally:
+                try:
+                    root.destroy()
+                except Exception:
+                    pass
         except Exception:
-            pass
+            ruta_destino = None
 
-    if not ruta_salida:
-        print("⚠️ Exportación cancelada por el usuario.")
-        return None
+    # Si sigue sin ruta, usamos carpeta segura
+    if not ruta_destino:
+        nombre_archivo = (nombre_sugerido or "analisis_ats").replace(" ", "_").lower()
+        ruta_destino = os.path.join(_safe_reports_dir(), f"{nombre_archivo}_{_timestamp()}.txt")
 
     # Construimos el texto básico del informe
     lineas = []
@@ -140,22 +167,23 @@ def _exportar_txt(nombre_sugerido, resultado_dict):
     lineas.append("Análisis generado por ATS Advisor - Proyecto TFM")
     lineas.append("Universidad Internacional de Valencia (VIU)")
     lineas.append("© Carlos Emilio López - 2025")
-    lineas.append("© clopezci@htmail.com")
+    # 🔧 Corregido (hotmail.com)
+    lineas.append("© clopezci@hotmail.com")
 
     # Guardar archivo
-    with open(ruta_salida, "w", encoding="utf-8", errors="ignore") as f:
+    with open(ruta_destino, "w", encoding="utf-8", errors="ignore") as f:
         f.write("\n".join(lineas))
 
-    print("ℹ️ ReportLab no estaba instalado. Se generó un TXT con el informe.")
-    return ruta_salida
+    print(f"✅ Informe TXT guardado en: {ruta_destino}")
+    return ruta_destino
 
 # ----------------------------------------------------
 # Exportación principal (PDF si hay reportlab)
 # ----------------------------------------------------
 def exportar_resultado_pdf(nombre_sugerido, resultado_dict):
     """
-    Exporta los resultados del análisis a PDF; si falta ReportLab,
-    ofrece fallback a TXT automáticamente.
+    Exporta los resultados del análisis a PDF; si falta ReportLab o no hay GUI,
+    ofrece fallback a TXT automáticamente y usa carpeta segura si es necesario.
     """
     # Intento de importación perezosa de reportlab
     try:
@@ -169,27 +197,32 @@ def exportar_resultado_pdf(nombre_sugerido, resultado_dict):
         print("⚠️ Falta la librería 'reportlab'. Se usará un informe .txt como fallback.")
         return _exportar_txt(nombre_sugerido, resultado_dict)
 
-    # Si sí hay reportlab, generamos PDF normal
-    root = Tk()
-    root.withdraw()
+    # Intentar GUI para elegir destino; si falla o cancelan, usar carpeta segura
+    ruta_salida = None
     try:
-        nombre_archivo = (nombre_sugerido or "analisis_ats").replace(" ", "_").lower() + ".pdf"
-
-        ruta_salida = filedialog.asksaveasfilename(
-            defaultextension=".pdf",
-            filetypes=[("PDF files", "*.pdf")],
-            initialfile=nombre_archivo,
-            title="Guardar análisis como PDF"
-        )
-    finally:
+        from tkinter import filedialog, Tk
+        root = Tk(); root.withdraw()
         try:
-            root.destroy()
-        except Exception:
-            pass
+            nombre_archivo = (nombre_sugerido or "analisis_ats").replace(" ", "_").lower() + ".pdf"
+            ruta_salida = filedialog.asksaveasfilename(
+                defaultextension=".pdf",
+                filetypes=[("PDF files", "*.pdf")],
+                initialfile=nombre_archivo,
+                title="Guardar análisis como PDF"
+            )
+        finally:
+            try:
+                root.destroy()
+            except Exception:
+                pass
+    except Exception:
+        ruta_salida = None
 
     if not ruta_salida:
-        print("⚠️ Exportación cancelada por el usuario.")
-        return None
+        # Carpeta segura
+        nombre_archivo = (nombre_sugerido or "analisis_ats").replace(" ", "_").lower()
+        ruta_salida = os.path.join(_safe_reports_dir(), f"{nombre_archivo}_{_timestamp()}.pdf")
+        print(f"ℹ️ No se pudo usar el diálogo gráfico. Se guardará automáticamente en: {ruta_salida}")
 
     # --- Estilos ---
     styles = getSampleStyleSheet()
@@ -299,4 +332,6 @@ def exportar_resultado_pdf(nombre_sugerido, resultado_dict):
     # Construcción
     doc.build(elements)
 
+    print(f"✅ Informe PDF guardado en: {ruta_salida}")
     return ruta_salida
+# 

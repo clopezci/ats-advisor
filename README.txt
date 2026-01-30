@@ -6,7 +6,7 @@
 🎓 Trabajo Fin de Máster – Máster en Gestión de Tecnologías de la Información (2025)
 👨‍💻 Autor: Carlos Emilio López
 ✉️ Correo de contacto: clopezci@hotmail.com
-📁 Versión: Jurado 2025 – Código Abierto Educativo
+📁 Versión: V2 – Código Abierto Educativo
 © 2025 Carlos Emilio López / Universidad Internacional de Valencia (VIU)
 
 ==========================================================
@@ -31,8 +31,8 @@ Incluye:
 📂 ESTRUCTURA DEL PROYECTO
 ----------------------------------------------------------
 Ruta instalada:
-C:\Users\probook\OneDrive\Documentos\ProyectosSoftware\prototipo-empleabilidad
-
+#C:\Users\probook\OneDrive\Documentos\ProyectosSoftware\prototipo-empleabilidad
+https://github.com/clopezci/ats-advisor/releases
 Estructura esperada:
 
 │
@@ -93,10 +93,13 @@ Opción 2 – Ejecución rápida (.bat)
    3️⃣ Salir
    4️⃣ Gestionar “ruido” aprendido
 
-Opción 3 – Versión Jurado (.EXE)
-El proyecto puede distribuirse en versión empaquetada (sin Python instalado) mediante PyInstaller.
-Ruta del ejecutable:
+Opción 3 – Versión V2 (.EXE)
+El proyecto puede distribuirse en versión empaquetada (sin Python instalado) mediante PyInstaller e instalador Inno Setup.
+Ruta del ejecutable de prueba local:
 dist\ATS-Advisor\ATS-Advisor.exe
+
+Nota: La versión descargable (V2) estará disponible en la sección “Releases” del repositorio cuando se publique.
+
 
 ==========================================================
 🧮 FUNCIONALIDADES CLAVE

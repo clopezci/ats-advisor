@@ -31,7 +31,6 @@
   "título/licencia en medicina (médico/médico general) requerido": 2,
   "conocimiento requerido: técnicas de venta consultiva": 2,
   "conocimiento requerido: scoring y plataformas comerciales/crediticias": 2,
-  "conocimiento requerido: portafolio pyme/empresarial": 10,
   "conocimiento requerido: portafolio banca personal/particular": 2,
   "conocimiento requerido: auditoría en salud / salud pública / epidemiología": 10,
   "conocimiento requerido: proyectos ciberseguridad": 2,
@@ -45,13 +44,13 @@
   "conocimiento requerido: estrategia tecnológica": 6,
   "conocimiento requerido: niif / ifrs": 4,
   "conocimiento requerido: analizar estratégicamente mejorar utilización facturable": 24,
-  "conocimiento requerido: metodologías ágiles": 40,
+  "conocimiento requerido: metodologías ágiles": 44,
   "conocimiento requerido: nivel avanzado inglés": 24,
   "experiencia en sector salud": 4,
   "conocimiento requerido: herramientas crm o plataformas experiencia": 2,
   "conocimiento requerido: bases datos relacionales no relacionales": 2,
   "conocimiento requerido: herramientas integración automatización": 2,
-  "conocimiento requerido: procesos típicos de ssc (finanzas/contabilidad/tesorería/procure-to-pay/order-to-cash)": 16,
+  "conocimiento requerido: procesos típicos de ssc (finanzas/contabilidad/tesorería/procure-to-pay/order-to-cash)": 20,
   "título requerido: profesional en mercadeo/administración/economía/ingeniería industrial (o afines)": 6,
   "conocimiento requerido: economía solidaria": 2,
   "conocimiento requerido: aspectos jurídicos": 2,
@@ -68,6 +67,7 @@
   "conocimiento requerido: trabajará manera colaborativa otras áreas": 2,
   "conocimiento requerido: garantizando integración coherente soluciones inteligentes": 2,
   "conocimiento requerido: inglés b": 2,
-  "conocimiento requerido: sap": 10,
-  "conocimiento requerido: gestión de proyectos": 4
+  "conocimiento requerido: sap": 14,
+  "conocimiento requerido: gestión de proyectos": 8,
+  "desajuste de dominio (tech=0.333, exp=0.167)": 1
 }

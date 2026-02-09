@@ -637,13 +637,18 @@ def load_rules():
             "label": "Conocimiento requerido: portafolio PyME/Empresarial",
             "type": "knowledge",
             "trigger_any": [
-                "pyme", "pymes", "portafolio pyme", "segmento pyme", "empresarial", "banca empresarial",
-                "segmento empresarial", "smb", "sme"
+                "pyme", "pymes", "portafolio pyme", "segmento pyme",
+                "banca empresarial", "segmento empresarial", "smb", "sme"
+            ],
+            #  obligatorio: si no aparece algo PyME real, no dispares la regla
+            "require_any": [
+                "pyme", "pymes", "portafolio pyme", "segmento pyme", "smb", "sme", "banca empresarial"
             ],
             "cv_any": [
-                "pyme", "pymes", "empresarial", "banca empresarial", "smb", "sme"
+                "pyme", "pymes", "banca empresarial", "smb", "sme"
             ]
         })
+
         _ensure_rule({
             "id": "sales_banca_personal",
             "label": "Conocimiento requerido: portafolio banca personal/particular",
@@ -1370,9 +1375,9 @@ def evaluate_requirements(texto_oferta: str, texto_cv: str):
         else:
             # Solo marcamos como requisito excluyente si el término aparece
             # en un contexto claramente de "requisito" en la oferta.
-            if _is_requirement_context(oferta, trig):
-                no_cumple.append(rule["label"])
-
+           #if _is_requirement_context(oferta, trig):
+            #    no_cumple.append(rule["label"])
+            pass
 
     # 3) Captura libre: viñetas/prefijos → CANONICALIZACIÓN
     prefixes = [ _nfkc(p).lower() for p in (cfg.get("knowledge_prefixes", []) or []) ]

@@ -254,18 +254,50 @@ def _save_noise_db(data: dict):
     except Exception:
         pass
 
-def _noise_mark(term: str, inc: int = 1):
-    term = (term or "").strip().lower()
-    if not term:
+def _noise_mark(term: str):
+    """
+    Marca un término como 'ruido' aprendido (contabiliza en noise_terms.json),
+    PERO evita falsos positivos: si el término está protegido, no se aprende.
+    """
+    t = (term or "").strip().lower()
+    if not t:
         return
-    data = _load_noise_db()
-    data[term] = int(data.get(term, 0)) + inc
-    _save_noise_db(data)
+
+    # 1) Guardrail: NO aprender como ruido algo protegido
+    if is_protected_term(t):
+        return
+
+    # 2) Guardrail: no aprender tokens demasiado cortos / basura
+    if len(t) < 4:
+        return
+
+    # 3) Guardrail: no aprender números puros
+    if t.isdigit():
+        return
+
+    # Mecanismo de persistencia (archivo, dict, etc.)
+    try:
+        noise_db = _load_noise_db()
+        noise_db[t] = int(noise_db.get(t, 0)) + 1
+        _save_noise_db(noise_db)
+    except Exception:
+        pass
+
+
 
 def dynamic_exclude_terms(threshold: int = 4) -> set:
-    """Devuelve términos que han aparecido como 'ruido' al menos 'threshold' veces."""
+    """Devuelve términos que han aparecido como 'ruido' al menos 'threshold' veces,
+    excluyendo siempre los términos protegidos."""
     data = _load_noise_db()
-    return {t for t, c in data.items() if int(c) >= int(threshold)}
+    out = set()
+    for t, c in data.items():
+        try:
+            if int(c) >= int(threshold) and (not is_protected_term(t)):
+                out.add(t)
+        except Exception:
+            continue
+    return out
+
 
 # ===== API pública para gestionar ruido desde el menú =====
 NOISE_THRESHOLD = 4  # umbral por defecto
@@ -425,9 +457,12 @@ def _pasa_filtro_pos(tok) -> bool:
     if lem in STOPWORDS:
         _noise_mark(lem)
         return False
-    if tok.pos_ in {"NOUN","PROPN"}:
-        _noise_mark(lem)
+    if tok.pos_ in {"NOUN", "PROPN"}:
+        # Solo marcar como ruido si es genérico/abstracto/contextual
+        if lem in GENERIC_NOUNS or lem in ABSTRACT_TERMS:
+            _noise_mark(lem)
         return True
+
     if tok.pos_ == "VERB":
         if lem in VERBS_DESCARTADOS:
             _noise_mark(lem)
@@ -583,7 +618,7 @@ NOISE_PHRASES = {
     "sobre nosotros","acerca del empleo","acerca de","somos","estamos contratando",
     "híbrido","hibrido","excelentes beneficios","proceso de selección","postúlate","postulate",
     "nuestro equipo","nuestra empresa","nuestras soluciones","zona estratégica","retos estratégicos",
-    "limpiafy"  # ejemplo del caso reportado
+    "limpiafy"  
 }
 
 # Palabras comunes de sección/marketing para filtrar
@@ -606,8 +641,78 @@ def _is_noise_phrase_local(frase: str) -> bool:
         pass
     return False
 
+
+# ==========================================================
+#  PROTECCIÓN ANTI-FALSOS POSITIVOS (Release-safe)
+#  Evitar que términos válidos del dominio se aprendan como "ruido"
+# ==========================================================
+
+def _safe_load_json(path, default):
+    try:
+        import json, os
+        if os.path.exists(path):
+            with open(path, "r", encoding="utf-8") as f:
+                return json.load(f)
+    except Exception:
+        pass
+    return default
+
+def _flatten_strings(obj):
+    """Extrae strings desde listas/dicts anidados (normaliza a lowercase)."""
+    out = set()
+    if isinstance(obj, str):
+        out.add(obj.strip().lower())
+    elif isinstance(obj, list):
+        for x in obj:
+            out |= _flatten_strings(x)
+    elif isinstance(obj, dict):
+        for _, v in obj.items():
+            out |= _flatten_strings(v)
+    return {s for s in out if s}
+
+def _project_root_dir():
+    """En exe/frozen podría cambiar; usa ruta relativa del módulo como base."""
+    import os
+    return os.path.dirname(__file__)
+
+# Ajusta
+_SKILLS_CUSTOM_PATH = os.path.join(_project_root_dir(), "skills_custom.json")
+_REQ_RULES_PATH     = os.path.join(_project_root_dir(), "requirements_rules.json")
+
+def build_protected_terms():
+    """
+    Protege:
+    - Todas las skills definidas (skills_custom.json)
+    - Todos los términos/reglas de requisitos (requirements_rules.json), si existen
+    """
+    protected = set()
+
+    skills = _safe_load_json(_SKILLS_CUSTOM_PATH, {})
+    protected |= _flatten_strings(skills)
+
+    rules = _safe_load_json(_REQ_RULES_PATH, {})
+    protected |= _flatten_strings(rules)
+
+    # Limpieza mínima: evitar tokens absurdamente cortos
+    protected = {p for p in protected if len(p) >= 4}
+
+    return protected
+
+PROTECTED_TERMS = build_protected_terms()
+
+def is_protected_term(term: str) -> bool:
+    t = (term or "").strip().lower()
+    if not t:
+        return False
+    # Protección exacta (término o frase)
+    if t in PROTECTED_TERMS:
+        return True
+    return False
+
+
+
 EXCLUDE_TERMS = set({
-    # (igual que antes) — términos contextuales, comerciales y geográficos
+    # — términos contextuales, comerciales y geográficos
     "postulate","postúlate","postulacion","postulación","postular","postula",
     "busqueda","búsqueda","buscar","fortalezca","fortalecer","envia","envía",
     "enviar","aplica","aplicar","aplicacion","aplicación","oportunidad","reto",

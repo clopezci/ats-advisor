@@ -259,6 +259,9 @@ def _contains_phrase(texto: str, frase: str) -> bool:
     return re.search(patron, texto, flags=re.IGNORECASE) is not None
 
 
+
+
+
 # ----------------------------
 # CATEGORIZACIÓN
 # ----------------------------
@@ -510,8 +513,6 @@ def categorizar_texto(texto):
 
 
 
-    return categorias
-
 # ----------------------------
 # REQUISITOS EXCLUYENTES (delegado a reglas externas)
 # ----------------------------
@@ -563,9 +564,10 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
                 duros.append(tag)
 
             # Guardamos por si en el futuro los quieres mostrar en otro sitio
-            res["no_cumple_soft"] = suaves
+            res["no_cumple_soft"] = (res.get("no_cumple_soft") or []) + suaves
             res["no_cumple"] = duros
             res["alerta"] = bool(duros)
+
     except Exception:
         pass
 
@@ -575,6 +577,8 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
 # ----------------------------
 # VALIDACIÓN PARA SUGERENCIAS FORMATIVAS
 # ----------------------------
+
+
 def _term_formativo_valido(t):
     t = (t or "").strip().lower()
     if not t or len(t) < 3:
@@ -589,9 +593,9 @@ def _term_formativo_valido(t):
 # DESALINEACIÓN GLOBAL (independiente de reglas)
 # ----------------------------
 def _perfil_desalineado(cat_oferta, cat_cv,
-                        min_items=3,
-                        tech_ratio_min=0.25,
-                        exp_ratio_min=0.25):
+                        min_items=5,
+                        tech_ratio_min=0.20,
+                        exp_ratio_min=0.20):
     of_tech = cat_oferta.get("tecnicas", set()) or set()
     cv_tech = cat_cv.get("tecnicas", set()) or set()
     of_exp  = cat_oferta.get("experiencia", set()) or set()
@@ -626,6 +630,23 @@ def _perfil_desalineado(cat_oferta, cat_cv,
 # ----------------------------
 # MATCHING SEMÁNTICO SUAVE
 # ----------------------------
+
+VERB_EQUIV = {
+    "implementar": {"implementacion", "implementé", "implementación", "implantacion", "implantación", "ejecucion", "ejecución"},
+    "analizar": {"analisis", "analicé", "análisis", "analitica", "analítica", "diagnostico", "diagnóstico", "evaluacion", "evaluación"},
+    "evaluar": {"evaluacion", "evalué", "evaluación", "valoracion", "valoración", "medicion", "medición", "assessment"},
+    "liderar": {"liderazgo", "lideré", "liderar", "dirigir", "supervisar", "coordinar", "gestionar", "orquestar"},
+    "gestionar": {"gestión", "gestioné", "gestionar", "dirigir", "supervisar", "coordinar", "liderar", "orquestar"},
+    "coordinar": {"coordinar", "coordiné", "coordinación", "gestionar", "dirigir", "supervisar", "liderar", "orquestar"},
+    "planificar": {"planificar", "planifiqué", "planificacion", "planificación", "organizar", "programar", "dirigir", "gestionar", "liderar"},
+    "dirigir": {"dirigí", "liderar", "gestionar", "supervisar", "coordinar", "orquestar"},
+    "supervisar": {"supervisar", "supervisé", "supervisión", "liderar", "dirigir", "gestionar", "coordinar", "orquestar"},
+    "orquestar": {"orquestar", "orquesté", "orquestación", "liderar", "dirigir", "gestionar", "supervisar", "coordinar"},
+    "desarrollar": {"desarrollo", "desarrollé", "desarrollar", "crear", "construir", "generar", "implementar"},
+    "construir": {"construir", 	"construí"	,	"construcción"	,	"desarrollado"	,	"creado"	,	"generado"	,	"implementado"}
+}
+
+
 def _soft_match(oferta_items: set,
                 cv_items: set,
                 texto_cv: str = "",
@@ -635,7 +656,7 @@ def _soft_match(oferta_items: set,
     Matching suave entre skills de la oferta y del CV:
     1) Coincidencia exacta entre items de las categorías.
     2) Coincidencia por lemas / similitud semántica (spaCy).
-    3) NUEVO: si la frase de la oferta aparece literalmente en el texto del CV
+    3) si la frase de la oferta aparece literalmente en el texto del CV
        (con tolerancia a espacios, signos y saltos), se considera reconocida
        aunque no haya caído como skill categorizada en el CV.
     """
@@ -644,6 +665,13 @@ def _soft_match(oferta_items: set,
 
     # Normalizamos el texto completo del CV una sola vez
     cv_norm = normalizar_para_nlp((texto_cv or "").lower())
+
+    # spaCy del CV una sola vez: lemas y texto
+    cv_doc = nlp(cv_norm) if cv_norm else None
+    cv_lemmas = set()
+    if cv_doc is not None:
+        cv_lemmas = {t.lemma_.lower() for t in cv_doc if t.is_alpha}
+
 
     for o in (oferta_items or set()):
         o_norm = (o or "").strip().lower()
@@ -661,6 +689,27 @@ def _soft_match(oferta_items: set,
                 doc_o = nlp(o_norm)
             except Exception:
                 doc_o = None
+
+            # 1.b) Fallback por lema y equivalencias (especialmente útil para VERBOS)
+            # Si o_norm es una sola palabra (tipo "analizar") lo tratamos como posible verbo/acción.
+            if (not matched) and (cv_doc is not None) and (len(o_norm.split()) == 1):
+                try:
+                    o_doc = nlp(o_norm)
+                    if o_doc and o_doc[0].is_alpha:
+                        o_lemma = o_doc[0].lemma_.lower()
+
+                        # a) mismo lema presente en CV (ej: oferta "evaluar", CV "evalué")
+                        if o_lemma in cv_lemmas:
+                            matched = True
+                        else:
+                            # b) equivalencias manuales verbo->sustantivo/variantes
+                            equivs = VERB_EQUIV.get(o_lemma, set())
+                            if any(e in cv_norm for e in equivs):
+                                matched = True
+                except Exception:
+                    pass
+
+
 
             for c in (cv_items or set()):
                 c_norm = (c or "").strip().lower()
@@ -717,19 +766,22 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
 
 
     # --- Desalineación de dominio (si no hubo exclusión dura)
+    # Se calcula aquí, pero se decide mostrar DESPUÉS, para evitar contradicciones
     desalineacion = {"activo": False, "razones": [], "resumen": {}}
     if not (requisitos and requisitos["alerta"]):
         desalineado, razones, resumen = _perfil_desalineado(cat_oferta, cat_cv)
         if desalineado:
             desalineacion = {"activo": True, "razones": razones, "resumen": resumen}
-            print("\n🚫 RESULTADO: Perfil no alineado con la oferta (desajuste de dominio).")
-            for rz in razones:
-                print(f"   ❌ {rz}")
-            try:
-                from modules.requisitos import learn_requirement
-                learn_requirement(f"Desajuste de dominio (tech={resumen['tech_ratio']}, exp={resumen['exp_ratio']})")
-            except Exception:
-                pass
+
+        #    print("\n🚫 RESULTADO: Perfil no alineado con la oferta (desajuste de dominio).")
+        #    for rz in razones:
+        #        print(f"   ❌ {rz}")
+        #    try:
+        #        from modules.requisitos import learn_requirement
+        #        learn_requirement(f"Desajuste de dominio (tech={resumen['tech_ratio']}, exp={resumen['exp_ratio']})")
+        #    except Exception:
+        #        pass
+            
 
     # 2) Coincidencia ponderada (con matching semántico)
     total_numerador = 0.0
@@ -773,7 +825,7 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
         sugerencias.extend(faltantes_top)
 
 
-        # --- Reconciliar requisitos excluyentes vs habilidades ya reconocidas ---
+    # --- Reconciliar requisitos excluyentes vs habilidades ya reconocidas ---
     # Si una habilidad se reconoce en el matching semántico (p.ej. "metodologías ágiles"),
     # no tiene sentido seguir marcándola como "no cumplida" en requisitos.
     if requisitos:
@@ -810,20 +862,54 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
 
     total_pct = round(total * 100, 2)
 
+
+    
+    # Score por habilidades (cálculo actual)
+    score_habilidades = total_pct
+
+    # Score ATS final (regla simple y realista):
+    # - Si hay requisitos excluyentes DUROS incumplidos => NO elegible (0.0)
+    # - Si no, score ATS = score habilidades
+    ats_excluido = bool(requisitos and requisitos.get("alerta") and requisitos.get("no_cumple"))
+    score_ats = 0.0 if ats_excluido else score_habilidades
+    
     # 3) Impresión
     print("\n======================================")
-    print(f"COINCIDENCIA PONDERADA TOTAL: {total_pct:.2f}%")
-    if requisitos and requisitos["alerta"]:
-        print("\n🚫 RESULTADO: Descartado por requisitos excluyentes.")
-        for r in requisitos["no_cumple"]:
+    print(f"COINCIDENCIA POR HABILIDADES: {score_habilidades:.2f}%")
+    print(
+        f"SCORE ATS FINAL (ELEGIBILIDAD): {score_ats:.2f}%"
+        + ("  → NO ELEGIBLE (requisitos excluyentes)" if ats_excluido else "")
+    )
+
+    if ats_excluido:
+        print("\n🚫 RESULTADO: Descartado por requisitos excluyentes (DUROS).")
+        for r in (requisitos.get("no_cumple") or []):
             print(f"   ❌ {r}")
-        print("❌ Aunque por habilidades tu CV tendría un "
-              f"{total_pct:.2f}% de coincidencia, NO pasarías los filtros ATS "
-              "porque no cumples requisitos excluyentes.")
+
+            print("❌ Aunque tu SCORE HABILIDADES es "
+            f"{score_habilidades:.2f}% tu SCORE ATS FINAL es {score_ats:.2f}%. "
+            "Un ATS real podría descartarte por no cumplir requisitos excluyentes básicos del cargo.")
     else:
-        print("🟢 Alta probabilidad de pasar el filtro ATS" if total_pct >= 70 else
-              "🟡 Posible aceptación, pero puede mejorar" if total_pct >= 50 else
-              "🔴 Baja probabilidad de pasar el filtro ATS")
+        print("🟢 Alta probabilidad de pasar el filtro ATS" if score_ats >= 70 else
+        "🟡 Posible aceptación, pero puede mejorar" if score_ats >= 50 else
+        "🔴 Baja probabilidad de pasar el filtro ATS")
+
+        # Mostrar desalineación SOLO si el match global NO es alto
+        if desalineacion.get("activo") and score_ats < 70:
+            print("\n🚫 RESULTADO: Perfil no alineado con la oferta (desajuste de dominio).")
+            for rz in desalineacion.get("razones", []):
+                print(f"   ❌ {rz}")
+                try:
+                    resumen = desalineacion.get("resumen", {}) or {}
+                    learn_requirement(
+                        f"Desajuste de dominio (tech={resumen.get('tech_ratio')}, exp={resumen.get('exp_ratio')})"
+                    )
+                except Exception:
+                    pass
+
+
+  
+
 
     print("\n📊 Detalle por categoría:")
     for cat, d in detalles_categorias.items():
@@ -835,6 +921,17 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
             print(f"   ✅ Reconocidas: {', '.join(d['reconocidas'])}")
         if d["faltantes"]:
             print(f"   🔍 Faltantes  : {', '.join(d['faltantes'])}")
+
+
+    print("\n👤 Reclutador humano vs 🤖 ATS")
+    if ats_excluido:
+        print("🤖 ATS: te descartaría automáticamente por no cumplir requisitos excluyentes.")
+        print("👤 Reclutador: podría revisarte si el rol lo permite (excepción),")
+        print("   pero normalmente pedirá evidencias claras o eliminará el descarte solo si son negociables.")
+    else:
+        print("🤖 ATS: probablemente te dejaría pasar a la siguiente fase (pre-filtro).")
+        print("👤 Reclutador: revisaría evidencias, logros cuantificados y ajuste al contexto del rol.")
+
 
     # 4) Advertencias y recomendaciones
     advertencia = None
@@ -850,10 +947,10 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
         "Sé honesto con tus competencias."
     ]
 
-    # 5) Sugerencias formativas
+    # 5) Sugerencias formativas (desde faltantes por categoría)
     sugerencias_formacion = []
     for cat, d in detalles_categorias.items():
-        falt = d["faltantes"]
+        falt = d.get("faltantes", [])
         if not falt:
             continue
         if cat == "tecnicas":
@@ -863,22 +960,53 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
         else:
             sugerencias_formacion += [f"Capacitación en {s}" for s in falt]
 
+    # 5.b) Formación prioritaria desde requisitos excluyentes (si existen)
+    formacion_prioritaria = []
+    formacion_deseable = []
+
+    if ats_excluido:
+
+        for r in requisitos["no_cumple"]:
+            core = r.split(":", 1)[1].strip() if ":" in r else r.strip()
+            formacion_prioritaria.append(f"Curso/lectura guiada en {core}")
+
+        print("\n🎯 Formación prioritaria (requisitos excluyentes detectados):")
+        for fp in formacion_prioritaria:
+            print(f"- {fp}")
+
+    # 5.c) Formación deseable (no excluyente) desde no_cumple_soft
+    formacion_deseable = []
+    if requisitos and requisitos.get("no_cumple_soft"):
+        for r in requisitos["no_cumple_soft"]:
+            core = r.split(":", 1)[1].strip() if ":" in r else r.strip()
+            formacion_deseable.append(f"Curso sugerido (deseable) en {core}")
+
+        print("\n✨ Formación deseable (nice to have):")
+        for fd in formacion_deseable:
+            print(f"- {fd}")
+
+
     if sugerencias_formacion:
         print("\n🎓 Sugerencias de formación:")
         for sf in sugerencias_formacion:
             print(f"- {sf}")
 
+
     return {
-        "total": total_pct,
-        "nivel": "Excluido" if (requisitos and requisitos["alerta"]) else (
-                 "🟢 Alta" if total_pct >= 70 else "🟡 Media" if total_pct >= 50 else "🔴 Baja"),
+        "total": score_habilidades,   # score por skills
+        "score_ats": score_ats,       # score final considerando requisitos excluyentes
+        "nivel": "Excluido" if ats_excluido else (
+            "🟢 Alta" if score_ats >= 70 else "🟡 Media" if score_ats >= 50 else "🔴 Baja"),
         "categorias": detalles_categorias,
         "sugerencias": sorted(set(sugerencias)),
         "advertencia": advertencia,
         "requisitos_excluyentes": requisitos,
         "recomendaciones": recomendaciones,
         "sugerencias_formacion": sugerencias_formacion,
+        "formacion_prioritaria": formacion_prioritaria,
+        "formacion_deseable": formacion_deseable,
         "desalineacion": desalineacion
+        
     }
 
 # Inicializar mapeo de lemas al cargar

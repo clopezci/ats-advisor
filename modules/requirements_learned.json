@@ -1,5 +1,5 @@
 {
-  "experiencia en sector manufactura": 36,
+  "experiencia en sector manufactura": 38,
   "conocimiento requerido: finanzas corporativas": 17,
   "conocimiento requerido: excel avanzado": 23,
   "conocimiento requerido: tesorería": 21,
@@ -31,7 +31,7 @@
   "título/licencia en medicina (médico/médico general) requerido": 2,
   "conocimiento requerido: técnicas de venta consultiva": 2,
   "conocimiento requerido: scoring y plataformas comerciales/crediticias": 2,
-  "conocimiento requerido: portafolio banca personal/particular": 2,
+  "conocimiento requerido: portafolio banca personal/particular": 4,
   "conocimiento requerido: auditoría en salud / salud pública / epidemiología": 10,
   "conocimiento requerido: proyectos ciberseguridad": 2,
   "desajuste de dominio (tech=1.0, exp=0.0)": 1,
@@ -69,5 +69,19 @@
   "conocimiento requerido: inglés b": 2,
   "conocimiento requerido: sap": 14,
   "conocimiento requerido: gestión de proyectos": 8,
-  "desajuste de dominio (tech=0.333, exp=0.167)": 1
+  "desajuste de dominio (tech=0.333, exp=0.167)": 1,
+  "conocimiento requerido: identificar diseñar e implementar iniciativas": 8,
+  "conocimiento requerido: proponer ajustes perfiles cargo requeridos": 8,
+  "conocimiento requerido: diseñar rediseñar estructuras organizacionales que": 12,
+  "conocimiento requerido: business intelligence bi": 12,
+  "conocimiento requerido: excel intermedio": 12,
+  "conocimiento requerido: bpm": 12,
+  "conocimiento requerido: conocimiento formal notación bpmn": 12,
+  "conocimiento requerido: diseño organizacional": 8,
+  "conocimiento requerido: horarios flexibles": 6,
+  "conocimiento requerido: póliza salud vida": 6,
+  "conocimiento requerido: descuentos marcas aliadas": 6,
+  "conocimiento requerido: auxilios estudiantiles": 6,
+  "conocimiento requerido: manejo recursos educativos digitales": 2,
+  "experiencia mínima requerida: 15 años en logística/cadena de suministro": 2
 }

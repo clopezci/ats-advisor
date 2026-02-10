@@ -1038,6 +1038,9 @@ def evaluate_requirements(texto_oferta: str, texto_cv: str):
 
     cumple: List[str] = []
     no_cumple: List[str] = []
+    no_cumple_soft: List[str] = []  # (deseables / blandos)
+    alerta = False                  # (se recalcula al final)
+
 
     def any_in(text, terms):
         return any((_nfkc(t).lower() in text) for t in (terms or []))
@@ -1356,28 +1359,18 @@ def evaluate_requirements(texto_oferta: str, texto_cv: str):
                         no_cumple.append(f"Nivel de {base.lower()} no evidenciado")
             continue
 
-        # ===== Profesión =====
-        if rtype == "profession":
-            if not any_in(cv, cv_need):
-                no_cumple.append(rule["label"])
-            continue
-
-        # ===== Sectores / Conocimientos / Herramientas / Certs =====
         if not any_in(cv, cv_need):
-            # Intento genérico de ver si el dominio del requisito está cubierto de forma semántica
+            # intentar semántico
             if _semantic_requirement_match(rule, cv):
-                # Lo damos por cumplido aunque no aparezca la frase exacta de cv_any
+                continue
+            no_cumple.append(rule["label"])
+        else:
+            # Si el CV lo evidencia, NO es incumplimiento.
+            # registrar como "cumple" cuando esté en contexto de requisito:
+            if _is_requirement_context(oferta, trig):
+                cumple.append(rule["label"])
                 continue
 
-            # Si tampoco pasa el filtro semántico, se considera incumplido
-            no_cumple.append(rule["label"])
-
-        else:
-            # Solo marcamos como requisito excluyente si el término aparece
-            # en un contexto claramente de "requisito" en la oferta.
-           #if _is_requirement_context(oferta, trig):
-            #    no_cumple.append(rule["label"])
-            pass
 
     # 3) Captura libre: viñetas/prefijos → CANONICALIZACIÓN
     prefixes = [ _nfkc(p).lower() for p in (cfg.get("knowledge_prefixes", []) or []) ]
@@ -1398,58 +1391,106 @@ def evaluate_requirements(texto_oferta: str, texto_cv: str):
                         extracted.append(body)
                     break
 
-        # 3b) Cabeceras de conocimiento:
-        #     - Capturar contenidos en la MISMA línea después de ':' (ej: "Conocimientos: X, Y, Z")
-        #     - Y luego, si existen, viñetas en las líneas siguientes.
+        # 3b) Cabeceras de conocimiento con "modo" (hard/soft/skip)
+        extracted_hard = []
+        extracted_soft = []
+
+        def _push(area_txt: str, mode: str):
+            area_txt = _nfkc(area_txt).lower().strip(" .:;")
+            if len(area_txt) < 3:
+                return
+            if mode == "soft":
+                extracted_soft.append(area_txt)
+            elif mode == "hard":
+                extracted_hard.append(area_txt)
+
+        mode = None  # None / "hard" / "soft" / "skip"
+
+        hard_headers = {
+            "requisitos", "requerimientos", "conocimientos requeridos", "requerido", "requerida"
+        }
+        soft_headers = {
+            "conocimientos deseables", "deseables", "nice to have", "plus", "será un plus", "sera un plus"
+        }
+        skip_headers = {
+            "te ofrecemos", "ofrecemos", "beneficios", "beneficio", "lo que ofrecemos", "lo que ofrecemos a cambio", "lo que ofrecemos a cambio", "qué ofrecemos", "que ofrecemos"
+            "oferta", "compensacion", "compensación", "salario", "para ti", "lo que tenemos para ti", "lo que tenemos para usted"
+        }
+
         for i, raw in enumerate(lines):
             stripped = raw.strip()
             low = _nfkc(stripped.rstrip(":")).lower()
-            if any(h in low for h in headers):
-                # --- NUEVO: contenidos en la misma línea tras ':' ---
-                if ":" in stripped:
-                    after = stripped.split(":", 1)[1].strip()
-                    if after:
-                        # Partir por comas y por ' y '
-                        parts = re.split(r",| y ", after)
-                        for p in parts:
-                            p = _nfkc(p).lower().strip(" .:;")
-                            if len(p) >= 3:
-                                extracted.append(p)
 
-                # --- EXISTENTE: viñetas en líneas siguientes ---
+            # Cambios de modo por cabecera
+            if any(h in low for h in skip_headers):
+                mode = "skip"
+                continue
+            if any(h in low for h in soft_headers):
+                mode = "soft"
+            elif any(h in low for h in hard_headers) or any(h in low for h in headers):
+                # headers incluye "requisitos/requerimientos/otras habilidades", etc.
+                # Por defecto, esto es duro
+                mode = "hard"
+
+            # Si está en modo skip, ignoramos hasta que aparezca otra cabecera relevante
+            if mode == "skip":
+                continue
+
+            # Capturar contenidos en la misma línea después de ':'
+            if ":" in stripped and mode in {"hard", "soft"}:
+                after = stripped.split(":", 1)[1].strip()
+                if after:
+                    parts = re.split(r",| y ", after)
+                    for p in parts:
+                        _push(p, mode)
+
+            # Capturar viñetas siguientes SOLO si estamos en hard/soft
+            # (se mantiene el comportamiento: leer bloque de bullets después de cabecera)
+            if mode in {"hard", "soft"} and (any(h in low for h in headers) or any(h in low for h in hard_headers) or any(h in low for h in soft_headers)):
                 j = i + 1
                 while j < len(lines):
                     t = lines[j].rstrip()
                     if not t:
                         break
-                    if any(h in _nfkc(t).lower() for h in headers):
+
+                    t_low = _nfkc(t.rstrip(":")).lower()
+
+                    # Si aparece otra cabecera, termina el bloque
+                    if any(h in t_low for h in headers) or any(h in t_low for h in hard_headers) or any(h in t_low for h in soft_headers) or any(h in t_low for h in skip_headers):
                         break
+
                     if t and (t[0:1] in bullets):
                         token = _nfkc(t.lstrip("".join(bullets)).strip(" .:;")).lower()
                         if token:
-                            extracted.append(token)
+                            _push(token, mode)
                     else:
-                        # si deja de haber viñetas, detenemos el bloque
                         if len(t.split()) < 2:
                             break
                     j += 1
 
 
-        # Canonicalizar y validar
-        canon = []
-        for area in extracted:
-            short = _canonicalize_requirement(area)
-            # filtrar ruido genérico demasiado corto/largo
-            if not short or len(short) < 3:
-                continue
-            if len(short.split()) > 7:
-                short = " ".join(short.split()[:7])
-            canon.append(short)
 
-        # chequeo en CV (tolerante)
-        for tag in canon:
+        # Canonicalizar y validar
+        def _canon_list(arr):
+            out = []
+            for area in arr:
+                short = _canonicalize_requirement(area)
+                if not short or len(short) < 3:
+                    continue
+                if len(short.split()) > 7:
+                    short = " ".join(short.split()[:7])
+                out.append(short)
+            return out
+
+        canon_hard = _canon_list(extracted_hard)
+        canon_soft = _canon_list(extracted_soft)
+
+        # hard: excluye
+        for tag in canon_hard:
             if not _cv_contains(cv, tag):
                 no_cumple.append(f"Conocimiento requerido: {tag}")
+
+
 
     alerta = True if no_cumple else False
     if not alerta:
@@ -1462,4 +1503,9 @@ def evaluate_requirements(texto_oferta: str, texto_cv: str):
     except Exception:
         pass
 
-    return {"cumple": cumple, "no_cumple": no_cumple, "alerta": alerta}
+    return {
+    "cumple": cumple,
+    "no_cumple": no_cumple,
+    "no_cumple_soft": no_cumple_soft,
+    "alerta": alerta
+}

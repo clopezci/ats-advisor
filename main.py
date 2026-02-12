@@ -159,7 +159,7 @@ def limpiar_consola():
 def mostrar_menu():
     print("===============================================")
     print("   🧠 ANALIZADOR DE CV VS OFERTAS LABORALES   ")
-    print(f"      ATS ADVISOR {APP_VERSION} - PROYECTO TFM (VIU 2025)")
+    print(f"  ATS ADVISOR {APP_VERSION} - PROYECTO TFM-TFT")
     print("===============================================")
     print("   Desarrollado por Carlos Emilio López          ")
     print("   Contacto: clopezci@hotmail.com                ")

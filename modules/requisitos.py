@@ -654,10 +654,10 @@ def load_rules():
             "label": "Conocimiento requerido: portafolio banca personal/particular",
             "type": "knowledge",
             "trigger_any": [
-                "banca personal", "banca de personas", "retail banking", "particular", "consumo"
+                "banca personal", "banca de personas", "retail banking"
             ],
             "cv_any": [
-                "banca personal", "retail banking", "particular", "consumo"
+                "banca personal", "retail banking"
             ]
         })
 

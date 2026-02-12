@@ -2,7 +2,7 @@
 #  ATS Advisor - Proyecto de Fin de Máster (TFM)
 #  Universidad Internacional de Valencia (VIU)
 #  Autor: Carlos Emilio López  (clopezci@hotmail.com)
-#  Año: 2025
+#  Año: 2025-2026
 # ----------------------------------------------------------
 #  Descripción:
 #  ATS Advisor es una herramienta educativa de código abierto
@@ -12,7 +12,7 @@
 #
 #  Propiedad Intelectual:
 #  © 2025 Universidad Internacional de Valencia (VIU)
-#  © 2025 Carlos Emilio López
+#  © 2025-2026 Carlos Emilio López
 #  Licencia de uso: Código abierto con fines educativos,
 #  investigación, y mejora libre bajo reconocimiento de autoría.
 #
@@ -35,6 +35,7 @@ import re
 import unicodedata
 import spacy
 
+from modules import requisitos
 from modules.requisitos import evaluate_requirements, learn_requirement
 from modules.habilidades import (
     tech_skills, soft_skills, exp_terms,
@@ -79,17 +80,28 @@ SIM_MARGIN = 0.05
 
 # ✅ Whitelist: tokens sueltos técnicos (tecnologías/herramientas)
 WHITELIST_TECH_TOKENS = {
-    "python","javascript","java","sql","aws","azure","gcp","sap","crm","salesforce","hubspot",
+    "python","javascript","java","sql","aws","azure","gcp","sap","crm", "n8n","salesforce","hubspot",
     "okrs","okr","kpi","nps","sla","docker","kubernetes","react","nodejs","tableau","pandas",
     "git","linux","cloud","fintech","looker","studio","datastudio","etl","power","bi","tensorflow",
-    "nube","ia","iot","ciberseguridad","seguridad","devops","powerbi",
-    "photoshop","illustrator","indesign","premiere","lightroom","after","effects",
-    "aftereffects","figma","canva","davinci","resolve","audition","media","encoder"
+    "nube","ia","iot","ciberseguridad","seguridad","devops","powerbi", "airflow", "snowflake", 
+    "hadoop", "spark", "scala", "ruby", "php", "angular","keras","pytorch","matlab","sas","mongodb",
+    "tensorflow","nube","ia","iot","ciberseguridad","seguridad","devops","powerbi", "airflow", "snowflake",
+    "RV","RA","realidad virtual","realidad aumentada","reaction","flutter","swift","kotlin",
+    "django","flask","spring","laravel","symfony","wordpress","react","angular","vue","nextjs","nuxtjs",
+    "zendesk","freshdesk","intercom", "regtech", "regulatory technology", "legaltech", "legal technology",
+    "Sap","Oracle","Workday","ServiceNow","Jira","Confluence", "lean","six sigma","scrum","kanban",
+    "S&OP","Kaizen","5S","just in time","JIT","total quality management","TQM",
+    "lean manufacturing","manufactura esbelta","gestión de la cadena de suministro","supply chain management",
+    "moodle", "tic", "tac", "tep", "lms", "e-learning", "elearning", "blackboard", "canvas", "schoology",
+    "autocad","solidworks","revit","sketchup","archicad","vray","lumion",
+    "sap","crm","looker","studio","datastudio","etl","powerbi","power bi",
+    "photoshop","illustrator","indesign","premiere","lightroom","aftereffects",
+    "aftereffects", "figma", "canva", "davinci", "resolve", "audition", "media", "encoder",
     
     #Creativo/audiovisual
     "adobe","final","cut","pro","audacity","gimp","blender","cinema","4d","autodesk","maya","photoshop",
     "lightroom","aftereffects","after","effects","illustrator","indesign","premiere","davinci","resolve",
-    "audition","media","encoder"
+    "audition","media","encoder", "figma", "canva"
 }
 
 # ❌ Negocio/operación sueltos
@@ -126,7 +138,11 @@ WHITELIST_TECH_PHRASES = {
     "orquestacion de proyectos","orquestación de proyectos",
     "estrategia tecnologica","estrategia tecnológica",
     "innovacion","innovación",
-    "okr","okrs",
+    "okr","okrs","recursos educativos digitales",
+    "herramientas de inteligencia artificial aplicadas a la educación",
+    "inteligencia artificial aplicada a la educación",
+    "plataforma moodle"
+
 
     # Creativo/audiovisual
     "adobe creative suite","produccion audiovisual","producción audiovisual",
@@ -136,6 +152,8 @@ WHITELIST_TECH_PHRASES = {
     "manejo de camara","manejo de cámara","iluminacion","iluminación",
     "diseno grafico","diseño gráfico","motion graphics"
 }
+
+
 
 # 🔎 Cabeceras/secciones típicas
 SECTION_HEADERS = (
@@ -259,6 +277,131 @@ def _contains_phrase(texto: str, frase: str) -> bool:
     return re.search(patron, texto, flags=re.IGNORECASE) is not None
 
 
+# ----------------------------
+# VALIDACIÓN ACADÉMICA ROBUSTA (para requisitos tipo "ingeniería..., informática o afines", "MBA o afines")
+# ----------------------------
+
+ACADEMIC_TRIGGER = {
+    "estudios", "profesional", "pregrado", "grado", "ingenieria", "ingeniería",
+    "informatica", "informática", "especializacion", "especialización",
+    "maestria", "maestría", "master", "máster", "mba", "posgrado", "postgrado"
+}
+
+# Equivalencias escalables: cada clave representa un "concepto" y lista variantes aceptables en CV
+ACADEMIC_EQUIV = {
+    
+    "ingenieria de sistemas": {
+        "ingenieria de sistemas", "ingeniería de sistemas",
+        "ingeniero de sistemas", "ingeniera de sistemas",
+        "ingeniero sistemas", "ingeniera sistemas",
+        "ingenieria sistemas", "ingeniería sistemas",
+        "ing de sistemas", "ing. de sistemas",
+        "ing sistemas", "ing. sistemas",
+        "ing en sistemas", "ing. en sistemas",
+        "sistemas"  # (lo dejamos porque en este caso lo usan como afín típico)
+    },
+
+    "informatica": {
+        "informatica", "informática",
+        # Afines que deben aceptar cuando piden "informática o afines"
+        "ingenieria de sistemas", "ingeniería de sistemas",
+        "ingeniero de sistemas", "ingeniera de sistemas",
+        "ingeniero sistemas", "ingeniera sistemas",
+        "ing de sistemas", "ing. de sistemas",
+        "ing sistemas", "ing. sistemas",
+        "sistemas",
+        # otros afines típicos
+        "ingenieria de software", "ingeniería de software",
+        "ingenieria informatica", "ingeniería informática"
+    },
+
+    "mba": {
+        "mba", "master en administracion", "máster en administración",
+        "maestria en administracion", "maestría en administración",
+        "master of business administration"
+    },
+    "arquitectura empresarial": {"arquitectura empresarial"},
+    "transformacion digital": {"transformacion digital", "transformación digital"},
+    "gestion de proyectos": {"gestion de proyectos", "gestión de proyectos", "project management"},
+    "sistemas de informacion": {"sistemas de informacion", "sistemas de información"},
+}
+
+def _norm_acad(x: str) -> str:
+    return normalizar_para_nlp((x or "").lower())
+
+def _split_academic_options(core: str) -> list:
+    """
+    Convierte: "ingeniería de sistemas, informática o afines"
+    en opciones: ["ingeniería de sistemas", "informática"]
+    """
+    c = _norm_acad(core)
+    c = re.sub(r"\b(o\s+afines|y\s+afines|afines)\b", "", c).strip()
+    # separadores típicos
+    parts = re.split(r"[;,/]| y | e | o ", c)
+    opts = []
+    for p in parts:
+        p = p.strip()
+        if len(p) >= 3:
+            opts.append(p)
+            # quitar duplicados manteniendo orden
+            out = []
+            seen = set()
+            for o in opts:
+                if o not in seen:
+                    out.append(o)
+                    seen.add(o)
+            return out
+
+def _cv_has_any(cv_norm: str, patterns: set) -> bool:
+    """
+    Busca variantes en el CV normalizado. Usa contains_phrase para tolerancia a saltos/puntuación.
+    """
+    if not cv_norm:
+        return False
+    for p in patterns:
+        if _contains_phrase(cv_norm, _norm_acad(p)):
+            return True
+    return False
+
+def _cumple_requisito_academico(tag: str, texto_cv: str) -> bool:
+    """
+    Decide si un tag de requisitos 'duros' realmente se cumple por formación (estudios),
+    usando equivalencias y opciones tipo "X, Y o afines".
+    """
+    if not tag or not texto_cv:
+        return False
+
+    tag_norm = _norm_acad(tag)
+    cv_norm  = _norm_acad(texto_cv)
+
+    # Solo aplicar si el tag parece académico
+    if not any(k in tag_norm for k in ACADEMIC_TRIGGER):
+        return False
+
+    # Extraer "core" después de ":" si existe
+    core = tag_norm.split(":", 1)[1].strip() if ":" in tag_norm else tag_norm
+
+    # 1) Si el core contiene opciones ("..., ... o afines"), evaluamos por opciones
+    opciones = _split_academic_options(core)
+    if opciones:
+        for opt in opciones:
+            # Si opt coincide con una clave del diccionario, usamos su set de equivalencias
+            key = opt
+            if key in ACADEMIC_EQUIV:
+                if _cv_has_any(cv_norm, ACADEMIC_EQUIV[key]):
+                    return True
+                else:
+                    # Si no está mapeado, intentamos búsqueda literal tolerante
+                    if _contains_phrase(cv_norm, opt):
+                        return True
+
+                    # 2) Fallback: si menciona una clave del diccionario dentro del core
+                    for key, variants in ACADEMIC_EQUIV.items():
+                        if key in core:
+                            if _cv_has_any(cv_norm, variants):
+                                return True
+
+                            return False
 
 
 
@@ -354,6 +497,19 @@ def categorizar_texto(texto):
 
     # 0) Detección textual conservadora (solo FRASES whitelist) usando patrón tolerante
     scan_text = normalizar_para_nlp(texto_filtrado.lower())
+    
+    # 0.b) Detección literal para tokens técnicos (incluye alfanuméricos)
+    TOKENS_TECNICOS_LITERALES = {"python", "sql", "aws", "azure", "gcp", "n8n", "salesforce", 
+                                 "hubspot", "docker", "kubernetes", "react", "nodejs", "tableau", 
+                                 "pandas","moodle", "tic", "tac", "tep", "lms", "e-learning", 
+                                 "elearning", "blackboard", "canvas", "schoology",}
+
+    for tok in TOKENS_TECNICOS_LITERALES:
+        if re.search(rf"\b{re.escape(tok)}\b", scan_text, flags=re.IGNORECASE):
+            categorias["tecnicas"].add(tok)
+
+
+    
     for fr in WHITELIST_TECH_PHRASES:
         if _contains_phrase(scan_text, fr):
             categorias["tecnicas"].add(fr)
@@ -476,9 +632,18 @@ def categorizar_texto(texto):
             else:
                 categorias[mejor_cat].add(lemma)
 
-    # ---- DEPURACIÓN FINAL: Técnicas (solo compuestos o tokens válidos) ----
+ 
+    # ---- DEPURACIÓN FINAL: Técnicas (robusta ante caracteres invisibles / puntuación) ----
+    def _norm_token_skill(x: str) -> str:
+        x = normalizar_para_nlp((x or "").lower())
+        # quitar basura alrededor pero conservar letras/números/guion
+        x = re.sub(r"[^\w\-]+", "", x, flags=re.UNICODE)
+        return x.strip()
+
     def _es_tecnologia_valida_unitaria(t: str) -> bool:
-        t = (t or "").strip().lower()
+        t = _norm_token_skill(t)
+        if not t:
+            return False
         if t in TECH_GENERIC_BLOCK:
             return False
         if t in WHITELIST_TECH_TOKENS:
@@ -488,16 +653,27 @@ def categorizar_texto(texto):
         return False
 
     depuradas = set()
-    for k in categorias["tecnicas"]:
-        kt = k.strip().lower()
+    # iteramos sobre una COPIA para evitar efectos por reasignación
+    for k in (categorias.get("tecnicas") or set()):
+        kt_raw = (k or "").strip()
+        kt = normalizar_para_nlp(kt_raw.lower())
+
+        # si es frase o contiene guion, se conserva “como frase”
         if " " in kt or "-" in kt:
             depuradas.add(kt)
-        elif _es_tecnologia_valida_unitaria(kt):
-            depuradas.add(kt)
+            continue
+
+        # si es token unitario, normalizamos fuerte (n8n, n8n. n8n\u200b etc funcionen)
+        kt_unit = _norm_token_skill(kt)
+        if _es_tecnologia_valida_unitaria(kt_unit):
+            depuradas.add(kt_unit)
+            
+            
+    # ✅ asignación UNA sola vez, al final
     categorias["tecnicas"] = depuradas
 
 
-        # ---- DEPURACIÓN FINAL: Blandas (eliminar frases claramente contextuales) ----
+    # ---- DEPURACIÓN FINAL: Blandas (eliminar frases claramente contextuales) ----
     dep_blandas = set()
     for k in categorias["blandas"]:
         kl = (k or "").strip().lower()
@@ -524,6 +700,78 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
     y para requisitos libres demasiado verborrágicos.
     """
     res = evaluate_requirements(texto_oferta, texto_cv)
+    
+    
+    print("DEBUG: entré a detectar_requisitos_excluyentes_inteligente")
+    print("DEBUG res.no_cumple =", (res.get("no_cumple") if res else None))
+
+    
+    
+    # --- Parche robusto: equivalencias académicas NO deben excluir si el CV las cumple ---
+    def _norm_acad(s: str) -> str:
+        # limpiar_texto() baja a minúsculas, quita tildes y signos.
+        return limpiar_texto(normalizar_para_nlp(s or ""))
+
+    ACADEMIC_EQUIV = {
+        "informatica": {
+            "ingenieria de sistemas", "ingeniería de sistemas",
+            "ingenieria informatica", "ingeniería informática",
+            "ciencias de la computacion", "ciencias de la computación",
+            "computacion", "computación",
+            "sistemas de informacion", "sistemas de información",
+            "ingenieria de software", "ingeniería de software",
+            "ingeniero de sistemas", "ingeniera de sistemas",
+            "ingeniero sistemas", "ingeniera sistemas",
+            "ing de sistemas", "ing. de sistemas",
+            "ing sistemas", "ing. sistemas",
+            "ing en sistemas", "ing. en sistemas",
+            "sistemas","especialista", "especialización"
+
+        },
+        "mba": {
+            "mba", "maestria", "maestría", "master en administracion", "máster en administración",
+            "maestria en administracion", "maestría en administración",
+            "master of business administration"
+        }
+    }
+
+    def _cumple_academico_por_equivalencia(tag: str, cv_text: str) -> bool:
+        t = _norm_acad(tag)
+        cvn = _norm_acad(cv_text)
+
+        core = t.split(":", 1)[1].strip() if ":" in t else t
+
+        if "informat" in core:
+            return any(_contains_phrase(cvn, _norm_acad(v)) for v in ACADEMIC_EQUIV["informatica"])
+
+        if "mba" in core:
+            return any(_contains_phrase(cvn, _norm_acad(v)) for v in ACADEMIC_EQUIV["mba"])
+
+        return False
+
+    # ✅ Parche académico (APLICA cambios al final del loop, no dentro)
+    try:
+        if res and res.get("no_cumple"):
+            nuevos_duros = []
+            movidos_a_soft = list(res.get("no_cumple_soft") or [])
+
+            for tag in (res.get("no_cumple") or []):
+                if _cumple_academico_por_equivalencia(tag, texto_cv):
+                    continue
+                nuevos_duros.append(tag)
+
+            # ✅ Estas asignaciones van FUERA del for (se aplican una sola vez)
+            res["no_cumple"] = nuevos_duros
+            res["no_cumple_soft"] = movidos_a_soft
+            res["alerta"] = bool(nuevos_duros)
+
+            print("DEBUG parche académico aplicado. no_cumple:", res.get("no_cumple"))
+            print("DEBUG parche académico aplicado. no_cumple_soft:", res.get("no_cumple_soft"))
+            
+    except Exception as e:
+        print("DEBUG parche académico error:", e)
+
+    
 
     # Aprendizaje de etiquetas fallidas
     try:
@@ -567,10 +815,46 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
             res["no_cumple_soft"] = (res.get("no_cumple_soft") or []) + suaves
             res["no_cumple"] = duros
             res["alerta"] = bool(duros)
+            
+    except Exception:
+        pass
+            
+    # --- Parche: NO aceptar requisitos que no estén realmente en el texto de la oferta ---
+    # Esto evita "fantasmas" (ej: banca personal) que pueden venir de reglas aprendidas o genéricas.
+    try:
+        if res and (res.get("no_cumple") or res.get("no_cumple_soft")):
+            oferta_norm = normalizar_para_nlp((texto_oferta or "").lower())
+
+            def _core(txt: str) -> str:
+                t = (txt or "").strip()
+                if ":" in t:
+                    t = t.split(":", 1)[1].strip()
+                return normalizar_para_nlp(t.lower())
+
+            def _esta_en_oferta(core: str) -> bool:
+                # Tolerante: busca la frase "core" dentro de la oferta, soportando espacios/puntuación/saltos
+                return bool(core) and _contains_phrase(oferta_norm, core)
+
+            nuevos_duros = []
+            movidos_a_soft = list(res.get("no_cumple_soft") or [])
+
+            for tag in (res.get("no_cumple") or []):
+                core = _core(tag)
+
+                # Si no aparece en la oferta, NO puede ser requisito duro.
+                if not _esta_en_oferta(core):
+                    movidos_a_soft.append(tag)
+                else:
+                    nuevos_duros.append(tag)
+
+            res["no_cumple"] = nuevos_duros
+            res["no_cumple_soft"] = movidos_a_soft
+            res["alerta"] = bool(nuevos_duros)
 
     except Exception:
         pass
-
+    
+    
     return res
 
 
@@ -581,13 +865,26 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
 
 def _term_formativo_valido(t):
     t = (t or "").strip().lower()
-    if not t or len(t) < 3:
+    if not t or len(t) < 2:
         return False
-    if re.fullmatch(r"[a-záéíóúñü\s\-/\.]+", t) is None:
+
+    # ✅ Si está en whitelist técnica, SIEMPRE es válido como "faltante formativo"
+    t_norm = normalizar_para_nlp(t)
+    t_unit = re.sub(r"[^\w\-]+", "", t_norm, flags=re.UNICODE).strip()
+
+    if t_unit in WHITELIST_TECH_TOKENS:
+        return True
+
+    # ✅ Aceptar tokens alfanuméricos típicos de tecnología: n8n, gpt4, 3cx, etc.
+    # (letras/números/guion/punto/slash/espacios)
+    if re.fullmatch(r"[a-z0-9áéíóúñü\s\-/\.]+", t_norm) is None:
         return False
-    if (t in GENERIC_NOUNS) or (t in ABSTRACT_TERMS):
+
+    if (t_norm in GENERIC_NOUNS) or (t_norm in ABSTRACT_TERMS):
         return False
-    return _skillness(t) >= SIM_THRESHOLD
+
+    return _skillness(t_norm) >= SIM_THRESHOLD
+
 
 # ----------------------------
 # DESALINEACIÓN GLOBAL (independiente de reglas)
@@ -646,6 +943,18 @@ VERB_EQUIV = {
     "construir": {"construir", 	"construí"	,	"construcción"	,	"desarrollado"	,	"creado"	,	"generado"	,	"implementado"}
 }
 
+# ---- Equivalencias bidireccionales (para que "liderazgo" ↔ "liderar") ----
+def _build_equiv_bidir(equiv: dict) -> dict:
+    bidir = {k: set(v) for k, v in equiv.items()}
+    for k, vs in equiv.items():
+        for v in vs:
+            bidir.setdefault(v, set()).add(k)
+            # También conectamos entre sí los sinónimos del mismo grupo
+            bidir[v].update(vs)
+    return bidir
+
+EQUIV_BIDIR = _build_equiv_bidir(VERB_EQUIV)
+
 
 def _soft_match(oferta_items: set,
                 cv_items: set,
@@ -675,6 +984,19 @@ def _soft_match(oferta_items: set,
 
     for o in (oferta_items or set()):
         o_norm = (o or "").strip().lower()
+        
+        # Normalizar equivalencias: si el término de oferta es "liderazgo", lo pasamos a su forma lema si existe
+        try:
+            o_doc_tmp = nlp(o_norm)
+            if o_doc_tmp and o_doc_tmp[0].is_alpha:
+                o_lemma_tmp = o_doc_tmp[0].lemma_.lower()
+                # Si el lemma existe en nuestro mapa bidireccional, mantenemos lemma como llave de comparación
+                if o_lemma_tmp in EQUIV_BIDIR:
+                    o_norm = o_lemma_tmp
+        except Exception:
+            pass
+
+        
         if not o_norm:
             continue
 
@@ -692,7 +1014,7 @@ def _soft_match(oferta_items: set,
 
             # 1.b) Fallback por lema y equivalencias (especialmente útil para VERBOS)
             # Si o_norm es una sola palabra (tipo "analizar") lo tratamos como posible verbo/acción.
-            if (not matched) and (cv_doc is not None) and (len(o_norm.split()) == 1):
+            if (not matched) and (cv_doc is not None) and (len(o_norm.split()) <= 3):
                 try:
                     o_doc = nlp(o_norm)
                     if o_doc and o_doc[0].is_alpha:
@@ -703,7 +1025,7 @@ def _soft_match(oferta_items: set,
                             matched = True
                         else:
                             # b) equivalencias manuales verbo->sustantivo/variantes
-                            equivs = VERB_EQUIV.get(o_lemma, set())
+                            equivs = EQUIV_BIDIR.get(o_lemma, set())
                             if any(e in cv_norm for e in equivs):
                                 matched = True
                 except Exception:
@@ -713,6 +1035,17 @@ def _soft_match(oferta_items: set,
 
             for c in (cv_items or set()):
                 c_norm = (c or "").strip().lower()
+                
+                try:
+                    c_doc_tmp = nlp(c_norm)
+                    if c_doc_tmp and c_doc_tmp[0].is_alpha:
+                        c_lemma_tmp = c_doc_tmp[0].lemma_.lower()
+                        if c_lemma_tmp in EQUIV_BIDIR:
+                            c_norm = c_lemma_tmp
+                except Exception:
+                    pass
+
+                
                 if not c_norm:
                     continue
 
@@ -855,27 +1188,37 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
 
 
 
-    if total_denominador > 0:
-        total = total_numerador / total_denominador
+    # 3) Impresión
+    # detectar si la oferta no tiene skills estructuradas
+    oferta_sin_skills = all(
+        (detalles_categorias[cat]["sin_reqs"] for cat in detalles_categorias)
+    )
+
+    # Score por habilidades:
+    # - si no hay skills en la oferta => NO evaluable (N/A), no lo inflamos a 100%
+    if oferta_sin_skills:
+        score_habilidades = 0.0
+        score_habilidades_label = "N/A (oferta sin skills explícitas detectables)"
     else:
-        total = 1.0
+        # aquí se calcula el score real
+        total = total_numerador / total_denominador if total_denominador > 0 else 0.0
+        score_habilidades = round(total * 100, 2)
+        score_habilidades_label = f"{score_habilidades:.2f}%"
 
-    total_pct = round(total * 100, 2)
-
-
-    
-    # Score por habilidades (cálculo actual)
-    score_habilidades = total_pct
-
-    # Score ATS final (regla simple y realista):
+    # Score ATS final:
     # - Si hay requisitos excluyentes DUROS incumplidos => NO elegible (0.0)
     # - Si no, score ATS = score habilidades
-    ats_excluido = bool(requisitos and requisitos.get("alerta") and requisitos.get("no_cumple"))
+    ats_excluido = bool(requisitos and requisitos.get("alerta") and (requisitos.get("no_cumple") or []))
     score_ats = 0.0 if ats_excluido else score_habilidades
-    
-    # 3) Impresión
+
     print("\n======================================")
-    print(f"COINCIDENCIA POR HABILIDADES: {score_habilidades:.2f}%")
+
+    if oferta_sin_skills:
+        print("ℹ️ Nota: No se detectaron requerimientos estructurados (skills) en la oferta;")
+        print("   el análisis se apoya principalmente en requisitos/exclusiones y lectura humana.")
+
+    print(f"COINCIDENCIA POR HABILIDADES: {score_habilidades_label}")
+
     print(
         f"SCORE ATS FINAL (ELEGIBILIDAD): {score_ats:.2f}%"
         + ("  → NO ELEGIBLE (requisitos excluyentes)" if ats_excluido else "")
@@ -886,31 +1229,41 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
         for r in (requisitos.get("no_cumple") or []):
             print(f"   ❌ {r}")
 
-            print("❌ Aunque tu SCORE HABILIDADES es "
+        # ✅ ESTE PRINT VA FUERA DEL FOR (solo una vez)
+        print(
+            "❌ Aunque tu SCORE HABILIDADES es "
             f"{score_habilidades:.2f}% tu SCORE ATS FINAL es {score_ats:.2f}%. "
-            "Un ATS real podría descartarte por no cumplir requisitos excluyentes básicos del cargo.")
+            "Un ATS real podría descartarte por no cumplir requisitos excluyentes básicos del cargo."
+        )
+
     else:
-        print("🟢 Alta probabilidad de pasar el filtro ATS" if score_ats >= 70 else
-        "🟡 Posible aceptación, pero puede mejorar" if score_ats >= 50 else
-        "🔴 Baja probabilidad de pasar el filtro ATS")
+        # Si la oferta no tiene skills, no calificamos “alta/media/baja” porque no es evaluable
+        if oferta_sin_skills:
+            print("🟡 Resultado: No evaluable por skills (oferta poco estructurada).")
+            print("   Recomendación: interpretar manualmente requisitos, experiencia y evidencias del CV.")
+        else:
+            print(
+                "🟢 Alta probabilidad de pasar el filtro ATS" if score_ats >= 70 else
+                "🟡 Posible aceptación, pero puede mejorar" if score_ats >= 50 else
+                "🔴 Baja probabilidad de pasar el filtro ATS"
+            )
 
-        # Mostrar desalineación SOLO si el match global NO es alto
-        if desalineacion.get("activo") and score_ats < 70:
-            print("\n🚫 RESULTADO: Perfil no alineado con la oferta (desajuste de dominio).")
-            for rz in desalineacion.get("razones", []):
-                print(f"   ❌ {rz}")
-                try:
-                    resumen = desalineacion.get("resumen", {}) or {}
-                    learn_requirement(
-                        f"Desajuste de dominio (tech={resumen.get('tech_ratio')}, exp={resumen.get('exp_ratio')})"
-                    )
-                except Exception:
-                    pass
+            # Mostrar desalineación SOLO si el match global NO es alto
+            if desalineacion.get("activo") and score_ats < 70:
+                print("\n🚫 RESULTADO: Perfil no alineado con la oferta (desajuste de dominio).")
+                for rz in desalineacion.get("razones", []):
+                    print(f"   ❌ {rz}")
 
+                    # ✅ TRY FUERA DEL FOR (una sola vez)
+                    try:
+                        resumen = desalineacion.get("resumen", {}) or {}
+                        learn_requirement(
+                            f"Desajuste de dominio (tech={resumen.get('tech_ratio')}, exp={resumen.get('exp_ratio')})"
+                        )
+                    except Exception:
+                        pass
 
-  
-
-
+    # ✅ Todo esto debe ejecutarse SIEMPRE, por eso va fuera del if/else anterior
     print("\n📊 Detalle por categoría:")
     for cat, d in detalles_categorias.items():
         if d.get("sin_reqs"):
@@ -921,7 +1274,6 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
             print(f"   ✅ Reconocidas: {', '.join(d['reconocidas'])}")
         if d["faltantes"]:
             print(f"   🔍 Faltantes  : {', '.join(d['faltantes'])}")
-
 
     print("\n👤 Reclutador humano vs 🤖 ATS")
     if ats_excluido:
@@ -964,9 +1316,8 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
     formacion_prioritaria = []
     formacion_deseable = []
 
-    if ats_excluido:
-
-        for r in requisitos["no_cumple"]:
+    if ats_excluido and requisitos:
+        for r in (requisitos.get("no_cumple") or []):
             core = r.split(":", 1)[1].strip() if ":" in r else r.strip()
             formacion_prioritaria.append(f"Curso/lectura guiada en {core}")
 
@@ -1006,8 +1357,9 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
         "formacion_prioritaria": formacion_prioritaria,
         "formacion_deseable": formacion_deseable,
         "desalineacion": desalineacion
-        
+            
     }
+    
 
 # Inicializar mapeo de lemas al cargar
 construir_diccionario_lemas()

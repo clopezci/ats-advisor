@@ -774,6 +774,35 @@ def load_rules():
         pass
 
 
+    # --- PATCH H: Título TI requerido (Ing. Sistemas / Informática / Computación / Software) ---
+    try:
+        _ensure_rule({
+            "id": "degree_it_afines",
+            "label": "Título requerido: Ingeniería de Sistemas/Informática/Computación/Software (o afines)",
+            "type": "degree",
+            "trigger_any": [
+                "ingeniería de sistemas", "ingenieria de sistemas",
+                "ingeniería informática", "ingenieria informatica",
+                "ciencias de la computación", "ciencias de la computacion",
+                "ingeniería de software", "ingenieria de software",
+                "ingeniería en sistemas", "ingenieria en sistemas",
+                "informática", "informatica",
+                "computer science", "software engineering"
+            ],
+            "cv_any": [
+                "ingeniería de sistemas", "ingenieria de sistemas",
+                "ingeniería en sistemas", "ingenieria en sistemas",
+                "ingeniería informática", "ingenieria informatica",
+                "ciencias de la computación", "ciencias de la computacion",
+                "ingeniería de software", "ingenieria de software",
+                "informática", "informatica",
+                "systems engineering", "computer science", "software engineering"
+            ]
+        })
+    except Exception:
+        pass
+
+
 
         # 2) OPTOMETRÍA / OPTÓMETRA
         _ensure_rule({
@@ -951,17 +980,34 @@ def _canonicalize_requirement(area_raw: str) -> str:
 
 def _cv_contains(cv_low: str, tag: str) -> bool:
     """
-    Búsqueda tolerante: exige que al menos 2 tokens de la etiqueta estén en el CV,
-    o que la etiqueta completa aparezca (tras normalización).
+    Búsqueda tolerante:
+        - Match directo por substring (tag completo)
+        - Para acrónimos/siglas (MBA, PMP, ITIL, COBIT...), basta 1 hit
+        - Para frases normales, exige >=2 tokens relevantes
     """
     tag = (tag or "").strip().lower()
     if not tag:
         return False
-    if tag in cv_low:
+
+    # normalización simple para comparar sin puntuación rara
+    cv_n = re.sub(r"[^a-záéíóúñü0-9\s]", " ", cv_low)
+    tag_n = re.sub(r"[^a-záéíóúñü0-9\s]", " ", tag)
+
+    if tag_n in cv_n:
         return True
-    toks = [w for w in re.findall(r"[a-záéíóúñü]+", tag) if len(w) >= 3]
-    hits = sum(1 for w in toks if w in cv_low)
+
+    # tokens relevantes
+    toks = [w for w in re.findall(r"[a-záéíóúñü0-9]+", tag_n) if len(w) >= 2]
+    if not toks:
+        return False
+
+    # regla especial: siglas/acrónimos
+    if len(toks) == 1 and 2 <= len(toks[0]) <= 6:
+        return toks[0] in cv_n
+
+    hits = sum(1 for w in toks if w in cv_n)
     return hits >= 2
+
 
 
 
@@ -1413,7 +1459,8 @@ def evaluate_requirements(texto_oferta: str, texto_cv: str):
             "conocimientos deseables", "deseables", "nice to have", "plus", "será un plus", "sera un plus"
         }
         skip_headers = {
-            "te ofrecemos", "ofrecemos", "beneficios", "beneficio", "lo que ofrecemos", "lo que ofrecemos a cambio", "lo que ofrecemos a cambio", "qué ofrecemos", "que ofrecemos"
+            "te ofrecemos", "ofrecemos", "beneficios", "beneficio", "lo que ofrecemos", "lo que ofrecemos a cambio", 
+            "qué ofrecemos", "que ofrecemos",
             "oferta", "compensacion", "compensación", "salario", "para ti", "lo que tenemos para ti", "lo que tenemos para usted"
         }
 
@@ -1486,7 +1533,15 @@ def evaluate_requirements(texto_oferta: str, texto_cv: str):
         canon_soft = _canon_list(extracted_soft)
 
         # hard: excluye
+        _STOP_TAGS = {
+            "técnicos", "tecnicos", "requeridos", "requeridas",
+            "requisitos", "requerimientos", "conocimientos", "habilidades",
+            "otros", "otras", "indispensable", "mandatorio", "obligatorio"
+        }
+
         for tag in canon_hard:
+            if tag in _STOP_TAGS or len(tag) < 4:
+                continue
             if not _cv_contains(cv, tag):
                 no_cumple.append(f"Conocimiento requerido: {tag}")
 

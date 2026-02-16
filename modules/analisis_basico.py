@@ -35,6 +35,7 @@ import re
 import unicodedata
 import spacy
 
+from datetime import datetime
 from modules import requisitos
 from modules.requisitos import evaluate_requirements, learn_requirement
 from modules.habilidades import (
@@ -96,7 +97,10 @@ WHITELIST_TECH_TOKENS = {
     "autocad","solidworks","revit","sketchup","archicad","vray","lumion",
     "sap","crm","looker","studio","datastudio","etl","powerbi","power bi",
     "photoshop","illustrator","indesign","premiere","lightroom","aftereffects",
-    "aftereffects", "figma", "canva", "davinci", "resolve", "audition", "media", "encoder",
+    "aftereffects", "figma", "canva", "davinci", "resolve", "audition", "media", "encoder", 
+    "postilion","postview","atalla","citrix","hsm","iso8583","iso-8583","switch","core bancario",
+    "swift","ach","pse","adquirencia","adquirente","emisor","emisora","tarjetas","transaccionalidad",
+
     
     #Creativo/audiovisual
     "adobe","final","cut","pro","audacity","gimp","blender","cinema","4d","autodesk","maya","photoshop",
@@ -141,7 +145,10 @@ WHITELIST_TECH_PHRASES = {
     "okr","okrs","recursos educativos digitales",
     "herramientas de inteligencia artificial aplicadas a la educación",
     "inteligencia artificial aplicada a la educación",
-    "plataforma moodle"
+    "plataforma moodle", "business intelligence", "bi", "excel intermedio", "excel avanzado",
+    "excel intermedio avanzado", "notacion bpmn", "notación bpmn", "bpmn",
+    "switch transaccional", "procesamiento de transacciones", "plataformas de alta transaccionalidad",
+    "mensajeria iso 8583","mensajería iso 8583", "core bancario", "medios de pago",
 
 
     # Creativo/audiovisual
@@ -161,6 +168,13 @@ SECTION_HEADERS = (
     "responsabilidades principales","responsabilidades",
     "requisitos","requerimientos","perfil","sobre nosotros"
 )
+
+DEBUG_ATS = False
+def _dbg(*args):
+    if DEBUG_ATS:
+        print("[DEBUG]", *args)
+
+
 
 # ----------------------------
 # LIMPIEZA / NORMALIZACIÓN
@@ -276,6 +290,502 @@ def _contains_phrase(texto: str, frase: str) -> bool:
     patron = r"\b" + r"\W+".join(tokens) + r"\b"
     return re.search(patron, texto, flags=re.IGNORECASE) is not None
 
+# ----------------------------
+# HELPERS: CONTEXTO "REQUISITO DURO", INGLÉS (A1-C2) Y MAESTRÍAS OBLIGATORIAS
+# ----------------------------
+
+HARD_MARKERS = {
+    "obligatorio", "obligatoria", "mandatorio", "mandatoria",
+    "indispensable", "imprescindible", "debe", "deberá", "debera",
+    "requisito excluyente", "excluyente", "mínimo", "minimo", "must",
+    "required","mandatory","essential","must have","required experience","mandatory requirement"
+}
+
+SOFT_MARKERS = {
+    "preferiblemente", "deseable", "idealmente", "se valora", "se valorara",
+    "nice to have", "opcional", "plus", "sera un plus", "será un plus",
+    "valorable", "se aprecia", "se apreciara", "seria un plus", "sería un plus",
+    "se considerara", "se considerará", "considerar[áa]", "seria deseable", "sería deseable"
+}
+
+
+EN_LEVEL_ORDER = {"a1": 1, "a2": 2, "b1": 3, "b2": 4, "c1": 5, "c2": 6}
+
+def _nivel_ingles_en_texto(txt: str):
+    """
+    Devuelve nivel (int) si detecta A1..C2.
+    Ej: "nivel de ingles minimo C1" -> 5
+    """
+    if not txt:
+        return None
+    t = normalizar_para_nlp(txt.lower())
+    m = re.search(r"\b([abc][12])\b", t)
+    if not m:
+        return None
+    return EN_LEVEL_ORDER.get(m.group(1))
+
+def _ingles_requerido_en_oferta(oferta_txt: str):
+    """
+    Detecta requerimiento mínimo de inglés tipo:
+        - "Nivel de ingles mínimo C1"
+        - "Mandatorio Inglés C1"
+    """
+    if not oferta_txt:
+        return None
+    o = normalizar_para_nlp(oferta_txt.lower())
+
+    # Señal: menciona inglés y un nivel A1..C2
+    if "ingles" not in o and "inglés" not in o and "english" not in o:
+        return None
+
+    # Preferir cuando hay marcador duro cerca
+    # Buscamos líneas/segmentos con 'ingles' y nivel, y si tienen hard markers.
+    segmentos = re.split(r"[\n\.\;\|]+", o)
+    candidato = None
+    for seg in segmentos:
+        if ("ingles" in seg or "inglés" in seg or "english" in seg):
+            lvl = _nivel_ingles_en_texto(seg)
+            if lvl:
+                if any(h in seg for h in HARD_MARKERS):
+                    return lvl
+                candidato = max(candidato or 0, lvl)
+    return candidato
+
+def _cv_nivel_ingles(texto_cv: str):
+    """
+    Detecta nivel de inglés en CV:
+        - "NIVEL INGLES B2"
+        - "Inglés: C1"
+        Si no encuentra nivel, devuelve None.
+    """
+    if not texto_cv:
+        return None
+    cv = normalizar_para_nlp(texto_cv.lower())
+    # prioriza 'ingles' cerca del nivel
+    for seg in re.split(r"[\n\.\;\|]+", cv):
+        if ("ingles" in seg or "inglés" in seg or "english" in seg):
+            lvl = _nivel_ingles_en_texto(seg)
+            if lvl:
+                return lvl
+    # fallback global
+    return _nivel_ingles_en_texto(cv)
+
+
+def _en_seccion_requisitos(core: str, oferta_txt: str) -> bool:
+    """
+    Retorna True si 'core' aparece dentro de una ventana cercana a la palabra 'requisitos'
+    (útil para ofertas que listan requisitos sin decir "obligatorio").
+    """
+    if not core or not oferta_txt:
+        return False
+
+    o = normalizar_para_nlp(oferta_txt.lower())
+
+    # ventana desde la palabra "requisitos" hasta ~600 chars (bullets típicos)
+    m = re.search(r"\brequisitos?\b", o)
+    if not m:
+        return False
+
+    ventana = o[m.start(): m.start() + 600]
+    return _contains_phrase(ventana, normalizar_para_nlp(core.lower()))
+
+
+
+def _contexto_requisito_duro(core: str, oferta_txt: str) -> bool:
+    """
+    Decide si un 'core' (ej: 'excel intermedio') es duro SOLO si:
+        - aparece en la oferta, y
+        - está en un segmento con HARD_MARKERS, o
+        - está en sección REQUISITOS sin SOFT_MARKERS
+    """
+    if not core or not oferta_txt:
+        return False
+
+    o = normalizar_para_nlp(oferta_txt.lower())
+    c = normalizar_para_nlp(core.lower())
+
+    # Si ni siquiera aparece, no puede ser duro
+    if not _contains_phrase(o, c):
+        return False
+
+    segmentos = re.split(r"[\n\.\;\|]+", o)
+
+    for seg in segmentos:
+        seg = (seg or "").strip()
+        if not seg:
+            continue
+
+        # Solo evaluamos contexto si el core está en ese segmento
+        if _contains_phrase(seg, c):
+
+            # 1) Marcadores duros explícitos (obligatorio, mínimo, debe, etc.)
+            if any(h in seg for h in HARD_MARKERS):
+                return True
+
+            # 2) Sección "Requisitos" = duro, a menos que esté marcado como deseable
+            #    (preferiblemente/deseable/idealmente/etc.)
+            if _en_seccion_requisitos(c, oferta_txt):
+                if not any(s in seg for s in SOFT_MARKERS):
+                    return True
+
+            # 3) (redundante pero seguro) hard por regex explícito
+            if re.search(r"\b(obligatorio|mandatorio|indispensable|excluyente|mínimo|minimo|debe)\b", seg):
+                return True
+
+    return False
+
+
+
+
+def _detectar_maestria_obligatoria(oferta_txt: str):
+    """
+    Captura patrones tipo:
+        - 'Obligatorio tener maestría en pedagogía'
+        - 'obligatorio: maestria en X'
+        Devuelve lista de 'maestria en <campo>'.
+    """
+    if not oferta_txt:
+        return []
+
+    o = normalizar_para_nlp(oferta_txt.lower())
+    tags = []
+
+    # patrón 1: obligatorio + maestria en <campo>
+    for m in re.finditer(r"\bobligatori[oa]\b.{0,80}\bmaestr[ií]a\b.{0,20}\ben\b\s+([a-z0-9áéíóúñü\s]{3,60})", o):
+        campo = m.group(1).strip()
+        # recortar campo a máximo 6 palabras para evitar capturas largas
+        campo = " ".join(campo.split()[:6]).strip()
+        if campo:
+            tags.append(f"Formación requerida: maestría en {campo}")
+
+    # patrón 2: 'maestria en X' + (obligatorio/mandatorio/excluyente) en el mismo segmento
+    segmentos = re.split(r"[\n\.\;\|]+", o)
+    for seg in segmentos:
+        if any(h in seg for h in HARD_MARKERS) and "maestr" in seg and " en " in seg:
+            m2 = re.search(r"\bmaestr[ií]a\b.{0,20}\ben\b\s+([a-z0-9áéíóúñü\s]{3,60})", seg)
+            if m2:
+                campo = " ".join(m2.group(1).strip().split()[:6]).strip()
+                if campo:
+                    tags.append(f"Formación requerida: maestría en {campo}")
+
+    # dedupe preservando orden
+    out, seen = [], set()
+    for t in tags:
+        if t not in seen:
+            out.append(t)
+            seen.add(t)
+    return out
+
+
+# ----------------------------
+# HELPERS: AÑOS DE EXPERIENCIA (mínimos) Y SECTOR/ÁREA (hard only by contexto)
+# ----------------------------
+
+SECTOR_EQUIV = {
+    "financiero": {"financiero", "banca", "banco", "banking", "pagos", "switch", "transaccional", "tarjetas"},
+    "infraestructura": {"infraestructura", "obras", "obra", "construccion", "construcción", "transporte masivo", "civil"},
+    "educativo": {"educativo", "educación", "educacion", "universidad", "docencia", "moodle", "lms"},
+    "tecnologia": {"tecnologia", "tecnología", "ti", "it", "software", "saas", "cloud", "digital"},
+    "manufactura": {"manufactura", "planta", "produccion", "producción", "fabrica", "fábrica", "consumo masivo"},
+    "salud": {"salud", "hospital", "clinica", "clínica", "medico", "médico", "farmaceutica", "farmacéutica", "biotecnologia", "biotecnología"},
+    "logistica": {"logistica", "logística", "supply chain", "cadena de suministro"},
+    "comercial": {"comercial", "ventas", "marketing", "negocios", "cliente"},
+    "publico": {"público", "publico", "gobierno", "estado", "administración pública", "administracion publica"},
+    "energia": {"energía", "energia", "petroleo", "petróleo", "gas", "eléctrico", "electrico", "mineria", "minería"},
+    "turismo": {"turismo", "hotel", "hospitalidad", "viajes", "agencia de viajes"},
+    "legal": {"legal", "abogacia", "abogacía", "juridico", "jurídico", "derecho"},
+    "retail": {"retail", "comercio", "minorista", "mayorista", "cadena de tiendas"},
+    "agroindustria": {"agroindustria", "agricola", "agrícola", "ganaderia", "ganadería", "campo"},
+    "medios y entretenimiento": {"medios", "entretenimiento", "audiovisual", "publicidad", "cine", "musica", "música"},
+    "telecomunicaciones": {"telecomunicaciones", "telecom", "telefonia", "telefonía", "internet", "redes"},
+    "consultoria": {"consultoria", "consultoría", "asesoria", "asesoría", "consulting"},
+    "logistica y transporte": {"logistica", "logística", "transporte", "envios", "envíos", "cadena de suministro"},
+    "sector publico": {"público", "publico", "gobierno", "estado", "administración pública", "administracion publica"},
+    "farmaceutico y biotecnología": {"farmaceutico", "farmacéutico", "biotecnologia", "biotecnología", "salud"},
+    "produccion": {"produccion", "producción", "manufactura", "planta", "fabrica", "fábrica", "industrial"},
+    "textil": {"textil", "confeccion", "moda", "ropa", "vestimenta"},
+    "alimentacion y bebidas": {"alimentacion", "alimentación", "bebidas", "food and beverage", "food & beverage", "restauracion", "restauración"},
+    "consumo masivo": {"consumo masivo", "retail", "comercio", "minorista", "mayorista", "cadena de tiendas"},
+    "servicios profesionales": {"servicios profesionales", "consultoria", "consultoría", "asesoria", "asesoría", "consulting"},
+    "servicios": {"servicios", "atencion al cliente", "atención al cliente", "customer service"},
+    "BPO": {"bpo", "business process outsourcing", "tercerizacion de procesos", "tercerización de procesos"},
+    "cajas de compensacion": {"cajas de compensacion", "cajas de compensación", "beneficios sociales"},
+    "gobierno y administracion publica": {"gobierno", "administracion publica", "administración pública", "estado"}
+    
+    
+}
+
+def _extract_min_years_from_offer(oferta_txt: str):
+    """
+    Detecta mínimo de años en oferta:
+        - "mínimo 5 años", "mas de 3 años", "+5 años", "experiencia mínima de 3 a 5 años"
+        Devuelve int mínimo, o None.
+    """
+    if not oferta_txt:
+        return None
+    o = normalizar_para_nlp(oferta_txt.lower())
+
+    # Patrones comunes
+    patrones = [
+        r"\bminim[oa]\s+(\d{1,2})\s+anos\b",
+        r"\bmas\s+de\s+(\d{1,2})\s+anos\b",
+        r"\b\d{1,2}\s*\+\s*anos\b",
+        r"\b\+(\d{1,2})\s+anos\b",
+        r"\bexperiencia\s+minim[oa]\s+de\s+(\d{1,2})\s+a\s+(\d{1,2})\s+anos\b",
+        r"\bminimo\s+(\d{1,2})\s+a\s+(\d{1,2})\s+anos\b",
+        r"\b(\d{1,2})\s+anos\s+de\s+experiencia\b",
+        r"\bexperiencia\s+de\s+(\d{1,2})\s+anos\b",
+    ]
+
+    mins = []
+    for pat in patrones:
+        for m in re.finditer(pat, o):
+            g = [x for x in m.groups() if x]
+            # rango "3 a 5" -> tomamos 3
+            try:
+                v = int(g[0])
+                mins.append(v)
+            except Exception:
+                pass
+
+    if not mins:
+        return None
+    return max(mins)  # conservador: si aparecen varios, tomamos el mayor
+
+def _cv_years_estimate(texto_cv: str):
+    """
+    Estima años de experiencia desde el CV:
+        1) Si aparece "X años" -> toma el mayor.
+        2) Si no, usa rango de años YYYY..YYYY (min..max) como aproximación de trayectoria.
+        Devuelve float o int, o None.
+    """
+    if not texto_cv:
+        return None
+
+    cv = normalizar_para_nlp(texto_cv.lower())
+
+    # 1) explícito: "15 años", "10 anos"
+    matches = re.findall(r"\b(\d{1,2})\s+anos\b", cv)
+    vals = []
+    for x in matches:
+        try:
+            vals.append(int(x))
+        except Exception:
+            pass
+    if vals:
+        return max(vals)
+
+    # 2) inferencia por años calendario (aprox trayectoria)
+    years = []
+    for y in re.findall(r"\b(19\d{2}|20\d{2})\b", cv):
+        try:
+            years.append(int(y))
+        except Exception:
+            pass
+    if len(years) >= 2:
+        y_min, y_max = min(years), max(years)
+        # cap razonable para evitar “saltos” raros
+        if 0 < (y_max - y_min) <= 60:
+            return (y_max - y_min)
+
+    # 3) fallback: si solo hay 1 año, usamos "hoy - año"
+    if len(years) == 1:
+        try:
+            return max(0, datetime.now().year - years[0])
+        except Exception:
+            return None
+
+    return None
+
+def _extract_sector_requirements(oferta_txt: str):
+    """
+    Devuelve lista de sectores requeridos explícitamente en oferta (como texto),
+    priorizando cuando el segmento tenga HARD_MARKERS o palabras tipo 'sector'.
+    """
+    if not oferta_txt:
+        return []
+
+    o = normalizar_para_nlp(oferta_txt.lower())
+    sectores = []
+
+    # segmentamos para evaluar contexto (hard markers)
+    segmentos = re.split(r"[\n\.\;\|]+", o)
+    for seg in segmentos:
+        seg = seg.strip()
+        if not seg:
+            continue
+
+        # Solo nos interesa si menciona sector/industria o tiene hard markers
+        ctx_hard = any(h in seg for h in HARD_MARKERS)
+        ctx_sector = ("sector" in seg) or ("industria" in seg)
+
+        if not (ctx_hard or ctx_sector):
+            continue
+
+        for key, kws in SECTOR_EQUIV.items():
+            if any(re.search(rf"\b{re.escape(kw)}\b", seg) for kw in kws):
+                # si hay soft markers y NO hay hard markers => deseable
+                if (any(s in seg for s in SOFT_MARKERS) and not any(h in seg for h in HARD_MARKERS)):
+                    sectores.append(f"Sector deseable: {key}")
+                else:
+                    sectores.append(f"Sector requerido: {key}")
+
+
+    # dedupe preservando orden
+    out, seen = [], set()
+    for s in sectores:
+        if s not in seen:
+            out.append(s)
+            seen.add(s)
+    return out
+
+def _cv_has_sector(texto_cv: str, sector_key: str) -> bool:
+    """
+    Revisa si el CV tiene evidencia del sector.
+    """
+    if not texto_cv or not sector_key:
+        return False
+    cv = normalizar_para_nlp(texto_cv.lower())
+    kws = SECTOR_EQUIV.get(sector_key, set())
+    if not kws:
+        return False
+    return any(re.search(rf"\b{re.escape(kw)}\b", cv) for kw in kws)
+
+
+def _extract_domain_years_requirements(oferta_txt: str):
+    """
+    Detecta requisitos tipo:
+        - "mínimo 5 años en sector financiero"
+        - "más de 3 años en SAP"
+        - "+5 años en infraestructura"
+        Retorna lista de dicts:
+            {"years": int, "domain": str, "hard": bool, "raw": str}
+            Domain se mapea a claves de SECTOR_EQUIV (si aplica).
+    """
+    if not oferta_txt:
+        return []
+
+    o = normalizar_para_nlp(oferta_txt.lower())
+    segmentos = re.split(r"[\n\.\;\|]+", o)
+
+    out = []
+    for seg in segmentos:
+        seg = seg.strip()
+        if not seg:
+            continue
+
+        # requisito de años presente?
+        y = None
+
+        # patrones (incluye rango -> toma mínimo)
+        m = re.search(r"\bexperiencia\s+minim[oa]\s+de\s+(\d{1,2})\s+a\s+(\d{1,2})\s+anos\b", seg)
+        if m:
+            try:
+                y = int(m.group(1))
+            except Exception:
+                y = None
+
+        if y is None:
+            m = re.search(r"\bminim[oa]\s+(\d{1,2})\s+anos\b", seg)
+            if m:
+                y = int(m.group(1))
+
+        if y is None:
+            m = re.search(r"\bmas\s+de\s+(\d{1,2})\s+anos\b", seg)
+            if m:
+                y = int(m.group(1))
+
+        if y is None:
+            m = re.search(r"\b\+(\d{1,2})\s+anos\b", seg)
+            if m:
+                y = int(m.group(1))
+
+        if y is None:
+            continue
+
+        # buscamos “en <algo>” cercano (dominio)
+        # ejemplo: "... años en sector financiero", "... años en infraestructura"
+        dom = None
+
+        # Si menciona explícitamente "sector/industria", intentamos mapear a SECTOR_EQUIV
+        dom_candidates = []
+        if "sector" in seg or "industria" in seg:
+            for key, kws in SECTOR_EQUIV.items():
+                if any(re.search(rf"\b{re.escape(kw)}\b", seg) for kw in kws):
+                    dom_candidates.append(key)
+
+        # si no hay sector explícito, igual intentamos mapear por keywords
+        if not dom_candidates:
+            for key, kws in SECTOR_EQUIV.items():
+                if any(re.search(rf"\b{re.escape(kw)}\b", seg) for kw in kws):
+                    dom_candidates.append(key)
+
+        if dom_candidates:
+            dom = dom_candidates[0]  # priorizamos la primera coincidencia
+        else:
+            # fallback: tomamos texto después de “en” si existe (sin hacerlo demasiado largo)
+            m2 = re.search(r"\banos\s+en\s+([a-z0-9áéíóúñü\s\-]{3,50})\b", seg)
+            if m2:
+                dom = m2.group(1).strip()
+                # recorte por seguridad
+                if len(dom.split()) > 6:
+                    dom = " ".join(dom.split()[:6])
+
+        # hard si el segmento tiene marcadores duros
+        hard = any(h in seg for h in HARD_MARKERS)
+
+        out.append({
+            "years": y,
+            "domain": dom or "",
+            "hard": hard,
+            "raw": f"Experiencia requerida: mínimo {y} años en {dom}" if dom else f"Experiencia requerida: mínimo {y} años"
+        })
+
+    # dedupe
+    uniq, seen = [], set()
+    for d in out:
+        k = (d.get("years"), d.get("domain"), d.get("hard"))
+        if k not in seen:
+            uniq.append(d)
+            seen.add(k)
+    return uniq
+
+
+
+EN_LEVELS = {"a1": 1, "a2": 2, "b1": 3, "b2": 4, "c1": 5, "c2": 6}
+
+def _extract_english_requirement(oferta_txt: str):
+    """
+    Devuelve {"min_level": "c1", "hard": bool} o None
+    """
+    if not oferta_txt:
+        return None
+    o = normalizar_para_nlp(oferta_txt.lower())
+    # detecta "ingles minimo c1", "nivel de ingles c1", "mandatorio ingles c1"
+    m = re.search(r"\b(ingles|ingl[eé]s)\b.*\b(a1|a2|b1|b2|c1|c2)\b", o)
+    if not m:
+        return None
+    level = m.group(2).lower()
+
+    # hard si aparece con marcadores o palabra "mínimo"
+    hard = ("minimo" in o) or any(h in o for h in HARD_MARKERS)
+    return {"min_level": level, "hard": hard}
+
+def _cv_english_level(texto_cv: str):
+    """
+    Extrae nivel del CV si aparece como B2/C1/etc. Devuelve "b2"/"c1"/None.
+    """
+    if not texto_cv:
+        return None
+    cv = normalizar_para_nlp(texto_cv.lower())
+    m = re.search(r"\b(ingles|ingl[eé]s)\b.*\b(a1|a2|b1|b2|c1|c2)\b", cv)
+    if not m:
+        # fallback: si aparece solo "C1" sin "inglés" en sección idiomas
+        m2 = re.search(r"\b(a1|a2|b1|b2|c1|c2)\b", cv)
+        return (m2.group(1).lower() if m2 else None)
+    return m.group(2).lower()
+
+
 
 # ----------------------------
 # VALIDACIÓN ACADÉMICA ROBUSTA (para requisitos tipo "ingeniería..., informática o afines", "MBA o afines")
@@ -336,21 +846,26 @@ def _split_academic_options(core: str) -> list:
     """
     c = _norm_acad(core)
     c = re.sub(r"\b(o\s+afines|y\s+afines|afines)\b", "", c).strip()
-    # separadores típicos
+
+    # separadores típicos (mantener robusto)
     parts = re.split(r"[;,/]| y | e | o ", c)
+
     opts = []
     for p in parts:
         p = p.strip()
         if len(p) >= 3:
             opts.append(p)
-            # quitar duplicados manteniendo orden
-            out = []
-            seen = set()
-            for o in opts:
-                if o not in seen:
-                    out.append(o)
-                    seen.add(o)
-            return out
+
+    # quitar duplicados manteniendo orden
+    out = []
+    seen = set()
+    for o in opts:
+        if o not in seen:
+            out.append(o)
+            seen.add(o)
+
+    return out
+
 
 def _cv_has_any(cv_norm: str, patterns: set) -> bool:
     """
@@ -365,7 +880,7 @@ def _cv_has_any(cv_norm: str, patterns: set) -> bool:
 
 def _cumple_requisito_academico(tag: str, texto_cv: str) -> bool:
     """
-    Decide si un tag de requisitos 'duros' realmente se cumple por formación (estudios),
+    Decide si un tag académico (duro) se cumple por formación en el CV,
     usando equivalencias y opciones tipo "X, Y o afines".
     """
     if not tag or not texto_cv:
@@ -374,35 +889,43 @@ def _cumple_requisito_academico(tag: str, texto_cv: str) -> bool:
     tag_norm = _norm_acad(tag)
     cv_norm  = _norm_acad(texto_cv)
 
-    # Solo aplicar si el tag parece académico
+    # Solo aplicar si parece académico
     if not any(k in tag_norm for k in ACADEMIC_TRIGGER):
         return False
 
-    # Extraer "core" después de ":" si existe
     core = tag_norm.split(":", 1)[1].strip() if ":" in tag_norm else tag_norm
 
-    # 1) Si el core contiene opciones ("..., ... o afines"), evaluamos por opciones
+    # Si hay opciones (X, Y, Z o afines), basta con cumplir cualquiera
     opciones = _split_academic_options(core)
     if opciones:
         for opt in opciones:
-            # Si opt coincide con una clave del diccionario, usamos su set de equivalencias
-            key = opt
-            if key in ACADEMIC_EQUIV:
-                if _cv_has_any(cv_norm, ACADEMIC_EQUIV[key]):
+            opt = opt.strip()
+            if not opt:
+                continue
+
+            # mapeo por equivalencias si existe
+            if opt in ACADEMIC_EQUIV:
+                if _cv_has_any(cv_norm, ACADEMIC_EQUIV[opt]):
                     return True
-                else:
-                    # Si no está mapeado, intentamos búsqueda literal tolerante
-                    if _contains_phrase(cv_norm, opt):
-                        return True
+            else:
+                # búsqueda literal tolerante
+                if _contains_phrase(cv_norm, opt):
+                    return True
 
-                    # 2) Fallback: si menciona una clave del diccionario dentro del core
-                    for key, variants in ACADEMIC_EQUIV.items():
-                        if key in core:
-                            if _cv_has_any(cv_norm, variants):
-                                return True
+        # fallback: si el core contiene una “clave” del diccionario
+        for key, variants in ACADEMIC_EQUIV.items():
+            if key in core and _cv_has_any(cv_norm, variants):
+                return True
 
-                            return False
+        return False
 
+    # Si no hay opciones, intentamos equivalencias por presencia de claves
+    for key, variants in ACADEMIC_EQUIV.items():
+        if key in core:
+            return _cv_has_any(cv_norm, variants)
+
+    # fallback final literal
+    return _contains_phrase(cv_norm, core)
 
 
 # ----------------------------
@@ -650,7 +1173,17 @@ def categorizar_texto(texto):
             return True
         if t in tech_skills:
             return True
+
+        # ✅ NUEVO: conservar herramientas/prod/tecnologías por forma (evita perder Postilion, Atalla, etc.)
+        # - alfanumérico o palabra "tipo producto"
+        # - longitud >= 4
+        # - no es stopword ni genérico
+        if len(t) >= 4 and re.fullmatch(r"[a-z0-9][a-z0-9\-]{2,}", t):
+            if t not in STOPWORDS and t not in BUSINESS_SINGLETONS and t not in TECH_GENERIC_BLOCK:
+                return True
+
         return False
+
 
     depuradas = set()
     # iteramos sobre una COPIA para evitar efectos por reasignación
@@ -702,8 +1235,8 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
     res = evaluate_requirements(texto_oferta, texto_cv)
     
     
-    print("DEBUG: entré a detectar_requisitos_excluyentes_inteligente")
-    print("DEBUG res.no_cumple =", (res.get("no_cumple") if res else None))
+    #print("DEBUG: entré a detectar_requisitos_excluyentes_inteligente")
+    #print("DEBUG res.no_cumple =", (res.get("no_cumple") if res else None))
 
     
     
@@ -765,11 +1298,13 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
             res["no_cumple_soft"] = movidos_a_soft
             res["alerta"] = bool(nuevos_duros)
 
-            print("DEBUG parche académico aplicado. no_cumple:", res.get("no_cumple"))
-            print("DEBUG parche académico aplicado. no_cumple_soft:", res.get("no_cumple_soft"))
+            
+            #print("DEBUG parche académico aplicado. no_cumple:", res.get("no_cumple"))
+            #print("DEBUG parche académico aplicado. no_cumple_soft:", res.get("no_cumple_soft"))
             
     except Exception as e:
-        print("DEBUG parche académico error:", e)
+        #print("DEBUG parche académico error:", e)
+        pass
 
     
 
@@ -780,6 +1315,169 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
                 learn_requirement(tag, inc=1)
     except Exception:
         pass
+    
+    
+    # ----------------------------
+    # Requisitos duros adicionales (realistas): Inglés mínimo + Maestrías obligatorias explícitas
+    # ----------------------------
+    try:
+        if res is None:
+            res = {"alerta": False, "no_cumple": [], "no_cumple_soft": []}
+
+        # 1) Inglés mínimo (A1..C2)
+        req_en = _ingles_requerido_en_oferta(texto_oferta or "")
+        if req_en:
+            cv_en = _cv_nivel_ingles(texto_cv or "")
+            # Si CV no declara nivel, lo tratamos como incumplido SOLO si la oferta lo marca como mínimo/mandatorio
+            # (req_en ya viene de oferta)
+            if (cv_en is None) or (cv_en < req_en):
+                # Tag estándar, fácil de entender
+                nivel_map = {v: k.upper() for k, v in EN_LEVEL_ORDER.items()}
+                res["no_cumple"] = list(res.get("no_cumple") or [])
+                res["no_cumple"].append(f"Idioma requerido: Inglés mínimo {nivel_map.get(req_en, 'C1')}")
+                res["alerta"] = True
+
+        # 2) Maestrías obligatorias explícitas (ej: pedagogía)
+        for tag in _detectar_maestria_obligatoria(texto_oferta or ""):
+            # tag = "Formación requerida: maestría en <campo>"
+            core = tag.split(":", 1)[1].strip() if ":" in tag else tag
+            cv_norm = _norm_acad(texto_cv or "")
+            core_norm = _norm_acad(core)
+            # Si el CV NO contiene esa maestría (tolerante), se excluye
+            if not _contains_phrase(cv_norm, core_norm):
+                res["no_cumple"] = list(res.get("no_cumple") or [])
+                res["no_cumple"].append(tag)
+                res["alerta"] = True
+
+    except Exception:
+        pass
+
+    
+    # ----------------------------
+    # Requisitos duros adicionales: AÑOS MÍNIMOS + SECTOR (solo si la oferta lo marca como duro)
+    # ----------------------------
+    try:
+        if res is None:
+            res = {"alerta": False, "no_cumple": [], "no_cumple_soft": []}
+
+        # 1) Años mínimos de experiencia
+        req_years = _extract_min_years_from_offer(texto_oferta or "")
+        if req_years:
+            oferta_norm = normalizar_para_nlp((texto_oferta or "").lower())
+            segmentos = re.split(r"[\n\.\;\|]+", oferta_norm)
+
+            # hard si un segmento con años también trae HARD_MARKERS
+            is_hard_years = False
+            for seg in segmentos:
+                if (("anos" in seg or "años" in seg) and re.search(r"\b\d{1,2}\b", seg)):
+                    if any(h in seg for h in HARD_MARKERS):
+                        is_hard_years = True
+                        break
+
+            cv_years = _cv_years_estimate(texto_cv or "")
+
+            # ✅ lógica correcta
+            if is_hard_years:
+                if (cv_years is None) or (cv_years < req_years):
+                    res["no_cumple"] = list(res.get("no_cumple") or [])
+                    res["no_cumple"].append(f"Experiencia requerida: mínimo {req_years} años")
+                    res["alerta"] = True
+            else:
+                # si no es hard, solo sugerencia si no cumple
+                if (cv_years is None) or (cv_years < req_years):
+                    res["no_cumple_soft"] = list(res.get("no_cumple_soft") or [])
+                    res["no_cumple_soft"].append(f"Experiencia sugerida: mínimo {req_years} años")
+
+                    
+        # 1.b) Años mínimos POR DOMINIO (ej: 5 años en sector financiero)
+        dom_years = _extract_domain_years_requirements(texto_oferta or "")
+        if dom_years:
+            cv_years = _cv_years_estimate(texto_cv or "")
+
+            for req in dom_years:
+                y = int(req.get("years") or 0)
+                dom = (req.get("domain") or "").strip().lower()
+                hard = bool(req.get("hard"))
+
+                # Si el dominio es una clave conocida (sector), usamos evidencia sector en CV.
+                # Si el dominio es texto libre (ej: "sap"), hacemos una búsqueda textual.
+                has_dom_evidence = False
+                if dom in SECTOR_EQUIV:
+                    has_dom_evidence = _cv_has_sector(texto_cv or "", dom)
+                else:
+                    cv_norm = normalizar_para_nlp((texto_cv or "").lower())
+                    has_dom_evidence = bool(dom) and _contains_phrase(cv_norm, dom)
+
+                # Heurística “barata y útil”:
+                # - si NO hay evidencia del dominio en CV => no cumple (hard si hard)
+                # - si hay evidencia, validamos años globales como proxy
+                if not has_dom_evidence:
+                    if hard:
+                        res["no_cumple"] = list(res.get("no_cumple") or [])
+                        res["no_cumple"].append(req.get("raw") or f"Experiencia requerida: mínimo {y} años en {dom}")
+                        res["alerta"] = True
+                    else:
+                        res["no_cumple_soft"] = list(res.get("no_cumple_soft") or [])
+                        res["no_cumple_soft"].append(req.get("raw") or f"Experiencia sugerida: mínimo {y} años en {dom}")
+                else:
+                    # si hay evidencia del dominio pero no tenemos años estimables -> lo dejamos soft
+                    if (cv_years is None) or (cv_years < y):
+                        if hard:
+                            res["no_cumple"] = list(res.get("no_cumple") or [])
+                            res["no_cumple"].append(req.get("raw") or f"Experiencia requerida: mínimo {y} años en {dom}")
+                            res["alerta"] = True
+                        else:
+                            res["no_cumple_soft"] = list(res.get("no_cumple_soft") or [])
+                            res["no_cumple_soft"].append(req.get("raw") or f"Experiencia sugerida: mínimo {y} años en {dom}")
+
+            
+        
+        # 2) Sector/área (DURO solo si oferta lo expresa como obligatorio/indispensable/sector)
+        sectors = _extract_sector_requirements(texto_oferta or "")
+        for tag in sectors:
+            core = tag.split(":", 1)[1].strip() if ":" in tag else ""
+            sector_key = core.strip().lower()
+
+            if not sector_key:
+                continue
+
+            if not _cv_has_sector(texto_cv or "", sector_key):
+                if tag.lower().startswith("sector requerido:"):
+                    res["no_cumple"] = list(res.get("no_cumple") or [])
+                    res["no_cumple"].append(tag)
+                    res["alerta"] = True
+                else:
+                    res["no_cumple_soft"] = list(res.get("no_cumple_soft") or [])
+                    res["no_cumple_soft"].append(tag)
+
+               
+                
+        # 3) Inglés mínimo (C1/C2/etc.)
+        eng = _extract_english_requirement(texto_oferta or "")
+        if eng:
+            req = eng.get("min_level")
+            hard = bool(eng.get("hard"))
+            cv_level = _cv_english_level(texto_cv or "")
+
+            req_num = EN_LEVELS.get(req, 0)
+            cv_num = EN_LEVELS.get((cv_level or "").lower(), 0)
+
+            if cv_num < req_num:
+                label = f"Idioma requerido: inglés mínimo {req.upper()}"
+                if hard:
+                    res["no_cumple"] = list(res.get("no_cumple") or [])
+                    res["no_cumple"].append(label)
+                    res["alerta"] = True
+                else:
+                    res["no_cumple_soft"] = list(res.get("no_cumple_soft") or [])
+                    res["no_cumple_soft"].append(label)
+
+               
+
+    except Exception:
+        pass
+
+    
 
     # Parche: manufactura solo si hay evidencia clara en la oferta
     try:
@@ -794,30 +1492,81 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
     except Exception:
         pass
 
-    # Parche genérico: requisitos tipo "Conocimiento requerido: <frase muy larga>"
-    # se consideran "blandos" (no excluyentes). Los guardamos aparte.
+    # Parche realista: "Conocimiento requerido: X" NO es excluyente salvo que sea OBLIGATORIO/MANDATORIO
+    # según el contexto real del texto de la oferta.
     try:
         if res and res.get("no_cumple"):
             duros = []
             suaves = []
+
+            oferta_txt = texto_oferta or ""
             for tag in res["no_cumple"]:
-                txt = (tag or "").strip().lower()
-                if txt.startswith("conocimiento requerido:"):
+                txt = (tag or "").strip()
+                txt_low = txt.lower()
+
+                if txt_low.startswith("conocimiento requerido:"):
                     core = txt.split(":", 1)[1].strip() if ":" in txt else txt
-                    # Si el "core" tiene más de 4 palabras, probablemente es
-                    # una frase libre auto-detectada, NO un requisito duro.
-                    if len(core.split()) > 4:
+
+                    # Si NO hay señal dura en la oferta alrededor de ese core → NO excluir.
+                    if not _contexto_requisito_duro(core, oferta_txt):
                         suaves.append(tag)
                         continue
+
+                # Si es una frase larguísima (ruido) también se baja a soft
+                core_len = len((txt.split(":", 1)[1] if ":" in txt else txt).split())
+                if core_len > 10:
+                    suaves.append(tag)
+                    continue
+
                 duros.append(tag)
 
-            # Guardamos por si en el futuro los quieres mostrar en otro sitio
             res["no_cumple_soft"] = (res.get("no_cumple_soft") or []) + suaves
             res["no_cumple"] = duros
             res["alerta"] = bool(duros)
-            
+
     except Exception:
         pass
+
+    
+    # Parche: "Conocimiento requerido:" NO debe ser excluyente por defecto.
+    # Solo será DURO si el segmento de oferta trae marcadores tipo obligatorio/indispensable/mandatorio/mínimo/debe.
+    try:
+        if res and res.get("no_cumple"):
+            oferta_norm = normalizar_para_nlp((texto_oferta or "").lower())
+            segmentos = re.split(r"[\n\.\;\|]+", oferta_norm)
+
+        def _ctx_hard_for_core(core: str) -> bool:
+            if not core:
+                return False
+            # si el core aparece en un segmento con HARD_MARKERS -> duro
+            for seg in segmentos:
+                if _contains_phrase(seg, core) and any(h in seg for h in HARD_MARKERS):
+                    return True
+            return False
+
+        duros = []
+        suaves = list(res.get("no_cumple_soft") or [])
+
+        for tag in (res.get("no_cumple") or []):
+            txt = (tag or "").strip()
+            low = txt.lower()
+
+            if low.startswith("conocimiento requerido:"):
+                core = low.split(":", 1)[1].strip()
+                # si NO hay contexto duro, lo bajamos a soft (gap formativo)
+                if not _ctx_hard_for_core(core):
+                    suaves.append(tag)
+                    continue
+
+            duros.append(tag)
+
+        res["no_cumple"] = duros
+        res["no_cumple_soft"] = suaves
+        res["alerta"] = bool(duros)
+
+    except Exception:
+        pass
+
             
     # --- Parche: NO aceptar requisitos que no estén realmente en el texto de la oferta ---
     # Esto evita "fantasmas" (ej: banca personal) que pueden venir de reglas aprendidas o genéricas.
@@ -886,6 +1635,36 @@ def _term_formativo_valido(t):
     return _skillness(t_norm) >= SIM_THRESHOLD
 
 
+def _sanear_item_formacion(txt: str) -> str:
+    """
+    Limpia basura típica en tags formativos:
+        - elimina URLs
+        - elimina prefijos tipo "//about"
+        - recorta exceso de longitud
+        - normaliza espacios
+        """
+    t = normalizar_para_nlp((txt or "").strip().lower())
+    if not t:
+        return ""
+
+    # quitar urls
+    t = re.sub(r"https?://\S+", "", t)
+    t = re.sub(r"\bwww\.\S+", "", t)
+
+    # quitar rutas sueltas tipo //about
+    t = re.sub(r"//\S+", "", t)
+
+    # colapsar espacios
+    t = re.sub(r"\s+", " ", t).strip()
+
+    # recorte por seguridad (evita “frases narrativas”)
+    if len(t) > 80:
+        t = t[:80].rsplit(" ", 1)[0].strip()
+
+    return t
+
+
+
 # ----------------------------
 # DESALINEACIÓN GLOBAL (independiente de reglas)
 # ----------------------------
@@ -923,6 +1702,98 @@ def _perfil_desalineado(cat_oferta, cat_cv,
         "exp_req": exp_req,   "exp_hit": len(inter_exp),   "exp_ratio": round(exp_ratio, 3)
     }
     return desalineado, razones, resumen
+
+
+
+# ----------------------------
+# OFERTA INSUFICIENTE / NO CONCLUYENTE (guardarraíl general)
+# ----------------------------
+GENERIC_OFFER_TERMS = {
+    # verbos/acciones demasiado genéricos que NO deben “habilitar” un score alto por sí solos
+    "liderar", "gestionar", "desarrollar", "implementar", "analizar", "evaluar",
+    "coordinar", "planificar", "dirigir", "supervisar", "orquestar",
+    # sustantivos genéricos
+    "estrategia", "estrategias", "proceso", "procesos", "productividad", "rentabilidad",
+    "crecimiento", "operacion", "operación", "politicas", "políticas", "objetivos", "metas"
+}
+
+def _evaluar_oferta_insuficiente(cat_oferta: dict, texto_oferta: str, 
+                                 min_total_items: int = 4, 
+                                 min_tecnicas: int = 2, 
+                                 max_ratio_genericos: float = 0.70):
+    
+    """
+    Detecta ofertas poco estructuradas o demasiado genéricas.
+    Devuelve (insuficiente: bool, motivo: str, resumen: dict)
+
+    Criterios robustos:
+        - Muy pocos ítems totales extraídos
+        - Muy pocas técnicas extraídas (señal fuerte)
+        - Mayoría de ítems genéricos (acciones/terminología vacía)
+        - Ausencia de secciones típicas (requisitos/perfil/conocimientos) en el texto
+    """
+    of_tech = set(cat_oferta.get("tecnicas") or set())
+    of_exp  = set(cat_oferta.get("experiencia") or set())
+    of_soft = set(cat_oferta.get("blandas") or set())
+
+    total_items = len(of_tech) + len(of_exp) + len(of_soft)
+
+    # conteo genéricos (token/frase corta o palabras típicas)
+    def _is_generic(x: str) -> bool:
+        xn = normalizar_para_nlp((x or "").lower())
+        if not xn:
+            return True
+        # si la frase es 1-2 tokens y es genérica → genérico
+        toks = xn.split()
+        if len(toks) <= 2 and any(t in GENERIC_OFFER_TERMS for t in toks):
+            return True
+        # si contiene solo términos genéricos (alta proporción)
+        hits = sum(1 for t in toks if t in GENERIC_OFFER_TERMS)
+        return (hits / max(len(toks), 1)) >= 0.60
+
+    items_all = list(of_tech | of_exp | of_soft)
+    generic_count = sum(1 for it in items_all if _is_generic(it))
+    generic_ratio = (generic_count / max(len(items_all), 1)) if items_all else 1.0
+
+    # secciones típicas presentes (señal de requisitos estructurados)
+    offer_low = normalizar_para_nlp((texto_oferta or "").lower())
+    # secciones típicas O señales “estructurales” aunque sea en un solo párrafo
+    has_headers = (
+        any(h in offer_low for h in SECTION_HEADERS)
+        or bool(re.search(r"\brequisitos?\b|\bconocimientos?\b|\bperfil\b", offer_low))
+        or bool(re.search(r"\bexperiencia\s+minim[oa]\b|\bminim[oa]\s+\d+\s+anos\b|\bmas\s+de\s+\d+\s+anos\b", offer_low))
+        or ("buscamos" in offer_low and "experiencia" in offer_low)
+        or ("profesional en" in offer_low)
+)
+
+
+    insuficiente = (
+        (total_items < min_total_items) or
+        (len(of_tech) < min_tecnicas and not has_headers) or
+        (generic_ratio >= max_ratio_genericos and not has_headers)
+    )
+
+    motivo = ""
+    if insuficiente:
+        if total_items < min_total_items:
+            motivo = "Oferta con muy pocos elementos detectables (poco contenido evaluable)."
+        elif len(of_tech) < min_tecnicas and not has_headers:
+            motivo = "Oferta sin señales técnicas mínimas y sin secciones de requisitos."
+        else:
+            motivo = "Oferta demasiado genérica: predominan acciones/terminología no verificable."
+
+    resumen = {
+        "total_items": total_items,
+        "tecnicas": len(of_tech),
+        "experiencia": len(of_exp),
+        "blandas": len(of_soft),
+        "generic_ratio": round(generic_ratio, 3),
+        "has_headers": bool(has_headers)
+    }
+    return insuficiente, motivo, resumen
+
+
+
 
 # ----------------------------
 # MATCHING SEMÁNTICO SUAVE
@@ -1093,7 +1964,7 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
             print(f"   ❌ {r}")
     elif requisitos:
         print("\n✅ Cumples con los requisitos principales de la oferta.")
-"""
+    """
     # 1) Requisitos excluyentes (todavía sin imprimir, se ajustan después)
     requisitos = detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv) if texto_oferta else None
 
@@ -1162,29 +2033,40 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
     # Si una habilidad se reconoce en el matching semántico (p.ej. "metodologías ágiles"),
     # no tiene sentido seguir marcándola como "no cumplida" en requisitos.
     if requisitos:
-        # Conjunto de todas las skills reconocidas (técnicas, experiencia, blandas)
-        reconocidas_all = set()
-        for d in detalles_categorias.values():
-            for s in d.get("reconocidas", []):
-                if s:
-                    reconocidas_all.add(s.strip().lower())
+        try:
+            oferta_norm = normalizar_para_nlp((texto_oferta or "").lower())
 
-        if requisitos.get("no_cumple"):
-            filtrados = []
-            for tag in requisitos["no_cumple"]:
-                txt = (tag or "").strip().lower()
-                skip = False
-                for sk in reconocidas_all:
-                    if sk and sk in txt:
-                        # Ejemplo: tag = "Conocimiento requerido: metodologías ágiles"
-                        #          sk  = "metodologías ágiles"
-                        # Ya fue reconocida, no la tratamos como incumplida.
-                        skip = True
-                        break
-                if not skip:
-                    filtrados.append(tag)
-            requisitos["no_cumple"] = filtrados
-            requisitos["alerta"] = bool(filtrados)
+            # conjunto de todas skills reconocidas (normalizadas)
+            reconocidas_all = set()
+            for d in detalles_categorias.values():
+                for s in d.get("reconocidas", []):
+                    sn = normalizar_para_nlp((s or "").lower())
+                    if sn:
+                        reconocidas_all.add(sn)
+
+            def _core(tag: str) -> str:
+                t = (tag or "").strip()
+                if ":" in t:
+                    t = t.split(":", 1)[1].strip()
+                return normalizar_para_nlp(t.lower())
+
+            nuevos = []
+            for tag in (requisitos.get("no_cumple") or []):
+                c = _core(tag)
+                # si el core ya está reconocido como skill o aparece literalmente en el CV/oferta, no lo excluyas
+                if any(_contains_phrase(c, sk) or _contains_phrase(sk, c) for sk in reconocidas_all):
+                    continue
+                # evita fantasmas: si core ni siquiera aparece en oferta, bájalo (no duro)
+                if c and not _contains_phrase(oferta_norm, c):
+                    (requisitos.setdefault("no_cumple_soft", [])).append(tag)
+                    continue
+                nuevos.append(tag)
+
+            requisitos["no_cumple"] = nuevos
+            requisitos["alerta"] = bool(nuevos)
+        except Exception:
+            pass
+
 
 
 
@@ -1194,11 +2076,31 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
         (detalles_categorias[cat]["sin_reqs"] for cat in detalles_categorias)
     )
 
+    # 🔒 Guardarraíl robusto: oferta insuficiente / demasiado genérica (NO CONCLUYENTE)
+    oferta_insuficiente, motivo_insuf, resumen_insuf = _evaluar_oferta_insuficiente(
+        cat_oferta=cat_oferta,
+        texto_oferta=texto_oferta
+    )
+    
+    # ✅ Reconciliación: si el motor de requisitos detecta estructura real,
+    # la oferta NO debe marcarse como "insuficiente" aunque skills sea bajo.
+    try:
+        if requisitos:
+            n_hard = len(requisitos.get("no_cumple") or [])
+            n_soft = len(requisitos.get("no_cumple_soft") or [])
+            if (n_hard + n_soft) >= 2:
+                oferta_insuficiente = False
+                motivo_insuf = ""
+    except Exception:
+        pass
+
+
+
     # Score por habilidades:
-    # - si no hay skills en la oferta => NO evaluable (N/A), no lo inflamos a 100%
-    if oferta_sin_skills:
+    # - si no hay skills o la oferta es insuficiente/genérica => NO CONCLUYENTE (N/A)
+    if oferta_sin_skills or oferta_insuficiente:
         score_habilidades = 0.0
-        score_habilidades_label = "N/A (oferta sin skills explícitas detectables)"
+        score_habilidades_label = "N/A (oferta insuficiente para evaluación confiable)"
     else:
         # aquí se calcula el score real
         total = total_numerador / total_denominador if total_denominador > 0 else 0.0
@@ -1209,9 +2111,21 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
     # - Si hay requisitos excluyentes DUROS incumplidos => NO elegible (0.0)
     # - Si no, score ATS = score habilidades
     ats_excluido = bool(requisitos and requisitos.get("alerta") and (requisitos.get("no_cumple") or []))
-    score_ats = 0.0 if ats_excluido else score_habilidades
+    
+    # Si la oferta es insuficiente, el score ATS no es concluyente (no se infiere elegibilidad real)
+    if oferta_sin_skills or oferta_insuficiente:
+        score_ats = 0.0
+    else:
+        score_ats = 0.0 if ats_excluido else score_habilidades
 
     print("\n======================================")
+    
+    if oferta_insuficiente:
+        print("ℹ️ Nota: Oferta insuficiente o demasiado genérica para una evaluación confiable.")
+        print(f"   Motivo: {motivo_insuf}")
+        # Opcional: debug controlado (puedes comentarlo si no lo quieres visible)
+        # print(f"   Resumen: {resumen_insuf}")
+
 
     if oferta_sin_skills:
         print("ℹ️ Nota: No se detectaron requerimientos estructurados (skills) en la oferta;")
@@ -1237,10 +2151,10 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
         )
 
     else:
-        # Si la oferta no tiene skills, no calificamos “alta/media/baja” porque no es evaluable
-        if oferta_sin_skills:
-            print("🟡 Resultado: No evaluable por skills (oferta poco estructurada).")
-            print("   Recomendación: interpretar manualmente requisitos, experiencia y evidencias del CV.")
+        # Si la oferta es insuficiente, NO calificamos probabilidad (NO CONCLUYENTE)
+        if oferta_sin_skills or oferta_insuficiente:
+            print("🟡 Resultado: NO CONCLUYENTE (oferta poco estructurada / genérica).")
+            print("   Recomendación: añade requisitos (perfil, experiencia, herramientas, estudios) o analiza manualmente.")
         else:
             print(
                 "🟢 Alta probabilidad de pasar el filtro ATS" if score_ats >= 70 else
@@ -1319,7 +2233,10 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
     if ats_excluido and requisitos:
         for r in (requisitos.get("no_cumple") or []):
             core = r.split(":", 1)[1].strip() if ":" in r else r.strip()
-            formacion_prioritaria.append(f"Curso/lectura guiada en {core}")
+            core = _sanear_item_formacion(core)
+            if core and _term_formativo_valido(core):
+                formacion_prioritaria.append(f"Curso/lectura guiada en {core}")
+
 
         print("\n🎯 Formación prioritaria (requisitos excluyentes detectados):")
         for fp in formacion_prioritaria:
@@ -1330,7 +2247,10 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
     if requisitos and requisitos.get("no_cumple_soft"):
         for r in requisitos["no_cumple_soft"]:
             core = r.split(":", 1)[1].strip() if ":" in r else r.strip()
-            formacion_deseable.append(f"Curso sugerido (deseable) en {core}")
+            core = _sanear_item_formacion(core)
+            if core and _term_formativo_valido(core):
+                formacion_deseable.append(f"Curso sugerido (deseable) en {core}")
+
 
         print("\n✨ Formación deseable (nice to have):")
         for fd in formacion_deseable:

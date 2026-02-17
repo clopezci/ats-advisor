@@ -169,8 +169,15 @@ WHITELIST_TECH_PHRASES = {
 SECTION_HEADERS = (
     "mision del cargo","misión del cargo",
     "responsabilidades principales","responsabilidades",
-    "requisitos","requerimientos","perfil","sobre nosotros"
+    "requisitos","requerimientos","perfil","sobre nosotros",
+    "requisitos del cargo","requisitos del puesto",
+    "competencias y habilidades","competencias",
+    "diferenciales",
+    "formacion","formación",
+    "experiencia",
+    "lo que buscamos"
 )
+
 
 DEBUG_ATS = False
 def _dbg(*args):
@@ -375,9 +382,16 @@ def _contexto_requisito_duro(core: str, oferta_txt: str) -> bool:
         if not _contains_phrase(seg, c):
             continue
 
-        # si el segmento marca deseable/preferible → NO duro
-        if any(s in seg for s in SOFT_MARKERS):
+        seg_soft = any(s in seg for s in SOFT_MARKERS)
+
+        # ✅ Si está dentro de la sección de requisitos, es DURO salvo que el MISMO segmento lo marque como deseable
+        if en_req and not seg_soft:
+            return True
+
+        # si el segmento marca deseable/preferible → NO duro (si no hay evidencia dura)
+        if seg_soft and not any(h in seg for h in HARD_MARKERS):
             continue
+
 
         # marcador duro explícito cerca
         if any(h in seg for h in HARD_MARKERS):
@@ -603,6 +617,18 @@ def _extract_min_years_from_offer(oferta_txt: str):
     o = limpiar_texto(normalizar_para_nlp(oferta_txt.lower()))
 
 
+    # --- Guardarraíl: NO confundir antigüedad de la empresa con experiencia requerida ---
+    # Ej: "Empresa con más de 45 años en el mercado" NO es requisito del candidato
+    if re.search(r"\b(\d{1,2})\s+anos\s+en\s+(el\s+)?(mercado|industria|sector)\b", o):
+        # eliminamos esos casos antes de extraer años mínimos
+        o = re.sub(r"\b\d{1,2}\s+anos\s+en\s+(el\s+)?(mercado|industria|sector)\b", " ", o)
+
+    # Si hay "años" pero NO hay señales de experiencia/candidato cerca, no extraer requisito
+    # (evita falsos por "años en el mercado", "trayectoria", "existencia")
+    if ("anos" in o) and not re.search(r"\b(experiencia|minim|minimo|anos\s+de\s+experiencia|roles?\s+similares?|cargos?\s+similares?)\b", o):
+        return None
+
+
     # Patrones comunes
     patrones = [
         r"\bminim[oa]\s+(\d{1,2})\s+anos\b",
@@ -613,6 +639,11 @@ def _extract_min_years_from_offer(oferta_txt: str):
         r"\bminimo\s+(\d{1,2})\s+a\s+(\d{1,2})\s+anos\b",
         r"\b(\d{1,2})\s+anos\s+de\s+experiencia\b",
         r"\bexperiencia\s+de\s+(\d{1,2})\s+anos\b",
+        r"\bexperiencia\s+superior\s+a\s+(\d{1,2})\s+anos\b",
+        r"\bal\s+menos\s+(\d{1,2})\s+anos\b",
+        r"\b(\d{1,2})\s*[\-–]\s*(\d{1,2})\s+anos\b",
+        r"\bminim[oa]\s+de\s+(\d{1,2})\s+anos\b"
+
     ]
 
     mins = []
@@ -628,7 +659,7 @@ def _extract_min_years_from_offer(oferta_txt: str):
 
     if not mins:
         return None
-    return max(mins)  # conservador: si aparecen varios, tomamos el mayor
+    return min(mins)  # tomamos el mínimo real del requisito (3–5 => 3)
 
 def _cv_years_estimate(texto_cv: str):
     """
@@ -1592,8 +1623,47 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
             "responsabilidades", "mision del cargo", "misión del cargo"
         )
 
-        req_items = _extract_bullets_in_section(texto_oferta or "", "conocimientos requeridos", stop_headers)
-        des_items = _extract_bullets_in_section(texto_oferta or "", "conocimientos deseables", stop_headers)
+        # ✅ Soportar encabezados reales del mercado
+        req_headers = [
+            "conocimientos requeridos",
+            "requisitos del cargo",
+            "requisitos del puesto",
+            "requisitos",
+            "requerimientos",
+            "lo que buscamos",
+            "perfil requerido",
+        ]
+        soft_headers = [
+            "conocimientos deseables",
+            "deseables",
+            "diferenciales",
+            "se valora",
+            "se valorara",
+            "nice to have",
+        ]
+
+        req_items = []
+        for h in req_headers:
+            req_items += _extract_bullets_in_section(texto_oferta or "", h, stop_headers)
+
+        des_items = []
+        for h in soft_headers:
+            des_items += _extract_bullets_in_section(texto_oferta or "", h, stop_headers)
+
+        # dedupe preservando orden
+        def _dedupe_preserve(lst):
+            out, seen = [], set()
+            for x in (lst or []):
+                k = limpiar_texto(normalizar_para_nlp((x or "").lower()))
+                if not k or k in seen:
+                    continue
+                seen.add(k)
+                out.append(x)
+            return out
+
+        req_items = _dedupe_preserve(req_items)
+        des_items = _dedupe_preserve(des_items)
+
 
         cv_norm = limpiar_texto(normalizar_para_nlp((texto_cv or "").lower()))
         oferta_norm_plain = limpiar_texto(normalizar_para_nlp((texto_oferta or "").lower()))
@@ -1700,20 +1770,34 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
                 res["no_cumple"].append(f"Certificación requerida: {cert}")
                 res["alerta"] = True
 
-        # --- Profesión base obligatoria (solo si la oferta lo expresa como "Profesional en ...") ---
-        m_prof = re.search(r"\bprofesional\s+en\s+([^;\.\n]+)", oferta_plain)
-        if m_prof:
-            tramo_prof = m_prof.group(1).strip()
+        # --- Profesión/Carrera base obligatoria (más robusto: detecta múltiples formulaciones) ---
+        patrones_prof = [
+            r"\bprofesional\s+en\s+([^;\.\n]+)",
+            r"\bcarrera\s+profesional\s+culminada\s+en\s+([^;\.\n]+)",
+            r"\bformaci[oó]n\s+acad[eé]mica\s+en\s+([^;\.\n]+)",
+            r"\bt[ií]tulo\s+en\s+([^;\.\n]+)",
+            r"\begresad[oa]\s+en\s+([^;\.\n]+)",
+            r"\bprofesi[oó]n\s+en\s+([^;\.\n]+)",
+        ]
 
-            # Normalizamos "o afines" para no ensuciar la evaluación
-            tramo_prof = re.sub(r"\b(o\s+afines|y\s+afines|afines)\b", "", tramo_prof).strip()
+        tramos_detectados = []
+        for pat in patrones_prof:
+            for m in re.finditer(pat, oferta_plain):
+                tramo_prof = (m.group(1) or "").strip()
+                if not tramo_prof:
+                    continue
+                tramo_prof = re.sub(r"\b(o\s+afines|y\s+afines|afines)\b", "", tramo_prof).strip()
+                if tramo_prof:
+                    tramos_detectados.append(tramo_prof)
 
-            # Grupos equivalentes (si la oferta pide cualquiera del grupo, el CV cumple con cualquiera del grupo)
+            # Si no detectamos nada, no excluimos por profesión (conservador)
+        if tramos_detectados:
+            # Grupos equivalentes (si la oferta pide cualquiera del grupo, el CV cumple con cualquiera)
             PROF_EQUIV_GROUPS = [
                 {"ingenieria de sistemas", "ingeniería de sistemas", "informatica", "informática",
                 "ingenieria informatica", "ingeniería informática", "ingenieria de software", "ingeniería de software",
                 "ciencias de la computacion", "ciencias de la computación", "computacion", "computación",
-                "sistemas de informacion", "sistemas de información"},  # <- ojo: aquí es área afín, NO "profesión obligatoria" aislada
+                "sistemas de informacion", "sistemas de información"},
                 {"derecho", "abogado", "abogada", "juridico", "jurídico"},
                 {"medicina", "medico", "médico"},
                 {"psicologia", "psicología"},
@@ -1723,28 +1807,25 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
                 {"administracion de empresas", "administración de empresas"},
             ]
 
-            # Detectar qué grupos aparecen realmente en el tramo "profesional en ..."
-            grupos_requeridos = []
-            for g in PROF_EQUIV_GROUPS:
-                if any(x in tramo_prof for x in g):
-                    grupos_requeridos.append(g)
+            for tramo_prof in tramos_detectados:
+                grupos_requeridos = []
+                for g in PROF_EQUIV_GROUPS:
+                    if any(x in tramo_prof for x in g):
+                        grupos_requeridos.append(g)
 
-            # Si la oferta no menciona ningún grupo conocido, NO excluimos por profesión (conservador)
-            for g in grupos_requeridos:
-                # Cumple si el CV tiene cualquiera del grupo
-                if not any(x in cv_plain for x in g):
-                    # elegimos una etiqueta representativa (la primera que aparezca en la oferta)
-                    etiqueta = None
-                    for x in g:
-                        if x in tramo_prof:
-                            etiqueta = x
-                            break
-                    etiqueta = etiqueta or next(iter(g))
+                # Si el tramo no menciona un grupo conocido, no excluimos por profesión (conservador)
+                for g in grupos_requeridos:
+                    if not any(x in cv_plain for x in g):
+                        etiqueta = None
+                        for x in g:
+                            if x in tramo_prof:
+                                etiqueta = x
+                                break
+                        etiqueta = etiqueta or next(iter(g))
 
-                    res["no_cumple"] = list(res.get("no_cumple") or [])
-                    res["no_cumple"].append(f"Profesión requerida: {etiqueta}")
-                    res["alerta"] = True
-
+                        res["no_cumple"] = list(res.get("no_cumple") or [])
+                        res["no_cumple"].append(f"Profesión requerida: {etiqueta}")
+                        res["alerta"] = True
 
 
     except Exception:
@@ -1821,8 +1902,12 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
                         res["no_cumple_soft"] = list(res.get("no_cumple_soft") or [])
                         res["no_cumple_soft"].append(req.get("raw") or f"Experiencia sugerida: mínimo {y} años en {dom}")
                 else:
-                    # si hay evidencia del dominio pero no tenemos años estimables -> lo dejamos soft
-                    if (cv_years is None) or (cv_years < y):
+                    # ✅ Años por dominio: si no tenemos forma confiable de medir años EN ese dominio,
+                    # lo dejamos como SOFT (no excluir)
+                    if cv_years is None:
+                        res["no_cumple_soft"] = list(res.get("no_cumple_soft") or [])
+                        res["no_cumple_soft"].append(req.get("raw") or f"Experiencia sugerida: mínimo {y} años en {dom}")
+                    elif cv_years < y:
                         if hard:
                             res["no_cumple"] = list(res.get("no_cumple") or [])
                             res["no_cumple"].append(req.get("raw") or f"Experiencia requerida: mínimo {y} años en {dom}")
@@ -1897,7 +1982,7 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
                 res["alerta"] = bool(res["no_cumple"])
     except Exception:
         pass
-
+    """
     # Parche realista: "Conocimiento requerido: X" NO es excluyente salvo que sea OBLIGATORIO/MANDATORIO
     # según el contexto real del texto de la oferta.
     try:
@@ -1979,7 +2064,7 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
     except Exception:
         pass
 
-
+    """
             
     # --- Parche: NO aceptar requisitos que no estén realmente en el texto de la oferta ---
     # ✅ FIX: comparar SIN tildes para evitar que "inglés" vs "ingles" baje a soft.
@@ -2800,6 +2885,31 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
         core = _sanear_item_formacion(core)
         if not core:
             return
+        
+        # 🚫 NO convertir sectores/profesiones en cursos (no son "formación" accionable como skill)
+        core_plain = limpiar_texto(normalizar_para_nlp(core.lower()))
+
+        bloqueados_exactos = {
+            "infraestructura", "manufactura", "produccion", "producción", "salud",
+            "medicina", "derecho", "abogado", "abogada"
+        }
+        if core_plain in bloqueados_exactos:
+            return
+
+        # ✅ Bloqueo por patrones (evita "carreras" y "sectores" como si fueran cursos)
+        if re.search(r"\b(ingenieria|ingeniería|derecho|psicologia|psicología|administracion|administración|civil|industrial|mecanica|mecánica|electrica|eléctrica)\b", core_plain):
+            return
+        if re.search(r"\b(sector|industria|manufactura|infraestructura|produccion|producción|construccion|construcción)\b", core_plain):
+            return
+
+
+        if core_plain.startswith("sector requerido") or core_plain.startswith("sector deseable"):
+            return
+        if core_plain.startswith("profesion requerida") or core_plain.startswith("profesión requerida"):
+            return
+
+        
+        
         if not _term_formativo_valido(core):
             return
 

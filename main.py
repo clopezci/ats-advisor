@@ -1,31 +1,31 @@
 # ==========================================================
-#  ATS Advisor - Proyecto de Fin de Máster (TFM)
-#  Universidad Internacional de Valencia (VIU)
-#  Autor: Carlos Emilio López  (clopezci@hotmail.com)
-#  Año: 2025
+#  ATS Advisor
+#Herramienta tecnológica de análisis y mejora de postulaciones laborales
+#
+#Desarrollado por Carlos Emilio López (clopezci@hotmail.com)
+#Proyecto independiente con propósito educativo y social
+#Año: 2025-2026
 # ----------------------------------------------------------
 #  Descripción:
-#  ATS Advisor es una herramienta educativa de código abierto
-#  diseñada como proyecto académico de fin de máster. Evalúa
-#  la compatibilidad entre una hoja de vida (CV) y una oferta
-#  laboral, simulando el funcionamiento de un sistema ATS.
-#
-#  Propiedad Intelectual:
-#  © 2025 Universidad Internacional de Valencia (VIU)
-#  © 2025 Carlos Emilio López
-#  Licencia de uso: Código abierto con fines educativos,
-#  investigación, y mejora libre bajo reconocimiento de autoría.
-#
-#  Descargo de responsabilidad:
-#  Este software se proporciona "tal cual", sin garantía de
-#  precisión o adecuación comercial. El autor y la universidad
-#  no se hacen responsables del uso indebido ni de decisiones
-#  tomadas con base en sus resultados. Los usuarios pueden
-#  modificar y adaptar el código respetando la autoría original.
-#
-#  Contacto:
-#  Carlos Emilio López - clopezci@hotmail.com
-# ==========================================================
+    #  ATS Advisor es una herramienta educativa. Evalúa
+    #  la compatibilidad entre una hoja de vida (CV) y una oferta
+    #  laboral, simulando el funcionamiento de un sistema ATS.
+    #
+    #  Propiedad Intelectual:
+        #  © 2025-2026 Carlos Emilio López
+        #  Licencia de uso: Código abierto con fines educativos,
+        #  investigación, y mejora libre bajo reconocimiento de autoría.
+        #
+        #  Descargo de responsabilidad:
+            #  Este software se proporciona "tal cual", sin garantía de
+            #  precisión o adecuación comercial. El autor
+            #  no se hacen responsables del uso indebido ni de decisiones
+            #  tomadas con base en sus resultados. Los usuarios pueden
+            #  modificar y adaptar el código respetando la autoría original.
+            #
+            #  Contacto:
+                #  Carlos Emilio López - clopezci@hotmail.com
+                # ==========================================================
 
 
 # ==========================
@@ -37,9 +37,7 @@
 #   3. Autoaprendizaje de nuevas skills
 #   4. Exportar resultados a PDF
 #
-# Mejora 2025-10-21:
-#   - Persistencia del CV: recuerda el último CV utilizado y pregunta si reutilizarlo.
-#   - Flujo de reutilización: si el usuario no quiere reutilizar, puede cargar otro CV en el mismo paso.
+# Mejora 2026-02-24:
 #
 # Autor: Carlos Emilio López (Proyecto TFM)
 # ===========================================
@@ -47,14 +45,21 @@
 import os
 import json
 import time
+import io
+import contextlib
+import tkinter as tk
+from tkinter import ttk
+from tkinter.scrolledtext import ScrolledText
 from modules import carga_archivos, analisis_basico, habilidades
 from modules.analisis_basico import contiene_lista_sospechosa
 from modules.pdf_exporter import exportar_resultado_pdf
+from modules.donacion import mostrar_popup_donacion
+
 
 # --- Helpers de estado (compatibles con ejecutable) ---
 import os, json, sys
 
-APP_VERSION = "V1.3 - Upd-1"
+APP_VERSION = "V-1.8"
 
 
 def _user_data_dir_main():
@@ -153,30 +158,84 @@ def limpiar_consola():
     """Limpia la pantalla de la consola (Windows/Linux/Mac)."""
     os.system('cls' if os.name == 'nt' else 'clear')
 
+def mostrar_resultados_popup(texto: str, titulo: str = "Resultado del análisis ATS"):
+    """
+    Muestra el texto del análisis en una ventana con scroll.
+    Al cerrar, retorna al flujo normal del programa (sin romper el menú).
+    """
+    base = tk.Tk()
+    base.withdraw()
+
+    win = tk.Toplevel(base)
+    win.title(titulo)
+    win.geometry("980x720")
+    win.resizable(True, True)
+
+    try:
+        ttk.Style(win).theme_use("clam")
+    except Exception:
+        pass
+
+    ttk.Label(
+        win,
+        text="Resumen del análisis (puedes copiar y revisar con calma):",
+        font=("Segoe UI", 12, "bold")
+    ).pack(pady=(10, 6))
+
+    box = ScrolledText(win, wrap="word", font=("Segoe UI", 10))
+    box.pack(fill="both", expand=True, padx=12, pady=8)
+    box.insert("1.0", texto or "")
+    box.configure(state="disabled")
+
+    def _cerrar():
+        try:
+            win.destroy()
+        except Exception:
+            pass
+        try:
+            base.quit()
+        except Exception:
+            pass
+
+    ttk.Button(win, text="Cerrar", command=_cerrar).pack(pady=(0, 12))
+    win.protocol("WM_DELETE_WINDOW", _cerrar)
+
+    # modal ligera para que no se pierda
+    try:
+        win.grab_set()
+    except Exception:
+        pass
+
+    base.mainloop()
+    try:
+        base.destroy()
+    except Exception:
+        pass
+
+
+
 # ----------------------------
 # MENÚ PRINCIPAL
 # ----------------------------
 def mostrar_menu():
-    print("===============================================")
-    print("   🧠 ANALIZADOR DE CV VS OFERTAS LABORALES   ")
-    print(f"  ATS ADVISOR {APP_VERSION} - PROYECTO TFM-TFT")
-    print("===============================================")
-    print("   Desarrollado por Carlos Emilio López          ")
-    print("   Contacto: clopezci@hotmail.com                ")
-    print("-----------------------------------------------")
-    print("   Este software es de código abierto, creado    ")
-    print("   con fines académicos en la Universidad        ")
-    print("   Internacional de Valencia (VIU).              ")
-    print("   © 2025 Carlos Emilio López / VIU              ")
-    print("   Uso educativo, libre y no comercial.          ")
-    print("===============================================")
+    print("====================================================================================================")
+    print("   🧠 Herramienta tecnológica de análisis y mejora de postulaciones laborales   ")
+    print(f"                        ATS ADVISOR {APP_VERSION}     ")
+    print("====================================================================================================")
+    print("     Desarrollado por © 2026 Carlos Emilio López - Contacto: clopezci@hotmail.com          ")
+    print("----------------------------------------------------------------------------------------------------")
+    print("     Este software es de código abierto, Proyecto independiente con propósito educativo y social.   ")
+    print("                           uso libre bajo reconocimiento de autoría.           ")
+    print("====================================================================================================")
+    print()
+    print("Bienvenido a ATS Advisor. Por favor, selecciona una opción:")
     print()
     print("1. Cargar hoja de vida (.pdf o .docx)")
     print("2. Cargar texto de la oferta y analizar")
     print("3. Salir")
-    print("-----------------------------------------------")
+    print("----------------------------------------------------------------------------------------------------")
     print("4. Gestionar 'ruido' aprendido (exclusiones)")
-    print("===============================================")
+    print("====================================================================================================")
 
 # ----------------------------
 # FLUJO PRINCIPAL DEL SISTEMA
@@ -223,44 +282,7 @@ def main():
         # Opción 2: Cargar oferta y analizar
         # ----------------------------
         elif opcion == "2":
-            """
-            # A) Si ya tenemos CV (en memoria o recordado), preguntar si lo reutiliza
-            if ruta_cv and os.path.exists(ruta_cv):
-                nombre_cv = os.path.basename(ruta_cv)
-                reuse = input(f"\n¿Deseas reutilizar el CV anterior \"{nombre_cv}\"? (s/n): ").strip().lower()
-                if reuse == "n":
-                    # Permitir cargar otro CV aquí mismo
-                    nuevo_cv = carga_archivos.cargar_cv()
-                    if nuevo_cv:
-                        ruta_cv = nuevo_cv
-                        _set_last_cv_path(ruta_cv)
-                        print(f"✅ CV actualizado a: {os.path.basename(ruta_cv)}")
-                    else:
-                        print("⚠️ No se seleccionó un nuevo CV. Se usará el CV anterior.")
-                else:
-                    print(f"🔁 Usando CV recordado: {nombre_cv}")
 
-            # B) Si NO hay CV, intentar recuperar del estado o forzar carga
-            if not ruta_cv or not os.path.exists(ruta_cv):
-                ruta_recordada = _get_last_cv_path()
-                if ruta_recordada:
-                    usar = input(f"\nSe encontró un CV anterior \"{os.path.basename(ruta_recordada)}\". ¿Usarlo? (s/n): ").strip().lower()
-                    if usar == "s":
-                        ruta_cv = ruta_recordada
-                        print(f"🔁 Usando CV recordado: {os.path.basename(ruta_cv)}")
-                    else:
-                        ruta_cv = None
-
-                if not ruta_cv:
-                    print("⚠️ Primero debe cargar su hoja de vida.")
-                    ruta_cv = carga_archivos.cargar_cv()
-                    if ruta_cv:
-                        _set_last_cv_path(ruta_cv)
-                        print(f"✅ CV cargado y recordado: {os.path.basename(ruta_cv)}")
-                    else:
-                        input("⚠️ No se cargó ningún CV. Presione Enter para continuar...")
-                        continue
-"""
             # Cargar oferta
             texto_oferta = carga_archivos.cargar_oferta()
             if not texto_oferta:
@@ -328,9 +350,23 @@ def main():
                 cat_oferta = analisis_basico.categorizar_texto(texto_oferta)
                 cat_cv = analisis_basico.categorizar_texto(texto_cv)
 
-                resultado_dict = analisis_basico.mostrar_resultados(
-                    cat_oferta, cat_cv, texto_cv, texto_oferta
-                )
+                buf = io.StringIO()
+                with contextlib.redirect_stdout(buf):
+                    resultado_dict = analisis_basico.mostrar_resultados(
+                        cat_oferta, cat_cv, texto_cv, texto_oferta
+                    )
+                texto_resultado = buf.getvalue()
+
+                # 1) Mostrar resultado en ventana (más visible y no ensucia consola)
+                mostrar_resultados_popup(texto_resultado)
+
+                # 2) Al cerrarla, mostrar donación (sutil pero visible)
+                try:
+                    mostrar_popup_donacion()
+                except Exception:
+                    pass
+                
+                
             except Exception as e:
                 print(f"\n❌ Error durante el análisis: {e}")
                 print("Sugerencias:")
@@ -375,6 +411,28 @@ def main():
                     print(f"\n✅ Archivo generado en: {ruta}")
                 input("Presione Enter para continuar...")
 
+
+            # ----------------------------
+            # MENSAJE FINAL + APOYO VOLUNTARIO (NO invasivo, sin preguntar)
+            # ----------------------------
+            print("\n💬 Mensaje final")
+            print("Esta herramienta es una versión inicial y puede no cubrir todas las variaciones del mercado laboral.")
+            print("Si encuentras un caso que no esté contemplado o quieres sugerir una mejora, escríbeme a: clopezci@hotmail.com")
+            print("\n🤝 Apoyo voluntario (donación simbólica)")
+            print("Si esta herramienta te fue útil, puedes invitarme una botella de agua o un café como apoyo voluntario, ")
+            print("para seguir mejorando la herramienta y ayudando a otras personas.")
+            print("El que lo hagas o no, no condiciona el uso de la herramineta.")
+            print("👉 Para ver opciones, escribe: DONAR (y presiona Enter). O presiona Enter para continuar.")
+            print("Y no olvides compartir con otras personas para que se puedan beneficiar de esta herramienta.")
+
+            try:
+                cmd = input("").strip().lower()
+                if cmd == "donar":
+                    mostrar_popup_donacion()
+            except Exception:
+                pass
+
+            
             input("\nPresione Enter para volver al menú...")
 
         # ----------------------------

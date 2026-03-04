@@ -13,3 +13,31 @@ env/
 *.sqlite
 *.db
 *.bak
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- Virtual env ---
+.venv/
+.venv311/
+venv/
+
+# --- Build / packaging ---
+build/
+dist/
+
+# --- Logs / temp ---
+*.log
+*.tmp
+
+# --- App temp/state (ATS Advisor) ---
+last_state.json
+data/temp_cv.txt
+
+# --- OS/IDE ---
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/

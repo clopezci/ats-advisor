@@ -1,31 +1,31 @@
 # ==========================================================
-#  ATS Advisor - Proyecto de Fin de Máster (TFM)
-#  Universidad Internacional de Valencia (VIU)
-#  Autor: Carlos Emilio López  (clopezci@hotmail.com)
-#  Año: 2025
+#  ATS Advisor
+#Herramienta tecnológica de análisis y mejora de postulaciones laborales
+#
+#Desarrollado por Carlos Emilio López (clopezci@hotmail.com)
+#Proyecto independiente con propósito educativo y social
+#Año: 2025-2026
 # ----------------------------------------------------------
 #  Descripción:
-#  ATS Advisor es una herramienta educativa de código abierto
-#  diseñada como proyecto académico de fin de máster. Evalúa
-#  la compatibilidad entre una hoja de vida (CV) y una oferta
-#  laboral, simulando el funcionamiento de un sistema ATS.
-#
-#  Propiedad Intelectual:
-#  © 2025 Universidad Internacional de Valencia (VIU)
-#  © 2025 Carlos Emilio López
-#  Licencia de uso: Código abierto con fines educativos,
-#  investigación, y mejora libre bajo reconocimiento de autoría.
-#
-#  Descargo de responsabilidad:
-#  Este software se proporciona "tal cual", sin garantía de
-#  precisión o adecuación comercial. El autor y la universidad
-#  no se hacen responsables del uso indebido ni de decisiones
-#  tomadas con base en sus resultados. Los usuarios pueden
-#  modificar y adaptar el código respetando la autoría original.
-#
-#  Contacto:
-#  Carlos Emilio López - clopezci@hotmail.com
-# ==========================================================
+    #  ATS Advisor es una herramienta educativa. Evalúa
+    #  la compatibilidad entre una hoja de vida (CV) y una oferta
+    #  laboral, simulando el funcionamiento de un sistema ATS.
+    #
+    #  Propiedad Intelectual:
+        #  © 2025-2026 Carlos Emilio López
+        #  Licencia de uso: Código abierto con fines educativos,
+        #  investigación, y mejora libre bajo reconocimiento de autoría.
+        #
+        #  Descargo de responsabilidad:
+            #  Este software se proporciona "tal cual", sin garantía de
+            #  precisión o adecuación comercial. El autor
+            #  no se hacen responsables del uso indebido ni de decisiones
+            #  tomadas con base en sus resultados. Los usuarios pueden
+            #  modificar y adaptar el código respetando la autoría original.
+            #
+            #  Contacto:
+                #  Carlos Emilio López - clopezci@hotmail.com
+                # ==========================================================
 
 
 # ==========================
@@ -35,22 +35,36 @@
 import os
 import json
 import re
+import unicodedata
 from math import exp
 import spacy
+
 
 # ----------------------------
 # Carga robusta de spaCy (fallbacks)
 # ----------------------------
+
+# --- Carga robusta del modelo  ---
+nlp = None
+
+# 1) Intentar cargar por import del paquete 
 try:
-    nlp = spacy.load("es_core_news_lg")
+    import es_core_news_lg  # type: ignore
+    nlp = es_core_news_lg.load()
 except Exception:
     try:
-        nlp = spacy.load("es_core_news_md")
-        print("ℹ️ [habilidades] Usando es_core_news_md (fallback).")
+        import es_core_news_md  # type: ignore
+        nlp = es_core_news_md.load()
     except Exception:
-        nlp = spacy.load("es_core_news_sm")
-        print("ℹ️ [habilidades] Usando es_core_news_sm (fallback sin vectores).")
-
+        try:
+            import es_core_news_sm  # type: ignore
+            nlp = es_core_news_sm.load()
+        except Exception as e:
+            raise RuntimeError(
+                "No se encontró un modelo de spaCy. Instala en el entorno:\n"
+                "  python -m spacy download es_core_news_sm\n"
+                f"Detalle: {e}"
+            )
 # ----------------------------
 # Stopwords locales
 # ----------------------------
@@ -65,6 +79,29 @@ STOPWORDS = set([
     "esas","eso","esos","mi","mis","tus","sus","nuestro","nuestra","nuestras","vosotros","vosotras",
     "ellos","ellas","ustedes","usted","estos","estas","lo"
 ])
+
+def _strip_accents(s: str) -> str:
+    """Elimina tildes y normaliza a forma ASCII básica."""
+    if not s:
+        return ""
+    return "".join(
+        c for c in unicodedata.normalize("NFD", s)
+        if unicodedata.category(c) != "Mn"
+    )
+
+def normalizar_simple(s: str) -> str:
+    """
+    Normaliza texto para comparaciones robustas:
+    - Minúsculas
+    - Sin tildes
+    - Sin signos raros
+    - Espacios colapsados
+    """
+    s = _strip_accents(s or "").lower()
+    s = re.sub(r"[^a-z0-9áéíóúñü\s]", " ", s)
+    s = re.sub(r"\s+", " ", s).strip()
+    return s
+
 
 # ----------------------------
 # Listas semilla (depuradas y extendidas)
@@ -119,7 +156,10 @@ exp_terms = [
     "six sigma","gestion del cambio","gestion de riesgos","gestion de la calidad","mejora continua",
     "gestion del talento","desarrollo organizacional","gestion del conocimiento","gestion del desempeño",
     "evaluacion de proyectos","gestion financiera","analisis financiero","planificacion financiera",
-    "control presupuestario","optimización de costos",
+    "control presupuestario","optimización de costos",     "planificacion estrategica",
+    "proyectos estrategicos", "proyectos estratégicos",
+    "gestion de proyectos","gestion de portafolio","innovacion tecnologica",
+    "seguridad informatica","ciberseguridad","analitica de datos","inteligencia de negocios"
 
     # Operaciones rol
     "reclutar","formar","entrenar","asegurar","garantizar","consolidar","reportar",
@@ -226,18 +266,50 @@ def _save_noise_db(data: dict):
     except Exception:
         pass
 
-def _noise_mark(term: str, inc: int = 1):
-    term = (term or "").strip().lower()
-    if not term:
+def _noise_mark(term: str):
+    """
+    Marca un término como 'ruido' aprendido (contabiliza en noise_terms.json),
+    PERO evita falsos positivos: si el término está protegido, no se aprende.
+    """
+    t = (term or "").strip().lower()
+    if not t:
         return
-    data = _load_noise_db()
-    data[term] = int(data.get(term, 0)) + inc
-    _save_noise_db(data)
+
+    # 1) Guardrail: NO aprender como ruido algo protegido
+    if is_protected_term(t):
+        return
+
+    # 2) Guardrail: no aprender tokens demasiado cortos / basura
+    if len(t) < 4:
+        return
+
+    # 3) Guardrail: no aprender números puros
+    if t.isdigit():
+        return
+
+    # Mecanismo de persistencia (archivo, dict, etc.)
+    try:
+        noise_db = _load_noise_db()
+        noise_db[t] = int(noise_db.get(t, 0)) + 1
+        _save_noise_db(noise_db)
+    except Exception:
+        pass
+
+
 
 def dynamic_exclude_terms(threshold: int = 4) -> set:
-    """Devuelve términos que han aparecido como 'ruido' al menos 'threshold' veces."""
+    """Devuelve términos que han aparecido como 'ruido' al menos 'threshold' veces,
+    excluyendo siempre los términos protegidos."""
     data = _load_noise_db()
-    return {t for t, c in data.items() if int(c) >= int(threshold)}
+    out = set()
+    for t, c in data.items():
+        try:
+            if int(c) >= int(threshold) and (not is_protected_term(t)):
+                out.add(t)
+        except Exception:
+            continue
+    return out
+
 
 # ===== API pública para gestionar ruido desde el menú =====
 NOISE_THRESHOLD = 4  # umbral por defecto
@@ -258,29 +330,7 @@ def list_noise_terms(top_n: int = 50):
     orden = sorted(data.items(), key=lambda x: x[1], reverse=True)
     return orden[:max(1, int(top_n))]
 
-""" se inhabilita para activar la opcion nueva en empaquetado ejecutable
-def forget_noise_term(term: str):
-    Elimina un término específico del registro de ruido.
-    term = (term or "").strip().lower()
-    if not term:
-        return False
-    data = _load_noise_db()
-    if term in data:
-        del data
-        data = _load_noise_db()  # asegurar recarga limpia
-        # reescritura sin term
-        data = _load_noise_db()
-        with open(NOISE_DB_FILE, "r", encoding="utf-8") as f:
-            try:
-                data = json.load(f)
-            except Exception:
-                data = {}
-        if term in data:
-            del data[term]
-        _save_noise_db(data)
-        return True
-    return False
-"""
+
 
 def forget_noise_term(term: str):
     """Elimina un término específico del registro de ruido."""
@@ -351,6 +401,9 @@ DETERMINERS = {"la","el","los","las","esta","este","estos","estas","una","un"}
 PREP_EXCLUDE = {"con","sin","para","por","en","de","del","al","sobre","entre","desde","hacia",
                 "hasta","bajo","tras","segun","según","durante","mediante","excepto","salvo","como"}
 
+PROTECTED = {"proyecto", "proyectos"}
+
+
 # Patrones útiles para “X de Y”, “orquestación”, etc.
 PATTERNS = [
     re.compile(r"^(gesti[oó]n|an[aá]lisis|implementaci[oó]n|modelaci[oó]n|planificaci[oó]n)\s+de\s+[\w\sáéíóúñü\-]+$"),
@@ -394,9 +447,12 @@ def _pasa_filtro_pos(tok) -> bool:
     if lem in STOPWORDS:
         _noise_mark(lem)
         return False
-    if tok.pos_ in {"NOUN","PROPN"}:
-        _noise_mark(lem)
+    if tok.pos_ in {"NOUN", "PROPN"}:
+        # Solo marcar como ruido si es genérico/abstracto/contextual
+        if lem in GENERIC_NOUNS or lem in ABSTRACT_TERMS:
+            _noise_mark(lem)
         return True
+
     if tok.pos_ == "VERB":
         if lem in VERBS_DESCARTADOS:
             _noise_mark(lem)
@@ -544,7 +600,7 @@ def clasificar_skill(skill):
     return mejor_cat or "tecnicas"
 
 # ----------------------------
-# Detección de nuevas habilidades (Conceptos relevantes) — Corregido
+# Detección de nuevas habilidades (Conceptos relevantes)
 # ----------------------------
 
 # Ruido típico de ofertas (no son skills)
@@ -552,7 +608,7 @@ NOISE_PHRASES = {
     "sobre nosotros","acerca del empleo","acerca de","somos","estamos contratando",
     "híbrido","hibrido","excelentes beneficios","proceso de selección","postúlate","postulate",
     "nuestro equipo","nuestra empresa","nuestras soluciones","zona estratégica","retos estratégicos",
-    "limpiafy"  # ejemplo del caso reportado
+    "limpiafy"  
 }
 
 # Palabras comunes de sección/marketing para filtrar
@@ -575,8 +631,78 @@ def _is_noise_phrase_local(frase: str) -> bool:
         pass
     return False
 
+
+# ==========================================================
+#  PROTECCIÓN ANTI-FALSOS POSITIVOS (Release-safe)
+#  Evitar que términos válidos del dominio se aprendan como "ruido"
+# ==========================================================
+
+def _safe_load_json(path, default):
+    try:
+        import json, os
+        if os.path.exists(path):
+            with open(path, "r", encoding="utf-8") as f:
+                return json.load(f)
+    except Exception:
+        pass
+    return default
+
+def _flatten_strings(obj):
+    """Extrae strings desde listas/dicts anidados (normaliza a lowercase)."""
+    out = set()
+    if isinstance(obj, str):
+        out.add(obj.strip().lower())
+    elif isinstance(obj, list):
+        for x in obj:
+            out |= _flatten_strings(x)
+    elif isinstance(obj, dict):
+        for _, v in obj.items():
+            out |= _flatten_strings(v)
+    return {s for s in out if s}
+
+def _project_root_dir():
+    """En exe/frozen podría cambiar; usa ruta relativa del módulo como base."""
+    import os
+    return os.path.dirname(__file__)
+
+# Ajusta
+_SKILLS_CUSTOM_PATH = os.path.join(_project_root_dir(), "skills_custom.json")
+_REQ_RULES_PATH     = os.path.join(_project_root_dir(), "requirements_rules.json")
+
+def build_protected_terms():
+    """
+    Protege:
+    - Todas las skills definidas (skills_custom.json)
+    - Todos los términos/reglas de requisitos (requirements_rules.json), si existen
+    """
+    protected = set()
+
+    skills = _safe_load_json(_SKILLS_CUSTOM_PATH, {})
+    protected |= _flatten_strings(skills)
+
+    rules = _safe_load_json(_REQ_RULES_PATH, {})
+    protected |= _flatten_strings(rules)
+
+    # Limpieza mínima: evitar tokens absurdamente cortos
+    protected = {p for p in protected if len(p) >= 4}
+
+    return protected
+
+PROTECTED_TERMS = build_protected_terms()
+
+def is_protected_term(term: str) -> bool:
+    t = (term or "").strip().lower()
+    if not t:
+        return False
+    # Protección exacta (término o frase)
+    if t in PROTECTED_TERMS:
+        return True
+    return False
+
+
+
 EXCLUDE_TERMS = set({
-    # (igual que antes) — términos contextuales, comerciales y geográficos
+    # — términos contextuales, comerciales y geográficos
     "postulate","postúlate","postulacion","postulación","postular","postula",
     "busqueda","búsqueda","buscar","fortalezca","fortalecer","envia","envía",
     "enviar","aplica","aplicar","aplicacion","aplicación","oportunidad","reto",
@@ -608,6 +734,10 @@ try:
     EXCLUDE_TERMS |= dynamic_exclude_terms(threshold=NOISE_THRESHOLD)
 except Exception:
     pass
+
+# Protección explícita de términos competenciales clave
+EXCLUDE_TERMS -= PROTECTED
+
 
 def _normalize_local_alias(texto: str) -> str:
     _ALIAS_REGEX_LOCAL = [
@@ -647,6 +777,38 @@ def detectar_nuevas_habilidades(texto_oferta, umbral_longitud=4, top_k=12):
         if _is_noise_phrase_local(frase):
             _noise_mark(frase)
             continue
+
+                # --- FILTRO ANTI-FRASES GENÉRICAS O DE CONTEXTO ---
+        # 1. Pronombres posesivos: "nuestro equipo", "sus funciones", "nuestros usuarios"
+        if re.search(r"\b(nuestro|nuestra|nuestros|nuestras|su|sus)\b", frase):
+            _noise_mark(frase)
+            continue
+
+        # 2. Conectores narrativos: "a través de", "gracias a", "mediante"
+        if frase.startswith(("a través", "através", "gracias a", "mediante")):
+            _noise_mark(frase)
+            continue
+
+        # 3. Cuantificadores: "varios", "tamaño medio", "gran escala", "multidisciplinar"
+        if re.search(r"\b(varios|varias|tamaño|gran|medio|multidisciplinar|altamente|cualificado)\b", frase):
+            _noise_mark(frase)
+            continue
+
+        # 4. Frases sin verbo o solo con verbos auxiliares
+        frase_doc = nlp(frase)
+        verbs = [t.lemma_.lower() for t in frase_doc if t.pos_ == "VERB"]
+        if verbs and all(v in {"ser", "estar", "tener", "haber"} for v in verbs):
+            _noise_mark(frase)
+            continue
+
+        # 5. Frases que contienen palabras NO competenciales
+        NON_SKILL_TERMS = {"equipo", "personal", "usuarios", "personas", "empresa", "organización", 
+                           "ambiente", "tamaño", "planes", "oportunidades"}
+        if any(w in NON_SKILL_TERMS for w in tokens_simple):
+            _noise_mark(frase)
+            continue
+
+
 
         tokens_simple = frase.split()
         if len(tokens_simple) < 2 or len(tokens_simple) > 8:
@@ -710,3 +872,46 @@ def detectar_nuevas_habilidades(texto_oferta, umbral_longitud=4, top_k=12):
     print("ℹ️ Ruido registrado/actualizado para exclusión dinámica.")
 
     return [c for c, _ in ordenados[:top_k]]
+
+def frase_en_texto(frase: str, texto: str) -> bool:
+    """
+    Comprueba si una 'skill' en formato de frase está realmente
+    presente en el texto (oferta o CV), de forma robusta:
+
+    - Insensible a mayúsculas/minúsculas y tildes.
+    - No exige coincidencia exacta carácter a carácter.
+    - Usa tokens clave (sin stopwords) y requiere que aparezca
+      la mayor parte de ellos en el texto.
+    """
+    if not frase or not texto:
+        return False
+
+    f = normalizar_simple(frase)
+    t = normalizar_simple(texto)
+
+    if not f or not t:
+        return False
+
+    # 1) Si la frase normalizada aparece tal cual
+    if f in t:
+        return True
+
+    # 2) Coincidencia por tokens clave
+    tokens = [w for w in f.split() if w not in STOPWORDS and len(w) >= 3]
+    if not tokens:
+        return False
+
+    # Contar cuántos tokens clave de la frase aparecen en el texto
+    texto_tokens = t.split()
+    hits = sum(1 for w in tokens if w in texto_tokens)
+
+    # Regla:
+    # - Si la frase tiene 1 token clave: debe aparecer 1/1
+    # - Si tiene 2 tokens: deben aparecer los 2
+    # - Si tiene 3 o más: al menos 2 y al menos la mitad redondeada hacia arriba
+    if len(tokens) == 1:
+        return hits == 1
+
+    needed = max(2, (len(tokens) + 1) // 2)
+    return hits >= needed
+

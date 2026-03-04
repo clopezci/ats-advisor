@@ -73,13 +73,15 @@ STOPWORDS = set([
     "eres","sea","fui","fue","está","estaba","estuvo","estuve","estar","acerca","estamos",
     "esa","esas","eso","esos","mi","mis","tus","sus","nuestro","nuestra","nuestras"
 ])
-VERBS_DESCARTADOS = {"ser","estar","tener","hacer","poder","deber","dar","trabajar","apoyar"}
+VERBS_DESCARTADOS = {"ser","estar","tener","hacer","poder","deber","dar","trabajar",
+                     "apoyar","colaborar","participar","contribuir","realizar"
+                     }
 
 SIM_THRESHOLD = 0.55
 SIM_THRESHOLD_LOCAL = 0.80
 SIM_MARGIN = 0.05
 
-# ✅ Whitelist: tokens sueltos técnicos (tecnologías/herramientas)
+#  Whitelist: tokens sueltos técnicos (tecnologías/herramientas)
 WHITELIST_TECH_TOKENS = {
     "python","javascript","java","sql","aws","azure","gcp","sap","crm", "n8n","salesforce","hubspot",
     "okrs","okr","kpi","nps","sla","docker","kubernetes","react","nodejs","tableau","pandas",
@@ -106,23 +108,23 @@ WHITELIST_TECH_TOKENS = {
     "adobe","final","cut","pro","audacity","gimp","blender","cinema","4d","autodesk","maya","photoshop",
     "lightroom","aftereffects","after","effects","illustrator","indesign","premiere","davinci","resolve",
     "audition","media","encoder", "figma", "canva"
-}
+    }
 
-# ❌ Negocio/operación sueltos
+#  Negocio/operación sueltos
 BUSINESS_SINGLETONS = {
     "cumplimiento","formacion","formación","gestion","gestión","operacion","operación","operaciones",
     "sistema","sistemas","tecnologia","tecnología","negocio","proyecto","proyectos","servicio","servicios",
     "vision","visión","direccion","dirección","proceso","procesos"
-}
+    }
 
-# ❌ Genéricos sueltos que NO cuentan como técnicas
+#  Genéricos sueltos que NO cuentan como técnicas
 TECH_GENERIC_BLOCK = {
     "cumplimiento","eficiencia","especializacion","especialización","formacion","formación",
     "gestion","gestión","innovacion","innovación","profesional","sistemas","soluciones",
     "tecnologia","tecnología","transformacion","transformación","calidad","datos","proceso",
     "procesos","digital","excelencia","ingenieria","ingeniería","ciencia","ciencias",
     "institucion","institución","fundacion","fundación","colombia"
-}
+    }
 
 # Frases técnicas frecuentes (señales fuertes, multi-palabra)
 WHITELIST_TECH_PHRASES = {
@@ -161,22 +163,25 @@ WHITELIST_TECH_PHRASES = {
     "composicion fotografica","composición fotográfica",
     "manejo de camara","manejo de cámara","iluminacion","iluminación",
     "diseno grafico","diseño gráfico","motion graphics"
-}
+    }
 
 
 
-# 🔎 Cabeceras/secciones típicas
+# Cabeceras/secciones típicas
 SECTION_HEADERS = (
-    "mision del cargo","misión del cargo",
+    "mision del cargo","misión del cargo", 
     "responsabilidades principales","responsabilidades",
     "requisitos","requerimientos","perfil","sobre nosotros",
-    "requisitos del cargo","requisitos del puesto",
-    "competencias y habilidades","competencias",
-    "diferenciales",
-    "formacion","formación",
-    "experiencia",
-    "lo que buscamos"
-)
+    "requisitos del cargo","requisitos del puesto", 
+    "competencias y habilidades","competencias", "habilidades", 
+    "diferenciales", "diferenciales del cargo", "diferenciales del puesto",
+    "formacion","formación", "educacion","educación", "estudios", "estudios requeridos",
+    "experiencia", "experiencia requerida", "experiencia deseable",
+    "lo que buscamos", "lo que buscamos en el candidato", 
+    "lo que buscamos en la candidata", "lo que buscamos en el perfil", 
+    "lo que buscamos en el postulante", "lo que buscamos en el aspirante", 
+    "lo que buscamos en el talento"
+    )
 
 
 DEBUG_ATS = False
@@ -298,7 +303,7 @@ def _contains_phrase(texto: str, frase: str) -> bool:
     """
     if not texto or not frase:
         return False
-    # Ambos ya deberían venir normalizados con normalizar_para_nlp
+    
     tokens = [re.escape(t) for t in frase.strip().split()]
     if not tokens:
         return False
@@ -313,7 +318,9 @@ HARD_MARKERS = {
     "obligatorio", "obligatoria", "mandatorio", "mandatoria",
     "indispensable", "imprescindible", "debe", "deberá", "debera",
     "requisito excluyente", "excluyente", "mínimo", "minimo", "must",
-    "required","mandatory","essential","must have","required experience","mandatory requirement"
+    "required","mandatory","essential","must have","required experience",
+    "mandatory requirement", "essential requirement", "must have experience",
+    "must have skill", "required skill", "mandatory skill", "essential skill"
 }
 
 SOFT_MARKERS = {
@@ -371,7 +378,7 @@ def _contexto_requisito_duro(core: str, oferta_txt: str) -> bool:
     o = normalizar_para_nlp(oferta_txt.lower())
     c = normalizar_para_nlp(core.lower())
 
-    # Si ni siquiera aparece, no puede ser duro
+    # Si no aparece, no puede ser duro
     if not _contains_phrase(o, c):
         return False
 
@@ -460,7 +467,7 @@ def _extraer_bloque(oferta_txt: str, header: str, stops=None) -> str:
 
     return after[:cut].strip()
 
-# Keywords canónicas del dominio "procesos/transformación"
+# Keywords del dominio "procesos/transformación"
 _CANON = {
     "bi": ["business intelligence", "bi", "inteligencia de negocios", "inteligencia de negocio"],
     "excel_avanzado": ["excel intermedio-avanzado", "excel intermedio avanzado", "excel avanzado", "excel intermedio"],
@@ -496,7 +503,7 @@ def _en_seccion_conocimientos_requeridos(core: str, oferta_txt: str) -> bool:
         c = _norm_txt(core)
         return bool(c and c in req)
 
-    # si cualquier keyword canónica del core aparece en el bloque requeridos => True
+    # si cualquier keyword del core aparece en el bloque requeridos => True
     for k in core_k:
         for a in _CANON.get(k, []):
             if _norm_txt(a) in req:
@@ -619,8 +626,8 @@ def _extract_min_years_from_offer(oferta_txt: str):
     o = limpiar_texto(normalizar_para_nlp(oferta_txt.lower()))
 
 
-    # --- Guardarraíl: NO confundir antigüedad de la empresa con experiencia requerida ---
-    # Ej: "Empresa con más de 45 años en el mercado" NO es requisito del candidato
+    # --- Guardarraíl: NO se debe confundir antigüedad de la empresa con experiencia requerida ---
+    
     if re.search(r"\b(\d{1,2})\s+anos\s+en\s+(el\s+)?(mercado|industria|sector)\b", o):
         # eliminamos esos casos antes de extraer años mínimos
         o = re.sub(r"\b\d{1,2}\s+anos\s+en\s+(el\s+)?(mercado|industria|sector)\b", " ", o)
@@ -730,7 +737,7 @@ def _extract_sector_requirements(oferta_txt: str):
         ctx_hard = any(h in seg for h in HARD_MARKERS)
         ctx_sector = ("sector" in seg) or ("industria" in seg)
 
-        # 🔒 Sector solo se evalúa si hay señal real de exigencia
+        # Sector solo se evalúa si hay señal real de exigencia
         # (evita excluir por menciones blandas tipo "experiencia en el sector")
         #ctx_sector_fuerte = ctx_hard or bool(re.search(r"\b(indispensable|necesariament[ee]|requisito\s+excluyente|excluyente)\b", seg))
         ctx_sector_fuerte = ctx_hard
@@ -1001,7 +1008,10 @@ def _cv_english_level(texto_cv: str):
 ACADEMIC_TRIGGER = {
     "estudios", "profesional", "pregrado", "grado", "ingenieria", "ingeniería",
     "informatica", "informática", "especializacion", "especialización",
-    "maestria", "maestría", "master", "máster", "mba", "posgrado", "postgrado"
+    "maestria", "maestría", "master", "máster", "mba", "posgrado", "postgrado", 
+    "doctorado", "phd", "administracion", "administración", "carrera", 
+    "arquitectura", "periodismo", "psicologia", "psicología", "derecho",
+    "medicina", "salud", "educacion", "educación"
 }
 
 # Equivalencias escalables: cada clave representa un "concepto" y lista variantes aceptables en CV
@@ -1053,7 +1063,7 @@ def _split_academic_options(core: str) -> list:
     """
     c = _norm_acad(core)
 
-    # ✅ FIX: quitar prefijos que rompen equivalencias ("Profesional en ...")
+    # FIX: quitar prefijos que rompen equivalencias ("Profesional en ...")
     c = re.sub(r"\bprofesional\s+en\b", "", c).strip()
     c = re.sub(r"\bprofesional\b", "", c).strip()
 
@@ -1162,7 +1172,7 @@ def _categoria_por_similitud(texto_skill: str):
     if _sim_corpora(t) < SIM_THRESHOLD:
         return None
 
-    # 🔒 No clasificar tokens técnicos whitelist por similitud
+    # No clasificar tokens técnicos whitelist por similitud
     if t in WHITELIST_TECH_TOKENS:
         return None
 
@@ -1233,7 +1243,7 @@ def categorizar_texto(texto):
     texto = normalizar_para_nlp(texto)
 
 
-    # 🔎 Filtrar cabeceras que contaminan los chunks
+    # Filtrar cabeceras que contaminan los chunks
     lineas_filtradas = []
     for l in (texto or "").splitlines():
         low = (l or "").strip().lower()
@@ -1259,7 +1269,7 @@ def categorizar_texto(texto):
                                  "elearning", "blackboard", "canvas", "schoology",}
 
     for tok in TOKENS_TECNICOS_LITERALES:
-        # 🔒 Moodle solo si aparece exactamente como palabra independiente
+        # Moodle solo si aparece exactamente como palabra independiente
         if tok == "moodle":
             if re.search(r"\bmoodle\b", scan_text):
                 categorias["tecnicas"].add(tok)
@@ -1412,7 +1422,7 @@ def categorizar_texto(texto):
         if t in tech_skills:
             return True
 
-        # ✅ NUEVO: conservar herramientas/prod/tecnologías por forma (evita perder Postilion, Atalla, etc.)
+        #  conservar herramientas/prod/tecnologías por forma (evita perder Postilion, Atalla, etc.)
         # - alfanumérico o palabra "tipo producto"
         # - longitud >= 4
         # - no es stopword ni genérico
@@ -1440,7 +1450,7 @@ def categorizar_texto(texto):
             depuradas.add(kt_unit)
             
             
-    # ✅ asignación UNA sola vez, al final
+    # asignación UNA sola vez, al final
     categorias["tecnicas"] = depuradas
 
 
@@ -1483,7 +1493,7 @@ def _extract_bullets_in_section(oferta_txt: str, header: str, stop_headers: tupl
     tail = o[m.end():]
     
     
-    # 🔒 Corte fuerte: si la sección "lo que ofrecemos" aparece, parar extracción
+    # Corte fuerte: si la sección "lo que ofrecemos" aparece, parar extracción
     # (Evita que beneficios/modalidad entren como requisitos)
     stop_offer = re.search(r"\blo\s+que\s+ofrecemos\b", tail)
     if stop_offer:
@@ -1501,7 +1511,7 @@ def _extract_bullets_in_section(oferta_txt: str, header: str, stop_headers: tupl
     if cut is not None:
         tail = tail[:cut]
 
-    # ✅ FIX: si los bullets vienen "pegados" en una misma línea (al pegar texto), los separamos
+    # FIX: si los bullets vienen "pegados" en una misma línea (al pegar texto), los separamos
     # ejemplo: "• BI. • Excel. • BPMN." => líneas separadas
     tail = re.sub(r"\s*[•\u2022·]+\s*", "\n", tail)
 
@@ -1511,11 +1521,11 @@ def _extract_bullets_in_section(oferta_txt: str, header: str, stop_headers: tupl
         if not ln:
             continue
         
-        # 🔒 SOLO aceptar líneas que originalmente eran bullets reales
+        # SOLO aceptar líneas que originalmente eran bullets reales
         #if not raw.strip().startswith(("•", "-", "*")):
         #    continue
 
-        # 🔒 Filtrar líneas narrativas sin contenido real de requisito
+        # Filtrar líneas narrativas sin contenido real de requisito
         ln_norm = limpiar_texto(normalizar_para_nlp(ln.lower()))
 
         # descartar frases tipo marketing/pregunta
@@ -1528,7 +1538,7 @@ def _extract_bullets_in_section(oferta_txt: str, header: str, stop_headers: tupl
 
         
         
-        # 🔒 Evitar encabezados disfrazados de ítems
+        # Evitar encabezados disfrazados de ítems
         ln_plain = limpiar_texto(normalizar_para_nlp(ln.lower()))
         if ln_plain in {
             "requisitos del cargo", "requisitos del puesto", "requisitos", "requerimientos",
@@ -1620,7 +1630,7 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
 
         return False
 
-    # ✅ Parche académico (APLICA cambios al final del loop, no dentro)
+    # Parche académico (APLICA cambios al final del loop, no dentro)
     try:
         if res and res.get("no_cumple"):
             nuevos_duros = []
@@ -1631,7 +1641,7 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
                     continue
                 nuevos_duros.append(tag)
 
-            # ✅ Estas asignaciones van FUERA del for (se aplican una sola vez)
+            
             res["no_cumple"] = nuevos_duros
             res["no_cumple_soft"] = movidos_a_soft
             res["alerta"] = bool(nuevos_duros)
@@ -1683,7 +1693,7 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
             "responsabilidades", "mision del cargo", "misión del cargo"
         )
 
-        # ✅ Soportar encabezados reales del mercado
+        # Soportar encabezados reales del mercado
         req_headers = [
             "conocimientos requeridos",
             "requisitos del cargo",
@@ -1733,13 +1743,13 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
             if not it:
                 return False
 
-            # ✅ NUEVO: si el item parece académico/profesión, validar con motor académico robusto
+            # si el item parece académico/profesión, validar con motor académico robusto
             if re.search(r"\b(profesional en|ingenieria|ingeniería|telematica|telemática|pregrado|grado|titulo|título)\b", it):
-                # reutiliza tu función robusta (usa equivalencias y "o afines")
+                # reutilizar función robusta (usa equivalencias y "o afines")
                 tag_tmp = f"Formación requerida: {item}"
                 if _cumple_requisito_academico(tag_tmp, texto_cv or ""):
                     return True
-                # si no cumple por motor académico, sigue con validación normal (por si era otra cosa)
+                # si no cumple por motor académico, sigue con validación normal 
 
             # match tolerante (frase completa o siglas típicas)
             if _contains_phrase(cv_norm, it):
@@ -1776,7 +1786,7 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
             if not it_plain or not _contains_phrase(oferta_norm_plain, it_plain):
                 continue
 
-            # 🔒 FILTRO ANTIBENEFICIOS / CONDICIONES LABORALES
+            # FILTRO ANTIBENEFICIOS / CONDICIONES LABORALES
             it_plain_check = limpiar_texto(normalizar_para_nlp(it.lower()))
 
             bloqueos_no_conocimiento = [
@@ -1801,7 +1811,7 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
 
             it_plain_check = limpiar_texto(normalizar_para_nlp(it.lower()))
 
-            # 🔒 BLOQUEO BENEFICIOS / NARRATIVO / CULTURA
+            # BLOQUEO BENEFICIOS / NARRATIVO / CULTURA
             bloqueos_contextuales = [
                 "no olvides", "postulate", "postúlate", "te interesa",
                 "lo que ofrecemos", "beneficios", "modalidad", "hibrida",
@@ -1834,7 +1844,7 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
                 res["alerta"] = True
                 
                 
-        # ✅ FIX: si algo aparece en requeridos, NO puede añadirse como deseable (aunque el texto pegado lo repita)
+        # FIX: si algo aparece en requeridos, NO puede añadirse como deseable (aunque el texto pegado lo repita)
         def _canon_key(x: str) -> str:
             xn = limpiar_texto(normalizar_para_nlp((x or "").lower()))
             if "bpmn" in xn:
@@ -2003,7 +2013,7 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
 
             cv_years = _cv_years_estimate(texto_cv or "")
 
-            # ✅ lógica correcta
+            #  lógica correcta
             if is_hard_years:
                 if (cv_years is None) or (cv_years < req_years):
                     res["no_cumple"] = list(res.get("no_cumple") or [])
@@ -2047,7 +2057,7 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
                         res["no_cumple_soft"] = list(res.get("no_cumple_soft") or [])
                         res["no_cumple_soft"].append(req.get("raw") or f"Experiencia sugerida: mínimo {y} años en {dom}")
                 else:
-                    # ✅ Años por dominio: si no tenemos forma confiable de medir años EN ese dominio,
+                    #  Años por dominio: si no tenemos forma confiable de medir años EN ese dominio,
                     # lo dejamos como SOFT (no excluir)
                     if cv_years is None:
                         res["no_cumple_soft"] = list(res.get("no_cumple_soft") or [])
@@ -2123,92 +2133,10 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
                 res["alerta"] = bool(res["no_cumple"])
     except Exception:
         pass
-    """
-    # Parche realista: "Conocimiento requerido: X" NO es excluyente salvo que sea OBLIGATORIO/MANDATORIO
-    # según el contexto real del texto de la oferta.
-    try:
-        if res and res.get("no_cumple"):
-            duros = []
-            suaves = []
 
-            oferta_txt = texto_oferta or ""
-            for tag in res["no_cumple"]:
-                txt = (tag or "").strip()
-                txt_low = txt.lower()
-
-                if txt_low.startswith("conocimiento requerido:"):
-                    core = txt.split(":", 1)[1].strip() if ":" in txt else txt
-
-                    # Si NO hay señal dura en la oferta alrededor de ese core → NO excluir.
-                    if not _contexto_requisito_duro(core, oferta_txt):
-                        suaves.append(tag)
-                        continue
-
-                # Si es una frase larguísima (ruido) también se baja a soft
-                core_len = len((txt.split(":", 1)[1] if ":" in txt else txt).split())
-                if core_len > 10:
-                    suaves.append(tag)
-                    continue
-
-                duros.append(tag)
-
-            res["no_cumple_soft"] = (res.get("no_cumple_soft") or []) + suaves
-            res["no_cumple"] = duros
-            res["alerta"] = bool(duros)
-
-    except Exception:
-        pass
-
-    
-    # Parche: "Conocimiento requerido:" NO debe ser excluyente por defecto.
-    # Solo será DURO si el segmento donde aparece trae HARD_MARKERS.
-    try:
-        if res and res.get("no_cumple"):
-            oferta_norm = normalizar_para_nlp((texto_oferta or "").lower())
-            segmentos = re.split(r"[\n\.\;\|]+", oferta_norm)
-
-            def _ctx_hard_for_core(core: str) -> bool:
-                if not core:
-                    return False
-
-                # ✅ Si el core está dentro de una sección "Conocimientos requeridos / Requisitos", se considera DURO
-                if _en_seccion_requisitos(core, texto_oferta or ""):
-                    return True
-
-                # Fallback: DURO si aparece en el mismo segmento con HARD_MARKERS
-                for seg in segmentos:
-                    if _contains_phrase(seg, core) and any(h in seg for h in HARD_MARKERS):
-                        return True
-
-                return False
-
-
-            duros = []
-            suaves = list(res.get("no_cumple_soft") or [])
-
-            for tag in (res.get("no_cumple") or []):
-                txt = (tag or "").strip()
-                low = txt.lower()
-
-                if low.startswith("conocimiento requerido:"):
-                    core = low.split(":", 1)[1].strip()
-                    if not _ctx_hard_for_core(core):
-                        suaves.append(tag)
-                        continue
-
-                duros.append(tag)
-
-            res["no_cumple"] = duros
-            res["no_cumple_soft"] = suaves
-            res["alerta"] = bool(duros)
-
-    except Exception:
-        pass
-
-    """
             
     # --- Parche: NO aceptar requisitos que no estén realmente en el texto de la oferta ---
-    # ✅ FIX: comparar SIN tildes para evitar que "inglés" vs "ingles" baje a soft.
+    # FIX: comparar SIN tildes para evitar que "inglés" vs "ingles" baje a soft.
     try:
         if res and (res.get("no_cumple") or res.get("no_cumple_soft")):
             oferta_plain = limpiar_texto(normalizar_para_nlp((texto_oferta or "").lower()))
@@ -2254,13 +2182,13 @@ def detectar_requisitos_excluyentes_inteligente(texto_oferta, texto_cv):
                 txt = (tag or "").strip()
                 core = txt.split(":", 1)[1].strip() if ":" in txt else txt
 
-                # 🔴 PRIORIDAD: si está en REQUERIDOS, SIEMPRE es duro
+                # PRIORIDAD: si está en REQUERIDOS, SIEMPRE es duro
                 if _en_seccion_conocimientos_requeridos(core, texto_oferta or ""):
                     if not any(core.lower() in d.lower() for d in duros):
                         duros.append(f"Conocimiento requerido: {core}")
                     continue
 
-                # 🟡 solo si NO está en requeridos, evaluamos deseables
+                # solo si NO está en requeridos, evaluamos deseables
                 if _en_seccion_conocimientos_deseables(core, texto_oferta or ""):
                     nuevos_softs.append(tag)
                     continue
@@ -2362,14 +2290,14 @@ def _term_formativo_valido(t):
     if not t or len(t) < 2:
         return False
 
-    # ✅ Si está en whitelist técnica, SIEMPRE es válido como "faltante formativo"
+    # Si está en whitelist técnica, SIEMPRE es válido como "faltante formativo"
     t_norm = normalizar_para_nlp(t)
     t_unit = re.sub(r"[^\w\-]+", "", t_norm, flags=re.UNICODE).strip()
 
     if t_unit in WHITELIST_TECH_TOKENS:
         return True
 
-    # ✅ Aceptar tokens alfanuméricos típicos de tecnología: n8n, gpt4, 3cx, etc.
+    #  Aceptar tokens alfanuméricos típicos de tecnología: n8n, gpt4, 3cx, etc.
     # (letras/números/guion/punto/slash/espacios)
     if re.fullmatch(r"[a-z0-9áéíóúñü\s\-/\.]+", t_norm) is None:
         return False
@@ -2403,7 +2331,7 @@ def _sanear_item_formacion(txt: str) -> str:
     t = re.sub(r"\s+", " ", t).strip()
 
 
-    # 🚫 FILTRO: NO convertir requisitos de años en cursos 
+    #  FILTRO: NO convertir requisitos de años en cursos 
     if re.search(r"\b(\+?\d{1,2}|\d{1,2}\s*a\s*\d{1,2})\s*(anos|años)\b", t):
         return ""
     if re.search(r"\b(minimo|mínimo|mas de|más de)\s+\d{1,2}\s*(anos|años)\b", t):
@@ -2631,7 +2559,7 @@ def _soft_match(oferta_items: set,
             pass
 
         
-        # 🔒 Guardarraíl: "moodle" solo puede ser reconocido si aparece literal en el CV
+        # Guardarraíl: "moodle" solo puede ser reconocido si aparece literal en el CV
         if re.search(r"\b(moodle|moodle\.org)\b", o_norm) and not re.search(r"\b(moodle|moodle\.org)\b", cv_norm):
             faltantes.add(o)
             continue
@@ -2704,7 +2632,7 @@ def _soft_match(oferta_items: set,
 
                 if doc_o is not None:
 
-                    # 🔒 BLOQUEO FUERTE: tokens técnicos whitelist SOLO por match literal
+                    # BLOQUEO FUERTE: tokens técnicos whitelist SOLO por match literal
                     if o_norm in WHITELIST_TECH_TOKENS:
                         # solo si aparece exactamente en el CV
                         if not re.search(rf"\b{re.escape(o_norm)}\b", cv_norm):
@@ -2853,7 +2781,7 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
                 if any(_contains_phrase(c, sk) or _contains_phrase(sk, c) for sk in reconocidas_all):
                     continue
 
-                # ✅ FIX: verificación anti-fantasmas SIN tildes (ingles vs inglés)
+                # FIX: verificación anti-fantasmas SIN tildes (ingles vs inglés)
                 c_plain = limpiar_texto(c)
                 if c_plain and not _contains_phrase(oferta_plain, c_plain):
                     (requisitos.setdefault("no_cumple_soft", [])).append(tag)
@@ -2874,13 +2802,13 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
         (detalles_categorias[cat]["sin_reqs"] for cat in detalles_categorias)
     )
 
-    # 🔒 Guardarraíl robusto: oferta insuficiente / demasiado genérica (NO CONCLUYENTE)
+    # Guardarraíl robusto: oferta insuficiente / demasiado genérica (NO CONCLUYENTE)
     oferta_insuficiente, motivo_insuf, resumen_insuf = _evaluar_oferta_insuficiente(
         cat_oferta=cat_oferta,
         texto_oferta=texto_oferta
     )
     
-    # ✅ Reconciliación: si el motor de requisitos detecta estructura real,
+    # Reconciliación: si el motor de requisitos detecta estructura real,
     # la oferta NO debe marcarse como "insuficiente" aunque skills sea bajo.
     try:
         if requisitos:
@@ -2942,7 +2870,7 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
         for r in (requisitos.get("no_cumple") or []):
             print(f"   ❌ {r}")
 
-        # ✅ ESTE PRINT VA FUERA DEL FOR (solo una vez)
+       
         print(
             "❌ Aunque tu SCORE HABILIDADES es "
             f"{score_habilidades:.2f}% tu SCORE ATS FINAL es {score_ats:.2f}%. "
@@ -2967,7 +2895,7 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
                 for rz in desalineacion.get("razones", []):
                     print(f"   ❌ {rz}")
 
-                    # ✅ TRY FUERA DEL FOR (una sola vez)
+                   
                     try:
                         resumen = desalineacion.get("resumen", {}) or {}
                         learn_requirement(
@@ -2976,7 +2904,7 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
                     except Exception:
                         pass
 
-    # ✅ Todo esto debe ejecutarse SIEMPRE, por eso va fuera del if/else anterior
+    
     print("\n📊 Detalle por categoría:")
     for cat, d in detalles_categorias.items():
         if d.get("sin_reqs"):
@@ -3029,7 +2957,7 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
         else:
             sugerencias_formacion += [f"Capacitación en {s}" for s in falt]
 
-    # ✅ Bloque único: prioriza DUROS, luego SOFT, luego complementarios del matching
+    # Bloque único: prioriza DUROS, luego SOFT, luego complementarios del matching
     plan_map = {}  # canon_key -> {"prio": int, "text": str}
 
     def _push_plan(core: str, prio: int, label: str):
@@ -3037,21 +2965,21 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
         if not core:
             return
         
-        # 🚫 NO convertir sectores/profesiones en cursos (no son "formación" accionable como skill)
+        # NO convertir sectores/profesiones en cursos (no son "formación" accionable como skill)
         core_plain = limpiar_texto(normalizar_para_nlp(core.lower()))
         
         
-        # 🔒 BLOQUEO: fragmentos subordinados/no accionables (evita "que al menos uno de ellos...")
+        # BLOQUEO: fragmentos subordinados/no accionables (evita "que al menos uno de ellos...")
         if re.match(r"^(que|y que|en que|donde|en los cuales|en las cuales)\b", core_plain):
             return
         
         
-        # 🔒 No convertir condiciones contractuales o restricciones en cursos
+        # No convertir condiciones contractuales o restricciones en cursos
         #if re.search(r"\b(bodega|bodegas|vacacional|residencial|interventor|interventoria|tarjeta profesional|matricula profesional)\b", core_plain):
         #    return
 
         
-        # 🔒 Bloqueo: condiciones laborales/beneficios no son formación
+        # Bloqueo: condiciones laborales/beneficios no son formación
         if re.search(r"\b(modalidad|hibrid|híbr|bienestar|contrato|termino|término|indefinido|dias libres|días libres|beneficios|salario|compensacion|compensación)\b", core_plain):
             return
 
@@ -3063,17 +2991,17 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
         if core_plain in bloqueados_exactos:
             return
 
-        # ✅ Bloqueo por patrones (evita "carreras" y "sectores" como si fueran cursos)
+        # Bloqueo por patrones (evita "carreras" y "sectores" como si fueran cursos)
         if re.search(r"\b(ingenieria|ingeniería|derecho|psicologia|psicología|administracion|administración|civil|industrial|mecanica|mecánica|electrica|eléctrica)\b", core_plain):
             return
         if re.search(r"\b(sector|industria|manufactura|infraestructura|produccion|producción|construccion|construcción)\b", core_plain):
             return
 
-        # 🔒 Evitar dominios / sectores como cursos
+        # Evitar dominios / sectores como cursos
         if re.search(r"\b(financiero|finanzas|infraestructura|sector|manufactura|logistica|logística)\b", core_plain):
             return
 
-        # 🔒 Si es inglés ya tratado como requisito duro, no sugerir curso
+        # Si es inglés ya tratado como requisito duro, no sugerir curso
         if re.search(r"\bingles\b|\bc1\b|\bb2\b|\ba1\b|\ba2\b|\bc2\b", core_plain):
             return
 
@@ -3115,7 +3043,7 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
         m = re.search(r"\b(en\s+(.+))$", sf)
         core = (m.group(1).strip() if m else sf)
 
-        # 🚫 FILTRO: evitar convertir años de trayectoria en curso
+        # FILTRO: evitar convertir años de trayectoria en curso
         core_lower = core.lower()
         if "años" in core_lower:
             continue
@@ -3126,13 +3054,13 @@ def mostrar_resultados(cat_oferta, cat_cv, texto_cv, texto_oferta=""):
     # construir lista ordenada
     plan_formacion = [v["text"] for v in sorted(plan_map.values(), key=lambda d: d["prio"])]
 
-    # imprimir un SOLO bloque
+    
     if plan_formacion:
         print("\n🎓 Plan de formación (ordenado por prioridad):")
         for it in plan_formacion:
             print(f"- {it}")
 
-    # Para el retorno (si quieres mantener compatibilidad con tu dict final)
+    # Para el retorno 
     formacion_prioritaria = [v["text"] for v in plan_map.values() if v["prio"] == 1]
     formacion_deseable = [v["text"] for v in plan_map.values() if v["prio"] == 2]
 

@@ -7,25 +7,25 @@
 #Año: 2025-2026
 # ----------------------------------------------------------
 #  Descripción:
-    #  ATS Advisor es una herramienta educativa. Evalúa
-    #  la compatibilidad entre una hoja de vida (CV) y una oferta
-    #  laboral, simulando el funcionamiento de un sistema ATS.
-    #
-    #  Propiedad Intelectual:
-        #  © 2025-2026 Carlos Emilio López
-        #  Licencia de uso: Código abierto con fines educativos,
-        #  investigación, y mejora libre bajo reconocimiento de autoría.
-        #
-        #  Descargo de responsabilidad:
-            #  Este software se proporciona "tal cual", sin garantía de
-            #  precisión o adecuación comercial. El autor
-            #  no se hacen responsables del uso indebido ni de decisiones
-            #  tomadas con base en sus resultados. Los usuarios pueden
-            #  modificar y adaptar el código respetando la autoría original.
-            #
-            #  Contacto:
-                #  Carlos Emilio López - clopezci@hotmail.com
-                # ==========================================================
+#  ATS Advisor es una herramienta educativa. Evalúa
+#  la compatibilidad entre una hoja de vida (CV) y una oferta
+#  laboral, simulando el funcionamiento de un sistema ATS.
+#
+#  Propiedad Intelectual:
+#  © 2025-2026 Carlos Emilio López
+#  Licencia de uso: Código abierto con fines educativos,
+#  investigación, y mejora libre bajo reconocimiento de autoría.
+#
+#  Descargo de responsabilidad:
+#  Este software se proporciona "tal cual", sin garantía de
+#  precisión o adecuación comercial. El autor
+#  no se hacen responsables del uso indebido ni de decisiones
+#  tomadas con base en sus resultados. Los usuarios pueden
+#  modificar y adaptar el código respetando la autoría original.
+#
+#  Contacto:
+#  Carlos Emilio López - clopezci@hotmail.com
+# ==========================================================
 
 
 # ==========================
@@ -46,28 +46,20 @@ def _get_req_nlp():
     global _REQ_NLP
     if _REQ_NLP is not None:
         return _REQ_NLP
+
     try:
         _REQ_NLP = spacy.load("es_core_news_lg")
     except Exception:
         try:
             _REQ_NLP = spacy.load("es_core_news_md")
-            print("ℹ️ [requisitos] Usando es_core_news_md (fallback).")
         except Exception:
             try:
                 _REQ_NLP = spacy.load("es_core_news_sm")
-                print("ℹ️ [requisitos] Usando es_core_news_sm (fallback sin vectores).")
             except Exception:
                 _REQ_NLP = None
-                print("⚠️ [requisitos] No se pudo cargar un modelo de spaCy. Comparación semántica desactivada.")
+
     return _REQ_NLP
 
-
-
-"""
-BASE_DIR = os.path.dirname(__file__)
-RULES_FILE = os.path.join(BASE_DIR, "requirements_rules.json")
-LEARNED_FILE = os.path.join(BASE_DIR, "requirements_learned.json") autoaprendizaje
-"""
 
 # --- soporte paths para EXE (PyInstaller) + AppData ---
 def _user_data_dir():
@@ -441,7 +433,7 @@ def _find_experience_domains(texto_oferta: str):
             continue
         dom_text = (m.group(2) or "").strip().lower()
         if not dom_text:
-            # sin dominio explícito, ignoramos (se mantiene el chequeo genérico existente)
+            # sin dominio explícito, ignoramos 
             continue
         # Elegimos el domain_label por coincidencia de anclas
         best_label = None
@@ -468,7 +460,7 @@ def load_rules():
 
     rules = data.get("rules", [])
 
-    # --- Helper interno: asegurar regla por id (si no existe, agregarla) ---
+    # --- Helper interno: asegurar regla por id  ---
     def _ensure_rule(rule_dict: dict):
         rid = rule_dict.get("id")
         if not rid:
@@ -482,7 +474,7 @@ def load_rules():
                 return
         rules.append(rule_dict)
 
-    # --- PATCH A: normalizar Inglés (por si el JSON externo está incompleto) ---
+    # --- PATCH A: normalizar Inglés  ---
     try:
         _ensure_rule({
             "id": "lang_english",
@@ -501,7 +493,7 @@ def load_rules():
     except Exception:
         pass
 
-    # --- PATCH B: profesiones obligatorias (inyectar si faltan) ---
+    # --- PATCH B: profesiones obligatorias  ---
     try:
         # 1) MÉDICO / MÉDICO GENERAL
         _ensure_rule({
@@ -511,11 +503,10 @@ def load_rules():
             # activadores en la oferta (al menos uno debe aparecer)
             "trigger_any": [
                 "médico general", "medico general",
-                "médico", "medico",              # ojo: muy común en las ofertas
+                "médico", "medico",              
                 "atención en consulta externa", "consulta externa"
             ],
-            # (opcional) si se quiere evitar falsos positivos con "médico" genérico,
-            # puede exigirse una de estas evidencias fuertes en texto de la oferta:
+            
             "require_any": [
                 "médico general", "medico general", "consulta externa", "ips", "hospital", "clínica", "clinica"
             ],
@@ -586,7 +577,7 @@ def load_rules():
     
         # --- PATCH D: Comercial/Ventas (B2B, B2C, venta consultiva, scoring, portafolio PyME/Empresarial) ---
     try:
-        # Rol/Dominio comercial de base (si falta, lo añadimos o reforzamos)
+        # Rol/Dominio comercial de base 
         _ensure_rule({
             "id": "sector_comercial_b2b",
             "label": "Experiencia en ventas B2B",
@@ -640,7 +631,7 @@ def load_rules():
                 "pyme", "pymes", "portafolio pyme", "segmento pyme",
                 "banca empresarial", "segmento empresarial", "smb", "sme"
             ],
-            #  obligatorio: si no aparece algo PyME real, no dispares la regla
+            
             "require_any": [
                 "pyme", "pymes", "portafolio pyme", "segmento pyme", "smb", "sme", "banca empresarial"
             ],
@@ -661,7 +652,7 @@ def load_rules():
             ]
         })
 
-        # Pipeline / Forecast (ya tienes una similar; reforzamos si faltara)
+        # Pipeline / Forecast 
         _ensure_rule({
             "id": "sales_crm_pipeline_forecast",
             "label": "Conocimiento requerido: CRM / Pipeline / Forecast",
@@ -699,7 +690,7 @@ def load_rules():
             ]
         })
 
-        # (Opcional) Procesos típicos de SSC (si quieres ser más estricto en conocimientos)
+        # Procesos típicos de SSC 
         _ensure_rule({
             "id": "ssc_procesos_tipicos",
             "label": "Conocimiento requerido: procesos típicos de SSC (finanzas/contabilidad/tesorería/procure-to-pay/order-to-cash)",
@@ -926,7 +917,7 @@ def _is_requirement_context(oferta_text: str, trigger_terms: List[str]) -> bool:
         return any(t in line for t in terms)
 
     for idx, raw_line in enumerate(lines):
-        # ¿Esta línea contiene alguno de los triggers?
+        
         if not any(t in raw_line for t in trigger_terms):
             continue
 
@@ -1169,7 +1160,7 @@ def evaluate_requirements(texto_oferta: str, texto_cv: str):
             or "salud pública" in req_block or "salud publica" in req_block
             or "epidemiología" in req_block or "epidemiologia" in req_block
         ):
-            # Ya habrá caído el conocimiento de auditoría; aquí reforzamos la profesión si falta en CV:
+            # aquí reforzamos la profesión si falta en CV:
             if not (re.search(r"\benfermer[oa]s?\b|\benfermer[ií]a\b", cv, flags=re.IGNORECASE) or
                     any(k in cv for k in ["licenciatura en enfermería", "licenciatura en enfermeria",
                                           "colegio de enfermería", "colegio de enfermeria", " rn "])):

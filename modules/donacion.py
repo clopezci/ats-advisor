@@ -17,13 +17,33 @@ except Exception:
 
 
 def _base_dir():
-    if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
-        return sys._MEIPASS
+    """
+    Devuelve la carpeta base donde están los assets.
+
+    """
+    if getattr(sys, "frozen", False):
+        exe_dir = os.path.dirname(sys.executable)
+
+        # 1) assets junto al exe 
+        if os.path.isdir(os.path.join(exe_dir, "assets")):
+            return exe_dir
+
+        # 2) assets dentro de _internal 
+        if os.path.isdir(os.path.join(exe_dir, "_internal", "assets")):
+            return os.path.join(exe_dir, "_internal")
+
+        # 3) fallback: MEIPASS (onefile o casos especiales)
+        if hasattr(sys, "_MEIPASS"):
+            return sys._MEIPASS
+
+        return exe_dir
+
+    # desarrollo: carpeta raíz del proyecto 
     return os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 
 def _asset_path(filename: str):
-    # Tu estructura real: assets/donacion/*
+    
     return os.path.join(_base_dir(), "assets", "donacion", filename)
 
 
@@ -39,7 +59,7 @@ def _load_image(master, path: str, max_w: int, max_h: int):
     if not path or not os.path.exists(path):
         return None
 
-    # 1) PIL con resize (preferido)
+    # 1) PIL con resize 
     if PIL_OK:
         try:
             img = Image.open(path)
@@ -56,7 +76,7 @@ def _load_image(master, path: str, max_w: int, max_h: int):
         except Exception:
             pass
 
-    # 2) Fallback Tk (sin resize)
+    # 2) Fallback Tk 
     try:
         return tk.PhotoImage(master=master, file=path)
     except Exception:
@@ -79,7 +99,7 @@ def mostrar_popup_donacion():
         - Dispensador + QR
         - Mensaje sutil (costos de APIs / continuidad)
         - Atribución/licencia
-        IMPORTANTE: crea SU PROPIO root oculto para NO depender de tk._default_root.
+        
     """
 
     base = tk.Tk()
@@ -89,9 +109,11 @@ def mostrar_popup_donacion():
     win.title("Apoyo voluntario (donación simbólica)")
     win.resizable(True, True)
 
-    # Tamaño suficiente para QR completos (y permitir maximizar si quieres)
-    W, H = 1020, 760
-    _center(win, W, H)
+    # Tamaño suficiente para QR completos
+    win.state("zoomed")  # Maximizar
+    win.lift()
+    win.attributes("-topmost", True)
+    win.after(300, lambda: win.attributes("-topmost", False))
 
     # Estilo
     try:
@@ -99,27 +121,73 @@ def mostrar_popup_donacion():
     except Exception:
         pass
 
+
+    style = ttk.Style(win)
+    style.configure("Card.TFrame", background="#f4f4f4")
+    style.configure("Card.TLabel", background="#f4f4f4")
+    style.configure("Title.TLabel", font=("Segoe UI", 12, "bold"))
+    style.configure("Close.TButton", font=("Segoe UI", 11, "bold"))
+    
     # Header: ético + sutil + “por qué”
+    header_frame = ttk.Frame(win)
+    header_frame.pack(fill="x", pady=(10, 6))
+
     header = ttk.Label(
-        win,
+        header_frame,
         text=(
             "Si este análisis fue útil para ti, puedes apoyar su evolución con una donación simbólica.\n"
-            "La meta es convertir esta herramienta en una plataforma con IA\n"
-            "capaz de optimizar hojas de vida y brindar orientación profesional avanzada (outplacement) y llegar a más personas.\n"
-            "Las tecnologías de IA requieren costos operativos, y tu apoyo ayuda a sostener y expandir este proyecto.\n"
+            "La meta es convertir esta herramienta en una plataforma con IA capaz de optimizar hojas de vida\n"
+            "y brindar orientación profesional avanzada (outplacement) para llegar a más personas.\n"
+            "Las tecnologías de IA tienen costos operativos, y tu apoyo ayuda a sostener y expandir este proyecto.\n"
             "El uso actual es y seguirá siendo libre."
         ),
         justify="center",
-        font=("Segoe UI", 11)
+        font=("Segoe UI", 11),
+        anchor="center"
     )
-    header.pack(pady=(12, 8))
 
-    cont = ttk.Frame(win)
-    cont.pack(fill="both", expand=True, padx=12, pady=8)
+    header.pack()
 
-    cont.columnconfigure(0, weight=1, uniform="col")
-    cont.columnconfigure(1, weight=1, uniform="col")
-    cont.columnconfigure(2, weight=1, uniform="col")
+    # Frame principal con scroll
+    canvas = tk.Canvas(win, highlightthickness=0)
+    scrollbar = ttk.Scrollbar(win, orient="vertical", command=canvas.yview)
+    scrollable_frame = ttk.Frame(canvas)
+
+    scrollable_frame.bind(
+        "<Configure>",
+        lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+    )
+
+    # Crear ventana interna para el frame scrolleable
+    inner_window = canvas.create_window((0, 0), window=scrollable_frame, anchor="n")
+
+    canvas.configure(yscrollcommand=scrollbar.set)
+
+    canvas.pack(side="left", fill="both", expand=True)
+    scrollbar.pack(side="right", fill="y")
+
+    # Forzar ancho del frame interno al ancho del canvas
+    def _resize_scroll_frame(event):
+        canvas.itemconfig(inner_window, width=event.width)
+
+    canvas.bind("<Configure>", _resize_scroll_frame)
+
+        # Scroll con rueda del mouse (Windows)
+    def _on_mousewheel(event):
+        canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+
+    canvas.bind_all("<MouseWheel>", _on_mousewheel)
+
+    # Contenedor de las 3 columnas (centrado)
+    content_wrapper = ttk.Frame(scrollable_frame)
+    content_wrapper.pack(fill="x")
+
+    cont = ttk.Frame(content_wrapper)
+    cont.pack(padx=40, pady=(8, 20))
+
+    for i in range(3):
+        cont.columnconfigure(i, weight=1)
+
 
     # Paths
     p_agua = _asset_path("agua.png")
@@ -129,20 +197,23 @@ def mostrar_popup_donacion():
     p_qr_otro = _asset_path("qr_voluntario.png")
 
     # Tamaños controlados para que el QR quepa completo
-    img_disp_agua = _load_image(win, p_agua, max_w=320, max_h=240)
-    img_disp_cafe = _load_image(win, p_cafe, max_w=320, max_h=240)
+    img_disp_agua = _load_image(win, p_agua, max_w=240, max_h=180)
+    img_disp_cafe = _load_image(win, p_cafe, max_w=240, max_h=180)
 
     # QRs: más grandes para escaneo cómodo
-    img_qr_agua = _load_image(win, p_qr_agua, max_w=320, max_h=320)
-    img_qr_cafe = _load_image(win, p_qr_cafe, max_w=320, max_h=320)
-    img_qr_otro = _load_image(win, p_qr_otro, max_w=320, max_h=320)
+    img_qr_agua = _load_image(win, p_qr_agua, max_w=240, max_h=240)
+    img_qr_cafe = _load_image(win, p_qr_cafe, max_w=240, max_h=240)
+    img_qr_otro = _load_image(win, p_qr_otro, max_w=240, max_h=240)
 
     # Mantener referencias
     win._imgs = [img_disp_agua, img_disp_cafe, img_qr_agua, img_qr_cafe, img_qr_otro]
 
     def _make_panel(parent, col: int, titulo: str, valor_texto: str, img_disp, img_qr):
-        frame = ttk.Frame(parent, padding=10, relief="groove")
-        frame.grid(row=0, column=col, padx=8, pady=6, sticky="nsew")
+        frame = ttk.Frame(parent, padding=15)
+        frame.grid_propagate(False)
+        frame.configure(style="Card.TFrame")
+        
+        frame.grid(row=0, column=col, padx=8, pady=6, sticky="n")
 
         ttk.Label(frame, text=titulo, font=("Segoe UI", 11, "bold")).pack(pady=(0, 6))
         ttk.Label(frame, text=valor_texto, font=("Segoe UI", 12)).pack(pady=(0, 8))
@@ -158,11 +229,11 @@ def mostrar_popup_donacion():
         else:
             ttk.Label(frame, text="(QR no cargó)", font=("Segoe UI", 9)).pack(pady=10)
 
-    # Agua / Café (QR ya trae el valor, NO copiamos nada)
+    # Agua / Café 
     _make_panel(cont, 0, "Botella de agua", _fmt_cop(5000), img_disp_agua, img_qr_agua)
     _make_panel(cont, 1, "Café", _fmt_cop(8000), img_disp_cafe, img_qr_cafe)
 
-    # Otro valor (QR libre; el valor lo define el usuario en su banco)
+    # Otro valor 
     frame_otro = ttk.Frame(cont, padding=10, relief="groove")
     frame_otro.grid(row=0, column=2, padx=8, pady=6, sticky="nsew")
 
@@ -179,16 +250,13 @@ def mostrar_popup_donacion():
     else:
         ttk.Label(frame_otro, text="(QR opcional no cargó)", font=("Segoe UI", 9)).pack(pady=10)
 
-    # Footer licencia (tu archivo se llama "License")
-    licencia_path = _asset_path("License")
+    # Footer licencia 
+    licencia_path = _asset_path("License.txt")
     footer_text = "Recurso gráfico: Designed by upklyak / Freepik."
     if os.path.exists(licencia_path):
-        footer_text += "\nLicencia completa disponible en assets/donacion/License"
+        footer_text += "\nLicencia completa disponible en assets/donacion/License.txt"
 
-    footer = tk.Label(win, text=footer_text, font=("Segoe UI", 8), justify="center")
-    footer.pack(pady=(8, 4))
-
-    # Cerrar (muy importante: quit + destroy)
+    # Cerrar 
     def _cerrar():
         try:
             win.destroy()
@@ -199,10 +267,28 @@ def mostrar_popup_donacion():
         except Exception:
             pass
 
-    ttk.Button(win, text="Cerrar y continuar", command=_cerrar).pack(pady=(0, 12))
+    # Footer + botón centrados dentro del área scrolleable
+    footer_frame = ttk.Frame(scrollable_frame)
+    footer_frame.pack(pady=(10, 20))
+
+    footer = tk.Label(
+        footer_frame,
+        text=footer_text,
+        font=("Segoe UI", 8),
+        justify="center"
+    )
+    footer.pack(pady=(5, 10))
+
+    ttk.Button(
+        footer_frame,
+        text="Cerrar y continuar",
+        style="Close.TButton",
+        command=_cerrar
+    ).pack()
+
     win.protocol("WM_DELETE_WINDOW", _cerrar)
 
-    # Modal ligera: obliga a cerrar antes de volver al menú (esto evita que “se pierda”)
+    # Modal ligera
     try:
         win.grab_set()
     except Exception:

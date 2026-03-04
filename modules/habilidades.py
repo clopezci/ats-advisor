@@ -43,16 +43,28 @@ import spacy
 # ----------------------------
 # Carga robusta de spaCy (fallbacks)
 # ----------------------------
+
+# --- Carga robusta del modelo  ---
+nlp = None
+
+# 1) Intentar cargar por import del paquete 
 try:
-    nlp = spacy.load("es_core_news_lg")
+    import es_core_news_lg  # type: ignore
+    nlp = es_core_news_lg.load()
 except Exception:
     try:
-        nlp = spacy.load("es_core_news_md")
-        print("ℹ️ [habilidades] Usando es_core_news_md (fallback).")
+        import es_core_news_md  # type: ignore
+        nlp = es_core_news_md.load()
     except Exception:
-        nlp = spacy.load("es_core_news_sm")
-        print("ℹ️ [habilidades] Usando es_core_news_sm (fallback sin vectores).")
-
+        try:
+            import es_core_news_sm  # type: ignore
+            nlp = es_core_news_sm.load()
+        except Exception as e:
+            raise RuntimeError(
+                "No se encontró un modelo de spaCy. Instala en el entorno:\n"
+                "  python -m spacy download es_core_news_sm\n"
+                f"Detalle: {e}"
+            )
 # ----------------------------
 # Stopwords locales
 # ----------------------------
@@ -318,29 +330,7 @@ def list_noise_terms(top_n: int = 50):
     orden = sorted(data.items(), key=lambda x: x[1], reverse=True)
     return orden[:max(1, int(top_n))]
 
-""" se inhabilita para activar la opcion nueva en empaquetado ejecutable
-def forget_noise_term(term: str):
-    Elimina un término específico del registro de ruido.
-    term = (term or "").strip().lower()
-    if not term:
-        return False
-    data = _load_noise_db()
-    if term in data:
-        del data
-        data = _load_noise_db()  # asegurar recarga limpia
-        # reescritura sin term
-        data = _load_noise_db()
-        with open(NOISE_DB_FILE, "r", encoding="utf-8") as f:
-            try:
-                data = json.load(f)
-            except Exception:
-                data = {}
-        if term in data:
-            del data[term]
-        _save_noise_db(data)
-        return True
-    return False
-"""
+
 
 def forget_noise_term(term: str):
     """Elimina un término específico del registro de ruido."""
@@ -610,7 +600,7 @@ def clasificar_skill(skill):
     return mejor_cat or "tecnicas"
 
 # ----------------------------
-# Detección de nuevas habilidades (Conceptos relevantes) — Corregido
+# Detección de nuevas habilidades (Conceptos relevantes)
 # ----------------------------
 
 # Ruido típico de ofertas (no son skills)
@@ -902,7 +892,7 @@ def frase_en_texto(frase: str, texto: str) -> bool:
     if not f or not t:
         return False
 
-    # 1) Si la frase normalizada aparece tal cual, aceptamos
+    # 1) Si la frase normalizada aparece tal cual
     if f in t:
         return True
 

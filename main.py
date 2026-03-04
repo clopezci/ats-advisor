@@ -7,25 +7,25 @@
 #Año: 2025-2026
 # ----------------------------------------------------------
 #  Descripción:
-    #  ATS Advisor es una herramienta educativa. Evalúa
-    #  la compatibilidad entre una hoja de vida (CV) y una oferta
-    #  laboral, simulando el funcionamiento de un sistema ATS.
-    #
-    #  Propiedad Intelectual:
-        #  © 2025-2026 Carlos Emilio López
-        #  Licencia de uso: Código abierto con fines educativos,
-        #  investigación, y mejora libre bajo reconocimiento de autoría.
-        #
-        #  Descargo de responsabilidad:
-            #  Este software se proporciona "tal cual", sin garantía de
-            #  precisión o adecuación comercial. El autor
-            #  no se hacen responsables del uso indebido ni de decisiones
-            #  tomadas con base en sus resultados. Los usuarios pueden
-            #  modificar y adaptar el código respetando la autoría original.
-            #
-            #  Contacto:
-                #  Carlos Emilio López - clopezci@hotmail.com
-                # ==========================================================
+#  ATS Advisor es una herramienta educativa. Evalúa
+#  la compatibilidad entre una hoja de vida (CV) y una oferta
+#  laboral, simulando el funcionamiento de un sistema ATS.
+#
+#  Propiedad Intelectual:
+#  © 2025-2026 Carlos Emilio López
+#  Licencia de uso: Código abierto con fines educativos,
+#  investigación, y mejora libre bajo reconocimiento de autoría.
+#
+#  Descargo de responsabilidad:
+#  Este software se proporciona "tal cual", sin garantía de
+#  precisión o adecuación comercial. El autor
+#  no se hacen responsables del uso indebido ni de decisiones
+#  tomadas con base en sus resultados. Los usuarios pueden
+#  modificar y adaptar el código respetando la autoría original.
+#
+#  Contacto:
+#  Carlos Emilio López - clopezci@hotmail.com
+# ==========================================================
 
 
 # ==========================
@@ -55,9 +55,16 @@ from modules.analisis_basico import contiene_lista_sospechosa
 from modules.pdf_exporter import exportar_resultado_pdf
 from modules.donacion import mostrar_popup_donacion
 
-
 # --- Helpers de estado (compatibles con ejecutable) ---
 import os, json, sys
+
+import warnings
+
+# Silenciar advertencias de spaCy sobre falta de vectores (W007)
+warnings.filterwarnings(
+    "ignore",
+    message=".*has no word vectors loaded.*"
+)
 
 APP_VERSION = "V-1.8"
 
@@ -168,7 +175,10 @@ def mostrar_resultados_popup(texto: str, titulo: str = "Resultado del análisis 
 
     win = tk.Toplevel(base)
     win.title(titulo)
-    win.geometry("980x720")
+    win.state("zoomed")  # Maximizar en Windows
+    win.lift()
+    win.attributes("-topmost", True)
+    win.after(300, lambda: win.attributes("-topmost", False))
     win.resizable(True, True)
 
     try:
@@ -197,7 +207,11 @@ def mostrar_resultados_popup(texto: str, titulo: str = "Resultado del análisis 
         except Exception:
             pass
 
-    ttk.Button(win, text="Cerrar", command=_cerrar).pack(pady=(0, 12))
+    ttk.Button(
+        win,
+        text="Cerrar análisis",
+        command=_cerrar
+    ).pack(pady=(10, 20))
     win.protocol("WM_DELETE_WINDOW", _cerrar)
 
     # modal ligera para que no se pierda
@@ -339,9 +353,19 @@ def main():
 
             # Advertencia ética (umbral ajustado en analisis_basico.contiene_lista_sospechosa)
             try:
-                if contiene_lista_sospechosa(texto_cv):
+                sospechosa = contiene_lista_sospechosa(texto_cv)
+
+                if sospechosa:
                     print("⚠️ Advertencia ética: Se detectaron secciones con alta densidad de palabras clave; los ATS reales podrían penalizarlas.")
                     print("👉 Recomendación: integra esas palabras en logros y responsabilidades reales.\n")
+                    print("👉 Recomendación adicional: Si estas postulando a un cargo de liderazgo, asegúrate de tener un contacto interno que te pueda ayudar y orientar en el proceso de selección.")
+                    print("   Esta herramienta te ayuda a mejorar tus posibilidades, no obstante para este tipo de cargos definitivamente necesitas networking.\n")
+
+                else:
+                    print("ℹ️ Revisión ética: No se detectó sobreoptimización de palabras clave. Se recomienda siempre integrar palabras clave de forma natural en logros y responsabilidades reales.\n")
+                    print("👉 Recomendación adicional: Si estas postulando a un cargo de liderazgo, asegúrate de tener un contacto interno que te pueda ayudar y orientar en el proceso de selección.")
+                    print("   Esta herramienta te ayuda a mejorar tus posibilidades, no obstante para este tipo de cargos definitivamente necesitas networking.\n")
+
             except Exception:
                 pass
 
@@ -357,10 +381,12 @@ def main():
                     )
                 texto_resultado = buf.getvalue()
 
-                # 1) Mostrar resultado en ventana (más visible y no ensucia consola)
+                # 1) Mostrar resultado en ventana 
                 mostrar_resultados_popup(texto_resultado)
+                
+                
 
-                # 2) Al cerrarla, mostrar donación (sutil pero visible)
+                # 2) Al cerrarla, mostrar donación 
                 try:
                     mostrar_popup_donacion()
                 except Exception:

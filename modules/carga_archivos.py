@@ -60,18 +60,28 @@ with suppress(Exception):
 # Helpers de UI (Tk)
 # ----------------------------
 def _with_tk_dialogs(func):
-    """Decora funciones que usan Tk: crea/destroye root de forma segura."""
+    """Decora funciones que usan Tk: crea/destroye root de forma segura + lo trae al frente."""
     def wrapper(*args, **kwargs):
         root = None
         try:
-            # Si tkinter no está disponible, se irá al except
             root = Tk()
             root.withdraw()
+
+            #  Forzar al frente (Windows)
+            root.lift()
+            root.attributes("-topmost", True)
+            root.update_idletasks()
+            root.update()
+
         except Exception:
-            # Sin entorno gráfico; continuamos y el func hará fallback
             root = None
+
         try:
-            return func(*args, **kwargs)
+                #  Pasar root a la función para usarlo como "parent"
+                if root is not None:
+                    root.after(200, lambda: root.attributes("-topmost", False))
+
+                return func(*args, **kwargs, _tk_root=root)
         finally:
             if root is not None:
                 try:
@@ -85,7 +95,7 @@ def _with_tk_dialogs(func):
 # CARGAR CV
 # ----------------------------
 @_with_tk_dialogs
-def cargar_cv():
+def cargar_cv(_tk_root=None):
     """
     Abre una ventana para seleccionar CV (.pdf o .docx). Fallback por consola si falla.
     Retorna:
@@ -95,6 +105,7 @@ def cargar_cv():
     try:
         print("Seleccione su archivo de CV (.pdf o .docx) en la ventana emergente...")
         ruta = filedialog.askopenfilename(
+            parent=_tk_root,  #  clave: sale encima
             title="Seleccionar archivo de CV",
             filetypes=[("PDF o Word", "*.pdf *.docx"), ("Todos", "*.*")]
         )
@@ -119,22 +130,80 @@ def cargar_cv():
 # CARGAR OFERTA
 # ----------------------------
 @_with_tk_dialogs
-def cargar_oferta():
+def cargar_oferta(_tk_root=None):
     """
-    Ventana para pegar oferta. Fallback por consola si falla.
+    Ventana para pegar oferta (Toplevel propio, siempre al frente).
+    Fallback por consola si falla.
     Retorna:
         str texto de la oferta ("" si se cancela).
     """
-    # Tk simpledialog
     try:
+        import tkinter as tk
+        from tkinter import ttk
+        from tkinter.scrolledtext import ScrolledText
+
         print("Escriba o pegue el texto de la vacante en la ventana emergente.")
-        texto = askstring("Vacante", "Pega aquí el texto completo de la oferta de empleo:")
-        if texto:
-            return texto
+
+        #  Ventana propia (control total)
+        win = tk.Toplevel(_tk_root) if _tk_root is not None else tk.Tk()
+        win.title("Vacante - Pega el texto de la oferta")
+        win.geometry("900x650")
+        win.minsize(700, 450)
+
+        #  Siempre al frente
+        win.lift()
+        win.attributes("-topmost", True)
+        win.after(250, lambda: win.attributes("-topmost", False))
+        win.focus_force()
+
+        # Estilo
+        try:
+            ttk.Style(win).theme_use("clam")
+        except Exception:
+            pass
+
+        ttk.Label(
+            win,
+            text="Pega aquí el texto completo de la oferta de empleo:",
+            font=("Segoe UI", 11, "bold")
+        ).pack(pady=(10, 6))
+
+        box = ScrolledText(win, wrap="word", font=("Segoe UI", 10))
+        box.pack(fill="both", expand=True, padx=12, pady=8)
+
+        # Botonera
+        btns = ttk.Frame(win)
+        btns.pack(pady=(0, 12))
+
+        result = {"texto": ""}
+
+        def _usar():
+            result["texto"] = (box.get("1.0", "end") or "").strip()
+            win.destroy()
+
+        def _cancelar():
+            result["texto"] = ""
+            win.destroy()
+
+        ttk.Button(btns, text="Usar este texto", command=_usar).pack(side="left", padx=8)
+        ttk.Button(btns, text="Cancelar", command=_cancelar).pack(side="left", padx=8)
+
+        win.protocol("WM_DELETE_WINDOW", _cancelar)
+
+        # Modal ligera para que no quede detrás
+        try:
+            win.grab_set()
+        except Exception:
+            pass
+
+        win.wait_window()
+        if result["texto"]:
+            return result["texto"]
+
     except Exception:
         pass
 
-    # Fallback por consola con EOF
+    # Fallback por consola con EOF 
     print("No se pudo abrir el diálogo gráfico.")
     print("Pega el texto de la oferta y finaliza con una línea que contenga solo 'EOF':")
     lines = []
@@ -177,7 +246,7 @@ def leer_cv_como_texto(ruta):
 
 
 # ----------------------------
-# EXTRAER TEXTO DE TXT (útil en pruebas)
+# EXTRAER TEXTO DE TXT 
 # ----------------------------
 def extraer_texto_txt(ruta):
     try:
@@ -246,7 +315,7 @@ def extraer_texto_pdf(ruta):
                 texto.append(page_text)
         joined = "\n".join(texto).strip()
         if not joined:
-            # Casi seguro que es escaneado (imagen) o protegido
+            
             raise RuntimeError(
                 "El PDF no contiene texto extraíble (posible escaneado o protegido). "
                 "Convierte a PDF con texto (OCR) o exporta a DOCX/TXT antes de analizar."

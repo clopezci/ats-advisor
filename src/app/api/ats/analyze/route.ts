@@ -1,9 +1,14 @@
 import { NextResponse } from "next/server";
 import { analyzeAts, type AtsProfile } from "@/lib/ats/engine";
+import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
+import { reportError } from "@/lib/observability";
 
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
+  const limited = rateLimit(req, "ats-analyze", { limit: 40, windowMs: 60_000 });
+  if (!limited.ok) return rateLimitedResponse(limited.retryAfterSec);
+
   try {
     const body = await req.json();
     const cvText = String(body.cvText || "").trim();
@@ -19,7 +24,8 @@ export async function POST(req: Request) {
 
     const result = analyzeAts({ cvText, jobText, atsProfile });
     return NextResponse.json({ ok: true, result });
-  } catch {
+  } catch (error) {
+    await reportError({ where: "api/ats/analyze", error });
     return NextResponse.json(
       { error: "No pudimos completar el análisis. Intenta de nuevo en unos segundos." },
       { status: 500 }

@@ -35,6 +35,8 @@ Todo lo que **tú** debes hacer (el agente no puede completarlo sin tus cuentas/
 | `WOMPI_EVENTS_SECRET` | Firma eventos webhook (si aplica) | Panel Wompi → eventos |
 | `SENTRY_DSN` | Errores (opcional) | https://sentry.io |
 | `ADSENSE_CLIENT_ID` | Ads en ATS free (opcional) | Google AdSense |
+| `NEXT_PUBLIC_ADSENSE_CLIENT_ID` | Mismo client id expuesto al browser | ej. `ca-pub-…` |
+| `WHATSAPP_TOKEN` / `WHATSAPP_PHONE_NUMBER_ID` | Microcápsulas WhatsApp (Plus) | Meta Cloud / BSP |
 
 Después de pegar variables: **Redeploy**.
 

@@ -1,22 +1,53 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { collectHabeasPayload, wipeHabeasLocal } from "@/lib/habeas/export";
+import {
+  planLabel,
+  readEntitlement,
+  setPlan,
+  type PlanId,
+} from "@/lib/entitlements";
+import { createBrowserSupabase } from "@/lib/supabase/client";
 
 export default function CuentaPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [channel, setChannel] = useState<"pwa" | "telegram" | "whatsapp">("pwa");
   const [msg, setMsg] = useState("");
+  const [plan, setPlanState] = useState<PlanId>("free");
+  const [sessionEmail, setSessionEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const p = JSON.parse(localStorage.getItem("ats_profile") || "null");
+      if (p) {
+        setName(p.name || "");
+        setEmail(p.email || "");
+        setChannel(p.channel || "pwa");
+      }
+      setPlanState(readEntitlement().plan);
+    } catch {
+      /* ignore */
+    }
+    const sb = createBrowserSupabase();
+    if (!sb) return;
+    sb.auth.getSession().then(({ data }) => {
+      const e = data.session?.user?.email;
+      if (e) {
+        setSessionEmail(e);
+        setEmail((prev) => prev || e);
+      }
+    });
+  }, []);
 
   function exportHabeas() {
-    const payload = {
-      exportedAt: new Date().toISOString(),
+    const payload = collectHabeasPayload({
       profile: { name, email, channel },
-      ats_history: safeParse("ats_history"),
-      out09_last: safeParse("out09_last"),
-    };
+      plan: readEntitlement(),
+    });
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -31,16 +62,15 @@ export default function CuentaPage() {
         body: JSON.stringify({ email, payload }),
       }).catch(() => undefined);
     }
-    setMsg("Descargamos tu paquete de datos (Habeas Data). Si hay Resend, también se intenta email.");
+    setMsg("Descargamos tu paquete completo de datos (Habeas Data).");
   }
 
   function deleteLocal() {
-    localStorage.removeItem("ats_history");
-    localStorage.removeItem("out09_last");
-    localStorage.removeItem("ats_profile");
+    wipeHabeasLocal();
     setName("");
     setEmail("");
-    setMsg("Datos locales eliminados. Con Supabase también se borrará la cuenta en servidor.");
+    setPlanState("free");
+    setMsg("Datos locales eliminados (perfil, tracker, CVs, racha, plan, historial).");
   }
 
   function save() {
@@ -48,15 +78,23 @@ export default function CuentaPage() {
     setMsg("Preferencias guardadas en este dispositivo.");
   }
 
+  async function signOut() {
+    const sb = createBrowserSupabase();
+    if (sb) await sb.auth.signOut();
+    setSessionEmail(null);
+    setMsg("Sesión cerrada.");
+  }
+
   return (
     <div className="flex flex-1 flex-col gap-5">
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between">
           <h1 className="text-2xl font-semibold">Mi cuenta</h1>
-          <SpeakButton text="Administra tu perfil, canal de aprendizaje, Habeas Data y baja." />
+          <SpeakButton text="Administra tu perfil, plan, canal de aprendizaje, Habeas Data y baja." />
         </div>
         <p className="text-sm muted">
-          Auth completa con Supabase se activa cuando configures las keys (ver MANUAL-ACCIONES.md).
+          Plan: <span className="font-medium" style={{ color: "var(--brand)" }}>{planLabel(plan)}</span>
+          {sessionEmail ? ` · sesión ${sessionEmail}` : " · sin sesión Supabase"}
         </p>
       </section>
 
@@ -74,7 +112,7 @@ export default function CuentaPage() {
           {([
             ["pwa", "Solo en la app"],
             ["telegram", "Telegram"],
-            ["whatsapp", "WhatsApp (addon)"],
+            ["whatsapp", "WhatsApp (addon Plus)"],
           ] as const).map(([id, label]) => (
             <button
               key={id}
@@ -90,6 +128,37 @@ export default function CuentaPage() {
         <button type="button" className="btn-primary" onClick={save}>
           Guardar
         </button>
+        {sessionEmail && (
+          <button type="button" className="btn-secondary" onClick={signOut}>
+            Cerrar sesión
+          </button>
+        )}
+        <Link href="/auth" className="btn-secondary">
+          Entrar con magic link
+        </Link>
+      </div>
+
+      <div className="bento-card space-y-3">
+        <h2 className="font-semibold">Plan (local / demo)</h2>
+        <p className="text-sm muted">
+          Sin Wompi puedes activar Carrera o Tester en este dispositivo para probar gates.
+        </p>
+        <div className="flex flex-col gap-2">
+          {(["free", "carrera", "plus", "tester"] as PlanId[]).map((p) => (
+            <button
+              key={p}
+              type="button"
+              className="btn-secondary"
+              onClick={() => {
+                setPlan(p, "local");
+                setPlanState(p);
+                setMsg(`Plan local: ${planLabel(p)}`);
+              }}
+            >
+              {planLabel(p)}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="bento-card space-y-3">
@@ -111,12 +180,4 @@ export default function CuentaPage() {
       </Link>
     </div>
   );
-}
-
-function safeParse(key: string) {
-  try {
-    return JSON.parse(localStorage.getItem(key) || "null");
-  } catch {
-    return null;
-  }
 }

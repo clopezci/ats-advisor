@@ -1,19 +1,67 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+
+declare global {
+  interface Window {
+    adsbygoogle?: unknown[];
+  }
+}
+
 export function AdSlot({ slot = "ats-free" }: { slot?: string }) {
-  const client = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || process.env.ADSENSE_CLIENT_ID;
-  if (!client) {
+  const [enabled, setEnabled] = useState(true);
+  const pushed = useRef(false);
+  const pub = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
+
+  useEffect(() => {
+    try {
+      if (localStorage.getItem("ats_feature_ads") === "0") setEnabled(false);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!pub || !enabled || pushed.current) return;
+    const existing = document.querySelector(`script[data-ats-adsense="1"]`);
+    if (!existing) {
+      const s = document.createElement("script");
+      s.async = true;
+      s.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${pub}`;
+      s.crossOrigin = "anonymous";
+      s.dataset.atsAdsense = "1";
+      document.head.appendChild(s);
+    }
+    try {
+      window.adsbygoogle = window.adsbygoogle || [];
+      window.adsbygoogle.push({});
+      pushed.current = true;
+    } catch {
+      /* ignore */
+    }
+  }, [pub, enabled]);
+
+  if (!enabled) return null;
+
+  if (!pub) {
     return (
       <div className="bento-card text-center text-xs muted">
-        Espacio de anuncios (plan free) · activa ADSENSE_CLIENT_ID para mostrar AdSense
+        Espacio de anuncios (plan free) · define NEXT_PUBLIC_ADSENSE_CLIENT_ID para AdSense
         <span className="sr-only">{slot}</span>
       </div>
     );
   }
+
   return (
-    <div className="bento-card text-center text-xs muted">
-      {/* Integración AdSense real al tener aprobación */}
-      Anuncio · {slot}
+    <div className="bento-card overflow-hidden text-center">
+      <ins
+        className="adsbygoogle"
+        style={{ display: "block", minHeight: 90 }}
+        data-ad-client={pub}
+        data-ad-slot={slot}
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      />
     </div>
   );
 }

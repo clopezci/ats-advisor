@@ -9,6 +9,7 @@ import type { AtsAnalyzeResult, AtsProfile } from "@/lib/ats/engine";
 import { canRunAts, recordAtsRun } from "@/lib/limits/atsFree";
 import { buildAtsReport, downloadText } from "@/lib/ats/report";
 import { bumpStreak } from "@/lib/engagement/streak";
+import { canAccessOutplacement, readEntitlement } from "@/lib/entitlements";
 
 const PROFILES: { id: AtsProfile; label: string }[] = [
   { id: "generic", label: "Genérico" },
@@ -93,9 +94,16 @@ export default function AtsPage() {
   }
 
   async function analyze() {
-    const gate = canRunAts(5);
+    const entitlement = readEntitlement();
+    const paid = canAccessOutplacement(entitlement.plan);
+    const dailyLimit = paid ? 100 : 5;
+    const gate = canRunAts(dailyLimit);
     if (!gate.ok) {
-      setError(`Límite diario free alcanzado (${gate.used}/5). Vuelve mañana o ve a Precios.`);
+      setError(
+        paid
+          ? `Límite alto alcanzado (${gate.used}/${dailyLimit}). Reintenta mañana.`
+          : `Límite diario free alcanzado (${gate.used}/${dailyLimit}). Vuelve mañana o ve a Precios.`
+      );
       return;
     }
     setLoading(true);
@@ -278,7 +286,7 @@ export default function AtsPage() {
             {aiTip && <p className="text-sm muted whitespace-pre-wrap">{aiTip}</p>}
           </section>
 
-          <AdSlot slot="ats-results" />
+          {!canAccessOutplacement(readEntitlement().plan) && <AdSlot slot="ats-results" />}
 
           <div className="flex flex-col gap-3">
             <button

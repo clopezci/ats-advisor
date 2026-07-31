@@ -1,10 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { DictationButton } from "@/components/DictationButton";
 import { SpeakButton } from "@/components/SpeakButton";
 import { OUT09_QUESTIONS } from "@/lib/outplacement/modules";
+import {
+  canGenerateOut09,
+  readEntitlement,
+  recordOut09Use,
+  type PlanId,
+} from "@/lib/entitlements";
+import { PaywallCard } from "@/components/PaywallCard";
 
 type Skill = "soft" | "hard" | null;
 
@@ -22,6 +29,15 @@ export default function Out09Page() {
     capsules: { day: number; title: string; content: string }[];
   } | null>(null);
   const [meta, setMeta] = useState<{ provider?: string; usedPaid?: boolean; qualityScore?: number }>({});
+  const [plan, setPlan] = useState<PlanId>("free");
+  const [gateMsg, setGateMsg] = useState("");
+
+  useEffect(() => {
+    const e = readEntitlement();
+    setPlan(e.plan);
+    const g = canGenerateOut09(e);
+    if (!g.ok) setGateMsg(g.reason || "");
+  }, []);
 
   const placeholder =
     skill === "hard"
@@ -31,16 +47,29 @@ export default function Out09Page() {
   const currentQ = OUT09_QUESTIONS[qIndex];
 
   async function generate() {
+    const entitlement = readEntitlement();
+    const gate = canGenerateOut09(entitlement);
+    if (!gate.ok) {
+      setError(gate.reason || "Plan insuficiente");
+      return;
+    }
     setLoading(true);
     setError("");
     try {
       const res = await fetch("/api/outplacement/out09", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ skillType: skill, description, answers }),
+        body: JSON.stringify({
+          skillType: skill,
+          description,
+          answers,
+          plan: entitlement.plan,
+          allowDemo: entitlement.plan === "tester",
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Error");
+      recordOut09Use();
       setCourse(data.course);
       setMeta({ provider: data.provider, usedPaid: data.usedPaid, qualityScore: data.qualityScore });
       try {
@@ -54,6 +83,17 @@ export default function Out09Page() {
     } finally {
       setLoading(false);
     }
+  }
+
+  if (gateMsg && !canGenerateOut09(readEntitlement()).ok) {
+    return (
+      <div className="flex flex-1 flex-col gap-5">
+        <PaywallCard title="OUT-09 bloqueado" reason={gateMsg} currentPlan={plan} />
+        <Link href="/outplacement" className="btn-secondary">
+          Volver
+        </Link>
+      </div>
+    );
   }
 
   return (

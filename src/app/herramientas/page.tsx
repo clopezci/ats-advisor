@@ -14,6 +14,11 @@ const TOOLS = [
     title: "Checklist CV ATS",
     desc: "Lista rápida de formato compatible con robots.",
   },
+  {
+    href: "/herramientas/linkedin",
+    title: "Optimizador LinkedIn",
+    desc: "Headline y About alineados a ATS.",
+  },
 ];
 
 export default function HerramientasPage() {

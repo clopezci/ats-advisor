@@ -1,24 +1,40 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { SpeakButton } from "@/components/SpeakButton";
 import { OUTPLACEMENT_MODULES } from "@/lib/outplacement/modules";
+import { getProgress, saveProgress } from "@/lib/progress/courses";
 
 function RutaInner() {
   const params = useSearchParams();
   const initial = params.get("code") || "OUT-01";
   const [code, setCode] = useState(initial);
   const [day, setDay] = useState(0);
+  const [completed, setCompleted] = useState<number[]>([]);
 
   const mod = useMemo(
     () => OUTPLACEMENT_MODULES.find((m) => m.code === code) || OUTPLACEMENT_MODULES[0],
     [code]
   );
   const capsule = mod.capsules[day];
-  const progress = ((day + 1) / mod.capsules.length) * 100;
+  const progress = (completed.length / Math.max(1, mod.capsules.length)) * 100;
+
+  useEffect(() => {
+    const p = getProgress(code);
+    setDay(p.day || 0);
+    setCompleted(p.completed || []);
+  }, [code]);
+
+  function goNext() {
+    const done = Array.from(new Set([...completed, day]));
+    setCompleted(done);
+    const next = Math.min(mod.capsules.length - 1, day + 1);
+    setDay(next);
+    saveProgress(code, next, done);
+  }
 
   return (
     <div className="flex flex-1 flex-col gap-5">
@@ -34,7 +50,7 @@ function RutaInner() {
           <div className="progress-fill" style={{ width: `${progress}%` }} />
         </div>
         <p className="text-xs muted">
-          Cápsula {day + 1} de {mod.capsules.length}
+          Completadas {completed.length}/{mod.capsules.length} · cápsula actual {day + 1}
         </p>
       </section>
 
@@ -45,10 +61,7 @@ function RutaInner() {
             type="button"
             className="pill-brand whitespace-nowrap"
             style={m.code === code ? { boxShadow: "var(--shadow-brand)" } : undefined}
-            onClick={() => {
-              setCode(m.code);
-              setDay(0);
-            }}
+            onClick={() => setCode(m.code)}
           >
             {m.code}
           </button>
@@ -82,22 +95,24 @@ function RutaInner() {
       )}
 
       <div className="flex flex-col gap-3">
-        <button
-          type="button"
-          className="btn-primary"
-          disabled={day >= mod.capsules.length - 1}
-          onClick={() => setDay((d) => Math.min(mod.capsules.length - 1, d + 1))}
-        >
-          Siguiente cápsula
+        <button type="button" className="btn-primary" onClick={goNext}>
+          Marcar y siguiente
         </button>
         <button
           type="button"
           className="btn-secondary"
           disabled={day <= 0}
-          onClick={() => setDay((d) => Math.max(0, d - 1))}
+          onClick={() => {
+            const prev = Math.max(0, day - 1);
+            setDay(prev);
+            saveProgress(code, prev, completed);
+          }}
         >
           Anterior
         </button>
+        <Link href="/outplacement/90-dias" className="btn-secondary">
+          Modo 90 días
+        </Link>
         <Link href="/outplacement" className="btn-secondary">
           Volver a módulos
         </Link>

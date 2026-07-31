@@ -8,6 +8,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/outplacement",
     "/outplacement/out09",
     "/outplacement/entrevista",
+    "/outplacement/90-dias",
+    "/outplacement/out09/player",
     "/precios",
     "/auth",
     "/cuenta",
@@ -15,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/legal/terminos",
     "/herramientas",
     "/herramientas/checklist",
+    "/herramientas/linkedin",
   ];
   return paths.map((p) => ({
     url: `${base}${p}`,

@@ -4,7 +4,10 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { DictationButton } from "@/components/DictationButton";
 import { SpeakButton } from "@/components/SpeakButton";
+import { AdSlot } from "@/components/AdSlot";
 import type { AtsAnalyzeResult, AtsProfile } from "@/lib/ats/engine";
+import { canRunAts, recordAtsRun } from "@/lib/limits/atsFree";
+import { buildAtsReport, downloadText } from "@/lib/ats/report";
 
 const PROFILES: { id: AtsProfile; label: string }[] = [
   { id: "generic", label: "Genérico" },
@@ -77,6 +80,11 @@ export default function AtsPage() {
   }
 
   async function analyze() {
+    const gate = canRunAts(5);
+    if (!gate.ok) {
+      setError(`Límite diario free alcanzado (${gate.used}/5). Vuelve mañana o ve a Precios.`);
+      return;
+    }
     setLoading(true);
     setError("");
     try {
@@ -87,12 +95,14 @@ export default function AtsPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Error");
+      recordAtsRun();
       setResult(data.result);
       setStep(4);
       try {
         const prev = JSON.parse(localStorage.getItem("ats_history") || "[]");
         prev.unshift({ at: Date.now(), score: data.result.score });
         localStorage.setItem("ats_history", JSON.stringify(prev.slice(0, 30)));
+        localStorage.setItem("ats_last_result", JSON.stringify({ result: data.result, atsProfile }));
       } catch {
         /* ignore */
       }
@@ -254,11 +264,24 @@ export default function AtsPage() {
             {aiTip && <p className="text-sm muted whitespace-pre-wrap">{aiTip}</p>}
           </section>
 
-          <div className="bento-card text-center text-xs muted">
-            Espacio para anuncios (plan free) — configurable en Admin
-          </div>
+          <AdSlot slot="ats-results" />
 
           <div className="flex flex-col gap-3">
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() =>
+                downloadText(
+                  `atsadvisor-informe-${result.score}.txt`,
+                  buildAtsReport(result, { profile: atsProfile })
+                )
+              }
+            >
+              Descargar informe
+            </button>
+            <Link href="/precios" className="btn-secondary">
+              Ver planes / quitar límites
+            </Link>
             <Link href="/outplacement" className="btn-primary">
               Mejorar con outplacement
             </Link>

@@ -39,6 +39,9 @@ export default function OutplacementPage() {
         <Link href="/outplacement/entrevista" className="btn-secondary">
           Simulador de entrevista
         </Link>
+        <Link href="/outplacement/90-dias" className="btn-secondary">
+          Modo primeros 90 días
+        </Link>
         <Link href="/outplacement/ruta" className="btn-secondary">
           Ver ruta OUT-01 a OUT-08
         </Link>

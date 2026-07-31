@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { InstallPrompt } from "@/components/InstallPrompt";
 
 const INTRO =
   "ATSAdvisor te ayuda a pasar filtros ATS y a reconstruir tu carrera. Elige solo una cosa para empezar.";
@@ -7,6 +8,7 @@ const INTRO =
 export default function HomePage() {
   return (
     <div className="flex flex-1 flex-col gap-6">
+      <InstallPrompt />
       <section className="bento-card space-y-4">
         <div className="flex items-start justify-between gap-3">
           <div>

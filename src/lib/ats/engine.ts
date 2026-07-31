@@ -1,4 +1,4 @@
-/** Motor ATS ultra-pro (ES) — no depende del Python v1. */
+import { textHasTerm } from "@/lib/ats/synonyms";
 
 export type AtsProfile = "generic" | "workday" | "greenhouse" | "taleo" | "successfactors" | "lever" | "sap";
 
@@ -125,7 +125,7 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
   const matched: string[] = [];
   const missing: string[] = [];
   for (const p of phrases) {
-    if (cvN.includes(normalize(p))) matched.push(p);
+    if (textHasTerm(cvN, p) || cvN.includes(normalize(p))) matched.push(p);
     else missing.push(p);
   }
 
@@ -135,7 +135,11 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
   const softMissing = missing.filter((p) => SOFT.some((h) => normalize(p).includes(normalize(h))));
 
   const exclusiveGaps: string[] = [];
-  if (/ingles|inglés|english|bilingue|bilingüe/.test(jobN) && !/ingles|inglés|english|bilingue|bilingüe/.test(cvN)) {
+  if (
+    /ingles|inglés|english|bilingue|bilingüe/.test(jobN) &&
+    !textHasTerm(cvN, "ingles") &&
+    !/ingles|inglés|english|bilingue|bilingüe/.test(cvN)
+  ) {
     exclusiveGaps.push("La oferta exige inglés y no aparece claramente en tu CV.");
   }
   const yr = yearsRequired(input.jobText);

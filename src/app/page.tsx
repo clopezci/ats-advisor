@@ -10,10 +10,12 @@ export default function HomePage() {
       <section className="bento-card space-y-4">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-xs uppercase tracking-[0.14em] muted">Paso 1 de 1</p>
-            <h1 className="mt-1 text-2xl font-semibold leading-tight">¿Qué quieres hacer ahora?</h1>
+            <p className="pill-brand">En construcción · LOTIC</p>
+            <h1 className="mt-3 text-2xl font-semibold leading-tight">¿Qué quieres hacer ahora?</h1>
           </div>
-          <SpeakButton text={`${INTRO} Opción uno: analizar mi CV con el ATS. Opción dos: ver el outplacement.`} />
+          <SpeakButton
+            text={`${INTRO} Opción uno: analizar mi CV con el ATS. Opción dos: ver el outplacement.`}
+          />
         </div>
         <p className="muted text-sm leading-relaxed">{INTRO}</p>
       </section>
@@ -34,9 +36,13 @@ export default function HomePage() {
         </div>
         <div className="bento-card">
           <p className="text-xs muted">Voz</p>
-          <p className="mt-1 text-sm font-medium">Escuchar y dictar en todo el flujo</p>
+          <p className="mt-1 text-sm font-medium">Escuchar y dictar en el flujo</p>
         </div>
       </section>
+
+      <Link href="/herramientas" className="text-center text-sm" style={{ color: "var(--brand)" }}>
+        Herramientas gratis →
+      </Link>
     </div>
   );
 }

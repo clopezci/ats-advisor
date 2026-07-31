@@ -17,17 +17,18 @@ export function AppShell({ children }: { children: ReactNode }) {
             <div className="text-xs muted">by LOTIC</div>
           </div>
         </Link>
-        <Link href="/cuenta" className="text-sm muted hover:text-white">
+        <Link href="/cuenta" className="text-sm muted hover:opacity-80">
           Mi cuenta
         </Link>
       </header>
       <main className="flex flex-1 flex-col">{children}</main>
-      <footer className="mt-10 space-y-2 border-t border-white/10 pt-4 text-center text-xs muted">
+      <footer className="mt-10 space-y-2 border-t pt-4 text-center text-xs muted" style={{ borderColor: "var(--border)" }}>
         <nav className="flex flex-wrap justify-center gap-x-3 gap-y-1">
           <Link href="/legal/privacidad">Privacidad</Link>
           <Link href="/legal/terminos">Términos</Link>
           <Link href="/legal/cookies">Cookies</Link>
           <Link href="/legal/contacto">Contacto</Link>
+          <Link href="/herramientas">Herramientas</Link>
         </nav>
         <p>© {new Date().getFullYear()} LOTIC Soluciones</p>
       </footer>

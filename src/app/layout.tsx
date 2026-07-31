@@ -4,6 +4,7 @@ import { RegisterSW } from "@/components/RegisterSW";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://ats-advisor-two.vercel.app"),
   title: {
     default: "ATSAdvisor | LOTIC",
     template: "%s | ATSAdvisor",
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "black-translucent",
+    statusBarStyle: "default",
     title: "ATSAdvisor",
   },
   openGraph: {
@@ -22,6 +23,7 @@ export const metadata: Metadata = {
     description: "Pasa el ATS y reconstruye tu carrera. Por LOTIC.",
     locale: "es_CO",
     type: "website",
+    url: "https://ats-advisor-two.vercel.app/",
   },
 };
 

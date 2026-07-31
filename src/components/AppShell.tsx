@@ -18,6 +18,9 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
         </Link>
         <nav className="flex items-center gap-3 text-sm muted">
+          <Link href="/tracker" className="hover:opacity-80">
+            Tracker
+          </Link>
           <Link href="/precios" className="hover:opacity-80">
             Precios
           </Link>

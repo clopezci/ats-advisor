@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { AppShell } from "@/components/AppShell";
 import { RegisterSW } from "@/components/RegisterSW";
+import { CookieBanner } from "@/components/CookieBanner";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -45,6 +46,7 @@ export default function RootLayout({
       <body className="antialiased">
         <RegisterSW />
         <AppShell>{children}</AppShell>
+        <CookieBanner />
       </body>
     </html>
   );

@@ -60,8 +60,19 @@ create policy "scans_own" on ats_scans
 create policy "courses_own" on courses
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
-insert into app_settings (key, value) values
-  ('pricing', '{"carrera": 79000, "plus": 99000, "out09_extra": 22000, "currency": "COP"}'::jsonb),
-  ('ai_limits', '{"free_ats_per_day": 5, "out09_included_carrera": 1, "out09_included_plus": 2, "quality_threshold": 0.72}'::jsonb),
-  ('features', '{"ads": true, "whatsapp": false, "telegram": true}'::jsonb)
-on conflict (key) do nothing;
+create table if not exists job_applications (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references profiles(id) on delete cascade,
+  title text not null,
+  company text not null,
+  url text,
+  status text not null default 'interes',
+  notes text,
+  score numeric,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table job_applications enable row level security;
+create policy "jobs_own" on job_applications
+  for all using (auth.uid() = user_id) with check (auth.uid() = user_id);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { DictationButton } from "@/components/DictationButton";
 import { SpeakButton } from "@/components/SpeakButton";
@@ -30,6 +30,18 @@ export default function AtsPage() {
   const [uploading, setUploading] = useState(false);
   const [aiTip, setAiTip] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
+
+  useEffect(() => {
+    try {
+      const draft = localStorage.getItem("ats_cv_draft");
+      if (draft) {
+        setCvText(draft);
+        localStorage.removeItem("ats_cv_draft");
+      }
+    } catch {
+      /* ignore */
+    }
+  }, []);
 
   const intro = useMemo(() => {
     if (step === 1) return "Sube tu CV (PDF/DOCX/TXT), pégalo o dicta el texto.";
@@ -279,6 +291,24 @@ export default function AtsPage() {
             >
               Descargar informe
             </button>
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={async () => {
+                const text = buildAtsReport(result, { profile: atsProfile });
+                if (navigator.share) {
+                  await navigator.share({ title: "Informe ATSAdvisor", text });
+                } else {
+                  await navigator.clipboard.writeText(text);
+                  alert("Informe copiado al portapapeles");
+                }
+              }}
+            >
+              Compartir informe
+            </button>
+            <Link href="/tracker" className="btn-secondary">
+              Guardar en tracker
+            </Link>
             <Link href="/precios" className="btn-secondary">
               Ver planes / quitar límites
             </Link>

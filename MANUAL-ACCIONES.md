@@ -32,6 +32,7 @@ Todo lo que **tú** debes hacer (el agente no puede completarlo sin tus cuentas/
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Auth cliente | Supabase → API |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server (nunca en cliente) | Supabase → API |
 | `WOMPI_PUBLIC_KEY` / `WOMPI_PRIVATE_KEY` | Pagos COP | https://wompi.co |
+| `WOMPI_EVENTS_SECRET` | Firma eventos webhook (si aplica) | Panel Wompi → eventos |
 | `SENTRY_DSN` | Errores (opcional) | https://sentry.io |
 | `ADSENSE_CLIENT_ID` | Ads en ATS free (opcional) | Google AdSense |
 

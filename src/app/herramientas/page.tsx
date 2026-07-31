@@ -19,6 +19,21 @@ const TOOLS = [
     title: "Optimizador LinkedIn",
     desc: "Headline y About alineados a ATS.",
   },
+  {
+    href: "/herramientas/carta",
+    title: "Carta de presentación",
+    desc: "Carta corta fiel a tu experiencia y a la oferta.",
+  },
+  {
+    href: "/herramientas/salario",
+    title: "Banda salarial",
+    desc: "Ancla orientativa en COP para negociar.",
+  },
+  {
+    href: "/tracker",
+    title: "Tracker de postulaciones",
+    desc: "Kanban simple de tu búsqueda.",
+  },
 ];
 
 export default function HerramientasPage() {

@@ -29,6 +29,9 @@ export default function HomePage() {
         <Link href="/outplacement" className="btn-secondary">
           Ver outplacement
         </Link>
+        <Link href="/tracker" className="btn-secondary">
+          Tracker de postulaciones
+        </Link>
       </div>
 
       <section className="grid grid-cols-2 gap-3">

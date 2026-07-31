@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { OUTPLACEMENT_MODULES } from "@/lib/outplacement/modules";
+import { notifyOwnerTelegram } from "@/lib/notify/channels";
 
 export async function POST(req: Request) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -10,15 +12,25 @@ export async function POST(req: Request) {
   const chatId = update?.message?.chat?.id;
   const text = String(update?.message?.text || "");
 
+  const dayIndex = Math.floor(Date.now() / 86400000) % Math.max(1, OUTPLACEMENT_MODULES.length);
+  const mod = OUTPLACEMENT_MODULES[dayIndex];
+  const cap = mod.capsules[Math.floor(Date.now() / 86400000) % mod.capsules.length];
+
   let reply =
-    "ATSAdvisor: usa /start para comenzar, /capsula para tu microcápsula del día, /ayuda para opciones.";
+    "ATSAdvisor: /start /capsula /progreso /ayuda";
   if (text.startsWith("/start")) {
-    reply = "Bienvenido a ATSAdvisor. Configura tu canal en la PWA (Mi cuenta) y sigue tu outplacement aquí.";
-  } else if (text.startsWith("/capsula")) {
     reply =
-      "Cápsula del día: escribe un logro con métrica (%, dinero o tiempo). Luego agrégalo a tu CV y vuelve a analizar con ATSAdvisor.";
+      "Bienvenido a ATSAdvisor. Usa /capsula para tu microaprendizaje del día y sigue la ruta en la PWA.";
+  } else if (text.startsWith("/capsula")) {
+    reply = `${mod.code} · ${mod.title}\n\n${cap.title}\n${cap.content}`;
+  } else if (text.startsWith("/progreso")) {
+    reply =
+      "Tu progreso detallado está en la PWA (Outplacement → ruta / OUT-09 player). Aquí te enviamos la cápsula diaria.";
   } else if (text.startsWith("/ayuda")) {
-    reply = "Comandos: /start /capsula /ayuda. Alertas del sistema llegan al chat del owner.";
+    reply = "Comandos: /start /capsula /progreso /ayuda";
+  } else if (text.startsWith("/alerta_owner_test")) {
+    await notifyOwnerTelegram("Test de alerta desde bot Telegram");
+    reply = "Alerta enviada al owner (si TELEGRAM_OWNER_CHAT_ID está configurado).";
   }
 
   if (chatId) {

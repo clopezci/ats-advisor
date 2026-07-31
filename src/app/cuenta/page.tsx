@@ -94,6 +94,9 @@ export default function CuentaPage() {
 
       <div className="bento-card space-y-3">
         <h2 className="font-semibold">Habeas Data y baja</h2>
+        <Link href="/cuenta/cvs" className="btn-secondary">
+          Versiones de CV
+        </Link>
         <button type="button" className="btn-primary" onClick={exportHabeas}>
           Descargar mis datos
         </button>

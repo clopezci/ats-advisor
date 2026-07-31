@@ -1,0 +1,223 @@
+{
+  "rules": [
+    {
+      "id": "lang_english",
+      "label": "Inglés requerido",
+      "trigger_any": [
+        "inglés",
+        "ingles",
+        "english",
+        "bilingüe",
+        "bilingual"
+      ],
+      "cv_any": [
+        "inglés",
+        "ingles",
+        "english",
+        "bilingüe",
+        "bilingual"
+      ],
+      "level_regex": "\\b(c1|c2|b2)\\b|biling[uü]e|bilingual|fluido|avanzado",
+      "require_level_if_present": true
+    },
+    {
+      "id": "sector_manufactura",
+      "label": "Experiencia en sector manufactura",
+      "trigger_any": [
+        "sector manufactura",
+        "sector manufacturero",
+        "manufactura",
+        "manufacturera",
+        "manufacturing",
+        "planta",
+        "producción",
+        "produccion",
+        "fábrica",
+        "fabrica"
+      ],
+      "cv_any": [
+        "manufactura",
+        "manufacturero",
+        "planta",
+        "producción",
+        "produccion",
+        "fábrica",
+        "fabrica"
+      ]
+    },
+    {
+      "id": "sector_agro",
+      "label": "Experiencia en sector agroindustrial",
+      "trigger_any": [
+        "agroindustrial",
+        "agrícola",
+        "agricola",
+        "cultivo",
+        "maquinaria agrícola",
+        "maquinaria agricola",
+        "fertilización",
+        "fertilizacion",
+        "aceite de palma"
+      ],
+      "cv_any": [
+        "agroindustrial",
+        "agrícola",
+        "agricola",
+        "cultivo",
+        "maquinaria agrícola",
+        "maquinaria agricola",
+        "fertilización",
+        "fertilizacion",
+        "aceite de palma"
+      ]
+    },
+    {
+      "id": "sector_salud",
+      "label": "Experiencia en sector salud",
+      "trigger_any": [
+        "sector salud",
+        "hospital",
+        "clínica",
+        "clinica",
+        "salud digital"
+      ],
+      "cv_any": [
+        "hospital",
+        "clínica",
+        "clinica",
+        "salud"
+      ]
+    },
+    {
+      "id": "sector_financiero",
+      "label": "Experiencia en sector financiero",
+      "trigger_any": [
+        "sector financiero",
+        "banca",
+        "bancario",
+        "entidad financiera",
+        "servicios financieros"
+      ],
+      "cv_any": [
+        "banca",
+        "bancario",
+        "entidad financiera",
+        "sector financiero"
+      ]
+    },
+    {
+      "id": "sector_tecnologia",
+      "label": "Experiencia en sector tecnología",
+      "trigger_any": [
+        "sector tecnología",
+        "sector tecnologia",
+        "software house",
+        "empresa de software",
+        "it services"
+      ],
+      "cv_any": [
+        "software",
+        "tecnología",
+        "tecnologia",
+        "it services"
+      ]
+    },
+    {
+      "id": "fin_finanzas_corporativas",
+      "label": "Conocimiento requerido: finanzas corporativas",
+      "trigger_any": [
+        "finanzas corporativas"
+      ],
+      "cv_any": [
+        "finanzas corporativas",
+        "corporate finance",
+        "modelación financiera",
+        "modelacion financiera"
+      ]
+    },
+    {
+      "id": "tool_excel_avanzado",
+      "label": "Conocimiento requerido: excel avanzado",
+      "trigger_any": [
+        "excel avanzado",
+        "nivel avanzado en excel",
+        "excel nivel avanzado"
+      ],
+      "cv_any": [
+        "excel",
+        "excel avanzado"
+      ]
+    },
+    {
+      "id": "tool_sap",
+      "label": "Conocimiento requerido: sap",
+      "trigger_any": [
+        "sap"
+      ],
+      "cv_any": [
+        "sap"
+      ]
+    },
+    {
+      "id": "proc_tesoreria",
+      "label": "Conocimiento requerido: tesorería",
+      "trigger_any": [
+        "tesorería",
+        "tesoreria"
+      ],
+      "cv_any": [
+        "tesorería",
+        "tesoreria"
+      ]
+    },
+    {
+      "id": "proc_flujo_caja",
+      "label": "Conocimiento requerido: flujo de caja",
+      "trigger_any": [
+        "flujo de caja"
+      ],
+      "cv_any": [
+        "flujo de caja"
+      ]
+    },
+    {
+      "id": "proc_liquidez",
+      "label": "Conocimiento requerido: liquidez",
+      "trigger_any": [
+        "liquidez"
+      ],
+      "cv_any": [
+        "liquidez"
+      ]
+    },
+    {
+      "id": "proc_control_interno",
+      "label": "Conocimiento requerido: control interno",
+      "trigger_any": [
+        "control interno",
+        "controles internos"
+      ],
+      "cv_any": [
+        "control interno",
+        "controles internos"
+      ]
+    }
+  ],
+  "experience_regex": "(mín(?:imo)?\\s*)?(\\d+)\\s*(?:\\+|más\\s+de\\s+)?\\s*(años|year[s]?)",
+  "knowledge_prefixes": [
+    "conocimiento en",
+    "conocimientos en",
+    "manejo de",
+    "dominio de",
+    "nivel avanzado en", "conocimientos técnicos",
+    "conocimientos tecnicos",
+    "conocimientos",
+    "habilidades técnicas",
+    "habilidades tecnicas",
+    "herramientas",
+    "tecnologías",
+    "tecnologias",
+    "requerimientos",
+    "otras habilidades"
+  ]
+}

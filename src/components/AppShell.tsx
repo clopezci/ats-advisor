@@ -1,0 +1,36 @@
+import type { ReactNode } from "react";
+import Link from "next/link";
+
+export function AppShell({ children }: { children: ReactNode }) {
+  return (
+    <div className="mx-auto flex min-h-dvh w-full max-w-lg flex-col px-4 pb-8 pt-5">
+      <header className="mb-6 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-2">
+          <span
+            className="flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold text-white"
+            style={{ background: "var(--brand)", boxShadow: "var(--shadow-brand)" }}
+          >
+            A
+          </span>
+          <div>
+            <div className="text-base font-semibold tracking-tight">ATSAdvisor</div>
+            <div className="text-xs muted">by LOTIC</div>
+          </div>
+        </Link>
+        <Link href="/cuenta" className="text-sm muted hover:text-white">
+          Mi cuenta
+        </Link>
+      </header>
+      <main className="flex flex-1 flex-col">{children}</main>
+      <footer className="mt-10 space-y-2 border-t border-white/10 pt-4 text-center text-xs muted">
+        <nav className="flex flex-wrap justify-center gap-x-3 gap-y-1">
+          <Link href="/legal/privacidad">Privacidad</Link>
+          <Link href="/legal/terminos">Términos</Link>
+          <Link href="/legal/cookies">Cookies</Link>
+          <Link href="/legal/contacto">Contacto</Link>
+        </nav>
+        <p>© {new Date().getFullYear()} LOTIC Soluciones</p>
+      </footer>
+    </div>
+  );
+}

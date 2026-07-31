@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0f0a1a;
+  --bg-elevated: #1a1229;
+  --surface: #241836;
+  --text: #f5f0ff;
+  --text-muted: #b7a8d4;
+  --brand: #7c3aed;
+  --brand-bright: #a78bfa;
+  --brand-glow: rgba(124, 58, 237, 0.45);
+  --danger: #f87171;
+  --success: #34d399;
+  --radius: 1.1rem;
+  --shadow-brand: 0 8px 28px var(--brand-glow);
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+}
+
+body {
+  font-family: "Segoe UI", "Trebuchet MS", "Avenir Next", sans-serif;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(124, 58, 237, 0.28), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(88, 28, 135, 0.2), transparent);
+  background-attachment: fixed;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.85rem 1.25rem;
+  border: none;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, #8b5cf6 0%, var(--brand) 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 1.05rem;
+  box-shadow: var(--shadow-brand);
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.85rem 1.25rem;
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  border-radius: var(--radius);
+  background: rgba(36, 24, 54, 0.85);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 1.05rem;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.12);
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.btn-secondary:hover {
+  border-color: var(--brand-bright);
+  transform: translateY(-1px);
+}
+
+.bento-card {
+  background: rgba(36, 24, 54, 0.72);
+  border: 1px solid rgba(167, 139, 250, 0.18);
+  border-radius: calc(var(--radius) + 0.15rem);
+  padding: 1.25rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  background: rgba(124, 58, 237, 0.15);
+  color: var(--brand-bright);
+  cursor: pointer;
+}

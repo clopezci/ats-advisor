@@ -1,0 +1,728 @@
+{
+  "rules": [
+    {
+      "id": "lang_english",
+      "label": "Inglés requerido",
+      "type": "language",
+      "lang": "en",
+      "trigger_any": [
+        "inglés",
+        "ingles",
+        "english",
+        "bilingüe",
+        "bilingual"
+      ],
+      "level_regex": "\\b([abc][12])\\b|biling[uü]e|bilingual|fluido|avanzado",
+      "level_synonyms": {
+        "básico": "a2",
+        "basico": "a2",
+        "intermedio": "b1",
+        "avanzado": "c1",
+        "fluido": "c1",
+        "bilingüe": "c1",
+        "bilingue": "c1",
+        "bilingual": "c1"
+      }
+    },
+    {
+      "id": "lang_portuguese",
+      "label": "Portugués requerido",
+      "type": "language",
+      "lang": "pt",
+      "trigger_any": [
+        "portugués",
+        "portugues",
+        "portuguese",
+        "bilingüe",
+        "bilingual",
+        "fluente",
+        "avançado"
+      ],
+      "level_regex": "\\b([abc][12])\\b|fluente|avançado|avanzado|intermedi[oó]|básico|basico|biling[uü]e|bilingual",
+      "level_synonyms": {
+        "básico": "a2",
+        "basico": "a2",
+        "intermedio": "b1",
+        "intermediario": "b1",
+        "avanzado": "c1",
+        "avançado": "c1",
+        "fluente": "c1",
+        "fluido": "c1",
+        "bilingüe": "c1",
+        "bilingue": "c1",
+        "bilingual": "c1"
+      }
+    },
+    {
+      "id": "lang_german",
+      "label": "Alemán requerido",
+      "type": "language",
+      "lang": "de",
+      "trigger_any": [
+        "alemán",
+        "aleman",
+        "deutsch",
+        "german",
+        "germany"
+      ],
+      "level_regex": "\\b([abc][12])\\b|fließend|fortgeschritten|mittelstufe|grundkenntnisse",
+      "level_synonyms": {
+        "grundkenntnisse": "a2",
+        "mittelstufe": "b1",
+        "fließend": "c1",
+        "fortgeschritten": "c1"
+      }
+    },
+    {
+      "id": "prof_enfermeria",
+      "label": "Título/Licencia en Enfermería requerido",
+      "type": "profession",
+      "trigger_any": [
+        "enfermera jefe",
+        "enfermera líder",
+        "enfermera lider",
+        "enfermera coordinadora",
+        "enfermera",
+        "enfermería",
+        "enfermeria",
+        "profesional de enfermería",
+        "profesional de enfermeria"
+      ],
+      "cv_any": [
+        "enfermera",
+        "enfermería",
+        "enfermeria",
+        "colegio de enfermería",
+        "licenciatura en enfermería",
+        "rn "
+      ]
+    },
+    {
+      "id": "sector_manufactura",
+      "label": "Experiencia en sector manufactura",
+      "type": "sector",
+      "trigger_any": [
+        "manufactura",
+        "manufacturero",
+        "manufacturera",
+        "manufacturing",
+        "planta",
+        "fábrica",
+        "fabrica",
+        "línea de producción",
+        "linea de produccion"
+      ],
+      "require_any": [
+        "manufactur",
+        "planta",
+        "fábric",
+        "fabric",
+        "línea de",
+        "linea de"
+      ],
+      "cv_any": [
+        "manufactura",
+        "manufacturero",
+        "planta",
+        "producción",
+        "produccion",
+        "fábrica",
+        "fabrica"
+      ]
+    },
+    {
+      "id": "sector_agro",
+      "label": "Experiencia en sector agroindustrial",
+      "type": "sector",
+      "trigger_any": [
+        "agroindustrial",
+        "agrícola",
+        "agricola",
+        "cultivo",
+        "maquinaria agrícola",
+        "maquinaria agricola",
+        "fertilización",
+        "fertilizacion",
+        "aceite de palma"
+      ],
+      "cv_any": [
+        "agroindustrial",
+        "agrícola",
+        "agricola",
+        "cultivo",
+        "maquinaria agrícola",
+        "maquinaria agricola",
+        "fertilización",
+        "fertilizacion",
+        "aceite de palma"
+      ]
+    },
+    {
+      "id": "sector_salud",
+      "label": "Experiencia en sector salud",
+      "type": "sector",
+      "trigger_any": [
+        "sector salud",
+        "hospital",
+        "clínica",
+        "clinica",
+        "salud digital"
+      ],
+      "cv_any": [
+        "hospital",
+        "clínica",
+        "clinica",
+        "salud"
+      ]
+    },
+    {
+      "id": "sector_salud_reforzado",
+      "label": "Experiencia en sector salud",
+      "type": "sector",
+      "trigger_any": [
+        "sector salud",
+        "hospital",
+        "clínica",
+        "clinica",
+        "ips",
+        "salud pública",
+        "salud publica",
+        "salud digital",
+        "ruta materno-perinatal",
+        "cardiovascular metabólica",
+        "cardiovascular metabolica",
+        "rias"
+      ],
+      "cv_any": [
+        "hospital",
+        "clínica",
+        "clinica",
+        "ips",
+        "salud pública",
+        "salud publica",
+        "salud"
+      ]
+    },
+    {
+      "id": "sector_financiero",
+      "label": "Experiencia en sector financiero",
+      "type": "sector",
+      "trigger_any": [
+        "sector financiero",
+        "banca",
+        "bancario",
+        "entidad financiera",
+        "servicios financieros"
+      ],
+      "cv_any": [
+        "banca",
+        "bancario",
+        "entidad financiera",
+        "sector financiero"
+      ]
+    },
+    {
+      "id": "sector_tecnologia",
+      "label": "Experiencia en sector tecnología",
+      "type": "sector",
+      "trigger_any": [
+        "sector tecnología",
+        "sector tecnologia",
+        "software house",
+        "empresa de software",
+        "it services"
+      ],
+      "cv_any": [
+        "software",
+        "tecnología",
+        "tecnologia",
+        "it services"
+      ]
+    },
+    {
+      "id": "sector_retail",
+      "label": "Experiencia en sector retail / consumo masivo",
+      "type": "sector",
+      "trigger_any": [
+        "sector retail",
+        "retail",
+        "consumo masivo",
+        "gran consumo",
+        "fmcg",
+        "tienda por departamentos",
+        "canal moderno",
+        "canal tradicional"
+      ],
+      "cv_any": [
+        "retail",
+        "consumo masivo",
+        "gran consumo",
+        "fmcg",
+        "canal moderno",
+        "canal tradicional"
+      ]
+    },
+    {
+      "id": "sector_comercial_b2b",
+      "label": "Experiencia en ventas B2B",
+      "type": "sector",
+      "trigger_any": [
+        "ventas b2b",
+        "comercial b2b",
+        "negocios empresa a empresa"
+      ],
+      "cv_any": [
+        "b2b",
+        "ventas b2b",
+        "comercial b2b"
+      ]
+    },
+    {
+      "id": "sector_comercial_b2c",
+      "label": "Experiencia en ventas B2C",
+      "type": "sector",
+      "trigger_any": [
+        "ventas b2c",
+        "comercial b2c",
+        "retail b2c"
+      ],
+      "cv_any": [
+        "b2c",
+        "ventas b2c",
+        "comercial b2c"
+      ]
+    },
+    {
+      "id": "sector_produccion_planta",
+      "label": "Experiencia en operaciones de planta de producción",
+      "type": "sector",
+      "trigger_any": [
+        "producción",
+        "produccion",
+        "turnos",
+        "línea de producción",
+        "linea de produccion",
+        "operaciones de planta"
+      ],
+      "require_any": [
+        "planta",
+        "turnos",
+        "línea de",
+        "linea de"
+      ],
+      "cv_any": [
+        "planta",
+        "producción",
+        "produccion",
+        "turnos",
+        "línea de producción",
+        "linea de produccion"
+      ]
+    },
+    {
+      "id": "sector_logistica",
+      "label": "Experiencia en logística y cadena de suministro",
+      "type": "sector",
+      "trigger_any": [
+        "logística",
+        "logistica",
+        "supply chain",
+        "cadena de suministro",
+        "almacenamiento",
+        "distribución",
+        "distribucion",
+        "inventarios",
+        "centro de distribución",
+        "centro de distribucion",
+        "última milla",
+        "ultima milla"
+      ],
+      "cv_any": [
+        "logística",
+        "logistica",
+        "supply chain",
+        "cadena de suministro",
+        "almacenamiento",
+        "distribución",
+        "distribucion",
+        "inventarios"
+      ]
+    },
+    {
+      "id": "sector_innovacion_id",
+      "label": "Experiencia en innovación / I+D",
+      "type": "sector",
+      "trigger_any": [
+        "i+d",
+        "i + d",
+        "investigación y desarrollo",
+        "investigacion y desarrollo",
+        "innovación",
+        "innovacion",
+        "laboratorio de innovación",
+        "open innovation"
+      ],
+      "cv_any": [
+        "i+d",
+        "investigación y desarrollo",
+        "innovación",
+        "innovacion",
+        "open innovation"
+      ]
+    },
+    {
+      "id": "sector_educacion",
+      "label": "Experiencia en sector educación / edtech",
+      "type": "sector",
+      "trigger_any": [
+        "sector educativo",
+        "institución educativa",
+        "institucion educativa",
+        "universidad",
+        "colegio",
+        "edtech",
+        "plataforma educativa"
+      ],
+      "cv_any": [
+        "universidad",
+        "colegio",
+        "sector educativo",
+        "edtech",
+        "plataforma educativa"
+      ]
+    },
+    {
+      "id": "sector_publico",
+      "label": "Experiencia en sector público",
+      "type": "sector",
+      "trigger_any": [
+        "sector público",
+        "sector publico",
+        "entidad pública",
+        "entidad publica",
+        "gubernamental"
+      ],
+      "cv_any": [
+        "sector público",
+        "sector publico",
+        "entidad pública",
+        "entidad publica"
+      ]
+    },
+    {
+      "id": "sector_ong",
+      "label": "Experiencia en organizaciones sin ánimo de lucro / ONG",
+      "type": "sector",
+      "trigger_any": [
+        "ong",
+        "organización sin ánimo de lucro",
+        "organizacion sin animo de lucro",
+        "fundación",
+        "fundacion",
+        "nonprofit"
+      ],
+      "cv_any": [
+        "ong",
+        "fundación",
+        "fundacion",
+        "nonprofit"
+      ]
+    },
+    {
+      "id": "kn_gestion_clinica",
+      "label": "Conocimiento requerido: gestión clínica",
+      "type": "knowledge",
+      "trigger_any": [
+        "gestión clínica",
+        "gestion clinica"
+      ],
+      "cv_any": [
+        "gestión clínica",
+        "gestion clinica"
+      ]
+    },
+    {
+      "id": "kn_auditoria_salud",
+      "label": "Conocimiento requerido: auditoría en salud",
+      "type": "knowledge",
+      "trigger_any": [
+        "auditoría en salud",
+        "auditoria en salud",
+        "auditoría clínica",
+        "auditoria clinica"
+      ],
+      "cv_any": [
+        "auditoría en salud",
+        "auditoria en salud",
+        "auditoría clínica",
+        "auditoria clinica"
+      ]
+    },
+    {
+      "id": "kn_normativa_salud",
+      "label": "Conocimiento requerido: normativa en salud",
+      "type": "knowledge",
+      "trigger_any": [
+        "normativa en salud",
+        "normatividad en salud",
+        "regulación sanitaria",
+        "regulacion sanitaria"
+      ],
+      "cv_any": [
+        "normativa en salud",
+        "normatividad en salud",
+        "regulación sanitaria",
+        "regulacion sanitaria"
+      ]
+    },
+    {
+      "id": "kn_res_3280",
+      "label": "Conocimiento requerido: Resolución 3280",
+      "type": "knowledge",
+      "trigger_any": [
+        "resolución 3280",
+        "resolucion 3280"
+      ],
+      "cv_any": [
+        "resolución 3280",
+        "resolucion 3280"
+      ]
+    },
+    {
+      "id": "kn_rias",
+      "label": "Conocimiento requerido: RIAS (Rutas Integrales de Atención en Salud)",
+      "type": "knowledge",
+      "trigger_any": [
+        "rias",
+        "rutas integrales de atención en salud",
+        "rutas integrales de atencion en salud"
+      ],
+      "cv_any": [
+        "rias",
+        "ruta integral de atención",
+        "ruta integral de atencion"
+      ]
+    },
+    {
+      "id": "kn_pyp_pym",
+      "label": "Conocimiento requerido: programas PyP / PyM",
+      "type": "knowledge",
+      "trigger_any": [
+        "programas de pyp",
+        "pyp",
+        "pym"
+      ],
+      "cv_any": [
+        "pyp",
+        "pym"
+      ]
+    },
+    {
+      "id": "fin_finanzas_corporativas",
+      "label": "Conocimiento requerido: finanzas corporativas",
+      "type": "knowledge",
+      "trigger_any": [
+        "finanzas corporativas"
+      ],
+      "cv_any": [
+        "finanzas corporativas",
+        "corporate finance",
+        "modelación financiera",
+        "modelacion financiera"
+      ]
+    },
+    {
+      "id": "fin_niif_ifrs",
+      "label": "Conocimiento requerido: NIIF / IFRS",
+      "type": "knowledge",
+      "trigger_any": [
+        "niif",
+        "ifrs",
+        "estados financieros",
+        "consolidación",
+        "consolidacion",
+        "modelación financiera",
+        "modelacion financiera",
+        "presupuestos",
+        "tesorería",
+        "tesoreria",
+        "flujo de caja"
+      ],
+      "cv_any": [
+        "niif",
+        "ifrs",
+        "estados financieros",
+        "consolidación",
+        "consolidacion",
+        "modelación financiera",
+        "modelacion financiera",
+        "presupuestos",
+        "tesorería",
+        "tesoreria",
+        "flujo de caja"
+      ]
+    },
+    {
+      "id": "tool_excel_avanzado",
+      "label": "Conocimiento requerido: excel avanzado",
+      "type": "tool",
+      "trigger_any": [
+        "excel avanzado",
+        "nivel avanzado en excel",
+        "excel nivel avanzado"
+      ],
+      "cv_any": [
+        "excel",
+        "excel avanzado"
+      ]
+    },
+    {
+      "id": "tool_sap",
+      "label": "Conocimiento requerido: sap",
+      "type": "tool",
+      "trigger_any": [
+        "sap"
+      ],
+      "cv_any": [
+        "sap"
+      ]
+    },
+    {
+      "id": "proc_tesoreria",
+      "label": "Conocimiento requerido: tesorería",
+      "type": "process",
+      "trigger_any": [
+        "tesorería",
+        "tesoreria"
+      ],
+      "cv_any": [
+        "tesorería",
+        "tesoreria"
+      ]
+    },
+    {
+      "id": "proc_flujo_caja",
+      "label": "Conocimiento requerido: flujo de caja",
+      "type": "process",
+      "trigger_any": [
+        "flujo de caja"
+      ],
+      "cv_any": [
+        "flujo de caja"
+      ]
+    },
+    {
+      "id": "proc_liquidez",
+      "label": "Conocimiento requerido: liquidez",
+      "type": "process",
+      "trigger_any": [
+        "liquidez"
+      ],
+      "cv_any": [
+        "liquidez"
+      ]
+    },
+    {
+      "id": "proc_control_interno",
+      "label": "Conocimiento requerido: control interno",
+      "type": "process",
+      "trigger_any": [
+        "control interno",
+        "controles internos"
+      ],
+      "cv_any": [
+        "control interno",
+        "controles internos"
+      ]
+    },
+    {
+      "id": "it_agile",
+      "label": "Conocimiento requerido: metodologías ágiles",
+      "type": "knowledge",
+      "trigger_any": [
+        "metodologías ágiles",
+        "metodologias agiles",
+        "agile",
+        "scrum",
+        "kanban"
+      ],
+      "cv_any": [
+        "metodologías ágiles",
+        "metodologias agiles",
+        "agile",
+        "scrum",
+        "kanban"
+      ]
+    },
+    {
+      "id": "it_project_mgmt",
+      "label": "Conocimiento requerido: gestión de proyectos",
+      "type": "knowledge",
+      "trigger_any": [
+        "gestión de proyectos",
+        "gestion de proyectos",
+        "project management",
+        "pm"
+      ],
+      "cv_any": [
+        "gestión de proyectos",
+        "gestion de proyectos",
+        "project management"
+      ]
+    },
+    {
+      "id": "it_okr",
+      "label": "Conocimiento requerido: OKR",
+      "type": "knowledge",
+      "trigger_any": [
+        "okr",
+        "okrs"
+      ],
+      "cv_any": [
+        "okr",
+        "okrs"
+      ]
+    },
+    {
+      "id": "it_estrategia_tec",
+      "label": "Conocimiento requerido: estrategia tecnológica",
+      "type": "knowledge",
+      "trigger_any": [
+        "estrategia tecnológica",
+        "estrategia tecnologica",
+        "technology strategy"
+      ],
+      "cv_any": [
+        "estrategia tecnológica",
+        "estrategia tecnologica",
+        "technology strategy"
+      ]
+    }
+  ],
+  "experience_regex": "(mín(?:imo)?\\s*)?(\\d+)\\s*(?:\\+|más\\s+de\\s+)?\\s*(años|year[s]?)",
+  "knowledge_prefixes": [
+    "conocimiento en",
+    "conocimientos en",
+    "manejo de",
+    "dominio de",
+    "nivel avanzado en"
+  ],
+  "knowledge_section_headers": [
+    "conocimientos técnicos",
+    "conocimientos tecnicos",
+    "conocimientos",
+    "habilidades técnicas",
+    "habilidades tecnicas",
+    "herramientas",
+    "tecnologías",
+    "tecnologias",
+    "requerimientos",
+    "otras habilidades"
+  ],
+  "bullet_markers": [
+    "•",
+    "-",
+    "*",
+    "·"
+  ]
+}

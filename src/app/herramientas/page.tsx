@@ -30,6 +30,21 @@ const TOOLS = [
     desc: "Ancla orientativa en COP para negociar.",
   },
   {
+    href: "/herramientas/plantilla",
+    title: "Plantilla CV ATS",
+    desc: "CV de una columna listo para pegar/analizar.",
+  },
+  {
+    href: "/herramientas/entrevistas",
+    title: "Banco de entrevistas",
+    desc: "Preguntas por perfil + feedback IA.",
+  },
+  {
+    href: "/herramientas/cultura",
+    title: "Ajuste cultural",
+    desc: "Adapta lenguaje a la cultura de la oferta.",
+  },
+  {
     href: "/tracker",
     title: "Tracker de postulaciones",
     desc: "Kanban simple de tu búsqueda.",

@@ -8,6 +8,7 @@ import { AdSlot } from "@/components/AdSlot";
 import type { AtsAnalyzeResult, AtsProfile } from "@/lib/ats/engine";
 import { canRunAts, recordAtsRun } from "@/lib/limits/atsFree";
 import { buildAtsReport, downloadText } from "@/lib/ats/report";
+import { bumpStreak } from "@/lib/engagement/streak";
 
 const PROFILES: { id: AtsProfile; label: string }[] = [
   { id: "generic", label: "Genérico" },
@@ -108,6 +109,7 @@ export default function AtsPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Error");
       recordAtsRun();
+      bumpStreak();
       setResult(data.result);
       setStep(4);
       try {
@@ -306,6 +308,9 @@ export default function AtsPage() {
             >
               Compartir informe
             </button>
+            <Link href="/ats/historial" className="btn-secondary">
+              Ver historial
+            </Link>
             <Link href="/tracker" className="btn-secondary">
               Guardar en tracker
             </Link>

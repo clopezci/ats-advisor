@@ -1,14 +1,30 @@
+"use client";
+
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { InstallPrompt } from "@/components/InstallPrompt";
+import { OnboardingGate } from "@/components/OnboardingGate";
+import { useEffect, useState } from "react";
+import { readStreak } from "@/lib/engagement/streak";
 
-const INTRO =
-  "ATSAdvisor te ayuda a pasar filtros ATS y a reconstruir tu carrera. Elige solo una cosa para empezar.";
+function HomeInner() {
+  const [streak, setStreak] = useState(0);
 
-export default function HomePage() {
+  useEffect(() => {
+    setStreak(readStreak().count);
+  }, []);
+
+  const INTRO =
+    "ATSAdvisor te ayuda a pasar filtros ATS y a reconstruir tu carrera. Elige solo una cosa para empezar.";
+
   return (
     <div className="flex flex-1 flex-col gap-6">
       <InstallPrompt />
+      {streak > 0 && (
+        <p className="text-center text-sm">
+          <span className="pill-brand">Racha {streak} día{streak === 1 ? "" : "s"}</span>
+        </p>
+      )}
       <section className="bento-card space-y-4">
         <div className="flex items-start justify-between gap-3">
           <div>
@@ -35,19 +51,27 @@ export default function HomePage() {
       </div>
 
       <section className="grid grid-cols-2 gap-3">
-        <div className="bento-card">
-          <p className="text-xs muted">Facilidad</p>
-          <p className="mt-1 text-sm font-medium">Máximo 2 decisiones por pantalla</p>
-        </div>
-        <div className="bento-card">
-          <p className="text-xs muted">Voz</p>
-          <p className="mt-1 text-sm font-medium">Escuchar y dictar en el flujo</p>
-        </div>
+        <Link href="/ats/historial" className="bento-card block">
+          <p className="text-xs muted">Historial</p>
+          <p className="mt-1 text-sm font-medium">Ver scores previos</p>
+        </Link>
+        <Link href="/blog" className="bento-card block">
+          <p className="text-xs muted">Blog</p>
+          <p className="mt-1 text-sm font-medium">Guías ATS gratis</p>
+        </Link>
       </section>
 
       <Link href="/herramientas" className="text-center text-sm" style={{ color: "var(--brand)" }}>
         Herramientas gratis →
       </Link>
     </div>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <OnboardingGate>
+      <HomeInner />
+    </OnboardingGate>
   );
 }

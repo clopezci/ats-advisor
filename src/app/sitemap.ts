@@ -7,6 +7,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/ats",
     "/outplacement",
     "/outplacement/out09",
+    "/blog",
+    "/blog/que-es-un-ats",
+    "/blog/cv-una-columna",
+    "/blog/keywords-sin-mentir",
+    "/ats/historial",
+    "/feedback",
     "/tracker",
     "/outplacement/entrevista",
     "/outplacement/90-dias",
@@ -22,6 +28,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/herramientas/linkedin",
     "/herramientas/carta",
     "/herramientas/salario",
+    "/herramientas/plantilla",
+    "/herramientas/entrevistas",
+    "/herramientas/cultura",
   ];
   return paths.map((p) => ({
     url: `${base}${p}`,

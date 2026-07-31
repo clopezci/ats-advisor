@@ -42,6 +42,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <Link href="/legal/terminos">Términos</Link>
           <Link href="/legal/cookies">Cookies</Link>
           <Link href="/legal/contacto">Contacto</Link>
+          <Link href="/blog">Blog</Link>
           <Link href="/herramientas">Herramientas</Link>
         </nav>
         <p>© {new Date().getFullYear()} LOTIC Soluciones</p>

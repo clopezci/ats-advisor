@@ -36,8 +36,14 @@ export default function OutplacementPage() {
         <Link href="/outplacement/out09" className="btn-primary">
           Crear curso personalizado (OUT-09)
         </Link>
+        <Link href="/outplacement/entrevista" className="btn-secondary">
+          Simulador de entrevista
+        </Link>
         <Link href="/outplacement/ruta" className="btn-secondary">
           Ver ruta OUT-01 a OUT-08
+        </Link>
+        <Link href="/precios" className="btn-secondary">
+          Ver precios
         </Link>
       </div>
 

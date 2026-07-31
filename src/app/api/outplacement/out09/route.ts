@@ -1,8 +1,23 @@
+import { readFileSync, existsSync } from "fs";
+import path from "path";
 import { NextResponse } from "next/server";
 import { completeWithCascade } from "@/lib/ai/router";
 import { OUT09_QUESTIONS } from "@/lib/outplacement/modules";
+import { notifyOwnerTelegram } from "@/lib/notify/channels";
 
 export const runtime = "nodejs";
+
+function loadKnowledge() {
+  const dir = path.join(process.cwd(), "knowledge_base");
+  const files = ["outplacement.md", "ats-parsing.md", "star-negociacion.md"];
+  return files
+    .map((f) => {
+      const p = path.join(dir, f);
+      return existsSync(p) ? readFileSync(p, "utf8") : "";
+    })
+    .join("\n\n")
+    .slice(0, 6000);
+}
 
 export async function POST(req: Request) {
   try {
@@ -16,13 +31,16 @@ export async function POST(req: Request) {
     }
 
     const qa = OUT09_QUESTIONS.map((q) => `${q.label} → ${answers[q.id] || "N/D"}`).join("\n");
+    const kb = loadKnowledge();
     const prompt = `Crea un curso OUT-09 personalizado en JSON válido con esta forma:
 {"title":"...","objective":"...","capsules":[{"day":1,"title":"...","content":"...","quiz":{"question":"...","options":["a","b","c"],"answer":0}}]}
 Tipo de habilidad: ${skillType === "hard" ? "técnica (dura)" : "blanda"}.
 Pedido del usuario: ${description}
 Cuestionario:
 ${qa}
-Reglas: 10 a 14 cápsulas, español LATAM, práctico, sin relleno, alineado al cuestionario.`;
+Base de conocimiento (úsalo para calidad profesional):
+${kb}
+Reglas: 10 a 14 cápsulas, español LATAM, práctico, sin relleno, alineado al cuestionario. Solo JSON.`;
 
     const ai = await completeWithCascade({
       task: "out09_outline",
@@ -38,17 +56,18 @@ Reglas: 10 a 14 cápsulas, español LATAM, práctico, sin relleno, alineado al c
       const cleaned = ai.text.replace(/^```json\s*|\s*```$/g, "").trim();
       course = JSON.parse(cleaned);
     } catch {
-      course = JSON.parse(
-        (
-          await completeWithCascade({
-            task: "out09_outline",
-            messages: [
-              { role: "system", content: "Devuelve SOLO JSON del curso." },
-              { role: "user", content: prompt },
-            ],
-          })
-        ).text.replace(/^```json\s*|\s*```$/g, "").trim()
-      );
+      const retry = await completeWithCascade({
+        task: "out09_outline",
+        messages: [
+          { role: "system", content: "Devuelve SOLO JSON del curso." },
+          { role: "user", content: prompt },
+        ],
+      });
+      course = JSON.parse(retry.text.replace(/^```json\s*|\s*```$/g, "").trim());
+    }
+
+    if (ai.usedPaid) {
+      await notifyOwnerTelegram(`OUT-09 escaló a IA de pago (calidad ${ai.qualityScore})`);
     }
 
     return NextResponse.json({

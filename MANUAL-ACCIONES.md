@@ -20,6 +20,7 @@ Todo lo que **tú** debes hacer (el agente no puede completarlo sin tus cuentas/
 | `NEXT_PUBLIC_APP_URL` | URL canónica | `https://ats-advisor-two.vercel.app` |
 | `ADMIN_EMAIL` | Acceso panel owner | Tu correo admin (ej. `clpezci@gmail.com`) |
 | `ADMIN_SECRET` | Token simple admin | Genera una clave larga aleatoria |
+| `CRON_SECRET` | Protege `/api/cron/audit` | Genera clave y úsala en Vercel Cron Authorization |
 | `GROQ_API_KEY` | IA gratuita rápida | https://console.groq.com |
 | `GOOGLE_AI_API_KEY` | Gemini Flash (gratis/pago) | https://aistudio.google.com/apikey |
 | `OPENAI_API_KEY` | Fallback pago (opcional) | https://platform.openai.com |

@@ -24,13 +24,57 @@ export default function AtsPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [result, setResult] = useState<AtsAnalyzeResult | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [aiTip, setAiTip] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
 
   const intro = useMemo(() => {
-    if (step === 1) return "Pega o dicta el texto de tu hoja de vida.";
+    if (step === 1) return "Sube tu CV (PDF/DOCX/TXT), pégalo o dicta el texto.";
     if (step === 2) return "Ahora pega o dicta la oferta laboral.";
     if (step === 3) return "Elige el tipo de ATS o portal si lo conoces.";
     return "Resultado de tu análisis ATS.";
   }, [step]);
+
+  async function onFile(file: File | null) {
+    if (!file) return;
+    setUploading(true);
+    setError("");
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await fetch("/api/ats/extract", { method: "POST", body: fd });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "No se pudo leer");
+      setCvText(data.text);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Error al subir");
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  async function askAiRewrite() {
+    if (!result) return;
+    setAiLoading(true);
+    setAiTip("");
+    try {
+      const res = await fetch("/api/ai/complete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          task: "ats_suggest",
+          prompt: `Con base en este análisis ATS, sugiere 5 reescrituras concretas de viñetas (sin inventar experiencia). Faltantes: ${result.missingKeywords.slice(0, 12).join(", ")}. Acciones: ${result.actions.join(" | ")}. CV (extracto): ${cvText.slice(0, 1200)}`,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "IA no disponible");
+      setAiTip(data.text);
+    } catch (e) {
+      setAiTip(e instanceof Error ? e.message : "No hay IA configurada aún");
+    } finally {
+      setAiLoading(false);
+    }
+  }
 
   async function analyze() {
     setLoading(true);
@@ -79,16 +123,28 @@ export default function AtsPage() {
         <>
           <div className="bento-card space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-medium">Texto del CV</label>
+              <label className="text-sm font-medium">CV (archivo o texto)</label>
               <DictationButton onResult={(t) => setCvText((p) => (p ? `${p} ${t}` : t))} />
             </div>
+            <input
+              type="file"
+              accept=".pdf,.docx,.txt,.md,application/pdf"
+              className="field"
+              onChange={(e) => onFile(e.target.files?.[0] || null)}
+            />
+            {uploading && <p className="text-xs muted">Leyendo archivo…</p>}
             <textarea
               className="field min-h-40"
               value={cvText}
               onChange={(e) => setCvText(e.target.value)}
-              placeholder="Pega aquí el contenido de tu CV…"
+              placeholder="O pega aquí el contenido de tu CV…"
             />
           </div>
+          {error && step === 1 && (
+            <p className="text-sm" style={{ color: "var(--danger)" }}>
+              {error}
+            </p>
+          )}
           <div className="flex flex-col gap-3">
             <button type="button" className="btn-primary" disabled={cvText.trim().length < 40} onClick={() => setStep(2)}>
               Continuar
@@ -186,6 +242,17 @@ export default function AtsPage() {
           <ResultBlock title="Alertas de formato" items={result.formatAlerts} />
           <ResultBlock title="Trampas / riesgos" items={result.trapAlerts} />
           <ResultBlock title="Formación sugerida" items={result.trainingSuggestions} />
+
+          <section className="bento-card space-y-3">
+            <div className="flex items-center justify-between gap-2">
+              <h2 className="text-sm font-semibold">Sugerencias IA (reescritura fiel)</h2>
+              <SpeakButton text={aiTip || "Pide sugerencias de reescritura basadas en el análisis."} />
+            </div>
+            <button type="button" className="btn-secondary" disabled={aiLoading} onClick={askAiRewrite}>
+              {aiLoading ? "Generando…" : "Pedir reescrituras con IA"}
+            </button>
+            {aiTip && <p className="text-sm muted whitespace-pre-wrap">{aiTip}</p>}
+          </section>
 
           <div className="bento-card text-center text-xs muted">
             Espacio para anuncios (plan free) — configurable en Admin

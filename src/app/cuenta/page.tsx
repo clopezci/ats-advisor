@@ -24,7 +24,14 @@ export default function CuentaPage() {
     a.download = "atsadvisor-habeas-data.json";
     a.click();
     URL.revokeObjectURL(url);
-    setMsg("Descargamos tu paquete de datos (Habeas Data).");
+    if (email.includes("@")) {
+      fetch("/api/account/habeas", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, payload }),
+      }).catch(() => undefined);
+    }
+    setMsg("Descargamos tu paquete de datos (Habeas Data). Si hay Resend, también se intenta email.");
   }
 
   function deleteLocal() {

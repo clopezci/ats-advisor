@@ -104,3 +104,28 @@ create table if not exists company_seats (
 
 alter table companies enable row level security;
 alter table company_seats enable row level security;
+
+-- Owner de la empresa ve/edita su org
+create policy "companies_owner_all" on companies
+  for all using (auth.uid() = owner_user_id) with check (auth.uid() = owner_user_id);
+
+-- Asientos: visibles/editables por el owner de la empresa
+create policy "seats_owner_all" on company_seats
+  for all using (
+    exists (
+      select 1 from companies c
+      where c.id = company_seats.company_id and c.owner_user_id = auth.uid()
+    )
+  )
+  with check (
+    exists (
+      select 1 from companies c
+      where c.id = company_seats.company_id and c.owner_user_id = auth.uid()
+    )
+  );
+
+-- Miembro invitado puede leer su propio asiento
+create policy "seats_member_read" on company_seats
+  for select using (
+    lower(email) = lower(coalesce(auth.jwt() ->> 'email', ''))
+  );

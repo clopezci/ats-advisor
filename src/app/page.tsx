@@ -42,9 +42,10 @@ function HomeInner() {
         <Link
           href="/capacidades"
           className="btn-primary"
-          style={{ minHeight: "4.25rem", fontSize: "1.15rem", lineHeight: 1.25 }}
+          style={{ minHeight: "4.5rem", fontSize: "1.2rem", lineHeight: 1.3 }}
         >
-          Ver todo lo que puedes hacer aquí
+          Ver todo lo que puedes hacer
+          <span className="block text-xs font-normal opacity-90">Persona, empresa RH, admin · estados reales</span>
         </Link>
         <Link href="/ats" className="btn-secondary">
           Analizar mi CV (ATS gratis)

@@ -9,6 +9,7 @@ type Settings = {
   features: { ads: boolean; whatsapp: boolean; telegram: boolean };
   ai_limits: { free_ats_per_day: number; quality_threshold: number };
   promotions: { name: string; percent: number; amount: number; starts: string; ends: string }[];
+  tester_emails: string[];
 };
 
 export default function AdminPage() {
@@ -155,6 +156,27 @@ export default function AdminPage() {
             {k}
           </label>
         ))}
+      </section>
+
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold">Testers (premium sin pago)</h2>
+        <p className="text-sm muted">
+          Correos con plan tester. También puedes usar env ADMIN_TESTER_EMAILS.
+        </p>
+        <textarea
+          className="field min-h-24"
+          placeholder="uno@correo.com, dos@correo.com"
+          value={(settings.tester_emails || []).join(", ")}
+          onChange={(e) =>
+            setSettings({
+              ...settings,
+              tester_emails: e.target.value
+                .split(/[,;\n]/)
+                .map((s) => s.trim().toLowerCase())
+                .filter(Boolean),
+            })
+          }
+        />
       </section>
 
       <section className="bento-card space-y-3">

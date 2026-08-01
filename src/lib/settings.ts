@@ -8,6 +8,7 @@ export type AppSettings = {
   };
   features: { ads: boolean; whatsapp: boolean; telegram: boolean };
   promotions: { name: string; percent: number; amount: number; starts: string; ends: string }[];
+  tester_emails: string[];
 };
 
 const g = globalThis as unknown as { __atsSettings?: AppSettings };
@@ -23,6 +24,10 @@ export function defaultSettings(): AppSettings {
     },
     features: { ads: true, whatsapp: false, telegram: true },
     promotions: [],
+    tester_emails: (process.env.ADMIN_TESTER_EMAILS || "")
+      .split(",")
+      .map((s) => s.trim().toLowerCase())
+      .filter(Boolean),
   };
 }
 

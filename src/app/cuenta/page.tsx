@@ -76,6 +76,18 @@ export default function CuentaPage() {
   function save() {
     localStorage.setItem("ats_profile", JSON.stringify({ name, email, channel }));
     setMsg("Preferencias guardadas en este dispositivo.");
+    if (email.includes("@")) {
+      fetch(`/api/testers/check?email=${encodeURIComponent(email)}`)
+        .then((r) => r.json())
+        .then((d) => {
+          if (d.tester) {
+            setPlan("tester", "admin");
+            setPlanState("tester");
+            setMsg("Preferencias guardadas. Correo en whitelist → plan Tester activado.");
+          }
+        })
+        .catch(() => undefined);
+    }
   }
 
   async function signOut() {

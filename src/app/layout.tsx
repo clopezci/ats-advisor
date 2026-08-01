@@ -19,6 +19,10 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "ATSAdvisor",
   },
+  icons: {
+    icon: [{ url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }],
+    apple: [{ url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }],
+  },
   openGraph: {
     title: "ATSAdvisor",
     description: "Pasa el ATS y reconstruye tu carrera. Por LOTIC.",

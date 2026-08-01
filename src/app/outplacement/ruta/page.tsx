@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { SpeakButton } from "@/components/SpeakButton";
+import { CapsuleQuiz } from "@/components/CapsuleQuiz";
 import { OUTPLACEMENT_MODULES } from "@/lib/outplacement/modules";
 import { getProgress, saveProgress } from "@/lib/progress/courses";
 
@@ -14,6 +15,7 @@ function RutaInner() {
   const [code, setCode] = useState(initial);
   const [day, setDay] = useState(0);
   const [completed, setCompleted] = useState<number[]>([]);
+  const [quizPassed, setQuizPassed] = useState(false);
 
   const mod = useMemo(
     () => OUTPLACEMENT_MODULES.find((m) => m.code === code) || OUTPLACEMENT_MODULES[0],
@@ -21,6 +23,7 @@ function RutaInner() {
   );
   const capsule = mod.capsules[day];
   const progress = (completed.length / Math.max(1, mod.capsules.length)) * 100;
+  const needsQuiz = Boolean(capsule?.quiz);
 
   useEffect(() => {
     const p = getProgress(code);
@@ -28,7 +31,12 @@ function RutaInner() {
     setCompleted(p.completed || []);
   }, [code]);
 
+  useEffect(() => {
+    setQuizPassed(!needsQuiz);
+  }, [code, day, needsQuiz]);
+
   function goNext() {
+    if (needsQuiz && !quizPassed) return;
     const done = Array.from(new Set([...completed, day]));
     setCompleted(done);
     const next = Math.min(mod.capsules.length - 1, day + 1);
@@ -60,6 +68,7 @@ function RutaInner() {
             key={m.code}
             type="button"
             className="pill-brand whitespace-nowrap"
+            aria-pressed={m.code === code}
             style={m.code === code ? { boxShadow: "var(--shadow-brand)" } : undefined}
             onClick={() => setCode(m.code)}
           >
@@ -73,30 +82,19 @@ function RutaInner() {
           <h2 className="text-lg font-semibold">{capsule.title}</h2>
           <p className="text-sm leading-relaxed muted">{capsule.content}</p>
           {capsule.quiz && (
-            <div className="rounded-xl p-3" style={{ background: "var(--brand-soft)" }}>
-              <p className="text-sm font-medium">{capsule.quiz.question}</p>
-              <div className="mt-2 flex flex-col gap-2">
-                {capsule.quiz.options.map((opt, idx) => (
-                  <button
-                    key={opt}
-                    type="button"
-                    className="btn-secondary"
-                    onClick={() =>
-                      alert(idx === capsule.quiz!.answer ? "Correcto" : "Revisa de nuevo la cápsula")
-                    }
-                  >
-                    {opt}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <CapsuleQuiz quiz={capsule.quiz} onPassed={() => setQuizPassed(true)} />
           )}
         </section>
       )}
 
       <div className="flex flex-col gap-3">
-        <button type="button" className="btn-primary" onClick={goNext}>
-          Marcar y siguiente
+        <button
+          type="button"
+          className="btn-primary"
+          disabled={needsQuiz && !quizPassed}
+          onClick={goNext}
+        >
+          {needsQuiz && !quizPassed ? "Responde el quiz para continuar" : "Marcar y siguiente"}
         </button>
         <button
           type="button"

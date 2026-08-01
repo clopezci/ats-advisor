@@ -59,7 +59,18 @@ export default function PreciosPage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get("paid") === "1") {
-      setMsg("Si el pago fue aprobado, tu plan se actualiza al confirmar el webhook. También puedes activar demo local abajo.");
+      try {
+        const last = JSON.parse(localStorage.getItem("ats_last_checkout") || "null");
+        const plan = String(last?.plan || params.get("plan") || "carrera") as PlanId;
+        if (plan === "carrera" || plan === "plus") {
+          setPlan(plan, "demo_checkout");
+          setMsg(`Pago detectado. Plan ${planLabel(plan)} activado en este dispositivo. El webhook confirma en servidor.`);
+        } else {
+          setMsg("Si el pago fue aprobado, tu plan se actualiza al confirmar el webhook. También puedes activar demo local abajo.");
+        }
+      } catch {
+        setMsg("Pago recibido. Activa Carrera demo si el plan no se reflejó aún.");
+      }
     }
     if (params.get("demo") === "carrera") {
       setPlan("carrera", "demo_checkout");

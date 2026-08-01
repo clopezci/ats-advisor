@@ -1,9 +1,14 @@
 import { NextResponse } from "next/server";
 import { extractTextFromFile } from "@/lib/ats/extract";
+import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
+import { reportError } from "@/lib/observability";
 
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
+  const limited = rateLimit(req, "ats-extract", { limit: 20, windowMs: 60_000 });
+  if (!limited.ok) return rateLimitedResponse(limited.retryAfterSec);
+
   try {
     const form = await req.formData();
     const file = form.get("file");
@@ -22,6 +27,7 @@ export async function POST(req: Request) {
     }
     return NextResponse.json({ ok: true, text, filename: file.name });
   } catch (e) {
+    await reportError({ where: "api/ats/extract", error: e });
     return NextResponse.json(
       { error: e instanceof Error ? e.message : "No se pudo leer el archivo." },
       { status: 500 }

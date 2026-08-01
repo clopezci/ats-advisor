@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { CapsuleQuiz } from "@/components/CapsuleQuiz";
 import { getProgress, saveProgress } from "@/lib/progress/courses";
 
 type Capsule = {
@@ -18,6 +19,7 @@ export default function Out09PlayerPage() {
   const [course, setCourse] = useState<Course | null>(null);
   const [day, setDay] = useState(0);
   const [completed, setCompleted] = useState<number[]>([]);
+  const [quizPassed, setQuizPassed] = useState(true);
 
   useEffect(() => {
     try {
@@ -30,6 +32,11 @@ export default function Out09PlayerPage() {
       setCourse(null);
     }
   }, []);
+
+  useEffect(() => {
+    const capsule = course?.capsules?.[day];
+    setQuizPassed(!capsule?.quiz);
+  }, [course, day]);
 
   if (!course) {
     return (
@@ -45,6 +52,7 @@ export default function Out09PlayerPage() {
   const capsule = course.capsules?.[day];
   const total = course.capsules?.length || 1;
   const pct = (completed.length / total) * 100;
+  const needsQuiz = Boolean(capsule?.quiz);
 
   return (
     <div className="flex flex-1 flex-col gap-5">
@@ -64,18 +72,21 @@ export default function Out09PlayerPage() {
 
       {capsule && (
         <section className="bento-card space-y-3">
-          <p className="pill-brand">
-            Día {capsule.day || day + 1}
-          </p>
+          <p className="pill-brand">Día {capsule.day || day + 1}</p>
           <h2 className="font-semibold">{capsule.title}</h2>
           <p className="text-sm muted">{capsule.content}</p>
+          {capsule.quiz && (
+            <CapsuleQuiz quiz={capsule.quiz} onPassed={() => setQuizPassed(true)} />
+          )}
         </section>
       )}
 
       <button
         type="button"
         className="btn-primary"
+        disabled={needsQuiz && !quizPassed}
         onClick={() => {
+          if (needsQuiz && !quizPassed) return;
           const done = Array.from(new Set([...completed, day]));
           setCompleted(done);
           const next = Math.min(total - 1, day + 1);
@@ -83,7 +94,7 @@ export default function Out09PlayerPage() {
           saveProgress("OUT-09", next, done);
         }}
       >
-        Completar y siguiente
+        {needsQuiz && !quizPassed ? "Responde el quiz para continuar" : "Completar y siguiente"}
       </button>
       <Link href="/outplacement/out09" className="btn-secondary">
         Generar otro OUT-09

@@ -111,8 +111,18 @@ export async function completeWithCascade(opts: {
   task: AiTask;
   messages: AiMessage[];
   qualityThreshold?: number;
+  maxPaidEscalations?: number;
 }): Promise<AiResult> {
-  const threshold = opts.qualityThreshold ?? Number(process.env.AI_QUALITY_THRESHOLD || 0.72);
+  let threshold = opts.qualityThreshold ?? Number(process.env.AI_QUALITY_THRESHOLD || 0.72);
+  let maxPaid = opts.maxPaidEscalations ?? 1;
+  try {
+    const { readSettings } = await import("@/lib/settings");
+    const s = readSettings();
+    if (opts.qualityThreshold == null) threshold = s.ai_limits.quality_threshold;
+    if (opts.maxPaidEscalations == null) maxPaid = s.ai_limits.max_paid_escalations;
+  } catch {
+    /* ignore */
+  }
   const prompt = opts.messages.map((m) => m.content).join("\n");
 
   // 1) free: Groq
@@ -129,7 +139,7 @@ export async function completeWithCascade(opts: {
   }
 
   let qualityScore = scoreQuality(text, opts.task);
-  if (qualityScore >= threshold) {
+  if (qualityScore >= threshold || maxPaid <= 0) {
     return { text, provider, usedPaid, qualityScore };
   }
 
@@ -141,5 +151,8 @@ export async function completeWithCascade(opts: {
   usedPaid = Boolean(process.env.OPENAI_API_KEY || process.env.GOOGLE_AI_API_KEY);
   provider = process.env.OPENAI_API_KEY ? "openai" : "gemini";
   qualityScore = scoreQuality(paid, opts.task);
+  if (qualityScore < threshold) {
+    // one more local-safe note; caller may alert owner
+  }
   return { text: paid, provider, usedPaid, qualityScore };
 }

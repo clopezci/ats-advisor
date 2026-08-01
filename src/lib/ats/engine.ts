@@ -94,11 +94,17 @@ function formatAlerts(cv: string, profile: AtsProfile): string[] {
   if ((cv.match(/•|●|◆/g) || []).length > 40) {
     alerts.push("Demasiados símbolos decorativos; preferible viñetas simples.");
   }
+  if (/https?:\/\/|www\./i.test(cv) && (cv.match(/https?:\/\//gi) || []).length > 8) {
+    alerts.push("Muchos hipervínculos pueden confundir parsers antiguos; deja 1–2 enlaces clave.");
+  }
   if (profile === "workday" || profile === "taleo") {
     alerts.push(`Perfil ${profile}: evita encabezados en imagen y columnas; usa fechas consistentes (MM/AAAA).`);
   }
   if (profile === "greenhouse" || profile === "lever") {
     alerts.push(`Perfil ${profile}: prioriza secciones claras (Experiencia, Educación, Skills) en una columna.`);
+  }
+  if (profile === "successfactors" || profile === "sap") {
+    alerts.push(`Perfil ${profile}: sé literal con títulos de cargo y evita tablas anidadas.`);
   }
   return alerts;
 }

@@ -1,14 +1,19 @@
 import { NextResponse } from "next/server";
-import { readSettings } from "@/lib/settings";
+import { applyPromotion, readSettings } from "@/lib/settings";
 import { notifyOwnerTelegram } from "@/lib/notify/channels";
+import { hydrateSettingsFromCloud } from "@/lib/settingsPersist";
 
 export async function POST(req: Request) {
+  await hydrateSettingsFromCloud();
   const body = await req.json().catch(() => ({}));
   const plan = String(body.plan || "carrera") as "carrera" | "plus" | "out09_extra";
   const email = String(body.email || "").trim();
-  const preferred = String(body.provider || "auto"); // auto | wompi | mercadopago
+  const coupon = String(body.coupon || "").trim();
+  const preferred = String(body.provider || "auto");
   const settings = readSettings();
-  const amount = settings.pricing[plan] || settings.pricing.carrera;
+  const baseAmount = settings.pricing[plan] || settings.pricing.carrera;
+  const priced = coupon ? applyPromotion(baseAmount, coupon, settings.promotions) : { amount: baseAmount, applied: null, discount: 0 };
+  const amount = priced.amount;
   const base = process.env.NEXT_PUBLIC_APP_URL || "https://ats-advisor-two.vercel.app";
   const reference = `ATS-${plan}-${Date.now()}`;
 
@@ -31,7 +36,7 @@ export async function POST(req: Request) {
           external_reference: reference,
           items: [
             {
-              title: `ATSAdvisor ${plan}`,
+              title: `ATSAdvisor ${plan}${priced.applied ? ` (${priced.applied})` : ""}`,
               quantity: 1,
               currency_id: "COP",
               unit_price: amount,
@@ -39,7 +44,7 @@ export async function POST(req: Request) {
           ],
           payer: email.includes("@") ? { email } : undefined,
           back_urls: {
-            success: `${base}/precios?paid=1&provider=mp`,
+            success: `${base}/precios?paid=1&provider=mp&plan=${plan}`,
             pending: `${base}/precios?paid=pending&provider=mp`,
             failure: `${base}/precios?paid=0&provider=mp`,
           },
@@ -54,13 +59,18 @@ export async function POST(req: Request) {
           { status: 502 }
         );
       }
-      await notifyOwnerTelegram(`Checkout MP: ${plan} ${amount} COP · ${email || "sin email"} · ${reference}`);
+      await notifyOwnerTelegram(
+        `Checkout MP: ${plan} ${amount} COP (base ${baseAmount}${priced.applied ? ` · cupón ${priced.applied}` : ""}) · ${email || "sin email"} · ${reference}`
+      );
       return NextResponse.json({
         ok: true,
         mode: "mercadopago",
         reference,
         plan,
         amount,
+        baseAmount,
+        coupon: priced.applied,
+        discount: priced.discount,
         currency: "COP",
         initPoint: data.init_point || data.sandbox_init_point,
         preferenceId: data.id,
@@ -71,7 +81,9 @@ export async function POST(req: Request) {
   }
 
   if (wantWompi && wompiPub && wompiPriv) {
-    await notifyOwnerTelegram(`Checkout Wompi: ${plan} ${amount} COP · ${email || "sin email"} · ${reference}`);
+    await notifyOwnerTelegram(
+      `Checkout Wompi: ${plan} ${amount} COP${priced.applied ? ` · cupón ${priced.applied}` : ""} · ${email || "sin email"} · ${reference}`
+    );
     return NextResponse.json({
       ok: true,
       mode: "wompi",
@@ -80,7 +92,10 @@ export async function POST(req: Request) {
       amountInCents: amount * 100,
       currency: "COP",
       plan,
-      redirectUrl: `${base}/precios?paid=1`,
+      baseAmount,
+      coupon: priced.applied,
+      discount: priced.discount,
+      redirectUrl: `${base}/precios?paid=1&plan=${plan}`,
     });
   }
 
@@ -90,6 +105,9 @@ export async function POST(req: Request) {
     message:
       "Sin Wompi ni Mercado Pago. Agrega WOMPI_* o MP_ACCESS_TOKEN en Vercel (MANUAL-ACCIONES.md).",
     amount,
+    baseAmount,
+    coupon: priced.applied,
+    discount: priced.discount,
     currency: settings.pricing.currency,
     plan,
     providersAvailable: {

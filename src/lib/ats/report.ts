@@ -46,3 +46,26 @@ export function downloadText(filename: string, content: string) {
   a.click();
   URL.revokeObjectURL(url);
 }
+
+/** Abre una ventana imprimible para “Guardar como PDF” del navegador. */
+export function openPrintableReport(result: AtsAnalyzeResult, meta?: { profile?: string }) {
+  const text = buildAtsReport(result, meta);
+  const html = `<!doctype html><html lang="es"><head><meta charset="utf-8"/><title>Informe ATSAdvisor</title>
+  <style>
+    body{font-family:Segoe UI,sans-serif;max-width:720px;margin:2rem auto;padding:0 1rem;color:#1f1630;line-height:1.45}
+    h1{color:#7c3aed;font-size:1.4rem}
+    pre{white-space:pre-wrap;font-family:inherit;font-size:0.95rem}
+    @media print{body{margin:0}}
+  </style></head><body>
+  <h1>ATSAdvisor — Informe</h1>
+  <pre>${text.replace(/</g, "&lt;")}</pre>
+  <script>window.onload=()=>setTimeout(()=>window.print(),200)</script>
+  </body></html>`;
+  const w = window.open("", "_blank");
+  if (!w) {
+    downloadText("informe-atsadvisor.txt", text);
+    return;
+  }
+  w.document.write(html);
+  w.document.close();
+}

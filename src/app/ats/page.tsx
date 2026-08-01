@@ -7,7 +7,7 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { AdSlot } from "@/components/AdSlot";
 import type { AtsAnalyzeResult, AtsProfile } from "@/lib/ats/engine";
 import { canRunAts, recordAtsRun } from "@/lib/limits/atsFree";
-import { buildAtsReport, downloadText } from "@/lib/ats/report";
+import { buildAtsReport, downloadText, openPrintableReport } from "@/lib/ats/report";
 import { bumpStreak } from "@/lib/engagement/streak";
 import { canAccessOutplacement, readEntitlement } from "@/lib/entitlements";
 import { upsertJob } from "@/lib/tracker/jobs";
@@ -303,7 +303,14 @@ export default function AtsPage() {
                 )
               }
             >
-              Descargar informe
+              Descargar informe TXT
+            </button>
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() => openPrintableReport(result, { profile: atsProfile })}
+            >
+              Exportar PDF (imprimir)
             </button>
             <button
               type="button"

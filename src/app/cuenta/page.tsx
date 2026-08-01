@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
-import { collectHabeasPayload, wipeHabeasLocal } from "@/lib/habeas/export";
+import { wipeHabeasLocal } from "@/lib/habeas/export";
+import { downloadHabeasZip } from "@/lib/habeas/zip";
 import {
   planLabel,
   readEntitlement,
@@ -43,18 +44,11 @@ export default function CuentaPage() {
     });
   }, []);
 
-  function exportHabeas() {
-    const payload = collectHabeasPayload({
+  async function exportHabeas() {
+    const payload = await downloadHabeasZip({
       profile: { name, email, channel },
       plan: readEntitlement(),
     });
-    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "atsadvisor-habeas-data.json";
-    a.click();
-    URL.revokeObjectURL(url);
     if (email.includes("@")) {
       fetch("/api/account/habeas", {
         method: "POST",
@@ -62,7 +56,7 @@ export default function CuentaPage() {
         body: JSON.stringify({ email, payload }),
       }).catch(() => undefined);
     }
-    setMsg("Descargamos tu paquete completo de datos (Habeas Data).");
+    setMsg("Descargamos ZIP Habeas Data (JSON + raw). Si hay Resend, también se intenta email.");
   }
 
   function deleteLocal() {
@@ -156,7 +150,7 @@ export default function CuentaPage() {
           Sin Wompi puedes activar Carrera o Tester en este dispositivo para probar gates.
         </p>
         <div className="flex flex-col gap-2">
-          {(["free", "carrera", "plus", "tester"] as PlanId[]).map((p) => (
+          {(["free", "carrera", "plus", "tester", "paused_90"] as PlanId[]).map((p) => (
             <button
               key={p}
               type="button"
@@ -179,7 +173,7 @@ export default function CuentaPage() {
           Versiones de CV
         </Link>
         <button type="button" className="btn-primary" onClick={exportHabeas}>
-          Descargar mis datos
+          Descargar mis datos (ZIP)
         </button>
         <button type="button" className="btn-secondary" onClick={deleteLocal}>
           Eliminar datos / dar de baja (local)

@@ -34,6 +34,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/legal/terminos",
     "/legal/cookies",
     "/legal/contacto",
+    "/legal/quienes-somos",
+    "/outplacement/coach",
     "/herramientas",
     "/herramientas/checklist",
     "/herramientas/linkedin",

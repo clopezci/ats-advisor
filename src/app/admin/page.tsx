@@ -8,7 +8,7 @@ type Settings = {
   pricing: { carrera: number; plus: number; out09_extra: number; currency: string };
   features: { ads: boolean; whatsapp: boolean; telegram: boolean };
   ai_limits: { free_ats_per_day: number; quality_threshold: number };
-  promotions: { name: string; percent: number; amount: number; starts: string; ends: string }[];
+  promotions: { name: string; percent: number; amount: number; starts: string; ends: string; code?: string }[];
   tester_emails: string[];
 };
 
@@ -193,6 +193,16 @@ export default function AdminPage() {
                 setSettings({ ...settings, promotions });
               }}
             />
+            <input
+              className="field"
+              placeholder="Código (ej. LOTIC10)"
+              value={(p as { code?: string }).code || ""}
+              onChange={(e) => {
+                const promotions = [...settings.promotions];
+                promotions[idx] = { ...p, code: e.target.value };
+                setSettings({ ...settings, promotions });
+              }}
+            />
             <div className="grid grid-cols-2 gap-2">
               <input
                 className="field"
@@ -237,10 +247,10 @@ export default function AdminPage() {
           onClick={() =>
             setSettings({
               ...settings,
-              promotions: [
-                ...settings.promotions,
-                { name: "PROMO", percent: 10, amount: 0, starts: "", ends: "" },
-              ],
+                promotions: [
+                  ...settings.promotions,
+                  { name: "PROMO", code: "PROMO10", percent: 10, amount: 0, starts: "", ends: "" },
+                ],
             })
           }
         >

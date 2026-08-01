@@ -12,10 +12,12 @@
     "test:modules": "npx --yes tsx scripts/test-modules.ts",
     "test:semantic": "npx --yes tsx scripts/test-semantic.ts",
     "test:entitlements": "npx --yes tsx scripts/test-entitlements.ts",
-    "test": "npm run test:ats && npm run test:modules && npm run test:semantic && npm run test:entitlements"
+    "test:smoke": "npx --yes tsx scripts/smoke-e2e.ts",
+    "test": "npm run test:ats && npm run test:modules && npm run test:semantic && npm run test:entitlements && npm run test:smoke"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.111.0",
+    "jszip": "^3.10.1",
     "mammoth": "^1.12.0",
     "next": "^15.5.22",
     "react": "19.1.0",

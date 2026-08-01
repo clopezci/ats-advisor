@@ -52,6 +52,7 @@ function loadWompiScript(): Promise<void> {
 
 export default function PreciosPage() {
   const [email, setEmail] = useState("");
+  const [coupon, setCoupon] = useState("");
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState<string | null>(null);
   const [provider, setProvider] = useState<"auto" | "wompi" | "mercadopago">("auto");
@@ -85,7 +86,7 @@ export default function PreciosPage() {
       const res = await fetch("/api/payments/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan, email, provider }),
+        body: JSON.stringify({ plan, email, provider, coupon }),
       });
       const data = await res.json();
       if (data.mode === "demo") {
@@ -154,6 +155,12 @@ export default function PreciosPage() {
           placeholder="Correo para el recibo (opcional)"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          className="field"
+          placeholder="Cupón (opcional)"
+          value={coupon}
+          onChange={(e) => setCoupon(e.target.value)}
         />
         <p className="text-sm font-medium">Pasarela</p>
         <div className="flex flex-col gap-2">

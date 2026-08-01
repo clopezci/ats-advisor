@@ -6,8 +6,12 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { PaywallCard } from "@/components/PaywallCard";
 import {
   canAccessOutplacement,
+  canClaimGuarantee,
+  claimGuarantee,
+  pauseFor90Days,
   planLabel,
   readEntitlement,
+  startGuarantee,
   type PlanId,
 } from "@/lib/entitlements";
 
@@ -15,11 +19,12 @@ type Mod = { code: string; title: string; summary: string; days: number };
 
 export default function OutplacementPage() {
   const [modules, setModules] = useState<Mod[]>([]);
-  const [plan, setPlan] = useState<PlanId>("free");
+  const [plan, setPlanState] = useState<PlanId>("free");
+  const [msg, setMsg] = useState("");
   const unlocked = canAccessOutplacement(plan);
 
   useEffect(() => {
-    setPlan(readEntitlement().plan);
+    setPlanState(readEntitlement().plan);
     fetch("/api/outplacement/modules")
       .then((r) => r.json())
       .then((d) => setModules(d.modules || []))
@@ -44,16 +49,29 @@ export default function OutplacementPage() {
         </p>
       </section>
 
-      {!unlocked && (
+      {!unlocked && plan !== "paused_90" && (
         <PaywallCard
           currentPlan={plan}
           reason="El outplacement completo y OUT-09 están en Carrera / Plus. Puedes activar un plan en Precios (demo local si aún no tienes Wompi)."
         />
       )}
 
+      {plan === "paused_90" && (
+        <section className="bento-card space-y-2">
+          <p className="pill-brand">Suscripción en pausa</p>
+          <p className="text-sm muted">Modo primeros 90 días activo. Puedes retomar Carrera cuando quieras.</p>
+          <Link href="/outplacement/90-dias" className="btn-primary">
+            Abrir checklist 90 días
+          </Link>
+        </section>
+      )}
+
       <div className="flex flex-col gap-3">
         <Link href={unlocked ? "/outplacement/out09" : "/precios"} className="btn-primary">
           Crear curso personalizado (OUT-09)
+        </Link>
+        <Link href="/outplacement/coach" className="btn-secondary">
+          Chat coach (RAG)
         </Link>
         <Link href="/outplacement/entrevista" className="btn-secondary">
           Simulador de entrevista
@@ -91,6 +109,46 @@ export default function OutplacementPage() {
             </Link>
           ))}
         </div>
+      )}
+
+      {unlocked && (
+        <section className="bento-card space-y-3">
+          <h2 className="font-semibold text-sm">Retención (plan original)</h2>
+          <button
+            type="button"
+            className="btn-secondary"
+            onClick={() => {
+              pauseFor90Days();
+              setPlanState("paused_90");
+              setMsg("Suscripción en pausa · modo 90 días.");
+              window.location.href = "/outplacement/90-dias";
+            }}
+          >
+            Conseguí empleo → pausar y abrir 90 días
+          </button>
+          <button
+            type="button"
+            className="btn-secondary"
+            onClick={() => {
+              startGuarantee();
+              setMsg("Garantía de avance iniciada (30 días sin entrevistas).");
+            }}
+          >
+            Activar garantía 30 días
+          </button>
+          <button
+            type="button"
+            className="btn-secondary"
+            onClick={() => {
+              const r = claimGuarantee();
+              setMsg(r.ok ? "Garantía reclamada: mes de cortesía demo." : r.reason);
+              if (r.ok) setPlanState(readEntitlement().plan);
+            }}
+          >
+            Reclamar garantía ({canClaimGuarantee().ok ? "elegible" : "aún no"})
+          </button>
+          {msg && <p className="text-sm">{msg}</p>}
+        </section>
       )}
 
       <Link href="/" className="btn-secondary">

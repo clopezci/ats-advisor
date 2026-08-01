@@ -1,4 +1,4 @@
-export type PlanId = "free" | "carrera" | "plus" | "tester";
+export type PlanId = "free" | "carrera" | "plus" | "tester" | "paused_90";
 
 export type Entitlement = {
   plan: PlanId;
@@ -6,6 +6,10 @@ export type Entitlement = {
   out09Month: string; // YYYY-MM
   activatedAt?: string;
   source?: "local" | "demo_checkout" | "webhook" | "admin";
+  pausedAt?: string;
+  guaranteeClaimedAt?: string;
+  guaranteeStartedAt?: string;
+  interviewsLoggedSinceGuarantee?: number;
 };
 
 const KEY = "ats_entitlement";
@@ -48,7 +52,6 @@ export function setPlan(plan: PlanId, source: Entitlement["source"] = "local") {
   };
   writeEntitlement(next);
   try {
-    // Dynamic import avoided — fire and forget if sync exists
     void import("@/lib/supabase/sync").then((m) => m.syncProfilePlan(plan)).catch(() => undefined);
   } catch {
     /* ignore */
@@ -69,14 +72,63 @@ export function canAccessOutplacement(plan: PlanId) {
   return plan === "carrera" || plan === "plus" || plan === "tester";
 }
 
+export function pauseFor90Days() {
+  const e = readEntitlement();
+  const next: Entitlement = {
+    ...e,
+    plan: "paused_90",
+    pausedAt: new Date().toISOString(),
+    source: "local",
+  };
+  writeEntitlement(next);
+  return next;
+}
+
+export function startGuarantee() {
+  const e = readEntitlement();
+  const next: Entitlement = {
+    ...e,
+    guaranteeStartedAt: new Date().toISOString(),
+    interviewsLoggedSinceGuarantee: 0,
+  };
+  writeEntitlement(next);
+  return next;
+}
+
+/** After 30 days with 0 interviews logged → claim free month flag (demo). */
+export function canClaimGuarantee(e = readEntitlement()): { ok: boolean; reason: string } {
+  if (!e.guaranteeStartedAt) return { ok: false, reason: "Activa la garantía desde outplacement." };
+  if (e.guaranteeClaimedAt) return { ok: false, reason: "Ya reclamaste la garantía." };
+  const started = new Date(e.guaranteeStartedAt).getTime();
+  const days = (Date.now() - started) / 86400000;
+  if (days < 30) return { ok: false, reason: `Llevas ${Math.floor(days)}/30 días.` };
+  if ((e.interviewsLoggedSinceGuarantee || 0) > 0) {
+    return { ok: false, reason: "Registraste entrevistas; la garantía aplica sin entrevistas en 30 días." };
+  }
+  return { ok: true, reason: "Elegible: mes de cortesía / revisión prioritaria (demo local)." };
+}
+
+export function claimGuarantee() {
+  const check = canClaimGuarantee();
+  if (!check.ok) return { ok: false as const, reason: check.reason };
+  const e = readEntitlement();
+  const next: Entitlement = {
+    ...e,
+    guaranteeClaimedAt: new Date().toISOString(),
+    plan: e.plan === "paused_90" || e.plan === "free" ? "carrera" : e.plan,
+    source: "admin",
+  };
+  writeEntitlement(next);
+  return { ok: true as const, entitlement: next };
+}
+
 export function canGenerateOut09(
   e: Entitlement,
   limits?: { carrera: number; plus: number }
 ): { ok: boolean; remaining: number; quota: number; reason?: string } {
-  if (!canAccessOutplacement(e.plan) && e.plan !== "free") {
+  if (!canAccessOutplacement(e.plan)) {
     return { ok: false, remaining: 0, quota: 0, reason: "Necesitas un plan Carrera o Plus." };
   }
-  // Free: allow 1 demo OUT-09 lifetime via separate flag — here monthly 0 means paywall
   const quota = out09Quota(e.plan, limits);
   if (quota <= 0) {
     return {
@@ -111,6 +163,7 @@ export function planLabel(plan: PlanId) {
     carrera: "Carrera",
     plus: "Carrera Plus",
     tester: "Tester",
+    paused_90: "Pausa · 90 días",
   };
   return map[plan];
 }

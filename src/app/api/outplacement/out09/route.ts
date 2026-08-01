@@ -2,40 +2,57 @@ import { NextResponse } from "next/server";
 import { completeWithCascade } from "@/lib/ai/router";
 import { OUT09_QUESTIONS } from "@/lib/outplacement/modules";
 import { notifyOwnerTelegram } from "@/lib/notify/channels";
-import { loadKnowledgeBase } from "@/lib/ai/knowledge";
+import { retrieveKnowledge } from "@/lib/ai/knowledge";
 import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
 import { reportError } from "@/lib/observability";
+import { readSettings } from "@/lib/settings";
 
 export const runtime = "nodejs";
+
+const BLOCKED = /(hacer\s+bomba|hackear\s+banco|drogas\s+ilegales|pornograf[ií]a\s+infantil)/i;
 
 export async function POST(req: Request) {
   const limited = rateLimit(req, "out09", { limit: 8, windowMs: 60_000 });
   if (!limited.ok) return rateLimitedResponse(limited.retryAfterSec);
 
   try {
+    const settings = readSettings();
+    if (!settings.features.out09) {
+      return NextResponse.json({ error: "OUT-09 está desactivado por el admin." }, { status: 403 });
+    }
+
     const body = await req.json();
     const skillType = body.skillType === "hard" ? "hard" : "soft";
     const description = String(body.description || "").trim();
     const answers = body.answers || {};
     const plan = String(body.plan || "free");
+    const maxChars = settings.ai_limits.max_out09_prompt_chars || 2000;
 
     if (description.length < 12) {
       return NextResponse.json({ error: "Describe con más detalle qué quieres mejorar." }, { status: 400 });
     }
-
-    // Soft server gate: free without demo flag is rejected (client also enforces entitlements)
+    if (description.length > maxChars) {
+      return NextResponse.json(
+        { error: `Acorta la descripción (máx. ${maxChars} caracteres).` },
+        { status: 400 }
+      );
+    }
+    if (BLOCKED.test(description)) {
+      await notifyOwnerTelegram(`OUT-09 rechazado (pedido no permitido): ${description.slice(0, 120)}`);
+      return NextResponse.json(
+        { error: "No podemos generar un curso sobre ese pedido. Elige un objetivo laboral lícito." },
+        { status: 400 }
+      );
+    }
     if (plan === "free" && body.allowDemo !== true) {
       return NextResponse.json(
-        {
-          error: "OUT-09 requiere plan Carrera/Plus o compra extra. Revisa /precios.",
-          code: "PAYWALL",
-        },
+        { error: "OUT-09 requiere plan Carrera/Plus o compra extra. Revisa /precios.", code: "PAYWALL" },
         { status: 402 }
       );
     }
 
     const qa = OUT09_QUESTIONS.map((q) => `${q.label} → ${answers[q.id] || "N/D"}`).join("\n");
-    const kb = loadKnowledgeBase();
+    const kb = retrieveKnowledge(`${skillType} ${description} ${qa}`, 5, 5500);
     const prompt = `Crea un curso OUT-09 personalizado en JSON válido con esta forma:
 {"title":"...","objective":"...","capsules":[{"day":1,"title":"...","content":"...","quiz":{"question":"...","options":["a","b","c"],"answer":0}}]}
 Tipo de habilidad: ${skillType === "hard" ? "técnica (dura)" : "blanda"}.
@@ -46,13 +63,15 @@ Base de conocimiento (úsalo para calidad profesional):
 ${kb}
 Reglas: 10 a 14 cápsulas, español LATAM, práctico, sin relleno, alineado al cuestionario. Solo JSON.`;
 
+    const threshold = settings.ai_limits.quality_threshold ?? 0.72;
     const ai = await completeWithCascade({
       task: "out09_outline",
       messages: [
         { role: "system", content: "Generas cursos de microlearning JSON. Solo JSON válido, sin markdown." },
         { role: "user", content: prompt },
       ],
-      qualityThreshold: 0.72,
+      qualityThreshold: threshold,
+      maxPaidEscalations: settings.ai_limits.max_paid_escalations,
     });
 
     let course;
@@ -60,14 +79,26 @@ Reglas: 10 a 14 cápsulas, español LATAM, práctico, sin relleno, alineado al c
       const cleaned = ai.text.replace(/^```json\s*|\s*```$/g, "").trim();
       course = JSON.parse(cleaned);
     } catch {
+      if (ai.qualityScore < threshold) {
+        await notifyOwnerTelegram(`OUT-09 falló calidad/JSON (score ${ai.qualityScore}). Revisar manualmente.`);
+        return NextResponse.json(
+          { error: "No logramos un curso con calidad suficiente. Reintenta o escribe a soporte." },
+          { status: 503 }
+        );
+      }
       const retry = await completeWithCascade({
         task: "out09_outline",
         messages: [
           { role: "system", content: "Devuelve SOLO JSON del curso." },
           { role: "user", content: prompt },
         ],
+        qualityThreshold: threshold,
       });
       course = JSON.parse(retry.text.replace(/^```json\s*|\s*```$/g, "").trim());
+    }
+
+    if (!course?.capsules?.length) {
+      return NextResponse.json({ error: "El curso salió incompleto. Reintenta." }, { status: 502 });
     }
 
     if (ai.usedPaid) {

@@ -14,6 +14,8 @@ export const HABEAS_KEYS = [
   "ats_last_result",
   "ats_cookie_ok",
   "ats_cv_draft",
+  "ats_b2b_org",
+  "ats_b2b_seats",
 ] as const;
 
 export function collectHabeasPayload(extra?: Record<string, unknown>) {

@@ -1,0 +1,480 @@
+export type Audience = "candidato" | "empresa" | "admin" | "tester" | "publico";
+
+export type CapabilityStatus =
+  | "disponible"
+  | "parcial"
+  | "requiere_config"
+  | "en_construccion"
+  | "planificado";
+
+export type Capability = {
+  id: string;
+  title: string;
+  summary: string;
+  audience: Audience[];
+  status: CapabilityStatus;
+  href?: string;
+};
+
+export const STATUS_LABEL: Record<CapabilityStatus, string> = {
+  disponible: "Disponible",
+  parcial: "Parcial / beta",
+  requiere_config: "Requiere tus keys",
+  en_construccion: "En construcción",
+  planificado: "Planificado",
+};
+
+export const AUDIENCE_LABEL: Record<Audience, string> = {
+  candidato: "Persona / candidato",
+  empresa: "Empresa / RH",
+  admin: "Admin / owner",
+  tester: "Tester",
+  publico: "Público / SEO",
+};
+
+/** Catálogo completo del producto (implementado + roadmap). */
+export const CAPABILITIES: Capability[] = [
+  // —— Candidato / ATS ——
+  {
+    id: "ats-analyze",
+    title: "Análisis ATS de CV vs oferta",
+    summary: "Score, keywords, gaps y tips accionables en español, perfiles por ATS (Workday, Greenhouse, etc.).",
+    audience: ["candidato", "publico"],
+    status: "disponible",
+    href: "/ats",
+  },
+  {
+    id: "ats-extract",
+    title: "Subir CV PDF / DOCX / TXT",
+    summary: "Extrae texto del archivo para analizar sin pegar todo a mano.",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/ats",
+  },
+  {
+    id: "ats-synonyms",
+    title: "Sinónimos y match semántico ES",
+    summary: "No solo keyword exacta: reconoce variantes laborales en español.",
+    audience: ["candidato"],
+    status: "parcial",
+    href: "/ats",
+  },
+  {
+    id: "ats-report",
+    title: "Descargar / compartir informe ATS",
+    summary: "Exporta el resultado y compártelo para iterar el CV.",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/ats",
+  },
+  {
+    id: "ats-history",
+    title: "Historial de scores",
+    summary: "Ve cómo mejora tu match a lo largo del tiempo en este dispositivo.",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/ats/historial",
+  },
+  {
+    id: "ats-rewrite",
+    title: "Reescrituras IA del CV",
+    summary: "Sugerencias de mejora alineadas al score y a la oferta.",
+    audience: ["candidato"],
+    status: "parcial",
+    href: "/ats",
+  },
+  {
+    id: "ats-free-limit",
+    title: "ATS gratis con límite diario",
+    summary: "Freemium: análisis diarios gratis; planes premium amplían cupo.",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/precios",
+  },
+  {
+    id: "ats-ads",
+    title: "Anuncios en ATS free (AdSense)",
+    summary: "Monetiza la capa gratuita sin cobrar al candidato.",
+    audience: ["candidato", "admin"],
+    status: "requiere_config",
+    href: "/ats",
+  },
+  {
+    id: "cv-versions",
+    title: "Versiones de CV",
+    summary: "Guarda varias versiones (una por rol o industria) y reutilízalas.",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/cuenta/cvs",
+  },
+  {
+    id: "tracker",
+    title: "Tracker de postulaciones",
+    summary: "Kanban simple: interés → aplicado → entrevista → oferta / rechazo.",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/tracker",
+  },
+  {
+    id: "voice-tts-stt",
+    title: "Voz: escuchar y dictar",
+    summary: "Speak + Dictate en flujos clave para accesibilidad e inclusión.",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/",
+  },
+  {
+    id: "pwa-install",
+    title: "Instalar como PWA",
+    summary: "App instalable en móvil/escritorio, mobile-first.",
+    audience: ["candidato", "publico"],
+    status: "disponible",
+    href: "/",
+  },
+  {
+    id: "onboarding-streak",
+    title: "Onboarding y racha diaria",
+    summary: "Primera guía en 3 pasos y motivación por constancia.",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/",
+  },
+
+  // —— Outplacement ——
+  {
+    id: "out-01-08",
+    title: "Ruta outplacement OUT-01…08",
+    summary: "Estabilización, competencias, mercado, upskilling, marca, networking, entrevistas, 90 días.",
+    audience: ["candidato"],
+    status: "parcial",
+    href: "/outplacement/ruta",
+  },
+  {
+    id: "out-09",
+    title: "OUT-09 curso personalizado IA",
+    summary: "Cuestionario corto → curso de microcápsulas a medida (blanda o dura), cascade free→paid.",
+    audience: ["candidato"],
+    status: "parcial",
+    href: "/outplacement/out09",
+  },
+  {
+    id: "out-player",
+    title: "Player de microcápsulas + quizzes",
+    summary: "Misma entrega para OUT-01…09: día a día con progreso.",
+    audience: ["candidato"],
+    status: "parcial",
+    href: "/outplacement/out09/player",
+  },
+  {
+    id: "interview-sim",
+    title: "Simulador de entrevista",
+    summary: "Practica respuestas y recibe feedback de coach IA.",
+    audience: ["candidato"],
+    status: "parcial",
+    href: "/outplacement/entrevista",
+  },
+  {
+    id: "filter-score",
+    title: "Score predictivo de filtro telefónico",
+    summary: "3 preguntas probables de screening + ensayo por voz + score.",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/outplacement/filtro",
+  },
+  {
+    id: "mode-90",
+    title: "Modo primeros 90 días",
+    summary: "Checklist de onboarding al nuevo rol para no fallar el periodo de prueba.",
+    audience: ["candidato"],
+    status: "parcial",
+    href: "/outplacement/90-dias",
+  },
+  {
+    id: "second-career",
+    title: "Segunda carrera / emprendimiento",
+    summary: "Pistas pivote, freelance o startup con plan de 14 días.",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/outplacement/segunda-carrera",
+  },
+  {
+    id: "certificate",
+    title: "Certificado de avance",
+    summary: "Documento imprimible/PDF que reconoce progreso en la ruta.",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/outplacement/certificado",
+  },
+  {
+    id: "cultural-fit",
+    title: "Infiltrado cultural (ajuste a la empresa)",
+    summary: "Adapta lenguaje del CV a valores detectados en la oferta (sin scraping ilegal).",
+    audience: ["candidato"],
+    status: "parcial",
+    href: "/herramientas/cultura",
+  },
+  {
+    id: "rag-kb",
+    title: "Knowledge base / RAG outplacement",
+    summary: "Grounding con metodologías, STAR, ATS y negociación LATAM.",
+    audience: ["candidato", "admin"],
+    status: "parcial",
+  },
+
+  // —— Canales ——
+  {
+    id: "telegram",
+    title: "Microlearning por Telegram",
+    summary: "Cápsulas y quizzes en el chat; preferencia en cuenta.",
+    audience: ["candidato", "admin"],
+    status: "requiere_config",
+    href: "/cuenta",
+  },
+  {
+    id: "whatsapp",
+    title: "Microlearning por WhatsApp (Plus)",
+    summary: "Mismo contenido por WhatsApp Business; coste por mensaje.",
+    audience: ["candidato", "empresa"],
+    status: "requiere_config",
+    href: "/precios",
+  },
+  {
+    id: "channel-pwa",
+    title: "Microlearning solo en la app",
+    summary: "Consumo de cápsulas sin depender de mensajería externa.",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/outplacement",
+  },
+
+  // —— Herramientas free / SEO ——
+  {
+    id: "tools-hub",
+    title: "Hub de herramientas gratis",
+    summary: "Checklist, LinkedIn, carta, salario, plantilla, entrevistas, cultura.",
+    audience: ["candidato", "publico"],
+    status: "disponible",
+    href: "/herramientas",
+  },
+  {
+    id: "blog",
+    title: "Blog SEO (guías ATS)",
+    summary: "Contenido orgánico para atraer tráfico y educar.",
+    audience: ["publico", "candidato"],
+    status: "parcial",
+    href: "/blog",
+  },
+  {
+    id: "cover-letter",
+    title: "Carta de presentación",
+    summary: "Borrador alineado a la oferta en español.",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/herramientas/carta",
+  },
+  {
+    id: "salary",
+    title: "Bandas salariales orientativas",
+    summary: "Referencia LATAM para negociación (informativo).",
+    audience: ["candidato"],
+    status: "parcial",
+    href: "/herramientas/salario",
+  },
+  {
+    id: "linkedin-opt",
+    title: "Optimizador LinkedIn",
+    summary: "Tips para headline/about alineados a ATS y reclutadores.",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/herramientas/linkedin",
+  },
+  {
+    id: "cv-template",
+    title: "Plantilla CV una columna",
+    summary: "Formato friendly para parsers ATS; listo para pegar/analizar.",
+    audience: ["candidato", "publico"],
+    status: "disponible",
+    href: "/herramientas/plantilla",
+  },
+
+  // —— Monetización / cuenta ——
+  {
+    id: "pricing",
+    title: "Planes Carrera / Plus / OUT-09 extra",
+    summary: "Precios COP ~$79k / $99k / ~$22k con margen ≥50%.",
+    audience: ["candidato", "admin"],
+    status: "parcial",
+    href: "/precios",
+  },
+  {
+    id: "wompi",
+    title: "Pagos Wompi (COP)",
+    summary: "Checkout con widget; webhook endurecido; demo local sin keys.",
+    audience: ["candidato", "admin"],
+    status: "requiere_config",
+    href: "/precios",
+  },
+  {
+    id: "entitlements",
+    title: "Gates de plan (Carrera / Plus / Tester)",
+    summary: "Paywall OUT-09 y outplacement; cuotas mensuales; demo en cuenta.",
+    audience: ["candidato", "tester", "admin"],
+    status: "disponible",
+    href: "/cuenta",
+  },
+  {
+    id: "auth",
+    title: "Auth magic link (Supabase)",
+    summary: "Entrada sin contraseña; sesión en cuenta cuando hay proyecto Supabase.",
+    audience: ["candidato", "admin"],
+    status: "requiere_config",
+    href: "/auth",
+  },
+  {
+    id: "habeas",
+    title: "Habeas Data 1-click (Ley 1581)",
+    summary: "Export JSON completo + borrado local; email/Telegram si hay Resend.",
+    audience: ["candidato", "admin"],
+    status: "parcial",
+    href: "/cuenta",
+  },
+  {
+    id: "feedback",
+    title: "Canal de feedback",
+    summary: "El usuario reporta mejoras; llega a Telegram del owner.",
+    audience: ["candidato", "admin"],
+    status: "disponible",
+    href: "/feedback",
+  },
+
+  // —— Admin ——
+  {
+    id: "admin-console",
+    title: "Consola owner (precios, flags, límites)",
+    status: "parcial",
+    summary: "Ajusta pricing, IA, ads, WhatsApp on/off y promociones.",
+    audience: ["admin"],
+    href: "/admin",
+  },
+  {
+    id: "admin-analytics",
+    title: "Analytics básico (+ Pro futuro)",
+    summary: "Scores, tracker, racha y tendencia en dispositivo; Pro con Supabase.",
+    audience: ["admin"],
+    status: "parcial",
+    href: "/admin/analytics",
+  },
+  {
+    id: "ai-router",
+    title: "AI Router free → paid",
+    summary: "Cascade Groq → Gemini → OpenAI/local con umbral de calidad.",
+    audience: ["admin", "candidato"],
+    status: "requiere_config",
+  },
+  {
+    id: "cron-audit",
+    title: "Cron de auditoría diaria",
+    summary: "Salud del sistema + alerta Telegram al owner.",
+    audience: ["admin"],
+    status: "requiere_config",
+  },
+  {
+    id: "sentry",
+    title: "Sentry / observabilidad errores",
+    summary: "Hook listo; SDK completo al pegar SENTRY_DSN.",
+    audience: ["admin"],
+    status: "requiere_config",
+  },
+  {
+    id: "rate-limits",
+    title: "Rate limits en APIs",
+    summary: "Protección soft anti-abuso en analyze, IA, OUT-09 y feedback.",
+    audience: ["admin"],
+    status: "disponible",
+  },
+  {
+    id: "legal",
+    title: "Legal: privacidad, términos, cookies",
+    summary: "Páginas legales y banner de cookies.",
+    audience: ["publico", "candidato", "empresa"],
+    status: "parcial",
+    href: "/legal/privacidad",
+  },
+  {
+    id: "tester-role",
+    title: "Rol Tester (premium sin pago)",
+    summary: "Plan tester local para QA; whitelist server con Supabase/admin.",
+    audience: ["tester", "admin"],
+    status: "parcial",
+    href: "/cuenta",
+  },
+
+  // —— Empresa B2B (P3) ——
+  {
+    id: "b2b-licenses",
+    title: "Licencias outplacement masivo (B2B)",
+    summary: "Empresa compra cupos para colaboradores en transición.",
+    audience: ["empresa", "admin"],
+        status: "parcial",
+        href: "/empresa",
+      },
+      {
+        id: "b2b-dashboard",
+        title: "Dashboard RH (progreso agregado)",
+        summary: "Vista de adopción, módulos avanzados y alertas sin ver CVs privados.",
+        audience: ["empresa"],
+        status: "parcial",
+        href: "/empresa/dashboard",
+      },
+      {
+        id: "b2b-invites",
+        title: "Invitaciones masivas a candidatos",
+        summary: "Enviar accesos por correo/CSV a la cohorte de outplacement.",
+        audience: ["empresa"],
+        status: "parcial",
+        href: "/empresa/invitaciones",
+      },
+      {
+        id: "b2b-reporting",
+        title: "Reporting RH exportable",
+        summary: "Informes de uso y outcomes para compliance interno / board.",
+        audience: ["empresa"],
+        status: "parcial",
+        href: "/empresa/dashboard",
+      },
+  {
+    id: "b2b-branding",
+    title: "Marca blanca ligera (logo empresa)",
+    summary: "Co-branding en certificados y emails de la cohorte.",
+    audience: ["empresa"],
+    status: "planificado",
+  },
+  {
+    id: "analytics-pro",
+    title: "Analytics Pro (correlaciones / foresight)",
+    summary: "Add-on de analítica avanzada sobre datos cloud.",
+    audience: ["admin", "empresa"],
+    status: "planificado",
+  },
+  {
+    id: "embeddings-ats",
+    title: "Motor ATS con embeddings / worker NLP",
+    summary: "Match vectorial más profundo si el motor reglas se queda corto.",
+    audience: ["candidato", "admin"],
+    status: "planificado",
+  },
+  {
+    id: "mercadopago",
+    title: "Pagos Mercado Pago (alternativa)",
+    summary: "Segundo PSP COP si Wompi no aplica al comercio.",
+    audience: ["candidato", "admin"],
+    status: "planificado",
+  },
+  {
+    id: "domain-lotic",
+    title: "Dominio propio / marca LOTIC",
+    summary: "URL canónica tipo atsadvisor.lotic… + logo oficial.",
+    audience: ["publico", "admin"],
+    status: "requiere_config",
+  },
+];

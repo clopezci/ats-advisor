@@ -32,14 +32,21 @@ function HomeInner() {
             <h1 className="mt-3 text-2xl font-semibold leading-tight">¿Qué quieres hacer ahora?</h1>
           </div>
           <SpeakButton
-            text={`${INTRO} Opción uno: analizar mi CV con el ATS. Opción dos: ver el outplacement.`}
+            text={`${INTRO} También puedes abrir el mapa completo de capacidades. Opción principal: analizar mi CV. Luego outplacement o tracker.`}
           />
         </div>
         <p className="muted text-sm leading-relaxed">{INTRO}</p>
       </section>
 
       <div className="flex flex-col gap-3">
-        <Link href="/ats" className="btn-primary">
+        <Link
+          href="/capacidades"
+          className="btn-primary"
+          style={{ minHeight: "4.25rem", fontSize: "1.15rem", lineHeight: 1.25 }}
+        >
+          Ver todo lo que puedes hacer aquí
+        </Link>
+        <Link href="/ats" className="btn-secondary">
           Analizar mi CV (ATS gratis)
         </Link>
         <Link href="/outplacement" className="btn-secondary">

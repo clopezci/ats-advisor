@@ -58,11 +58,20 @@ export default function OutplacementPage() {
         <Link href="/outplacement/entrevista" className="btn-secondary">
           Simulador de entrevista
         </Link>
+        <Link href="/outplacement/filtro" className="btn-secondary">
+          Score predictivo de filtro
+        </Link>
         <Link href="/outplacement/90-dias" className="btn-secondary">
           Modo primeros 90 días
         </Link>
+        <Link href={unlocked ? "/outplacement/segunda-carrera" : "/precios"} className="btn-secondary">
+          Segunda carrera / emprendimiento
+        </Link>
         <Link href={unlocked ? "/outplacement/ruta" : "/precios"} className="btn-secondary">
           Ver ruta OUT-01 a OUT-08
+        </Link>
+        <Link href="/outplacement/certificado" className="btn-secondary">
+          Certificado de avance
         </Link>
         <Link href="/precios" className="btn-secondary">
           Ver precios

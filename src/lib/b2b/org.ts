@@ -15,6 +15,10 @@ export type CompanyOrg = {
   contactEmail: string;
   seatsPurchased: number;
   createdAt: number;
+  /** Co-branding ligero */
+  brandTagline?: string;
+  brandAccent?: string; // hex
+  logoDataUrl?: string; // data:image/...;base64
 };
 
 const ORG_KEY = "ats_b2b_org";

@@ -10,6 +10,9 @@ export default function EmpresaPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [seats, setSeats] = useState(25);
+  const [tagline, setTagline] = useState("");
+  const [accent, setAccent] = useState("#7c3aed");
+  const [logo, setLogo] = useState("");
   const [msg, setMsg] = useState("");
 
   useEffect(() => {
@@ -19,8 +22,22 @@ export default function EmpresaPage() {
       setName(o.name);
       setEmail(o.contactEmail);
       setSeats(o.seatsPurchased);
+      setTagline(o.brandTagline || "");
+      setAccent(o.brandAccent || "#7c3aed");
+      setLogo(o.logoDataUrl || "");
     }
   }, []);
+
+  function onLogo(file: File | null) {
+    if (!file) return;
+    if (file.size > 400_000) {
+      setMsg("Logo demasiado grande (máx. ~400 KB). Usa PNG/JPG liviano.");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => setLogo(String(reader.result || ""));
+    reader.readAsDataURL(file);
+  }
 
   function save() {
     if (name.trim().length < 2 || !email.includes("@")) {
@@ -32,10 +49,13 @@ export default function EmpresaPage() {
       contactEmail: email.trim(),
       seatsPurchased: Math.max(5, Math.min(500, seats)),
       createdAt: org?.createdAt || Date.now(),
+      brandTagline: tagline.trim() || undefined,
+      brandAccent: accent || undefined,
+      logoDataUrl: logo || undefined,
     };
     writeOrg(next);
     setOrg(next);
-    setMsg("Organización guardada en este dispositivo (demo B2B). Con Supabase se sincroniza en cloud.");
+    setMsg("Organización y marca blanca guardadas (demo local).");
   }
 
   return (
@@ -43,14 +63,14 @@ export default function EmpresaPage() {
       <section className="bento-card space-y-3">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="pill-brand">B2B · F15</p>
+            <p className="pill-brand">B2B · F15–F16</p>
             <h1 className="mt-2 text-2xl font-semibold">Portal empresas / RH</h1>
           </div>
-          <SpeakButton text="Portal para empresas: compra cupos de outplacement, invita colaboradores y mira el progreso agregado sin acceder a CVs privados." />
+          <SpeakButton text="Portal para empresas: cupos, invitaciones, dashboard y co-branding en certificados." />
         </div>
         <p className="text-sm muted leading-relaxed">
-          Licencias de outplacement masivo para transiciones laborales. Dashboard agregado (privacidad
-          primero): no se exponen hojas de vida individuales al RH.
+          Licencias de outplacement masivo. Dashboard agregado sin CVs. Marca blanca ligera en
+          certificados de avance.
         </p>
       </section>
 
@@ -83,6 +103,45 @@ export default function EmpresaPage() {
         <button type="button" className="btn-primary" onClick={save}>
           Guardar organización
         </button>
+      </section>
+
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold">Marca blanca ligera</h2>
+        <p className="text-sm muted">Aparece en certificados de colaboradores (co-brand LOTIC + tu empresa).</p>
+        <label className="block text-sm">
+          Tagline / programa
+          <input
+            className="field mt-1"
+            placeholder="Programa de transición laboral"
+            value={tagline}
+            onChange={(e) => setTagline(e.target.value)}
+          />
+        </label>
+        <label className="block text-sm">
+          Color acento
+          <input
+            className="field mt-1"
+            type="color"
+            value={accent}
+            onChange={(e) => setAccent(e.target.value)}
+          />
+        </label>
+        <label className="block text-sm">
+          Logo (PNG/JPG)
+          <input
+            className="field mt-1"
+            type="file"
+            accept="image/png,image/jpeg,image/webp"
+            onChange={(e) => onLogo(e.target.files?.[0] || null)}
+          />
+        </label>
+        {logo && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={logo} alt="Logo empresa" className="mx-auto h-16 object-contain" />
+        )}
+        <button type="button" className="btn-secondary" onClick={save}>
+          Guardar marca
+        </button>
         {msg && <p className="text-sm">{msg}</p>}
       </section>
 
@@ -93,8 +152,8 @@ export default function EmpresaPage() {
         <Link href="/empresa/invitaciones" className="btn-secondary">
           Invitaciones / CSV
         </Link>
-        <Link href="/precios" className="btn-secondary">
-          Ver precios B2C (referencia)
+        <Link href="/outplacement/certificado" className="btn-secondary">
+          Vista previa certificado co-brand
         </Link>
         <Link href="/capacidades" className="btn-secondary">
           Ver mapa completo del producto

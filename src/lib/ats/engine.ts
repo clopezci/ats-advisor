@@ -1,4 +1,5 @@
 import { textHasTerm } from "@/lib/ats/synonyms";
+import { semanticOverlapScore } from "@/lib/ats/semantic";
 
 export type AtsProfile = "generic" | "workday" | "greenhouse" | "taleo" | "successfactors" | "lever" | "sap";
 
@@ -11,6 +12,7 @@ export type AtsAnalyzeInput = {
 export type AtsAnalyzeResult = {
   score: number;
   interviewProbability: number;
+  semanticScore: number;
   matchedKeywords: string[];
   missingKeywords: string[];
   hardSkills: { matched: string[]; missing: string[] };
@@ -153,7 +155,10 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
   const format = formatAlerts(input.cvText, profile);
   const traps = trapAlerts(input.cvText);
   const formatPenalty = Math.min(0.15, format.length * 0.03 + traps.length * 0.05);
-  const score = Math.round(Math.max(0, Math.min(100, (coverage * 100) * (1 - exclusivePenalty - formatPenalty))));
+  const keywordScore = Math.max(0, Math.min(100, (coverage * 100) * (1 - exclusivePenalty - formatPenalty)));
+  const semanticScore = semanticOverlapScore(input.cvText, input.jobText);
+  // Blend: keywords still primary; bag-of-words cosine as soft semantic boost (embeddings-lite)
+  const score = Math.round(Math.max(0, Math.min(100, keywordScore * 0.82 + semanticScore * 0.18)));
 
   const interviewProbability = Math.round(
     Math.max(5, Math.min(95, score * 0.85 + (softMatched.length > 0 ? 5 : 0) - exclusiveGaps.length * 8))
@@ -172,7 +177,8 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
   actions.push("Adapta el CV a esta oferta concreta antes de postular.");
 
   const explanation = [
-    `Cobertura semántica de términos de la oferta: ${Math.round(coverage * 100)}%.`,
+    `Cobertura de términos de la oferta: ${Math.round(coverage * 100)}%.`,
+    `Solape semántico (bag-of-words): ${semanticScore}%.`,
     `Perfil ATS aplicado: ${profile}.`,
     exclusiveGaps.length
       ? "Hay brechas excluyentes que bajan fuerte la probabilidad de pasar el filtro."
@@ -182,6 +188,7 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
   return {
     score,
     interviewProbability,
+    semanticScore,
     matchedKeywords: matched.slice(0, 40),
     missingKeywords: missing.slice(0, 40),
     hardSkills: { matched: hardMatched, missing: hardMissing },

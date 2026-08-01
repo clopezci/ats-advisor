@@ -76,3 +76,31 @@ create table if not exists job_applications (
 alter table job_applications enable row level security;
 create policy "jobs_own" on job_applications
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+-- B2B (F15/F16)
+create table if not exists companies (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  contact_email text not null,
+  seats_purchased int not null default 25,
+  brand_tagline text,
+  brand_accent text,
+  logo_url text,
+  owner_user_id uuid references profiles(id) on delete set null,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists company_seats (
+  id uuid primary key default gen_random_uuid(),
+  company_id uuid not null references companies(id) on delete cascade,
+  email text not null,
+  full_name text,
+  status text not null default 'invited', -- invited | active | completed | paused
+  modules_done int not null default 0,
+  invited_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  unique (company_id, email)
+);
+
+alter table companies enable row level security;
+alter table company_seats enable row level security;

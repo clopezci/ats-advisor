@@ -29,7 +29,9 @@ const PLANS = [
 
 declare global {
   interface Window {
-    WidgetCheckout?: new (opts: Record<string, unknown>) => { open: (cb: (result: { status?: string }) => void) => void };
+    WidgetCheckout?: new (opts: Record<string, unknown>) => {
+      open: (cb: (result: { status?: string }) => void) => void;
+    };
   }
 }
 
@@ -52,6 +54,7 @@ export default function PreciosPage() {
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState<string | null>(null);
+  const [provider, setProvider] = useState<"auto" | "wompi" | "mercadopago">("auto");
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -71,7 +74,7 @@ export default function PreciosPage() {
       const res = await fetch("/api/payments/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan, email }),
+        body: JSON.stringify({ plan, email, provider }),
       });
       const data = await res.json();
       if (data.mode === "demo") {
@@ -81,34 +84,43 @@ export default function PreciosPage() {
       }
 
       localStorage.setItem("ats_last_checkout", JSON.stringify(data));
-      await loadWompiScript();
-      if (!window.WidgetCheckout) {
-        setMsg(`Referencia ${data.reference}. Widget no disponible; revisa la red.`);
+
+      if (data.mode === "mercadopago" && data.initPoint) {
+        window.location.href = data.initPoint;
         return;
       }
 
-      const checkoutWidget = new window.WidgetCheckout({
-        currency: data.currency || "COP",
-        amountInCents: data.amountInCents,
-        reference: data.reference,
-        publicKey: data.publicKey,
-        redirectUrl: data.redirectUrl,
-        customerData: email.includes("@") ? { email } : undefined,
-      });
-
-      checkoutWidget.open((result) => {
-        if (result?.status === "APPROVED") {
-          const map: Record<string, PlanId> = {
-            carrera: "carrera",
-            plus: "plus",
-            out09_extra: "carrera",
-          };
-          setPlan(map[plan] || "carrera", "demo_checkout");
-          setMsg(`Pago aprobado. Plan ${planLabel(map[plan] || "carrera")} activo en este dispositivo.`);
-        } else {
-          setMsg(`Checkout cerrado (${result?.status || "sin estado"}). Si pagaste, espera el webhook.`);
+      if (data.mode === "wompi") {
+        await loadWompiScript();
+        if (!window.WidgetCheckout) {
+          setMsg(`Referencia ${data.reference}. Widget no disponible; revisa la red.`);
+          return;
         }
-      });
+        const checkoutWidget = new window.WidgetCheckout({
+          currency: data.currency || "COP",
+          amountInCents: data.amountInCents,
+          reference: data.reference,
+          publicKey: data.publicKey,
+          redirectUrl: data.redirectUrl,
+          customerData: email.includes("@") ? { email } : undefined,
+        });
+        checkoutWidget.open((result) => {
+          if (result?.status === "APPROVED") {
+            const map: Record<string, PlanId> = {
+              carrera: "carrera",
+              plus: "plus",
+              out09_extra: "carrera",
+            };
+            setPlan(map[plan] || "carrera", "demo_checkout");
+            setMsg(`Pago aprobado. Plan ${planLabel(map[plan] || "carrera")} activo en este dispositivo.`);
+          } else {
+            setMsg(`Checkout cerrado (${result?.status || "sin estado"}). Si pagaste, espera el webhook.`);
+          }
+        });
+        return;
+      }
+
+      setMsg(data.error || "Respuesta de checkout desconocida.");
     } catch {
       setMsg("No se pudo iniciar el checkout.");
     } finally {
@@ -122,7 +134,7 @@ export default function PreciosPage() {
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between">
           <h1 className="text-2xl font-semibold">Precios</h1>
-          <SpeakButton text="Planes Carrera, Carrera Plus y curso OUT-09 extra. El ATS básico es gratis con límite diario." />
+          <SpeakButton text="Planes Carrera, Carrera Plus y curso OUT-09 extra. Puedes pagar con Wompi o Mercado Pago si están configurados." />
         </div>
         <p className="text-sm muted">ATS gratis: 5 análisis/día. Outplacement democratizado.</p>
         <input
@@ -132,6 +144,28 @@ export default function PreciosPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+        <p className="text-sm font-medium">Pasarela</p>
+        <div className="flex flex-col gap-2">
+          {(
+            [
+              ["auto", "Automática (Wompi o MP)"],
+              ["wompi", "Wompi"],
+              ["mercadopago", "Mercado Pago"],
+            ] as const
+          ).map(([id, label]) => (
+            <button
+              key={id}
+              type="button"
+              className="btn-secondary"
+              style={
+                provider === id ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" } : undefined
+              }
+              onClick={() => setProvider(id)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
       </section>
 
       {PLANS.map((p) => (
@@ -157,7 +191,7 @@ export default function PreciosPage() {
       ))}
 
       <section className="bento-card space-y-2">
-        <h2 className="font-semibold text-sm">Sin Wompi aún</h2>
+        <h2 className="font-semibold text-sm">Sin pasarela aún</h2>
         <p className="text-sm muted">Activa Carrera en este dispositivo para probar outplacement.</p>
         <button
           type="button"

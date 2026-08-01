@@ -85,6 +85,9 @@ export default function AnalyticsPage() {
         ))}
       </section>
 
+      <Link href="/admin/analytics/pro" className="btn-primary">
+        Abrir Analytics Pro
+      </Link>
       <Link href="/admin" className="btn-secondary">
         Volver a admin
       </Link>

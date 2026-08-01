@@ -31,9 +31,10 @@ Todo lo que **tú** debes hacer (el agente no puede completarlo sin tus cuentas/
 | `NEXT_PUBLIC_SUPABASE_URL` | Auth/DB (cuando actives) | Supabase → Project Settings |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Auth cliente | Supabase → API |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server (nunca en cliente) | Supabase → API |
-| `WOMPI_PUBLIC_KEY` / `WOMPI_PRIVATE_KEY` | Pagos COP | https://wompi.co |
+| `WOMPI_PUBLIC_KEY` / `WOMPI_PRIVATE_KEY` | Pagos COP (Wompi) | https://wompi.co |
 | `WOMPI_EVENTS_SECRET` | Firma eventos webhook (si aplica) | Panel Wompi → eventos |
 | `WOMPI_CHECKSUM_MODE` | Solo staging: `skip` para no validar checksum | Opcional |
+| `MP_ACCESS_TOKEN` | Pagos COP (Mercado Pago) | https://www.mercadopago.com.co/developers |
 | `SENTRY_DSN` | Errores (opcional) | https://sentry.io |
 | `ADSENSE_CLIENT_ID` | Ads en ATS free (opcional) | Google AdSense |
 | `NEXT_PUBLIC_ADSENSE_CLIENT_ID` | Mismo client id expuesto al browser | ej. `ca-pub-…` |
@@ -85,10 +86,11 @@ Después de pegar variables: **Redeploy**.
 **Qué:** Cobrar Carrera $79k / Plus $99k / OUT-09 extra.  
 **Dónde:** https://wompi.co o Mercado Pago Colombia  
 **Cómo:**
-1. Cuenta comercio, llaves test y live.
+1. Cuenta comercio, llaves test y live (Wompi y/o Mercado Pago).
 2. Webhook a `https://ats-advisor-two.vercel.app/api/webhooks/payments`.
-3. Variables en Vercel.
-4. Probar pago test → luego live.
+3. Variables en Vercel: `WOMPI_*` y/o `MP_ACCESS_TOKEN`.
+4. En `/precios` elige pasarela (auto / Wompi / Mercado Pago).
+5. Probar pago test → luego live.
 
 ---
 

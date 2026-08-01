@@ -250,7 +250,7 @@ export default function AtsPage() {
       {step === 4 && result && (
         <>
           <section className="bento-card space-y-3">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-2">
               <div>
                 <p className="text-xs muted">Compatibilidad ATS</p>
                 <p className="text-4xl font-semibold score-ring">{result.score}%</p>
@@ -258,9 +258,10 @@ export default function AtsPage() {
               <div className="text-right">
                 <p className="text-xs muted">Prob. entrevista</p>
                 <p className="text-2xl font-semibold">{result.interviewProbability}%</p>
+                <p className="mt-1 text-xs muted">Semántico {result.semanticScore ?? "—"}%</p>
               </div>
               <SpeakButton
-                text={`Tu compatibilidad es ${result.score} por ciento. Probabilidad de entrevista ${result.interviewProbability}. ${result.actions[0] || ""}`}
+                text={`Tu compatibilidad es ${result.score} por ciento. Solape semántico ${result.semanticScore}. Probabilidad de entrevista ${result.interviewProbability}. ${result.actions[0] || ""}`}
               />
             </div>
             <div className="progress-track">

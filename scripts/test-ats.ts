@@ -17,6 +17,7 @@ flujo de caja, inglés B2 y liderazgo. Trabajo en equipo y Power BI deseable.
 `;
 
 const result = analyzeAts({ cvText: cv, jobText: job, atsProfile: "workday" });
+assert(typeof result.semanticScore === "number", "sin semanticScore");
 assert(result.score > 40, `score bajo: ${result.score}`);
 assert(result.matchedKeywords.length > 0, "sin matches");
 assert(Array.isArray(result.actions), "sin actions");

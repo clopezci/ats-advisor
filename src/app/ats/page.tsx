@@ -10,6 +10,8 @@ import { canRunAts, recordAtsRun } from "@/lib/limits/atsFree";
 import { buildAtsReport, downloadText } from "@/lib/ats/report";
 import { bumpStreak } from "@/lib/engagement/streak";
 import { canAccessOutplacement, readEntitlement } from "@/lib/entitlements";
+import { upsertJob } from "@/lib/tracker/jobs";
+import { syncAtsScan } from "@/lib/supabase/sync";
 
 const PROFILES: { id: AtsProfile; label: string }[] = [
   { id: "generic", label: "Genérico" },
@@ -125,6 +127,7 @@ export default function AtsPage() {
         prev.unshift({ at: Date.now(), score: data.result.score });
         localStorage.setItem("ats_history", JSON.stringify(prev.slice(0, 30)));
         localStorage.setItem("ats_last_result", JSON.stringify({ result: data.result, atsProfile }));
+        syncAtsScan(data.result).catch(() => undefined);
       } catch {
         /* ignore */
       }
@@ -320,9 +323,28 @@ export default function AtsPage() {
             <Link href="/ats/historial" className="btn-secondary">
               Ver historial
             </Link>
-            <Link href="/tracker" className="btn-secondary">
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() => {
+                try {
+                  const last = JSON.parse(localStorage.getItem("ats_last_result") || "null");
+                  const score = last?.result?.score ?? result.score;
+                  upsertJob({
+                    title: "Vacante desde ATS",
+                    company: "Por completar",
+                    status: "interes",
+                    score,
+                    notes: `Score ATS ${score}% · perfil ${atsProfile}. Edita cargo/empresa en el tracker.`,
+                  });
+                  window.location.href = "/tracker?from=ats";
+                } catch {
+                  window.location.href = "/tracker";
+                }
+              }}
+            >
               Guardar en tracker
-            </Link>
+            </button>
             <Link href="/precios" className="btn-secondary">
               Ver planes / quitar límites
             </Link>

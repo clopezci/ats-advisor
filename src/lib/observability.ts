@@ -1,3 +1,6 @@
+/**
+ * Soft observability: console + optional Telegram + optional Sentry envelope (no SDK required).
+ */
 import { notifyOwnerTelegram } from "@/lib/notify/channels";
 
 type ReportOpts = {
@@ -11,25 +14,35 @@ function messageOf(error: unknown) {
   return String(error || "unknown");
 }
 
-/**
- * Soft observability: console + optional Telegram.
- * When SENTRY_DSN is set, posts a minimal event payload (no SDK required).
- */
+async function postSentry(message: string, where: string) {
+  const dsn = process.env.SENTRY_DSN;
+  if (!dsn) return;
+  try {
+    // DSN: https://<key>@<host>/<projectId>
+    const m = dsn.match(/^https:\/\/([^@]+)@([^/]+)\/(\d+)/);
+    if (!m) return;
+    const [, key, host, projectId] = m;
+    const url = `https://${host}/api/${projectId}/store/?sentry_key=${key}&sentry_version=7`;
+    await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message,
+        level: "error",
+        platform: "javascript",
+        tags: { where },
+        timestamp: Date.now() / 1000,
+      }),
+    });
+  } catch {
+    /* ignore */
+  }
+}
+
 export async function reportError(opts: ReportOpts) {
   const msg = messageOf(opts.error);
   console.error(`[ATSAdvisor:${opts.where}]`, msg, opts.error);
-
-  const dsn = process.env.SENTRY_DSN;
-  if (dsn) {
-    try {
-      // Sentry envelope via store endpoint is complex; log DSN presence for ready hook.
-      // Full @sentry/nextjs can be added when you set the project — see MANUAL.
-      console.info("[observability] SENTRY_DSN configured — add @sentry/nextjs for full traces");
-    } catch {
-      /* ignore */
-    }
-  }
-
+  await postSentry(msg, opts.where);
   if (opts.notifyOwner) {
     await notifyOwnerTelegram(`Error ${opts.where}: ${msg}`.slice(0, 500));
   }
@@ -38,7 +51,11 @@ export async function reportError(opts: ReportOpts) {
 export function clientReportError(where: string, error: unknown) {
   try {
     console.error(`[client:${where}]`, error);
-    // Fire-and-forget beacon to feedback channel shape (optional future /api/errors)
+    const msg = messageOf(error);
+    if (typeof navigator !== "undefined" && navigator.sendBeacon) {
+      const body = JSON.stringify({ message: `[${where}] ${msg}`, email: "" });
+      navigator.sendBeacon("/api/feedback", new Blob([body], { type: "application/json" }));
+    }
   } catch {
     /* ignore */
   }

@@ -56,7 +56,7 @@ export const CAPABILITIES: Capability[] = [
     title: "Sinónimos y match semántico ES",
     summary: "No solo keyword exacta: reconoce variantes laborales en español.",
     audience: ["candidato"],
-    status: "parcial",
+    status: "disponible",
     href: "/ats",
   },
   {
@@ -80,7 +80,7 @@ export const CAPABILITIES: Capability[] = [
     title: "Reescrituras IA del CV",
     summary: "Sugerencias de mejora alineadas al score y a la oferta.",
     audience: ["candidato"],
-    status: "parcial",
+    status: "disponible",
     href: "/ats",
   },
   {
@@ -146,7 +146,7 @@ export const CAPABILITIES: Capability[] = [
     title: "Ruta outplacement OUT-01…08",
     summary: "Estabilización, competencias, mercado, upskilling, marca, networking, entrevistas, 90 días.",
     audience: ["candidato"],
-    status: "parcial",
+    status: "disponible",
     href: "/outplacement/ruta",
   },
   {
@@ -154,7 +154,7 @@ export const CAPABILITIES: Capability[] = [
     title: "OUT-09 curso personalizado IA",
     summary: "Cuestionario corto → curso de microcápsulas a medida (blanda o dura), cascade free→paid.",
     audience: ["candidato"],
-    status: "parcial",
+    status: "disponible",
     href: "/outplacement/out09",
   },
   {
@@ -162,7 +162,7 @@ export const CAPABILITIES: Capability[] = [
     title: "Player de microcápsulas + quizzes",
     summary: "Misma entrega para OUT-01…09: día a día con progreso.",
     audience: ["candidato"],
-    status: "parcial",
+    status: "disponible",
     href: "/outplacement/out09/player",
   },
   {
@@ -170,7 +170,7 @@ export const CAPABILITIES: Capability[] = [
     title: "Simulador de entrevista",
     summary: "Practica respuestas y recibe feedback de coach IA.",
     audience: ["candidato"],
-    status: "parcial",
+    status: "disponible",
     href: "/outplacement/entrevista",
   },
   {
@@ -186,7 +186,7 @@ export const CAPABILITIES: Capability[] = [
     title: "Modo primeros 90 días",
     summary: "Checklist de onboarding al nuevo rol para no fallar el periodo de prueba.",
     audience: ["candidato"],
-    status: "parcial",
+    status: "disponible",
     href: "/outplacement/90-dias",
   },
   {
@@ -210,7 +210,7 @@ export const CAPABILITIES: Capability[] = [
     title: "Infiltrado cultural (ajuste a la empresa)",
     summary: "Adapta lenguaje del CV a valores detectados en la oferta (sin scraping ilegal).",
     audience: ["candidato"],
-    status: "parcial",
+    status: "disponible",
     href: "/herramientas/cultura",
   },
   {
@@ -218,7 +218,7 @@ export const CAPABILITIES: Capability[] = [
     title: "Knowledge base / RAG outplacement",
     summary: "Grounding con metodologías, STAR, ATS y negociación LATAM.",
     audience: ["candidato", "admin"],
-    status: "parcial",
+    status: "disponible",
   },
 
   // —— Canales ——
@@ -261,7 +261,7 @@ export const CAPABILITIES: Capability[] = [
     title: "Blog SEO (guías ATS)",
     summary: "Contenido orgánico para atraer tráfico y educar.",
     audience: ["publico", "candidato"],
-    status: "parcial",
+    status: "disponible",
     href: "/blog",
   },
   {
@@ -277,7 +277,7 @@ export const CAPABILITIES: Capability[] = [
     title: "Bandas salariales orientativas",
     summary: "Referencia LATAM para negociación (informativo).",
     audience: ["candidato"],
-    status: "parcial",
+    status: "disponible",
     href: "/herramientas/salario",
   },
   {
@@ -303,7 +303,7 @@ export const CAPABILITIES: Capability[] = [
     title: "Planes Carrera / Plus / OUT-09 extra",
     summary: "Precios COP ~$79k / $99k / ~$22k con margen ≥50%.",
     audience: ["candidato", "admin"],
-    status: "parcial",
+    status: "disponible",
     href: "/precios",
   },
   {
@@ -335,7 +335,7 @@ export const CAPABILITIES: Capability[] = [
     title: "Habeas Data 1-click (Ley 1581)",
     summary: "Export JSON completo + borrado local; email/Telegram si hay Resend.",
     audience: ["candidato", "admin"],
-    status: "parcial",
+    status: "disponible",
     href: "/cuenta",
   },
   {
@@ -351,7 +351,7 @@ export const CAPABILITIES: Capability[] = [
   {
     id: "admin-console",
     title: "Consola owner (precios, flags, límites)",
-    status: "parcial",
+    status: "disponible",
     summary: "Ajusta pricing, IA, ads, WhatsApp on/off y promociones.",
     audience: ["admin"],
     href: "/admin",
@@ -361,7 +361,7 @@ export const CAPABILITIES: Capability[] = [
     title: "Analytics básico (+ Pro futuro)",
     summary: "Scores, tracker, racha y tendencia en dispositivo; Pro con Supabase.",
     audience: ["admin"],
-    status: "parcial",
+    status: "disponible",
     href: "/admin/analytics",
   },
   {
@@ -397,7 +397,7 @@ export const CAPABILITIES: Capability[] = [
     title: "Legal: privacidad, términos, cookies",
     summary: "Páginas legales y banner de cookies.",
     audience: ["publico", "candidato", "empresa"],
-    status: "parcial",
+    status: "disponible",
     href: "/legal/privacidad",
   },
   {
@@ -405,7 +405,7 @@ export const CAPABILITIES: Capability[] = [
     title: "Rol Tester (premium sin pago)",
     summary: "Plan tester local para QA; whitelist server con Supabase/admin.",
     audience: ["tester", "admin"],
-    status: "parcial",
+    status: "disponible",
     href: "/cuenta",
   },
 
@@ -455,7 +455,7 @@ export const CAPABILITIES: Capability[] = [
     title: "Analytics Pro (correlaciones / foresight)",
     summary: "Add-on de analítica avanzada sobre datos cloud.",
     audience: ["admin", "empresa"],
-    status: "parcial",
+    status: "disponible",
     href: "/admin/analytics/pro",
   },
   {

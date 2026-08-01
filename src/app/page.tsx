@@ -28,7 +28,7 @@ function HomeInner() {
       <section className="bento-card space-y-4">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="pill-brand">En construcción · LOTIC</p>
+            <p className="pill-brand">LOTIC · listo para usar</p>
             <h1 className="mt-3 text-2xl font-semibold leading-tight">¿Qué quieres hacer ahora?</h1>
           </div>
           <SpeakButton

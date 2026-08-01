@@ -85,9 +85,15 @@ export default function TrackerPage() {
             <div>
               <h2 className="font-semibold">{job.title}</h2>
               <p className="text-sm muted">{job.company}</p>
+              {typeof job.score === "number" && (
+                <p className="mt-1 text-xs" style={{ color: "var(--brand)" }}>
+                  Score ATS {job.score}%
+                </p>
+              )}
             </div>
             <span className="pill-brand">{STATUS_LABEL[job.status]}</span>
           </div>
+          {job.notes && <p className="text-xs muted">{job.notes}</p>}
           <select
             className="field"
             value={job.status}
@@ -102,6 +108,22 @@ export default function TrackerPage() {
               </option>
             ))}
           </select>
+          <Link
+            href="/ats"
+            className="btn-secondary"
+            onClick={() => {
+              try {
+                localStorage.setItem(
+                  "ats_tracker_context",
+                  JSON.stringify({ jobId: job.id, title: job.title, company: job.company, score: job.score })
+                );
+              } catch {
+                /* ignore */
+              }
+            }}
+          >
+            Re-analizar CV para esta vacante
+          </Link>
           <button
             type="button"
             className="btn-secondary"

@@ -1,6 +1,16 @@
 import { NextResponse } from "next/server";
 import { OUTPLACEMENT_MODULES } from "@/lib/outplacement/modules";
 import { notifyOwnerTelegram } from "@/lib/notify/channels";
+import { formatCapsuleText } from "@/lib/notify/deliverCapsule";
+
+function capsuleForChat(chatId: number) {
+  const day = Math.floor(Date.now() / 86400000);
+  // Stable rotation per chat so two users don't always get identical day if desired
+  const seed = Math.abs(chatId) + day;
+  const mod = OUTPLACEMENT_MODULES[seed % OUTPLACEMENT_MODULES.length];
+  const cap = mod.capsules[seed % mod.capsules.length];
+  return { mod, cap };
+}
 
 export async function POST(req: Request) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -9,23 +19,25 @@ export async function POST(req: Request) {
   }
 
   const update = await req.json();
-  const chatId = update?.message?.chat?.id;
+  const chatId = update?.message?.chat?.id as number | undefined;
   const text = String(update?.message?.text || "");
 
-  const dayIndex = Math.floor(Date.now() / 86400000) % Math.max(1, OUTPLACEMENT_MODULES.length);
-  const mod = OUTPLACEMENT_MODULES[dayIndex];
-  const cap = mod.capsules[Math.floor(Date.now() / 86400000) % mod.capsules.length];
+  const { mod, cap } = capsuleForChat(Number(chatId || 0));
 
-  let reply =
-    "ATSAdvisor: /start /capsula /progreso /ayuda";
+  let reply = "ATSAdvisor: /start /capsula /progreso /ayuda";
   if (text.startsWith("/start")) {
     reply =
-      "Bienvenido a ATSAdvisor. Usa /capsula para tu microaprendizaje del día y sigue la ruta en la PWA.";
+      "Bienvenido a ATSAdvisor. Usa /capsula para tu microaprendizaje del día. El progreso detallado vive en la PWA.";
   } else if (text.startsWith("/capsula")) {
-    reply = `${mod.code} · ${mod.title}\n\n${cap.title}\n${cap.content}`;
+    reply = formatCapsuleText({
+      moduleCode: mod.code,
+      day: cap.day,
+      title: cap.title,
+      content: cap.content,
+      quiz: cap.quiz,
+    });
   } else if (text.startsWith("/progreso")) {
-    reply =
-      "Tu progreso detallado está en la PWA (Outplacement → ruta / OUT-09 player). Aquí te enviamos la cápsula diaria.";
+    reply = `Hoy te toca ${mod.code} · ${mod.title} (día ${cap.day}/${mod.days}: ${cap.title}).\nCompleta quizzes en la PWA → Outplacement → ruta para guardar progreso unificado.`;
   } else if (text.startsWith("/ayuda")) {
     reply = "Comandos: /start /capsula /progreso /ayuda";
   } else if (text.startsWith("/alerta_owner_test")) {

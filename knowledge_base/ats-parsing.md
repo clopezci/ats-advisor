@@ -18,3 +18,9 @@ Más estrictos con parse; evitar diseños creativos.
 
 ## Anti-trampas
 No usar texto blanco, font 1px ni keyword stuffing. Los ATS modernos penalizan.
+
+## Match semántico (ATSAdvisor)
+Además de keywords exactas, el motor calcula solape bag-of-words (cosine) entre CV y oferta
+y lo mezcla (~18%) con el score de cobertura. No sustituye embeddings vectoriales cloud,
+pero reduce falsos negativos por sinónimos parciales y orden de palabras.
+

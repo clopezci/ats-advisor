@@ -1,27 +1,31 @@
 import Link from "next/link";
 
-export const metadata = { title: "Contacto" };
+export const metadata = { title: "Contacto · ATSAdvisor" };
 
 export default function ContactoPage() {
   return (
-    <div className="space-y-4">
+    <div className="flex flex-1 flex-col gap-5">
       <h1 className="text-2xl font-semibold">Contacto</h1>
-      <div className="bento-card text-sm muted leading-relaxed space-y-2">
-        <p>LOTIC Soluciones</p>
+      <section className="bento-card space-y-3 text-sm leading-relaxed">
         <p>
-          GitHub owner:{" "}
-          <a className="underline" href="mailto:clpezci@gmail.com">
-            clpezci@gmail.com
-          </a>
+          <strong>Producto:</strong> ATSAdvisor by LOTIC Soluciones
         </p>
         <p>
-          Sitio:{" "}
-          <a className="underline" href="https://lotic-soluciones.vercel.app/" target="_blank" rel="noreferrer">
-            lotic-soluciones.vercel.app
-          </a>
+          <strong>Soporte / Habeas Data:</strong> usa /feedback o el correo del owner configurado en
+          el despliegue (ADMIN_EMAIL).
         </p>
-      </div>
-      <Link href="/" className="btn-secondary inline-flex">
+        <p>
+          <strong>Empresas / RH:</strong> portal /empresa para licencias de outplacement.
+        </p>
+        <p>
+          También puedes escribir desde el formulario de feedback; si Telegram owner está activo,
+          llega al instante.
+        </p>
+      </section>
+      <Link href="/feedback" className="btn-primary">
+        Enviar feedback
+      </Link>
+      <Link href="/" className="btn-secondary">
         Volver
       </Link>
     </div>

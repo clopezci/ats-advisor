@@ -26,6 +26,8 @@ Todo lo que **tú** debes hacer (el agente no puede completarlo sin tus cuentas/
 | `OPENAI_API_KEY` | Fallback pago (opcional) | https://platform.openai.com |
 | `TELEGRAM_BOT_TOKEN` | Bot alertas + microlearning | @BotFather en Telegram |
 | `TELEGRAM_OWNER_CHAT_ID` | Tu chat para alertas | Habla al bot y usa `getUpdates` |
+| `TELEGRAM_BROADCAST_CHAT_IDS` | Lista de chats para cron cápsulas (coma) | Opcional; si vacío usa owner |
+| `WHATSAPP_BROADCAST_TO` | Número destino demo cron WhatsApp | Opcional |
 | `RESEND_API_KEY` | Emails (Habeas Data, etc.) | https://resend.com |
 | `RESEND_FROM` | Remitente verificado | ej. `ATSAdvisor <noreply@tudominio.com>` |
 | `NEXT_PUBLIC_SUPABASE_URL` | Auth/DB (cuando actives) | Supabase → Project Settings |

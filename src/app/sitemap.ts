@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { BLOG_POSTS } from "@/lib/blog/posts";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_APP_URL || "https://ats-advisor-two.vercel.app";
@@ -14,9 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/empresa/dashboard",
     "/empresa/invitaciones",
     "/blog",
-    "/blog/que-es-un-ats",
-    "/blog/cv-una-columna",
-    "/blog/keywords-sin-mentir",
+    ...BLOG_POSTS.map((p) => `/blog/${p.slug}`),
     "/ats/historial",
     "/feedback",
     "/tracker",
@@ -32,6 +31,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/cuenta/cvs",
     "/legal/privacidad",
     "/legal/terminos",
+    "/legal/cookies",
+    "/legal/contacto",
     "/herramientas",
     "/herramientas/checklist",
     "/herramientas/linkedin",
@@ -44,7 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return paths.map((p) => ({
     url: `${base}${p}`,
     lastModified: new Date(),
-    changeFrequency: "weekly",
+    changeFrequency: "weekly" as const,
     priority: p === "" ? 1 : 0.7,
   }));
 }

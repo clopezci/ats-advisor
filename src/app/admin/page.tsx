@@ -157,10 +157,79 @@ export default function AdminPage() {
         ))}
       </section>
 
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold">Promociones</h2>
+        {(settings.promotions || []).map((p, idx) => (
+          <div key={`${p.name}-${idx}`} className="space-y-2 border-b pb-3" style={{ borderColor: "var(--border)" }}>
+            <input
+              className="field"
+              placeholder="Nombre cupón"
+              value={p.name}
+              onChange={(e) => {
+                const promotions = [...settings.promotions];
+                promotions[idx] = { ...p, name: e.target.value };
+                setSettings({ ...settings, promotions });
+              }}
+            />
+            <div className="grid grid-cols-2 gap-2">
+              <input
+                className="field"
+                type="number"
+                placeholder="% dto"
+                value={p.percent}
+                onChange={(e) => {
+                  const promotions = [...settings.promotions];
+                  promotions[idx] = { ...p, percent: Number(e.target.value) };
+                  setSettings({ ...settings, promotions });
+                }}
+              />
+              <input
+                className="field"
+                type="number"
+                placeholder="$ fijo"
+                value={p.amount}
+                onChange={(e) => {
+                  const promotions = [...settings.promotions];
+                  promotions[idx] = { ...p, amount: Number(e.target.value) };
+                  setSettings({ ...settings, promotions });
+                }}
+              />
+            </div>
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() =>
+                setSettings({
+                  ...settings,
+                  promotions: settings.promotions.filter((_, i) => i !== idx),
+                })
+              }
+            >
+              Quitar
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          className="btn-secondary"
+          onClick={() =>
+            setSettings({
+              ...settings,
+              promotions: [
+                ...settings.promotions,
+                { name: "PROMO", percent: 10, amount: 0, starts: "", ends: "" },
+              ],
+            })
+          }
+        >
+          Añadir promoción
+        </button>
+      </section>
+
       <section className="bento-card space-y-2 text-sm muted">
         <h2 className="font-semibold text-[var(--text)]">Salud</h2>
-        <p>Sentry/Telegram: configura SENTRY_DSN y TELEGRAM_* (ver MANUAL-ACCIONES.md).</p>
-        <p>Auditoría cron: se activará con Supabase + job externo (Vercel Cron).</p>
+        <HealthPanel />
+        <p>Sentry: opcional vía SENTRY_DSN (envelope sin SDK). Cron: /api/cron/audit y /api/cron/capsules.</p>
       </section>
 
       <button type="button" className="btn-primary" onClick={save}>
@@ -170,9 +239,23 @@ export default function AdminPage() {
       <Link href="/admin/analytics" className="btn-secondary">
         Ver analytics
       </Link>
+      <Link href="/admin/analytics/pro" className="btn-secondary">
+        Analytics Pro
+      </Link>
       <Link href="/" className="btn-secondary">
         Salir al inicio
       </Link>
     </div>
   );
+}
+
+function HealthPanel() {
+  const [health, setHealth] = useState<string>("…");
+  useEffect(() => {
+    fetch("/api/health")
+      .then((r) => r.json())
+      .then((d) => setHealth(d.ok ? `OK · ${d.service || "atsadvisor"}` : "Degradado"))
+      .catch(() => setHealth("Sin respuesta"));
+  }, []);
+  return <p>API health: {health}</p>;
 }

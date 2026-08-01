@@ -47,6 +47,12 @@ export function setPlan(plan: PlanId, source: Entitlement["source"] = "local") {
     source,
   };
   writeEntitlement(next);
+  try {
+    // Dynamic import avoided — fire and forget if sync exists
+    void import("@/lib/supabase/sync").then((m) => m.syncProfilePlan(plan)).catch(() => undefined);
+  } catch {
+    /* ignore */
+  }
   return next;
 }
 

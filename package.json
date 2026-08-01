@@ -8,7 +8,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:ats": "npx --yes tsx scripts/test-ats.ts"
+    "test:ats": "npx --yes tsx scripts/test-ats.ts",
+    "test:modules": "npx --yes tsx scripts/test-modules.ts",
+    "test:semantic": "npx --yes tsx scripts/test-semantic.ts",
+    "test:entitlements": "npx --yes tsx scripts/test-entitlements.ts",
+    "test": "npm run test:ats && npm run test:modules && npm run test:semantic && npm run test:entitlements"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.111.0",

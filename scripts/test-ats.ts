@@ -21,6 +21,10 @@ assert(typeof result.semanticScore === "number", "sin semanticScore");
 assert(result.score > 40, `score bajo: ${result.score}`);
 assert(result.matchedKeywords.length > 0, "sin matches");
 assert(Array.isArray(result.actions), "sin actions");
+assert(result.mustHave && Array.isArray(result.mustHave.matched), "sin mustHave");
+assert(result.atsInsights?.length > 0, "sin atsInsights");
+assert(result.nextSteps?.length > 0, "sin nextSteps");
+assert(result.applicationTips?.length > 0, "sin applicationTips");
 
 const weak = analyzeAts({
   cvText: "Hola soy candidato",

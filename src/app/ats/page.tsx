@@ -6,6 +6,7 @@ import { DictationButton } from "@/components/DictationButton";
 import { SpeakButton } from "@/components/SpeakButton";
 import { AdSlot } from "@/components/AdSlot";
 import type { AtsAnalyzeResult, AtsProfile } from "@/lib/ats/engine";
+import { DISCLAIMER_CV_REWRITE } from "@/lib/ats/coaching";
 import { canRunAts, recordAtsRun } from "@/lib/limits/atsFree";
 import { buildAtsReport, downloadText, openPrintableReport } from "@/lib/ats/report";
 import { bumpStreak } from "@/lib/engagement/streak";
@@ -13,14 +14,14 @@ import { canAccessOutplacement, readEntitlement } from "@/lib/entitlements";
 import { upsertJob } from "@/lib/tracker/jobs";
 import { syncAtsScan } from "@/lib/supabase/sync";
 
-const PROFILES: { id: AtsProfile; label: string }[] = [
-  { id: "generic", label: "Genérico" },
-  { id: "workday", label: "Workday" },
-  { id: "greenhouse", label: "Greenhouse" },
-  { id: "taleo", label: "Taleo" },
-  { id: "successfactors", label: "SuccessFactors" },
-  { id: "lever", label: "Lever" },
-  { id: "sap", label: "SAP" },
+const PROFILES: { id: AtsProfile; label: string; hint: string }[] = [
+  { id: "generic", label: "Genérico", hint: "Si no sabes cuál usan" },
+  { id: "workday", label: "Workday", hint: "Semántico + formato estricto" },
+  { id: "greenhouse", label: "Greenhouse", hint: "Parse limpio + scorecard humano" },
+  { id: "taleo", label: "Taleo", hint: "Keywords literales" },
+  { id: "successfactors", label: "SuccessFactors", hint: "Parse estricto SAP" },
+  { id: "lever", label: "Lever", hint: "Relevancia + 1 columna" },
+  { id: "sap", label: "SAP", hint: "Títulos literales" },
 ];
 
 export default function AtsPage() {
@@ -34,6 +35,10 @@ export default function AtsPage() {
   const [uploading, setUploading] = useState(false);
   const [aiTip, setAiTip] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
+  const [rewriteText, setRewriteText] = useState("");
+  const [rewriteLoading, setRewriteLoading] = useState(false);
+  const [applyTips, setApplyTips] = useState("");
+  const [applyLoading, setApplyLoading] = useState(false);
 
   useEffect(() => {
     try {
@@ -51,7 +56,7 @@ export default function AtsPage() {
     if (step === 1) return "Sube tu CV (PDF/DOCX/TXT), pégalo o dicta el texto.";
     if (step === 2) return "Ahora pega o dicta la oferta laboral.";
     if (step === 3) return "Elige el tipo de ATS o portal si lo conoces.";
-    return "Resultado de tu análisis ATS.";
+    return "Resultado pro: match, must-have, formato, tips y ajuste de hoja de vida.";
   }, [step]);
 
   async function onFile(file: File | null) {
@@ -82,7 +87,8 @@ export default function AtsPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           task: "ats_suggest",
-          prompt: `Con base en este análisis ATS, sugiere 5 reescrituras concretas de viñetas (sin inventar experiencia). Faltantes: ${result.missingKeywords.slice(0, 12).join(", ")}. Acciones: ${result.actions.join(" | ")}. CV (extracto): ${cvText.slice(0, 1200)}`,
+          useKnowledge: true,
+          prompt: `Perfil ATS: ${atsProfile}. Score ${result.score}%. Must-have faltantes: ${result.mustHave?.missing?.slice(0, 10).join(", ") || "n/a"}. Keywords faltantes: ${result.missingKeywords.slice(0, 12).join(", ")}. Acciones: ${result.actions.join(" | ")}. Sugiere 5 reescrituras de viñetas (sin inventar). CV: ${cvText.slice(0, 1600)}`,
         }),
       });
       const data = await res.json();
@@ -92,6 +98,88 @@ export default function AtsPage() {
       setAiTip(e instanceof Error ? e.message : "No hay IA configurada aún");
     } finally {
       setAiLoading(false);
+    }
+  }
+
+  async function adjustCv() {
+    if (!result) return;
+    setRewriteLoading(true);
+    setRewriteText("");
+    try {
+      const res = await fetch("/api/ai/complete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          task: "cv_rewrite",
+          useKnowledge: true,
+          prompt: [
+            `DISCLAIMER obligatorio al inicio: ${DISCLAIMER_CV_REWRITE}`,
+            `Perfil ATS objetivo: ${atsProfile}`,
+            `Score actual: ${result.score}% · semántico ${result.semanticScore}%`,
+            `Must-have faltantes: ${(result.mustHave?.missing || []).slice(0, 15).join(", ")}`,
+            `Hard skills faltantes: ${result.hardSkills.missing.slice(0, 12).join(", ")}`,
+            `Soft faltantes: ${result.softSkills.missing.slice(0, 8).join(", ")}`,
+            `Cómo filtra este ATS: ${(result.atsInsights || []).join(" ")}`,
+            `OFERTA (extracto): ${jobText.slice(0, 1800)}`,
+            `CV ACTUAL COMPLETO:\n${cvText.slice(0, 7000)}`,
+            "Tarea: reescribe el CV en texto plano tejiendo keywords faltantes SOLO donde el contexto del CV ya lo soporte. Frases de valor (verbo + contexto + skill + resultado). No inventes. Marca [REVISAR] si algo es dudoso.",
+          ].join("\n\n"),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "IA no disponible");
+      setRewriteText(data.text);
+    } catch (e) {
+      setRewriteText(e instanceof Error ? e.message : "No se pudo ajustar el CV");
+    } finally {
+      setRewriteLoading(false);
+    }
+  }
+
+  async function askApplicationAdvice() {
+    if (!result) return;
+    setApplyLoading(true);
+    setApplyTips("");
+    try {
+      const res = await fetch("/api/ai/complete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          task: "application_advice",
+          useKnowledge: true,
+          prompt: [
+            `Quiero un plan de buena postulación para esta vacante.`,
+            `Perfil ATS: ${atsProfile}. Score ${result.score}%. Prob. entrevista ${result.interviewProbability}%.`,
+            `Excluyentes: ${result.exclusiveGaps.join(" | ") || "ninguno"}`,
+            `Must-have OK: ${(result.mustHave?.matched || []).slice(0, 8).join(", ")}`,
+            `Must-have faltantes: ${(result.mustHave?.missing || []).slice(0, 8).join(", ")}`,
+            `Tips base del motor: ${(result.applicationTips || []).join(" | ")}`,
+            `OFERTA: ${jobText.slice(0, 1600)}`,
+            `CV (extracto): ${cvText.slice(0, 1000)}`,
+            "Incluye: antes de postular, durante el formulario, mensaje/carta corta, LinkedIn, seguimiento y errores típicos según cómo filtran los ATS.",
+          ].join("\n"),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "IA no disponible");
+      setApplyTips(data.text);
+    } catch (e) {
+      setApplyTips(e instanceof Error ? e.message : "No se pudo generar el plan");
+    } finally {
+      setApplyLoading(false);
+    }
+  }
+
+  function applyRewriteToEditor() {
+    if (!rewriteText.trim()) return;
+    // Intenta extraer bloque CV si el modelo lo separó; si no, usa todo
+    const marker = rewriteText.search(/\n(?:CV|Hoja de vida|Versión|TEXTO)[^\n]*:\s*\n/i);
+    const body = marker >= 0 ? rewriteText.slice(marker).replace(/^[^\n]*\n/, "") : rewriteText;
+    setCvText(body.trim() || rewriteText);
+    try {
+      localStorage.setItem("ats_cv_draft", body.trim() || rewriteText);
+    } catch {
+      /* ignore */
     }
   }
 
@@ -110,6 +198,9 @@ export default function AtsPage() {
     }
     setLoading(true);
     setError("");
+    setRewriteText("");
+    setApplyTips("");
+    setAiTip("");
     try {
       const res = await fetch("/api/ats/analyze", {
         method: "POST",
@@ -143,7 +234,7 @@ export default function AtsPage() {
       <section className="bento-card space-y-3">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-xs uppercase tracking-[0.14em] muted">ATS · paso {step} de 4</p>
+            <p className="text-xs uppercase tracking-[0.14em] muted">ATS Pro · paso {step} de 4</p>
             <h1 className="mt-1 text-2xl font-semibold">Analizar mi CV</h1>
           </div>
           <SpeakButton text={intro} />
@@ -220,12 +311,15 @@ export default function AtsPage() {
         <>
           <div className="bento-card space-y-3">
             <p className="text-sm font-medium">¿A qué ATS o portal postulas?</p>
+            <p className="text-xs muted">
+              Cambia el peso keywords vs semántica y los tips (como Jobscan hace por motor).
+            </p>
             <div className="grid grid-cols-2 gap-2">
               {PROFILES.map((p) => (
                 <button
                   key={p.id}
                   type="button"
-                  className="btn-secondary"
+                  className="btn-secondary text-left"
                   style={
                     atsProfile === p.id
                       ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
@@ -233,12 +327,17 @@ export default function AtsPage() {
                   }
                   onClick={() => setAtsProfile(p.id)}
                 >
-                  {p.label}
+                  <span className="block font-medium">{p.label}</span>
+                  <span className="block text-xs muted">{p.hint}</span>
                 </button>
               ))}
             </div>
           </div>
-          {error && <p className="text-sm" style={{ color: "var(--danger)" }}>{error}</p>}
+          {error && (
+            <p className="text-sm" style={{ color: "var(--danger)" }}>
+              {error}
+            </p>
+          )}
           <div className="flex flex-col gap-3">
             <button type="button" className="btn-primary" disabled={loading} onClick={analyze}>
               {loading ? "Analizando…" : "Analizar ahora"}
@@ -255,7 +354,7 @@ export default function AtsPage() {
           <section className="bento-card space-y-3">
             <div className="flex items-center justify-between gap-2">
               <div>
-                <p className="text-xs muted">Compatibilidad ATS</p>
+                <p className="text-xs muted">Compatibilidad ATS ({atsProfile})</p>
                 <p className="text-4xl font-semibold score-ring">{result.score}%</p>
               </div>
               <div className="text-right">
@@ -264,24 +363,92 @@ export default function AtsPage() {
                 <p className="mt-1 text-xs muted">Semántico {result.semanticScore ?? "—"}%</p>
               </div>
               <SpeakButton
-                text={`Tu compatibilidad es ${result.score} por ciento. Solape semántico ${result.semanticScore}. Probabilidad de entrevista ${result.interviewProbability}. ${result.actions[0] || ""}`}
+                text={`Tu compatibilidad es ${result.score} por ciento. ${(result.nextSteps || result.actions)[0] || ""}`}
               />
             </div>
             <div className="progress-track">
               <div className="progress-fill" style={{ width: `${result.score}%` }} />
             </div>
+            <p className="text-xs muted">
+              Umbral típico de surfacing a reclutador: ~70%+. Esto es orientación, no garantía de entrevista.
+            </p>
           </section>
 
-          <ResultBlock title="Qué hacer ahora" items={result.actions} />
-          <ResultBlock title="Palabras faltantes" items={result.missingKeywords.slice(0, 12)} />
+          <ResultBlock title="Cómo avanza ahora (prioridad)" items={result.nextSteps || result.actions} />
+          <ResultBlock title="Cómo filtra este ATS" items={result.atsInsights || []} />
+          <ResultBlock title="Qué explica el score" items={result.explanation} />
+
+          <section className="bento-card space-y-2">
+            <h2 className="text-sm font-semibold">Cobertura de secciones (parse)</h2>
+            <ul className="grid grid-cols-2 gap-1 text-sm muted">
+              {result.sectionCoverage &&
+                Object.entries(result.sectionCoverage).map(([k, ok]) => (
+                  <li key={k}>
+                    {ok ? "✓" : "✗"} {labelSection(k)}
+                  </li>
+                ))}
+            </ul>
+          </section>
+
+          <ChipBlock title="Must-have presentes" items={result.mustHave?.matched || []} tone="ok" />
+          <ChipBlock title="Must-have faltantes" items={result.mustHave?.missing || []} tone="warn" />
+          <ChipBlock title="Nice-to-have faltantes" items={result.niceToHave?.missing || []} tone="muted" />
+          <ChipBlock title="Hard skills OK" items={result.hardSkills.matched} tone="ok" />
+          <ChipBlock title="Hard skills faltantes" items={result.hardSkills.missing} tone="warn" />
+          <ChipBlock title="Soft skills OK" items={result.softSkills.matched} tone="ok" />
+          <ChipBlock title="Keywords presentes" items={result.matchedKeywords.slice(0, 20)} tone="ok" />
+          <ChipBlock title="Keywords faltantes" items={result.missingKeywords.slice(0, 20)} tone="warn" />
+
           <ResultBlock title="Requisitos excluyentes" items={result.exclusiveGaps} />
           <ResultBlock title="Alertas de formato" items={result.formatAlerts} />
           <ResultBlock title="Trampas / riesgos" items={result.trapAlerts} />
           <ResultBlock title="Formación sugerida" items={result.trainingSuggestions} />
+          <ResultBlock title="Para el reclutador humano (después del ATS)" items={result.recruiterTips || []} />
+          <ResultBlock title="Checklist postulación (base)" items={result.applicationTips || []} />
+
+          <section className="bento-card space-y-3">
+            <h2 className="text-sm font-semibold">Ajustar hoja de vida</h2>
+            <p className="text-xs muted">{DISCLAIMER_CV_REWRITE}</p>
+            <button type="button" className="btn-primary" disabled={rewriteLoading} onClick={adjustCv}>
+              {rewriteLoading ? "Ajustando con IA…" : "Ajustar hoja de vida"}
+            </button>
+            {rewriteText && (
+              <>
+                <SpeakButton text={rewriteText.slice(0, 400)} />
+                <pre className="text-sm muted whitespace-pre-wrap max-h-96 overflow-auto rounded-lg p-3" style={{ background: "var(--surface-2, #f6f4fb)" }}>
+                  {rewriteText}
+                </pre>
+                <button type="button" className="btn-secondary" onClick={applyRewriteToEditor}>
+                  Cargar texto ajustado al editor (revisar antes de usar)
+                </button>
+                <button
+                  type="button"
+                  className="btn-secondary"
+                  onClick={async () => {
+                    await navigator.clipboard.writeText(rewriteText);
+                    alert("Copiado. Revísalo antes de postular.");
+                  }}
+                >
+                  Copiar ajuste
+                </button>
+              </>
+            )}
+          </section>
+
+          <section className="bento-card space-y-3">
+            <h2 className="text-sm font-semibold">Cómo lograr una buena postulación</h2>
+            <p className="text-xs muted">
+              Plan accionable según esta vacante y cómo filtran los ATS (parse → match → ranking → humano).
+            </p>
+            <button type="button" className="btn-primary" disabled={applyLoading} onClick={askApplicationAdvice}>
+              {applyLoading ? "Preparando plan…" : "Consejos de buena postulación"}
+            </button>
+            {applyTips && <p className="text-sm muted whitespace-pre-wrap">{applyTips}</p>}
+          </section>
 
           <section className="bento-card space-y-3">
             <div className="flex items-center justify-between gap-2">
-              <h2 className="text-sm font-semibold">Sugerencias IA (reescritura fiel)</h2>
+              <h2 className="text-sm font-semibold">Reescrituras puntuales (5 viñetas)</h2>
               <SpeakButton text={aiTip || "Pide sugerencias de reescritura basadas en el análisis."} />
             </div>
             <button type="button" className="btn-secondary" disabled={aiLoading} onClick={askAiRewrite}>
@@ -297,10 +464,7 @@ export default function AtsPage() {
               type="button"
               className="btn-secondary"
               onClick={() =>
-                downloadText(
-                  `atsadvisor-informe-${result.score}.txt`,
-                  buildAtsReport(result, { profile: atsProfile })
-                )
+                downloadText(`atsadvisor-informe-${result.score}.txt`, buildAtsReport(result, { profile: atsProfile }))
               }
             >
               Descargar informe TXT
@@ -375,6 +539,17 @@ export default function AtsPage() {
   );
 }
 
+function labelSection(k: string) {
+  const map: Record<string, string> = {
+    experience: "Experiencia",
+    education: "Educación",
+    skills: "Skills",
+    contact: "Contacto",
+    summary: "Resumen",
+  };
+  return map[k] || k;
+}
+
 function ResultBlock({ title, items }: { title: string; items: string[] }) {
   if (!items?.length) return null;
   const text = `${title}. ${items.join(". ")}`;
@@ -389,6 +564,36 @@ function ResultBlock({ title, items }: { title: string; items: string[] }) {
           <li key={item}>• {item}</li>
         ))}
       </ul>
+    </section>
+  );
+}
+
+function ChipBlock({
+  title,
+  items,
+  tone,
+}: {
+  title: string;
+  items: string[];
+  tone: "ok" | "warn" | "muted";
+}) {
+  if (!items?.length) return null;
+  const color =
+    tone === "ok" ? "var(--brand)" : tone === "warn" ? "var(--danger, #b42318)" : "var(--muted, #6b6575)";
+  return (
+    <section className="bento-card space-y-2">
+      <h2 className="text-sm font-semibold">{title}</h2>
+      <div className="flex flex-wrap gap-2">
+        {items.slice(0, 24).map((item) => (
+          <span
+            key={item}
+            className="text-xs px-2 py-1 rounded-full"
+            style={{ border: `1px solid ${color}`, color }}
+          >
+            {item}
+          </span>
+        ))}
+      </div>
     </section>
   );
 }

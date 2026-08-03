@@ -1,5 +1,7 @@
 export type AiTask =
   | "ats_suggest"
+  | "cv_rewrite"
+  | "application_advice"
   | "out09_outline"
   | "out09_capsule"
   | "interview_feedback"
@@ -30,6 +32,31 @@ function localFallback(task: AiTask, prompt: string): string {
         },
       })),
     });
+  }
+  if (task === "cv_rewrite") {
+    return [
+      "DISCLAIMER: Esto es un apoyo. Debes revisar y ajustar según tu experiencia real.",
+      "",
+      "Sin claves IA online, aplica este patrón a tus viñetas:",
+      "1) Copia 1 logro real que ya tengas.",
+      "2) Inserta 1–2 keywords faltantes de la oferta SOLO si son verdad.",
+      "3) Formato: Verbo + acción + herramienta/skill + resultado medible.",
+      "Ejemplo: 'Lideré migración a [herramienta de la oferta], reduciendo tiempo de cierre 25%.'",
+      "",
+      `Contexto pedido: ${prompt.slice(0, 400)}`,
+    ].join("\n");
+  }
+  if (task === "application_advice") {
+    return [
+      "Checklist de buena postulación (modo local):",
+      "1) CV adaptado a ESTA vacante (keywords en logros, no stuffing).",
+      "2) PDF texto seleccionable / DOCX; 1 columna.",
+      "3) Formulario del portal completo con los mismos términos.",
+      "4) Mensaje corto: encaje + 1 logro + disponibilidad.",
+      "5) LinkedIn alineado; postula pronto; prepara STAR.",
+      "",
+      `Contexto: ${prompt.slice(0, 280)}`,
+    ].join("\n");
   }
   return `Sugerencia local (sin claves IA): revisa tu descripción y concreta un logro medible. Pedido: ${prompt.slice(0, 280)}`;
 }

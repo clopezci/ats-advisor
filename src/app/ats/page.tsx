@@ -277,6 +277,11 @@ export default function AtsPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "IA no disponible");
       setCoverLetter(data.text);
+      try {
+        localStorage.setItem("ats_cover_letter", data.text);
+      } catch {
+        /* ignore */
+      }
     } catch (e) {
       setCoverLetter(e instanceof Error ? e.message : "No se pudo generar");
     } finally {
@@ -406,6 +411,15 @@ export default function AtsPage() {
             <Link href="/" className="btn-secondary">
               Volver
             </Link>
+            <Link href="/ats/multi" className="btn-secondary">
+              Comparar varias ofertas
+            </Link>
+            <Link href="/ats/portales" className="btn-secondary">
+              Portales LATAM
+            </Link>
+            <Link href="/cuenta/cvs" className="btn-secondary">
+              Versiones de CV
+            </Link>
           </div>
         </>
       )}
@@ -525,7 +539,89 @@ export default function AtsPage() {
             <p className="text-xs muted">
               Umbral típico de surfacing a reclutador: ~70%+. Esto es orientación, no garantía de entrevista.
             </p>
+            <div className="flex flex-wrap gap-2 pt-1">
+              <Link href="/ats/multi" className="btn-secondary" style={{ width: "auto", minHeight: "2.25rem", padding: "0.35rem 0.7rem", fontSize: "0.75rem" }}>
+                Multi-oferta
+              </Link>
+              <Link href="/ats/screening" className="btn-secondary" style={{ width: "auto", minHeight: "2.25rem", padding: "0.35rem 0.7rem", fontSize: "0.75rem" }}>
+                Screening
+              </Link>
+              <Link href="/ats/portales" className="btn-secondary" style={{ width: "auto", minHeight: "2.25rem", padding: "0.35rem 0.7rem", fontSize: "0.75rem" }}>
+                Portales LATAM
+              </Link>
+              <Link href="/ats/pack" className="btn-secondary" style={{ width: "auto", minHeight: "2.25rem", padding: "0.35rem 0.7rem", fontSize: "0.75rem" }}>
+                Pack ZIP
+              </Link>
+              <Link href="/ats/benchmark" className="btn-secondary" style={{ width: "auto", minHeight: "2.25rem", padding: "0.35rem 0.7rem", fontSize: "0.75rem" }}>
+                Benchmark
+              </Link>
+            </div>
           </section>
+
+          {result.recruiterSkim && (
+            <section className="bento-card space-y-2">
+              <h2 className="text-sm font-semibold">Ojo del reclutador · {result.recruiterSkim.seconds}s</h2>
+              <p className="text-sm font-medium">{result.recruiterSkim.verdict}</p>
+              {result.recruiterSkim.firstGlance.length > 0 && (
+                <ul className="text-sm muted space-y-1">
+                  {result.recruiterSkim.firstGlance.map((x) => (
+                    <li key={x}>• {x}</li>
+                  ))}
+                </ul>
+              )}
+              {result.recruiterSkim.redFlags.length > 0 && (
+                <div>
+                  <p className="text-xs font-medium">Banderas rojas</p>
+                  <ul className="text-sm muted space-y-1">
+                    {result.recruiterSkim.redFlags.map((x) => (
+                      <li key={x}>• {x}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {result.recruiterSkim.greenFlags.length > 0 && (
+                <div>
+                  <p className="text-xs font-medium">Señales verdes</p>
+                  <ul className="text-sm muted space-y-1">
+                    {result.recruiterSkim.greenFlags.map((x) => (
+                      <li key={x}>• {x}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {result.recruiterSkim.fixNow.length > 0 && (
+                <div>
+                  <p className="text-xs font-medium">Arregla ya</p>
+                  <ul className="text-sm muted space-y-1">
+                    {result.recruiterSkim.fixNow.map((x) => (
+                      <li key={x}>• {x}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </section>
+          )}
+
+          {typeof result.authenticityScore === "number" && (
+            <section className="bento-card space-y-2">
+              <div className="flex items-center justify-between gap-2">
+                <h2 className="text-sm font-semibold">Autenticidad / anti-IA</h2>
+                <span className="pill-brand">{result.authenticityScore}%</span>
+              </div>
+              <p className="text-xs muted">
+                Detecta tono genérico de IA y keyword stuffing. Alto = más humano y creíble.
+              </p>
+              {(result.authenticityAlerts || []).length > 0 ? (
+                <ul className="text-sm muted space-y-1">
+                  {result.authenticityAlerts.map((a) => (
+                    <li key={a}>• {a}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-sm muted">Sin alertas fuertes de tono IA o stuffing.</p>
+              )}
+            </section>
+          )}
 
           <ResultBlock title="Cómo avanza ahora (prioridad)" items={result.nextSteps || result.actions} />
           <ResultBlock title="Cómo filtra este ATS" items={result.atsInsights || []} />
@@ -774,7 +870,12 @@ export default function AtsPage() {
                   className="btn-secondary"
                   onClick={async () => {
                     await navigator.clipboard.writeText(coverLetter);
-                    alert("Carta copiada");
+                    try {
+                      localStorage.setItem("ats_cover_letter", coverLetter);
+                    } catch {
+                      /* ignore */
+                    }
+                    alert("Carta copiada (también en pack ZIP)");
                   }}
                 >
                   Copiar carta

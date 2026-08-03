@@ -63,6 +63,14 @@ function HomeInner() {
           <p className="text-xs muted">Historial</p>
           <p className="mt-1 text-sm font-medium">Ver scores previos</p>
         </Link>
+        <Link href="/ats/multi" className="bento-card block">
+          <p className="text-xs muted">Multi-oferta</p>
+          <p className="mt-1 text-sm font-medium">Prioriza vacantes</p>
+        </Link>
+        <Link href="/ats/portales" className="bento-card block">
+          <p className="text-xs muted">LATAM</p>
+          <p className="mt-1 text-sm font-medium">Portales y screening</p>
+        </Link>
         <Link href="/blog" className="bento-card block">
           <p className="text-xs muted">Blog</p>
           <p className="mt-1 text-sm font-medium">Guías ATS gratis</p>

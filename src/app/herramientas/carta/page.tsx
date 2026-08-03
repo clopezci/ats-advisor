@@ -96,7 +96,12 @@ export default function CartaPage() {
               className="btn-secondary"
               onClick={async () => {
                 await navigator.clipboard.writeText(out);
-                alert("Copiada");
+                try {
+                  localStorage.setItem("ats_cover_letter", out);
+                } catch {
+                  /* ignore */
+                }
+                alert("Copiada (lista para Pack ZIP)");
               }}
             >
               Copiar

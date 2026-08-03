@@ -9,6 +9,12 @@ export function buildAtsReport(result: AtsAnalyzeResult, meta?: { profile?: stri
     `Score: ${result.score}%`,
     `Probabilidad de entrevista: ${result.interviewProbability}%`,
     `Solape semántico: ${result.semanticScore}% (${result.embeddingProvider || "local"})`,
+    `Autenticidad / anti-IA: ${result.authenticityScore ?? "—"}%`,
+    "",
+    "Ojo del reclutador (8s):",
+    `- Veredicto: ${result.recruiterSkim?.verdict || "—"}`,
+    ...(result.recruiterSkim?.fixNow || []).map((e) => `- Arregla: ${e}`),
+    ...(result.authenticityAlerts || []).map((e) => `- Alerta autenticidad: ${e}`),
     "",
     "Heatmap keywords (oferta vs CV):",
     ...(result.heatmap || []).map(

@@ -49,6 +49,8 @@ assert(Array.isArray(result.sectionHits), "sin sectionHits");
 assert(result.bulletQuality && typeof result.bulletQuality.avgScore === "number", "sin bulletQuality");
 assert(Array.isArray(result.placementGuide), "sin placementGuide");
 assert(result.parsePreview?.email, "sin parse email");
+assert(typeof result.authenticityScore === "number", "sin authenticityScore");
+assert(result.recruiterSkim?.verdict, "sin recruiterSkim");
 
 const weak = analyzeAts({
   cvText: "Hola soy candidato",
@@ -77,7 +79,7 @@ assert(byDomain.company?.name === "Bancolombia", "company name");
 
 assert(localTfidfScore(cv, job) > 0, "tfidf");
 assert(analyzeBullets(cv).total > 0, "bullets");
-assert(whatsappFinalPriceCop() === 21000, `wa price ${whatsappFinalPriceCop()}`);
+assert(whatsappFinalPriceCop() === 4500, `wa price ${whatsappFinalPriceCop()}`);
 
 console.log("ats engine tests ok", {
   strong: result.score,

@@ -10,6 +10,26 @@ const TOOLS = [
     desc: "Compara tu CV con una oferta y obtén score + acciones.",
   },
   {
+    href: "/ats/multi",
+    title: "Multi-oferta",
+    desc: "Rankea varias vacantes y decide dónde postular primero.",
+  },
+  {
+    href: "/ats/screening",
+    title: "Preguntas de screening",
+    desc: "Respuestas honestas para Easy Apply y formularios.",
+  },
+  {
+    href: "/ats/portales",
+    title: "Portales LATAM",
+    desc: "Checklists Computrabajo, elempleo, Magneto y más.",
+  },
+  {
+    href: "/ats/pack",
+    title: "Pack ZIP",
+    desc: "CV + carta + LinkedIn + screening listos para enviar.",
+  },
+  {
     href: "/herramientas/checklist",
     title: "Checklist CV ATS",
     desc: "Lista rápida de formato compatible con robots.",

@@ -86,9 +86,24 @@ export default function LinkedInToolPage() {
         {loading ? "Generando…" : "Generar"}
       </button>
       {out && (
-        <section className="bento-card">
+        <section className="bento-card space-y-2">
           <SpeakButton text={out} />
           <p className="mt-2 text-sm muted whitespace-pre-wrap">{out}</p>
+          <button
+            type="button"
+            className="btn-secondary"
+            onClick={async () => {
+              await navigator.clipboard.writeText(out);
+              try {
+                localStorage.setItem("ats_linkedin_blurb", out);
+              } catch {
+                /* ignore */
+              }
+              alert("Copiado (lista para Pack ZIP)");
+            }}
+          >
+            Copiar
+          </button>
         </section>
       )}
       <Link href="/ats" className="btn-secondary">

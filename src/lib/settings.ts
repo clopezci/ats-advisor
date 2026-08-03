@@ -54,7 +54,7 @@ export function defaultSettings(): AppSettings {
       currency: "COP",
     },
     whatsapp_cost: {
-      meta_mid_monthly_cop: 14000,
+      meta_mid_monthly_cop: 3000,
       margin_percent: 50,
       msgs_per_month: 45,
     },

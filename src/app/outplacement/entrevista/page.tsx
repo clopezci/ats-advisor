@@ -1,24 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { DictationButton } from "@/components/DictationButton";
 import { SpeakButton } from "@/components/SpeakButton";
-
-const STARTERS = [
-  "Cuéntame de un logro reciente con impacto medible.",
-  "¿Por qué saliste de tu último empleo?",
-  "¿Cuál es tu mayor debilidad y cómo la trabajas?",
-  "¿Por qué quieres este rol ahora?",
-];
+import { scoreStarAnswer, STAR_BANK } from "@/lib/interview/star";
 
 export default function EntrevistaPage() {
   const [qIndex, setQIndex] = useState(0);
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
+  const [jobHint, setJobHint] = useState("");
 
-  const question = STARTERS[qIndex % STARTERS.length];
+  useEffect(() => {
+    try {
+      const ws = JSON.parse(localStorage.getItem("ats_workspace") || "null");
+      if (ws?.jobText) setJobHint(ws.jobText.slice(0, 400));
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const item = STAR_BANK[qIndex % STAR_BANK.length];
+  const local = useMemo(() => (answer.trim().length >= 40 ? scoreStarAnswer(answer) : null), [answer]);
 
   async function evaluate() {
     setLoading(true);
@@ -29,7 +34,16 @@ export default function EntrevistaPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           task: "interview_feedback",
-          prompt: `Eres entrevistador exigente pero justo. Pregunta: ${question}. Respuesta del candidato: ${answer}. Da feedback breve en español: tono, estructura STAR, qué mejorar, y una versión mejorada de 4-6 líneas. No inventes hechos.`,
+          useKnowledge: true,
+          prompt: [
+            "Eres coach de entrevistas LATAM. Evalúa con rúbrica STAR (Situación, Tarea, Acción, Resultado).",
+            `Pregunta: ${item.q}`,
+            `Respuesta: ${answer}`,
+            jobHint ? `Contexto vacante (extracto): ${jobHint}` : "",
+            "Devuelve: 1) score STAR /10 por dimensión 2) qué faltó 3) versión mejorada 5-8 líneas SIN inventar hechos 4) tip de 8s para el reclutador.",
+          ]
+            .filter(Boolean)
+            .join("\n"),
         }),
       });
       const data = await res.json();
@@ -46,23 +60,38 @@ export default function EntrevistaPage() {
     <div className="flex flex-1 flex-col gap-5">
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between">
-          <h1 className="text-xl font-semibold">Simulador de entrevista</h1>
-          <SpeakButton text={`${question}. Responde por voz o texto y pide feedback.`} />
+          <h1 className="text-xl font-semibold">Simulador STAR</h1>
+          <SpeakButton text={`${item.q}. Responde con Situación, Tarea, Acción y Resultado.`} />
         </div>
-        <p className="text-sm muted">OUT-07 · práctica por voz con feedback IA.</p>
+        <p className="text-sm muted">OUT-07 · banco ampliado + score local STAR + feedback IA.</p>
+        {jobHint && <p className="text-xs muted">Usando extracto de tu última oferta del ATS.</p>}
       </section>
 
       <section className="bento-card space-y-3">
-        <p className="font-medium">{question}</p>
+        <p className="font-medium">{item.q}</p>
+        <p className="text-xs muted">{item.hint}</p>
         <div className="flex items-center justify-between">
           <span className="text-xs muted">Tu respuesta</span>
           <DictationButton onResult={(t) => setAnswer((p) => (p ? `${p} ${t}` : t))} />
         </div>
-        <textarea className="field min-h-28" value={answer} onChange={(e) => setAnswer(e.target.value)} />
+        <textarea className="field min-h-32" value={answer} onChange={(e) => setAnswer(e.target.value)} />
+        {local && (
+          <div className="text-sm space-y-1">
+            <p className="font-semibold">Score STAR local: {local.total}%</p>
+            <p className="text-xs muted">
+              S {local.situation} · T {local.task} · A {local.action} · R {local.result}
+            </p>
+            <ul className="text-xs muted space-y-1">
+              {local.tips.map((t) => (
+                <li key={t}>• {t}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </section>
 
       <button type="button" className="btn-primary" disabled={loading || answer.trim().length < 20} onClick={evaluate}>
-        {loading ? "Evaluando…" : "Recibir feedback"}
+        {loading ? "Evaluando…" : "Feedback coach IA"}
       </button>
       <button
         type="button"
@@ -73,7 +102,7 @@ export default function EntrevistaPage() {
           setFeedback("");
         }}
       >
-        Otra pregunta
+        Siguiente pregunta ({(qIndex % STAR_BANK.length) + 1}/{STAR_BANK.length})
       </button>
 
       {feedback && (
@@ -86,6 +115,9 @@ export default function EntrevistaPage() {
         </section>
       )}
 
+      <Link href="/ats/pack" className="btn-secondary">
+        Pack listo para enviar
+      </Link>
       <Link href="/outplacement" className="btn-secondary">
         Volver
       </Link>

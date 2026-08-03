@@ -8,6 +8,7 @@ export default function CvsPage() {
   const [items, setItems] = useState<CvVersion[]>([]);
   const [name, setName] = useState("CV principal");
   const [text, setText] = useState("");
+  const [tag, setTag] = useState("");
 
   function refresh() {
     setItems(listCvVersions());
@@ -17,19 +18,49 @@ export default function CvsPage() {
     refresh();
   }, []);
 
+  function loadFromAts() {
+    try {
+      const ws = JSON.parse(localStorage.getItem("ats_workspace") || "null");
+      const draft = localStorage.getItem("ats_cv_draft") || "";
+      const t = ws?.cvText || draft;
+      if (t) {
+        setText(t);
+        if (!name || name === "CV principal") setName("Desde ATS");
+      }
+    } catch {
+      /* ignore */
+    }
+  }
+
   return (
     <div className="flex flex-1 flex-col gap-5">
       <h1 className="text-xl font-semibold">Versiones de CV</h1>
-      <p className="text-sm muted">Guarda variantes por rol/empresa (local).</p>
-      <input className="field" value={name} onChange={(e) => setName(e.target.value)} />
+      <p className="text-sm muted">Guarda variantes por rol, industria o empresa (solo en este dispositivo).</p>
+      <input
+        className="field"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Nombre de la versión"
+      />
+      <input
+        className="field"
+        value={tag}
+        onChange={(e) => setTag(e.target.value)}
+        placeholder="Etiqueta opcional (ej. finanzas, tech)"
+      />
       <textarea className="field min-h-32" value={text} onChange={(e) => setText(e.target.value)} />
+      <button type="button" className="btn-secondary" onClick={loadFromAts}>
+        Cargar desde workspace ATS
+      </button>
       <button
         type="button"
         className="btn-primary"
         disabled={text.trim().length < 40}
         onClick={() => {
-          saveCvVersion(name.trim() || "CV", text);
+          const label = tag.trim() ? `${name.trim() || "CV"} · ${tag.trim()}` : name.trim() || "CV";
+          saveCvVersion(label, text);
           setText("");
+          setTag("");
           refresh();
         }}
       >
@@ -45,10 +76,29 @@ export default function CvsPage() {
             className="btn-secondary"
             onClick={() => {
               localStorage.setItem("ats_cv_draft", c.text);
+              try {
+                const ws = JSON.parse(localStorage.getItem("ats_workspace") || "{}");
+                localStorage.setItem(
+                  "ats_workspace",
+                  JSON.stringify({ ...ws, cvText: c.text, savedAt: Date.now() })
+                );
+              } catch {
+                /* ignore */
+              }
               window.location.href = "/ats";
             }}
           >
             Usar en ATS
+          </button>
+          <button
+            type="button"
+            className="btn-secondary"
+            onClick={() => {
+              saveCvVersion(`${c.name} (copia)`, c.text);
+              refresh();
+            }}
+          >
+            Duplicar
           </button>
           <button
             type="button"
@@ -62,6 +112,9 @@ export default function CvsPage() {
           </button>
         </div>
       ))}
+      <Link href="/ats/pack" className="btn-secondary">
+        Pack ZIP
+      </Link>
       <Link href="/cuenta" className="btn-secondary">
         Volver
       </Link>

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
-import { listSeats, readOrg, seatStats, updateSeatStatus, type CompanySeat } from "@/lib/b2b/org";
+import { listSeats, readOrg, seatStats, updateSeatStatus, rhAlerts, boardSummaryText, type CompanySeat } from "@/lib/b2b/org";
 
 export default function EmpresaDashboardPage() {
   const [seats, setSeats] = useState<CompanySeat[]>([]);
@@ -24,6 +24,7 @@ export default function EmpresaDashboardPage() {
   }, []);
 
   const stats = useMemo(() => seatStats(seats), [seats]);
+  const alerts = useMemo(() => rhAlerts(seats, purchased), [seats, purchased]);
   const usedPct = purchased ? Math.min(100, Math.round((stats.total / purchased) * 100)) : 0;
 
   function exportReport() {
@@ -39,6 +40,17 @@ export default function EmpresaDashboardPage() {
     const a = document.createElement("a");
     a.href = url;
     a.download = `atsadvisor-rh-${orgName.replace(/\s+/g, "-").toLowerCase()}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function exportBoard() {
+    const text = boardSummaryText(orgName, seats, purchased);
+    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `atsadvisor-board-${orgName.replace(/\s+/g, "-").toLowerCase()}.txt`;
     a.click();
     URL.revokeObjectURL(url);
   }
@@ -80,6 +92,17 @@ export default function EmpresaDashboardPage() {
         </div>
       </div>
 
+      {alerts.length > 0 && (
+        <section className="bento-card space-y-2">
+          <h2 className="font-semibold text-sm">Alertas RH</h2>
+          <ul className="text-sm muted space-y-1">
+            {alerts.map((a) => (
+              <li key={a}>• {a}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       <section className="bento-card space-y-3">
         <h2 className="font-semibold text-sm">Cohorte</h2>
         {seats.length === 0 && (
@@ -117,6 +140,9 @@ export default function EmpresaDashboardPage() {
 
       <button type="button" className="btn-primary" onClick={exportReport} disabled={!seats.length}>
         Exportar reporte CSV
+      </button>
+      <button type="button" className="btn-secondary" onClick={exportBoard} disabled={!seats.length}>
+        Resumen para board (TXT)
       </button>
       <Link href="/empresa/invitaciones" className="btn-secondary">
         Gestionar invitaciones

@@ -108,6 +108,45 @@ export function seatStats(seats: CompanySeat[]) {
   };
 }
 
+/** Alertas agregadas para RH (sin contenido de CV). */
+export function rhAlerts(seats: CompanySeat[], purchased: number): string[] {
+  const s = seatStats(seats);
+  const alerts: string[] = [];
+  if (purchased > 0 && s.total / purchased < 0.4) {
+    alerts.push("Adopción baja: menos del 40% de cupos invitados.");
+  }
+  if (s.invited > 0 && s.active + s.completed === 0) {
+    alerts.push("Nadie ha activado aún: conviene reenviar recordatorio.");
+  }
+  if (s.paused > s.active && s.paused > 0) {
+    alerts.push("Más personas en pausa que activas: revisa seguimiento.");
+  }
+  if (s.avgModules < 2 && s.total >= 3) {
+    alerts.push("Progreso bajo de módulos: promedio bajo 2 cápsulas.");
+  }
+  if (s.completed >= Math.max(1, Math.floor(s.total * 0.5))) {
+    alerts.push("Buen outcome: ≥50% de la cohorte marcada como completada.");
+  }
+  return alerts;
+}
+
+export function boardSummaryText(orgName: string, seats: CompanySeat[], purchased: number): string {
+  const s = seatStats(seats);
+  const alerts = rhAlerts(seats, purchased);
+  return [
+    `ATSAdvisor / LOTIC — Resumen RH (${orgName})`,
+    `Fecha: ${new Date().toLocaleString("es-CO")}`,
+    `Cupos: ${s.total}/${purchased}`,
+    `Estados: invitados ${s.invited} · activos ${s.active} · completados ${s.completed} · pausa ${s.paused}`,
+    `Módulos promedio: ${s.avgModules}`,
+    "",
+    "Alertas:",
+    ...(alerts.length ? alerts.map((a) => `- ${a}`) : ["- Sin alertas"]),
+    "",
+    "Privacidad: este reporte no incluye CVs ni respuestas personales.",
+  ].join("\n");
+}
+
 export function parseInviteCsv(text: string): { name: string; email: string }[] {
   return text
     .split(/\r?\n/)

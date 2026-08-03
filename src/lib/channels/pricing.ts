@@ -29,8 +29,8 @@ export type WhatsappCostModel = {
 };
 
 export const DEFAULT_WA_COST: WhatsappCostModel = {
-  // Mid operativo LATAM: Meta (utility↔marketing CO) + BSP/conectividad para ~45 msgs
-  metaMidMonthlyCop: 14000,
+  // Recalibrado: Meta utility CO es céntimos/msg; mid realista ~45 cápsulas + BSP liviano
+  metaMidMonthlyCop: 3000,
   marginPercent: 50,
   msgsPerMonth: 45,
 };

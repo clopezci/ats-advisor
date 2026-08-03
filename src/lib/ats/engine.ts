@@ -10,6 +10,8 @@ import { localTfidfScore, type EmbeddingProvider } from "@/lib/ats/embeddings";
 import { buildKeywordHeatmap, sectionKeywordHits, type HeatCell } from "@/lib/ats/heatmap";
 import { analyzeBullets } from "@/lib/ats/bulletQuality";
 import { buildPlacementGuide, type PlacementTip } from "@/lib/ats/placementGuide";
+import { analyzeAuthenticity } from "@/lib/ats/aiTells";
+import { recruiterSkim, type RecruiterSkim } from "@/lib/ats/recruiterSkim";
 
 export type AtsProfile =
   | "generic"
@@ -69,6 +71,9 @@ export type AtsAnalyzeResult = {
   };
   placementGuide: PlacementTip[];
   parsePreview: ReturnType<typeof parseCvPreview>;
+  authenticityScore: number;
+  authenticityAlerts: string[];
+  recruiterSkim: RecruiterSkim;
 };
 
 const SOFT = [
@@ -319,13 +324,8 @@ function trapAlerts(cv: string): string[] {
   if (/color:\s*#?fff|color:\s*white|font-size:\s*1px/i.test(cv)) {
     alerts.push("Posible texto oculto / trampa ATS. Sistemas modernos pueden descartarte por fraude.");
   }
-  const words = tokenize(cv);
-  const freq = new Map<string, number>();
-  for (const w of words) freq.set(w, (freq.get(w) || 0) + 1);
-  const stuffed = [...freq.entries()].filter(([, c]) => c > 18).map(([w]) => w);
-  if (stuffed.length) {
-    alerts.push(`Posible keyword stuffing (${stuffed.slice(0, 3).join(", ")}). Usa lenguaje natural en logros.`);
-  }
+  const auth = analyzeAuthenticity(cv);
+  alerts.push(...auth.alerts);
   return alerts;
 }
 
@@ -454,10 +454,13 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
     sectionHits,
   });
   const parsePreview = parseCvPreview(input.cvText);
+  const authenticity = analyzeAuthenticity(input.cvText);
+  const skim = recruiterSkim(input.cvText, mustHave.matched[0] || matched[0]);
 
   const explanation = [
     `Cobertura ponderada (must-have + keywords): ${Math.round(coverage * 100)}%.`,
     `Solape semántico (${embeddingProvider}): ${semanticScore}%.`,
+    `Autenticidad / anti-IA: ${authenticity.authenticityScore}%.`,
     `Pesos perfil ${profile}: keywords ${Math.round(w.kw * 100)}% / semántico ${Math.round(w.sem * 100)}%.`,
     exclusiveGaps.length
       ? "Hay brechas excluyentes que bajan fuerte la probabilidad de pasar el filtro."
@@ -518,5 +521,8 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
     bulletQuality,
     placementGuide,
     parsePreview,
+    authenticityScore: authenticity.authenticityScore,
+    authenticityAlerts: authenticity.alerts,
+    recruiterSkim: skim,
   };
 }

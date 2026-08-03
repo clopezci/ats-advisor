@@ -12,14 +12,17 @@ import {
   type PlanId,
 } from "@/lib/entitlements";
 import { createBrowserSupabase } from "@/lib/supabase/client";
+import { ChannelChooser } from "@/components/ChannelChooser";
+import { whatsappFinalPriceCop, type LearningChannel } from "@/lib/channels/pricing";
 
 export default function CuentaPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [channel, setChannel] = useState<"pwa" | "telegram" | "whatsapp">("pwa");
+  const [channel, setChannel] = useState<LearningChannel>("pwa");
   const [msg, setMsg] = useState("");
   const [plan, setPlanState] = useState<PlanId>("free");
   const [sessionEmail, setSessionEmail] = useState<string | null>(null);
+  const waPrice = whatsappFinalPriceCop();
 
   useEffect(() => {
     try {
@@ -114,23 +117,7 @@ export default function CuentaPage() {
           <input className="field mt-1" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
         </label>
         <p className="text-sm font-medium">Canal de microlearning</p>
-        <div className="flex flex-col gap-2">
-          {([
-            ["pwa", "Solo en la app"],
-            ["telegram", "Telegram"],
-            ["whatsapp", "WhatsApp (addon Plus)"],
-          ] as const).map(([id, label]) => (
-            <button
-              key={id}
-              type="button"
-              className="btn-secondary"
-              style={channel === id ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" } : undefined}
-              onClick={() => setChannel(id)}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
+        <ChannelChooser value={channel} onChange={setChannel} whatsappPriceCop={waPrice} />
         <button type="button" className="btn-primary" onClick={save}>
           Guardar
         </button>

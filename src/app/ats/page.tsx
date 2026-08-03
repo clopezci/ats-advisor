@@ -33,6 +33,8 @@ export default function AtsPage() {
   const [cvText, setCvText] = useState("");
   const [jobText, setJobText] = useState("");
   const [jobUrl, setJobUrl] = useState("");
+  const [companyDomain, setCompanyDomain] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [detectMsg, setDetectMsg] = useState("");
   const [atsProfile, setAtsProfile] = useState<AtsProfile>("generic");
   const [loading, setLoading] = useState(false);
@@ -69,12 +71,16 @@ export default function AtsPage() {
       setDetectMsg("");
       return;
     }
-    const d = detectAtsProfile({ jobText, jobUrl });
-    setDetectMsg(`${d.reason} (${d.confidence})`);
+    const d = detectAtsProfile({ jobText, jobUrl, companyDomain, companyName });
+    setDetectMsg(
+      d.company
+        ? `${d.reason} · Empresa: ${d.company.name}`
+        : `${d.reason} (${d.confidence})`
+    );
     if (d.confidence === "high" || d.confidence === "medium") {
       setAtsProfile(d.profile);
     }
-  }, [jobUrl, jobText]);
+  }, [jobUrl, jobText, companyDomain, companyName]);
 
   const intro = useMemo(() => {
     if (step === 1) return "Sube tu CV (PDF/DOCX/TXT), pégalo o dicta el texto.";
@@ -219,7 +225,15 @@ export default function AtsPage() {
       const res = await fetch("/api/ats/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cvText: textToScore, jobText, jobUrl, atsProfile, autoDetect: false }),
+        body: JSON.stringify({
+          cvText: textToScore,
+          jobText,
+          jobUrl,
+          companyDomain,
+          companyName,
+          atsProfile,
+          autoDetect: false,
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Error al re-analizar");
@@ -292,7 +306,15 @@ export default function AtsPage() {
       const res = await fetch("/api/ats/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cvText, jobText, jobUrl, atsProfile, autoDetect: true }),
+        body: JSON.stringify({
+          cvText,
+          jobText,
+          jobUrl,
+          companyDomain,
+          companyName,
+          atsProfile,
+          autoDetect: true,
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Error");
@@ -408,6 +430,19 @@ export default function AtsPage() {
               value={jobUrl}
               onChange={(e) => setJobUrl(e.target.value)}
               placeholder="https://empresa.wd5.myworkdayjobs.com/… o boards.greenhouse.io/…"
+            />
+            <label className="text-sm font-medium">Empresa / dominio (opcional)</label>
+            <input
+              className="field"
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+              placeholder="Nombre empresa (ej. Bancolombia, Globant)"
+            />
+            <input
+              className="field"
+              value={companyDomain}
+              onChange={(e) => setCompanyDomain(e.target.value)}
+              placeholder="Dominio (ej. bancolombia.com, globant.com)"
             />
             {detectMsg && <p className="text-xs muted">{detectMsg}</p>}
           </div>

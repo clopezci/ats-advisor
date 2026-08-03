@@ -1,10 +1,13 @@
 import { cosineSimilarity, tokenFrequency, semanticOverlapScore } from "@/lib/ats/semantic";
 
-export type EmbeddingProvider = "openai" | "gemini" | "local-tfidf" | "local-bow";
+export type EmbeddingProvider = "openai" | "gemini" | "huggingface" | "local-tfidf" | "local-bow";
 
 export type EmbeddingResult = {
   score: number; // 0–100
   provider: EmbeddingProvider;
+  /** true si vino de API cloud */
+  cloud: boolean;
+  warning?: string;
 };
 
 function cosineVectors(a: number[], b: number[]): number {
@@ -25,7 +28,18 @@ function clip(text: string, max = 6000) {
   return text.length > max ? text.slice(0, max) : text;
 }
 
-/** TF-IDF-ish local vectors (unigrams + bigrams). */
+function meanPool(matrix: number[][]): number[] {
+  if (!matrix.length) return [];
+  const dim = matrix[0].length;
+  const out = new Array(dim).fill(0);
+  for (const row of matrix) {
+    for (let i = 0; i < dim; i++) out[i] += row[i] || 0;
+  }
+  for (let i = 0; i < dim; i++) out[i] /= matrix.length;
+  return out;
+}
+
+/** TF-IDF local — solo fallback de emergencia. */
 export function localTfidfScore(cvText: string, jobText: string): number {
   const docs = [cvText, jobText].map((t) => {
     const freq = tokenFrequency(t);
@@ -115,25 +129,75 @@ async function geminiEmbed(texts: string[]): Promise<number[][] | null> {
   }
 }
 
+/** Hugging Face Inference — embeddings multilingües (cloud gratis/pago según token). */
+async function huggingfaceEmbed(texts: string[]): Promise<number[][] | null> {
+  const key = process.env.HF_TOKEN || process.env.HUGGINGFACE_API_KEY;
+  const model =
+    process.env.HF_EMBEDDING_MODEL || "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2";
+  try {
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    if (key) headers.Authorization = `Bearer ${key}`;
+    const vectors: number[][] = [];
+    for (const text of texts) {
+      const res = await fetch(`https://api-inference.huggingface.co/pipeline/feature-extraction/${model}`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ inputs: clip(text, 4000), options: { wait_for_model: true } }),
+      });
+      if (!res.ok) return null;
+      const data = await res.json();
+      // Puede ser number[] o number[][] (tokens)
+      let vec: number[] | null = null;
+      if (Array.isArray(data) && typeof data[0] === "number") vec = data as number[];
+      else if (Array.isArray(data) && Array.isArray(data[0])) vec = meanPool(data as number[][]);
+      else if (data?.embeddings && Array.isArray(data.embeddings[0])) vec = data.embeddings[0];
+      if (!vec?.length) return null;
+      vectors.push(vec);
+    }
+    return vectors;
+  } catch {
+    return null;
+  }
+}
+
 /**
- * Score semántico 0–100.
- * Cascade: OpenAI → Gemini → TF-IDF local → BoW.
+ * Embeddings **cloud-first**: OpenAI → Gemini → Hugging Face.
+ * Local solo si no hay cloud (con warning). Preferible configurar GOOGLE_AI o OPENAI o HF_TOKEN.
  */
 export async function computeSemanticScore(cvText: string, jobText: string): Promise<EmbeddingResult> {
   const openai = await openaiEmbed([cvText, jobText]);
   if (openai?.length === 2) {
     const sim = cosineVectors(openai[0], openai[1]);
-    return { score: Math.round(Math.max(0, Math.min(100, sim * 100))), provider: "openai" };
+    return { score: Math.round(Math.max(0, Math.min(100, sim * 100))), provider: "openai", cloud: true };
   }
 
   const gemini = await geminiEmbed([cvText, jobText]);
   if (gemini?.length === 2) {
     const sim = cosineVectors(gemini[0], gemini[1]);
-    return { score: Math.round(Math.max(0, Math.min(100, sim * 100))), provider: "gemini" };
+    return { score: Math.round(Math.max(0, Math.min(100, sim * 100))), provider: "gemini", cloud: true };
+  }
+
+  const hf = await huggingfaceEmbed([cvText, jobText]);
+  if (hf?.length === 2) {
+    const sim = cosineVectors(hf[0], hf[1]);
+    return { score: Math.round(Math.max(0, Math.min(100, sim * 100))), provider: "huggingface", cloud: true };
   }
 
   const tfidf = localTfidfScore(cvText, jobText);
-  if (tfidf > 0) return { score: tfidf, provider: "local-tfidf" };
+  return {
+    score: tfidf || semanticOverlapScore(cvText, jobText),
+    provider: tfidf > 0 ? "local-tfidf" : "local-bow",
+    cloud: false,
+    warning:
+      "Sin embeddings cloud (agrega GOOGLE_AI_API_KEY, OPENAI_API_KEY o HF_TOKEN). Usamos match local temporal.",
+  };
+}
 
-  return { score: semanticOverlapScore(cvText, jobText), provider: "local-bow" };
+export function cloudEmbeddingsConfigured(): boolean {
+  return Boolean(
+    process.env.OPENAI_API_KEY ||
+      process.env.GOOGLE_AI_API_KEY ||
+      process.env.HF_TOKEN ||
+      process.env.HUGGINGFACE_API_KEY
+  );
 }

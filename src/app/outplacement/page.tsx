@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { PaywallCard } from "@/components/PaywallCard";
+import { ChannelChooser } from "@/components/ChannelChooser";
 import {
   canAccessOutplacement,
   canClaimGuarantee,
@@ -14,6 +15,8 @@ import {
   startGuarantee,
   type PlanId,
 } from "@/lib/entitlements";
+import { whatsappFinalPriceCop, type LearningChannel } from "@/lib/channels/pricing";
+import { CHANNEL_CHOICE_INTRO } from "@/lib/channels/pricing";
 
 type Mod = { code: string; title: string; summary: string; days: number };
 
@@ -21,10 +24,18 @@ export default function OutplacementPage() {
   const [modules, setModules] = useState<Mod[]>([]);
   const [plan, setPlanState] = useState<PlanId>("free");
   const [msg, setMsg] = useState("");
+  const [channel, setChannel] = useState<LearningChannel>("telegram");
   const unlocked = canAccessOutplacement(plan);
+  const waPrice = whatsappFinalPriceCop();
 
   useEffect(() => {
     setPlanState(readEntitlement().plan);
+    try {
+      const p = JSON.parse(localStorage.getItem("ats_profile") || "null");
+      if (p?.channel) setChannel(p.channel);
+    } catch {
+      /* ignore */
+    }
     fetch("/api/outplacement/modules")
       .then((r) => r.json())
       .then((d) => setModules(d.modules || []))
@@ -47,6 +58,25 @@ export default function OutplacementPage() {
           Ruta completa OUT-01 a OUT-08. Desde $79.000 COP/mes. También puedes crear un curso a
           tu medida.
         </p>
+      </section>
+
+      <section className="bento-card space-y-3">
+        <h2 className="text-sm font-semibold">¿Por dónde quieres las cápsulas?</h2>
+        <p className="text-xs muted">{CHANNEL_CHOICE_INTRO}</p>
+        <ChannelChooser
+          value={channel}
+          onChange={(c) => {
+            setChannel(c);
+            try {
+              const p = JSON.parse(localStorage.getItem("ats_profile") || "{}");
+              localStorage.setItem("ats_profile", JSON.stringify({ ...p, channel: c }));
+            } catch {
+              /* ignore */
+            }
+          }}
+          whatsappPriceCop={waPrice}
+          showIntro={false}
+        />
       </section>
 
       {!unlocked && plan !== "paused_90" && (

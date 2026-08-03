@@ -16,6 +16,8 @@ export async function POST(req: Request) {
     const cvText = String(body.cvText || "").trim();
     const jobText = String(body.jobText || "").trim();
     const jobUrl = String(body.jobUrl || "").trim();
+    const companyDomain = String(body.companyDomain || "").trim();
+    const companyName = String(body.companyName || "").trim();
     let atsProfile = (body.atsProfile || "generic") as AtsProfile;
     const autoDetect = body.autoDetect !== false;
 
@@ -26,7 +28,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const detection = detectAtsProfile({ jobText, jobUrl });
+    const detection = detectAtsProfile({ jobText, jobUrl, companyDomain, companyName });
     if (autoDetect && (!body.atsProfile || body.atsProfile === "generic") && detection.confidence !== "low") {
       atsProfile = detection.profile;
     }
@@ -39,11 +41,22 @@ export async function POST(req: Request) {
       semanticOverride: semantic,
     });
 
+    if (semantic.warning) {
+      result.explanation = [semantic.warning, ...result.explanation];
+    }
+    if (detection.company) {
+      result.explanation = [
+        `Empresa detectada: ${detection.company.name} (${detection.company.domain}).`,
+        ...result.explanation,
+      ];
+    }
+
     return NextResponse.json({
       ok: true,
       result,
       detection,
       atsProfileUsed: atsProfile,
+      embeddings: { provider: semantic.provider, cloud: semantic.cloud },
     });
   } catch (error) {
     await reportError({ where: "api/ats/analyze", error });

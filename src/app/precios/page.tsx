@@ -4,20 +4,39 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { InstallPrompt } from "@/components/InstallPrompt";
+import { ChannelChooser } from "@/components/ChannelChooser";
 import { planLabel, readEntitlement, setPlan, type PlanId } from "@/lib/entitlements";
+import {
+  CHANNEL_CHOICE_INTRO,
+  formatCop,
+  whatsappFinalPriceCop,
+  type LearningChannel,
+} from "@/lib/channels/pricing";
+
+const waPrice = whatsappFinalPriceCop();
 
 const PLANS = [
   {
     id: "carrera" as const,
     name: "Carrera",
     price: "$79.000 COP/mes",
-    points: ["OUT-01 a OUT-08", "1× OUT-09 / mes", "Telegram", "Voz en toda la app"],
+    points: [
+      "OUT-01 a OUT-08",
+      "1× OUT-09 / mes",
+      "Telegram gratis (microlearning)",
+      "Voz en toda la app",
+    ],
   },
   {
     id: "plus" as const,
     name: "Carrera Plus",
     price: "$99.000 COP/mes",
-    points: ["Todo Carrera", "2× OUT-09 / mes", "WhatsApp", "Más simulador"],
+    points: [
+      "Todo Carrera",
+      "2× OUT-09 / mes",
+      "Más simulador",
+      "Puedes sumar WhatsApp como addon (ver abajo)",
+    ],
   },
   {
     id: "out09_extra" as const,
@@ -58,6 +77,7 @@ export default function PreciosPage() {
   const [provider, setProvider] = useState<"auto" | "wompi" | "mercadopago">("auto");
   const [currentPlan, setCurrentPlan] = useState<PlanId>("free");
   const [dummyPhase, setDummyPhase] = useState<"idle" | "processing" | "done">("idle");
+  const [channel, setChannel] = useState<LearningChannel>("telegram");
 
   useEffect(() => {
     setCurrentPlan(readEntitlement().plan);
@@ -256,6 +276,30 @@ export default function PreciosPage() {
           </button>
         </section>
       ))}
+
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold text-sm">Canal de microlearning</h2>
+        <p className="text-sm muted">{CHANNEL_CHOICE_INTRO}</p>
+        <ChannelChooser
+          value={channel}
+          onChange={(c) => {
+            setChannel(c);
+            try {
+              const p = JSON.parse(localStorage.getItem("ats_profile") || "{}");
+              localStorage.setItem("ats_profile", JSON.stringify({ ...p, channel: c }));
+            } catch {
+              /* ignore */
+            }
+          }}
+          whatsappPriceCop={waPrice}
+          showIntro={false}
+        />
+        {channel === "whatsapp" && (
+          <p className="text-sm font-medium" style={{ color: "var(--brand)" }}>
+            Addon WhatsApp: {formatCop(waPrice)}/mes (precio final).
+          </p>
+        )}
+      </section>
 
       <section className="bento-card space-y-2">
         <h2 className="font-semibold text-sm">Modo prueba (sin Wompi / MP)</h2>

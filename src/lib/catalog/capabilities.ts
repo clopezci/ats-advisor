@@ -232,8 +232,9 @@ export const CAPABILITIES: Capability[] = [
   },
   {
     id: "whatsapp",
-    title: "Microlearning por WhatsApp (Plus)",
-    summary: "Mismo contenido por WhatsApp Business; coste por mensaje.",
+    title: "Microlearning por WhatsApp (addon)",
+    summary:
+      "Canal opcional con tarifa final (incluye sobrecosto Meta). Telegram sigue gratis.",
     audience: ["candidato", "empresa"],
     status: "requiere_config",
     href: "/precios",
@@ -460,8 +461,8 @@ export const CAPABILITIES: Capability[] = [
   },
   {
     id: "embeddings-ats",
-    title: "Motor ATS con embeddings / TF-IDF",
-    summary: "Cascade OpenAI → Gemini → TF-IDF local; heatmap y detección de ATS por URL.",
+    title: "Motor ATS con embeddings cloud",
+    summary: "OpenAI → Gemini → Hugging Face; fallback local solo con aviso. Heatmap + detección por dominio.",
     audience: ["candidato", "admin"],
     status: "disponible",
     href: "/ats",

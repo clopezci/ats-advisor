@@ -25,7 +25,7 @@ export type AtsAnalyzeInput = {
   jobText: string;
   atsProfile?: AtsProfile;
   /** Si viene de embeddings cloud / TF-IDF async. */
-  semanticOverride?: { score: number; provider: EmbeddingProvider };
+  semanticOverride?: { score: number; provider: EmbeddingProvider; cloud?: boolean; warning?: string };
 };
 
 export type AtsAnalyzeResult = {

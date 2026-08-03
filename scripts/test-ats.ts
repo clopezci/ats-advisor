@@ -3,6 +3,7 @@ import { detectAtsProfile } from "../src/lib/ats/detectAts";
 import { localTfidfScore } from "../src/lib/ats/embeddings";
 import { compareAtsResults } from "../src/lib/ats/compare";
 import { analyzeBullets } from "../src/lib/ats/bulletQuality";
+import { whatsappFinalPriceCop } from "../src/lib/channels/pricing";
 
 function assert(cond: unknown, msg: string): asserts cond {
   if (!cond) throw new Error(msg);
@@ -70,13 +71,20 @@ const det = detectAtsProfile({
 assert(det.profile === "workday", `detect workday got ${det.profile}`);
 assert(det.confidence === "high", "detect confidence");
 
+const byDomain = detectAtsProfile({ companyDomain: "bancolombia.com", jobText: "Vacante analista" });
+assert(byDomain.profile === "successfactors", `domain detect got ${byDomain.profile}`);
+assert(byDomain.company?.name === "Bancolombia", "company name");
+
 assert(localTfidfScore(cv, job) > 0, "tfidf");
 assert(analyzeBullets(cv).total > 0, "bullets");
+assert(whatsappFinalPriceCop() === 21000, `wa price ${whatsappFinalPriceCop()}`);
 
 console.log("ats engine tests ok", {
   strong: result.score,
   weak: weak.score,
   semantic: result.embeddingProvider,
   detect: det.profile,
+  domain: byDomain.profile,
   bullets: result.bulletQuality.avgScore,
+  wa: whatsappFinalPriceCop(),
 });

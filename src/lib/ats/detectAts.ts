@@ -1,10 +1,17 @@
 import type { AtsProfile } from "@/lib/ats/engine";
+import {
+  COMPANY_ATS_DB,
+  extractCompanyHints,
+  lookupCompanyAts,
+  type CompanyAtsEntry,
+} from "@/data/companyAtsDb";
 
 export type AtsDetection = {
   profile: AtsProfile;
   confidence: "high" | "medium" | "low";
   reason: string;
   signals: string[];
+  company?: { name: string; domain: string };
 };
 
 const URL_RULES: { re: RegExp; profile: AtsProfile; label: string }[] = [
@@ -29,10 +36,25 @@ const TEXT_RULES: { re: RegExp; profile: AtsProfile; label: string }[] = [
   { re: /\bpowered by sap\b|\bcandidatos? sap\b/i, profile: "sap", label: "Mención SAP ATS" },
 ];
 
+function fromCompany(entry: CompanyAtsEntry, via: string): AtsDetection {
+  return {
+    profile: entry.ats,
+    confidence: "high",
+    reason: `${entry.name} (${entry.domain}) suele usar ${entry.ats}. ${via}`,
+    signals: [`Base empresas: ${entry.name}`, via],
+    company: { name: entry.name, domain: entry.domain },
+  };
+}
+
 /**
- * Detecta el ATS probable desde URL de la vacante y/o texto de la oferta.
+ * Detecta el ATS: URL del portal → base por dominio de empresa → menciones en texto.
  */
-export function detectAtsProfile(input: { jobText?: string; jobUrl?: string }): AtsDetection {
+export function detectAtsProfile(input: {
+  jobText?: string;
+  jobUrl?: string;
+  companyDomain?: string;
+  companyName?: string;
+}): AtsDetection {
   const signals: string[] = [];
   const url = (input.jobUrl || "").trim();
   const text = `${url}\n${input.jobText || ""}`;
@@ -40,16 +62,23 @@ export function detectAtsProfile(input: { jobText?: string; jobUrl?: string }): 
   for (const rule of URL_RULES) {
     if (url && rule.re.test(url)) {
       signals.push(rule.label);
+      // Si además hay match de empresa, enriquecer razón
+      const company =
+        lookupCompanyAts({
+          domain: input.companyDomain,
+          companyName: input.companyName,
+          emailOrUrl: url,
+        }) || null;
       return {
         profile: rule.profile,
         confidence: "high",
         reason: `Detectamos ${rule.label}. Ajustamos tips y pesos del análisis.`,
         signals,
+        company: company ? { name: company.name, domain: company.domain } : undefined,
       };
     }
   }
 
-  // URLs embebidas en el texto de la oferta
   for (const rule of URL_RULES) {
     if (rule.re.test(text)) {
       signals.push(`${rule.label} (en el texto)`);
@@ -59,6 +88,32 @@ export function detectAtsProfile(input: { jobText?: string; jobUrl?: string }): 
         reason: `Encontramos ${rule.label} dentro de la oferta.`,
         signals,
       };
+    }
+  }
+
+  // Base por dominio / nombre de empresa
+  const direct = lookupCompanyAts({
+    domain: input.companyDomain,
+    companyName: input.companyName,
+    emailOrUrl: url || input.companyDomain,
+  });
+  if (direct) return fromCompany(direct, "Coincidencia directa en base de dominios.");
+
+  const hints = extractCompanyHints(input.jobText || "", url);
+  for (const d of hints.domains) {
+    const hit = lookupCompanyAts({ domain: d });
+    if (hit) return fromCompany(hit, "Dominio encontrado en la oferta/URL.");
+  }
+  for (const n of hints.names) {
+    const hit = lookupCompanyAts({ companyName: n });
+    if (hit) return fromCompany(hit, "Nombre de empresa detectado en el aviso.");
+  }
+
+  // Búsqueda difusa: alguna empresa de la DB mencionada en el texto
+  const textN = text.toLowerCase();
+  for (const e of COMPANY_ATS_DB) {
+    if (textN.includes(e.name.toLowerCase()) || textN.includes(e.domain.replace(/\.\w+$/, ""))) {
+      return fromCompany(e, "Mención de empresa en el texto de la vacante.");
     }
   }
 
@@ -74,7 +129,6 @@ export function detectAtsProfile(input: { jobText?: string; jobUrl?: string }): 
     }
   }
 
-  // Heurística LATAM: portales locales → genérico con tips de formulario
   if (/computrabajo|elempleo|magneto|occmundiale|linkedin/i.test(text)) {
     signals.push("Portal de empleo detectado");
     return {
@@ -88,7 +142,7 @@ export function detectAtsProfile(input: { jobText?: string; jobUrl?: string }): 
   return {
     profile: "generic",
     confidence: "low",
-    reason: "No identificamos el ATS. Elige manualmente si lo conoces (Workday, Taleo, etc.).",
+    reason: "No identificamos el ATS. Elige manualmente o indica el dominio de la empresa.",
     signals: ["Sin señales claras"],
   };
 }

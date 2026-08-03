@@ -1,5 +1,18 @@
 export type AppSettings = {
-  pricing: { carrera: number; plus: number; out09_extra: number; currency: string; plan_90_dias: number };
+  pricing: {
+    carrera: number;
+    plus: number;
+    out09_extra: number;
+    currency: string;
+    plan_90_dias: number;
+    /** Addon WhatsApp mensual (precio final al usuario). Si 0, se calcula por fórmula. */
+    whatsapp_addon: number;
+  };
+  whatsapp_cost: {
+    meta_mid_monthly_cop: number;
+    margin_percent: number;
+    msgs_per_month: number;
+  };
   ai_limits: {
     free_ats_per_day: number;
     out09_included_carrera: number;
@@ -37,7 +50,13 @@ export function defaultSettings(): AppSettings {
       plus: 99000,
       out09_extra: 22000,
       plan_90_dias: 39000,
+      whatsapp_addon: 0, // 0 = calcular: meta_mid × 1.5
       currency: "COP",
+    },
+    whatsapp_cost: {
+      meta_mid_monthly_cop: 14000,
+      margin_percent: 50,
+      msgs_per_month: 45,
     },
     ai_limits: {
       free_ats_per_day: 5,
@@ -50,7 +69,7 @@ export function defaultSettings(): AppSettings {
     },
     features: {
       ads: true,
-      whatsapp: false,
+      whatsapp: true,
       telegram: true,
       outplacement: true,
       out09: true,
@@ -100,6 +119,7 @@ function deepMerge(base: AppSettings, patch: Partial<AppSettings>): AppSettings 
     ...base,
     ...patch,
     pricing: { ...base.pricing, ...(patch.pricing || {}) },
+    whatsapp_cost: { ...base.whatsapp_cost, ...(patch.whatsapp_cost || {}) },
     ai_limits: { ...base.ai_limits, ...(patch.ai_limits || {}) },
     features: { ...base.features, ...(patch.features || {}) },
     llm: { ...base.llm, ...(patch.llm || {}) },
@@ -107,4 +127,12 @@ function deepMerge(base: AppSettings, patch: Partial<AppSettings>): AppSettings 
     tester_emails: patch.tester_emails ?? base.tester_emails,
     microlearning_footer: patch.microlearning_footer ?? base.microlearning_footer,
   };
+}
+
+/** Precio final WhatsApp al usuario (solo el número público). */
+export function resolveWhatsappAddonCop(settings = readSettings()): number {
+  if (settings.pricing.whatsapp_addon > 0) return settings.pricing.whatsapp_addon;
+  const mid = settings.whatsapp_cost.meta_mid_monthly_cop;
+  const margin = settings.whatsapp_cost.margin_percent;
+  return Math.round(mid * (1 + margin / 100));
 }

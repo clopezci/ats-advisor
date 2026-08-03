@@ -6,6 +6,8 @@ export async function GET() {
     app: true,
     groq: Boolean(process.env.GROQ_API_KEY),
     gemini: Boolean(process.env.GOOGLE_AI_API_KEY),
+    openai: Boolean(process.env.OPENAI_API_KEY),
+    embeddings: Boolean(process.env.OPENAI_API_KEY || process.env.GOOGLE_AI_API_KEY),
     telegram: Boolean(process.env.TELEGRAM_BOT_TOKEN),
     supabase: Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL),
     wompi: Boolean(process.env.WOMPI_PUBLIC_KEY),

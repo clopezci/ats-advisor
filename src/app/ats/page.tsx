@@ -7,6 +7,8 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { AdSlot } from "@/components/AdSlot";
 import type { AtsAnalyzeResult, AtsProfile } from "@/lib/ats/engine";
 import { DISCLAIMER_CV_REWRITE } from "@/lib/ats/coaching";
+import { detectAtsProfile } from "@/lib/ats/detectAts";
+import { buildCvDocx, downloadBlob } from "@/lib/ats/docxExport";
 import { canRunAts, recordAtsRun } from "@/lib/limits/atsFree";
 import { buildAtsReport, downloadText, openPrintableReport } from "@/lib/ats/report";
 import { bumpStreak } from "@/lib/engagement/streak";
@@ -28,6 +30,8 @@ export default function AtsPage() {
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
   const [cvText, setCvText] = useState("");
   const [jobText, setJobText] = useState("");
+  const [jobUrl, setJobUrl] = useState("");
+  const [detectMsg, setDetectMsg] = useState("");
   const [atsProfile, setAtsProfile] = useState<AtsProfile>("generic");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -51,6 +55,18 @@ export default function AtsPage() {
       /* ignore */
     }
   }, []);
+
+  useEffect(() => {
+    if (!jobUrl.trim() && jobText.trim().length < 40) {
+      setDetectMsg("");
+      return;
+    }
+    const d = detectAtsProfile({ jobText, jobUrl });
+    setDetectMsg(`${d.reason} (${d.confidence})`);
+    if (d.confidence === "high" || d.confidence === "medium") {
+      setAtsProfile(d.profile);
+    }
+  }, [jobUrl, jobText]);
 
   const intro = useMemo(() => {
     if (step === 1) return "Sube tu CV (PDF/DOCX/TXT), pégalo o dicta el texto.";
@@ -205,12 +221,14 @@ export default function AtsPage() {
       const res = await fetch("/api/ats/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cvText, jobText, atsProfile }),
+        body: JSON.stringify({ cvText, jobText, jobUrl, atsProfile, autoDetect: true }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Error");
       recordAtsRun();
       bumpStreak();
+      if (data.atsProfileUsed) setAtsProfile(data.atsProfileUsed);
+      if (data.detection?.reason) setDetectMsg(data.detection.reason);
       setResult(data.result);
       setStep(4);
       try {
@@ -295,6 +313,15 @@ export default function AtsPage() {
               onChange={(e) => setJobText(e.target.value)}
               placeholder="Pega aquí la descripción del puesto…"
             />
+            <label className="text-sm font-medium">URL de la vacante (opcional — detecta el ATS)</label>
+            <input
+              className="field"
+              type="url"
+              value={jobUrl}
+              onChange={(e) => setJobUrl(e.target.value)}
+              placeholder="https://empresa.wd5.myworkdayjobs.com/… o boards.greenhouse.io/…"
+            />
+            {detectMsg && <p className="text-xs muted">{detectMsg}</p>}
           </div>
           <div className="flex flex-col gap-3">
             <button type="button" className="btn-primary" disabled={jobText.trim().length < 40} onClick={() => setStep(3)}>
@@ -312,8 +339,9 @@ export default function AtsPage() {
           <div className="bento-card space-y-3">
             <p className="text-sm font-medium">¿A qué ATS o portal postulas?</p>
             <p className="text-xs muted">
-              Cambia el peso keywords vs semántica y los tips (como Jobscan hace por motor).
+              Si pegaste la URL, ya intentamos detectarlo. Puedes corregirlo manualmente.
             </p>
+            {detectMsg && <p className="text-xs" style={{ color: "var(--brand)" }}>{detectMsg}</p>}
             <div className="grid grid-cols-2 gap-2">
               {PROFILES.map((p) => (
                 <button
@@ -360,7 +388,9 @@ export default function AtsPage() {
               <div className="text-right">
                 <p className="text-xs muted">Prob. entrevista</p>
                 <p className="text-2xl font-semibold">{result.interviewProbability}%</p>
-                <p className="mt-1 text-xs muted">Semántico {result.semanticScore ?? "—"}%</p>
+                <p className="mt-1 text-xs muted">
+                  Semántico {result.semanticScore ?? "—"}% · {result.embeddingProvider || "local"}
+                </p>
               </div>
               <SpeakButton
                 text={`Tu compatibilidad es ${result.score} por ciento. ${(result.nextSteps || result.actions)[0] || ""}`}
@@ -377,6 +407,61 @@ export default function AtsPage() {
           <ResultBlock title="Cómo avanza ahora (prioridad)" items={result.nextSteps || result.actions} />
           <ResultBlock title="Cómo filtra este ATS" items={result.atsInsights || []} />
           <ResultBlock title="Qué explica el score" items={result.explanation} />
+
+          {result.heatmap?.length > 0 && (
+            <section className="bento-card space-y-3">
+              <h2 className="text-sm font-semibold">Heatmap de keywords (oferta vs CV)</h2>
+              <p className="text-xs muted">
+                Rojo = falta · ámbar = débil · verde = ok. Intensidad según frecuencia en la oferta.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {result.heatmap.map((h) => {
+                  const bg =
+                    h.status === "missing"
+                      ? "rgba(180,35,24,0.18)"
+                      : h.status === "weak"
+                        ? "rgba(180,120,20,0.18)"
+                        : "rgba(124,58,237,0.14)";
+                  const border =
+                    h.status === "missing" ? "#b42318" : h.status === "weak" ? "#b47814" : "var(--brand)";
+                  return (
+                    <span
+                      key={h.term}
+                      title={`Oferta ×${h.jobCount} · CV ×${h.cvCount}`}
+                      className="text-xs px-2 py-1 rounded-md"
+                      style={{
+                        background: bg,
+                        border: `1px solid ${border}`,
+                        opacity: 0.55 + h.intensity / 200,
+                      }}
+                    >
+                      {h.term}{" "}
+                      <span className="muted">
+                        {h.cvCount}/{h.jobCount}
+                      </span>
+                    </span>
+                  );
+                })}
+              </div>
+            </section>
+          )}
+
+          {result.sectionHits?.length > 0 && (
+            <section className="bento-card space-y-2">
+              <h2 className="text-sm font-semibold">Keywords por sección del CV</h2>
+              <ul className="space-y-2 text-sm muted">
+                {result.sectionHits.map((s) => (
+                  <li key={s.section}>
+                    <span className="font-medium" style={{ color: "var(--ink, inherit)" }}>
+                      {s.section}
+                    </span>
+                    : {s.hits} hits
+                    {s.sample.length ? ` · ${s.sample.join(", ")}` : " · sin keywords de la oferta"}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           <section className="bento-card space-y-2">
             <h2 className="text-sm font-semibold">Cobertura de secciones (parse)</h2>
@@ -431,6 +516,16 @@ export default function AtsPage() {
                 >
                   Copiar ajuste
                 </button>
+                <button
+                  type="button"
+                  className="btn-primary"
+                  onClick={async () => {
+                    const blob = await buildCvDocx(rewriteText, { title: "Hoja de vida — ATSAdvisor" });
+                    downloadBlob(`CV-ajustado-ATSAdvisor.docx`, blob);
+                  }}
+                >
+                  Descargar DOCX del ajuste
+                </button>
               </>
             )}
           </section>
@@ -460,6 +555,17 @@ export default function AtsPage() {
           {!canAccessOutplacement(readEntitlement().plan) && <AdSlot slot="ats-results" />}
 
           <div className="flex flex-col gap-3">
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={async () => {
+                const text = rewriteText.trim() || cvText;
+                const blob = await buildCvDocx(text, { title: "Hoja de vida — ATSAdvisor" });
+                downloadBlob(`CV-ATSAdvisor.docx`, blob);
+              }}
+            >
+              Descargar CV en DOCX
+            </button>
             <button
               type="button"
               className="btn-secondary"

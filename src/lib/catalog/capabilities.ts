@@ -460,10 +460,10 @@ export const CAPABILITIES: Capability[] = [
   },
   {
     id: "embeddings-ats",
-    title: "Motor ATS con embeddings / worker NLP",
-    summary: "Match vectorial más profundo si el motor reglas se queda corto.",
+    title: "Motor ATS con embeddings / TF-IDF",
+    summary: "Cascade OpenAI → Gemini → TF-IDF local; heatmap y detección de ATS por URL.",
     audience: ["candidato", "admin"],
-    status: "parcial",
+    status: "disponible",
     href: "/ats",
   },
   {

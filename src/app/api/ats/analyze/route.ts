@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { analyzeAts, type AtsProfile } from "@/lib/ats/engine";
+import { computeSemanticScore } from "@/lib/ats/embeddings";
+import { detectAtsProfile } from "@/lib/ats/detectAts";
 import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
 import { reportError } from "@/lib/observability";
 
@@ -13,7 +15,9 @@ export async function POST(req: Request) {
     const body = await req.json();
     const cvText = String(body.cvText || "").trim();
     const jobText = String(body.jobText || "").trim();
-    const atsProfile = (body.atsProfile || "generic") as AtsProfile;
+    const jobUrl = String(body.jobUrl || "").trim();
+    let atsProfile = (body.atsProfile || "generic") as AtsProfile;
+    const autoDetect = body.autoDetect !== false;
 
     if (cvText.length < 40 || jobText.length < 40) {
       return NextResponse.json(
@@ -22,8 +26,25 @@ export async function POST(req: Request) {
       );
     }
 
-    const result = analyzeAts({ cvText, jobText, atsProfile });
-    return NextResponse.json({ ok: true, result });
+    const detection = detectAtsProfile({ jobText, jobUrl });
+    if (autoDetect && (!body.atsProfile || body.atsProfile === "generic") && detection.confidence !== "low") {
+      atsProfile = detection.profile;
+    }
+
+    const semantic = await computeSemanticScore(cvText, jobText);
+    const result = analyzeAts({
+      cvText,
+      jobText,
+      atsProfile,
+      semanticOverride: semantic,
+    });
+
+    return NextResponse.json({
+      ok: true,
+      result,
+      detection,
+      atsProfileUsed: atsProfile,
+    });
   } catch (error) {
     await reportError({ where: "api/ats/analyze", error });
     return NextResponse.json(

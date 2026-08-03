@@ -137,8 +137,8 @@ Cuando tengas el proyecto:
 
 | Variable | Para qué | Cómo |
 | -------- | -------- | ---- |
-| `GOOGLE_AI_API_KEY` | Gemini Flash (fallback IA) | https://aistudio.google.com/apikey → Create API key → pegar en Vercel |
-| `OPENAI_API_KEY` | Fallback pago | https://platform.openai.com → API keys |
+| `OPENAI_API_KEY` | Fallback pago + **embeddings ATS** (`text-embedding-3-small`) | https://platform.openai.com → API keys |
+| `GOOGLE_AI_API_KEY` | Gemini Flash + **embeddings ATS** (`text-embedding-004`) | https://aistudio.google.com/apikey |
 | `SENTRY_DSN` | Errores en producción | https://sentry.io → Create project (Next.js) → copiar DSN |
 | `ADSENSE_CLIENT_ID` | Ads server-side / flags | Tras aprobación AdSense |
 | `NEXT_PUBLIC_ADSENSE_CLIENT_ID` | Ads en el browser | Mismo valor `ca-pub-…` |

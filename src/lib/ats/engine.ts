@@ -1,5 +1,4 @@
 import { textHasTerm } from "@/lib/ats/synonyms";
-import { semanticOverlapScore } from "@/lib/ats/semantic";
 import { detectCvSections, splitJobSections } from "@/lib/ats/jdParse";
 import {
   APPLICATION_PLAYBOOK_BASE,
@@ -7,6 +6,8 @@ import {
   buildNextSteps,
   humanRecruiterTips,
 } from "@/lib/ats/coaching";
+import { localTfidfScore, type EmbeddingProvider } from "@/lib/ats/embeddings";
+import { buildKeywordHeatmap, sectionKeywordHits, type HeatCell } from "@/lib/ats/heatmap";
 
 export type AtsProfile =
   | "generic"
@@ -21,12 +22,15 @@ export type AtsAnalyzeInput = {
   cvText: string;
   jobText: string;
   atsProfile?: AtsProfile;
+  /** Si viene de embeddings cloud / TF-IDF async. */
+  semanticOverride?: { score: number; provider: EmbeddingProvider };
 };
 
 export type AtsAnalyzeResult = {
   score: number;
   interviewProbability: number;
   semanticScore: number;
+  embeddingProvider: EmbeddingProvider;
   matchedKeywords: string[];
   missingKeywords: string[];
   hardSkills: { matched: string[]; missing: string[] };
@@ -54,6 +58,8 @@ export type AtsAnalyzeResult = {
   recruiterTips: string[];
   /** Checklist de buena postulación (estático + contextual). */
   applicationTips: string[];
+  heatmap: HeatCell[];
+  sectionHits: { section: string; hits: number; sample: string[] }[];
 };
 
 const SOFT = [
@@ -385,7 +391,9 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
     0,
     Math.min(100, coverage * 100 * (1 - exclusivePenalty - formatPenalty - sectionPenalty))
   );
-  const semanticScore = semanticOverlapScore(input.cvText, input.jobText);
+  const embeddingProvider: EmbeddingProvider = input.semanticOverride?.provider || "local-tfidf";
+  const semanticScore =
+    input.semanticOverride?.score ?? localTfidfScore(input.cvText, input.jobText);
   const w = profileWeights(profile);
   const score = Math.round(Math.max(0, Math.min(100, keywordScore * w.kw + semanticScore * w.sem)));
 
@@ -421,9 +429,13 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
   if (!sections.skills) actions.push("Añade bloque Skills con términos literales de la oferta (sin inventar).");
   actions.push("Adapta el CV a esta oferta concreta; luego completa bien el formulario del portal.");
 
+  const heatTerms = [...new Set([...mustHave.missing, ...mustHave.matched, ...hardMissing, ...hardMatched, ...missing, ...matched])];
+  const heatmap = buildKeywordHeatmap(input.cvText, input.jobText, heatTerms, 28);
+  const sectionHits = sectionKeywordHits(input.cvText, [...matched, ...missing].slice(0, 40));
+
   const explanation = [
     `Cobertura ponderada (must-have + keywords): ${Math.round(coverage * 100)}%.`,
-    `Solape semántico (bag-of-words): ${semanticScore}%.`,
+    `Solape semántico (${embeddingProvider}): ${semanticScore}%.`,
     `Pesos perfil ${profile}: keywords ${Math.round(w.kw * 100)}% / semántico ${Math.round(w.sem * 100)}%.`,
     exclusiveGaps.length
       ? "Hay brechas excluyentes que bajan fuerte la probabilidad de pasar el filtro."
@@ -455,6 +467,7 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
     score,
     interviewProbability,
     semanticScore,
+    embeddingProvider,
     matchedKeywords: matched.slice(0, 40),
     missingKeywords: missing.slice(0, 40),
     hardSkills: { matched: hardMatched.slice(0, 25), missing: hardMissing.slice(0, 25) },
@@ -478,5 +491,7 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
     nextSteps,
     recruiterTips: humanRecruiterTips(),
     applicationTips,
+    heatmap,
+    sectionHits,
   };
 }

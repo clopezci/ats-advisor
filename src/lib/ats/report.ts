@@ -8,7 +8,17 @@ export function buildAtsReport(result: AtsAnalyzeResult, meta?: { profile?: stri
     "",
     `Score: ${result.score}%`,
     `Probabilidad de entrevista: ${result.interviewProbability}%`,
-    `Solape semántico: ${result.semanticScore}%`,
+    `Solape semántico: ${result.semanticScore}% (${result.embeddingProvider || "local"})`,
+    "",
+    "Heatmap keywords (oferta vs CV):",
+    ...(result.heatmap || []).map(
+      (h) => `- [${h.status}] ${h.term}: oferta×${h.jobCount} · CV×${h.cvCount}`
+    ),
+    "",
+    "Keywords por sección del CV:",
+    ...(result.sectionHits || []).map(
+      (s) => `- ${s.section}: ${s.hits} hits (${s.sample.join(", ") || "—"})`
+    ),
     "",
     "Cómo filtra este ATS:",
     ...(result.atsInsights || []).map((e) => `- ${e}`),

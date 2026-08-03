@@ -1,4 +1,6 @@
 import { analyzeAts } from "../src/lib/ats/engine";
+import { detectAtsProfile } from "../src/lib/ats/detectAts";
+import { localTfidfScore } from "../src/lib/ats/embeddings";
 
 function assert(cond: unknown, msg: string): asserts cond {
   if (!cond) throw new Error(msg);
@@ -25,6 +27,9 @@ assert(result.mustHave && Array.isArray(result.mustHave.matched), "sin mustHave"
 assert(result.atsInsights?.length > 0, "sin atsInsights");
 assert(result.nextSteps?.length > 0, "sin nextSteps");
 assert(result.applicationTips?.length > 0, "sin applicationTips");
+assert(result.heatmap?.length > 0, "sin heatmap");
+assert(result.embeddingProvider, "sin embeddingProvider");
+assert(Array.isArray(result.sectionHits), "sin sectionHits");
 
 const weak = analyzeAts({
   cvText: "Hola soy candidato",
@@ -33,4 +38,17 @@ const weak = analyzeAts({
 });
 assert(weak.score < result.score, "weak debería puntuar menos");
 
-console.log("ats engine tests ok", { strong: result.score, weak: weak.score });
+const det = detectAtsProfile({
+  jobUrl: "https://company.wd5.myworkdayjobs.com/en-US/External/job/Analyst",
+});
+assert(det.profile === "workday", `detect workday got ${det.profile}`);
+assert(det.confidence === "high", "detect confidence");
+
+assert(localTfidfScore(cv, job) > 0, "tfidf");
+
+console.log("ats engine tests ok", {
+  strong: result.score,
+  weak: weak.score,
+  semantic: result.embeddingProvider,
+  detect: det.profile,
+});

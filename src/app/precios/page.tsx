@@ -111,11 +111,14 @@ export default function PreciosPage() {
     setMsg("");
     await new Promise((r) => setTimeout(r, 1200));
     const next = setPlan(plan, "demo_checkout");
+    const addon = channel === "whatsapp" ? waPrice : 0;
     localStorage.setItem(
       "ats_last_checkout",
       JSON.stringify({
         mode: "dummy",
         plan,
+        channel,
+        whatsappAddon: addon,
         reference: `DUMMY-${plan.toUpperCase()}-${Date.now()}`,
         paidAt: new Date().toISOString(),
       })
@@ -124,7 +127,9 @@ export default function PreciosPage() {
     setDummyPhase("done");
     setLoading(null);
     setMsg(
-      `Pago simulado OK. Plan ${planLabel(plan)} activo en este navegador. Ya puedes usar outplacement, OUT-09 y gates premium.`
+      `Pago simulado OK. Plan ${planLabel(plan)} activo${
+        addon ? ` + WhatsApp ${formatCop(addon)}/mes (registrado)` : ""
+      }. Ya puedes usar outplacement.`
     );
   }
 
@@ -135,7 +140,7 @@ export default function PreciosPage() {
       const res = await fetch("/api/payments/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan, email, provider, coupon }),
+        body: JSON.stringify({ plan, email, provider, coupon, channel }),
       });
       const data = await res.json();
       if (data.mode === "demo") {
@@ -296,9 +301,16 @@ export default function PreciosPage() {
         />
         {channel === "whatsapp" && (
           <p className="text-sm font-medium" style={{ color: "var(--brand)" }}>
-            Addon WhatsApp: {formatCop(waPrice)}/mes (precio final).
+            Addon WhatsApp: {formatCop(waPrice)}/mes. Se suma al checkout de Carrera/Plus.
           </p>
         )}
+        <p className="text-xs muted">
+          Totales orientativos: Carrera{" "}
+          {formatCop(79000 + (channel === "whatsapp" ? waPrice : 0))}
+          {channel === "whatsapp" ? " (plan+WA)" : ""} · Plus{" "}
+          {formatCop(99000 + (channel === "whatsapp" ? waPrice : 0))}
+          {channel === "whatsapp" ? " (plan+WA)" : ""}.
+        </p>
       </section>
 
       <section className="bento-card space-y-2">

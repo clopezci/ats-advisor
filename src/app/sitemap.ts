@@ -27,6 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tracker",
     "/outplacement/entrevista",
     "/outplacement/filtro",
+    "/outplacement/networking",
     "/outplacement/90-dias",
     "/outplacement/segunda-carrera",
     "/outplacement/certificado",

@@ -1,20 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import {
+  CITY_MULT,
+  NEGOTIATION_CHECKLIST,
+  SALARY_BANDS,
+  estimateBand,
+  type CityTier,
+} from "@/lib/salary/bandsCo";
 
-const BANDS: Record<string, { min: number; max: number; note: string }> = {
-  "analista junior": { min: 2800000, max: 4200000, note: "Ciudades principales CO" },
-  "analista semi": { min: 4200000, max: 6500000, note: "Con 2-4 años" },
-  "especialista": { min: 6500000, max: 9500000, note: "Skills escasas" },
-  "coordinador": { min: 5500000, max: 8500000, note: "Liderazgo de equipo" },
-  "gerente": { min: 9000000, max: 16000000, note: "Varía fuerte por industria" },
-};
+function fmt(n: number) {
+  return new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+    maximumFractionDigits: 0,
+  }).format(n);
+}
 
 export default function SalarioPage() {
-  const [role, setRole] = useState("analista junior");
-  const band = BANDS[role];
+  const [role, setRole] = useState(SALARY_BANDS[0].id);
+  const [city, setCity] = useState<CityTier>("bogota_medellin");
+  const est = useMemo(() => estimateBand(role, city), [role, city]);
 
   return (
     <div className="flex flex-1 flex-col gap-5">
@@ -23,27 +31,59 @@ export default function SalarioPage() {
           <h1 className="text-xl font-semibold">Banda salarial (orientativa)</h1>
           <SpeakButton text="Estimación orientativa en pesos colombianos. No es asesoría laboral formal." />
         </div>
-        <p className="text-sm muted">Referencias aproximadas para Colombia 2026. Ajústalas con ofertas reales.</p>
+        <p className="text-sm muted">Referencias aproximadas Colombia 2026. Ajústalas con ofertas reales.</p>
       </section>
 
-      <select className="field" value={role} onChange={(e) => setRole(e.target.value)}>
-        {Object.keys(BANDS).map((k) => (
-          <option key={k} value={k}>
-            {k}
-          </option>
-        ))}
-      </select>
+      <label className="text-sm">
+        Rol
+        <select className="field mt-1" value={role} onChange={(e) => setRole(e.target.value)}>
+          {SALARY_BANDS.map((b) => (
+            <option key={b.id} value={b.id}>
+              {b.label}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      <label className="text-sm">
+        Ciudad / modalidad
+        <select className="field mt-1" value={city} onChange={(e) => setCity(e.target.value as CityTier)}>
+          {(Object.keys(CITY_MULT) as CityTier[]).map((k) => (
+            <option key={k} value={k}>
+              {CITY_MULT[k].label}
+            </option>
+          ))}
+        </select>
+      </label>
 
       <section className="bento-card space-y-2">
-        <p className="text-sm muted">{band.note}</p>
-        <p className="text-2xl font-semibold score-ring">
-          ${(band.min / 1e6).toFixed(1)}M – ${(band.max / 1e6).toFixed(1)}M COP
+        <p className="text-sm muted">
+          {est.band.note} · {est.cityLabel}
         </p>
-        <p className="text-xs muted">Usa esto como ancla en OUT-07 (negociación), no como garantía.</p>
+        <p className="text-2xl font-semibold score-ring">
+          {fmt(est.min)} – {fmt(est.max)}
+        </p>
+        <ul className="text-sm muted space-y-1">
+          <li>Piso (no bajes): {fmt(est.floor)}</li>
+          <li>Meta: {fmt(est.target)}</li>
+          <li>Techo / stretch: {fmt(est.stretch)}</li>
+        </ul>
+      </section>
+
+      <section className="bento-card space-y-2">
+        <h2 className="text-sm font-semibold">Checklist negociación (OUT-07)</h2>
+        <ul className="text-sm muted space-y-1">
+          {NEGOTIATION_CHECKLIST.map((c) => (
+            <li key={c}>☐ {c}</li>
+          ))}
+        </ul>
       </section>
 
       <Link href="/outplacement/entrevista" className="btn-primary">
-        Practicar negociación
+        Practicar negociación / STAR
+      </Link>
+      <Link href="/outplacement/filtro" className="btn-secondary">
+        Ensayar filtro telefónico
       </Link>
       <Link href="/herramientas" className="btn-secondary">
         Volver

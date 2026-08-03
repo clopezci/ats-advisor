@@ -9,6 +9,7 @@ import {
   canAccessOutplacement,
   canClaimGuarantee,
   claimGuarantee,
+  guaranteeProgress,
   pauseFor90Days,
   planLabel,
   readEntitlement,
@@ -25,11 +26,18 @@ export default function OutplacementPage() {
   const [plan, setPlanState] = useState<PlanId>("free");
   const [msg, setMsg] = useState("");
   const [channel, setChannel] = useState<LearningChannel>("telegram");
+  const [gProgress, setGProgress] = useState({
+    active: false,
+    days: 0,
+    interviews: 0,
+    claim: { ok: false, reason: "" },
+  });
   const unlocked = canAccessOutplacement(plan);
   const waPrice = whatsappFinalPriceCop();
 
   useEffect(() => {
     setPlanState(readEntitlement().plan);
+    setGProgress(guaranteeProgress());
     try {
       const p = JSON.parse(localStorage.getItem("ats_profile") || "null");
       if (p?.channel) setChannel(p.channel);
@@ -161,11 +169,18 @@ export default function OutplacementPage() {
             className="btn-secondary"
             onClick={() => {
               startGuarantee();
-              setMsg("Garantía de avance iniciada (30 días sin entrevistas).");
+              setGProgress(guaranteeProgress());
+              setMsg("Garantía de avance iniciada (30 días sin entrevistas en el tracker).");
             }}
           >
             Activar garantía 30 días
           </button>
+          {gProgress.active && (
+            <p className="text-sm muted">
+              Día {gProgress.days}/30 · entrevistas registradas: {gProgress.interviews}.{" "}
+              {gProgress.claim.reason}
+            </p>
+          )}
           <button
             type="button"
             className="btn-secondary"
@@ -173,10 +188,17 @@ export default function OutplacementPage() {
               const r = claimGuarantee();
               setMsg(r.ok ? "Garantía reclamada: mes de cortesía demo." : r.reason);
               if (r.ok) setPlanState(readEntitlement().plan);
+              setGProgress(guaranteeProgress());
             }}
           >
             Reclamar garantía ({canClaimGuarantee().ok ? "elegible" : "aún no"})
           </button>
+          <Link href="/outplacement/networking" className="btn-secondary">
+            CRM networking (OUT-06)
+          </Link>
+          <Link href="/outplacement/coach" className="btn-secondary">
+            Coach multi-turno
+          </Link>
           {msg && <p className="text-sm">{msg}</p>}
         </section>
       )}

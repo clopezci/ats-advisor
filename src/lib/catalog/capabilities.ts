@@ -308,10 +308,18 @@ export const CAPABILITIES: Capability[] = [
   {
     id: "tools-hub",
     title: "Hub de herramientas gratis",
-    summary: "Checklist, LinkedIn, carta, salario, plantilla, entrevistas, cultura.",
+    summary: "Checklist, LinkedIn, carta, salario, plantilla, entrevistas, cultura, multi-oferta.",
     audience: ["candidato", "publico"],
     status: "disponible",
     href: "/herramientas",
+  },
+  {
+    id: "networking-crm",
+    title: "CRM de networking (OUT-06)",
+    summary: "Contactos, estados, próximos pasos y plantillas LinkedIn locales.",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/outplacement/networking",
   },
   {
     id: "blog",

@@ -14,11 +14,28 @@ export function AdSlot({ slot = "ats-free" }: { slot?: string }) {
   const pub = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
 
   useEffect(() => {
-    try {
-      if (localStorage.getItem("ats_feature_ads") === "0") setEnabled(false);
-    } catch {
-      /* ignore */
-    }
+    let cancelled = false;
+    (async () => {
+      try {
+        if (localStorage.getItem("ats_feature_ads") === "0") {
+          if (!cancelled) setEnabled(false);
+          return;
+        }
+        const res = await fetch("/api/features");
+        if (res.ok) {
+          const data = await res.json();
+          if (!cancelled) {
+            setEnabled(Boolean(data.ads));
+            localStorage.setItem("ats_feature_ads", data.ads ? "1" : "0");
+          }
+        }
+      } catch {
+        /* keep default */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {

@@ -12,6 +12,7 @@ import {
   type JobItem,
   type JobStatus,
 } from "@/lib/tracker/jobs";
+import { logInterviewForGuarantee } from "@/lib/entitlements";
 
 const STATUSES = Object.keys(STATUS_LABEL) as JobStatus[];
 
@@ -98,7 +99,12 @@ export default function TrackerPage() {
             className="field"
             value={job.status}
             onChange={(e) => {
-              upsertJob({ ...job, status: e.target.value as JobStatus, id: job.id });
+              const nextStatus = e.target.value as JobStatus;
+              const prev = job.status;
+              upsertJob({ ...job, status: nextStatus, id: job.id });
+              if (nextStatus === "entrevista" && prev !== "entrevista") {
+                logInterviewForGuarantee();
+              }
               refresh();
             }}
           >

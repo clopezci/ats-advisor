@@ -122,6 +122,44 @@ export function claimGuarantee() {
   return { ok: true as const, entitlement: next };
 }
 
+/** Incrementa contador cuando el tracker marca una entrevista (rompe elegibilidad de garantía). */
+export function logInterviewForGuarantee() {
+  const e = readEntitlement();
+  if (!e.guaranteeStartedAt || e.guaranteeClaimedAt) return e;
+  const next: Entitlement = {
+    ...e,
+    interviewsLoggedSinceGuarantee: (e.interviewsLoggedSinceGuarantee || 0) + 1,
+  };
+  writeEntitlement(next);
+  return next;
+}
+
+export type GuaranteeProgress = {
+  active: boolean;
+  days: number;
+  interviews: number;
+  claim: { ok: boolean; reason: string };
+};
+
+export function guaranteeProgress(e = readEntitlement()): GuaranteeProgress {
+  if (!e.guaranteeStartedAt) {
+    return {
+      active: false,
+      days: 0,
+      interviews: 0,
+      claim: { ok: false, reason: "Inactiva" },
+    };
+  }
+  const days = Math.floor((Date.now() - new Date(e.guaranteeStartedAt).getTime()) / 86400000);
+  const interviews = e.interviewsLoggedSinceGuarantee || 0;
+  return {
+    active: true,
+    days: Math.min(30, days),
+    interviews,
+    claim: canClaimGuarantee(e),
+  };
+}
+
 export function canGenerateOut09(
   e: Entitlement,
   limits?: { carrera: number; plus: number }

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { applyPromotion, readSettings } from "@/lib/settings";
+import { applyPromotion, readSettings, resolveWhatsappAddonCop } from "@/lib/settings";
 import { notifyOwnerTelegram } from "@/lib/notify/channels";
 import { hydrateSettingsFromCloud } from "@/lib/settingsPersist";
 
@@ -10,12 +10,19 @@ export async function POST(req: Request) {
   const email = String(body.email || "").trim();
   const coupon = String(body.coupon || "").trim();
   const preferred = String(body.provider || "auto");
+  const channel = String(body.channel || "telegram");
   const settings = readSettings();
   const baseAmount = settings.pricing[plan] || settings.pricing.carrera;
-  const priced = coupon ? applyPromotion(baseAmount, coupon, settings.promotions) : { amount: baseAmount, applied: null, discount: 0 };
-  const amount = priced.amount;
+  const priced = coupon
+    ? applyPromotion(baseAmount, coupon, settings.promotions)
+    : { amount: baseAmount, applied: null, discount: 0 };
+  const waAddon =
+    channel === "whatsapp" && plan !== "out09_extra" && settings.features.whatsapp
+      ? resolveWhatsappAddonCop(settings)
+      : 0;
+  const amount = priced.amount + waAddon;
   const base = process.env.NEXT_PUBLIC_APP_URL || "https://ats-advisor-two.vercel.app";
-  const reference = `ATS-${plan}-${Date.now()}`;
+  const reference = `ATS-${plan}${waAddon ? "-WA" : ""}-${Date.now()}`;
 
   const wompiPub = process.env.WOMPI_PUBLIC_KEY;
   const wompiPriv = process.env.WOMPI_PRIVATE_KEY;
@@ -23,6 +30,7 @@ export async function POST(req: Request) {
 
   const wantMp = preferred === "mercadopago" || (preferred === "auto" && !wompiPub && !!mpToken);
   const wantWompi = preferred === "wompi" || (preferred === "auto" && !!wompiPub);
+  const titleExtra = waAddon ? ` + WhatsApp ${waAddon}` : "";
 
   if (wantMp && mpToken) {
     try {
@@ -36,7 +44,7 @@ export async function POST(req: Request) {
           external_reference: reference,
           items: [
             {
-              title: `ATSAdvisor ${plan}${priced.applied ? ` (${priced.applied})` : ""}`,
+              title: `ATSAdvisor ${plan}${priced.applied ? ` (${priced.applied})` : ""}${titleExtra}`,
               quantity: 1,
               currency_id: "COP",
               unit_price: amount,
@@ -60,7 +68,7 @@ export async function POST(req: Request) {
         );
       }
       await notifyOwnerTelegram(
-        `Checkout MP: ${plan} ${amount} COP (base ${baseAmount}${priced.applied ? ` · cupón ${priced.applied}` : ""}) · ${email || "sin email"} · ${reference}`
+        `Checkout MP: ${plan} ${amount} COP (base ${baseAmount}${waAddon ? ` +WA ${waAddon}` : ""}${priced.applied ? ` · cupón ${priced.applied}` : ""}) · ${email || "sin email"} · ${reference}`
       );
       return NextResponse.json({
         ok: true,
@@ -69,6 +77,8 @@ export async function POST(req: Request) {
         plan,
         amount,
         baseAmount,
+        whatsappAddon: waAddon,
+        channel,
         coupon: priced.applied,
         discount: priced.discount,
         currency: "COP",
@@ -82,7 +92,7 @@ export async function POST(req: Request) {
 
   if (wantWompi && wompiPub && wompiPriv) {
     await notifyOwnerTelegram(
-      `Checkout Wompi: ${plan} ${amount} COP${priced.applied ? ` · cupón ${priced.applied}` : ""} · ${email || "sin email"} · ${reference}`
+      `Checkout Wompi: ${plan} ${amount} COP${waAddon ? ` +WA ${waAddon}` : ""}${priced.applied ? ` · cupón ${priced.applied}` : ""} · ${email || "sin email"} · ${reference}`
     );
     return NextResponse.json({
       ok: true,
@@ -93,6 +103,8 @@ export async function POST(req: Request) {
       currency: "COP",
       plan,
       baseAmount,
+      whatsappAddon: waAddon,
+      channel,
       coupon: priced.applied,
       discount: priced.discount,
       redirectUrl: `${base}/precios?paid=1&plan=${plan}`,
@@ -106,6 +118,8 @@ export async function POST(req: Request) {
       "Sin Wompi ni Mercado Pago. Agrega WOMPI_* o MP_ACCESS_TOKEN en Vercel (MANUAL-ACCIONES.md).",
     amount,
     baseAmount,
+    whatsappAddon: waAddon,
+    channel,
     coupon: priced.applied,
     discount: priced.discount,
     currency: settings.pricing.currency,

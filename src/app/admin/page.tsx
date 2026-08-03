@@ -42,6 +42,13 @@ export default function AdminPage() {
     });
     const data = await res.json();
     setMsg(res.ok ? "Guardado" : data.error || "Error");
+    if (res.ok) {
+      try {
+        localStorage.setItem("ats_feature_ads", settings.features.ads ? "1" : "0");
+      } catch {
+        /* ignore */
+      }
+    }
   }
 
   useEffect(() => {

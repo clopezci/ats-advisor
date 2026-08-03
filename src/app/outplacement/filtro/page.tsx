@@ -1,21 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { DictationButton } from "@/components/DictationButton";
-
-type Q = { q: string; tip: string };
+import { pickFiltroQuestions, scoreFiltroAnswers, type FiltroQ } from "@/lib/interview/filtro";
 
 export default function FiltroPredictivoPage() {
   const [job, setJob] = useState("");
-  const [questions, setQuestions] = useState<Q[]>([]);
+  const [questions, setQuestions] = useState<FiltroQ[]>([]);
   const [answers, setAnswers] = useState<string[]>(["", "", ""]);
   const [idx, setIdx] = useState(0);
   const [score, setScore] = useState<number | null>(null);
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [usedAi, setUsedAi] = useState(false);
+
+  useEffect(() => {
+    try {
+      const ws = JSON.parse(localStorage.getItem("ats_workspace") || "null");
+      if (ws?.jobText) setJob(ws.jobText);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  function buildLocal() {
+    if (job.trim().length < 40) {
+      setError("Pega más texto de la oferta.");
+      return;
+    }
+    setError("");
+    setScore(null);
+    setUsedAi(false);
+    const qs = pickFiltroQuestions(job, 3);
+    setQuestions(qs);
+    setAnswers(["", "", ""]);
+    setIdx(0);
+  }
 
   async function buildQuestions() {
     if (job.trim().length < 40) {
@@ -42,13 +65,16 @@ Solo JSON.`,
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "IA no disponible");
       const cleaned = String(data.text || "").replace(/^```json\s*|\s*```$/g, "").trim();
-      const parsed = JSON.parse(cleaned) as Q[];
+      const parsed = JSON.parse(cleaned) as FiltroQ[];
       if (!Array.isArray(parsed) || parsed.length < 3) throw new Error("Formato inválido");
       setQuestions(parsed.slice(0, 3));
       setAnswers(["", "", ""]);
       setIdx(0);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "No se pudieron generar preguntas");
+      setUsedAi(true);
+    } catch {
+      setUsedAi(false);
+      buildLocal();
+      setError("IA no disponible — usamos banco local LATAM.");
     } finally {
       setLoading(false);
     }
@@ -57,17 +83,16 @@ Solo JSON.`,
   async function scoreAnswers() {
     setLoading(true);
     setError("");
+    const local = scoreFiltroAnswers(answers);
     try {
-      const qa = questions
-        .map((q, i) => `P: ${q.q}\nR: ${answers[i] || "(vacía)"}`)
-        .join("\n\n");
+      const qa = questions.map((q, i) => `P: ${q.q}\nR: ${answers[i] || "(vacía)"}`).join("\n\n");
       const res = await fetch("/api/ai/complete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           task: "interview_feedback",
           useKnowledge: true,
-          prompt: `Evalúa estas 3 respuestas de filtro telefónico para la oferta.
+          prompt: `Evalúa estas 3 respuestas de filtro telefónico.
 Devuelve JSON: {"score":0-100,"verdict":"...","improve":["...","..."]}
 Oferta (resumen): ${job.slice(0, 1200)}
 ${qa}
@@ -78,12 +103,15 @@ Solo JSON.`,
       if (!res.ok) throw new Error(data.error || "IA no disponible");
       const cleaned = String(data.text || "").replace(/^```json\s*|\s*```$/g, "").trim();
       const parsed = JSON.parse(cleaned) as { score: number; verdict: string; improve?: string[] };
-      setScore(Math.round(Number(parsed.score) || 0));
+      setScore(Math.round(Number(parsed.score) || local.score));
       setFeedback(
-        `${parsed.verdict || ""}\n\n${(parsed.improve || []).map((x) => `• ${x}`).join("\n")}`
+        `${parsed.verdict || local.verdict}\n\n${(parsed.improve || local.improve).map((x) => `• ${x}`).join("\n")}`
       );
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "No se pudo puntuar");
+      setUsedAi(true);
+    } catch {
+      setScore(local.score);
+      setFeedback(`${local.verdict}\n\n${local.improve.map((x) => `• ${x}`).join("\n")}`);
+      setError("Score local (sin IA).");
     } finally {
       setLoading(false);
     }
@@ -97,34 +125,49 @@ Solo JSON.`,
             <p className="pill-brand">Score predictivo</p>
             <h1 className="mt-2 text-xl font-semibold">Filtro telefónico</h1>
           </div>
-          <SpeakButton text="Pega la oferta, responde 3 preguntas típicas de filtro y recibe un score predictivo de llamada." />
+          <SpeakButton text="Pega la oferta, responde 3 preguntas de filtro y recibe un score. Funciona offline con banco LATAM." />
         </div>
-        <p className="text-sm muted">3 preguntas · responde con voz o texto · score de probabilidad de pasar.</p>
+        <p className="text-sm muted">Prefill desde tu workspace ATS si existe.</p>
       </section>
 
-      {!questions.length && (
-        <>
-          <textarea
-            className="field min-h-36"
-            placeholder="Pega la oferta de empleo…"
-            value={job}
-            onChange={(e) => setJob(e.target.value)}
-          />
-          <button type="button" className="btn-primary" disabled={loading} onClick={buildQuestions}>
-            {loading ? "Generando…" : "Generar 3 preguntas de filtro"}
-          </button>
-        </>
+      <div className="bento-card space-y-2">
+        <label className="text-sm font-medium">Oferta</label>
+        <textarea className="field min-h-28" value={job} onChange={(e) => setJob(e.target.value)} />
+        <button type="button" className="btn-primary" disabled={loading} onClick={buildQuestions}>
+          {loading ? "Generando…" : "3 preguntas (IA o local)"}
+        </button>
+        <button type="button" className="btn-secondary" onClick={buildLocal}>
+          Solo banco local
+        </button>
+      </div>
+
+      {error && (
+        <p className="text-sm" style={{ color: "var(--danger, #b42318)" }}>
+          {error}
+        </p>
       )}
 
-      {questions.length > 0 && score === null && (
+      {questions.length > 0 && (
         <section className="bento-card space-y-3">
           <p className="text-xs muted">
-            Pregunta {idx + 1} de 3 · {questions[idx]?.tip}
+            Pregunta {idx + 1}/3 {usedAi ? "· IA" : "· local"}
           </p>
-          <p className="font-medium">{questions[idx]?.q}</p>
-          <SpeakButton text={questions[idx]?.q || ""} />
+          <p className="font-medium">{questions[idx].q}</p>
+          <p className="text-xs muted">{questions[idx].tip}</p>
+          <div className="flex justify-between">
+            <span className="text-xs muted">Tu respuesta</span>
+            <DictationButton
+              onResult={(t) =>
+                setAnswers((prev) => {
+                  const next = [...prev];
+                  next[idx] = next[idx] ? `${next[idx]} ${t}` : t;
+                  return next;
+                })
+              }
+            />
+          </div>
           <textarea
-            className="field min-h-28"
+            className="field min-h-24"
             value={answers[idx]}
             onChange={(e) => {
               const next = [...answers];
@@ -132,26 +175,17 @@ Solo JSON.`,
               setAnswers(next);
             }}
           />
-          <DictationButton
-            onResult={(t) => {
-              const next = [...answers];
-              next[idx] = `${next[idx] ? next[idx] + " " : ""}${t}`.trim();
-              setAnswers(next);
-            }}
-          />
-          <div className="flex flex-col gap-2">
+          <div className="flex gap-2">
+            <button type="button" className="btn-secondary" disabled={idx === 0} onClick={() => setIdx((i) => i - 1)}>
+              Anterior
+            </button>
             {idx < 2 ? (
-              <button type="button" className="btn-primary" onClick={() => setIdx(idx + 1)}>
+              <button type="button" className="btn-primary" onClick={() => setIdx((i) => i + 1)}>
                 Siguiente
               </button>
             ) : (
               <button type="button" className="btn-primary" disabled={loading} onClick={scoreAnswers}>
-                {loading ? "Puntuando…" : "Calcular score"}
-              </button>
-            )}
-            {idx > 0 && (
-              <button type="button" className="btn-secondary" onClick={() => setIdx(idx - 1)}>
-                Anterior
+                {loading ? "Puntuando…" : "Obtener score"}
               </button>
             )}
           </div>
@@ -159,26 +193,16 @@ Solo JSON.`,
       )}
 
       {score !== null && (
-        <section className="bento-card space-y-3">
-          <p className="text-xs muted">Probabilidad de pasar el filtro</p>
-          <p className="text-4xl font-semibold score-ring">{score}%</p>
-          <p className="text-sm whitespace-pre-wrap">{feedback}</p>
-          <SpeakButton text={`Tu score es ${score} por ciento. ${feedback}`} />
-          <button
-            type="button"
-            className="btn-secondary"
-            onClick={() => {
-              setQuestions([]);
-              setScore(null);
-              setFeedback("");
-            }}
-          >
-            Nueva simulación
-          </button>
+        <section className="bento-card space-y-2">
+          <p className="text-3xl font-semibold">{score}%</p>
+          <SpeakButton text={feedback.slice(0, 400)} />
+          <p className="text-sm muted whitespace-pre-wrap">{feedback}</p>
         </section>
       )}
 
-      {error && <p className="text-sm" style={{ color: "#b91c1c" }}>{error}</p>}
+      <Link href="/outplacement/entrevista" className="btn-secondary">
+        Simulador STAR
+      </Link>
       <Link href="/outplacement" className="btn-secondary">
         Volver
       </Link>

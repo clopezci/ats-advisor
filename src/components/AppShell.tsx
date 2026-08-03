@@ -13,13 +13,8 @@ export function AppShell({ children }: { children: ReactNode }) {
       </a>
       <header className="mb-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <span
-            className="flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold text-white"
-            style={{ background: "var(--brand)", boxShadow: "var(--shadow-brand)" }}
-            aria-hidden
-          >
-            A
-          </span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.svg" alt="" width={36} height={36} className="h-9 w-9 rounded-full" />
           <div>
             <div className="text-base font-semibold tracking-tight">ATSAdvisor</div>
             <div className="text-xs muted">by LOTIC</div>

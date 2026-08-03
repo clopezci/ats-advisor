@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { AdSlot } from "@/components/AdSlot";
 
 export const metadata = { title: "Herramientas gratis" };
 
@@ -87,6 +88,7 @@ export default function HerramientasPage() {
           <p className="mt-1 text-sm muted">{t.desc}</p>
         </Link>
       ))}
+      <AdSlot slot="herramientas-hub" />
       <Link href="/" className="btn-secondary">
         Volver
       </Link>

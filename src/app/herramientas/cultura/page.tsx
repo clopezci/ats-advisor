@@ -18,6 +18,7 @@ export default function CulturaPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           task: "general",
+          useKnowledge: true,
           prompt: `Eres coach de empleabilidad. Empresa: ${company || "N/D"}. Oferta:\n${jd.slice(0, 3000)}\n\nInfiere valores/cultura SOLO a partir del texto de la oferta (no inventes datos externos). Sugiere 5 ajustes de lenguaje al CV/LinkedIn alineados a esa cultura, sin inventar experiencia. Español LATAM.`,
         }),
       });

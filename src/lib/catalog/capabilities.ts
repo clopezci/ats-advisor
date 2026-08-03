@@ -78,7 +78,7 @@ export const CAPABILITIES: Capability[] = [
   {
     id: "ats-rewrite",
     title: "Ajuste coherente de hoja de vida",
-    summary: "IA teje keywords en frases de valor con disclaimer; tips de buena postulación.",
+    summary: "Rewrite + re-score antes/después, DOCX, carta y LinkedIn ligados al análisis.",
     audience: ["candidato"],
     status: "disponible",
     href: "/ats",

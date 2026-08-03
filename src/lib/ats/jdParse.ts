@@ -69,4 +69,73 @@ export function detectCvSections(cv: string): {
   };
 }
 
+/** Vista “cómo te parsea el ATS”: campos estructurados aproximados. */
+export function parseCvPreview(cv: string): {
+  name: string;
+  email: string;
+  phone: string;
+  linkedin: string;
+  summary: string;
+  skills: string[];
+  experienceSnippets: string[];
+  educationSnippets: string[];
+} {
+  const email = (cv.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i) || [])[0] || "";
+  const phone = (cv.match(/(?:\+?\d{1,3}[\s-]?)?(?:\(?\d{2,3}\)?[\s-]?)?\d{3}[\s-]?\d{4}|\+\d{10,15}/) || [])[0] || "";
+  const linkedin = (cv.match(/linkedin\.com\/in\/[a-z0-9\-_%]+/i) || [])[0] || "";
+  const firstLines = cv
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean);
+  const name =
+    firstLines.find(
+      (l) =>
+        l.length > 3 &&
+        l.length < 60 &&
+        !/@/.test(l) &&
+        !/experiencia|educaci|skills|perfil|resumen|objetivo/i.test(l)
+    ) || "";
+
+  const summaryMatch = cv.match(
+    /(?:resumen|perfil\s+profesional|objetivo|summary)[:\s]*([\s\S]{40,500}?)(?=\n\s*(?:experiencia|experience|educaci|skills|habilidades)|$)/i
+  );
+  const skillsMatch = cv.match(
+    /(?:skills|habilidades|competencias|tecnolog[ií]as)[:\s]*([\s\S]{20,500}?)(?=\n\s*(?:experiencia|educaci|idiomas|certific)|$)/i
+  );
+  const skills = (skillsMatch?.[1] || "")
+    .split(/[,|•\n]/)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 1 && s.length < 40)
+    .slice(0, 24);
+
+  const expMatch = cv.match(
+    /(?:experiencia|experience|historial\s+laboral)[:\s]*([\s\S]{80,2500}?)(?=\n\s*(?:educaci[oó]n|estudios|skills|habilidades|certific)|$)/i
+  );
+  const experienceSnippets = (expMatch?.[1] || "")
+    .split("\n")
+    .map((l) => l.trim())
+    .filter((l) => l.length > 20)
+    .slice(0, 8);
+
+  const eduMatch = cv.match(
+    /(?:educaci[oó]n|estudios|formaci[oó]n)[:\s]*([\s\S]{20,800}?)(?=\n\s*(?:skills|habilidades|experiencia|idiomas|certific)|$)/i
+  );
+  const educationSnippets = (eduMatch?.[1] || "")
+    .split("\n")
+    .map((l) => l.trim())
+    .filter((l) => l.length > 8)
+    .slice(0, 5);
+
+  return {
+    name,
+    email,
+    phone,
+    linkedin,
+    summary: (summaryMatch?.[1] || firstLines.slice(1, 4).join(" ")).slice(0, 400).trim(),
+    skills,
+    experienceSnippets,
+    educationSnippets,
+  };
+}
+
 export { SECTION_SPLIT };

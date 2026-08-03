@@ -1,5 +1,5 @@
 import { textHasTerm } from "@/lib/ats/synonyms";
-import { detectCvSections, splitJobSections } from "@/lib/ats/jdParse";
+import { detectCvSections, parseCvPreview, splitJobSections } from "@/lib/ats/jdParse";
 import {
   APPLICATION_PLAYBOOK_BASE,
   ATS_HOW_THEY_FILTER,
@@ -8,6 +8,8 @@ import {
 } from "@/lib/ats/coaching";
 import { localTfidfScore, type EmbeddingProvider } from "@/lib/ats/embeddings";
 import { buildKeywordHeatmap, sectionKeywordHits, type HeatCell } from "@/lib/ats/heatmap";
+import { analyzeBullets } from "@/lib/ats/bulletQuality";
+import { buildPlacementGuide, type PlacementTip } from "@/lib/ats/placementGuide";
 
 export type AtsProfile =
   | "generic"
@@ -60,6 +62,13 @@ export type AtsAnalyzeResult = {
   applicationTips: string[];
   heatmap: HeatCell[];
   sectionHits: { section: string; hits: number; sample: string[] }[];
+  bulletQuality: {
+    avgScore: number;
+    total: number;
+    weakest: { text: string; score: number; tips: string[] }[];
+  };
+  placementGuide: PlacementTip[];
+  parsePreview: ReturnType<typeof parseCvPreview>;
 };
 
 const SOFT = [
@@ -432,6 +441,19 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
   const heatTerms = [...new Set([...mustHave.missing, ...mustHave.matched, ...hardMissing, ...hardMatched, ...missing, ...matched])];
   const heatmap = buildKeywordHeatmap(input.cvText, input.jobText, heatTerms, 28);
   const sectionHits = sectionKeywordHits(input.cvText, [...matched, ...missing].slice(0, 40));
+  const bulletRaw = analyzeBullets(input.cvText, [...hardMatched, ...hardMissing, ...matched].slice(0, 30));
+  const bulletQuality = {
+    avgScore: bulletRaw.avgScore,
+    total: bulletRaw.total,
+    weakest: bulletRaw.weakest.map((b) => ({ text: b.text, score: b.score, tips: b.tips })),
+  };
+  const placementGuide = buildPlacementGuide({
+    missingMust: mustHave.missing,
+    missingHard: hardMissing,
+    missingSoft: softMissing,
+    sectionHits,
+  });
+  const parsePreview = parseCvPreview(input.cvText);
 
   const explanation = [
     `Cobertura ponderada (must-have + keywords): ${Math.round(coverage * 100)}%.`,
@@ -493,5 +515,8 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
     applicationTips,
     heatmap,
     sectionHits,
+    bulletQuality,
+    placementGuide,
+    parsePreview,
   };
 }

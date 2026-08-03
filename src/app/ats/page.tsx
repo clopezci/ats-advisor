@@ -9,6 +9,8 @@ import type { AtsAnalyzeResult, AtsProfile } from "@/lib/ats/engine";
 import { DISCLAIMER_CV_REWRITE } from "@/lib/ats/coaching";
 import { detectAtsProfile } from "@/lib/ats/detectAts";
 import { buildCvDocx, downloadBlob } from "@/lib/ats/docxExport";
+import { compareAtsResults, lineDiff, type ScoreDelta } from "@/lib/ats/compare";
+import { buildHistoryPayload, pushAtsHistory, saveAtsWorkspace } from "@/lib/ats/history";
 import { canRunAts, recordAtsRun } from "@/lib/limits/atsFree";
 import { buildAtsReport, downloadText, openPrintableReport } from "@/lib/ats/report";
 import { bumpStreak } from "@/lib/engagement/streak";
@@ -43,6 +45,12 @@ export default function AtsPage() {
   const [rewriteLoading, setRewriteLoading] = useState(false);
   const [applyTips, setApplyTips] = useState("");
   const [applyLoading, setApplyLoading] = useState(false);
+  const [originalCv, setOriginalCv] = useState("");
+  const [scoreDelta, setScoreDelta] = useState<ScoreDelta | null>(null);
+  const [rescoring, setRescoring] = useState(false);
+  const [diffLines, setDiffLines] = useState<{ type: "same" | "add" | "del"; text: string }[]>([]);
+  const [coverLetter, setCoverLetter] = useState("");
+  const [coverLoading, setCoverLoading] = useState(false);
 
   useEffect(() => {
     try {
@@ -188,14 +196,77 @@ export default function AtsPage() {
 
   function applyRewriteToEditor() {
     if (!rewriteText.trim()) return;
-    // Intenta extraer bloque CV si el modelo lo separó; si no, usa todo
+    if (!originalCv) setOriginalCv(cvText);
     const marker = rewriteText.search(/\n(?:CV|Hoja de vida|Versión|TEXTO)[^\n]*:\s*\n/i);
     const body = marker >= 0 ? rewriteText.slice(marker).replace(/^[^\n]*\n/, "") : rewriteText;
-    setCvText(body.trim() || rewriteText);
+    const next = body.trim() || rewriteText;
+    setCvText(next);
+    setDiffLines(lineDiff(originalCv || cvText, next));
     try {
-      localStorage.setItem("ats_cv_draft", body.trim() || rewriteText);
+      localStorage.setItem("ats_cv_draft", next);
     } catch {
       /* ignore */
+    }
+  }
+
+  async function rescoreAfterRewrite() {
+    if (!result) return;
+    const textToScore = cvText.trim().length > 40 ? cvText : rewriteText;
+    if (textToScore.trim().length < 40) return;
+    setRescoring(true);
+    try {
+      const before = result;
+      const res = await fetch("/api/ats/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cvText: textToScore, jobText, jobUrl, atsProfile, autoDetect: false }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Error al re-analizar");
+      recordAtsRun();
+      const after = data.result as AtsAnalyzeResult;
+      setScoreDelta(compareAtsResults(before, after));
+      setResult(after);
+      setDiffLines(lineDiff(originalCv || before.parsePreview?.summary || "", textToScore));
+      pushAtsHistory(
+        buildHistoryPayload({
+          score: after.score,
+          semanticScore: after.semanticScore,
+          interviewProbability: after.interviewProbability,
+          profile: atsProfile,
+          jobText,
+          mustMissing: after.mustHave?.missing,
+          embeddingProvider: after.embeddingProvider,
+        })
+      );
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "No se pudo re-analizar");
+    } finally {
+      setRescoring(false);
+    }
+  }
+
+  async function generateCoverLetter() {
+    if (!result) return;
+    setCoverLoading(true);
+    setCoverLetter("");
+    try {
+      const res = await fetch("/api/ai/complete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          task: "application_advice",
+          useKnowledge: true,
+          prompt: `Redacta una CARTA / mensaje de postulación corto (160-220 palabras) en español LATAM. No inventes experiencia. Perfil ATS ${atsProfile}. Must-have a enfatizar si están en el CV: ${(result.mustHave?.matched || []).slice(0, 8).join(", ")}. Gaps honestos a no fingir: ${(result.mustHave?.missing || []).slice(0, 5).join(", ")}. CV:\n${cvText.slice(0, 2200)}\n\nOferta:\n${jobText.slice(0, 1800)}\n\nIncluye: saludo, encaje, 1-2 logros, cierre con disponibilidad. Disclaimer implícito: solo hechos del CV.`,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "IA no disponible");
+      setCoverLetter(data.text);
+    } catch (e) {
+      setCoverLetter(e instanceof Error ? e.message : "No se pudo generar");
+    } finally {
+      setCoverLoading(false);
     }
   }
 
@@ -231,11 +302,28 @@ export default function AtsPage() {
       if (data.detection?.reason) setDetectMsg(data.detection.reason);
       setResult(data.result);
       setStep(4);
+      setOriginalCv(cvText);
+      setScoreDelta(null);
+      setDiffLines([]);
       try {
-        const prev = JSON.parse(localStorage.getItem("ats_history") || "[]");
-        prev.unshift({ at: Date.now(), score: data.result.score });
-        localStorage.setItem("ats_history", JSON.stringify(prev.slice(0, 30)));
-        localStorage.setItem("ats_last_result", JSON.stringify({ result: data.result, atsProfile }));
+        pushAtsHistory(
+          buildHistoryPayload({
+            score: data.result.score,
+            semanticScore: data.result.semanticScore,
+            interviewProbability: data.result.interviewProbability,
+            profile: data.atsProfileUsed || atsProfile,
+            jobText,
+            mustMissing: data.result.mustHave?.missing,
+            embeddingProvider: data.result.embeddingProvider,
+          })
+        );
+        saveAtsWorkspace({
+          cvText,
+          jobText,
+          jobUrl,
+          atsProfile: data.atsProfileUsed || atsProfile,
+          result: data.result,
+        });
         syncAtsScan(data.result).catch(() => undefined);
       } catch {
         /* ignore */
@@ -408,6 +496,90 @@ export default function AtsPage() {
           <ResultBlock title="Cómo filtra este ATS" items={result.atsInsights || []} />
           <ResultBlock title="Qué explica el score" items={result.explanation} />
 
+          {scoreDelta && (
+            <section className="bento-card space-y-2">
+              <h2 className="text-sm font-semibold">Antes → después del ajuste</h2>
+              <p className="text-2xl font-semibold">
+                {scoreDelta.before}% → {scoreDelta.after}%{" "}
+                <span style={{ color: scoreDelta.delta >= 0 ? "var(--brand)" : "var(--danger, #b42318)" }}>
+                  ({scoreDelta.delta >= 0 ? "+" : ""}
+                  {scoreDelta.delta})
+                </span>
+              </p>
+              <p className="text-xs muted">
+                Semántico {scoreDelta.semanticBefore}% → {scoreDelta.semanticAfter}%
+              </p>
+              {scoreDelta.mustGained.length > 0 && (
+                <p className="text-sm muted">Must-have recuperados: {scoreDelta.mustGained.join(", ")}</p>
+              )}
+              {scoreDelta.mustStillMissing.length > 0 && (
+                <p className="text-sm muted">Aún faltan: {scoreDelta.mustStillMissing.join(", ")}</p>
+              )}
+            </section>
+          )}
+
+          {result.parsePreview && (
+            <section className="bento-card space-y-2">
+              <h2 className="text-sm font-semibold">Cómo te parsea el ATS (vista estructurada)</h2>
+              <p className="text-xs muted">
+                Así suele “ver” el bot tus campos. Si algo vacío o raro, el ranking baja aunque seas buen candidato.
+              </p>
+              <ul className="text-sm muted space-y-1">
+                <li>Nombre: {result.parsePreview.name || "— no detectado —"}</li>
+                <li>Email: {result.parsePreview.email || "—"}</li>
+                <li>Tel: {result.parsePreview.phone || "—"}</li>
+                <li>LinkedIn: {result.parsePreview.linkedin || "—"}</li>
+                <li>Resumen: {result.parsePreview.summary || "—"}</li>
+                <li>Skills parseadas: {result.parsePreview.skills.join(", ") || "—"}</li>
+              </ul>
+              {result.parsePreview.experienceSnippets.length > 0 && (
+                <div>
+                  <p className="text-xs font-medium">Experiencia (extractos)</p>
+                  <ul className="text-xs muted space-y-1">
+                    {result.parsePreview.experienceSnippets.slice(0, 4).map((x) => (
+                      <li key={x}>• {x}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </section>
+          )}
+
+          {result.bulletQuality && result.bulletQuality.total > 0 && (
+            <section className="bento-card space-y-2">
+              <h2 className="text-sm font-semibold">
+                Calidad de viñetas · promedio {result.bulletQuality.avgScore}%
+              </h2>
+              <p className="text-xs muted">
+                Heurística tipo Resume Worded: verbo de acción + métrica + skill (sin inventar).
+              </p>
+              {result.bulletQuality.weakest.map((b) => (
+                <div key={b.text.slice(0, 40)} className="text-sm border-b py-2" style={{ borderColor: "var(--border)" }}>
+                  <p className="font-medium">{b.score}% · {b.text.slice(0, 140)}{b.text.length > 140 ? "…" : ""}</p>
+                  <p className="text-xs muted">{b.tips[0]}</p>
+                </div>
+              ))}
+            </section>
+          )}
+
+          {result.placementGuide && result.placementGuide.length > 0 && (
+            <section className="bento-card space-y-2">
+              <h2 className="text-sm font-semibold">Dónde poner cada keyword</h2>
+              <ul className="space-y-2 text-sm muted">
+                {result.placementGuide.slice(0, 8).map((p) => (
+                  <li key={p.term + p.where}>
+                    <span className="font-medium" style={{ color: "var(--brand)" }}>
+                      {p.term}
+                    </span>{" "}
+                    → {p.where}. {p.why}
+                    <br />
+                    <span className="text-xs">{p.pattern}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
           {result.heatmap?.length > 0 && (
             <section className="bento-card space-y-3">
               <h2 className="text-sm font-semibold">Heatmap de keywords (oferta vs CV)</h2>
@@ -506,6 +678,9 @@ export default function AtsPage() {
                 <button type="button" className="btn-secondary" onClick={applyRewriteToEditor}>
                   Cargar texto ajustado al editor (revisar antes de usar)
                 </button>
+                <button type="button" className="btn-primary" disabled={rescoring} onClick={rescoreAfterRewrite}>
+                  {rescoring ? "Re-analizando…" : "Re-analizar score (antes → después)"}
+                </button>
                 <button
                   type="button"
                   className="btn-secondary"
@@ -526,8 +701,57 @@ export default function AtsPage() {
                 >
                   Descargar DOCX del ajuste
                 </button>
+                {diffLines.length > 0 && (
+                  <div className="max-h-64 overflow-auto text-xs space-y-1">
+                    <p className="font-medium text-sm">Diff rápido</p>
+                    {diffLines.slice(0, 40).map((d, i) => (
+                      <p
+                        key={`${d.type}-${i}`}
+                        style={{
+                          color:
+                            d.type === "add" ? "var(--brand)" : d.type === "del" ? "var(--danger, #b42318)" : undefined,
+                          opacity: d.type === "same" ? 0.55 : 1,
+                        }}
+                      >
+                        {d.type === "add" ? "+ " : d.type === "del" ? "− " : "  "}
+                        {d.text.slice(0, 160)}
+                      </p>
+                    ))}
+                  </div>
+                )}
               </>
             )}
+          </section>
+
+          <section className="bento-card space-y-3">
+            <h2 className="text-sm font-semibold">Carta / mensaje de postulación</h2>
+            <p className="text-xs muted">
+              Generada con el contexto de este análisis (must-have y CV). Revísala antes de enviar.
+            </p>
+            <button type="button" className="btn-primary" disabled={coverLoading} onClick={generateCoverLetter}>
+              {coverLoading ? "Redactando…" : "Generar carta de postulación"}
+            </button>
+            {coverLetter && (
+              <>
+                <p className="text-sm muted whitespace-pre-wrap">{coverLetter}</p>
+                <button
+                  type="button"
+                  className="btn-secondary"
+                  onClick={async () => {
+                    await navigator.clipboard.writeText(coverLetter);
+                    alert("Carta copiada");
+                  }}
+                >
+                  Copiar carta
+                </button>
+              </>
+            )}
+            <Link href="/herramientas/carta" className="btn-secondary">
+              Abrir herramienta carta (con datos del ATS)
+            </Link>
+            <Link href="/herramientas/linkedin" className="btn-secondary">
+              Optimizar LinkedIn para esta vacante
+            </Link>
           </section>
 
           <section className="bento-card space-y-3">

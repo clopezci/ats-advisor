@@ -15,6 +15,20 @@ export function buildAtsReport(result: AtsAnalyzeResult, meta?: { profile?: stri
       (h) => `- [${h.status}] ${h.term}: oferta×${h.jobCount} · CV×${h.cvCount}`
     ),
     "",
+    "Calidad de viñetas:",
+    `- Promedio: ${result.bulletQuality?.avgScore ?? "—"}% (${result.bulletQuality?.total ?? 0} viñetas)`,
+    ...(result.bulletQuality?.weakest || []).map(
+      (b) => `- [${b.score}%] ${b.text.slice(0, 100)}… → ${b.tips[0] || ""}`
+    ),
+    "",
+    "Dónde colocar keywords:",
+    ...(result.placementGuide || []).map((p) => `- ${p.term} → ${p.where}: ${p.pattern}`),
+    "",
+    "Parse preview:",
+    `- Nombre: ${result.parsePreview?.name || "—"}`,
+    `- Email: ${result.parsePreview?.email || "—"}`,
+    `- Skills: ${(result.parsePreview?.skills || []).join(", ") || "—"}`,
+    "",
     "Keywords por sección del CV:",
     ...(result.sectionHits || []).map(
       (s) => `- ${s.section}: ${s.hits} hits (${s.sample.join(", ") || "—"})`

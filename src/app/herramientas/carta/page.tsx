@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { DictationButton } from "@/components/DictationButton";
 import { SpeakButton } from "@/components/SpeakButton";
@@ -8,8 +8,29 @@ import { SpeakButton } from "@/components/SpeakButton";
 export default function CartaPage() {
   const [cv, setCv] = useState("");
   const [job, setJob] = useState("");
+  const [contextNote, setContextNote] = useState("");
   const [out, setOut] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    try {
+      const ws = JSON.parse(localStorage.getItem("ats_workspace") || "null");
+      const last = JSON.parse(localStorage.getItem("ats_last_result") || "null");
+      if (ws?.cvText) setCv(ws.cvText);
+      else if (last?.cvText) setCv(last.cvText);
+      if (ws?.jobText) setJob(ws.jobText);
+      else if (last?.jobText) setJob(last.jobText);
+      const missing = last?.result?.mustHave?.missing || [];
+      const matched = last?.result?.mustHave?.matched || [];
+      if (missing.length || matched.length) {
+        setContextNote(
+          `Contexto ATS: score ${last?.result?.score ?? "—"}%. Destacar: ${matched.slice(0, 6).join(", ") || "—"}. No fingir: ${missing.slice(0, 5).join(", ") || "—"}.`
+        );
+      }
+    } catch {
+      /* ignore */
+    }
+  }, []);
 
   async function generate() {
     setLoading(true);
@@ -19,8 +40,9 @@ export default function CartaPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          task: "general",
-          prompt: `Redacta una carta de presentación breve (180-260 palabras) en español LATAM, tono profesional y humano. No inventes experiencia. CV:\n${cv.slice(0, 2500)}\n\nOferta:\n${job.slice(0, 2500)}`,
+          task: "application_advice",
+          useKnowledge: true,
+          prompt: `Redacta una carta de presentación breve (180-260 palabras) en español LATAM, tono profesional y humano. No inventes experiencia. ${contextNote}\n\nCV:\n${cv.slice(0, 2500)}\n\nOferta:\n${job.slice(0, 2500)}`,
         }),
       });
       const data = await res.json();
@@ -37,6 +59,7 @@ export default function CartaPage() {
           <h1 className="text-xl font-semibold">Carta de presentación</h1>
           <SpeakButton text="Genera una carta corta alineada a la oferta, sin inventar experiencia." />
         </div>
+        {contextNote && <p className="text-xs muted">{contextNote}</p>}
       </section>
 
       <div className="bento-card space-y-2">
@@ -83,8 +106,11 @@ export default function CartaPage() {
         </section>
       )}
 
+      <Link href="/ats" className="btn-secondary">
+        Volver al ATS
+      </Link>
       <Link href="/herramientas" className="btn-secondary">
-        Volver
+        Herramientas
       </Link>
     </div>
   );

@@ -24,7 +24,7 @@ export function PaywallCard({
       </div>
       <p className="text-sm muted">{reason}</p>
       <Link href="/precios" className="btn-primary">
-        Ver precios
+        Ver precios / Pagar demo
       </Link>
       <Link href="/ats" className="btn-secondary">
         Seguir con ATS gratis

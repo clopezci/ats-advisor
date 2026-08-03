@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { InstallPrompt } from "@/components/InstallPrompt";
-import { planLabel, setPlan, type PlanId } from "@/lib/entitlements";
+import { planLabel, readEntitlement, setPlan, type PlanId } from "@/lib/entitlements";
 
 const PLANS = [
   {
@@ -56,8 +56,11 @@ export default function PreciosPage() {
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState<string | null>(null);
   const [provider, setProvider] = useState<"auto" | "wompi" | "mercadopago">("auto");
+  const [currentPlan, setCurrentPlan] = useState<PlanId>("free");
+  const [dummyPhase, setDummyPhase] = useState<"idle" | "processing" | "done">("idle");
 
   useEffect(() => {
+    setCurrentPlan(readEntitlement().plan);
     const params = new URLSearchParams(window.location.search);
     if (params.get("paid") === "1") {
       try {
@@ -65,6 +68,7 @@ export default function PreciosPage() {
         const plan = String(last?.plan || params.get("plan") || "carrera") as PlanId;
         if (plan === "carrera" || plan === "plus") {
           setPlan(plan, "demo_checkout");
+          setCurrentPlan(plan);
           setMsg(`Pago detectado. Plan ${planLabel(plan)} activado en este dispositivo. El webhook confirma en servidor.`);
         } else {
           setMsg("Si el pago fue aprobado, tu plan se actualiza al confirmar el webhook. También puedes activar demo local abajo.");
@@ -75,9 +79,34 @@ export default function PreciosPage() {
     }
     if (params.get("demo") === "carrera") {
       setPlan("carrera", "demo_checkout");
+      setCurrentPlan("carrera");
       setMsg("Plan Carrera activado en este dispositivo (demo).");
     }
   }, []);
+
+  /** Simula pago real: delay → activa plan → desbloquea outplacement. */
+  async function dummyPay(plan: "carrera" | "plus") {
+    setDummyPhase("processing");
+    setLoading(`dummy-${plan}`);
+    setMsg("");
+    await new Promise((r) => setTimeout(r, 1200));
+    const next = setPlan(plan, "demo_checkout");
+    localStorage.setItem(
+      "ats_last_checkout",
+      JSON.stringify({
+        mode: "dummy",
+        plan,
+        reference: `DUMMY-${plan.toUpperCase()}-${Date.now()}`,
+        paidAt: new Date().toISOString(),
+      })
+    );
+    setCurrentPlan(next.plan);
+    setDummyPhase("done");
+    setLoading(null);
+    setMsg(
+      `Pago simulado OK. Plan ${planLabel(plan)} activo en este navegador. Ya puedes usar outplacement, OUT-09 y gates premium.`
+    );
+  }
 
   async function checkout(plan: "carrera" | "plus" | "out09_extra") {
     setLoading(plan);
@@ -146,9 +175,15 @@ export default function PreciosPage() {
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between">
           <h1 className="text-2xl font-semibold">Precios</h1>
-          <SpeakButton text="Planes Carrera, Carrera Plus y curso OUT-09 extra. Puedes pagar con Wompi o Mercado Pago si están configurados." />
+          <SpeakButton text="Planes Carrera, Carrera Plus y curso OUT-09 extra. Usa Pagar demo para probar sin pasarela real." />
         </div>
         <p className="text-sm muted">ATS gratis: 5 análisis/día. Outplacement democratizado.</p>
+        <p className="text-sm">
+          Plan actual:{" "}
+          <span className="font-medium" style={{ color: "var(--brand)" }}>
+            {planLabel(currentPlan)}
+          </span>
+        </p>
         <input
           className="field"
           type="email"
@@ -197,30 +232,47 @@ export default function PreciosPage() {
               <li key={x}>• {x}</li>
             ))}
           </ul>
+          {p.id !== "out09_extra" && (
+            <button
+              type="button"
+              className="btn-primary"
+              disabled={dummyPhase === "processing" || loading === `dummy-${p.id}`}
+              onClick={() => dummyPay(p.id)}
+            >
+              {loading === `dummy-${p.id}`
+                ? "Procesando pago…"
+                : dummyPhase === "done" && currentPlan === p.id
+                  ? `✓ ${p.name} activo — seguir`
+                  : `Pagar ${p.name} (demo)`}
+            </button>
+          )}
           <button
             type="button"
-            className="btn-primary"
+            className="btn-secondary"
             disabled={loading === p.id}
             onClick={() => checkout(p.id)}
           >
-            {loading === p.id ? "Preparando…" : `Elegir ${p.name}`}
+            {loading === p.id ? "Preparando…" : `Checkout real ${p.name}`}
           </button>
         </section>
       ))}
 
       <section className="bento-card space-y-2">
-        <h2 className="font-semibold text-sm">Sin pasarela aún</h2>
-        <p className="text-sm muted">Activa Carrera en este dispositivo para probar outplacement.</p>
-        <button
-          type="button"
-          className="btn-secondary"
-          onClick={() => {
-            setPlan("carrera", "demo_checkout");
-            setMsg("Plan Carrera (demo local) activado.");
-          }}
-        >
-          Activar Carrera demo
-        </button>
+        <h2 className="font-semibold text-sm">Modo prueba (sin Wompi / MP)</h2>
+        <p className="text-sm muted">
+          El botón <strong>Pagar (demo)</strong> simula un cobro (~1 s), activa el plan en este navegador y te deja
+          entrar a outplacement. No cobra dinero. Cuando configures Wompi o Mercado Pago, usa “Checkout real”.
+        </p>
+        {dummyPhase === "processing" && (
+          <p className="text-sm" style={{ color: "var(--brand)" }}>
+            Simulando pasarela… no cierres esta pestaña.
+          </p>
+        )}
+        {dummyPhase === "done" && (
+          <Link href="/outplacement" className="btn-primary">
+            Continuar a outplacement →
+          </Link>
+        )}
       </section>
 
       {msg && <p className="text-sm muted">{msg}</p>}

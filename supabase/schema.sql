@@ -124,8 +124,11 @@ create policy "seats_owner_all" on company_seats
     )
   );
 
--- Miembro invitado puede leer su propio asiento
-create policy "seats_member_read" on company_seats
-  for select using (
-    lower(email) = lower(coalesce(auth.jwt() ->> 'email', ''))
-  );
+alter table app_settings enable row level security;
+alter table audit_events enable row level security;
+-- Sin políticas anon: solo service_role (bypass RLS) puede leer/escribir.
+-- El cliente browser NUNCA debe usar la service role key.
+
+-- telegram chat ids para fan-out de cápsulas
+alter table profiles add column if not exists telegram_chat_id text;
+alter table profiles add column if not exists whatsapp_phone text;

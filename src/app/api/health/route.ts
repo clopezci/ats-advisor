@@ -1,27 +1,30 @@
 import { NextResponse } from "next/server";
+import { buildHealthSnapshot } from "@/lib/observability";
+import { isAdminSecret } from "@/lib/admin/auth";
 import { OUTPLACEMENT_MODULES } from "@/lib/outplacement/modules";
 
-export async function GET() {
-  const checks = {
-    app: true,
-    groq: Boolean(process.env.GROQ_API_KEY),
-    gemini: Boolean(process.env.GOOGLE_AI_API_KEY),
-    openai: Boolean(process.env.OPENAI_API_KEY),
-    embeddings: Boolean(
-      process.env.OPENAI_API_KEY ||
-        process.env.GOOGLE_AI_API_KEY ||
-        process.env.HF_TOKEN ||
-        process.env.HUGGINGFACE_API_KEY
-    ),
-    telegram: Boolean(process.env.TELEGRAM_BOT_TOKEN),
-    whatsapp: Boolean(process.env.WHATSAPP_TOKEN && process.env.WHATSAPP_PHONE_NUMBER_ID),
-    supabase: Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL),
-    wompi: Boolean(process.env.WOMPI_PUBLIC_KEY),
+export async function GET(req: Request) {
+  const snap = buildHealthSnapshot();
+  const secret = req.headers.get("x-admin-secret");
+  const detailed = isAdminSecret(secret);
+
+  const publicPayload = {
+    ok: snap.ok,
+    service: "atsadvisor",
+    ts: snap.ts,
     modules: OUTPLACEMENT_MODULES.length,
   };
-  const ok = checks.app && checks.modules > 0;
+
+  if (!detailed) {
+    return NextResponse.json(publicPayload, { status: snap.ok ? 200 : 503 });
+  }
+
   return NextResponse.json(
-    { ok, service: "atsadvisor", ts: new Date().toISOString(), checks },
-    { status: ok ? 200 : 503 }
+    {
+      ...publicPayload,
+      degraded: snap.degraded,
+      checks: { ...snap.checks, modules: OUTPLACEMENT_MODULES.length },
+    },
+    { status: snap.ok ? 200 : 503 }
   );
 }

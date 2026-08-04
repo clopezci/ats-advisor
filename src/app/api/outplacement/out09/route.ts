@@ -5,7 +5,7 @@ import { notifyOwnerTelegram } from "@/lib/notify/channels";
 import { retrieveKnowledge } from "@/lib/ai/knowledge";
 import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
 import { reportError } from "@/lib/observability";
-import { readSettings } from "@/lib/settings";
+import { hydrateSettingsFromCloud } from "@/lib/settingsPersist";
 
 export const runtime = "nodejs";
 
@@ -16,17 +16,20 @@ export async function POST(req: Request) {
   if (!limited.ok) return rateLimitedResponse(limited.retryAfterSec);
 
   try {
-    const settings = readSettings();
+    const settings = await hydrateSettingsFromCloud();
     if (!settings.features.out09) {
       return NextResponse.json({ error: "OUT-09 está desactivado por el admin." }, { status: 403 });
     }
 
-    const body = await req.json();
+    const body = await req.json().catch(() => ({}));
     const skillType = body.skillType === "hard" ? "hard" : "soft";
     const description = String(body.description || "").trim();
     const answers = body.answers || {};
     const plan = String(body.plan || "free");
     const maxChars = settings.ai_limits.max_out09_prompt_chars || 2000;
+    const isProd = process.env.VERCEL_ENV === "production" || process.env.NODE_ENV === "production";
+    // allowDemo solo en no-producción (evita bypass de paywall)
+    const allowDemo = !isProd && body.allowDemo === true;
 
     if (description.length < 12) {
       return NextResponse.json({ error: "Describe con más detalle qué quieres mejorar." }, { status: 400 });
@@ -44,7 +47,8 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    if (plan === "free" && body.allowDemo !== true) {
+    const paidPlans = new Set(["carrera", "plus", "tester"]);
+    if (!paidPlans.has(plan) && !allowDemo) {
       return NextResponse.json(
         { error: "OUT-09 requiere plan Carrera/Plus o compra extra. Revisa /precios.", code: "PAYWALL" },
         { status: 402 }

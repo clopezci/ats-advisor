@@ -3,51 +3,80 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
-
-type Settings = {
-  pricing: { carrera: number; plus: number; out09_extra: number; currency: string };
-  features: { ads: boolean; whatsapp: boolean; telegram: boolean };
-  ai_limits: { free_ats_per_day: number; quality_threshold: number };
-  promotions: { name: string; percent: number; amount: number; starts: string; ends: string; code?: string }[];
-  tester_emails: string[];
-};
+import type { AppSettings } from "@/lib/settings";
 
 export default function AdminPage() {
   const [secret, setSecret] = useState("");
   const [authed, setAuthed] = useState(false);
-  const [settings, setSettings] = useState<Settings | null>(null);
+  const [settings, setSettings] = useState<AppSettings | null>(null);
   const [msg, setMsg] = useState("");
+  const [health, setHealth] = useState<string>("…");
+  const [testingAlert, setTestingAlert] = useState(false);
 
   async function load() {
-    const res = await fetch(`/api/admin/settings?secret=${encodeURIComponent(secret)}`);
-    const data = await res.json();
-    if (!res.ok) {
-      setMsg(data.error || "No autorizado");
-      return;
+    try {
+      const res = await fetch("/api/admin/settings", {
+        headers: { "x-admin-secret": secret },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setMsg(data.error || "No autorizado");
+        return;
+      }
+      setSettings(data.settings);
+      setAuthed(true);
+      setMsg("");
+      const h = await fetch("/api/health", { headers: { "x-admin-secret": secret } });
+      const hj = await h.json();
+      setHealth(
+        hj.ok
+          ? `OK · degradados: ${(hj.degraded || []).join(", ") || "ninguno"}`
+          : `Degradado · ${JSON.stringify(hj.checks || {})}`
+      );
+    } catch {
+      setMsg("Error de red al cargar admin");
     }
-    setSettings(data.settings);
-    setAuthed(true);
-    setMsg("");
   }
 
   async function save() {
     if (!settings) return;
-    const res = await fetch("/api/admin/settings", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "x-admin-secret": secret,
-      },
-      body: JSON.stringify(settings),
-    });
-    const data = await res.json();
-    setMsg(res.ok ? "Guardado" : data.error || "Error");
-    if (res.ok) {
-      try {
-        localStorage.setItem("ats_feature_ads", settings.features.ads ? "1" : "0");
-      } catch {
-        /* ignore */
+    try {
+      const res = await fetch("/api/admin/settings", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-secret": secret,
+        },
+        body: JSON.stringify(settings),
+      });
+      const data = await res.json();
+      setMsg(res.ok ? `Guardado${data.cloud ? " (+ cloud)" : " (memoria/local)"}` : data.error || "Error");
+      if (res.ok && data.settings) {
+        setSettings(data.settings);
+        try {
+          localStorage.setItem("ats_feature_ads", data.settings.features.ads ? "1" : "0");
+        } catch {
+          /* ignore */
+        }
       }
+    } catch {
+      setMsg("Error de red al guardar");
+    }
+  }
+
+  async function runHealthAlert() {
+    setTestingAlert(true);
+    try {
+      const res = await fetch("/api/admin/health-report", {
+        method: "POST",
+        headers: { "x-admin-secret": secret },
+      });
+      const data = await res.json();
+      setMsg(res.ok ? (data.sent ? "Reporte de salud enviado a Telegram" : "Salud OK (sin envío)") : data.error);
+    } catch {
+      setMsg("No se pudo disparar el reporte");
+    } finally {
+      setTestingAlert(false);
     }
   }
 
@@ -60,7 +89,10 @@ export default function AdminPage() {
     return (
       <div className="flex flex-1 flex-col gap-4">
         <h1 className="text-2xl font-semibold">Admin LOTIC</h1>
-        <p className="text-sm muted">Entra con tu ADMIN_SECRET (o `dev-admin` en local).</p>
+        <p className="text-sm muted">
+          Entra con ADMIN_SECRET. En local (sin secret en env) usa <code>dev-admin</code>. En producción el fallback
+          está desactivado.
+        </p>
         <input
           className="field"
           type="password"
@@ -78,7 +110,11 @@ export default function AdminPage() {
         >
           Entrar
         </button>
-        {msg && <p className="text-sm" style={{ color: "var(--danger)" }}>{msg}</p>}
+        {msg && (
+          <p className="text-sm" style={{ color: "var(--danger)" }}>
+            {msg}
+          </p>
+        )}
         <Link href="/" className="btn-secondary">
           Volver
         </Link>
@@ -90,14 +126,14 @@ export default function AdminPage() {
     <div className="flex flex-1 flex-col gap-5">
       <div className="flex items-start justify-between">
         <h1 className="text-2xl font-semibold">Panel owner</h1>
-        <SpeakButton text="Panel de administración: precios, límites de IA, canales y promociones." />
+        <SpeakButton text="Administra precios, WhatsApp, límites IA, flags, LLM, promociones y salud." />
       </div>
 
       <section className="bento-card space-y-3">
         <h2 className="font-semibold">Precios COP</h2>
-        {(["carrera", "plus", "out09_extra"] as const).map((k) => (
+        {(["carrera", "plus", "out09_extra", "plan_90_dias", "whatsapp_addon"] as const).map((k) => (
           <label key={k} className="block text-sm">
-            {k}
+            {k} {k === "whatsapp_addon" ? "(0 = fórmula costo Meta)" : ""}
             <input
               className="field mt-1"
               type="number"
@@ -111,44 +147,74 @@ export default function AdminPage() {
             />
           </label>
         ))}
+        <label className="block text-sm">
+          Moneda
+          <input
+            className="field mt-1"
+            value={settings.pricing.currency}
+            onChange={(e) =>
+              setSettings({ ...settings, pricing: { ...settings.pricing, currency: e.target.value } })
+            }
+          />
+        </label>
+      </section>
+
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold">Costo WhatsApp (interno)</h2>
+        {(["meta_mid_monthly_cop", "margin_percent", "msgs_per_month"] as const).map((k) => (
+          <label key={k} className="block text-sm">
+            {k}
+            <input
+              className="field mt-1"
+              type="number"
+              value={settings.whatsapp_cost[k]}
+              onChange={(e) =>
+                setSettings({
+                  ...settings,
+                  whatsapp_cost: { ...settings.whatsapp_cost, [k]: Number(e.target.value) },
+                })
+              }
+            />
+          </label>
+        ))}
       </section>
 
       <section className="bento-card space-y-3">
         <h2 className="font-semibold">Límites IA</h2>
-        <label className="block text-sm">
-          ATS free / día
-          <input
-            className="field mt-1"
-            type="number"
-            value={settings.ai_limits.free_ats_per_day}
-            onChange={(e) =>
-              setSettings({
-                ...settings,
-                ai_limits: { ...settings.ai_limits, free_ats_per_day: Number(e.target.value) },
-              })
-            }
-          />
-        </label>
-        <label className="block text-sm">
-          Umbral calidad (0-1)
-          <input
-            className="field mt-1"
-            type="number"
-            step="0.01"
-            value={settings.ai_limits.quality_threshold}
-            onChange={(e) =>
-              setSettings({
-                ...settings,
-                ai_limits: { ...settings.ai_limits, quality_threshold: Number(e.target.value) },
-              })
-            }
-          />
-        </label>
+        {(
+          [
+            "free_ats_per_day",
+            "out09_included_carrera",
+            "out09_included_plus",
+            "quality_threshold",
+            "max_paid_escalations",
+            "max_ai_cost_cop_per_user_month",
+            "max_out09_prompt_chars",
+          ] as const
+        ).map((k) => (
+          <label key={k} className="block text-sm">
+            {k}
+            <input
+              className="field mt-1"
+              type="number"
+              step={k === "quality_threshold" ? "0.01" : "1"}
+              value={settings.ai_limits[k]}
+              onChange={(e) =>
+                setSettings({
+                  ...settings,
+                  ai_limits: { ...settings.ai_limits, [k]: Number(e.target.value) },
+                })
+              }
+            />
+          </label>
+        ))}
       </section>
 
       <section className="bento-card space-y-3">
-        <h2 className="font-semibold">Canales</h2>
-        {(["ads", "telegram", "whatsapp"] as const).map((k) => (
+        <h2 className="font-semibold">Feature flags</h2>
+        {(
+          ["ads", "telegram", "whatsapp", "outplacement", "out09", "coach_chat", "guarantee"] as const
+        ).map((k) => (
           <label key={k} className="flex items-center gap-2 text-sm">
             <input
               type="checkbox"
@@ -166,10 +232,35 @@ export default function AdminPage() {
       </section>
 
       <section className="bento-card space-y-3">
-        <h2 className="font-semibold">Testers (premium sin pago)</h2>
-        <p className="text-sm muted">
-          Correos con plan tester. También puedes usar env ADMIN_TESTER_EMAILS.
-        </p>
+        <h2 className="font-semibold">Preferencias LLM</h2>
+        {(["prefer_groq", "prefer_gemini", "prefer_openai"] as const).map((k) => (
+          <label key={k} className="flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={settings.llm[k]}
+              onChange={(e) =>
+                setSettings({
+                  ...settings,
+                  llm: { ...settings.llm, [k]: e.target.checked },
+                })
+              }
+            />
+            {k}
+          </label>
+        ))}
+      </section>
+
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold">Footer microlearning</h2>
+        <textarea
+          className="field min-h-20"
+          value={settings.microlearning_footer}
+          onChange={(e) => setSettings({ ...settings, microlearning_footer: e.target.value })}
+        />
+      </section>
+
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold">Testers</h2>
         <textarea
           className="field min-h-24"
           placeholder="uno@correo.com, dos@correo.com"
@@ -189,10 +280,10 @@ export default function AdminPage() {
       <section className="bento-card space-y-3">
         <h2 className="font-semibold">Promociones</h2>
         {(settings.promotions || []).map((p, idx) => (
-          <div key={`${p.name}-${idx}`} className="space-y-2 border-b pb-3" style={{ borderColor: "var(--border)" }}>
+          <div key={`${p.code}-${idx}`} className="space-y-2 border-b pb-3" style={{ borderColor: "var(--border)" }}>
             <input
               className="field"
-              placeholder="Nombre cupón"
+              placeholder="Nombre"
               value={p.name}
               onChange={(e) => {
                 const promotions = [...settings.promotions];
@@ -202,8 +293,8 @@ export default function AdminPage() {
             />
             <input
               className="field"
-              placeholder="Código (ej. LOTIC10)"
-              value={(p as { code?: string }).code || ""}
+              placeholder="Código"
+              value={p.code || ""}
               onChange={(e) => {
                 const promotions = [...settings.promotions];
                 promotions[idx] = { ...p, code: e.target.value };
@@ -233,6 +324,26 @@ export default function AdminPage() {
                   setSettings({ ...settings, promotions });
                 }}
               />
+              <input
+                className="field"
+                type="date"
+                value={p.starts || ""}
+                onChange={(e) => {
+                  const promotions = [...settings.promotions];
+                  promotions[idx] = { ...p, starts: e.target.value };
+                  setSettings({ ...settings, promotions });
+                }}
+              />
+              <input
+                className="field"
+                type="date"
+                value={p.ends || ""}
+                onChange={(e) => {
+                  const promotions = [...settings.promotions];
+                  promotions[idx] = { ...p, ends: e.target.value };
+                  setSettings({ ...settings, promotions });
+                }}
+              />
             </div>
             <button
               type="button"
@@ -254,10 +365,10 @@ export default function AdminPage() {
           onClick={() =>
             setSettings({
               ...settings,
-                promotions: [
-                  ...settings.promotions,
-                  { name: "PROMO", code: "PROMO10", percent: 10, amount: 0, starts: "", ends: "" },
-                ],
+              promotions: [
+                ...settings.promotions,
+                { name: "PROMO", code: "PROMO10", percent: 10, amount: 0, starts: "", ends: "" },
+              ],
             })
           }
         >
@@ -266,35 +377,27 @@ export default function AdminPage() {
       </section>
 
       <section className="bento-card space-y-2 text-sm muted">
-        <h2 className="font-semibold text-[var(--text)]">Salud</h2>
-        <HealthPanel />
-        <p>Sentry: opcional vía SENTRY_DSN (envelope sin SDK). Cron: /api/cron/audit y /api/cron/capsules.</p>
+        <h2 className="font-semibold text-[var(--text)]">Salud / Sentry interno</h2>
+        <p>API health: {health}</p>
+        <p>
+          Errores → log + envelope Sentry (si SENTRY_DSN) + Telegram al owner con throttle 15 min. Cron diario:{" "}
+          <code>/api/cron/audit</code>.
+        </p>
+        <button type="button" className="btn-secondary" disabled={testingAlert} onClick={runHealthAlert}>
+          {testingAlert ? "Enviando…" : "Enviar reporte de salud a Telegram ahora"}
+        </button>
       </section>
 
       <button type="button" className="btn-primary" onClick={save}>
-        Guardar
+        Guardar todo
       </button>
       {msg && <p className="text-sm">{msg}</p>}
       <Link href="/admin/analytics" className="btn-secondary">
-        Ver analytics
-      </Link>
-      <Link href="/admin/analytics/pro" className="btn-secondary">
-        Analytics Pro
+        Analytics
       </Link>
       <Link href="/" className="btn-secondary">
-        Salir al inicio
+        Salir
       </Link>
     </div>
   );
-}
-
-function HealthPanel() {
-  const [health, setHealth] = useState<string>("…");
-  useEffect(() => {
-    fetch("/api/health")
-      .then((r) => r.json())
-      .then((d) => setHealth(d.ok ? `OK · ${d.service || "atsadvisor"}` : "Degradado"))
-      .catch(() => setHealth("Sin respuesta"));
-  }, []);
-  return <p>API health: {health}</p>;
 }

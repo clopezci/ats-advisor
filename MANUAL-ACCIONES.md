@@ -110,7 +110,9 @@ Cuando tengas el proyecto:
 | -------- | -------------- |
 | `TELEGRAM_BOT_TOKEN` | Sí, si quieres bot |
 | `TELEGRAM_OWNER_CHAT_ID` | Sí, para alertas a ti |
+| `TELEGRAM_WEBHOOK_SECRET` | **Sí en prod** (auth del webhook) |
 | `TELEGRAM_BROADCAST_CHAT_IDS` | Opcional (si vacío usa el owner) |
+| `SENTRY_DSN` | Opcional (envelope interno + Telegram) |
 
 ---
 
@@ -317,18 +319,30 @@ https://api.telegram.org/botTOKEN/getUpdates
 
 ### Paso 3.3 — Webhook (para que Telegram hable con tu app)
 
-1. Tras Redeploy, abre en el navegador (una sola vez):
+**Obligatorio en producción:** secret del webhook (sin esto el endpoint responde 401).
 
-```text
-https://api.telegram.org/botTOKEN/setWebhook?url=https://ats-advisor-two.vercel.app/api/webhooks/telegram
+1. Genera un secret (PowerShell):
+
+```powershell
+-join ((48..57) + (65..90) + (97..122) | Get-Random -Count 40 | ForEach-Object {[char]$_})
 ```
 
-2. Debes ver `{"ok":true,...}`.  
-3. Verifica:
+2. Vercel → `TELEGRAM_WEBHOOK_SECRET` = ese valor. Redeploy.
+
+3. Registra el webhook **con secret_token** (sustituye TOKEN y SECRET):
+
+```text
+https://api.telegram.org/botTOKEN/setWebhook?url=https://ats-advisor-two.vercel.app/api/webhooks/telegram&secret_token=SECRET
+```
+
+4. Debes ver `{"ok":true,...}`.  
+5. Verifica:
 
 ```text
 https://api.telegram.org/botTOKEN/getWebhookInfo
 ```
+
+Telegram enviará el header `X-Telegram-Bot-Api-Secret-Token` en cada update.
 
 ### Paso 3.4 — Probar
 

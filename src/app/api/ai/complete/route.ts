@@ -42,6 +42,9 @@ export async function POST(req: Request) {
     if (prompt.length < 8) {
       return NextResponse.json({ error: "Escribe un poco más de contexto." }, { status: 400 });
     }
+    if (prompt.length > 12000) {
+      return NextResponse.json({ error: "Prompt demasiado largo (máx. 12000 caracteres)." }, { status: 400 });
+    }
 
     const grounded =
       GROUNDED_TASKS.has(rawTask.toLowerCase()) ||

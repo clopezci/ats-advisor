@@ -3,7 +3,7 @@ import { sendWhatsAppCapsule } from "@/lib/notify/whatsapp";
 
 export type DeliveryChannel = "telegram" | "whatsapp" | "pwa";
 
-export function formatCapsuleText(capsule: CapsulePayload & { moduleCode?: string }) {
+export function formatCapsuleText(capsule: CapsulePayload & { moduleCode?: string; footer?: string }) {
   const head = capsule.moduleCode ? `${capsule.moduleCode} · ${capsule.title}` : capsule.title;
   let text = `${head}\n\n${capsule.content}`;
   if (capsule.quiz) {
@@ -11,6 +11,7 @@ export function formatCapsuleText(capsule: CapsulePayload & { moduleCode?: strin
     text += capsule.quiz.options.map((o, i) => `${i + 1}) ${o}`).join("\n");
   }
   if (capsule.day != null) text = `Día ${capsule.day} · ${text}`;
+  if (capsule.footer) text += `\n\n—\n${capsule.footer}`;
   return text.slice(0, 3500);
 }
 

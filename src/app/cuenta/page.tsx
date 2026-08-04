@@ -22,6 +22,7 @@ export default function CuentaPage() {
   const [msg, setMsg] = useState("");
   const [plan, setPlanState] = useState<PlanId>("free");
   const [sessionEmail, setSessionEmail] = useState<string | null>(null);
+  const [allowLocalPlans, setAllowLocalPlans] = useState(false);
   const waPrice = whatsappFinalPriceCop();
 
   useEffect(() => {
@@ -33,6 +34,12 @@ export default function CuentaPage() {
         setChannel(p.channel || "pwa");
       }
       setPlanState(readEntitlement().plan);
+      const host = window.location.hostname;
+      setAllowLocalPlans(
+        host === "localhost" ||
+          host === "127.0.0.1" ||
+          localStorage.getItem("ats_admin_unlock") === "1"
+      );
     } catch {
       /* ignore */
     }
@@ -132,26 +139,35 @@ export default function CuentaPage() {
       </div>
 
       <div className="bento-card space-y-3">
-        <h2 className="font-semibold">Plan (local / demo)</h2>
+        <h2 className="font-semibold">Plan actual</h2>
         <p className="text-sm muted">
-          Sin Wompi puedes activar Carrera o Tester en este dispositivo para probar gates.
+          {planLabel(plan)}. En producción el plan se confirma vía pago/webhook. El cambio local solo
+          está disponible en localhost (o con unlock admin).
         </p>
-        <div className="flex flex-col gap-2">
-          {(["free", "carrera", "plus", "tester", "paused_90"] as PlanId[]).map((p) => (
-            <button
-              key={p}
-              type="button"
-              className="btn-secondary"
-              onClick={() => {
-                setPlan(p, "local");
-                setPlanState(p);
-                setMsg(`Plan local: ${planLabel(p)}`);
-              }}
-            >
-              {planLabel(p)}
-            </button>
-          ))}
-        </div>
+        {allowLocalPlans && (
+          <div className="flex flex-col gap-2">
+            <p className="text-xs muted">Modo local / QA — no usar en producción pública.</p>
+            {(["free", "carrera", "plus", "tester", "paused_90"] as PlanId[]).map((p) => (
+              <button
+                key={p}
+                type="button"
+                className="btn-secondary"
+                onClick={() => {
+                  setPlan(p, "local");
+                  setPlanState(p);
+                  setMsg(`Plan local: ${planLabel(p)}`);
+                }}
+              >
+                {planLabel(p)}
+              </button>
+            ))}
+          </div>
+        )}
+        {!allowLocalPlans && (
+          <Link href="/precios" className="btn-primary">
+            Ver precios / activar plan
+          </Link>
+        )}
       </div>
 
       <div className="bento-card space-y-3">

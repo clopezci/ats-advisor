@@ -15,37 +15,6 @@ import {
 
 const waPrice = whatsappFinalPriceCop();
 
-const PLANS = [
-  {
-    id: "carrera" as const,
-    name: "Carrera",
-    price: "$79.000 COP/mes",
-    points: [
-      "OUT-01 a OUT-08",
-      "1× OUT-09 / mes",
-      "Telegram gratis (microlearning)",
-      "Voz en toda la app",
-    ],
-  },
-  {
-    id: "plus" as const,
-    name: "Carrera Plus",
-    price: "$99.000 COP/mes",
-    points: [
-      "Todo Carrera",
-      "2× OUT-09 / mes",
-      "Más simulador",
-      "Puedes sumar WhatsApp como addon (ver abajo)",
-    ],
-  },
-  {
-    id: "out09_extra" as const,
-    name: "OUT-09 extra",
-    price: "$22.000 COP",
-    points: ["1 curso personalizado adicional", "Misma entrega por microcápsulas"],
-  },
-];
-
 declare global {
   interface Window {
     WidgetCheckout?: new (opts: Record<string, unknown>) => {
@@ -78,10 +47,26 @@ export default function PreciosPage() {
   const [currentPlan, setCurrentPlan] = useState<PlanId>("free");
   const [dummyPhase, setDummyPhase] = useState<"idle" | "processing" | "done">("idle");
   const [channel, setChannel] = useState<LearningChannel>("telegram");
+  const [prices, setPrices] = useState({ carrera: 79000, plus: 99000, out09_extra: 22000, whatsapp_addon: waPrice });
 
   useEffect(() => {
     setCurrentPlan(readEntitlement().plan);
+    fetch("/api/features")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.pricing) {
+          setPrices({
+            carrera: d.pricing.carrera,
+            plus: d.pricing.plus,
+            out09_extra: d.pricing.out09_extra,
+            whatsapp_addon: d.pricing.whatsapp_addon || waPrice,
+          });
+        }
+      })
+      .catch(() => undefined);
     const params = new URLSearchParams(window.location.search);
+    const isLocal =
+      window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
     if (params.get("paid") === "1") {
       try {
         const last = JSON.parse(localStorage.getItem("ats_last_checkout") || "null");
@@ -98,9 +83,13 @@ export default function PreciosPage() {
       }
     }
     if (params.get("demo") === "carrera") {
-      setPlan("carrera", "demo_checkout");
-      setCurrentPlan("carrera");
-      setMsg("Plan Carrera activado en este dispositivo (demo).");
+      if (isLocal) {
+        setPlan("carrera", "demo_checkout");
+        setCurrentPlan("carrera");
+        setMsg("Plan Carrera activado en este dispositivo (demo local).");
+      } else {
+        setMsg("La activación ?demo=carrera solo está disponible en localhost. Usa checkout o el botón demo.");
+      }
     }
   }, []);
 
@@ -111,7 +100,7 @@ export default function PreciosPage() {
     setMsg("");
     await new Promise((r) => setTimeout(r, 1200));
     const next = setPlan(plan, "demo_checkout");
-    const addon = channel === "whatsapp" ? waPrice : 0;
+    const addon = channel === "whatsapp" ? prices.whatsapp_addon : 0;
     localStorage.setItem(
       "ats_last_checkout",
       JSON.stringify({
@@ -246,7 +235,36 @@ export default function PreciosPage() {
         </div>
       </section>
 
-      {PLANS.map((p) => (
+      {[
+        {
+          id: "carrera" as const,
+          name: "Carrera",
+          price: `${formatCop(prices.carrera)}/mes`,
+          points: [
+            "OUT-01 a OUT-08",
+            "1× OUT-09 / mes",
+            "Telegram gratis (microlearning)",
+            "Voz en toda la app",
+          ],
+        },
+        {
+          id: "plus" as const,
+          name: "Carrera Plus",
+          price: `${formatCop(prices.plus)}/mes`,
+          points: [
+            "Todo Carrera",
+            "2× OUT-09 / mes",
+            "Más simulador",
+            "Puedes sumar WhatsApp como addon (ver abajo)",
+          ],
+        },
+        {
+          id: "out09_extra" as const,
+          name: "OUT-09 extra",
+          price: formatCop(prices.out09_extra),
+          points: ["1 curso personalizado adicional", "Misma entrega por microcápsulas"],
+        },
+      ].map((p) => (
         <section key={p.id} className="bento-card space-y-3">
           <div className="flex items-center justify-between">
             <h2 className="font-semibold">{p.name}</h2>
@@ -296,19 +314,19 @@ export default function PreciosPage() {
               /* ignore */
             }
           }}
-          whatsappPriceCop={waPrice}
+          whatsappPriceCop={prices.whatsapp_addon}
           showIntro={false}
         />
         {channel === "whatsapp" && (
           <p className="text-sm font-medium" style={{ color: "var(--brand)" }}>
-            Addon WhatsApp: {formatCop(waPrice)}/mes. Se suma al checkout de Carrera/Plus.
+            Addon WhatsApp: {formatCop(prices.whatsapp_addon)}/mes. Se suma al checkout de Carrera/Plus.
           </p>
         )}
         <p className="text-xs muted">
           Totales orientativos: Carrera{" "}
-          {formatCop(79000 + (channel === "whatsapp" ? waPrice : 0))}
+          {formatCop(prices.carrera + (channel === "whatsapp" ? prices.whatsapp_addon : 0))}
           {channel === "whatsapp" ? " (plan+WA)" : ""} · Plus{" "}
-          {formatCop(99000 + (channel === "whatsapp" ? waPrice : 0))}
+          {formatCop(prices.plus + (channel === "whatsapp" ? prices.whatsapp_addon : 0))}
           {channel === "whatsapp" ? " (plan+WA)" : ""}.
         </p>
       </section>

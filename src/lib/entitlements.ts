@@ -59,7 +59,7 @@ export function setPlan(plan: PlanId, source: Entitlement["source"] = "local") {
   return next;
 }
 
-/** OUT-09 monthly quota by plan (mirrors settings defaults). */
+/** OUT-09 monthly quota by plan (defaults; prefer settings when passed). */
 export function out09Quota(plan: PlanId, limits?: { carrera: number; plus: number }) {
   const carrera = limits?.carrera ?? 1;
   const plus = limits?.plus ?? 2;

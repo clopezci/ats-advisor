@@ -53,6 +53,7 @@ export default function AtsPage() {
   const [diffLines, setDiffLines] = useState<{ type: "same" | "add" | "del"; text: string }[]>([]);
   const [coverLetter, setCoverLetter] = useState("");
   const [coverLoading, setCoverLoading] = useState(false);
+  const [freeAtsLimit, setFreeAtsLimit] = useState(5);
 
   useEffect(() => {
     try {
@@ -64,6 +65,12 @@ export default function AtsPage() {
     } catch {
       /* ignore */
     }
+    fetch("/api/features")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d?.ai_limits?.free_ats_per_day) setFreeAtsLimit(Number(d.ai_limits.free_ats_per_day) || 5);
+      })
+      .catch(() => undefined);
   }, []);
 
   useEffect(() => {
@@ -292,7 +299,7 @@ export default function AtsPage() {
   async function analyze() {
     const entitlement = readEntitlement();
     const paid = canAccessOutplacement(entitlement.plan);
-    const dailyLimit = paid ? 100 : 5;
+    const dailyLimit = paid ? 100 : freeAtsLimit;
     const gate = canRunAts(dailyLimit);
     if (!gate.ok) {
       setError(

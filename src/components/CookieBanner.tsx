@@ -23,10 +23,15 @@ export function CookieBanner() {
     >
       <div className="bento-card space-y-3 shadow-lg">
         <p className="text-sm">
-          Usamos cookies técnicas necesarias para la PWA. Si activamos anuncios o analítica, lo
-          verás aquí.{" "}
+          Usamos cookies técnicas necesarias para la PWA. Si aceptas, también podemos mostrar
+          anuncios propios LOTIC (p. ej. ArriendoSeguro) y, cuando estén configurados, de Google u
+          otros operadores.{" "}
           <Link href="/legal/cookies" style={{ color: "var(--brand)" }}>
-            Más info
+            Cookies
+          </Link>{" "}
+          ·{" "}
+          <Link href="/legal/privacidad" style={{ color: "var(--brand)" }}>
+            Privacidad
           </Link>
         </p>
         <div className="flex gap-2">

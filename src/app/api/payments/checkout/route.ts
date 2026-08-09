@@ -5,6 +5,7 @@ import { hydrateSettingsFromCloud } from "@/lib/settingsPersist";
 import { parseCheckoutPlan, clampText } from "@/lib/validation";
 import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
 import { reportError } from "@/lib/observability";
+import { recordPaymentIntent } from "@/lib/payments/entitlementsCloud";
 
 export async function POST(req: Request) {
   const limited = rateLimit(req, "checkout", { limit: 15, windowMs: 60_000 });
@@ -36,6 +37,15 @@ export async function POST(req: Request) {
     const amount = priced.amount + waAddon;
     const base = process.env.NEXT_PUBLIC_APP_URL || "https://ats-advisor-two.vercel.app";
     const reference = `ATS-${plan}${waAddon ? "-WA" : ""}-${Date.now()}`;
+
+    await recordPaymentIntent({
+      reference,
+      plan,
+      email: email.includes("@") ? email : null,
+      amount,
+      provider: preferred,
+      channel,
+    });
 
     const wompiPub = process.env.WOMPI_PUBLIC_KEY;
     const wompiPriv = process.env.WOMPI_PRIVATE_KEY;
@@ -92,6 +102,7 @@ export async function POST(req: Request) {
           baseAmount,
           whatsappAddon: waAddon,
           channel,
+          email: email.includes("@") ? email : null,
           coupon: priced.applied,
           discount: priced.discount,
           currency: "COP",
@@ -119,6 +130,7 @@ export async function POST(req: Request) {
         baseAmount,
         whatsappAddon: waAddon,
         channel,
+        email: email.includes("@") ? email : null,
         coupon: priced.applied,
         discount: priced.discount,
         redirectUrl: `${base}/precios?paid=1&plan=${plan}`,

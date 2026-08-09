@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BLOG_POSTS } from "@/lib/blog/posts";
+import { AdSlot } from "@/components/AdSlot";
 
 export const metadata = { title: "Blog · ATSAdvisor" };
 
@@ -10,6 +11,7 @@ export default function BlogPage() {
         <h1 className="text-2xl font-semibold">Blog</h1>
         <p className="text-sm muted">Guías gratis de ATS, empleo y outplacement en español LATAM.</p>
       </section>
+      <AdSlot slot="blog-hub" />
       <div className="space-y-3">
         {BLOG_POSTS.map((p) => (
           <Link key={p.slug} href={`/blog/${p.slug}`} className="bento-card block">

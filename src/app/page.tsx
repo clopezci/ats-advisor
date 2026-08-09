@@ -4,14 +4,18 @@ import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { OnboardingGate } from "@/components/OnboardingGate";
+import { AdSlot } from "@/components/AdSlot";
 import { useEffect, useState } from "react";
 import { readStreak } from "@/lib/engagement/streak";
+import { canAccessOutplacement, readEntitlement } from "@/lib/entitlements";
 
 function HomeInner() {
   const [streak, setStreak] = useState(0);
+  const [showAd, setShowAd] = useState(false);
 
   useEffect(() => {
     setStreak(readStreak().count);
+    setShowAd(!canAccessOutplacement(readEntitlement().plan));
   }, []);
 
   const INTRO =
@@ -76,6 +80,8 @@ function HomeInner() {
           <p className="mt-1 text-sm font-medium">Guías ATS gratis</p>
         </Link>
       </section>
+
+      {showAd && <AdSlot slot="home-free" />}
 
       <Link href="/herramientas" className="text-center text-sm" style={{ color: "var(--brand)" }}>
         Herramientas gratis →

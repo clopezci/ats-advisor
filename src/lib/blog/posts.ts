@@ -110,6 +110,94 @@ export const BLOG_POSTS: BlogPost[] = [
       "61–90: proponer mejoras con datos. Usa el modo 90 días de la app.",
     ],
   },
+  {
+    slug: "pdf-ats-colombia",
+    title: "PDF que sobrevive a Workday, Taleo y portales locales",
+    excerpt: "Exportar bien importa más que el diseño en Canva.",
+    body: [
+      "En Colombia y LATAM conviven Workday, Taleo, SAP SuccessFactors, Greenhouse y ATS de portales (Computrabajo, LinkedIn Easy Apply, Elempleo). Cada uno parsea distinto, pero todos fallan con tablas anidadas, texto en imágenes y dos columnas.",
+      "Exporta desde Word o Google Docs a PDF «estándar» (no «solo imagen»). Evita encabezados/pies con datos críticos: el parseo a veces los ignora.",
+      "Valida el mismo PDF en ATSAdvisor contra 2 ofertas reales del rol target. Si el score cae por «formato», arregla estructura antes de keywords.",
+      "Guarda versiones: CV_general.pdf y CV_empresaX.pdf. El tracker de la app te ayuda a no mezclar envíos.",
+    ],
+  },
+  {
+    slug: "filtro-telefonico",
+    title: "Filtro telefónico: 8 minutos que deciden si avanzas",
+    excerpt: "Estructura, tono y trampas típicas en LATAM.",
+    body: [
+      "El filtro no busca genios: busca claridad, disponibilidad y coherencia con el CV. Habla en bloques: quién eres (20 s), logro relevante (40 s), por qué esta vacante (40 s), pregunta al cierre.",
+      "Ten a mano: pretensión salarial en rango, fecha de disponibilidad, aviso previo y un ejemplo STAR corto.",
+      "Evita monólogos. Si te preguntan «cuéntame de ti», no leas el CV: elige un hilo (rol → problema → resultado).",
+      "Practica en el simulador de filtro de ATSAdvisor y grábate. Las muletillas se oyen más que en tu cabeza.",
+    ],
+  },
+  {
+    slug: "gaps-cv",
+    title: "Huecos en el CV: cómo explicarlos sin sabotearte",
+    excerpt: "Silencio, honestidad y evidencia de aprendizaje.",
+    body: [
+      "Un gap no es automático rechazo. Lo que hunde es la evasión. Nombra el periodo, el motivo breve (estudio, cuidado, proyecto, búsqueda) y qué hiciste para mantenerte vigente.",
+      "Si estudiaste o hiciste freelance, conviértelo en bullets con resultado. Si solo buscaste empleo, muestra volumen de networking y cursos con aplicación práctica.",
+      "No inventes cargos. Los verificadores y referencias lo detectan. Mejor un mes «en transición» bien narrado que un invento.",
+      "En entrevista, cierra con puente al rol actual: «por eso busco X, donde puedo aportar Y».",
+    ],
+  },
+  {
+    slug: "remoto-latam",
+    title: "Empleo remoto desde LATAM: señales de oferta seria",
+    excerpt: "Zonas horarias, contratos y red flags de fraude.",
+    body: [
+      "Ofertas serias clarifican zona horaria, moneda de pago, tipo de contrato (laboral local, contractor, EOR) y herramientas. Si solo hablan de «comisiones en cripto» o piden pago por adelantado para «capacitación», sal.",
+      "Adapta el CV: experiencia colaborando async, overlap de horas, herramientas (Slack, Notion, Jira). Evita pretender «nativo US» si no lo eres.",
+      "Negocia: internet, equipo, benefits y retención de impuestos. Pregunta quién firma el contrato.",
+      "Usa multi-oferta en ATSAdvisor para priorizar vacantes donde tu match de keywords y seniority sea realista.",
+    ],
+  },
+  {
+    slug: "segunda-carrera",
+    title: "Segunda carrera a los 40+: reinventarse sin empezar de cero",
+    excerpt: "Transferible > título nuevo.",
+    body: [
+      "No tires 15 años de experiencia: tradúcelos. Liderazgo de equipos, presupuesto, stakeholders y crisis son skills transferibles a producto, ops, customer success o analítica.",
+      "Elige un puente: un proyecto visible (portfolio, caso, certificación aplicada) que demuestre el nuevo dominio en 60–90 días.",
+      "Actualiza LinkedIn y CV con el lenguaje del mercado destino, no del cargo anterior. Valida con ofertas reales.",
+      "ATSAdvisor incluye ruta de segunda carrera en outplacement para estructurar el cambio sin improvisar.",
+    ],
+  },
+  {
+    slug: "cartas-presentacion",
+    title: "Carta de presentación que no parece plantilla de 2012",
+    excerpt: "Tres párrafos y una prueba de lectura de la oferta.",
+    body: [
+      "Párrafo 1: rol + por qué esta empresa (hecho concreto de la oferta o del producto). Párrafo 2: un logro medible alineado al requisito #1. Párrafo 3: disponibilidad y CTA.",
+      "Nunca digas «soy apasionado y proactivo» sin evidencia. El reclutador ya leyó mil veces eso.",
+      "Si el portal no pide carta, no la fuerces: usa el mensaje de LinkedIn o el campo «nota» con la misma estructura corta.",
+      "Genera borradores en Herramientas → Carta y luego humaniza: quita adjetivos vacíos y añade un detalle solo tú podrías saber.",
+    ],
+  },
+  {
+    slug: "rechazo-despues",
+    title: "Después del rechazo: qué responder y qué medir",
+    excerpt: "Feedback, pipeline y salud mental operativa.",
+    body: [
+      "Responde agradeciendo y pide un dato accionable (skill o seniority). A veces no hay respuesta: igual cierra el ciclo en tu tracker.",
+      "Clasifica rechazos: formato/ATS, experiencia, cultura, compensación, timing. Si 5 caídas son por formato, deja de postular y arregla el CV.",
+      "Mantén un embudo semanal: X envíos, Y filtros, Z entrevistas. Sin métrica, la búsqueda se vuelve ruido emocional.",
+      "En ATSAdvisor el tracker y el historial de scores te muestran si estás mejorando o solo «enviando más».",
+    ],
+  },
+  {
+    slug: "ia-cv-limites",
+    title: "Usar IA en el CV sin que te detecten (ni te inventes logros)",
+    excerpt: "Asistente sí; autoría falsa no.",
+    body: [
+      "La IA ayuda a reordenar, condensar y alinear keywords. No debe inventar métricas, cargos ni tecnologías que no usaste.",
+      "Revisa «tells» típicos: tono genérico, verbos de moda en inglés mezclados, listas perfectas sin fricción. Humaniza con detalles locales y verbos concretos.",
+      "Pasa el texto por el análisis de ATSAdvisor: si el score sube solo por stuffing, bajarás en entrevista.",
+      "Regla: cada bullet generado debe poder defenderse en 60 segundos con una historia STAR real.",
+    ],
+  },
 ];
 
 export function getPost(slug: string) {

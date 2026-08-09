@@ -50,9 +50,47 @@ export default function CuentaPage() {
       if (e) {
         setSessionEmail(e);
         setEmail((prev) => prev || e);
+        syncCloudPlan(e);
       }
     });
   }, []);
+
+  async function syncCloudPlan(em: string) {
+    try {
+      const res = await fetch(`/api/entitlements?email=${encodeURIComponent(em)}`);
+      if (!res.ok) return;
+      const d = await res.json();
+      if (d.plan && ["free", "carrera", "plus", "tester"].includes(d.plan)) {
+        setPlan(d.plan as PlanId, "webhook");
+        setPlanState(d.plan as PlanId);
+        if (d.pendingApplied > 0) {
+          setMsg(`Se aplicaron ${d.pendingApplied} pago(s) pendiente(s). Plan: ${planLabel(d.plan)}.`);
+        }
+      }
+    } catch {
+      /* ignore */
+    }
+  }
+
+  async function claimPayments() {
+    if (!email.includes("@")) {
+      setMsg("Escribe el correo con el que pagaste.");
+      return;
+    }
+    setMsg("Reclamando pagos…");
+    try {
+      const res = await fetch("/api/payments/claim", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const d = await res.json();
+      await syncCloudPlan(email);
+      setMsg(d.message || "Listo.");
+    } catch {
+      setMsg("No se pudo reclamar el pago.");
+    }
+  }
 
   async function exportHabeas() {
     const payload = await downloadHabeasZip({
@@ -63,10 +101,29 @@ export default function CuentaPage() {
       fetch("/api/account/habeas", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, payload }),
+        body: JSON.stringify({ email, payload, action: "export" }),
       }).catch(() => undefined);
     }
     setMsg("Descargamos ZIP Habeas Data (JSON + raw). Si hay Resend, también se intenta email.");
+  }
+
+  async function wipeCloudAndLocal() {
+    if (!confirm("¿Borrar datos locales y cloud (plan free)? Esta acción no se puede deshacer.")) return;
+    wipeHabeasLocal();
+    setName("");
+    setPlanState("free");
+    if (email.includes("@")) {
+      try {
+        await fetch("/api/account/habeas", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, payload: {}, action: "wipe" }),
+        });
+      } catch {
+        /* ignore */
+      }
+    }
+    setMsg("Datos locales eliminados. Si había perfil cloud, quedó en plan free / wipe solicitado.");
   }
 
   function deleteLocal() {
@@ -164,9 +221,14 @@ export default function CuentaPage() {
           </div>
         )}
         {!allowLocalPlans && (
-          <Link href="/precios" className="btn-primary">
-            Ver precios / activar plan
-          </Link>
+          <>
+            <Link href="/precios" className="btn-primary">
+              Ver precios / activar plan
+            </Link>
+            <button type="button" className="btn-secondary" onClick={claimPayments}>
+              Reclamar pago (mismo correo del checkout)
+            </button>
+          </>
         )}
       </div>
 
@@ -179,7 +241,10 @@ export default function CuentaPage() {
           Descargar mis datos (ZIP)
         </button>
         <button type="button" className="btn-secondary" onClick={deleteLocal}>
-          Eliminar datos / dar de baja (local)
+          Eliminar datos locales
+        </button>
+        <button type="button" className="btn-secondary" onClick={wipeCloudAndLocal}>
+          Baja completa (local + cloud)
         </button>
       </div>
 

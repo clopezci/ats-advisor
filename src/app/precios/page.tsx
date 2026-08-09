@@ -51,6 +51,12 @@ export default function PreciosPage() {
 
   useEffect(() => {
     setCurrentPlan(readEntitlement().plan);
+    try {
+      const p = JSON.parse(localStorage.getItem("ats_profile") || "null");
+      if (p?.email) setEmail(p.email);
+    } catch {
+      /* ignore */
+    }
     fetch("/api/features")
       .then((r) => r.json())
       .then((d) => {
@@ -74,9 +80,21 @@ export default function PreciosPage() {
         if (plan === "carrera" || plan === "plus") {
           setPlan(plan, "demo_checkout");
           setCurrentPlan(plan);
-          setMsg(`Pago detectado. Plan ${planLabel(plan)} activado en este dispositivo. El webhook confirma en servidor.`);
+          setMsg(
+            `Pago detectado. Plan ${planLabel(plan)} en este dispositivo. El webhook activa cloud si diste correo.`
+          );
         } else {
-          setMsg("Si el pago fue aprobado, tu plan se actualiza al confirmar el webhook. También puedes activar demo local abajo.");
+          setMsg(
+            "Si el pago fue aprobado, el webhook activa el plan en servidor. Usa el mismo correo en /cuenta → Reclamar pago."
+          );
+        }
+        const em = String(last?.email || email || "").trim();
+        if (em.includes("@") && last?.reference) {
+          fetch("/api/payments/activate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: em, reference: last.reference, plan: last.plan }),
+          }).catch(() => undefined);
         }
       } catch {
         setMsg("Pago recibido. Activa Carrera demo si el plan no se reflejó aún.");
@@ -201,10 +219,15 @@ export default function PreciosPage() {
         <input
           className="field"
           type="email"
-          placeholder="Correo para el recibo (opcional)"
+          placeholder="Correo (recomendado: activa el plan en cloud tras el pago)"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
+        <p className="text-xs muted">
+          Sin correo el pago se confirma, pero el plan cloud queda pendiente hasta que reclames en
+          /cuenta con el mismo email.
+        </p>
         <input
           className="field"
           placeholder="Cupón (opcional)"

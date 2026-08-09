@@ -55,8 +55,31 @@ export async function GET(req: Request) {
 
     const sb = createServiceSupabase();
     let cloudProfiles = 0;
-    if (sb) {
-      const { data } = await sb.from("profiles").select("learning_channel, email").limit(200);
+    if (sb && settings.features.telegram) {
+      const { data } = await sb
+        .from("profiles")
+        .select("learning_channel, email, telegram_chat_id, plan")
+        .not("telegram_chat_id", "is", null)
+        .limit(500);
+      cloudProfiles = data?.length || 0;
+      for (const p of data || []) {
+        const chat = String(p.telegram_chat_id || "").trim();
+        if (!chat) continue;
+        if (p.learning_channel && p.learning_channel !== "telegram" && p.learning_channel !== "pwa") {
+          // still send if they linked telegram
+        }
+        const paid = ["carrera", "plus", "tester"].includes(String(p.plan || ""));
+        if (!paid) continue; // cápsulas outplacement solo planes pagos
+        if (telegramIds.includes(chat)) continue; // evitar duplicar owner/broadcast
+        const r = await deliverCapsule("telegram", chat, payload);
+        results.push({
+          channel: `telegram:user:${chat}`,
+          ok: r.ok,
+          skipped: "skipped" in r ? r.skipped : false,
+        });
+      }
+    } else if (sb) {
+      const { data } = await sb.from("profiles").select("email").limit(200);
       cloudProfiles = data?.length || 0;
     }
 

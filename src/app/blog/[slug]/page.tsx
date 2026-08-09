@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BLOG_POSTS, getPost } from "@/lib/blog/posts";
+import { AdSlot } from "@/components/AdSlot";
 
 export function generateStaticParams() {
   return BLOG_POSTS.map((p) => ({ slug: p.slug }));
@@ -22,12 +23,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <article className="bento-card space-y-4">
         <h1 className="text-2xl font-semibold leading-tight">{post.title}</h1>
         <p className="text-sm muted">{post.excerpt}</p>
-        {post.body.map((p) => (
-          <p key={p.slice(0, 24)} className="text-sm leading-relaxed">
+        {post.body.map((p, i) => (
+          <p key={`${i}-${p.slice(0, 24)}`} className="text-sm leading-relaxed">
             {p}
           </p>
         ))}
       </article>
+      <AdSlot slot="blog-post" />
       <Link href="/blog" className="btn-secondary">
         Más artículos
       </Link>

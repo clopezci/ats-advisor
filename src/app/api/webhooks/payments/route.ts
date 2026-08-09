@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createHash } from "crypto";
 import { notifyOwnerTelegram } from "@/lib/notify/channels";
 import { createServiceSupabase } from "@/lib/supabase/client";
+import { activatePlanFromPayment } from "@/lib/payments/entitlementsCloud";
 
 type Normalized = {
   provider: "wompi" | "mercadopago" | "unknown";
@@ -143,14 +144,29 @@ export async function POST(req: Request) {
   const approved =
     normalized.status.toUpperCase() === "APPROVED" ||
     normalized.status.toLowerCase() === "approved";
-  if (sb && approved) {
-    await sb.from("audit_events").insert({
-      kind: "payment_approved",
-      detail: normalized,
+
+  let entitlement: Awaited<ReturnType<typeof activatePlanFromPayment>> | null = null;
+  if (approved) {
+    if (sb) {
+      await sb.from("audit_events").insert({
+        kind: "payment_approved",
+        detail: normalized,
+      });
+    }
+    entitlement = await activatePlanFromPayment({
+      reference: normalized.reference,
+      planHint: normalized.planHint,
+      provider: normalized.provider,
+      status: normalized.status,
     });
   }
 
-  return NextResponse.json({ ok: true, received: true, ...normalized });
+  return NextResponse.json({
+    ok: true,
+    received: true,
+    ...normalized,
+    entitlement,
+  });
 }
 
 export async function GET(req: Request) {

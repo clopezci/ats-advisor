@@ -198,6 +198,28 @@ export const BLOG_POSTS: BlogPost[] = [
       "Regla: cada bullet generado debe poder defenderse en 60 segundos con una historia STAR real.",
     ],
   },
+  {
+    slug: "calculadora-match-cv",
+    title: "Calculadora de match CV–oferta: cuándo usarla (y cuándo no)",
+    excerpt: "Un % rápido ayuda a priorizar; el ATS completo decide el envío.",
+    body: [
+      "La calculadora gratis de ATSAdvisor mide solapamiento de palabras clave entre tu HV y la oferta. Sirve para descartar vacantes mal alineadas en segundos.",
+      "No sustituye el análisis ATS: formato, must-haves, heatmap de secciones y trampas de parsing solo salen en el analizador completo.",
+      "Flujo recomendado: match rápido → si ≥45%, ATS completo → ajustar CV → tracker.",
+      "Úsala también en multi-oferta: rankea 3–5 roles y empieza por el de mejor encaje real.",
+    ],
+  },
+  {
+    slug: "plan-semanal-busqueda",
+    title: "Plan semanal de búsqueda de empleo (sin quemarte)",
+    excerpt: "Siete bloques cortos: ATS, networking, práctica y descanso.",
+    body: [
+      "Buscar empleo a tiempo completo agota. Mejor un ritmo: ~2–4 horas/día con foco distinto cada jornada.",
+      "Lunes ATS + tracker; martes cápsula OUT; miércoles networking; jueves práctica de filtro/STAR; viernes postular; sábado upskilling; domingo bienestar.",
+      "ATSAdvisor incluye el plan de la semana y el hub de progreso para no perder el hilo.",
+      "Si consigues empleo, pausa la suscripción y abre el checklist de primeros 90 días.",
+    ],
+  },
 ];
 
 export function getPost(slug: string) {

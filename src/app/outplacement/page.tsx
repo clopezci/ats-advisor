@@ -98,8 +98,20 @@ export default function OutplacementPage() {
       )}
 
       <div className="flex flex-col gap-3">
-        <Link href="/outplacement/misiones" className="btn-primary">
+        <Link href="/outplacement/progreso" className="btn-primary">
+          Mi progreso (XP + OUT + cursos)
+        </Link>
+        <Link href="/outplacement/plan-semana" className="btn-secondary">
+          Plan de la semana
+        </Link>
+        <Link href="/outplacement/misiones" className="btn-secondary">
           Misiones del día (+XP)
+        </Link>
+        <Link href="/outplacement/alertas" className="btn-secondary">
+          Alertas de vacantes
+        </Link>
+        <Link href="/outplacement/portfolio" className="btn-secondary">
+          Caso / portfolio STAR
         </Link>
         <Link href="/outplacement/vacantes" className="btn-secondary">
           Vacantes rankeadas

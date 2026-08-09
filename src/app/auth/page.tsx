@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { createBrowserSupabase } from "@/lib/supabase/client";
+import { claimReferral } from "@/lib/growth/referral";
 
 export default function AuthPage() {
   const [email, setEmail] = useState("");
@@ -20,6 +21,18 @@ export default function AuthPage() {
       setSessionEmail(session?.user?.email || null);
     });
     return () => sub.subscription.unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    try {
+      const ref = new URLSearchParams(window.location.search).get("ref");
+      if (ref && ref.length >= 4) {
+        claimReferral(ref);
+        setMsg(`Referido ${ref.toUpperCase()} guardado.`);
+      }
+    } catch {
+      /* ignore */
+    }
   }, []);
 
   async function sendLink() {

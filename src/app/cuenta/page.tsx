@@ -234,6 +234,9 @@ export default function CuentaPage() {
 
       <div className="bento-card space-y-3">
         <h2 className="font-semibold">Habeas Data y baja</h2>
+        <Link href="/cuenta/referidos" className="btn-secondary">
+          Invitar amigos (referidos)
+        </Link>
         <Link href="/cuenta/cvs" className="btn-secondary">
           Versiones de CV
         </Link>

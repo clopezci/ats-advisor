@@ -15,7 +15,7 @@ El código ya está en `main` y Vercel despliega solo al push.
 
 # BLOQUE PENDIENTES (hazlo cuando el agente termine el código)
 
-### YA HECHO (código reciente — precios + Fase 1/2/3)
+### YA HECHO (código reciente — precios + Fase 1/2/3 + 4/5)
 
 - Garantía 30 días eliminada; OUT-09 solo Plus; `plan_90_dias` $39k retirado.
 - Fase 1: assessment, career-brief, oferta, bienestar, remoto.
@@ -23,6 +23,9 @@ El código ya está en `main` y Vercel despliega solo al push.
 - **Aliados + WhatsApp + conciliación:** `/admin` (precio servicio COP, % comisión auto→COP, modo cobro, WA) · tablero `/admin/expertos` · usuario `/outplacement/experto` + confirmar.
 - Modo cobro default **platform_collect**: LOTIC cobra al cliente y liquida neto al aliado (ingreso real = comisión).
 - **Fase 3:** marketplace `/outplacement/marketplace` · cursos externos `/outplacement/cursos` · alumni `/outplacement/alumni` (enlaces en admin).
+- **Fase 4 (SEO/crecimiento):** match `/herramientas/match` · referidos `/cuenta/referidos` · portfolio `/outplacement/portfolio`.
+- **Fase 5 (hábito):** progreso `/outplacement/progreso` · plan semana `/outplacement/plan-semana` · alertas `/outplacement/alertas`.
+- **Pendiente código (último):** checkout Wompi/hub de sesiones de aliados (`platform_collect`).
 
 
 > **Instrucción:** no empieces este bloque hasta que el último push a `main` esté **Ready** en Vercel.  

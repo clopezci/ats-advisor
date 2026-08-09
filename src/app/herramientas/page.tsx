@@ -6,6 +6,11 @@ export const metadata = { title: "Herramientas gratis" };
 
 const TOOLS = [
   {
+    href: "/herramientas/match",
+    title: "Calculadora de match",
+    desc: "Porcentaje rápido CV ↔ oferta (SEO). Luego pasa al ATS completo.",
+  },
+  {
     href: "/ats",
     title: "Analizador ATS",
     desc: "Compara tu CV con una oferta y obtén score + acciones.",

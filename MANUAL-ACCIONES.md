@@ -87,56 +87,118 @@ Copia el string (ej. `K9mP2abc...`).
 3. Save.
 4. **Redeploy** otra vez (§2).
 
-### Paso 3.3 — Re-registrar el webhook (sustituye TOKEN y SECRET)
+### Paso 3.3 — Re-registrar el webhook (cuidado con TOKEN y SECRET)
 
-Abre en el navegador **una sola vez** (usa tu `TELEGRAM_BOT_TOKEN` y el secret nuevo):
+**¿Para qué sirve el secret si ya te llegaban mensajes?**
+
+Hay **dos caminos** distintos:
+
+| Camino | Qué hace | ¿Usa el webhook? |
+| ------ | -------- | ---------------- |
+| App → Telegram (alertas, cron, admin “salud”) | La app llama a la API de Telegram con tu token y te escribe | **No** |
+| Tú → Bot (`/start`, `/capsula`, etc.) | Telegram llama a tu URL `/api/webhooks/telegram` | **Sí** |
+
+El secret protege ese segundo camino: sin él, cualquiera que adivine la URL podría fingir mensajes al bot. Las alertas al owner **pueden seguir llegando** aunque el webhook esté mal; lo que se rompe son los **comandos del bot**.
+
+**Error frecuente:** `{"ok":false,"error_code":404,"description":"Not Found"}`  
+Eso **casi siempre** significa que el **TOKEN del bot está mal en la URL** (typo, espacio, token incompleto, o dejaste la palabra `TOKEN` literal). No es un fallo de Vercel ni del secret.
+
+1. Copia el token **exacto** desde Vercel → `TELEGRAM_BOT_TOKEN` (o desde @BotFather con `/token`).
+2. Prueba primero que el token vive (en el navegador):
 
 ```text
-https://api.telegram.org/botTOKEN/setWebhook?url=https://ats-advisor-two.vercel.app/api/webhooks/telegram&secret_token=SECRET
+https://api.telegram.org/botPEGATUTOKENAQUI/getMe
 ```
 
-Debes ver: `{"ok":true,...}`
+Debes ver `"ok":true` y el username del bot. Si aquí ya da 404 → el token está mal; no sigas al setWebhook.
+
+3. Si el secret tiene caracteres raros (`+`, `/`, `=`, `&`), **codifícalo** o regenera uno solo con letras/números (el comando PowerShell del paso 3.1 ya sirve).
+
+4. Arma la URL **sin espacios**. Ejemplo de forma (todo en una línea):
+
+```text
+https://api.telegram.org/bot7123456789:AAHxxxxxxxx/setWebhook?url=https://ats-advisor-two.vercel.app/api/webhooks/telegram&secret_token=TuSecretSoloLetrasYNumeros
+```
+
+5. Debes ver: `{"ok":true,...}`
+
+**Alternativa PowerShell** (evita errores de pegado en el navegador):
+
+```powershell
+$token  = "PEGA_TELEGRAM_BOT_TOKEN"
+$secret = "PEGA_TELEGRAM_WEBHOOK_SECRET"
+$url    = "https://ats-advisor-two.vercel.app/api/webhooks/telegram"
+Invoke-RestMethod -Uri "https://api.telegram.org/bot$token/setWebhook" -Method Post -Body @{
+  url          = $url
+  secret_token = $secret
+}
+```
 
 ### Paso 3.4 — Verificar
 
 ```text
-https://api.telegram.org/botTOKEN/getWebhookInfo
+https://api.telegram.org/botPEGATUTOKENAQUI/getWebhookInfo
 ```
 
-Comprueba que `url` sea la de tu app y `ok`/estado correctos.
+Comprueba `url` = tu app. Si `last_error_message` habla de 401, el secret de Vercel y el de setWebhook **no coinciden** → Redeploy + vuelve a setWebhook con el mismo valor.
 
 ### Paso 3.5 — Probar el bot
 
 1. En Telegram, ábrele chat a tu bot.
 2. Envía `/start` o `/capsula`.
-3. Debe responder. Si no: revisa que el Redeploy terminó y que `secret_token` coincide exactamente con `TELEGRAM_WEBHOOK_SECRET`.
+3. Debe responder.
 
-> **Nota:** Ya tenías webhook “OK” **sin** secret. Eso era válido antes; **ahora hay que repetir el setWebhook con secret**.
+> Si solo te importan **alertas al owner** (cron/admin) y no usas comandos del bot, el webhook secret es menos urgente; igual conviene dejarlo bien por seguridad.
 
 ---
 
 # 4. A3 — Supabase: SQL de seguridad extra
 
-**Qué:** Activar RLS en `app_settings` y `audit_events` + columnas opcionales (ya está al final de `schema.sql`).  
-**Dónde:** https://supabase.com → tu proyecto → **SQL** → **SQL Editor**.  
-**Cómo:**
+**Qué:** Activar RLS en `app_settings` y `audit_events` + columnas opcionales.  
+**Dónde:** https://supabase.com → proyecto **ATSAdvisor** → menú izquierdo **SQL** → **SQL Editor**.
+
+### Paso 4.1 — Ejecutar el parche (si aún no)
 
 1. **New query**.
-2. Pega **solo** este bloque (si ya corriste el schema completo una vez, este patch es suficiente):
+2. Pega:
 
 ```sql
 alter table app_settings enable row level security;
 alter table audit_events enable row level security;
--- Sin políticas anon: solo service_role (bypass RLS) puede leer/escribir.
 
 alter table profiles add column if not exists telegram_chat_id text;
 alter table profiles add column if not exists whatsapp_phone text;
 ```
 
 3. **Run**.
-4. Si dice que la política/columna ya existe, ignora el error de “already exists” y sigue.
 
-**Comprobar:** Table Editor → `app_settings` / `audit_events` → en el candado / RLS debe estar **enabled**.
+### Paso 4.2 — Cómo comprobarlo (no busques un interruptor “RLS”)
+
+En el **Table Editor** (la pantalla que compartiste) **no hay** un botón grande que diga “RLS ON/OFF”.
+
+Lo correcto es esto:
+
+1. Menú izquierdo → **Table Editor**.
+2. Click en la tabla **`audit_events`** (o **`app_settings`**).
+3. Arriba a la derecha, si ves el botón **“Add RLS policy”** → **RLS ya está activado**.  
+   Eso es lo que queremos: candado puesto, **sin** políticas para el rol `anon` (el navegador no lee/escribe esas tablas; solo el servidor con `service_role`).
+4. **No hace falta** crear una policy ahora. Si creas una “Allow all for anon”, **empeoras** la seguridad.
+
+**Comprobación 100 % clara (SQL):**
+
+1. SQL Editor → New query → pega y Run:
+
+```sql
+select c.relname as tabla, c.relrowsecurity as rls_activado
+from pg_class c
+join pg_namespace n on n.oid = c.relnamespace
+where n.nspname = 'public'
+  and c.relname in ('app_settings', 'audit_events');
+```
+
+2. Debes ver `rls_activado = true` en ambas filas.
+
+Si eso sale `true` → **A3 está listo**. Marca el checklist y sigue a §5.
 
 ---
 

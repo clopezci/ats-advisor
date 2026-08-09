@@ -78,6 +78,7 @@ export function sanitizeSettingsPatch(body: unknown): AppSettings {
       out09: bool(featIn.out09, base.features.out09),
       coach_chat: bool(featIn.coach_chat, base.features.coach_chat),
       guarantee: false, // descontinuada
+      experts: bool(featIn.experts, base.features.experts),
     },
     llm: {
       prefer_groq: bool(llmIn.prefer_groq, base.llm.prefer_groq),
@@ -87,6 +88,24 @@ export function sanitizeSettingsPatch(body: unknown): AppSettings {
     promotions,
     tester_emails: emails,
     microlearning_footer: str(b.microlearning_footer, base.microlearning_footer, 280),
+    allies: (() => {
+      const raw = Array.isArray(b.allies) ? b.allies : base.allies;
+      return raw.slice(0, 40).map((a, i) => {
+        const row = a as Partial<AppSettings["allies"][number]>;
+        const specs = Array.isArray(row.specialties)
+          ? row.specialties.map((s) => str(s, "", 40)).filter(Boolean).slice(0, 12)
+          : [];
+        return {
+          id: str(row.id, `ally_${i}_${Date.now()}`, 64),
+          name: str(row.name, "Aliado", 80),
+          email: str(row.email, "", 120).trim().toLowerCase(),
+          telegram_chat_id: str(row.telegram_chat_id, "", 40),
+          specialties: specs.length ? specs : ["carrera"],
+          active: bool(row.active, true),
+          notes: str(row.notes, "", 280),
+        };
+      });
+    })(),
   };
 }
 

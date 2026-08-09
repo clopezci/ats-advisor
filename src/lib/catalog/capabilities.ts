@@ -198,6 +198,38 @@ export const CAPABILITIES: Capability[] = [
 
   // —— Outplacement ——
   {
+    id: "experts",
+    title: "Solicitud a aliado experto",
+    summary: "Formulario corto → correo/Telegram al convenio configurado en admin.",
+    audience: ["candidato", "admin"],
+    status: "disponible",
+    href: "/outplacement/experto",
+  },
+  {
+    id: "job-feed",
+    title: "Vacantes rankeadas",
+    summary: "Feed curado LATAM ordenado por match con tu CV.",
+    audience: ["candidato", "publico"],
+    status: "disponible",
+    href: "/outplacement/vacantes",
+  },
+  {
+    id: "video-mock",
+    title: "Video mock entrevista STAR",
+    summary: "Grabación local + rúbrica de autoevaluación (sin subir video).",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/outplacement/video-entrevista",
+  },
+  {
+    id: "missions-xp",
+    title: "Misiones diarias + XP",
+    summary: "Tres retos al día, racha y rangos de progreso.",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/outplacement/misiones",
+  },
+  {
     id: "riasec",
     title: "Assessment RIASEC + roles LATAM",
     summary: "18 ítems Holland → código + mapa de roles típicos en la región.",

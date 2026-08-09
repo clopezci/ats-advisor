@@ -98,7 +98,19 @@ export default function OutplacementPage() {
       )}
 
       <div className="flex flex-col gap-3">
-        <Link href="/outplacement/assessment" className="btn-primary">
+        <Link href="/outplacement/misiones" className="btn-primary">
+          Misiones del día (+XP)
+        </Link>
+        <Link href="/outplacement/vacantes" className="btn-secondary">
+          Vacantes rankeadas
+        </Link>
+        <Link href="/outplacement/video-entrevista" className="btn-secondary">
+          Video mock STAR
+        </Link>
+        <Link href="/outplacement/experto" className="btn-secondary">
+          Hablar con un experto (aliado)
+        </Link>
+        <Link href="/outplacement/assessment" className="btn-secondary">
           Assessment RIASEC → roles LATAM
         </Link>
         <Link href="/outplacement/career-brief" className="btn-secondary">

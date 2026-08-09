@@ -1,3 +1,15 @@
+export type ExpertAlly = {
+  id: string;
+  name: string;
+  email: string;
+  /** Opcional: chat_id Telegram del aliado para aviso directo */
+  telegram_chat_id: string;
+  /** cv | entrevista | negociacion | carrera | bienestar | remoto | emprendimiento */
+  specialties: string[];
+  active: boolean;
+  notes: string;
+};
+
 export type AppSettings = {
   pricing: {
     carrera: number;
@@ -29,6 +41,8 @@ export type AppSettings = {
     out09: boolean;
     coach_chat: boolean;
     guarantee: boolean;
+    /** Solicitudes a aliados expertos */
+    experts: boolean;
   };
   llm: {
     prefer_groq: boolean;
@@ -38,6 +52,8 @@ export type AppSettings = {
   promotions: { name: string; percent: number; amount: number; starts: string; ends: string; code: string }[];
   tester_emails: string[];
   microlearning_footer: string;
+  /** Aliados expertos (coach CV, entrevista, etc.) — configurables en admin */
+  allies: ExpertAlly[];
 };
 
 const g = globalThis as unknown as { __atsSettings?: AppSettings };
@@ -73,6 +89,7 @@ export function defaultSettings(): AppSettings {
       out09: true,
       coach_chat: true,
       guarantee: false, // descontinuada: no controlamos entrevistas del mercado
+      experts: true,
     },
     llm: { prefer_groq: true, prefer_gemini: true, prefer_openai: true },
     promotions: [],
@@ -81,6 +98,7 @@ export function defaultSettings(): AppSettings {
       .map((s) => s.trim().toLowerCase())
       .filter(Boolean),
     microlearning_footer: "ATSAdvisor · LOTIC — practica 5–15 min al día.",
+    allies: [],
   };
 }
 
@@ -124,6 +142,7 @@ function deepMerge(base: AppSettings, patch: Partial<AppSettings>): AppSettings 
     promotions: patch.promotions ?? base.promotions,
     tester_emails: patch.tester_emails ?? base.tester_emails,
     microlearning_footer: patch.microlearning_footer ?? base.microlearning_footer,
+    allies: patch.allies ?? base.allies,
   };
 }
 

@@ -14,6 +14,7 @@ export async function GET() {
     coach_chat: Boolean(s.features.coach_chat),
     outplacement: Boolean(s.features.outplacement),
     out09: Boolean(s.features.out09),
+    experts: Boolean(s.features.experts),
     pricing: {
       carrera: s.pricing.carrera,
       plus: s.pricing.plus,

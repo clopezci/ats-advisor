@@ -32,7 +32,16 @@ export async function PUT(req: Request) {
     }
     // Merge with current so partial UI saves don't wipe fields
     const current = readSettings();
-    const merged = sanitizeSettingsPatch({ ...current, ...body, pricing: { ...current.pricing, ...(body as { pricing?: object }).pricing }, whatsapp_cost: { ...current.whatsapp_cost, ...(body as { whatsapp_cost?: object }).whatsapp_cost }, ai_limits: { ...current.ai_limits, ...(body as { ai_limits?: object }).ai_limits }, features: { ...current.features, ...(body as { features?: object }).features }, llm: { ...current.llm, ...(body as { llm?: object }).llm } });
+    const merged = sanitizeSettingsPatch({
+      ...current,
+      ...body,
+      pricing: { ...current.pricing, ...(body as { pricing?: object }).pricing },
+      whatsapp_cost: { ...current.whatsapp_cost, ...(body as { whatsapp_cost?: object }).whatsapp_cost },
+      ai_limits: { ...current.ai_limits, ...(body as { ai_limits?: object }).ai_limits },
+      features: { ...current.features, ...(body as { features?: object }).features },
+      llm: { ...current.llm, ...(body as { llm?: object }).llm },
+      allies: (body as { allies?: unknown }).allies ?? current.allies,
+    });
     writeSettings(merged);
     const persisted = await persistSettingsToCloud(merged);
     return NextResponse.json({ ok: true, settings: merged, cloud: persisted.cloud });

@@ -79,8 +79,16 @@ export default function EmpresaDashboardPage() {
           </div>
         </div>
         <div className="bento-card">
+          <p className="text-xs muted">Engagement (0–100)</p>
+          <p className="text-2xl font-semibold">{stats.engagementScore}</p>
+        </div>
+        <div className="bento-card">
           <p className="text-xs muted">Módulos promedio</p>
           <p className="text-2xl font-semibold">{stats.avgModules}</p>
+        </div>
+        <div className="bento-card">
+          <p className="text-xs muted">Días promedio en programa</p>
+          <p className="text-2xl font-semibold">{stats.avgDaysInProgram}</p>
         </div>
         <div className="bento-card">
           <p className="text-xs muted">Activos</p>
@@ -117,7 +125,10 @@ export default function EmpresaDashboardPage() {
               </div>
               <span className="pill-brand">{s.status}</span>
             </div>
-            <p className="text-xs muted">{s.modulesDone} cápsulas registradas</p>
+            <p className="text-xs muted">
+              {s.modulesDone} cápsulas · {Math.max(0, Math.floor((Date.now() - s.invitedAt) / 86400000))} días
+              en programa
+            </p>
             <div className="flex flex-wrap gap-2">
               {(["invited", "active", "completed", "paused"] as const).map((st) => (
                 <button

@@ -95,6 +95,21 @@ export function updateSeatStatus(id: string, status: SeatStatus) {
 }
 
 export function seatStats(seats: CompanySeat[]) {
+  const now = Date.now();
+  const daysInProgram = seats.map((s) => Math.max(0, Math.floor((now - s.invitedAt) / 86400000)));
+  const avgDays =
+    seats.length === 0 ? 0 : Math.round(daysInProgram.reduce((a, d) => a + d, 0) / seats.length);
+  const engagement =
+    seats.length === 0
+      ? 0
+      : Math.round(
+          seats.reduce((a, s) => {
+            const statusScore =
+              s.status === "completed" ? 100 : s.status === "active" ? 70 : s.status === "paused" ? 40 : 15;
+            const modScore = Math.min(100, s.modulesDone * 12);
+            return a + (statusScore * 0.5 + modScore * 0.5);
+          }, 0) / seats.length
+        );
   return {
     total: seats.length,
     invited: seats.filter((s) => s.status === "invited").length,
@@ -105,6 +120,8 @@ export function seatStats(seats: CompanySeat[]) {
       seats.length === 0
         ? 0
         : Math.round(seats.reduce((a, s) => a + s.modulesDone, 0) / seats.length),
+    avgDaysInProgram: avgDays,
+    engagementScore: engagement,
   };
 }
 
@@ -139,6 +156,8 @@ export function boardSummaryText(orgName: string, seats: CompanySeat[], purchase
     `Cupos: ${s.total}/${purchased}`,
     `Estados: invitados ${s.invited} · activos ${s.active} · completados ${s.completed} · pausa ${s.paused}`,
     `Módulos promedio: ${s.avgModules}`,
+    `Días promedio en programa: ${s.avgDaysInProgram}`,
+    `Engagement score (0–100): ${s.engagementScore}`,
     "",
     "Alertas:",
     ...(alerts.length ? alerts.map((a) => `- ${a}`) : ["- Sin alertas"]),

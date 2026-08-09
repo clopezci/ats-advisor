@@ -15,11 +15,13 @@ El código ya está en `main` y Vercel despliega solo al push.
 
 # BLOQUE PENDIENTES (hazlo cuando el agente termine el código)
 
-### YA HECHO (código reciente — precios)
+### YA HECHO (código reciente — precios + Fase 1/2)
 
-- Garantía 30 días eliminada.
-- OUT-09 **solo** en Carrera Plus (2/mes) o compra extra $22k; Carrera $79k = OUT-01…08 sin curso a medida.
-- Precio `plan_90_dias` $39k **retirado**. El “modo 90 días” es pausa post-empleo gratuita (checklist), no un plan barato de 3 meses.
+- Garantía 30 días eliminada; OUT-09 solo Plus; `plan_90_dias` $39k retirado.
+- Fase 1: assessment, career-brief, oferta, bienestar, remoto.
+- Fase 2: vacantes, video mock, misiones/XP, tracks profundos, dashboard RH engagement.
+- **Aliados expertos:** `/admin` → sección «Aliados expertos» (nombre, correo, telegram, especialidades). Usuario: `/outplacement/experto`. Flag `experts`.
+
 
 > **Instrucción:** no empieces este bloque hasta que el último push a `main` esté **Ready** en Vercel.  
 > Mientras tanto ya puedes **probar ads internos** (ArriendoSeguro / LOTIC) sin Google.

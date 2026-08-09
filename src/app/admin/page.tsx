@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import type { AppSettings } from "@/lib/settings";
+import { EXPERT_SPECIALTIES } from "@/lib/experts/specialties";
 
 export default function AdminPage() {
   const [secret, setSecret] = useState("");
@@ -213,7 +214,7 @@ export default function AdminPage() {
       <section className="bento-card space-y-3">
         <h2 className="font-semibold">Feature flags</h2>
         {(
-          ["ads", "telegram", "whatsapp", "outplacement", "out09", "coach_chat"] as const
+          ["ads", "telegram", "whatsapp", "outplacement", "out09", "coach_chat", "experts"] as const
         ).map((k) => (
           <label key={k} className="flex items-center gap-2 text-sm">
             <input
@@ -275,6 +276,133 @@ export default function AdminPage() {
             })
           }
         />
+      </section>
+
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold">Aliados expertos</h2>
+        <p className="text-xs muted">
+          Convenios: el usuario pide ayuda en /outplacement/experto y el aliado recibe correo (+
+          Telegram si pones chat_id). Puedes crear varios.
+        </p>
+        {(settings.allies || []).map((a, idx) => (
+          <div
+            key={a.id}
+            className="space-y-2 border-b pb-3"
+            style={{ borderColor: "var(--border)" }}
+          >
+            <input
+              className="field"
+              placeholder="Nombre del aliado"
+              value={a.name}
+              onChange={(e) => {
+                const allies = [...settings.allies];
+                allies[idx] = { ...a, name: e.target.value };
+                setSettings({ ...settings, allies });
+              }}
+            />
+            <input
+              className="field"
+              type="email"
+              placeholder="Correo (notificación)"
+              value={a.email}
+              onChange={(e) => {
+                const allies = [...settings.allies];
+                allies[idx] = { ...a, email: e.target.value };
+                setSettings({ ...settings, allies });
+              }}
+            />
+            <input
+              className="field"
+              placeholder="Telegram chat_id (opcional)"
+              value={a.telegram_chat_id || ""}
+              onChange={(e) => {
+                const allies = [...settings.allies];
+                allies[idx] = { ...a, telegram_chat_id: e.target.value };
+                setSettings({ ...settings, allies });
+              }}
+            />
+            <p className="text-xs muted">Especialidades</p>
+            <div className="flex flex-wrap gap-2">
+              {EXPERT_SPECIALTIES.map((s) => {
+                const on = (a.specialties || []).includes(s.id);
+                return (
+                  <label key={s.id} className="flex items-center gap-1 text-xs">
+                    <input
+                      type="checkbox"
+                      checked={on}
+                      onChange={() => {
+                        const allies = [...settings.allies];
+                        const set = new Set(a.specialties || []);
+                        if (on) set.delete(s.id);
+                        else set.add(s.id);
+                        allies[idx] = { ...a, specialties: [...set] };
+                        setSettings({ ...settings, allies });
+                      }}
+                    />
+                    {s.label}
+                  </label>
+                );
+              })}
+            </div>
+            <textarea
+              className="field min-h-16"
+              placeholder="Notas públicas (bio corta)"
+              value={a.notes || ""}
+              onChange={(e) => {
+                const allies = [...settings.allies];
+                allies[idx] = { ...a, notes: e.target.value };
+                setSettings({ ...settings, allies });
+              }}
+            />
+            <label className="flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={a.active}
+                onChange={(e) => {
+                  const allies = [...settings.allies];
+                  allies[idx] = { ...a, active: e.target.checked };
+                  setSettings({ ...settings, allies });
+                }}
+              />
+              Activo
+            </label>
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() =>
+                setSettings({
+                  ...settings,
+                  allies: settings.allies.filter((_, i) => i !== idx),
+                })
+              }
+            >
+              Quitar aliado
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          className="btn-secondary"
+          onClick={() =>
+            setSettings({
+              ...settings,
+              allies: [
+                ...(settings.allies || []),
+                {
+                  id: `ally_${Date.now()}`,
+                  name: "Nuevo aliado",
+                  email: "",
+                  telegram_chat_id: "",
+                  specialties: ["cv", "carrera"],
+                  active: true,
+                  notes: "",
+                },
+              ],
+            })
+          }
+        >
+          Añadir aliado
+        </button>
       </section>
 
       <section className="bento-card space-y-3">

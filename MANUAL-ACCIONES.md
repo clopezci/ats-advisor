@@ -1,232 +1,311 @@
-# Acciones manuales — ATSAdvisor
-
-Solo lo que **tú** debes hacer en consolas (Vercel, Supabase, Telegram, pagos, ads…).  
-El código ya está en `main` y Vercel despliega solo al push.
-
-| | |
-| --- | --- |
-| **App** | https://ats-advisor-two.vercel.app/ |
-| **Vercel** | proyecto `ats-advisor` |
-| **Repo** | https://github.com/clopezci/ats-advisor (`main`) |
-| **Admin** | https://ats-advisor-two.vercel.app/admin |
-| **Actualizado** | 2026-08-09 |
-
----
-
-# BLOQUE PENDIENTES (hazlo cuando el agente termine el código)
-
-### YA HECHO (código reciente — precios + Fase 1/2/3 + 4/5)
-
-- Garantía 30 días eliminada; OUT-09 solo Plus; `plan_90_dias` $39k retirado.
-- Fase 1: assessment, career-brief, oferta, bienestar, remoto.
-- Fase 2: vacantes, video mock, misiones/XP, tracks profundos, dashboard RH engagement.
-- **Aliados + WhatsApp + conciliación:** `/admin` (precio servicio COP, % comisión auto→COP, modo cobro, WA) · tablero `/admin/expertos` · usuario `/outplacement/experto` + confirmar.
-- Modo cobro default **platform_collect**: LOTIC cobra al cliente y liquida neto al aliado (ingreso real = comisión).
-- **Fase 3:** marketplace `/outplacement/marketplace` · cursos externos `/outplacement/cursos` · alumni `/outplacement/alumni` (enlaces en admin).
-- **Fase 4 (SEO/crecimiento):** match `/herramientas/match` · referidos `/cuenta/referidos` · portfolio `/outplacement/portfolio`.
-- **Fase 5 (hábito):** progreso `/outplacement/progreso` · plan semana `/outplacement/plan-semana` · alertas `/outplacement/alertas`.
-- **Pendiente código (último):** checkout Wompi/hub de sesiones de aliados (`platform_collect`).
-
-
-> **Instrucción:** no empieces este bloque hasta que el último push a `main` esté **Ready** en Vercel.  
-> Mientras tanto ya puedes **probar ads internos** (ArriendoSeguro / LOTIC) sin Google.
-
-## Pendiente tuyo — checklist corta
-
-| # | Qué | Prioridad | Sección |
-| - | --- | --------- | ------- |
-| P1 | **Redeploy** Production tras este push | Ahora | [§2](#2-redeploy) |
-| P2 | Confirmar house ads en home / blog / ATS (plan free) | Ahora | [§12](#12-ads-internos-y-alternativas-a-google) |
-| P3 | Wompi **o** Mercado Pago (sandbox → live) | Cobros | [§6](#6-pagos-reales-wompi-o-mercado-pago) |
-| P4 | Solicitud **Google AdSense** (puede tardar / rechazar si hay poco tráfico) | Paralelo | [§8.4](#84-google-adsense) |
-| P5 | (Opcional) operador alternativo: EthicalAds / Carbon / Media.net | Paralelo | [§12](#12-ads-internos-y-alternativas-a-google) |
-| P6 | WhatsApp Meta (addon + avisos a aliados) | Después | [§8.2](#82-whatsapp-business) |
-| P6b | Cargar aliados + enlaces alumni en `/admin`; revisar `/admin/expertos` | Ahora | Admin |
-| P7 | Dominio propio + actualizar webhooks | Cuando tengas | [§8.5](#85-dominio-propio) |
-| P8 | Logo LOTIC final + tarjeta Live en lotic-soluciones | Brand | [§8.6](#86-logo--portfolio-lotic) |
-| P9 | Gemini / OpenAI / HF / Sentry DSN | Opcional | [§8.1](#81-fallback-ia)--[§8.3](#83-sentry) |
-| P10 | Resend dominio verificado | Email fiable | [§7](#7-resend-dominio) |
-
-### Ya no debes rehacer (según conversación previa)
-
-- Vars base Vercel, `CRON_SECRET`, Supabase (schema + 3 keys + bucket `cvs` + Auth)
-- Telegram bot + owner + webhook + `TELEGRAM_WEBHOOK_SECRET`
-- RLS `app_settings` / `audit_events`
-- Health → Telegram OK
-
-Si algo de esa lista falló en tu entorno, revisa §§2–5 abajo.
-
----
-
-# 1. Qué quedó listo en código (no requiere tu acción)
-
-- **Pago → plan cloud:** checkout guarda `payment_intent`; webhook Wompi/MP hace upsert de `profiles.plan`; `/api/payments/claim` + `/cuenta` → «Reclamar pago».
-- **Ads multi-operador:** por defecto **house** (ArriendoSeguro → https://arriendoseguro.app/ + hub LOTIC). Estructura lista para `adsense` / `custom`.
-- **Google-ready:** privacidad/cookies con disclosure de ads + enlace partners Google; `ads.txt`; blog ampliado; slots en home/blog/ATS/herramientas; banner de consentimiento.
-- **Telegram:** `/start` registra chat; `/vincular correo@x.com` guarda `telegram_chat_id`; cron envía cápsulas a perfiles pagos vinculados.
-- **Habeas:** export + wipe cloud (`action=wipe`) desde `/cuenta`.
-
----
-
-# 2. Redeploy
-
-1. Vercel → **ats-advisor** → Deployments → último Production → **Redeploy**.
-2. Espera **Ready**.
-3. Abre https://ats-advisor-two.vercel.app/api/health  
-4. Prueba ads: home o `/blog` en plan free → debe verse creativo **ArriendoSeguro · LOTIC**.
-5. `https://ats-advisor-two.vercel.app/ads.txt` debe responder texto (línea Google comentada hasta que tengas `ca-pub-…`).
-
----
-
-# 3–5. Telegram / RLS / verificación
-
-Si el bot ya responde a `/start` y el reporte de salud llega: **salta**.  
-Si no: ver historial de este archivo en commits previos o:
-
-- Secret + setWebhook: PowerShell con `TELEGRAM_BOT_TOKEN` + `TELEGRAM_WEBHOOK_SECRET`.
-- RLS: `select relname, relrowsecurity from pg_class …` en `app_settings` / `audit_events`.
-- Admin: `/admin` + «Enviar reporte de salud».
-
-Comando nuevo del bot: **`/vincular tu@correo.com`** (perfil debe existir vía magic link).
-
----
-
-# 6. Pagos reales (Wompi o Mercado Pago)
-
-**Webhook:** `https://ats-advisor-two.vercel.app/api/webhooks/payments`
-
-| Paso | Acción |
-| ---- | ------ |
-| 1 | Sandbox Wompi (`WOMPI_PUBLIC_KEY`, `WOMPI_PRIVATE_KEY`, `WOMPI_EVENTS_SECRET`) **o** `MP_ACCESS_TOKEN` |
-| 2 | Redeploy |
-| 3 | `/precios` → correo **obligatorio recomendado** → checkout |
-| 4 | Tras APPROVED: Telegram «Plan activado» + plan en Supabase `profiles` |
-| 5 | Si pagaste sin perfil: magic link → `/cuenta` → **Reclamar pago** |
-| 6 | Live: llaves producción; quita `WOMPI_CHECKSUM_MODE=skip` |
-
-Sin pasarela: sigue **Pagar (demo)** (solo dispositivo).
-
----
-
-# 7. Resend dominio
-
-Verifica DNS en resend.com y pon `RESEND_FROM` con dominio propio. Redeploy.
-
----
-
-# 8. Opcionales
-
-## 8.1 Fallback IA
-
-`GOOGLE_AI_API_KEY` · `OPENAI_API_KEY` · `HF_TOKEN` → Vercel → Redeploy.
-
-## 8.2 WhatsApp Business
-
-Meta app → `WHATSAPP_TOKEN` (o `META_WHATSAPP_TOKEN`) + `WHATSAPP_PHONE_NUMBER_ID` (+ opcional `WHATSAPP_BROADCAST_TO`). Precio addon en `/admin`.
-
-**También notifica aliados:** en `/admin` → Aliados → WhatsApp E.164 + toggle «WhatsApp». Sin esas vars, la solicitud igual crea el caso y manda email/Telegram.
-
-**Conciliación:** `/admin/expertos` — casos confirmados por el usuario + corte semanal. Configura % comisión por aliado o el default.
-
-## 8.3 Sentry
-
-`SENTRY_DSN` (opcional; ya hay alertas Telegram).
-
-## 8.4 Google AdSense
-
-1. Cumple políticas: contenido original (blog), nav clara, HTTPS, privacidad/cookies, contacto, quiénes somos — **ya en la app**.
-2. https://www.google.com/adsense → añade la URL del sitio.
-3. Tras aprobación: `NEXT_PUBLIC_ADSENSE_CLIENT_ID=ca-pub-…`
-4. Opcional: `NEXT_PUBLIC_AD_OPERATOR=adsense` (si no, auto-pasa a adsense cuando hay client id).
-5. Flag **ads** en `/admin` = on.
-6. Redeploy. Revisa `/ads.txt`.
-
-> Riesgo: demora o rechazo si el sitio tiene poco tráfico/uso. Por eso dejamos **house ads** activos ya.
-
-## 8.5 Dominio propio
-
-Domains en Vercel → actualizar `NEXT_PUBLIC_APP_URL`, Supabase Auth URLs, webhooks Telegram/pagos, Redeploy.
-
-## 8.6 Logo + portfolio LOTIC
-
-Reemplaza `public/logo.svg` / iconos o envíamelos. En lotic-soluciones marca ATSAdvisor Live si aún dice “en construcción”.
-
----
-
-# 12. Ads internos y alternativas a Google
-
-### Ya activo (sin tu cuenta Google)
-
-- Operador por defecto: **`house`**
-- Creativo principal: **ArriendoSeguro** → https://arriendoseguro.app/
-- Secundario: hub https://lotic-soluciones.vercel.app/
-- Slots: home (free), blog, ATS resultados, herramientas
-- Respeto cookie: «Solo esenciales» oculta ads
-
-### Variables opcionales (Vercel)
-
-| Variable | Uso |
-| -------- | --- |
-| `NEXT_PUBLIC_AD_OPERATOR` | `house` \| `adsense` \| `custom` \| `mediavine` \| `ezoic` |
-| `NEXT_PUBLIC_AD_ARRIENDOSEGURO_URL` | Override URL (default arriendoseguro.app) |
-| `NEXT_PUBLIC_ADSENSE_CLIENT_ID` | `ca-pub-…` |
-| `NEXT_PUBLIC_AD_CUSTOM_SCRIPT_URL` | Script EthicalAds / Carbon / Media.net / etc. |
-| `NEXT_PUBLIC_AD_NETWORK_NAME` | Etiqueta visible del operador custom |
-
-### Alternativas recomendadas (mientras AdSense decide)
-
-| Opción | Notas | Encaje |
-| ------ | ----- | ------ |
-| **House / LOTIC** | Ya listo; promoción cruzada ArriendoSeguro | Mejor ahora |
-| **EthicalAds** | Developer-friendly, aprobación más humana | `custom` + script |
-| **Carbon Ads** | Audiencias tech | `custom` |
-| **Media.net** | Estilo contextual Yahoo | `custom` / cuenta propia |
-| **Propeller / redes abiertas** | Más fácil entrar, peor UX/brand | Solo si aceptas el trade-off |
-| **Amazon Associates / afiliados** | No es display clásico | Enlaces en blog |
-
-Flujo sugerido: **house ahora** → solicitar AdSense en paralelo → si rechazan, EthicalAds/Carbon → si creces tráfico, Mediavine/Ezoic.
-
----
-
-# 9. Checklist imprimible
-
-### Hecho (código + tu setup previo)
-
-- [x] App en Vercel + vars base + Supabase + Telegram secret
-- [x] House ads ArriendoSeguro + multi-operador
-- [x] Puente pago→plan + claim + habeas wipe
-- [x] Legal ads/Google + ads.txt + blog ampliado
-
-### Pendiente tuyo (este bloque)
-
-- [ ] Redeploy (§2)
-- [ ] Ver creativo ArriendoSeguro en free (§12)
-- [ ] Wompi/MP sandbox (§6)
-- [ ] Solicitud AdSense (§8.4) — en paralelo, sin bloquear house
-- [ ] (Opc) EthicalAds u otro custom (§12)
-- [ ] (Opc) WhatsApp, dominio, logo, Gemini/OpenAI, Resend dominio
-
----
-
-# 10. Variables — referencia
-
-**Ya suelen estar:**  
-`NEXT_PUBLIC_APP_URL` · `ADMIN_*` · `GROQ_*` · `RESEND_*` · `CRON_SECRET` · Supabase ×3 · `TELEGRAM_BOT_TOKEN` · `TELEGRAM_OWNER_CHAT_ID` · `TELEGRAM_WEBHOOK_SECRET`
-
-**Agregar cuando cobres / monetices:**  
-`WOMPI_*` o `MP_ACCESS_TOKEN` · `NEXT_PUBLIC_ADSENSE_CLIENT_ID` · opcionales de §12 y §8
-
-**Regla:** cada cambio de env → **Redeploy**.
-
----
-
-# 11. Dudas rápidas
-
-| Pregunta | Respuesta |
-| -------- | --------- |
-| ¿Puedo publicitar sin Google? | Sí: house ads ya muestran ArriendoSeguro. |
-| ¿Pagó y no ve plan? | Mismo correo en checkout + `/cuenta` → Reclamar pago (o magic link antes). |
-| ¿Bot no manda cápsulas diarias al user? | `/vincular email` + plan carrera/plus + cron capsules. |
-| ¿Cómo apago ads? | `/admin` flag **ads** off, o usuario «Solo esenciales». |
-
-Cuando marques Redeploy + veas el ad de ArriendoSeguro, avisa y seguimos con la pasarela que elijas.
+# Acciones manuales — ATSAdvisor
+
+Solo lo que **tú** debes hacer en consolas (Vercel, Supabase, Telegram, pagos, ads…).  
+El código ya está en `main` y Vercel despliega solo al push.
+
+| | |
+| --- | --- |
+| **App** | https://ats-advisor-two.vercel.app/ |
+| **Vercel** | proyecto `ats-advisor` |
+| **Repo** | https://github.com/clopezci/ats-advisor (`main`) |
+| **Admin** | https://ats-advisor-two.vercel.app/admin |
+| **Actualizado** | 2026-08-09 |
+
+---
+
+# PENDIENTES UNO A UNO (hazlos en este orden)
+
+Cada punto = **una tarea tuya**. Marca el checkbox cuando termines.
+
+---
+
+## 1. Redeploy de Production
+
+**Para qué:** que Vercel sirva el código nuevo (fases 1–5, aliados, etc.).
+
+**Dónde:** https://vercel.com → proyecto **ats-advisor**
+
+**Cómo:**
+1. Entra a **Deployments**.
+2. Abre el último deployment de la rama **Production** / `main`.
+3. Menú **⋯** → **Redeploy** → confirma (sin “Use existing Build Cache” si quieres build limpio).
+4. Espera estado **Ready** (verde).
+
+**Cómo saber que quedó bien:** abre  
+https://ats-advisor-two.vercel.app/api/health  
+y no debe dar 404/error 500.
+
+- [ ] Hecho
+
+---
+
+## 2. Probar que la app levantó
+
+**Para qué:** no configurar nada más si el deploy falló.
+
+**Cómo:**
+1. Abre https://ats-advisor-two.vercel.app/
+2. Abre https://ats-advisor-two.vercel.app/outplacement/progreso
+3. Abre https://ats-advisor-two.vercel.app/admin  
+   - Pega tu `ADMIN_SECRET` (el de Vercel → Settings → Environment Variables).  
+   - Debe cargar settings (precios, flags, aliados).
+
+**Si admin no entra:** la variable `ADMIN_SECRET` no está en Production o no hiciste Redeploy tras ponerla.
+
+- [ ] Hecho
+
+---
+
+## 3. Ver ads internos (ArriendoSeguro)
+
+**Para qué:** monetizar free **sin** Google todavía.
+
+**Cómo:**
+1. Entra a la home o a `/blog` **sin** plan Carrera (plan free / ventana privada).
+2. Debes ver un bloque tipo anuncio **ArriendoSeguro · LOTIC** con enlace a https://arriendoseguro.app/
+3. Si no aparece: `/admin` → flag **ads** = ON → Guardar → recarga la home.
+
+**Opcional:** abre https://ats-advisor-two.vercel.app/ads.txt — debe mostrar texto (la línea de Google puede estar comentada).
+
+- [ ] Hecho
+
+---
+
+## 4. Cargar al menos 1 aliado experto
+
+**Para qué:** que `/outplacement/experto` y el marketplace muestren precios reales.
+
+**Dónde:** https://ats-advisor-two.vercel.app/admin → sección **Aliados expertos**
+
+**Cómo (por cada persona):**
+1. **Añadir aliado**.
+2. Nombre + correo real (ahí le llegan las solicitudes).
+3. **Valor del servicio (COP)** — ej. `80000` (esto ve el cliente).
+4. **Comisión %** — ej. `15` (abajo verás comisión COP y neto aliado calculados solos).
+5. Opcional: Telegram `chat_id`, WhatsApp `57300…`, especialidades, notas.
+6. Deja **Activo** marcado.
+7. Arriba: modo de cobro = **LOTIC cobra y liquida** (recomendado).
+8. Flag **experts** = ON (en features).
+9. **Guardar todo**.
+
+**Probar:** https://ats-advisor-two.vercel.app/outplacement/experto → debe verse el aliado con el precio.
+
+- [ ] Hecho
+
+---
+
+## 5. Enlaces alumni (si ya tienes grupo)
+
+**Dónde:** `/admin` → **Alumni / comunidad**
+
+**Cómo:** pega URL de Telegram (y Discord si hay) + nota del AMA → Guardar.
+
+**Probar:** https://ats-advisor-two.vercel.app/outplacement/alumni
+
+Si aún no tienes grupo, **salta** este punto.
+
+- [ ] Hecho / [ ] No aplica aún
+
+---
+
+## 6. Activar cobros reales (elige UNA pasarela)
+
+**Para qué:** que Carrera / Plus / OUT-09 dejen de ser solo “demo local”.
+
+### Opción A — Wompi (Colombia, recomendada si ya la usas)
+
+1. Entra a https://comercios.wompi.co (o dashboard Wompi).
+2. Crea/usa comercio en **Sandbox** primero.
+3. Copia:
+   - Public key  
+   - Private key  
+   - Events secret (para webhooks)
+4. Vercel → **ats-advisor** → Settings → **Environment Variables** → Production:
+   - `WOMPI_PUBLIC_KEY` = …
+   - `WOMPI_PRIVATE_KEY` = …
+   - `WOMPI_EVENTS_SECRET` = …
+5. En Wompi, webhook de eventos → URL exacta:  
+   `https://ats-advisor-two.vercel.app/api/webhooks/payments`
+6. **Redeploy** (punto 1 otra vez).
+7. Prueba: `/precios` → pon un correo real → paga en sandbox.
+8. Debe: aviso Telegram “Plan activado” + plan en Supabase; si no, `/cuenta` → **Reclamar pago** (mismo correo).
+9. Cuando sandbox OK: cambia a llaves **Live** y quita cualquier `WOMPI_CHECKSUM_MODE=skip`.
+
+### Opción B — Mercado Pago
+
+1. Developers MP → crea app → `Access Token`.
+2. Vercel: `MP_ACCESS_TOKEN` = …
+3. Webhook a la misma URL:  
+   `https://ats-advisor-two.vercel.app/api/webhooks/payments`
+4. Redeploy + prueba en `/precios`.
+
+### Opción C — Hub de pagos ArriendoSeguro (si lo vas a usar)
+
+1. En el hub registra app **ATSAdvisor**.
+2. Webhook: `https://ats-advisor-two.vercel.app/api/payments/hub-webhook`  
+   *(si esa ruta aún no existe en código, avísame antes de apuntar producción; mientras usa Wompi/MP del punto A/B).*
+3. Pega en Vercel las keys `PAYMENT_HUB_*` que te dio el hub → Redeploy.
+
+**Sin este punto:** la gente puede usar “Pagar (demo)” solo en su dispositivo; **no** te llega plata real.
+
+- [ ] Sandbox OK  
+- [ ] Live OK (después)
+
+---
+
+## 7. Correos fiables (Resend + dominio)
+
+**Para qué:** que aliados y usuarios reciban mails (solicitudes, confirmaciones) sin caer en spam.
+
+**Cómo:**
+1. https://resend.com → Domains → añade tu dominio (ej. `tudominio.com`).
+2. Copia los registros DNS (TXT/MX/CNAME) a tu proveedor de dominio.
+3. Espera verificación **Verified**.
+4. Vercel: `RESEND_FROM` = algo como `ATSAdvisor <noreply@tudominio.com>`
+5. Redeploy.
+6. Prueba enviando una solicitud a un aliado desde `/outplacement/experto`.
+
+Si no tienes dominio propio aún, puedes seguir con el from de prueba de Resend (más limitado).
+
+- [ ] Hecho / [ ] Más adelante
+
+---
+
+## 8. WhatsApp Business (Meta) — opcional pero útil para aliados
+
+**Para qué:** avisar al aliado por WA cuando alguien pide servicio + addon de cápsulas WhatsApp.
+
+**Cómo:**
+1. Meta for Developers → App → WhatsApp → API Setup.
+2. Obtén **Phone number ID** y un **token** permanente (o de sistema).
+3. Vercel Production:
+   - `WHATSAPP_TOKEN` (o `META_WHATSAPP_TOKEN`)
+   - `WHATSAPP_PHONE_NUMBER_ID`
+4. Redeploy.
+5. En `/admin` → aliado → WhatsApp `573001234567` + toggle WhatsApp ON → Guardar.
+6. Manda una solicitud de prueba; el aliado debe recibir WA (si el número está en modo permitido / plantillas según Meta).
+
+Sin esto: siguen funcionando **email + Telegram**.
+
+- [ ] Hecho / [ ] Después
+
+---
+
+## 9. Solicitar Google AdSense (en paralelo, no bloquea)
+
+**Para qué:** ads de terceros cuando Google apruebe (puede tardar semanas o rechazar).
+
+**Cómo:**
+1. Entra a https://www.google.com/adsense con tu cuenta Google.
+2. Añade el sitio: `https://ats-advisor-two.vercel.app` (o tu dominio cuando lo tengas).
+3. Espera revisión.
+4. Si aprueban, te dan `ca-pub-XXXXXXXX`.
+5. Vercel: `NEXT_PUBLIC_ADSENSE_CLIENT_ID` = `ca-pub-…`
+6. Opcional: `NEXT_PUBLIC_AD_OPERATOR` = `adsense`
+7. Redeploy.
+8. En `/admin` deja **ads** ON.
+
+**Mientras esperas:** sigue con house ads (punto 3). No apagues ArriendoSeguro hasta ver AdSense vivo.
+
+- [ ] Solicitud enviada  
+- [ ] Aprobado + variable puesta
+
+---
+
+## 10. Dominio propio (cuando lo compres)
+
+**Para qué:** marca seria, mejor AdSense, URLs estables.
+
+**Cómo:**
+1. Compra dominio (ej. `atsadvisor.com` o subdominio LOTIC).
+2. Vercel → Project → **Domains** → añade el dominio → sigue DNS que indique Vercel.
+3. Cuando HTTPS esté verde, actualiza variables:
+   - `NEXT_PUBLIC_APP_URL` = `https://tu-dominio.com`
+4. Supabase → Authentication → URL Configuration:
+   - Site URL = tu dominio  
+   - Redirect URLs = `https://tu-dominio.com/**`
+5. Wompi/MP/Telegram: cambia webhooks a la URL nueva.
+6. Redeploy.
+7. Prueba magic link y un pago sandbox.
+
+- [ ] Hecho / [ ] Después
+
+---
+
+## 11. Logo final + tarjeta Live en LOTIC
+
+**Para qué:** branding coherente en app y portafolio.
+
+**Cómo:**
+1. Sustituye `public/logo.svg` (y favicons si tienes) **o** mándamelos al agente para que los meta.
+2. En el repo/site **lotic-soluciones**: tarjeta ATSAdvisor → status **Live** + URL  
+   `https://ats-advisor-two.vercel.app/` (o tu dominio).
+
+- [ ] Logo  
+- [ ] Tarjeta LOTIC Live
+
+---
+
+## 12. Fallbacks de IA y Sentry (opcional)
+
+**Para qué:** si Groq se cae o quieres embeddings mejores / errores en Sentry.
+
+**Vercel (solo los que quieras):**
+- `GOOGLE_AI_API_KEY`
+- `OPENAI_API_KEY`
+- `HF_TOKEN`
+- `SENTRY_DSN`
+
+Luego **Redeploy**.
+
+- [ ] Hecho / [ ] No necesito aún
+
+---
+
+## 13. Tablero de comisiones (uso operativo, no config)
+
+**Para qué:** cobrar comisión a aliados con pruebas (cortes semanales).
+
+**Cómo usarlo (cuando ya haya casos):**
+1. Usuario pide experto → confirma servicio con monto.
+2. Tú entras a https://ats-advisor-two.vercel.app/admin/expertos
+3. Filtro **Confirmados sin corte** → marcas → **Cerrar corte** de la semana.
+4. Con ese total le cobras / liquidas según el modo (si cobras tú en plataforma: liquidas el **neto** al aliado).
+
+**Nota:** el checkout automático de la sesión del aliado **aún es el último pending de código**; hasta entonces puedes cobrar manual (link de pago / transferencia) y usar el tablero como prueba.
+
+- [ ] Entendido / probado con un caso de prueba
+
+---
+
+# Orden sugerido esta semana
+
+| Día | Puntos |
+| --- | --- |
+| Hoy | **1 → 2 → 3 → 4** (y 5 si tienes Telegram alumni) |
+| Esta semana | **6** sandbox pagos |
+| En paralelo | **9** AdSense + **7** Resend si tienes dominio |
+| Después | 8, 10, 11, 12 |
+
+---
+
+# Ya NO debes rehacer (si ya te funcionó antes)
+
+- Variables base Vercel, `CRON_SECRET`
+- Supabase (proyecto, keys, Auth, bucket `cvs`)
+- Telegram bot + owner + webhook
+- RLS de `app_settings` / `audit_events`
+- Health → Telegram
+
+Si algo de esa lista **no** te funciona, dilo y lo reparamos puntual.
+
+---
+
+# Referencia corta de webhooks
+
+| Sistema | URL |
+| ------- | --- |
+| Wompi / Mercado Pago | `https://ats-advisor-two.vercel.app/api/webhooks/payments` |
+| Telegram | la que ya configuraste con `TELEGRAM_WEBHOOK_SECRET` |
+
+**Regla:** cada vez que cambies una variable en Vercel → otra vez **Redeploy** (punto 1).

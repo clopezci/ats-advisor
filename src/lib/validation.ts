@@ -104,6 +104,12 @@ export function sanitizeSettingsPatch(body: unknown): AppSettings {
           specialties: specs.length ? specs : ["carrera"],
           active: bool(row.active, true),
           notes: str(row.notes, "", 280),
+          service_price_cop: num(
+            row.service_price_cop,
+            base.expert_default_service_price_cop,
+            0,
+            50_000_000
+          ),
           commission_percent: num(row.commission_percent, base.expert_default_commission_percent, 0, 100),
           notify_email: bool(row.notify_email, true),
           notify_telegram: bool(row.notify_telegram, true),
@@ -122,6 +128,14 @@ export function sanitizeSettingsPatch(body: unknown): AppSettings {
       0,
       100
     ),
+    expert_default_service_price_cop: num(
+      b.expert_default_service_price_cop,
+      base.expert_default_service_price_cop,
+      0,
+      50_000_000
+    ),
+    expert_billing_mode:
+      b.expert_billing_mode === "ally_direct" ? "ally_direct" : "platform_collect",
   };
 }
 

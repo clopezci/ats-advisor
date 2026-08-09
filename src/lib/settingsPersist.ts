@@ -17,6 +17,9 @@ function deepMerge(base: AppSettings, patch: Partial<AppSettings>): AppSettings 
     alumni: { ...base.alumni, ...(patch.alumni || {}) },
     expert_default_commission_percent:
       patch.expert_default_commission_percent ?? base.expert_default_commission_percent,
+    expert_default_service_price_cop:
+      patch.expert_default_service_price_cop ?? base.expert_default_service_price_cop,
+    expert_billing_mode: patch.expert_billing_mode ?? base.expert_billing_mode,
   };
 }
 

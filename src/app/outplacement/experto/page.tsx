@@ -13,12 +13,16 @@ type AllyPublic = {
   specialties: string[];
   specialtyLabels: string[];
   notes: string;
+  servicePriceCop: number;
+  commissionPercent: number;
 };
 
 function ExpertoInner() {
   const params = useSearchParams();
   const [allies, setAllies] = useState<AllyPublic[]>([]);
   const [enabled, setEnabled] = useState(true);
+  const [billingCopy, setBillingCopy] = useState("");
+  const [billingMode, setBillingMode] = useState<"platform_collect" | "ally_direct">("platform_collect");
   const [allyId, setAllyId] = useState("");
   const [specialty, setSpecialty] = useState("cv");
   const [name, setName] = useState("");
@@ -57,13 +61,15 @@ function ExpertoInner() {
       .then((d) => {
         setEnabled(Boolean(d.enabled));
         setAllies(d.allies || []);
+        setBillingCopy(d.billingCopy || "");
+        if (d.billingMode === "ally_direct" || d.billingMode === "platform_collect") {
+          setBillingMode(d.billingMode);
+        }
         const list = (d.allies || []) as AllyPublic[];
-        const preferred =
-          list.find((a) => a.specialties.includes(spec)) || list[0];
+        const preferred = list.find((a) => a.specialties.includes(spec)) || list[0];
         if (preferred) setAllyId(preferred.id);
       })
       .catch(() => setEnabled(false));
-    // solo al montar / cambiar query
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [qSpecialty, packId]);
 
@@ -104,16 +110,12 @@ function ExpertoInner() {
             <p className="text-xs uppercase tracking-[0.14em] muted">Aliados · conciliación</p>
             <h1 className="mt-1 text-2xl font-semibold">Hablar con un experto</h1>
           </div>
-          <SpeakButton text="Elige aliado, envía la solicitud. El aliado recibe correo, Telegram o WhatsApp. Cuando tomes el servicio, confirma con el enlace para dejar prueba de comisión." />
+          <SpeakButton text="Elige aliado. El precio del servicio lo define el convenio. Confirma cuando lo tomes." />
         </div>
-        <p className="text-sm muted">
-          Convenios LOTIC: pagas la sesión al aliado. Tras tomarla, confirma en la app — eso genera
-          la prueba para el corte semanal de comisiones (no es un cobro automático a ti).
-        </p>
+        <p className="text-sm muted">{billingCopy || "Convenios LOTIC con precio público por aliado."}</p>
         {pack && (
           <p className="text-xs muted">
-            Paquete marketplace: <strong>{pack.title}</strong> · desde orientativo{" "}
-            {pack.fromCop.toLocaleString("es-CO")} COP
+            Paquete marketplace: <strong>{pack.title}</strong>
           </p>
         )}
       </section>
@@ -131,9 +133,19 @@ function ExpertoInner() {
       {enabled &&
         allies.map((a) => (
           <section key={a.id} className="bento-card space-y-2">
-            <h2 className="font-semibold">{a.name}</h2>
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <h2 className="font-semibold">{a.name}</h2>
+              <p className="text-sm font-medium">
+                {a.servicePriceCop?.toLocaleString("es-CO")} COP
+              </p>
+            </div>
             <p className="text-xs muted">{a.specialtyLabels.join(" · ")}</p>
             {a.notes ? <p className="text-sm muted">{a.notes}</p> : null}
+            <p className="text-xs muted">
+              {billingMode === "platform_collect"
+                ? "Pagas este valor en ATSAdvisor (LOTIC liquida al aliado)."
+                : "Precio de referencia · pagas al aliado."}
+            </p>
             <button
               type="button"
               className="btn-primary"
@@ -155,6 +167,10 @@ function ExpertoInner() {
       {open && selected && (
         <form className="bento-card space-y-3" onSubmit={submit}>
           <h2 className="font-semibold">Solicitud · {selected.name}</h2>
+          <p className="text-sm">
+            Valor del servicio:{" "}
+            <strong>{selected.servicePriceCop?.toLocaleString("es-CO")} COP</strong>
+          </p>
           <label className="block text-sm">
             Tu nombre
             <input className="field mt-1" required value={name} onChange={(e) => setName(e.target.value)} />

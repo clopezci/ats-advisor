@@ -20,6 +20,9 @@ type CaseRow = {
   serviceDate?: string;
   proofNote?: string;
   settlementId?: string;
+  listedPriceCop?: number;
+  allyNetCop?: number;
+  billingMode?: string;
 };
 
 type Settlement = {
@@ -178,8 +181,15 @@ export default function AdminExpertosPage() {
                 </p>
                 {c.amountPaidCop != null && (
                   <p>
-                    Pagó aliado {formatCop(c.amountPaidCop)} · Comisión {c.commissionPercent}% ={" "}
+                    Pagó {formatCop(c.amountPaidCop)} · Comisión {c.commissionPercent}% ={" "}
                     <strong>{formatCop(c.commissionCop || 0)}</strong>
+                    {c.allyNetCop != null ? ` · Neto aliado ${formatCop(c.allyNetCop)}` : ""}
+                  </p>
+                )}
+                {c.listedPriceCop != null && c.amountPaidCop == null && (
+                  <p className="muted">
+                    Precio listado {formatCop(c.listedPriceCop)}
+                    {c.billingMode ? ` · ${c.billingMode}` : ""}
                   </p>
                 )}
                 {c.proofNote && <p className="muted">Prueba: {c.proofNote}</p>}

@@ -28,11 +28,14 @@ export async function GET(req: Request) {
       createdAt: c.createdAt,
       userName: c.userName,
       commissionPercent: c.commissionPercent,
+      listedPriceCop: c.listedPriceCop,
+      billingMode: c.billingMode,
       confirmedAt: c.confirmedAt,
       amountPaidCop: c.amountPaidCop,
       serviceDate: c.serviceDate,
       proofNote: c.proofNote,
       commissionCop: c.commissionCop,
+      allyNetCop: c.allyNetCop,
     },
   });
 }
@@ -84,6 +87,7 @@ export async function POST(req: Request) {
     }
 
     const commissionCop = computeCommission(amountPaidCop, c.commissionPercent);
+    const allyNetCop = Math.max(0, amountPaidCop - commissionCop);
     ops.cases[idx] = {
       ...c,
       status: "confirmed",
@@ -92,6 +96,7 @@ export async function POST(req: Request) {
       amountPaidCop,
       proofNote,
       commissionCop,
+      allyNetCop,
     };
     await saveExpertOps(ops);
 

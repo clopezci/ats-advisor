@@ -12,11 +12,13 @@ type AllyPublic = {
   specialties: string[];
   specialtyLabels: string[];
   notes: string;
+  servicePriceCop: number;
 };
 
 export default function MarketplacePage() {
   const [allies, setAllies] = useState<AllyPublic[]>([]);
   const [enabled, setEnabled] = useState(true);
+  const [billingCopy, setBillingCopy] = useState("");
 
   useEffect(() => {
     fetch("/api/experts")
@@ -24,6 +26,7 @@ export default function MarketplacePage() {
       .then((d) => {
         setEnabled(Boolean(d.enabled));
         setAllies(d.allies || []);
+        setBillingCopy(d.billingCopy || "");
       })
       .catch(() => setEnabled(false));
   }, []);
@@ -36,11 +39,11 @@ export default function MarketplacePage() {
             <p className="text-xs uppercase tracking-[0.14em] muted">Fase 3 · marketplace</p>
             <h1 className="mt-1 text-2xl font-semibold">Coach y revisión humana</h1>
           </div>
-          <SpeakButton text="Elige un paquete, pide al aliado y confirma el servicio para dejar prueba de comisión." />
+          <SpeakButton text="El precio lo define cada aliado en el convenio. Elige paquete y solicita." />
         </div>
         <p className="text-sm muted">
-          Empaques orientativos. Pagas al aliado; LOTIC concilia comisión semanal cuando tú
-          confirmas que tomaste el servicio.
+          {billingCopy ||
+            "Empaques orientativos. El valor exacto lo muestra cada aliado al solicitar."}
         </p>
       </section>
 
@@ -51,12 +54,15 @@ export default function MarketplacePage() {
       <div className="space-y-3">
         {MARKETPLACE_PACKAGES.map((pkg) => {
           const match = allies.filter((a) => a.specialties.includes(pkg.specialty));
+          const fromAlly = match.length
+            ? Math.min(...match.map((a) => a.servicePriceCop || pkg.fromCop))
+            : pkg.fromCop;
           return (
             <article key={pkg.id} className="bento-card space-y-2">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <h2 className="font-semibold">{pkg.title}</h2>
                 <p className="text-sm muted">
-                  Desde {formatCop(pkg.fromCop)} · {pkg.duration}
+                  Desde {formatCop(fromAlly)} · {pkg.duration}
                 </p>
               </div>
               <p className="text-sm muted">{pkg.summary}</p>
@@ -66,13 +72,16 @@ export default function MarketplacePage() {
                 ))}
               </ul>
               {match.length > 0 ? (
-                <p className="text-xs muted">
-                  Aliados con esta especialidad: {match.map((a) => a.name).join(", ")}
-                </p>
+                <div className="space-y-1 text-xs muted">
+                  {match.map((a) => (
+                    <p key={a.id}>
+                      {a.name}: <strong>{formatCop(a.servicePriceCop)}</strong>
+                    </p>
+                  ))}
+                </div>
               ) : (
                 <p className="text-xs muted">
-                  Aún no hay aliado cargado para esta especialidad — igual puedes solicitar en
-                  expertos.
+                  Aún no hay aliado para esta especialidad — precio orientativo del empaque.
                 </p>
               )}
               <Link

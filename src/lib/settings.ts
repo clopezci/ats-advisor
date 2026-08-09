@@ -10,7 +10,9 @@ export type ExpertAlly = {
   specialties: string[];
   active: boolean;
   notes: string;
-  /** % comisión LOTIC sobre lo que el usuario pagó al aliado (default 15) */
+  /** Precio público del servicio (COP) — lo que ve el cliente */
+  service_price_cop: number;
+  /** % comisión LOTIC sobre service_price_cop */
   commission_percent: number;
   notify_email: boolean;
   notify_telegram: boolean;
@@ -69,6 +71,13 @@ export type AppSettings = {
   };
   /** Comisión por defecto % si el aliado no define una */
   expert_default_commission_percent: number;
+  /** Precio de servicio por defecto (COP) al crear aliado */
+  expert_default_service_price_cop: number;
+  /**
+   * platform_collect: cliente paga a LOTIC → liquidación al aliado (neto).
+   * ally_direct: aliado cobra → LOTIC cobra comisión en corte semanal.
+   */
+  expert_billing_mode: "platform_collect" | "ally_direct";
 };
 
 const g = globalThis as unknown as { __atsSettings?: AppSettings };
@@ -120,6 +129,8 @@ export function defaultSettings(): AppSettings {
       ama_note: "AMA mensual con alumni (próximamente — configura el enlace aquí).",
     },
     expert_default_commission_percent: 15,
+    expert_default_service_price_cop: 80000,
+    expert_billing_mode: "platform_collect",
   };
 }
 
@@ -167,6 +178,9 @@ function deepMerge(base: AppSettings, patch: Partial<AppSettings>): AppSettings 
     alumni: { ...base.alumni, ...(patch.alumni || {}) },
     expert_default_commission_percent:
       patch.expert_default_commission_percent ?? base.expert_default_commission_percent,
+    expert_default_service_price_cop:
+      patch.expert_default_service_price_cop ?? base.expert_default_service_price_cop,
+    expert_billing_mode: patch.expert_billing_mode ?? base.expert_billing_mode,
   };
 }
 

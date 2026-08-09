@@ -15,6 +15,8 @@ function ConfirmInner() {
     specialty: string;
     status: string;
     commissionPercent: number;
+    listedPriceCop?: number;
+    billingMode?: string;
   } | null>(null);
   const [serviceDate, setServiceDate] = useState(new Date().toISOString().slice(0, 10));
   const [amount, setAmount] = useState("");
@@ -27,8 +29,10 @@ function ConfirmInner() {
     fetch(`/api/experts/confirm?case=${encodeURIComponent(caseId)}&token=${encodeURIComponent(token)}`)
       .then((r) => r.json())
       .then((d) => {
-        if (d.case) setInfo(d.case);
-        else setMsg(d.error || "Caso no encontrado");
+        if (d.case) {
+          setInfo(d.case);
+          if (d.case.listedPriceCop) setAmount(String(d.case.listedPriceCop));
+        } else setMsg(d.error || "Caso no encontrado");
       })
       .catch(() => setMsg("Error de red"));
   }, [caseId, token]);
@@ -84,9 +88,16 @@ function ConfirmInner() {
             Caso <code>{caseId}</code> · {info.allyName} · {info.specialty}
           </p>
           <p className="text-xs muted">
-            Estado: {info.status} · Comisión LOTIC: {info.commissionPercent}% sobre lo que pagaste al
-            aliado
+            Estado: {info.status} · Comisión LOTIC: {info.commissionPercent}%
+            {info.listedPriceCop != null
+              ? ` · Precio listado ${info.listedPriceCop.toLocaleString("es-CO")} COP`
+              : ""}
           </p>
+          {info.billingMode === "platform_collect" && (
+            <p className="text-xs muted">
+              Modo plataforma: confirma el monto pagado en ATSAdvisor (suele ser el precio listado).
+            </p>
+          )}
           {info.status === "requested" || info.status === "disputed" ? (
             <>
               <label className="block text-sm">

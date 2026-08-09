@@ -281,29 +281,77 @@ export default function AdminPage() {
       <section className="bento-card space-y-3">
         <h2 className="font-semibold">Aliados expertos</h2>
         <p className="text-xs muted">
-          Notifica por correo, Telegram y/o WhatsApp. Comisión % para cortes semanales en{" "}
+          Precio de servicio + % comisión (el COP de comisión se calcula solo). Clientes ven el
+          precio. Cortes en{" "}
           <Link href="/admin/expertos" className="underline">
             /admin/expertos
           </Link>
           .
         </p>
         <label className="block text-sm">
-          Comisión por defecto %
-          <input
+          Modo de cobro
+          <select
             className="field mt-1"
-            type="number"
-            min={0}
-            max={100}
-            value={settings.expert_default_commission_percent}
+            value={settings.expert_billing_mode}
             onChange={(e) =>
               setSettings({
                 ...settings,
-                expert_default_commission_percent: Number(e.target.value),
+                expert_billing_mode: e.target.value as "platform_collect" | "ally_direct",
               })
             }
-          />
+          >
+            <option value="platform_collect">
+              Recomendado: LOTIC cobra al cliente y liquida al aliado (neto)
+            </option>
+            <option value="ally_direct">
+              Aliado cobra directo; LOTIC cobra comisión en corte semanal
+            </option>
+          </select>
         </label>
-        {(settings.allies || []).map((a, idx) => (
+        <p className="text-xs muted">
+          {settings.expert_billing_mode === "platform_collect"
+            ? "Ingreso bruto en pasarela = precio completo; tu ingreso real = comisión. Liquidas al aliado el neto cada corte."
+            : "No inflas facturación, pero dependes de que el aliado te pague la comisión tras confirmar el servicio."}
+        </p>
+        <div className="grid gap-2 sm:grid-cols-2">
+          <label className="block text-sm">
+            Precio servicio default (COP)
+            <input
+              className="field mt-1"
+              type="number"
+              min={0}
+              value={settings.expert_default_service_price_cop}
+              onChange={(e) =>
+                setSettings({
+                  ...settings,
+                  expert_default_service_price_cop: Number(e.target.value),
+                })
+              }
+            />
+          </label>
+          <label className="block text-sm">
+            Comisión default %
+            <input
+              className="field mt-1"
+              type="number"
+              min={0}
+              max={100}
+              value={settings.expert_default_commission_percent}
+              onChange={(e) =>
+                setSettings({
+                  ...settings,
+                  expert_default_commission_percent: Number(e.target.value),
+                })
+              }
+            />
+          </label>
+        </div>
+        {(settings.allies || []).map((a, idx) => {
+          const price = a.service_price_cop ?? settings.expert_default_service_price_cop;
+          const pct = a.commission_percent ?? settings.expert_default_commission_percent;
+          const commissionCop = Math.round(Math.max(0, price) * (Math.max(0, pct) / 100));
+          const allyNet = Math.max(0, price - commissionCop);
+          return (
           <div
             key={a.id}
             className="space-y-2 border-b pb-3"
@@ -350,21 +398,42 @@ export default function AdminPage() {
                 setSettings({ ...settings, allies });
               }}
             />
-            <label className="block text-sm">
-              Comisión % (este aliado)
-              <input
-                className="field mt-1"
-                type="number"
-                min={0}
-                max={100}
-                value={a.commission_percent ?? settings.expert_default_commission_percent}
-                onChange={(e) => {
-                  const allies = [...settings.allies];
-                  allies[idx] = { ...a, commission_percent: Number(e.target.value) };
-                  setSettings({ ...settings, allies });
-                }}
-              />
-            </label>
+            <div className="grid gap-2 sm:grid-cols-2">
+              <label className="block text-sm">
+                Valor del servicio (COP)
+                <input
+                  className="field mt-1"
+                  type="number"
+                  min={0}
+                  value={price}
+                  onChange={(e) => {
+                    const allies = [...settings.allies];
+                    allies[idx] = { ...a, service_price_cop: Number(e.target.value) };
+                    setSettings({ ...settings, allies });
+                  }}
+                />
+              </label>
+              <label className="block text-sm">
+                Comisión %
+                <input
+                  className="field mt-1"
+                  type="number"
+                  min={0}
+                  max={100}
+                  value={pct}
+                  onChange={(e) => {
+                    const allies = [...settings.allies];
+                    allies[idx] = { ...a, commission_percent: Number(e.target.value) };
+                    setSettings({ ...settings, allies });
+                  }}
+                />
+              </label>
+            </div>
+            <p className="text-xs muted">
+              Comisión LOTIC (auto): <strong>{commissionCop.toLocaleString("es-CO")} COP</strong>
+              {" · "}
+              Neto aliado: <strong>{allyNet.toLocaleString("es-CO")} COP</strong>
+            </p>
             <div className="flex flex-wrap gap-3 text-xs">
               {(
                 [
@@ -445,7 +514,8 @@ export default function AdminPage() {
               Quitar aliado
             </button>
           </div>
-        ))}
+          );
+        })}
         <button
           type="button"
           className="btn-secondary"
@@ -463,6 +533,7 @@ export default function AdminPage() {
                   specialties: ["cv", "carrera"],
                   active: true,
                   notes: "",
+                  service_price_cop: settings.expert_default_service_price_cop,
                   commission_percent: settings.expert_default_commission_percent,
                   notify_email: true,
                   notify_telegram: true,

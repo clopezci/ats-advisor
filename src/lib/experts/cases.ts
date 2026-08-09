@@ -24,10 +24,15 @@ export type ExpertCase = {
   confirmedAt?: string;
   serviceDate?: string;
   amountPaidCop?: number;
+  /** Precio listado al momento de la solicitud (admin) */
+  listedPriceCop?: number;
+  /** Neto a liquidar al aliado (platform_collect) */
+  allyNetCop?: number;
   proofNote?: string;
   commissionPercent: number;
   commissionCop?: number;
   settlementId?: string;
+  billingMode?: "platform_collect" | "ally_direct";
   notify: { email: boolean; telegram: boolean; whatsapp: boolean };
 };
 

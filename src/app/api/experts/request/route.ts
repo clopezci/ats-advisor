@@ -13,6 +13,7 @@ import {
   newConfirmToken,
   type ExpertCase,
 } from "@/lib/experts/cases";
+import { computeAllyCommission, billingModeClientCopy } from "@/lib/experts/pricing";
 import { reportError } from "@/lib/observability";
 
 /**
@@ -58,6 +59,12 @@ export async function POST(req: Request) {
       typeof ally.commission_percent === "number"
         ? ally.commission_percent
         : s.expert_default_commission_percent;
+    const listedPriceCop =
+      typeof ally.service_price_cop === "number" && ally.service_price_cop > 0
+        ? ally.service_price_cop
+        : s.expert_default_service_price_cop;
+    const { commissionCop, allyNetCop } = computeAllyCommission(listedPriceCop, commissionPercent);
+    const billingMode = s.expert_billing_mode;
 
     const confirmUrl = `${baseUrl}/outplacement/experto/confirmar?case=${caseId}&token=${confirmToken}`;
 
@@ -75,6 +82,9 @@ export async function POST(req: Request) {
       status: "requested",
       confirmToken,
       commissionPercent,
+      listedPriceCop,
+      allyNetCop,
+      billingMode,
       notify: {
         email: ally.notify_email !== false,
         telegram: Boolean(ally.notify_telegram && ally.telegram_chat_id),
@@ -86,12 +96,17 @@ export async function POST(req: Request) {
     ops.cases = [expertCase, ...ops.cases].slice(0, 2000);
     await saveExpertOps(ops);
 
+    const payHint =
+      billingMode === "platform_collect"
+        ? `Cliente paga ${listedPriceCop} COP a LOTIC → comisión ${commissionCop} · liquidar aliado ${allyNetCop} COP`
+        : `Precio ref. ${listedPriceCop} COP · aliado cobra directo · comisión LOTIC ${commissionPercent}% (${commissionCop} COP)`;
+
     const summary = [
       `Caso ${caseId}`,
       `Aliado: ${ally.name} <${ally.email}>`,
       `Solicitante: ${name} <${email}>${phone ? ` · ${phone}` : ""}`,
       `Servicio: ${specLabel}`,
-      `Comisión pactada: ${commissionPercent}% (al confirmar servicio)`,
+      payHint,
       `Mensaje: ${message}`,
       `Confirmar servicio (usuario): ${confirmUrl}`,
     ].join("\n");
@@ -101,14 +116,18 @@ export async function POST(req: Request) {
       <p><strong>Caso:</strong> ${escapeHtml(caseId)}</p>
       <p><strong>De:</strong> ${escapeHtml(name)} &lt;${escapeHtml(email)}&gt; ${phone ? `· ${escapeHtml(phone)}` : ""}</p>
       <p><strong>Quiere:</strong> ${escapeHtml(specLabel)}</p>
+      <p><strong>Precio listado:</strong> ${listedPriceCop} COP · Comisión ${commissionPercent}% = ${commissionCop} COP · Neto aliado ${allyNetCop} COP</p>
+      <p><strong>Modo:</strong> ${escapeHtml(billingModeClientCopy(billingMode))}</p>
       <pre style="white-space:pre-wrap;font-family:sans-serif">${escapeHtml(message)}</pre>
-      <p>Cuando atiendas al usuario, pídele que confirme el servicio en la app (le llega el enlace). Eso genera la prueba para el corte de comisión (${commissionPercent}%).</p>
+      <p>Cuando atiendas al usuario, pídele que confirme el servicio en la app (le llega el enlace).</p>
     `;
 
     const htmlUser = `
       <p>Hola ${escapeHtml(name)},</p>
       <p>Enviamos tu pedido a <strong>${escapeHtml(ally.name)}</strong> (${escapeHtml(specLabel)}).</p>
-      <p><strong>Importante:</strong> cuando tomes el servicio (sesión/revisión), confirma aquí para dejar constancia (sirve para conciliación LOTIC–aliado):</p>
+      <p><strong>Valor del servicio:</strong> ${listedPriceCop} COP</p>
+      <p>${escapeHtml(billingModeClientCopy(billingMode))}</p>
+      <p><strong>Importante:</strong> cuando tomes el servicio, confirma aquí:</p>
       <p><a href="${escapeHtml(confirmUrl)}">${escapeHtml(confirmUrl)}</a></p>
       <p>Caso: ${escapeHtml(caseId)}</p>
       <p>Tu mensaje:</p>
@@ -143,21 +162,29 @@ export async function POST(req: Request) {
     }
 
     await notifyOwnerTelegram(
-      `Experto caso ${caseId}: ${ally.name} ← ${name} (${specLabel}) · comisión ${commissionPercent}%`
+      `Experto caso ${caseId}: ${ally.name} ← ${name} (${specLabel}) · ${listedPriceCop} COP · comisión ${commissionCop}`
     );
 
     return NextResponse.json({
       ok: true,
       caseId,
       confirmUrl,
+      listedPriceCop,
+      commissionPercent,
+      commissionCop,
+      allyNetCop,
+      billingMode,
       mailedAlly: mailedAlly.ok,
       mailedUser: mailedUser.ok,
       whatsapp: wa.ok,
       message:
-        "Solicitud creada. El aliado fue notificado (correo / Telegram / WhatsApp según config). Te enviamos el enlace para confirmar cuando tomes el servicio.",
+        billingMode === "platform_collect"
+          ? `Solicitud creada. Valor del servicio: ${listedPriceCop} COP (pagas en ATSAdvisor; LOTIC liquida al aliado). Te enviamos el enlace de confirmación.`
+          : `Solicitud creada. Precio de referencia: ${listedPriceCop} COP (pagas al aliado). Confirma el servicio para el corte de comisión.`,
     });
   } catch (e) {
     await reportError({ where: "api/experts/request", error: e, notifyOwner: true });
     return NextResponse.json({ error: "No se pudo enviar la solicitud" }, { status: 500 });
   }
 }
+

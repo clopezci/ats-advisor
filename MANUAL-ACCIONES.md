@@ -20,7 +20,8 @@ El código ya está en `main` y Vercel despliega solo al push.
 - Garantía 30 días eliminada; OUT-09 solo Plus; `plan_90_dias` $39k retirado.
 - Fase 1: assessment, career-brief, oferta, bienestar, remoto.
 - Fase 2: vacantes, video mock, misiones/XP, tracks profundos, dashboard RH engagement.
-- **Aliados + WhatsApp + conciliación:** `/admin` (WA, % comisión, toggles notify) · tablero `/admin/expertos` · usuario `/outplacement/experto` + confirmar `/outplacement/experto/confirmar`.
+- **Aliados + WhatsApp + conciliación:** `/admin` (precio servicio COP, % comisión auto→COP, modo cobro, WA) · tablero `/admin/expertos` · usuario `/outplacement/experto` + confirmar.
+- Modo cobro default **platform_collect**: LOTIC cobra al cliente y liquida neto al aliado (ingreso real = comisión).
 - **Fase 3:** marketplace `/outplacement/marketplace` · cursos externos `/outplacement/cursos` · alumni `/outplacement/alumni` (enlaces en admin).
 
 

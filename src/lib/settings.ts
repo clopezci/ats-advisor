@@ -4,7 +4,6 @@ export type AppSettings = {
     plus: number;
     out09_extra: number;
     currency: string;
-    plan_90_dias: number;
     /** Addon WhatsApp mensual (precio final al usuario). Si 0, se calcula por fórmula. */
     whatsapp_addon: number;
   };
@@ -49,7 +48,6 @@ export function defaultSettings(): AppSettings {
       carrera: 79000,
       plus: 99000,
       out09_extra: 22000,
-      plan_90_dias: 39000,
       whatsapp_addon: 0, // 0 = calcular: meta_mid × 1.5
       currency: "COP",
     },
@@ -60,7 +58,7 @@ export function defaultSettings(): AppSettings {
     },
     ai_limits: {
       free_ats_per_day: 5,
-      out09_included_carrera: 1,
+      out09_included_carrera: 0, // OUT-09 solo en Plus (o compra extra)
       out09_included_plus: 2,
       quality_threshold: 0.72,
       max_paid_escalations: 1,
@@ -74,7 +72,7 @@ export function defaultSettings(): AppSettings {
       outplacement: true,
       out09: true,
       coach_chat: true,
-      guarantee: true,
+      guarantee: false, // descontinuada: no controlamos entrevistas del mercado
     },
     llm: { prefer_groq: true, prefer_gemini: true, prefer_openai: true },
     promotions: [],

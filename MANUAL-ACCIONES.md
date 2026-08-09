@@ -15,6 +15,12 @@ El código ya está en `main` y Vercel despliega solo al push.
 
 # BLOQUE PENDIENTES (hazlo cuando el agente termine el código)
 
+### YA HECHO (código reciente — precios)
+
+- Garantía 30 días eliminada.
+- OUT-09 **solo** en Carrera Plus (2/mes) o compra extra $22k; Carrera $79k = OUT-01…08 sin curso a medida.
+- Precio `plan_90_dias` $39k **retirado**. El “modo 90 días” es pausa post-empleo gratuita (checklist), no un plan barato de 3 meses.
+
 > **Instrucción:** no empieces este bloque hasta que el último push a `main` esté **Ready** en Vercel.  
 > Mientras tanto ya puedes **probar ads internos** (ArriendoSeguro / LOTIC) sin Google.
 

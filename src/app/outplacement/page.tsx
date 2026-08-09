@@ -7,13 +7,9 @@ import { PaywallCard } from "@/components/PaywallCard";
 import { ChannelChooser } from "@/components/ChannelChooser";
 import {
   canAccessOutplacement,
-  canClaimGuarantee,
-  claimGuarantee,
-  guaranteeProgress,
   pauseFor90Days,
   planLabel,
   readEntitlement,
-  startGuarantee,
   type PlanId,
 } from "@/lib/entitlements";
 import { whatsappFinalPriceCop, type LearningChannel } from "@/lib/channels/pricing";
@@ -26,18 +22,12 @@ export default function OutplacementPage() {
   const [plan, setPlanState] = useState<PlanId>("free");
   const [msg, setMsg] = useState("");
   const [channel, setChannel] = useState<LearningChannel>("telegram");
-  const [gProgress, setGProgress] = useState({
-    active: false,
-    days: 0,
-    interviews: 0,
-    claim: { ok: false, reason: "" },
-  });
   const unlocked = canAccessOutplacement(plan);
   const waPrice = whatsappFinalPriceCop();
+  const hasOut09 = plan === "plus" || plan === "tester";
 
   useEffect(() => {
     setPlanState(readEntitlement().plan);
-    setGProgress(guaranteeProgress());
     try {
       const p = JSON.parse(localStorage.getItem("ats_profile") || "null");
       if (p?.channel) setChannel(p.channel);
@@ -60,11 +50,11 @@ export default function OutplacementPage() {
             </p>
             <h1 className="mt-1 text-2xl font-semibold">Outplacement</h1>
           </div>
-          <SpeakButton text="Elige un módulo de la ruta o crea un curso personalizado OUT-09." />
+          <SpeakButton text="Elige un módulo de la ruta. OUT-09 personalizado está en Carrera Plus." />
         </div>
         <p className="muted text-sm">
-          Ruta completa OUT-01 a OUT-08. Desde $79.000 COP/mes. También puedes crear un curso a
-          tu medida.
+          Ruta OUT-01 a OUT-08 desde $79.000 COP/mes. Curso personalizado OUT-09 solo en Carrera Plus
+          ($99.000) o como compra extra.
         </p>
       </section>
 
@@ -90,14 +80,17 @@ export default function OutplacementPage() {
       {!unlocked && plan !== "paused_90" && (
         <PaywallCard
           currentPlan={plan}
-          reason="El outplacement completo y OUT-09 están en Carrera / Plus. Puedes activar un plan en Precios (demo local si aún no tienes Wompi)."
+          reason="El outplacement OUT-01…08 está en Carrera / Plus. OUT-09 personalizado solo en Plus. Activa un plan en Precios."
         />
       )}
 
       {plan === "paused_90" && (
         <section className="bento-card space-y-2">
           <p className="pill-brand">Suscripción en pausa</p>
-          <p className="text-sm muted">Modo primeros 90 días activo. Puedes retomar Carrera cuando quieras.</p>
+          <p className="text-sm muted">
+            Modo primeros 90 días activo (checklist de onboarding al nuevo empleo — sin cobro extra).
+            Puedes retomar Carrera cuando quieras.
+          </p>
           <Link href="/outplacement/90-dias" className="btn-primary">
             Abrir checklist 90 días
           </Link>
@@ -105,8 +98,15 @@ export default function OutplacementPage() {
       )}
 
       <div className="flex flex-col gap-3">
-        <Link href={unlocked ? "/outplacement/out09" : "/precios"} className="btn-primary">
-          Crear curso personalizado (OUT-09)
+        <Link
+          href={hasOut09 ? "/outplacement/out09" : unlocked ? "/precios" : "/precios"}
+          className="btn-primary"
+        >
+          {hasOut09
+            ? "Crear curso personalizado (OUT-09)"
+            : unlocked
+              ? "OUT-09 → upgrade a Plus o compra extra"
+              : "OUT-09 (requiere Carrera Plus)"}
         </Link>
         <Link href="/outplacement/coach" className="btn-secondary">
           Chat coach (RAG)
@@ -118,7 +118,7 @@ export default function OutplacementPage() {
           Score predictivo de filtro
         </Link>
         <Link href="/outplacement/90-dias" className="btn-secondary">
-          Modo primeros 90 días
+          Modo primeros 90 días (post-empleo)
         </Link>
         <Link href={unlocked ? "/outplacement/segunda-carrera" : "/precios"} className="btn-secondary">
           Segunda carrera / emprendimiento
@@ -151,7 +151,11 @@ export default function OutplacementPage() {
 
       {unlocked && (
         <section className="bento-card space-y-3">
-          <h2 className="font-semibold text-sm">Retención (plan original)</h2>
+          <h2 className="font-semibold text-sm">Tras conseguir empleo</h2>
+          <p className="text-xs muted">
+            Pausas la suscripción de búsqueda y abres el checklist de onboarding (incluidos en el
+            plan; no es un plan aparte de $39k).
+          </p>
           <button
             type="button"
             className="btn-secondary"
@@ -163,35 +167,6 @@ export default function OutplacementPage() {
             }}
           >
             Conseguí empleo → pausar y abrir 90 días
-          </button>
-          <button
-            type="button"
-            className="btn-secondary"
-            onClick={() => {
-              startGuarantee();
-              setGProgress(guaranteeProgress());
-              setMsg("Garantía de avance iniciada (30 días sin entrevistas en el tracker).");
-            }}
-          >
-            Activar garantía 30 días
-          </button>
-          {gProgress.active && (
-            <p className="text-sm muted">
-              Día {gProgress.days}/30 · entrevistas registradas: {gProgress.interviews}.{" "}
-              {gProgress.claim.reason}
-            </p>
-          )}
-          <button
-            type="button"
-            className="btn-secondary"
-            onClick={() => {
-              const r = claimGuarantee();
-              setMsg(r.ok ? "Garantía reclamada: mes de cortesía demo." : r.reason);
-              if (r.ok) setPlanState(readEntitlement().plan);
-              setGProgress(guaranteeProgress());
-            }}
-          >
-            Reclamar garantía ({canClaimGuarantee().ok ? "elegible" : "aún no"})
           </button>
           <Link href="/outplacement/networking" className="btn-secondary">
             CRM networking (OUT-06)

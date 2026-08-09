@@ -142,8 +142,7 @@ Microcápsulas diarias + quizzes → barra de progreso única (OUT-01…09 usan 
 
 **Ganchos de retención:**
 
-- Pausar al conseguir empleo → modo “90 días”.  
-- Garantía de avance (completa checklist 30 días sin entrevista → mes gratis o revisión prioritaria).
+- Pausar al conseguir empleo → modo “90 días” (checklist onboarding, sin cobro extra).
 
 ### 3.2.1 OUT-09 — Curso personalizado (detalle UX + técnica)
 
@@ -304,10 +303,12 @@ El mercado de outplacement corporativo está en **millones**. Incluso cobrando *
 | Plan | Precio COP/mes | Incluye | Margen est. (uso medio) |
 |------|----------------|---------|-------------------------|
 | **ATS Free** | $0 + ads | ATS ultra-pro limitado + ads | Ads ≥ costo |
-| **Carrera (Outplacement)** | **$79.000** | OUT-01…08 + 1× OUT-09/mes + Telegram + voz | ~70–85% |
-| **Carrera Plus** | **$99.000** | Lo anterior + WhatsApp + 2× OUT-09/mes + más simulador | ~65–80% |
-| **OUT-09 extra** | **$19.000–25.000** / curso | 1 curso personalizado adicional | ≥50% aunque gen cueste ~3.200 |
-| **90 días (post-empleo)** | **$39.000** o pausa con retención | Modo onboarding | Alto |
+| **Carrera (Outplacement)** | **$79.000**/mes | OUT-01…08 + Telegram/PWA + coach/simulador. **Sin OUT-09 incluido**. | ~70–85% |
+| **Carrera Plus** | **$99.000**/mes | Todo Carrera + **2× OUT-09**/mes + más simulador | ~65–80% |
+| **OUT-09 extra** | **$22.000** / curso | 1 curso personalizado adicional | ≥50% |
+| **Modo 90 días (post-empleo)** | **$0** (pausa de suscripción) | Checklist onboarding al nuevo empleo — **no es SKU de $39k** | Alto |
+
+**Nota:** Se eliminó la “garantía 30 días sin entrevistas” (no controlable). El antiguo precio `plan_90_dias` $39k se retiró para no confundir con “3 meses baratos”.
 
 **Por qué $79k–99k y no $50k:** a $50k aún hay margen en uso medio, pero OUT-09 + simulador intenso puede comer margen; **$79k** da colchón ≥50% incluso en uso alto y sigue siendo ~1% del outplacement corporativo → **quiebre por precio** sin suicidio unitario.
 

@@ -264,10 +264,10 @@ export default function PreciosPage() {
           name: "Carrera",
           price: `${formatCop(prices.carrera)}/mes`,
           points: [
-            "OUT-01 a OUT-08",
-            "1× OUT-09 / mes",
+            "OUT-01 a OUT-08 (ruta completa)",
             "Telegram gratis (microlearning)",
-            "Voz en toda la app",
+            "Coach, simulador, networking, voz",
+            "Sin OUT-09 incluido (upgrade a Plus o compra extra)",
           ],
         },
         {
@@ -276,8 +276,8 @@ export default function PreciosPage() {
           price: `${formatCop(prices.plus)}/mes`,
           points: [
             "Todo Carrera",
-            "2× OUT-09 / mes",
-            "Más simulador",
+            "2× OUT-09 personalizados / mes",
+            "Más uso de simulador / coach",
             "Puedes sumar WhatsApp como addon (ver abajo)",
           ],
         },
@@ -285,7 +285,11 @@ export default function PreciosPage() {
           id: "out09_extra" as const,
           name: "OUT-09 extra",
           price: formatCop(prices.out09_extra),
-          points: ["1 curso personalizado adicional", "Misma entrega por microcápsulas"],
+          points: [
+            "1 curso personalizado adicional",
+            "Para quien tiene Carrera sin cupo Plus, o agotó los 2 del mes",
+            "Misma entrega por microcápsulas",
+          ],
         },
       ].map((p) => (
         <section key={p.id} className="bento-card space-y-3">

@@ -48,7 +48,6 @@ export function sanitizeSettingsPatch(body: unknown): AppSettings {
       carrera: num(pricingIn.carrera, base.pricing.carrera, 0, 5_000_000),
       plus: num(pricingIn.plus, base.pricing.plus, 0, 5_000_000),
       out09_extra: num(pricingIn.out09_extra, base.pricing.out09_extra, 0, 5_000_000),
-      plan_90_dias: num(pricingIn.plan_90_dias, base.pricing.plan_90_dias, 0, 5_000_000),
       whatsapp_addon: num(pricingIn.whatsapp_addon, base.pricing.whatsapp_addon, 0, 500_000),
       currency: str(pricingIn.currency, base.pricing.currency, 8) || "COP",
     },
@@ -78,7 +77,7 @@ export function sanitizeSettingsPatch(body: unknown): AppSettings {
       outplacement: bool(featIn.outplacement, base.features.outplacement),
       out09: bool(featIn.out09, base.features.out09),
       coach_chat: bool(featIn.coach_chat, base.features.coach_chat),
-      guarantee: bool(featIn.guarantee, base.features.guarantee),
+      guarantee: false, // descontinuada
     },
     llm: {
       prefer_groq: bool(llmIn.prefer_groq, base.llm.prefer_groq),

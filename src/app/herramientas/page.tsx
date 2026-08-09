@@ -51,6 +51,26 @@ const TOOLS = [
     desc: "Ancla orientativa en COP para negociar.",
   },
   {
+    href: "/outplacement/oferta",
+    title: "Wizard de oferta",
+    desc: "Piso/meta/techo + scripts de negociación Colombia.",
+  },
+  {
+    href: "/outplacement/assessment",
+    title: "Assessment RIASEC",
+    desc: "Código Holland y roles típicos LATAM.",
+  },
+  {
+    href: "/outplacement/remoto",
+    title: "CV bilingüe + remoto",
+    desc: "Viñetas ES→EN y checklist empleo remoto.",
+  },
+  {
+    href: "/outplacement/bienestar",
+    title: "Bienestar y derechos CO",
+    desc: "Guía de transición + checklist laboral orientativa.",
+  },
+  {
     href: "/herramientas/plantilla",
     title: "Plantilla CV ATS",
     desc: "CV de una columna listo para pegar/analizar.",

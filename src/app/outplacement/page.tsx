@@ -98,9 +98,24 @@ export default function OutplacementPage() {
       )}
 
       <div className="flex flex-col gap-3">
+        <Link href="/outplacement/assessment" className="btn-primary">
+          Assessment RIASEC → roles LATAM
+        </Link>
+        <Link href="/outplacement/career-brief" className="btn-secondary">
+          Career Brief (PDF 1 página)
+        </Link>
+        <Link href="/outplacement/oferta" className="btn-secondary">
+          Wizard negociación de oferta
+        </Link>
+        <Link href="/outplacement/bienestar" className="btn-secondary">
+          Bienestar + derechos laborales CO
+        </Link>
+        <Link href="/outplacement/remoto" className="btn-secondary">
+          CV bilingüe ES→EN + remoto
+        </Link>
         <Link
           href={hasOut09 ? "/outplacement/out09" : unlocked ? "/precios" : "/precios"}
-          className="btn-primary"
+          className="btn-secondary"
         >
           {hasOut09
             ? "Crear curso personalizado (OUT-09)"

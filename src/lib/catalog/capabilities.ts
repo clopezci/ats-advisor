@@ -198,6 +198,46 @@ export const CAPABILITIES: Capability[] = [
 
   // —— Outplacement ——
   {
+    id: "riasec",
+    title: "Assessment RIASEC + roles LATAM",
+    summary: "18 ítems Holland → código + mapa de roles típicos en la región.",
+    audience: ["candidato", "publico"],
+    status: "disponible",
+    href: "/outplacement/assessment",
+  },
+  {
+    id: "career-brief",
+    title: "Career Brief PDF",
+    summary: "Una página imprimible con perfil, roles y plan 30 días.",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/outplacement/career-brief",
+  },
+  {
+    id: "offer-wizard",
+    title: "Wizard negociación de oferta",
+    summary: "Piso/meta/techo con bandas CO + scripts de contraoferta.",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/outplacement/oferta",
+  },
+  {
+    id: "bienestar-co",
+    title: "Bienestar y derechos laborales CO",
+    summary: "Guía de estabilización + checklist orientativa (no asesoría legal).",
+    audience: ["candidato", "publico"],
+    status: "disponible",
+    href: "/outplacement/bienestar",
+  },
+  {
+    id: "remote-bilingual",
+    title: "CV bilingüe y checklist remoto",
+    summary: "Glosario ES→EN para viñetas + checklist empleo remoto LATAM.",
+    audience: ["candidato", "publico"],
+    status: "disponible",
+    href: "/outplacement/remoto",
+  },
+  {
     id: "out-01-08",
     title: "Ruta outplacement OUT-01…08",
     summary: "Estabilización, competencias, mercado, upskilling, marca, networking, entrevistas, 90 días.",

@@ -13,6 +13,10 @@ function deepMerge(base: AppSettings, patch: Partial<AppSettings>): AppSettings 
     promotions: patch.promotions ?? base.promotions,
     tester_emails: patch.tester_emails ?? base.tester_emails,
     microlearning_footer: patch.microlearning_footer ?? base.microlearning_footer,
+    allies: patch.allies ?? base.allies,
+    alumni: { ...base.alumni, ...(patch.alumni || {}) },
+    expert_default_commission_percent:
+      patch.expert_default_commission_percent ?? base.expert_default_commission_percent,
   };
 }
 

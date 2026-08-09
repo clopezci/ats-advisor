@@ -107,8 +107,17 @@ export default function OutplacementPage() {
         <Link href="/outplacement/video-entrevista" className="btn-secondary">
           Video mock STAR
         </Link>
+        <Link href="/outplacement/marketplace" className="btn-secondary">
+          Marketplace coach / CV review
+        </Link>
         <Link href="/outplacement/experto" className="btn-secondary">
           Hablar con un experto (aliado)
+        </Link>
+        <Link href="/outplacement/cursos" className="btn-secondary">
+          Cursos externos low-cost
+        </Link>
+        <Link href="/outplacement/alumni" className="btn-secondary">
+          Comunidad alumni
         </Link>
         <Link href="/outplacement/assessment" className="btn-secondary">
           Assessment RIASEC → roles LATAM

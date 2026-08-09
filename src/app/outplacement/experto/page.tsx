@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { SpeakButton } from "@/components/SpeakButton";
 import { EXPERT_SPECIALTIES, specialtyLabel } from "@/lib/experts/specialties";
+import { packageById } from "@/lib/outplacement/marketplacePackages";
 
 type AllyPublic = {
   id: string;
@@ -13,7 +15,8 @@ type AllyPublic = {
   notes: string;
 };
 
-export default function ExpertoPage() {
+function ExpertoInner() {
+  const params = useSearchParams();
   const [allies, setAllies] = useState<AllyPublic[]>([]);
   const [enabled, setEnabled] = useState(true);
   const [allyId, setAllyId] = useState("");
@@ -25,6 +28,11 @@ export default function ExpertoPage() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
+  const [confirmUrl, setConfirmUrl] = useState("");
+
+  const packId = params.get("pack") || "";
+  const pack = packId ? packageById(packId) : null;
+  const qSpecialty = params.get("specialty") || "";
 
   useEffect(() => {
     try {
@@ -34,15 +42,30 @@ export default function ExpertoPage() {
     } catch {
       /* ignore */
     }
+    const spec = qSpecialty || pack?.specialty || "";
+    if (spec) setSpecialty(spec);
+    if (pack) {
+      setMessage((prev) =>
+        prev.trim()
+          ? prev
+          : `Quiero el paquete «${pack.title}» (${pack.duration}). Contexto: `
+      );
+      setOpen(true);
+    }
     fetch("/api/experts")
       .then((r) => r.json())
       .then((d) => {
         setEnabled(Boolean(d.enabled));
         setAllies(d.allies || []);
-        if (d.allies?.[0]) setAllyId(d.allies[0].id);
+        const list = (d.allies || []) as AllyPublic[];
+        const preferred =
+          list.find((a) => a.specialties.includes(spec)) || list[0];
+        if (preferred) setAllyId(preferred.id);
       })
       .catch(() => setEnabled(false));
-  }, []);
+    // solo al montar / cambiar query
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [qSpecialty, packId]);
 
   const selected = allies.find((a) => a.id === allyId);
 
@@ -50,6 +73,7 @@ export default function ExpertoPage() {
     e.preventDefault();
     setLoading(true);
     setMsg("");
+    setConfirmUrl("");
     try {
       const res = await fetch("/api/experts/request", {
         method: "POST",
@@ -62,6 +86,7 @@ export default function ExpertoPage() {
         return;
       }
       setMsg(data.message || "Enviado");
+      if (data.confirmUrl) setConfirmUrl(data.confirmUrl);
       setOpen(false);
       setMessage("");
     } catch {
@@ -76,15 +101,21 @@ export default function ExpertoPage() {
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-xs uppercase tracking-[0.14em] muted">Fase 2 · aliados</p>
+            <p className="text-xs uppercase tracking-[0.14em] muted">Aliados · conciliación</p>
             <h1 className="mt-1 text-2xl font-semibold">Hablar con un experto</h1>
           </div>
-          <SpeakButton text="Elige un aliado, completa el formulario corto y le llega la notificación por correo y Telegram si está configurado." />
+          <SpeakButton text="Elige aliado, envía la solicitud. El aliado recibe correo, Telegram o WhatsApp. Cuando tomes el servicio, confirma con el enlace para dejar prueba de comisión." />
         </div>
         <p className="text-sm muted">
-          Convenios LOTIC: un humano revisa CV, entrevista u orientación. La app no cobra la sesión
-          aquí — el aliado te contacta.
+          Convenios LOTIC: pagas la sesión al aliado. Tras tomarla, confirma en la app — eso genera
+          la prueba para el corte semanal de comisiones (no es un cobro automático a ti).
         </p>
+        {pack && (
+          <p className="text-xs muted">
+            Paquete marketplace: <strong>{pack.title}</strong> · desde orientativo{" "}
+            {pack.fromCop.toLocaleString("es-CO")} COP
+          </p>
+        )}
       </section>
 
       {!enabled && (
@@ -108,7 +139,11 @@ export default function ExpertoPage() {
               className="btn-primary"
               onClick={() => {
                 setAllyId(a.id);
-                setSpecialty(a.specialties[0] || "carrera");
+                setSpecialty(
+                  qSpecialty && a.specialties.includes(qSpecialty)
+                    ? qSpecialty
+                    : a.specialties[0] || "carrera"
+                );
                 setOpen(true);
               }}
             >
@@ -152,7 +187,6 @@ export default function ExpertoPage() {
                   {s.label}
                 </option>
               ))}
-              {/* si el filtro vacía, mostrar todas */}
               {selected.specialties.length > 0 &&
                 !EXPERT_SPECIALTIES.some((s) => selected.specialties.includes(s.id)) &&
                 selected.specialties.map((id) => (
@@ -185,9 +219,29 @@ export default function ExpertoPage() {
       )}
 
       {msg && <p className="text-sm">{msg}</p>}
+      {confirmUrl && (
+        <section className="bento-card space-y-2 text-sm">
+          <p>Guarda este enlace: cuando tomes el servicio, confirma aquí.</p>
+          <Link href={confirmUrl} className="btn-primary">
+            Ir a confirmar servicio
+          </Link>
+        </section>
+      )}
+
+      <Link href="/outplacement/marketplace" className="btn-secondary">
+        Ver empaques marketplace
+      </Link>
       <Link href="/outplacement" className="btn-secondary">
         Volver
       </Link>
     </div>
+  );
+}
+
+export default function ExpertoPage() {
+  return (
+    <Suspense fallback={<p className="p-4 text-sm muted">Cargando…</p>}>
+      <ExpertoInner />
+    </Suspense>
   );
 }

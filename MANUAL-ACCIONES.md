@@ -15,12 +15,13 @@ El código ya está en `main` y Vercel despliega solo al push.
 
 # BLOQUE PENDIENTES (hazlo cuando el agente termine el código)
 
-### YA HECHO (código reciente — precios + Fase 1/2)
+### YA HECHO (código reciente — precios + Fase 1/2/3)
 
 - Garantía 30 días eliminada; OUT-09 solo Plus; `plan_90_dias` $39k retirado.
 - Fase 1: assessment, career-brief, oferta, bienestar, remoto.
 - Fase 2: vacantes, video mock, misiones/XP, tracks profundos, dashboard RH engagement.
-- **Aliados expertos:** `/admin` → sección «Aliados expertos» (nombre, correo, telegram, especialidades). Usuario: `/outplacement/experto`. Flag `experts`.
+- **Aliados + WhatsApp + conciliación:** `/admin` (WA, % comisión, toggles notify) · tablero `/admin/expertos` · usuario `/outplacement/experto` + confirmar `/outplacement/experto/confirmar`.
+- **Fase 3:** marketplace `/outplacement/marketplace` · cursos externos `/outplacement/cursos` · alumni `/outplacement/alumni` (enlaces en admin).
 
 
 > **Instrucción:** no empieces este bloque hasta que el último push a `main` esté **Ready** en Vercel.  
@@ -35,7 +36,8 @@ El código ya está en `main` y Vercel despliega solo al push.
 | P3 | Wompi **o** Mercado Pago (sandbox → live) | Cobros | [§6](#6-pagos-reales-wompi-o-mercado-pago) |
 | P4 | Solicitud **Google AdSense** (puede tardar / rechazar si hay poco tráfico) | Paralelo | [§8.4](#84-google-adsense) |
 | P5 | (Opcional) operador alternativo: EthicalAds / Carbon / Media.net | Paralelo | [§12](#12-ads-internos-y-alternativas-a-google) |
-| P6 | WhatsApp Meta (addon) | Después | [§8.2](#82-whatsapp-business) |
+| P6 | WhatsApp Meta (addon + avisos a aliados) | Después | [§8.2](#82-whatsapp-business) |
+| P6b | Cargar aliados + enlaces alumni en `/admin`; revisar `/admin/expertos` | Ahora | Admin |
 | P7 | Dominio propio + actualizar webhooks | Cuando tengas | [§8.5](#85-dominio-propio) |
 | P8 | Logo LOTIC final + tarjeta Live en lotic-soluciones | Brand | [§8.6](#86-logo--portfolio-lotic) |
 | P9 | Gemini / OpenAI / HF / Sentry DSN | Opcional | [§8.1](#81-fallback-ia)--[§8.3](#83-sentry) |
@@ -116,7 +118,11 @@ Verifica DNS en resend.com y pon `RESEND_FROM` con dominio propio. Redeploy.
 
 ## 8.2 WhatsApp Business
 
-Meta app → `WHATSAPP_TOKEN` + `WHATSAPP_PHONE_NUMBER_ID` (+ opcional `WHATSAPP_BROADCAST_TO`). Precio addon en `/admin`.
+Meta app → `WHATSAPP_TOKEN` (o `META_WHATSAPP_TOKEN`) + `WHATSAPP_PHONE_NUMBER_ID` (+ opcional `WHATSAPP_BROADCAST_TO`). Precio addon en `/admin`.
+
+**También notifica aliados:** en `/admin` → Aliados → WhatsApp E.164 + toggle «WhatsApp». Sin esas vars, la solicitud igual crea el caso y manda email/Telegram.
+
+**Conciliación:** `/admin/expertos` — casos confirmados por el usuario + corte semanal. Configura % comisión por aliado o el default.
 
 ## 8.3 Sentry
 

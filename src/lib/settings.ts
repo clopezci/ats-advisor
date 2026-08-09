@@ -4,10 +4,17 @@ export type ExpertAlly = {
   email: string;
   /** Opcional: chat_id Telegram del aliado para aviso directo */
   telegram_chat_id: string;
+  /** E.164 sin + o con +, ej. 573001234567 */
+  whatsapp_phone: string;
   /** cv | entrevista | negociacion | carrera | bienestar | remoto | emprendimiento */
   specialties: string[];
   active: boolean;
   notes: string;
+  /** % comisión LOTIC sobre lo que el usuario pagó al aliado (default 15) */
+  commission_percent: number;
+  notify_email: boolean;
+  notify_telegram: boolean;
+  notify_whatsapp: boolean;
 };
 
 export type AppSettings = {
@@ -54,6 +61,14 @@ export type AppSettings = {
   microlearning_footer: string;
   /** Aliados expertos (coach CV, entrevista, etc.) — configurables en admin */
   allies: ExpertAlly[];
+  /** Comunidad alumni (Fase 3) */
+  alumni: {
+    telegram_url: string;
+    discord_url: string;
+    ama_note: string;
+  };
+  /** Comisión por defecto % si el aliado no define una */
+  expert_default_commission_percent: number;
 };
 
 const g = globalThis as unknown as { __atsSettings?: AppSettings };
@@ -99,6 +114,12 @@ export function defaultSettings(): AppSettings {
       .filter(Boolean),
     microlearning_footer: "ATSAdvisor · LOTIC — practica 5–15 min al día.",
     allies: [],
+    alumni: {
+      telegram_url: "",
+      discord_url: "",
+      ama_note: "AMA mensual con alumni (próximamente — configura el enlace aquí).",
+    },
+    expert_default_commission_percent: 15,
   };
 }
 
@@ -143,6 +164,9 @@ function deepMerge(base: AppSettings, patch: Partial<AppSettings>): AppSettings 
     tester_emails: patch.tester_emails ?? base.tester_emails,
     microlearning_footer: patch.microlearning_footer ?? base.microlearning_footer,
     allies: patch.allies ?? base.allies,
+    alumni: { ...base.alumni, ...(patch.alumni || {}) },
+    expert_default_commission_percent:
+      patch.expert_default_commission_percent ?? base.expert_default_commission_percent,
   };
 }
 

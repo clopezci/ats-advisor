@@ -281,9 +281,28 @@ export default function AdminPage() {
       <section className="bento-card space-y-3">
         <h2 className="font-semibold">Aliados expertos</h2>
         <p className="text-xs muted">
-          Convenios: el usuario pide ayuda en /outplacement/experto y el aliado recibe correo (+
-          Telegram si pones chat_id). Puedes crear varios.
+          Notifica por correo, Telegram y/o WhatsApp. Comisión % para cortes semanales en{" "}
+          <Link href="/admin/expertos" className="underline">
+            /admin/expertos
+          </Link>
+          .
         </p>
+        <label className="block text-sm">
+          Comisión por defecto %
+          <input
+            className="field mt-1"
+            type="number"
+            min={0}
+            max={100}
+            value={settings.expert_default_commission_percent}
+            onChange={(e) =>
+              setSettings({
+                ...settings,
+                expert_default_commission_percent: Number(e.target.value),
+              })
+            }
+          />
+        </label>
         {(settings.allies || []).map((a, idx) => (
           <div
             key={a.id}
@@ -321,6 +340,53 @@ export default function AdminPage() {
                 setSettings({ ...settings, allies });
               }}
             />
+            <input
+              className="field"
+              placeholder="WhatsApp E.164 (ej. 573001234567)"
+              value={a.whatsapp_phone || ""}
+              onChange={(e) => {
+                const allies = [...settings.allies];
+                allies[idx] = { ...a, whatsapp_phone: e.target.value };
+                setSettings({ ...settings, allies });
+              }}
+            />
+            <label className="block text-sm">
+              Comisión % (este aliado)
+              <input
+                className="field mt-1"
+                type="number"
+                min={0}
+                max={100}
+                value={a.commission_percent ?? settings.expert_default_commission_percent}
+                onChange={(e) => {
+                  const allies = [...settings.allies];
+                  allies[idx] = { ...a, commission_percent: Number(e.target.value) };
+                  setSettings({ ...settings, allies });
+                }}
+              />
+            </label>
+            <div className="flex flex-wrap gap-3 text-xs">
+              {(
+                [
+                  ["notify_email", "Email"],
+                  ["notify_telegram", "Telegram"],
+                  ["notify_whatsapp", "WhatsApp"],
+                ] as const
+              ).map(([k, label]) => (
+                <label key={k} className="flex items-center gap-1">
+                  <input
+                    type="checkbox"
+                    checked={a[k] !== false}
+                    onChange={(e) => {
+                      const allies = [...settings.allies];
+                      allies[idx] = { ...a, [k]: e.target.checked };
+                      setSettings({ ...settings, allies });
+                    }}
+                  />
+                  {label}
+                </label>
+              ))}
+            </div>
             <p className="text-xs muted">Especialidades</p>
             <div className="flex flex-wrap gap-2">
               {EXPERT_SPECIALTIES.map((s) => {
@@ -393,9 +459,14 @@ export default function AdminPage() {
                   name: "Nuevo aliado",
                   email: "",
                   telegram_chat_id: "",
+                  whatsapp_phone: "",
                   specialties: ["cv", "carrera"],
                   active: true,
                   notes: "",
+                  commission_percent: settings.expert_default_commission_percent,
+                  notify_email: true,
+                  notify_telegram: true,
+                  notify_whatsapp: true,
                 },
               ],
             })
@@ -403,6 +474,46 @@ export default function AdminPage() {
         >
           Añadir aliado
         </button>
+        <Link href="/admin/expertos" className="btn-primary">
+          Abrir tablero de conciliación / cortes
+        </Link>
+      </section>
+
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold">Alumni / comunidad</h2>
+        <input
+          className="field"
+          placeholder="URL Telegram comunidad"
+          value={settings.alumni?.telegram_url || ""}
+          onChange={(e) =>
+            setSettings({
+              ...settings,
+              alumni: { ...settings.alumni, telegram_url: e.target.value },
+            })
+          }
+        />
+        <input
+          className="field"
+          placeholder="URL Discord (opcional)"
+          value={settings.alumni?.discord_url || ""}
+          onChange={(e) =>
+            setSettings({
+              ...settings,
+              alumni: { ...settings.alumni, discord_url: e.target.value },
+            })
+          }
+        />
+        <textarea
+          className="field min-h-16"
+          placeholder="Nota AMA / comunidad"
+          value={settings.alumni?.ama_note || ""}
+          onChange={(e) =>
+            setSettings({
+              ...settings,
+              alumni: { ...settings.alumni, ama_note: e.target.value },
+            })
+          }
+        />
       </section>
 
       <section className="bento-card space-y-3">

@@ -100,12 +100,28 @@ export function sanitizeSettingsPatch(body: unknown): AppSettings {
           name: str(row.name, "Aliado", 80),
           email: str(row.email, "", 120).trim().toLowerCase(),
           telegram_chat_id: str(row.telegram_chat_id, "", 40),
+          whatsapp_phone: str(row.whatsapp_phone, "", 40).replace(/\s/g, ""),
           specialties: specs.length ? specs : ["carrera"],
           active: bool(row.active, true),
           notes: str(row.notes, "", 280),
+          commission_percent: num(row.commission_percent, base.expert_default_commission_percent, 0, 100),
+          notify_email: bool(row.notify_email, true),
+          notify_telegram: bool(row.notify_telegram, true),
+          notify_whatsapp: bool(row.notify_whatsapp, true),
         };
       });
     })(),
+    alumni: {
+      telegram_url: str((b.alumni as { telegram_url?: string } | undefined)?.telegram_url, base.alumni.telegram_url, 300),
+      discord_url: str((b.alumni as { discord_url?: string } | undefined)?.discord_url, base.alumni.discord_url, 300),
+      ama_note: str((b.alumni as { ama_note?: string } | undefined)?.ama_note, base.alumni.ama_note, 400),
+    },
+    expert_default_commission_percent: num(
+      b.expert_default_commission_percent,
+      base.expert_default_commission_percent,
+      0,
+      100
+    ),
   };
 }
 

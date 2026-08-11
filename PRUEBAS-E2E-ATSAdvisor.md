@@ -1,5 +1,9 @@
 # Pruebas extremo a extremo — ATSAdvisor (LOTIC)
 
+> **Si buscas la guía fácil (sin tecnicismos):** abre  
+> **[`PRUEBAS-FACILES-ATSAdvisor.md`](./PRUEBAS-FACILES-ATSAdvisor.md)**  
+> Este archivo es la versión **técnica / avanzada**.
+
 **App:** https://ats-advisor-two.vercel.app/  
 **Admin:** https://ats-advisor-two.vercel.app/admin  
 **Repo:** `main` · **Actualizado:** 2026-08-09  

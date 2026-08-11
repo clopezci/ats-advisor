@@ -11,7 +11,8 @@ El código ya está en `main` y Vercel despliega solo al push.
 | **Actualizado** | 2026-08-09 |
 
 ---
-> **QA:** checklist completo con casillas en [`PRUEBAS-E2E-ATSAdvisor.md`](./PRUEBAS-E2E-ATSAdvisor.md) (funcional, lógica, seguridad, IA, voz, bento, pagos, guiones A–F).
+> **Pruebas (fácil):** [`PRUEBAS-FACILES-ATSAdvisor.md`](./PRUEBAS-FACILES-ATSAdvisor.md) — qué hacer, cómo y dónde, para personas sin conocimientos técnicos.  
+> **Pruebas (técnicas):** [`PRUEBAS-E2E-ATSAdvisor.md`](./PRUEBAS-E2E-ATSAdvisor.md) — seguridad, IA, rate limits, etc.
 
 ---
 

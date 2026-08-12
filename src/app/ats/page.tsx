@@ -9,6 +9,9 @@ import type { AtsAnalyzeResult, AtsProfile } from "@/lib/ats/engine";
 import { DISCLAIMER_CV_REWRITE } from "@/lib/ats/coaching";
 import { detectAtsProfile } from "@/lib/ats/detectAts";
 import { buildCvDocx, downloadBlob } from "@/lib/ats/docxExport";
+import { extractPlainCv } from "@/lib/ats/plainCv";
+import { HelpTip } from "@/components/HelpTip";
+import { glossaryForTitle } from "@/lib/ats/glossary";
 import { compareAtsResults, lineDiff, type ScoreDelta } from "@/lib/ats/compare";
 import { buildHistoryPayload, pushAtsHistory, saveAtsWorkspace } from "@/lib/ats/history";
 import { canRunAts, recordAtsRun } from "@/lib/limits/atsFree";
@@ -150,7 +153,6 @@ export default function AtsPage() {
           task: "cv_rewrite",
           useKnowledge: true,
           prompt: [
-            `DISCLAIMER obligatorio al inicio: ${DISCLAIMER_CV_REWRITE}`,
             `Perfil ATS objetivo: ${atsProfile}`,
             `Score actual: ${result.score}% · semántico ${result.semanticScore}%`,
             `Must-have faltantes: ${(result.mustHave?.missing || []).slice(0, 15).join(", ")}`,
@@ -159,13 +161,16 @@ export default function AtsPage() {
             `Cómo filtra este ATS: ${(result.atsInsights || []).join(" ")}`,
             `OFERTA (extracto): ${jobText.slice(0, 1800)}`,
             `CV ACTUAL COMPLETO:\n${cvText.slice(0, 7000)}`,
-            "Tarea: reescribe el CV en texto plano tejiendo keywords faltantes SOLO donde el contexto del CV ya lo soporte. Frases de valor (verbo + contexto + skill + resultado). No inventes. Marca [REVISAR] si algo es dudoso.",
+            "Tarea: reescribe SOLO la hoja de vida lista para pegar en Word y postular.",
+            "Estructura: Nombre, contacto, perfil profesional, experiencia (viñetas), educación, habilidades, idiomas/certificaciones si aplican.",
+            "NO escribas títulos internos como «Resumen de cambios», «CV reescrito», «texto plano» ni disclaimers.",
+            "Teje keywords faltantes SOLO si el CV actual ya lo soporta. No inventes. Si algo es dudoso, deja [REVISAR] dentro de la misma viñeta.",
           ].join("\n\n"),
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "IA no disponible");
-      setRewriteText(data.text);
+      setRewriteText(extractPlainCv(String(data.text || "")) || String(data.text || ""));
     } catch (e) {
       setRewriteText(e instanceof Error ? e.message : "No se pudo ajustar el CV");
     } finally {
@@ -210,9 +215,7 @@ export default function AtsPage() {
   function applyRewriteToEditor() {
     if (!rewriteText.trim()) return;
     if (!originalCv) setOriginalCv(cvText);
-    const marker = rewriteText.search(/\n(?:CV|Hoja de vida|Versión|TEXTO)[^\n]*:\s*\n/i);
-    const body = marker >= 0 ? rewriteText.slice(marker).replace(/^[^\n]*\n/, "") : rewriteText;
-    const next = body.trim() || rewriteText;
+    const next = extractPlainCv(rewriteText) || rewriteText.trim();
     setCvText(next);
     setDiffLines(lineDiff(originalCv || cvText, next));
     try {
@@ -685,11 +688,12 @@ export default function AtsPage() {
 
           {result.bulletQuality && result.bulletQuality.total > 0 && (
             <section className="bento-card space-y-2">
-              <h2 className="text-sm font-semibold">
-                Calidad de viñetas · promedio {result.bulletQuality.avgScore}%
-              </h2>
+              <HelpTip
+                label={`Calidad de viñetas · promedio ${result.bulletQuality.avgScore}%`}
+                help={glossaryForTitle("Calidad de viñetas") || ""}
+              />
               <p className="text-xs muted">
-                Heurística tipo Resume Worded: verbo de acción + métrica + skill (sin inventar).
+                Cada logro debería tener verbo + qué hiciste + un número o resultado (sin inventar).
               </p>
               {result.bulletQuality.weakest.map((b) => (
                 <div key={b.text.slice(0, 40)} className="text-sm border-b py-2" style={{ borderColor: "var(--border)" }}>
@@ -702,7 +706,10 @@ export default function AtsPage() {
 
           {result.placementGuide && result.placementGuide.length > 0 && (
             <section className="bento-card space-y-2">
-              <h2 className="text-sm font-semibold">Dónde poner cada keyword</h2>
+              <HelpTip
+                label="Dónde poner cada palabra clave"
+                help={glossaryForTitle("Dónde poner cada keyword") || ""}
+              />
               <ul className="space-y-2 text-sm muted">
                 {result.placementGuide.slice(0, 8).map((p) => (
                   <li key={p.term + p.where}>
@@ -720,9 +727,13 @@ export default function AtsPage() {
 
           {result.heatmap?.length > 0 && (
             <section className="bento-card space-y-3">
-              <h2 className="text-sm font-semibold">Heatmap de keywords (oferta vs CV)</h2>
+              <HelpTip
+                label="Palabras de la oferta vs tu CV"
+                help={glossaryForTitle("Heatmap de keywords") || ""}
+              />
               <p className="text-xs muted">
-                Rojo = falta · ámbar = débil · verde = ok. Intensidad según frecuencia en la oferta.
+                Rojo = no está en tu CV · ámbar = aparece poco · morado = sí está. El número es
+                veces en el CV / veces en la oferta.
               </p>
               <div className="flex flex-wrap gap-2">
                 {result.heatmap.map((h) => {
@@ -758,7 +769,10 @@ export default function AtsPage() {
 
           {result.sectionHits?.length > 0 && (
             <section className="bento-card space-y-2">
-              <h2 className="text-sm font-semibold">Keywords por sección del CV</h2>
+              <HelpTip
+                label="Palabras clave por sección del CV"
+                help={glossaryForTitle("Keywords por sección") || ""}
+              />
               <ul className="space-y-2 text-sm muted">
                 {result.sectionHits.map((s) => (
                   <li key={s.section}>
@@ -774,7 +788,10 @@ export default function AtsPage() {
           )}
 
           <section className="bento-card space-y-2">
-            <h2 className="text-sm font-semibold">Cobertura de secciones (parse)</h2>
+            <HelpTip
+              label="¿El CV tiene las secciones que el robot espera?"
+              help={glossaryForTitle("Cobertura de secciones") || ""}
+            />
             <ul className="grid grid-cols-2 gap-1 text-sm muted">
               {result.sectionCoverage &&
                 Object.entries(result.sectionCoverage).map(([k, ok]) => (
@@ -785,14 +802,14 @@ export default function AtsPage() {
             </ul>
           </section>
 
-          <ChipBlock title="Must-have presentes" items={result.mustHave?.matched || []} tone="ok" />
-          <ChipBlock title="Must-have faltantes" items={result.mustHave?.missing || []} tone="warn" />
-          <ChipBlock title="Nice-to-have faltantes" items={result.niceToHave?.missing || []} tone="muted" />
-          <ChipBlock title="Hard skills OK" items={result.hardSkills.matched} tone="ok" />
-          <ChipBlock title="Hard skills faltantes" items={result.hardSkills.missing} tone="warn" />
-          <ChipBlock title="Soft skills OK" items={result.softSkills.matched} tone="ok" />
-          <ChipBlock title="Keywords presentes" items={result.matchedKeywords.slice(0, 20)} tone="ok" />
-          <ChipBlock title="Keywords faltantes" items={result.missingKeywords.slice(0, 20)} tone="warn" />
+          <ChipBlock title="Requisitos indispensables que sí tienes" items={result.mustHave?.matched || []} tone="ok" />
+          <ChipBlock title="Requisitos indispensables que faltan" items={result.mustHave?.missing || []} tone="warn" />
+          <ChipBlock title="Requisitos deseables que faltan" items={result.niceToHave?.missing || []} tone="muted" />
+          <ChipBlock title="Habilidades técnicas que sí tienes" items={result.hardSkills.matched} tone="ok" />
+          <ChipBlock title="Habilidades técnicas que faltan" items={result.hardSkills.missing} tone="warn" />
+          <ChipBlock title="Habilidades blandas que sí tienes" items={result.softSkills.matched} tone="ok" />
+          <ChipBlock title="Palabras clave presentes" items={result.matchedKeywords.slice(0, 20)} tone="ok" />
+          <ChipBlock title="Palabras clave faltantes" items={result.missingKeywords.slice(0, 20)} tone="warn" />
 
           <ResultBlock title="Requisitos excluyentes" items={result.exclusiveGaps} />
           <ResultBlock title="Alertas de formato" items={result.formatAlerts} />
@@ -833,7 +850,7 @@ export default function AtsPage() {
                   type="button"
                   className="btn-primary"
                   onClick={async () => {
-                    const blob = await buildCvDocx(rewriteText, { title: "Hoja de vida — ATSAdvisor" });
+                    const blob = await buildCvDocx(extractPlainCv(rewriteText) || rewriteText);
                     downloadBlob(`CV-ajustado-ATSAdvisor.docx`, blob);
                   }}
                 >
@@ -926,8 +943,8 @@ export default function AtsPage() {
               type="button"
               className="btn-secondary"
               onClick={async () => {
-                const text = rewriteText.trim() || cvText;
-                const blob = await buildCvDocx(text, { title: "Hoja de vida — ATSAdvisor" });
+                const text = extractPlainCv(rewriteText) || rewriteText.trim() || cvText;
+                const blob = await buildCvDocx(text);
                 downloadBlob(`CV-ATSAdvisor.docx`, blob);
               }}
             >
@@ -1026,10 +1043,11 @@ function labelSection(k: string) {
 function ResultBlock({ title, items }: { title: string; items: string[] }) {
   if (!items?.length) return null;
   const text = `${title}. ${items.join(". ")}`;
+  const help = glossaryForTitle(title);
   return (
     <section className="bento-card space-y-2">
-      <div className="flex items-center justify-between gap-2">
-        <h2 className="text-sm font-semibold">{title}</h2>
+      <div className="flex items-start justify-between gap-2">
+        {help ? <HelpTip label={title} help={help} /> : <h2 className="text-sm font-semibold">{title}</h2>}
         <SpeakButton text={text} />
       </div>
       <ul className="space-y-1 text-sm muted">
@@ -1053,9 +1071,10 @@ function ChipBlock({
   if (!items?.length) return null;
   const color =
     tone === "ok" ? "var(--brand)" : tone === "warn" ? "var(--danger, #b42318)" : "var(--muted, #6b6575)";
+  const help = glossaryForTitle(title);
   return (
     <section className="bento-card space-y-2">
-      <h2 className="text-sm font-semibold">{title}</h2>
+      {help ? <HelpTip label={title} help={help} /> : <h2 className="text-sm font-semibold">{title}</h2>}
       <div className="flex flex-wrap gap-2">
         {items.slice(0, 24).map((item) => (
           <span

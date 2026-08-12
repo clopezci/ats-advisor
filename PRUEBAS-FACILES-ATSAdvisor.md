@@ -34,9 +34,10 @@
 - **OK si:** ves el nombre ATSAdvisor y la página carga (no pantalla en blanco).
 - [ ] Listo
 
-### 2. Revisar el menú de abajo / pie de página
-- **Dónde:** al final de la misma página.
-- **Qué hacer:** toca Privacidad, Términos, Contacto, Blog, Herramientas.
+### 2. Revisar el menú de arriba y el pie de página
+- **Dónde:** arriba: **Inicio**, **Herramientas**, Mapa, Tracker, Precios, Cuenta.  
+  Abajo: Privacidad, Términos, Cookies, Preferencias de cookies, Contacto, Blog.
+- **Qué hacer:** toca Inicio (vuelve al home) y Herramientas. Luego prueba 2 enlaces del pie.
 - **OK si:** cada enlace abre otra pantalla sin error raro.
 - [ ] Listo
 
@@ -71,19 +72,22 @@
 
 # Parte 3 — Usuario gratis (sin pagar)
 
-### 6. Aceptar cookies
-- **Dónde:** al entrar, si aparece el aviso de cookies.
-- **Qué hacer:** acepta o elige “solo esenciales”.
-- **OK si:** el aviso se cierra y puedes seguir.
+### 6. Aceptar cookies / preferencias
+- **Dónde:** al entrar (ventana nueva o incógnito) sale un recuadro abajo.  
+  Si no sale: al final de cualquier página toca **Preferencias de cookies**.
+- **Qué hacer:** elige **Aceptar** o **Solo esenciales**.
+- **OK si:** el recuadro se cierra y puedes volver a abrirlo desde el pie de página.
 - [ ] Listo
 
-### 7. Calculadora de match (rápida y gratis)
-- **Dónde:** menú **Herramientas** → **Calculadora de match**  
-  o https://ats-advisor-two.vercel.app/herramientas/match
+### 7. ¿Qué tan bien encaja tu CV? (rápida y gratis)
+- **Dónde:** menú de arriba **Herramientas** → **¿Qué tan bien encaja tu CV?**  
+  o desde Inicio el botón del mismo nombre.  
+  Enlaces: https://ats-advisor-two.vercel.app/herramientas/calculadora  
+  (el antiguo `/herramientas/match` también debe abrir lo mismo).
 - **Qué hacer:**
   1. Pega un pedazo de tu hoja de vida (aunque sea inventado).
   2. Pega un pedazo de una oferta de empleo.
-  3. Toca **Calcular match rápido**.
+  3. Toca **Calcular coincidencia**.
 - **OK si:** sale un porcentaje y un consejo en español.
 - [ ] Listo
 
@@ -95,6 +99,18 @@
   2. Pega una oferta.
   3. Toca analizar / continuar.
 - **OK si:** te muestra un puntaje y recomendaciones en español (no un error feo de programación).
+- [ ] Listo
+
+### 8b. Títulos del resultado ATS (ayuda)
+- **Dónde:** en el resultado del análisis, al lado de cada título hay un botón **?**.
+- **Qué hacer:** tócalo (celular) o pasa el cursor (PC) sobre títulos como “Palabras de la oferta vs tu CV” o “Habilidades técnicas”.
+- **OK si:** aparece una explicación en español sencillo.
+- [ ] Listo
+
+### 8c. Descargar el CV ajustado
+- **Dónde:** en el resultado ATS → “Ajustar hoja de vida” → **Descargar DOCX del ajuste**.
+- **Qué hacer:** descarga y ábrelo en Word.
+- **OK si:** se ve como una hoja de vida normal (nombre, experiencia…), **sin** títulos tipo “Resumen de cambios” o “CV REESCRITO COMPLETO”.
 - [ ] Listo
 
 ### 9. Si pegas muy poco texto

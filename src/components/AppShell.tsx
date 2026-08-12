@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { CookiePrefsButton } from "@/components/CookieBanner";
 
 export function AppShell({ children }: { children: ReactNode }) {
   return (
@@ -11,16 +12,27 @@ export function AppShell({ children }: { children: ReactNode }) {
       >
         Saltar al contenido
       </a>
-      <header className="mb-6 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.svg" alt="" width={36} height={36} className="h-9 w-9 rounded-full" />
-          <div>
-            <div className="text-base font-semibold tracking-tight">ATSAdvisor</div>
-            <div className="text-xs muted">by LOTIC</div>
-          </div>
-        </Link>
-        <nav className="flex items-center gap-3 text-sm muted" aria-label="Principal">
+      <header className="mb-6 space-y-3">
+        <div className="flex items-center justify-between gap-3">
+          <Link href="/" className="flex items-center gap-2 min-w-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.svg" alt="" width={36} height={36} className="h-9 w-9 rounded-full" />
+            <div>
+              <div className="text-base font-semibold tracking-tight">ATSAdvisor</div>
+              <div className="text-xs muted">by LOTIC</div>
+            </div>
+          </Link>
+        </div>
+        <nav
+          className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm muted"
+          aria-label="Principal"
+        >
+          <Link href="/" className="hover:opacity-80 font-medium" style={{ color: "var(--text)" }}>
+            Inicio
+          </Link>
+          <Link href="/herramientas" className="hover:opacity-80 font-medium" style={{ color: "var(--text)" }}>
+            Herramientas
+          </Link>
           <Link href="/capacidades" className="hover:opacity-80">
             Mapa
           </Link>
@@ -46,12 +58,12 @@ export function AppShell({ children }: { children: ReactNode }) {
           <Link href="/legal/privacidad">Privacidad</Link>
           <Link href="/legal/terminos">Términos</Link>
           <Link href="/legal/cookies">Cookies</Link>
+          <CookiePrefsButton />
           <Link href="/legal/contacto">Contacto</Link>
           <Link href="/legal/quienes-somos">Quiénes somos</Link>
           <Link href="/capacidades">Capacidades</Link>
           <Link href="/empresa">Empresas</Link>
           <Link href="/blog">Blog</Link>
-          <Link href="/herramientas">Herramientas</Link>
         </nav>
         <p>© {new Date().getFullYear()} LOTIC Soluciones</p>
       </footer>

@@ -240,11 +240,11 @@ export const CAPABILITIES: Capability[] = [
   },
   {
     id: "match-calc",
-    title: "Calculadora de match (SEO)",
+    title: "¿Qué tan bien encaja tu CV?",
     summary: "Preview rápido CV↔oferta; puente al ATS completo.",
     audience: ["candidato", "publico"],
     status: "disponible",
-    href: "/herramientas/match",
+    href: "/herramientas/calculadora",
   },
   {
     id: "referrals",

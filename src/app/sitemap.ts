@@ -47,6 +47,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/outplacement/portfolio",
     "/cuenta/referidos",
     "/herramientas/match",
+    "/herramientas/calculadora",
     "/outplacement/vacantes",
     "/outplacement/video-entrevista",
     "/outplacement/misiones",

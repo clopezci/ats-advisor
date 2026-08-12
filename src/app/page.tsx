@@ -51,8 +51,11 @@ function HomeInner() {
           Ver todo lo que puedes hacer
           <span className="block text-xs font-normal opacity-90">Persona, empresa RH, admin · estados reales</span>
         </Link>
+        <Link href="/herramientas/calculadora" className="btn-secondary">
+          ¿Qué tan bien encaja tu CV? (rápido y gratis)
+        </Link>
         <Link href="/ats" className="btn-secondary">
-          Analizar mi CV (ATS gratis)
+          Analizar mi CV (ATS completo)
         </Link>
         <Link href="/outplacement" className="btn-secondary">
           Ver outplacement

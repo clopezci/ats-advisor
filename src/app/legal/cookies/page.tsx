@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CookiePrefsButton } from "@/components/CookieBanner";
 
 export const metadata = { title: "Cookies · ATSAdvisor" };
 
@@ -49,8 +50,12 @@ export default function CookiesPage() {
           .
         </p>
         <p>
-          Puedes elegir <em>Solo esenciales</em> en el banner (oculta ads de terceros) o limpiar
-          datos en /cuenta.
+          Puedes elegir <em>Solo esenciales</em> o <em>Aceptar</em> en el recuadro de cookies. Si ya
+          lo cerraste, ábrelo otra vez desde el pie de página: <strong>Preferencias de cookies</strong>.
+          También puedes limpiar datos en /cuenta.
+        </p>
+        <p>
+          <CookiePrefsButton />
         </p>
         <p className="muted text-xs">Última actualización: 2026-08-09.</p>
       </section>

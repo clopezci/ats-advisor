@@ -48,21 +48,41 @@ export default function PlantillaPage() {
       <label className="text-sm">
         Nombre
         <div className="mt-1 flex gap-2">
-          <input className="field" value={name} onChange={(e) => setName(e.target.value)} />
+          <input
+            className="field"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Ejemplo: María Gómez"
+          />
           <DictationButton onResult={(t) => setName((p) => (p ? `${p} ${t}` : t))} />
         </div>
       </label>
       <label className="text-sm">
         Cargo objetivo
-        <input className="field mt-1" value={role} onChange={(e) => setRole(e.target.value)} />
+        <input
+          className="field mt-1"
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          placeholder="Ejemplo: Analista de datos"
+        />
       </label>
       <label className="text-sm">
         Skills (separadas por coma)
-        <input className="field mt-1" value={skills} onChange={(e) => setSkills(e.target.value)} />
+        <input
+          className="field mt-1"
+          value={skills}
+          onChange={(e) => setSkills(e.target.value)}
+          placeholder="Ejemplo: Excel, Power BI, SQL"
+        />
       </label>
       <label className="text-sm">
         Un logro STAR
-        <textarea className="field mt-1 min-h-20" value={achievement} onChange={(e) => setAchievement(e.target.value)} />
+        <textarea
+          className="field mt-1 min-h-20"
+          value={achievement}
+          onChange={(e) => setAchievement(e.target.value)}
+          placeholder="Ejemplo: En el banco X reduje el cierre mensual de 8 a 3 días armando un tablero en Power BI."
+        />
       </label>
 
       <pre className="bento-card text-xs whitespace-pre-wrap muted">{doc}</pre>

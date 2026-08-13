@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { DictationButton } from "@/components/DictationButton";
+import { CvPasteField, JobPasteField } from "@/components/CvPasteField";
 import { SpeakButton } from "@/components/SpeakButton";
 import { AdSlot } from "@/components/AdSlot";
 import type { AtsAnalyzeResult, AtsProfile } from "@/lib/ats/engine";
@@ -15,14 +16,14 @@ import { glossaryForTitle } from "@/lib/ats/glossary";
 import { compareAtsResults, lineDiff, type ScoreDelta } from "@/lib/ats/compare";
 import { buildHistoryPayload, pushAtsHistory, saveAtsWorkspace } from "@/lib/ats/history";
 import { canRunAts, recordAtsRun } from "@/lib/limits/atsFree";
-import { buildAtsReport, downloadText, openPrintableReport } from "@/lib/ats/report";
+import { openPrintableReport } from "@/lib/ats/report";
 import { bumpStreak } from "@/lib/engagement/streak";
 import { canAccessOutplacement, readEntitlement } from "@/lib/entitlements";
 import { upsertJob } from "@/lib/tracker/jobs";
 import { syncAtsScan } from "@/lib/supabase/sync";
 
 const PROFILES: { id: AtsProfile; label: string; hint: string }[] = [
-  { id: "generic", label: "Genérico", hint: "Si no sabes cuál usan" },
+  { id: "generic", label: "No lo sé", hint: "Sirve para la mayoría de avisos" },
   { id: "workday", label: "Workday", hint: "Semántico + formato estricto" },
   { id: "greenhouse", label: "Greenhouse", hint: "Parse limpio + scorecard humano" },
   { id: "taleo", label: "Taleo", hint: "Keywords literales" },
@@ -43,7 +44,6 @@ export default function AtsPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [result, setResult] = useState<AtsAnalyzeResult | null>(null);
-  const [uploading, setUploading] = useState(false);
   const [aiTip, setAiTip] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
   const [rewriteText, setRewriteText] = useState("");
@@ -57,6 +57,7 @@ export default function AtsPage() {
   const [coverLetter, setCoverLetter] = useState("");
   const [coverLoading, setCoverLoading] = useState(false);
   const [freeAtsLimit, setFreeAtsLimit] = useState(5);
+  const [resultPhase, setResultPhase] = useState(1);
 
   useEffect(() => {
     try {
@@ -95,27 +96,9 @@ export default function AtsPage() {
   const intro = useMemo(() => {
     if (step === 1) return "Sube tu CV (PDF/DOCX/TXT), pégalo o dicta el texto.";
     if (step === 2) return "Ahora pega o dicta la oferta laboral.";
-    if (step === 3) return "Elige el tipo de ATS o portal si lo conoces.";
-    return "Resultado pro: match, must-have, formato, tips y ajuste de hoja de vida.";
+    if (step === 3) return "Si no sabes con qué programa filtra la empresa, deja No lo sé y continúa.";
+    return "Tu resultado. Un paso a la vez: entiende el puntaje, luego ajusta el CV, luego carta y guardar.";
   }, [step]);
-
-  async function onFile(file: File | null) {
-    if (!file) return;
-    setUploading(true);
-    setError("");
-    try {
-      const fd = new FormData();
-      fd.append("file", file);
-      const res = await fetch("/api/ats/extract", { method: "POST", body: fd });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "No se pudo leer");
-      setCvText(data.text);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Error al subir");
-    } finally {
-      setUploading(false);
-    }
-  }
 
   async function askAiRewrite() {
     if (!result) return;
@@ -338,6 +321,7 @@ export default function AtsPage() {
       if (data.atsProfileUsed) setAtsProfile(data.atsProfileUsed);
       if (data.detection?.reason) setDetectMsg(data.detection.reason);
       setResult(data.result);
+      setResultPhase(1);
       setStep(4);
       setOriginalCv(cvText);
       setScoreDelta(null);
@@ -391,22 +375,12 @@ export default function AtsPage() {
       {step === 1 && (
         <>
           <div className="bento-card space-y-3">
-            <div className="flex items-center justify-between">
-              <label className="text-sm font-medium">CV (archivo o texto)</label>
-              <DictationButton onResult={(t) => setCvText((p) => (p ? `${p} ${t}` : t))} />
-            </div>
-            <input
-              type="file"
-              accept=".pdf,.docx,.txt,.md,application/pdf"
-              className="field"
-              onChange={(e) => onFile(e.target.files?.[0] || null)}
-            />
-            {uploading && <p className="text-xs muted">Leyendo archivo…</p>}
-            <textarea
-              className="field min-h-40"
+            <CvPasteField
+              framed={false}
               value={cvText}
-              onChange={(e) => setCvText(e.target.value)}
-              placeholder="O pega aquí el contenido de tu CV…"
+              onChange={setCvText}
+              label="Tu hoja de vida"
+              hint="El CV tuyo (PDF o Word). No pongas aquí el aviso de la vacante: eso va en el siguiente paso."
             />
           </div>
           {error && step === 1 && (
@@ -421,15 +395,6 @@ export default function AtsPage() {
             <Link href="/" className="btn-secondary">
               Volver
             </Link>
-            <Link href="/ats/multi" className="btn-secondary">
-              Comparar varias ofertas
-            </Link>
-            <Link href="/ats/portales" className="btn-secondary">
-              Portales LATAM
-            </Link>
-            <Link href="/cuenta/cvs" className="btn-secondary">
-              Versiones de CV
-            </Link>
           </div>
         </>
       )}
@@ -437,36 +402,43 @@ export default function AtsPage() {
       {step === 2 && (
         <>
           <div className="bento-card space-y-3">
-            <div className="flex items-center justify-between">
-              <label className="text-sm font-medium">Oferta laboral</label>
-              <DictationButton onResult={(t) => setJobText((p) => (p ? `${p} ${t}` : t))} />
-            </div>
-            <textarea
-              className="field min-h-40"
+            <JobPasteField
+              framed={false}
               value={jobText}
-              onChange={(e) => setJobText(e.target.value)}
-              placeholder="Pega aquí la descripción del puesto…"
+              onChange={setJobText}
+              label="El aviso de la vacante"
+              hint="Copia el texto del empleo (título, requisitos, funciones). Esto NO es tu CV."
             />
-            <label className="text-sm font-medium">URL de la vacante (opcional — detecta el ATS)</label>
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-medium">URL de la vacante (opcional)</label>
+              <DictationButton label="Dictar URL" onResult={(t) => setJobUrl((p) => (p ? `${p} ${t}` : t))} />
+            </div>
             <input
               className="field"
               type="url"
               value={jobUrl}
               onChange={(e) => setJobUrl(e.target.value)}
-              placeholder="https://empresa.wd5.myworkdayjobs.com/… o boards.greenhouse.io/…"
+              placeholder="https://… (enlace de la oferta)"
             />
-            <label className="text-sm font-medium">Empresa / dominio (opcional)</label>
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-medium">Empresa (opcional)</label>
+              <DictationButton label="Dictar empresa" onResult={(t) => setCompanyName((p) => (p ? `${p} ${t}` : t))} />
+            </div>
             <input
               className="field"
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
               placeholder="Nombre empresa (ej. Bancolombia, Globant)"
             />
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-medium">Dominio web (opcional)</label>
+              <DictationButton label="Dictar dominio" onResult={(t) => setCompanyDomain((p) => (p ? `${p} ${t}` : t))} />
+            </div>
             <input
               className="field"
               value={companyDomain}
               onChange={(e) => setCompanyDomain(e.target.value)}
-              placeholder="Dominio (ej. bancolombia.com, globant.com)"
+              placeholder="ej. bancolombia.com"
             />
             {detectMsg && <p className="text-xs muted">{detectMsg}</p>}
           </div>
@@ -484,9 +456,9 @@ export default function AtsPage() {
       {step === 3 && (
         <>
           <div className="bento-card space-y-3">
-            <p className="text-sm font-medium">¿A qué ATS o portal postulas?</p>
+            <p className="text-sm font-medium">¿Con qué sistema filtra la empresa? (si lo sabes)</p>
             <p className="text-xs muted">
-              Si pegaste la URL, ya intentamos detectarlo. Puedes corregirlo manualmente.
+              Workday, Greenhouse, etc. son programas de RH. Si no lo sabes, deja “Genérico” y continúa. No pasa nada.
             </p>
             {detectMsg && <p className="text-xs" style={{ color: "var(--brand)" }}>{detectMsg}</p>}
             <div className="grid grid-cols-2 gap-2">
@@ -547,25 +519,8 @@ export default function AtsPage() {
               <div className="progress-fill" style={{ width: `${result.score}%` }} />
             </div>
             <p className="text-xs muted">
-              Umbral típico de surfacing a reclutador: ~70%+. Esto es orientación, no garantía de entrevista.
+              Umbral típico para que un reclutador lo vea: ~70%+. Esto es orientación, no garantía de entrevista.
             </p>
-            <div className="flex flex-wrap gap-2 pt-1">
-              <Link href="/ats/multi" className="btn-secondary" style={{ width: "auto", minHeight: "2.25rem", padding: "0.35rem 0.7rem", fontSize: "0.75rem" }}>
-                Multi-oferta
-              </Link>
-              <Link href="/ats/screening" className="btn-secondary" style={{ width: "auto", minHeight: "2.25rem", padding: "0.35rem 0.7rem", fontSize: "0.75rem" }}>
-                Screening
-              </Link>
-              <Link href="/ats/portales" className="btn-secondary" style={{ width: "auto", minHeight: "2.25rem", padding: "0.35rem 0.7rem", fontSize: "0.75rem" }}>
-                Portales LATAM
-              </Link>
-              <Link href="/ats/pack" className="btn-secondary" style={{ width: "auto", minHeight: "2.25rem", padding: "0.35rem 0.7rem", fontSize: "0.75rem" }}>
-                Pack ZIP
-              </Link>
-              <Link href="/ats/benchmark" className="btn-secondary" style={{ width: "auto", minHeight: "2.25rem", padding: "0.35rem 0.7rem", fontSize: "0.75rem" }}>
-                Benchmark
-              </Link>
-            </div>
           </section>
 
           {result.recruiterSkim && (
@@ -637,7 +592,13 @@ export default function AtsPage() {
           <ResultBlock title="Cómo filtra este ATS" items={result.atsInsights || []} />
           <ResultBlock title="Qué explica el score" items={result.explanation} />
 
-          {scoreDelta && (
+          {resultPhase < 2 && (
+            <button type="button" className="btn-primary" onClick={() => setResultPhase(2)}>
+              Siguiente: ver qué falta en tu CV
+            </button>
+          )}
+
+          {resultPhase >= 2 && scoreDelta && (
             <section className="bento-card space-y-2">
               <h2 className="text-sm font-semibold">Antes → después del ajuste</h2>
               <p className="text-2xl font-semibold">
@@ -659,6 +620,8 @@ export default function AtsPage() {
             </section>
           )}
 
+          {resultPhase >= 2 && (
+          <>
           {result.parsePreview && (
             <section className="bento-card space-y-2">
               <h2 className="text-sm font-semibold">Cómo te parsea el ATS (vista estructurada)</h2>
@@ -817,7 +780,16 @@ export default function AtsPage() {
           <ResultBlock title="Formación sugerida" items={result.trainingSuggestions} />
           <ResultBlock title="Para el reclutador humano (después del ATS)" items={result.recruiterTips || []} />
           <ResultBlock title="Checklist postulación (base)" items={result.applicationTips || []} />
+          </>
+          )}
 
+          {resultPhase === 2 && (
+            <button type="button" className="btn-primary" onClick={() => setResultPhase(3)}>
+              Siguiente: ajustar la hoja de vida
+            </button>
+          )}
+
+          {resultPhase >= 3 && (
           <section className="bento-card space-y-3">
             <h2 className="text-sm font-semibold">Ajustar hoja de vida</h2>
             <p className="text-xs muted">{DISCLAIMER_CV_REWRITE}</p>
@@ -877,7 +849,16 @@ export default function AtsPage() {
               </>
             )}
           </section>
+          )}
 
+          {resultPhase === 3 && (
+            <button type="button" className="btn-primary" onClick={() => setResultPhase(4)}>
+              Siguiente: carta de postulación
+            </button>
+          )}
+
+          {resultPhase >= 4 && (
+          <>
           <section className="bento-card space-y-3">
             <h2 className="text-sm font-semibold">Carta / mensaje de postulación</h2>
             <p className="text-xs muted">
@@ -906,12 +887,6 @@ export default function AtsPage() {
                 </button>
               </>
             )}
-            <Link href="/herramientas/carta" className="btn-secondary">
-              Abrir herramienta carta (con datos del ATS)
-            </Link>
-            <Link href="/herramientas/linkedin" className="btn-secondary">
-              Optimizar LinkedIn para esta vacante
-            </Link>
           </section>
 
           <section className="bento-card space-y-3">
@@ -936,9 +911,39 @@ export default function AtsPage() {
             {aiTip && <p className="text-sm muted whitespace-pre-wrap">{aiTip}</p>}
           </section>
 
-          {!canAccessOutplacement(readEntitlement().plan) && <AdSlot slot="ats-results" />}
+          {resultPhase === 4 && (
+            <button type="button" className="btn-primary" onClick={() => setResultPhase(5)}>
+              Siguiente: guardar y descargar
+            </button>
+          )}
+          </>
+          )}
 
+          {resultPhase >= 5 && (
           <div className="flex flex-col gap-3">
+            <button
+              type="button"
+              className="btn-primary"
+              onClick={() => {
+                try {
+                  const last = JSON.parse(localStorage.getItem("ats_last_result") || "null");
+                  const score = last?.result?.score ?? result.score;
+                  upsertJob({
+                    title: companyName.trim() || "Vacante desde ATS",
+                    company: companyName.trim() || "Por completar",
+                    url: jobUrl.trim() || undefined,
+                    status: "interes",
+                    score,
+                    notes: `Score ATS ${score}%. Edita cargo/empresa en el tracker.`,
+                  });
+                  window.location.href = "/tracker?from=ats";
+                } catch {
+                  window.location.href = "/tracker";
+                }
+              }}
+            >
+              Guardar esta vacante en el tracker
+            </button>
             <button
               type="button"
               className="btn-secondary"
@@ -948,69 +953,17 @@ export default function AtsPage() {
                 downloadBlob(`CV-ATSAdvisor.docx`, blob);
               }}
             >
-              Descargar CV en DOCX
-            </button>
-            <button
-              type="button"
-              className="btn-secondary"
-              onClick={() =>
-                downloadText(`atsadvisor-informe-${result.score}.txt`, buildAtsReport(result, { profile: atsProfile }))
-              }
-            >
-              Descargar informe TXT
+              Descargar CV en Word
             </button>
             <button
               type="button"
               className="btn-secondary"
               onClick={() => openPrintableReport(result, { profile: atsProfile })}
             >
-              Exportar PDF (imprimir)
+              Exportar informe (PDF / imprimir)
             </button>
-            <button
-              type="button"
-              className="btn-secondary"
-              onClick={async () => {
-                const text = buildAtsReport(result, { profile: atsProfile });
-                if (navigator.share) {
-                  await navigator.share({ title: "Informe ATSAdvisor", text });
-                } else {
-                  await navigator.clipboard.writeText(text);
-                  alert("Informe copiado al portapapeles");
-                }
-              }}
-            >
-              Compartir informe
-            </button>
-            <Link href="/ats/historial" className="btn-secondary">
-              Ver historial
-            </Link>
-            <button
-              type="button"
-              className="btn-secondary"
-              onClick={() => {
-                try {
-                  const last = JSON.parse(localStorage.getItem("ats_last_result") || "null");
-                  const score = last?.result?.score ?? result.score;
-                  upsertJob({
-                    title: "Vacante desde ATS",
-                    company: "Por completar",
-                    status: "interes",
-                    score,
-                    notes: `Score ATS ${score}% · perfil ${atsProfile}. Edita cargo/empresa en el tracker.`,
-                  });
-                  window.location.href = "/tracker?from=ats";
-                } catch {
-                  window.location.href = "/tracker";
-                }
-              }}
-            >
-              Guardar en tracker
-            </button>
-            <Link href="/precios" className="btn-secondary">
-              Ver planes / quitar límites
-            </Link>
-            <Link href="/outplacement" className="btn-primary">
-              Mejorar con outplacement
+            <Link href="/guia" className="btn-primary">
+              Seguir con mi plan de búsqueda
             </Link>
             <button
               type="button"
@@ -1018,11 +971,14 @@ export default function AtsPage() {
               onClick={() => {
                 setStep(1);
                 setResult(null);
+                setResultPhase(1);
               }}
             >
               Nuevo análisis
             </button>
+            <AdSlot slot="ats-results" />
           </div>
+          )}
         </>
       )}
     </div>

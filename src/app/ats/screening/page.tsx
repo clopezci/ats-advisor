@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
-import { DictationButton } from "@/components/DictationButton";
+import { CvPasteField, JobPasteField } from "@/components/CvPasteField";
+import { SCREENING_Q_EXAMPLE } from "@/lib/copy/fieldExamples";
+import { HintTextarea } from "@/components/HintTextarea";
 import { extractScreeningQuestions, buildScreeningPrompt } from "@/lib/ats/screening";
 
 export default function ScreeningPage() {
@@ -63,38 +65,43 @@ export default function ScreeningPage() {
     <div className="flex flex-1 flex-col gap-5">
       <section className="bento-card space-y-2">
         <div className="flex justify-between">
-          <h1 className="text-xl font-semibold">Preguntas de screening</h1>
-          <SpeakButton text="Respuestas honestas a preguntas del formulario, basadas en tu CV." />
+          <h1 className="text-xl font-semibold">Preguntas del formulario de postulación</h1>
+          <SpeakButton text="Carga tu CV, pega la oferta y, si el portal ya te hizo preguntas, escríbelas. Generamos respuestas honestas para copiar." />
         </div>
-        <p className="text-sm muted">
-          LinkedIn Easy Apply, Computrabajo y ATS internos preguntan esto. No inventamos experiencia.
+        <p className="text-sm muted leading-relaxed">
+          No enviamos nada al portal. Tú copias el texto al formulario de LinkedIn, Computrabajo o la empresa.
         </p>
       </section>
 
+      <CvPasteField
+        value={cv}
+        onChange={setCv}
+        label="Tu hoja de vida"
+        hint="El CV tuyo. Con eso armamos respuestas honestas. No pongas aquí las preguntas del portal."
+      />
+      <JobPasteField
+        value={job}
+        onChange={setJob}
+        label="El aviso de la vacante"
+        hint="El texto del empleo. Así las respuestas coinciden con lo que piden. No es tu CV."
+      />
+
       <div className="bento-card space-y-2">
-        <div className="flex justify-between">
-          <label className="text-sm font-medium">CV</label>
-          <DictationButton onResult={(t) => setCv((p) => (p ? `${p} ${t}` : t))} />
-        </div>
-        <textarea className="field min-h-28" value={cv} onChange={(e) => setCv(e.target.value)} />
-      </div>
-      <div className="bento-card space-y-2">
-        <label className="text-sm font-medium">Oferta</label>
-        <textarea className="field min-h-28" value={job} onChange={(e) => setJob(e.target.value)} />
-      </div>
-      <div className="bento-card space-y-2">
-        <label className="text-sm font-medium">Preguntas extra (una por línea)</label>
-        <textarea
-          className="field min-h-20"
+        <HintTextarea
+          label="Preguntas que te hizo el portal (opcional)"
+          hint="Si LinkedIn o Computrabajo ya te mostró preguntas, pégalas (una por línea). Si no, déjalo vacío."
+          example={SCREENING_Q_EXAMPLE}
           value={extraQ}
-          onChange={(e) => setExtraQ(e.target.value)}
-          placeholder="¿Tienes disponibilidad inmediata?"
+          onChange={setExtraQ}
+          minClass="min-h-24"
         />
-        <ul className="text-xs muted space-y-1">
-          {questions.slice(0, 8).map((q) => (
-            <li key={q}>• {q}</li>
-          ))}
-        </ul>
+        {questions.length > 0 && (
+          <ul className="text-xs muted space-y-1">
+            {questions.slice(0, 8).map((q) => (
+              <li key={q}>• {q}</li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <button
@@ -120,7 +127,7 @@ export default function ScreeningPage() {
               } catch {
                 /* ignore */
               }
-              alert("Copiado");
+              alert("Copiado. Pégalo en el formulario del portal.");
             }}
           >
             Copiar
@@ -128,8 +135,8 @@ export default function ScreeningPage() {
         </section>
       )}
 
-      <Link href="/ats" className="btn-secondary">
-        Volver al ATS
+      <Link href="/ats/portales" className="btn-secondary">
+        Volver a los sitios de empleo
       </Link>
     </div>
   );

@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { HouseCreative, AdOperator } from "@/lib/ads/config";
+import { pickArriendoCreative, ARRIENDO_URL } from "@/lib/ads/arriendoCreatives";
+import { canAccessOutplacement, readEntitlement } from "@/lib/entitlements";
 
 declare global {
   interface Window {
@@ -19,69 +21,74 @@ type AdsApi = {
   disclosure: string;
 };
 
-function pickHouse(list: HouseCreative[], slot: string) {
-  if (!list.length) return null;
-  // Prefer ArriendoSeguro as primary creative
-  const preferred = list.find((c) => c.id === "arriendoseguro");
-  if (preferred && (slot.includes("ats") || slot.includes("blog") || slot.includes("home"))) {
-    return preferred;
+function trackClick(id: string) {
+  try {
+    const key = "ats_ad_clicks";
+    const prev = JSON.parse(localStorage.getItem(key) || "{}");
+    prev[id] = (prev[id] || 0) + 1;
+    localStorage.setItem(key, JSON.stringify(prev));
+  } catch {
+    /* ignore */
   }
-  const idx = Math.abs(slot.split("").reduce((a, c) => a + c.charCodeAt(0), 0)) % list.length;
-  return list[idx];
 }
 
-function HouseAd({ creative, disclosure }: { creative: HouseCreative; disclosure: string }) {
+function HouseAd({ slot }: { slot: string }) {
+  const [creative, setCreative] = useState<ReturnType<typeof pickArriendoCreative> | null>(null);
+
+  useEffect(() => {
+    setCreative(pickArriendoCreative(slot));
+  }, [slot]);
+
+  if (!creative) {
+    return <aside className="ad-unit ad-unit--loading" aria-hidden />;
+  }
+
   return (
     <aside
-      className="bento-card space-y-2 text-left"
+      className="ad-unit"
       data-ad-operator="house"
       data-ad-id={creative.id}
-      style={{
-        background:
-          "linear-gradient(135deg, color-mix(in srgb, var(--brand) 12%, transparent), transparent)",
-      }}
+      aria-label="Publicidad"
     >
-      <p className="text-[10px] uppercase tracking-wide muted">{disclosure}</p>
-      {creative.badge ? (
-        <p className="text-[11px] font-medium" style={{ color: "var(--brand)" }}>
-          {creative.badge}
-        </p>
-      ) : null}
-      <p className="text-xs muted">{creative.brand}</p>
-      <p className="text-sm font-semibold leading-snug">{creative.headline}</p>
-      <p className="text-xs muted leading-relaxed">{creative.body}</p>
+      <div className="ad-unit__bar">
+        <span className="ad-unit__tag">Publicidad</span>
+        <span className="ad-unit__brand">ArriendoSeguro</span>
+      </div>
+      <p className="ad-unit__headline">{creative.headline}</p>
+      <p className="ad-unit__body">{creative.body}</p>
       <a
-        href={creative.href}
+        href={ARRIENDO_URL}
         target="_blank"
         rel="noopener noreferrer sponsored"
-        className="btn-primary inline-flex text-sm"
-        onClick={() => {
-          try {
-            const key = "ats_ad_clicks";
-            const prev = JSON.parse(localStorage.getItem(key) || "{}");
-            prev[creative.id] = (prev[creative.id] || 0) + 1;
-            localStorage.setItem(key, JSON.stringify(prev));
-          } catch {
-            /* ignore */
-          }
-        }}
+        className="ad-unit__cta"
+        onClick={() => trackClick(creative.id)}
       >
         {creative.cta}
+        <span aria-hidden> →</span>
       </a>
+      <p className="ad-unit__foot">Se abre arriendoseguro.app · no es parte de ATSAdvisor</p>
     </aside>
   );
 }
 
 /**
  * Slot multi-operador:
- * - house (default): ArriendoSeguro / LOTIC — listo ya, sin aprobación Google
- * - adsense: cuando NEXT_PUBLIC_ADSENSE_CLIENT_ID + operator
- * - custom: script externo (EthicalAds, Carbon, Media.net, etc.)
+ * - house (default): campañas ArriendoSeguro
+ * - adsense / custom: cuando hay env
  */
 export function AdSlot({ slot = "ats-free" }: { slot?: string }) {
   const [cfg, setCfg] = useState<AdsApi | null>(null);
   const [enabled, setEnabled] = useState(true);
+  const [hideForPaid, setHideForPaid] = useState(false);
   const pushed = useRef(false);
+
+  useEffect(() => {
+    try {
+      setHideForPaid(canAccessOutplacement(readEntitlement().plan));
+    } catch {
+      /* ignore */
+    }
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -122,7 +129,6 @@ export function AdSlot({ slot = "ats-free" }: { slot?: string }) {
 
   const operator = cfg?.operator || "house";
   const pub = cfg?.adsenseClientId || process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || null;
-  const house = useMemo(() => pickHouse(cfg?.house || [], slot), [cfg?.house, slot]);
 
   useEffect(() => {
     if (!enabled || operator !== "adsense" || !pub || pushed.current) return;
@@ -155,38 +161,24 @@ export function AdSlot({ slot = "ats-free" }: { slot?: string }) {
     document.head.appendChild(s);
   }, [enabled, operator, cfg?.customScriptUrl]);
 
-  if (!enabled) return null;
-
-  const disclosure = cfg?.disclosure || "Anuncio";
+  if (!enabled || hideForPaid) return null;
 
   if (operator === "house" || (operator === "adsense" && !pub)) {
-    if (!house) {
-      return (
-        <div className="bento-card text-center text-xs muted">
-          Espacio publicitario (plan free) · house ads LOTIC
-          <span className="sr-only">{slot}</span>
-        </div>
-      );
-    }
-    return <HouseAd creative={house} disclosure={disclosure} />;
+    return <HouseAd slot={slot} />;
   }
 
   if (operator === "custom") {
     return (
-      <div className="bento-card space-y-2 text-center text-xs muted" data-ad-operator="custom">
-        <p className="text-[10px] uppercase tracking-wide">{disclosure}</p>
+      <div className="ad-unit ad-unit--external" data-ad-operator="custom">
+        <p className="ad-unit__tag">Publicidad</p>
         <div id={`ats-ad-slot-${slot}`} data-ad-network={cfg?.customSlotHtmlHint || "custom"} />
-        <p className="text-[10px]">
-          Operador: {cfg?.customSlotHtmlHint || "custom"} · define NEXT_PUBLIC_AD_CUSTOM_SCRIPT_URL
-        </p>
       </div>
     );
   }
 
-  // AdSense
   return (
-    <div className="bento-card overflow-hidden text-center" data-ad-operator="adsense">
-      <p className="mb-1 text-[10px] uppercase tracking-wide muted">{disclosure}</p>
+    <div className="ad-unit ad-unit--external" data-ad-operator="adsense">
+      <p className="ad-unit__tag">Publicidad</p>
       <ins
         className="adsbygoogle"
         style={{ display: "block", minHeight: 90 }}

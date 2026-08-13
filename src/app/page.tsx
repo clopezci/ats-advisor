@@ -7,88 +7,78 @@ import { OnboardingGate } from "@/components/OnboardingGate";
 import { AdSlot } from "@/components/AdSlot";
 import { useEffect, useState } from "react";
 import { readStreak } from "@/lib/engagement/streak";
-import { canAccessOutplacement, readEntitlement } from "@/lib/entitlements";
 
 function HomeInner() {
   const [streak, setStreak] = useState(0);
-  const [showAd, setShowAd] = useState(false);
 
   useEffect(() => {
     setStreak(readStreak().count);
-    setShowAd(!canAccessOutplacement(readEntitlement().plan));
   }, []);
 
   const INTRO =
-    "ATSAdvisor te ayuda a pasar filtros ATS y a reconstruir tu carrera. Elige solo una cosa para empezar.";
+    "Elige una sola cosa. Te guiamos paso a paso, con voz si quieres. No hace falta explorar todo el menú.";
 
   return (
     <div className="flex flex-1 flex-col gap-6">
       <InstallPrompt />
       {streak > 0 && (
         <p className="text-center text-sm">
-          <span className="pill-brand">Racha {streak} día{streak === 1 ? "" : "s"}</span>
+          <span className="pill-brand">
+            Racha {streak} día{streak === 1 ? "" : "s"}
+          </span>
         </p>
       )}
       <section className="bento-card space-y-4">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="pill-brand">LOTIC · listo para usar</p>
+            <p className="pill-brand">LOTIC · un paso a la vez</p>
             <h1 className="mt-3 text-2xl font-semibold leading-tight">¿Qué quieres hacer ahora?</h1>
           </div>
-          <SpeakButton
-            text={`${INTRO} También puedes abrir el mapa completo de capacidades. Opción principal: analizar mi CV. Luego outplacement o tracker.`}
-          />
+          <SpeakButton text={INTRO} />
         </div>
         <p className="muted text-sm leading-relaxed">{INTRO}</p>
       </section>
 
       <div className="flex flex-col gap-3">
         <Link
-          href="/capacidades"
+          href="/ats"
           className="btn-primary"
-          style={{ minHeight: "4.5rem", fontSize: "1.2rem", lineHeight: 1.3 }}
+          style={{ minHeight: "4.5rem", fontSize: "1.15rem", lineHeight: 1.3 }}
         >
-          Ver todo lo que puedes hacer
-          <span className="block text-xs font-normal opacity-90">Persona, empresa RH, admin · estados reales</span>
+          Mejorar mi CV para una oferta
+          <span className="block text-xs font-normal opacity-90">Gratis · te llevamos de la mano</span>
         </Link>
-        <Link href="/herramientas/calculadora" className="btn-secondary">
-          ¿Qué tan bien encaja tu CV? (rápido y gratis)
-        </Link>
-        <Link href="/ats" className="btn-secondary">
-          Analizar mi CV (ATS completo)
-        </Link>
-        <Link href="/outplacement" className="btn-secondary">
-          Ver outplacement
+        <Link
+          href="/guia"
+          className="btn-primary"
+          style={{ minHeight: "4.5rem", fontSize: "1.15rem", lineHeight: 1.3 }}
+        >
+          Armar mi plan de búsqueda
+          <span className="block text-xs font-normal opacity-90">
+            Marcas qué necesitas (o lo dictas) y avanzas uno a uno
+          </span>
         </Link>
         <Link href="/tracker" className="btn-secondary">
-          Tracker de postulaciones
+          Anotar una postulación
         </Link>
       </div>
 
-      <section className="grid grid-cols-2 gap-3">
-        <Link href="/ats/historial" className="bento-card block">
-          <p className="text-xs muted">Historial</p>
-          <p className="mt-1 text-sm font-medium">Ver scores previos</p>
-        </Link>
-        <Link href="/ats/multi" className="bento-card block">
-          <p className="text-xs muted">Multi-oferta</p>
-          <p className="mt-1 text-sm font-medium">Prioriza vacantes</p>
-        </Link>
-        <Link href="/ats/portales" className="bento-card block">
-          <p className="text-xs muted">LATAM</p>
-          <p className="mt-1 text-sm font-medium">Portales y screening</p>
-        </Link>
-        <Link href="/blog" className="bento-card block">
-          <p className="text-xs muted">Blog</p>
-          <p className="mt-1 text-sm font-medium">Guías ATS gratis</p>
-        </Link>
-      </section>
+      <AdSlot slot="home-free" />
 
-      {showAd && <AdSlot slot="home-free" />}
-
-      <Link href="/herramientas" className="text-center text-sm" style={{ color: "var(--brand)" }}>
-        Herramientas gratis →
-      </Link>
+      <p className="text-center text-xs muted">
+        Si ya sabes el atajo:{" "}
+        <Link href="/capacidades" style={{ color: "var(--brand)" }}>
+          mapa
+        </Link>
+        {" · "}
+        <Link href="/precios" style={{ color: "var(--brand)" }}>
+          precios
+        </Link>
+        {" · "}
+        <Link href="/herramientas" style={{ color: "var(--brand)" }}>
+          herramientas
+        </Link>
+      </p>
     </div>
   );
 }

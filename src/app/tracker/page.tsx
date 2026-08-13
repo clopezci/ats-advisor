@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { DictationButton } from "@/components/DictationButton";
 import { SpeakButton } from "@/components/SpeakButton";
+import { AdSlot } from "@/components/AdSlot";
 import {
   STATUS_LABEL,
   deleteJob,
@@ -19,6 +20,8 @@ export default function TrackerPage() {
   const [jobs, setJobs] = useState<JobItem[]>([]);
   const [title, setTitle] = useState("");
   const [company, setCompany] = useState("");
+  const [url, setUrl] = useState("");
+  const [notes, setNotes] = useState("");
   const [filter, setFilter] = useState<JobStatus | "todos">("todos");
 
   function refresh() {
@@ -47,18 +50,57 @@ export default function TrackerPage() {
       <section className="bento-card space-y-3">
         <p className="text-sm font-medium">Nueva vacante</p>
         <div className="flex gap-2">
-          <input className="field" placeholder="Cargo" value={title} onChange={(e) => setTitle(e.target.value)} />
-          <DictationButton onResult={(t) => setTitle((p) => (p ? `${p} ${t}` : t))} />
+          <input
+            className="field"
+            placeholder="Ejemplo: Analista de datos"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <DictationButton label="Dictar cargo" onResult={(t) => setTitle((p) => (p ? `${p} ${t}` : t))} />
         </div>
-        <input className="field" placeholder="Empresa" value={company} onChange={(e) => setCompany(e.target.value)} />
+        <div className="flex gap-2">
+          <input
+            className="field"
+            placeholder="Ejemplo: Bancolombia"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+          />
+          <DictationButton label="Dictar empresa" onResult={(t) => setCompany((p) => (p ? `${p} ${t}` : t))} />
+        </div>
+        <div className="flex gap-2">
+          <input
+            className="field"
+            placeholder="Enlace de la vacante (opcional)"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+          />
+          <DictationButton label="Dictar enlace" onResult={(t) => setUrl((p) => (p ? `${p} ${t}` : t))} />
+        </div>
+        <div className="flex gap-2">
+          <textarea
+            className="field min-h-20"
+            placeholder="Ejemplo: me escribieron el martes; entrevista el jueves 10 a.m."
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+          />
+          <DictationButton label="Dictar notas" onResult={(t) => setNotes((p) => (p ? `${p} ${t}` : t))} />
+        </div>
         <button
           type="button"
           className="btn-primary"
           disabled={!title.trim() || !company.trim()}
           onClick={() => {
-            upsertJob({ title: title.trim(), company: company.trim(), status: "interes" });
+            upsertJob({
+              title: title.trim(),
+              company: company.trim(),
+              url: url.trim() || undefined,
+              notes: notes.trim() || undefined,
+              status: "interes",
+            });
             setTitle("");
             setCompany("");
+            setUrl("");
+            setNotes("");
             refresh();
           }}
         >
@@ -93,7 +135,25 @@ export default function TrackerPage() {
             </div>
             <span className="pill-brand">{STATUS_LABEL[job.status]}</span>
           </div>
-          {job.notes && <p className="text-xs muted">{job.notes}</p>}
+          <div className="flex gap-2">
+            <textarea
+              className="field min-h-16 text-sm"
+              placeholder="Ejemplo: entrevista jueves 10 a.m."
+              value={job.notes || ""}
+              onChange={(e) => {
+                upsertJob({ ...job, notes: e.target.value, id: job.id });
+                refresh();
+              }}
+            />
+            <DictationButton
+              label="Dictar notas de esta vacante"
+              onResult={(t) => {
+                const notes = `${job.notes || ""} ${t}`.trim();
+                upsertJob({ ...job, notes, id: job.id });
+                refresh();
+              }}
+            />
+          </div>
           <select
             className="field"
             value={job.status}
@@ -137,6 +197,8 @@ export default function TrackerPage() {
           </button>
         </article>
       ))}
+
+      <AdSlot slot="tracker" />
 
       <Link href="/ats" className="btn-secondary">
         Analizar un CV para una vacante

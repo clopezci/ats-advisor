@@ -52,9 +52,10 @@ export default function AlertasPage() {
       </section>
 
       <section className="bento-card space-y-3">
+        <p className="text-xs muted">Qué cargo buscas. No aplica por ti; es un recordatorio para cuando entres a los portales.</p>
         <input
           className="field"
-          placeholder="Rol / keywords (ej. analista de datos Bogotá)"
+          placeholder="Ejemplo: analista de datos Bogotá"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />

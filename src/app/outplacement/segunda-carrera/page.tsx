@@ -104,11 +104,12 @@ Devuelve Día 1…14 con título + 2 acciones. Español LATAM.`,
                 ))}
               </div>
               <label className="block text-sm">
-                Contexto (para personalizar con IA)
+                Cuéntale tu situación (para personalizar)
                 <textarea
                   className="field mt-1 min-h-[80px]"
                   value={context}
                   onChange={(e) => setContext(e.target.value)}
+                  placeholder="Ejemplo: 8 años en bancos, quiero vender servicios de Excel a pymes en Bogotá, tengo $2 millones para empezar."
                 />
               </label>
               <DictationButton onResult={(t) => setContext((c) => `${c} ${t}`.trim())} />

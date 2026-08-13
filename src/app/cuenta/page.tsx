@@ -173,12 +173,23 @@ export default function CuentaPage() {
 
       <div className="bento-card space-y-3">
         <label className="block text-sm">
-          Nombre
-          <input className="field mt-1" value={name} onChange={(e) => setName(e.target.value)} />
+          Tu nombre
+          <input
+            className="field mt-1"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Ejemplo: María Gómez"
+          />
         </label>
         <label className="block text-sm">
-          Correo
-          <input className="field mt-1" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          Correo (el mismo si pagaste, para activar el plan)
+          <input
+            className="field mt-1"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Ejemplo: maria@correo.com"
+          />
         </label>
         <p className="text-sm font-medium">Canal de microlearning</p>
         <ChannelChooser value={channel} onChange={setChannel} whatsappPriceCop={waPrice} />

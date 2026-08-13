@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { AdSlot } from "@/components/AdSlot";
-import { DictationButton } from "@/components/DictationButton";
+import { CvPasteField, JobPasteField } from "@/components/CvPasteField";
 import { quickMatch } from "@/lib/seo/quickMatch";
 
 export function MatchCalculator() {
@@ -34,26 +34,18 @@ export function MatchCalculator() {
 
       <AdSlot slot="herramientas-hub" />
 
-      <label className="block text-sm">
-        Texto del CV
-        <textarea
-          className="field mt-1 min-h-32"
-          value={cv}
-          onChange={(e) => setCv(e.target.value)}
-          placeholder="Pega un extracto de tu hoja de vida…"
-        />
-        <DictationButton onResult={(t) => setCv((c) => `${c} ${t}`.trim())} />
-      </label>
-      <label className="block text-sm">
-        Texto de la oferta
-        <textarea
-          className="field mt-1 min-h-32"
-          value={job}
-          onChange={(e) => setJob(e.target.value)}
-          placeholder="Pega requisitos y responsabilidades…"
-        />
-        <DictationButton onResult={(t) => setJob((j) => `${j} ${t}`.trim())} />
-      </label>
+      <CvPasteField
+        value={cv}
+        onChange={setCv}
+        label="Tu hoja de vida"
+        hint="El CV tuyo. No pongas aquí el aviso: eso va en el recuadro de abajo."
+      />
+      <JobPasteField
+        value={job}
+        onChange={setJob}
+        label="El aviso de la vacante"
+        hint="Copia el texto del empleo. Esto NO es tu CV."
+      />
       <button type="button" className="btn-primary" onClick={run}>
         Calcular coincidencia
       </button>

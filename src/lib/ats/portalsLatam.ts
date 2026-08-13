@@ -4,6 +4,8 @@ export type PortalGuide = {
   id: string;
   name: string;
   countries: string[];
+  /** En una frase: qué es este sitio y cuándo usar esta tarjeta. */
+  purpose: string;
   checklist: string[];
   tips: string[];
 };
@@ -13,6 +15,8 @@ export const PORTALS_LATAM: PortalGuide[] = [
     id: "computrabajo",
     name: "Computrabajo",
     countries: ["CO", "MX", "PE", "AR", "CL", "EC"],
+    purpose:
+      "Portal de empleo muy usado en Colombia y la región. Usa esta lista si vas a postular ahí: completa el perfil del sitio, no solo subas el PDF.",
     checklist: [
       "Perfil 100% completo (foto opcional pero ayuda en LATAM).",
       "CV adjunto PDF texto + mismos datos en el formulario (no contradigas fechas).",
@@ -29,6 +33,8 @@ export const PORTALS_LATAM: PortalGuide[] = [
     id: "elempleo",
     name: "elempleo.com",
     countries: ["CO"],
+    purpose:
+      "Portal colombiano que usan muchas empresas grandes. La hoja de vida que llenas en el sitio cuenta tanto como el archivo que adjuntas.",
     checklist: [
       "Hoja de vida del portal alineada al PDF (cargos y fechas).",
       "Sección de logros con números (no solo funciones).",
@@ -43,6 +49,8 @@ export const PORTALS_LATAM: PortalGuide[] = [
     id: "magneto",
     name: "Magneto365",
     countries: ["CO", "LATAM"],
+    purpose:
+      "Plataforma de empleo (sobre todo Colombia). El match depende mucho de las habilidades que marques como etiquetas en tu perfil.",
     checklist: [
       "Completa skills etiquetadas (el match es muy tag-driven).",
       "CV limpio 1 columna.",
@@ -54,6 +62,8 @@ export const PORTALS_LATAM: PortalGuide[] = [
     id: "linkedin",
     name: "LinkedIn (Easy Apply / Recruiter)",
     countries: ["LATAM", "global"],
+    purpose:
+      "Red profesional. “Easy Apply” es el botón de postular rápido: usa tu perfil + a veces preguntas. Recruiter es lo que usa quien busca candidatos.",
     checklist: [
       "Headline = cargo objetivo + 1 skill top de la vacante.",
       "About con 3 logros medibles (no párrafo motivacional vacío).",
@@ -70,6 +80,7 @@ export const PORTALS_LATAM: PortalGuide[] = [
     id: "occ",
     name: "OCC Mundial",
     countries: ["MX"],
+    purpose: "Portal de empleo de México. El formulario de OCC suele alimentar el sistema interno de la empresa.",
     checklist: [
       "Perfil OCC completo + CV PDF.",
       "Pretensión salarial en MXN coherente con mercado.",
@@ -81,6 +92,7 @@ export const PORTALS_LATAM: PortalGuide[] = [
     id: "bumeran",
     name: "Bumeran",
     countries: ["AR", "PE", "EC", "PA"],
+    purpose: "Portal de empleo en Argentina, Perú y otros países. Alinea el perfil del sitio con tu PDF y el vocabulario local.",
     checklist: [
       "CV + datos del perfil alineados.",
       "Modalidad (presencial/híbrido/remoto) explícita.",

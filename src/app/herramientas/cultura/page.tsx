@@ -39,7 +39,13 @@ export default function CulturaPage() {
         <p className="text-sm muted">Basado en el texto de la vacante, no en scraping externo.</p>
       </section>
       <input className="field" placeholder="Empresa (opcional)" value={company} onChange={(e) => setCompany(e.target.value)} />
-      <textarea className="field min-h-40" placeholder="Pega la oferta…" value={jd} onChange={(e) => setJd(e.target.value)} />
+      <p className="text-xs muted">Pega el aviso completo. No es tu CV: es el texto de la vacante.</p>
+      <textarea
+        className="field min-h-40"
+        placeholder="Ejemplo: Analista de datos, retail, Bogotá híbrido. Requisitos: Power BI, SQL…"
+        value={jd}
+        onChange={(e) => setJd(e.target.value)}
+      />
       <button type="button" className="btn-primary" disabled={loading || jd.length < 40} onClick={run}>
         {loading ? "Analizando…" : "Sugerir ajustes"}
       </button>

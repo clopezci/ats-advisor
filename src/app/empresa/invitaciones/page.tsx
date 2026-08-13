@@ -40,7 +40,12 @@ export default function InvitacionesPage() {
         </p>
       </section>
 
-      <textarea className="field min-h-40 font-mono text-sm" value={raw} onChange={(e) => setRaw(e.target.value)} />
+      <textarea
+        className="field min-h-40 font-mono text-sm"
+        value={raw}
+        onChange={(e) => setRaw(e.target.value)}
+        placeholder={"Ejemplo:\nMaría Gómez, maria@empresa.com\njuan@empresa.com"}
+      />
       <button type="button" className="btn-primary" onClick={invite}>
         Cargar invitaciones
       </button>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { deleteCvVersion, listCvVersions, saveCvVersion, type CvVersion } from "@/lib/cv/versions";
+import { CvPasteField } from "@/components/CvPasteField";
 
 export default function CvsPage() {
   const [items, setItems] = useState<CvVersion[]>([]);
@@ -40,7 +41,7 @@ export default function CvsPage() {
         className="field"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        placeholder="Nombre de la versión"
+        placeholder="Ejemplo: CV para bancos"
       />
       <input
         className="field"
@@ -48,7 +49,7 @@ export default function CvsPage() {
         onChange={(e) => setTag(e.target.value)}
         placeholder="Etiqueta opcional (ej. finanzas, tech)"
       />
-      <textarea className="field min-h-32" value={text} onChange={(e) => setText(e.target.value)} />
+      <CvPasteField value={text} onChange={setText} label="Texto de esta versión del CV" />
       <button type="button" className="btn-secondary" onClick={loadFromAts}>
         Cargar desde workspace ATS
       </button>

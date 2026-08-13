@@ -207,9 +207,15 @@ export default function PreciosPage() {
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between">
           <h1 className="text-2xl font-semibold">Precios</h1>
-          <SpeakButton text="Planes Carrera, Carrera Plus y curso OUT-09 extra. Usa Pagar demo para probar sin pasarela real." />
+          <SpeakButton text="El análisis de CV es gratis, con un tope diario. El acompañamiento de carrera cuesta una mínima fracción de lo que cobran las empresas de outplacement. Así lo hacemos accesible, no exclusivo." />
         </div>
-        <p className="text-sm muted">ATS gratis: 5 análisis/día. Outplacement democratizado.</p>
+        <p className="text-sm muted">Análisis de CV gratis: 5 por día.</p>
+        <p className="text-sm leading-relaxed">
+          El plan Carrera cuesta solo una mínima fracción de lo que cobran las empresas de outplacement.
+        </p>
+        <p className="text-sm muted leading-relaxed">
+          Por eso lo llamamos outplacement democratizado: el mismo tipo de guía (CV, mercado, entrevistas, primeros 90 días), al alcance de una persona, no solo de quien sale de una multinacional.
+        </p>
         <p className="text-sm">
           Plan actual:{" "}
           <span className="font-medium" style={{ color: "var(--brand)" }}>
@@ -264,10 +270,10 @@ export default function PreciosPage() {
           name: "Carrera",
           price: `${formatCop(prices.carrera)}/mes`,
           points: [
-            "OUT-01 a OUT-08 (ruta completa)",
-            "Telegram gratis (microlearning)",
-            "Coach, simulador, networking, voz",
-            "Sin OUT-09 incluido (upgrade a Plus o compra extra)",
+            "Ruta guiada de 8 semanas: estabilizarte, CV, mercado, entrevistas y primeros 90 días",
+            "Cápsulas diarias por Telegram (incluidas)",
+            "Coach con IA, práctica de entrevista y red de contactos",
+            "El curso a tu medida (tú eliges el tema) está en Plus o se compra aparte",
           ],
         },
         {
@@ -275,20 +281,20 @@ export default function PreciosPage() {
           name: "Carrera Plus",
           price: `${formatCop(prices.plus)}/mes`,
           points: [
-            "Todo Carrera",
-            "2× OUT-09 personalizados / mes",
-            "Más uso de simulador / coach",
-            "Puedes sumar WhatsApp como addon (ver abajo)",
+            "Todo lo de Carrera",
+            "2 cursos a tu medida por mes: tú dices el tema y la app arma las lecciones",
+            "Más práctica de entrevistas y coach",
+            "WhatsApp es opcional (se suma al mes si lo eliges abajo)",
           ],
         },
         {
           id: "out09_extra" as const,
-          name: "OUT-09 extra",
+          name: "Curso extra a tu medida",
           price: formatCop(prices.out09_extra),
           points: [
-            "1 curso personalizado adicional",
-            "Para quien tiene Carrera sin cupo Plus, o agotó los 2 del mes",
-            "Misma entrega por microcápsulas",
+            "Un curso más sobre el tema que tú elijas",
+            "Si tienes Carrera y quieres un tema puntual, o si ya usaste los 2 del mes en Plus",
+            "Lecciones cortas, las mismas que el resto del plan",
           ],
         },
       ].map((p) => (
@@ -370,15 +376,15 @@ export default function PreciosPage() {
           </p>
         )}
         {dummyPhase === "done" && (
-          <Link href="/outplacement" className="btn-primary">
-            Continuar a outplacement →
+          <Link href="/guia" className="btn-primary">
+            Armar mi recorrido paso a paso →
           </Link>
         )}
       </section>
 
       {msg && <p className="text-sm muted">{msg}</p>}
-      <Link href="/outplacement" className="btn-secondary">
-        Ver outplacement
+      <Link href="/guia" className="btn-secondary">
+        Quiero que me guíen (qué hacer primero)
       </Link>
       <Link href="/" className="btn-secondary">
         Volver

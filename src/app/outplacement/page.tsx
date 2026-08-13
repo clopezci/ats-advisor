@@ -22,6 +22,7 @@ export default function OutplacementPage() {
   const [plan, setPlanState] = useState<PlanId>("free");
   const [msg, setMsg] = useState("");
   const [channel, setChannel] = useState<LearningChannel>("telegram");
+  const [showMenu, setShowMenu] = useState(false);
   const unlocked = canAccessOutplacement(plan);
   const waPrice = whatsappFinalPriceCop();
   const hasOut09 = plan === "plus" || plan === "tester";
@@ -48,14 +49,17 @@ export default function OutplacementPage() {
             <p className="text-xs uppercase tracking-[0.14em] muted">
               Carrera · {planLabel(plan)}
             </p>
-            <h1 className="mt-1 text-2xl font-semibold">Outplacement</h1>
+            <h1 className="mt-1 text-2xl font-semibold">Acompañamiento de carrera</h1>
           </div>
-          <SpeakButton text="Elige un módulo de la ruta. OUT-09 personalizado está en Carrera Plus." />
+          <SpeakButton text="No elijas entre veinte pantallas. Arma tu plan: marcas lo que necesitas o lo dictas, y avanzas un paso a la vez." />
         </div>
-        <p className="muted text-sm">
-          Ruta OUT-01 a OUT-08 desde $79.000 COP/mes. Curso personalizado OUT-09 solo en Carrera Plus
-          ($99.000) o como compra extra.
+        <p className="muted text-sm leading-relaxed">
+          Esto es lo que en empresas llaman outplacement: guiarte desde el CV hasta entrevistas y los
+          primeros 90 días. Aquí lo haces a tu ritmo, con voz e IA.
         </p>
+        <Link href="/guia" className="btn-primary">
+          ¿Qué quieres hacer? Armar mi recorrido
+        </Link>
       </section>
 
       <section className="bento-card space-y-3">
@@ -80,7 +84,7 @@ export default function OutplacementPage() {
       {!unlocked && plan !== "paused_90" && (
         <PaywallCard
           currentPlan={plan}
-          reason="El outplacement OUT-01…08 está en Carrera / Plus. OUT-09 personalizado solo en Plus. Activa un plan en Precios."
+          reason="El acompañamiento completo (ruta, entrevistas, red, rumbo) está en el plan Carrera. Los cursos a tu medida están en Carrera Plus. Mira precios si quieres desbloquear."
         />
       )}
 
@@ -97,9 +101,14 @@ export default function OutplacementPage() {
         </section>
       )}
 
+      <button type="button" className="btn-secondary" onClick={() => setShowMenu((v) => !v)}>
+        {showMenu ? "Ocultar menú completo" : "Ver todas las herramientas (si ya sabes cuál)"}
+      </button>
+
+      {showMenu && (
       <div className="flex flex-col gap-3">
         <Link href="/outplacement/progreso" className="btn-primary">
-          Mi progreso (XP + OUT + cursos)
+          Mi progreso
         </Link>
         <Link href="/outplacement/plan-semana" className="btn-secondary">
           Plan de la semana
@@ -151,10 +160,10 @@ export default function OutplacementPage() {
           className="btn-secondary"
         >
           {hasOut09
-            ? "Crear curso personalizado (OUT-09)"
+            ? "Crear un curso a mi medida"
             : unlocked
-              ? "OUT-09 → upgrade a Plus o compra extra"
-              : "OUT-09 (requiere Carrera Plus)"}
+              ? "Curso a tu medida → está en Plus o se compra extra"
+              : "Curso a tu medida (en Carrera Plus)"}
         </Link>
         <Link href="/outplacement/coach" className="btn-secondary">
           Chat coach (RAG)
@@ -172,7 +181,7 @@ export default function OutplacementPage() {
           Segunda carrera / emprendimiento
         </Link>
         <Link href={unlocked ? "/outplacement/ruta" : "/precios"} className="btn-secondary">
-          Ver ruta OUT-01 a OUT-08
+          Ver la ruta semana a semana
         </Link>
         <Link href="/outplacement/certificado" className="btn-secondary">
           Certificado de avance
@@ -181,15 +190,13 @@ export default function OutplacementPage() {
           Ver precios
         </Link>
       </div>
+      )}
 
       {unlocked && (
         <div className="space-y-3">
           {modules.map((m) => (
             <Link key={m.code} href={`/outplacement/ruta?code=${m.code}`} className="bento-card block">
-              <div className="flex items-center justify-between gap-2">
-                <span className="pill-brand">{m.code}</span>
-                <span className="text-xs muted">{m.days} días</span>
-              </div>
+              <p className="text-xs muted">{m.days} días</p>
               <h2 className="mt-2 text-base font-semibold">{m.title}</h2>
               <p className="mt-1 text-sm muted">{m.summary}</p>
             </Link>
@@ -217,7 +224,7 @@ export default function OutplacementPage() {
             Conseguí empleo → pausar y abrir 90 días
           </button>
           <Link href="/outplacement/networking" className="btn-secondary">
-            CRM networking (OUT-06)
+            Red de contactos
           </Link>
           <Link href="/outplacement/coach" className="btn-secondary">
             Coach multi-turno

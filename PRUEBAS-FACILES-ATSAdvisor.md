@@ -35,16 +35,23 @@
 - [ ] Listo
 
 ### 2. Revisar el menú de arriba y el pie de página
-- **Dónde:** arriba: **Inicio**, **Herramientas**, Mapa, Tracker, Precios, Cuenta.  
+- **Dónde:** arriba: **Inicio**, **Mi plan**, Herramientas, Mapa, Tracker, Precios, Cuenta.  
   Abajo: Privacidad, Términos, Cookies, Preferencias de cookies, Contacto, Blog.
-- **Qué hacer:** toca Inicio (vuelve al home) y Herramientas. Luego prueba 2 enlaces del pie.
+- **Qué hacer:** toca Inicio (vuelve al home) y **Mi plan**. Luego prueba 2 enlaces del pie.
 - **OK si:** cada enlace abre otra pantalla sin error raro.
 - [ ] Listo
 
-### 3. Probar el mapa de capacidades
+### 3. Probar el mapa (lo que TÚ puedes hacer)
 - **Dónde:** arriba toca **Mapa** (o ve a `/capacidades`).
-- **Qué hacer:** mira la lista de cosas que hace la app.
-- **OK si:** se ve una lista y puedes volver atrás.
+- **Qué hacer:** debe abrir en **Para ti** (acciones que te benefician: CV, postulaciones, entrevistas).  
+  No debe llenarse de cosas técnicas (pagos, admin, servidores) a menos que toques **Técnico / admin**.
+- **OK si:** las tarjetas suenan a “qué gano yo”, no a “cómo está hecha la app”.
+- [ ] Listo
+
+### 3b. Armar mi plan (matriz + voz)
+- **Dónde:** inicio → **Armar mi plan de búsqueda** o arriba **Mi plan** (`/guia`).
+- **Qué hacer:** marca 2 o 3 casillas, o dicta “necesito CV y practicar entrevistas”, toca **Marcar según esto**, luego **Empezar mi recorrido**. Avanza un paso. Toca **Volver a la lista**.
+- **OK si:** ves UNA sola cosa por pantalla, con Siguiente / Anterior, y puedes volver a marcar más.
 - [ ] Listo
 
 ---
@@ -92,13 +99,13 @@
 - [ ] Listo
 
 ### 8. Analizar CV contra una oferta (ATS)
-- **Dónde:** https://ats-advisor-two.vercel.app/ats  
-  o desde el inicio “Analizar mi CV”.
+- **Dónde:** inicio → **Mejorar mi CV para una oferta** o https://ats-advisor-two.vercel.app/ats
 - **Qué hacer:**
-  1. Pega un CV un poco más largo (varias líneas).
-  2. Pega una oferta.
-  3. Toca analizar / continuar.
-- **OK si:** te muestra un puntaje y recomendaciones en español (no un error feo de programación).
+  1. Pega un CV un poco más largo (varias líneas). En este paso **no** deben aparecer atajos a “varias ofertas” o “portales”.
+  2. Continuar → pega una oferta (micrófono también en empresa / enlace).
+  3. Continuar → analizar.
+  4. En el resultado: un botón **Siguiente** a la vez (qué falta → ajustar CV → carta → guardar). No un menú de 8 destinos.
+- **OK si:** te muestra un puntaje y avanzas uno a uno, sin perderte.
 - [ ] Listo
 
 ### 8b. Títulos del resultado ATS (ayuda)
@@ -113,6 +120,18 @@
 - **OK si:** se ve como una hoja de vida normal (nombre, experiencia…), **sin** títulos tipo “Resumen de cambios” o “CV REESCRITO COMPLETO”.
 - [ ] Listo
 
+### 8d. Sitios de empleo (antes “Portales LATAM”)
+- **Dónde:** https://ats-advisor-two.vercel.app/ats/portales
+- **Qué hacer:** lee el recuadro de arriba (**Para qué** / **Cómo**). Abre Computrabajo o LinkedIn.
+- **OK si:** entiendes que **no postula por ti**; es una lista para completar tu perfil en ese sitio. Cada tarjeta explica qué es ese portal.
+- [ ] Listo
+
+### 8e. Preguntas del formulario (screening)
+- **Dónde:** en portales, el botón de preparar respuestas → `/ats/screening`
+- **Qué hacer:** debe haber **Cargar CV (PDF o Word)**, no solo micrófono. Los recuadros vacíos muestran un **ejemplo en gris**. Al escribir, dictar o cargar, el ejemplo se quita.
+- **OK si:** queda claro que pegas el aviso de la vacante y, si quieres, las preguntas del portal.
+- [ ] Listo
+
 ### 9. Si pegas muy poco texto
 - **Dónde:** misma pantalla `/ats`.
 - **Qué hacer:** deja el CV casi vacío y intenta analizar.
@@ -121,22 +140,25 @@
 
 ### 10. Guardar una postulación en el Tracker
 - **Dónde:** arriba **Tracker** → https://ats-advisor-two.vercel.app/tracker
-- **Qué hacer:** escribe un cargo y una empresa y guárdalo. Cambia el estado (por ejemplo “Aplicado”).
-- **OK si:** al salir y volver, sigue ahí.
+- **Qué hacer:** cargo, empresa, enlace y notas deben tener el icono de **micrófono** al lado. Dicta o escribe, guarda, cambia el estado (por ejemplo “Aplicado”).
+- **OK si:** al salir y volver, sigue ahí. El micrófono está en todos esos campos, no solo en cargo.
 - [ ] Listo
 
-### 11. Ver anuncio interno (ArriendoSeguro)
-- **Dónde:** inicio o **Blog**, siendo usuario gratis.
-- **Qué hacer:** busca un bloque que hable de ArriendoSeguro / LOTIC.
-- **OK si:** lo ves y el enlace abre otra página.
+### 11. Ver anuncio (ArriendoSeguro)
+- **Dónde:** Blog, inicio, herramientas u otras pantallas **gratis**.
+- **Qué hacer:** busca un recuadro **oscuro** (verde/dorado) con la palabra **Publicidad** arriba. El texto cambia (contrato de palabra, inventario, firma digital…). Toca el botón dorado.
+- **OK si:** se nota que **no es parte de ATSAdvisor**; se abre **arriendoseguro.app** en otra pestaña. No debe decir “contenido propio LOTIC”.
 - [ ] Listo
 - [ ] No lo vi (avisa al dueño: puede faltar activar “ads” en admin)
 
 ### 12. Mirar precios (sin pagar aún)
 - **Dónde:** **Precios** → https://ats-advisor-two.vercel.app/precios
-- **Qué hacer:** lee los planes.
-- **OK si:** ves algo como Carrera (~$79.000), Plus (~$99.000) y OUT-09 extra.  
-  **No debe** aparecer una “garantía de 30 días de entrevistas” ni un plan raro de $39.000 por 3 meses.
+- **Qué hacer:** lee el texto de arriba y las tarjetas.
+- **OK si:**
+  - El ATS gratis (5 al día) va en una línea **aparte**.
+  - Luego dice, en otras palabras, que Carrera cuesta **una mínima fracción** de lo que cobran empresas de outplacement, y **después** lo de “democratizado”.
+  - Las tarjetas se llaman **Carrera**, **Carrera Plus** y **Curso extra a tu medida** (no códigos tipo OUT-01 / OUT-09).
+  - **No debe** aparecer una “garantía de 30 días de entrevistas” ni un plan raro de $39.000 por 3 meses.
 - [ ] Listo
 
 ### 13. Outplacement bloqueado si no pagaste
@@ -381,10 +403,10 @@ Clave: la variable `ADMIN_SECRET` de Vercel.
 
 ## Recorrido A — 15 minutos (gratis)
 1. [ ] Parte 1 (abre la app)  
-2. [ ] Calculadora de match  
-3. [ ] ATS  
-4. [ ] Tracker  
-5. [ ] Precios  
+2. [ ] Mi plan (marcar 2 cosas y avanzar un paso)  
+3. [ ] ATS (sin saltar a otras pantallas)  
+4. [ ] Tracker (micrófono en cargo, empresa y notas)  
+5. [ ] Precios (texto de fracción + sin códigos OUT)  
 6. [ ] ¿Se ve el anuncio?
 
 ## Recorrido B — 30 minutos (con plan)

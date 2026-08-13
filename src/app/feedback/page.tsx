@@ -31,7 +31,12 @@ export default function FeedbackPage() {
       <h1 className="text-xl font-semibold">Feedback</h1>
       <p className="text-sm muted">Cuéntanos qué mejorar. Si Telegram owner está activo, llega al instante.</p>
       <input className="field" placeholder="Correo (opcional)" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <textarea className="field min-h-32" value={message} onChange={(e) => setMessage(e.target.value)} />
+      <textarea
+        className="field min-h-32"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Ejemplo: estaba en comparar vacantes, el recuadro del CV estaba en blanco y no supe qué pegar."
+      />
       <button type="button" className="btn-primary" disabled={loading || message.length < 5} onClick={send}>
         {loading ? "Enviando…" : "Enviar"}
       </button>

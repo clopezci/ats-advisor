@@ -19,9 +19,9 @@ const STEPS = [
   },
   {
     title: "Reconstruye tu carrera",
-    body: "Outplacement guiado + OUT-09 personalizado, con voz y microcápsulas.",
-    href: "/outplacement",
-    cta: "Ver outplacement",
+    body: "Marcas qué te importa (o lo dictas) y te llevamos uno a uno: CV, entrevistas, red, rumbo.",
+    href: "/guia",
+    cta: "Armar mi plan",
   },
 ];
 

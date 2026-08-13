@@ -22,13 +22,13 @@ const TOOLS = [
   },
   {
     href: "/ats/screening",
-    title: "Preguntas de screening",
-    desc: "Respuestas honestas para Easy Apply y formularios.",
+    title: "Preguntas del formulario",
+    desc: "Cuando LinkedIn o Computrabajo te preguntan disponibilidad o años de experiencia, aquí armas la respuesta con tu CV.",
   },
   {
     href: "/ats/portales",
-    title: "Portales LATAM",
-    desc: "Checklists Computrabajo, elempleo, Magneto y más.",
+    title: "Sitios donde postulas",
+    desc: "Listas para completar tu perfil en Computrabajo, elempleo, LinkedIn o Magneto. No postula por ti.",
   },
   {
     href: "/ats/pack",

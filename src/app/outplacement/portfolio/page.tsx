@@ -36,30 +36,61 @@ export default function PortfolioPage() {
 
       <section className="bento-card space-y-3">
         <label className="block text-sm">
-          Rol / contexto
-          <input className="field mt-1" value={role} onChange={(e) => setRole(e.target.value)} />
+          En qué cargo ocurrió (tu rol, no el de la vacante)
+          <input
+            className="field mt-1"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            placeholder="Ejemplo: Analista de datos en un banco"
+          />
         </label>
         {(
           [
-            ["Situación", situation, setSituation],
-            ["Tarea", task, setTask],
-            ["Acción", action, setAction],
-            ["Resultado", result, setResult],
+            [
+              "Situación",
+              situation,
+              setSituation,
+              "¿Dónde estabas y cuál era el problema?\nEjemplo: El cierre mensual tardaba 8 días y gerencia no tenía tablero.",
+            ],
+            [
+              "Tarea",
+              task,
+              setTask,
+              "¿Qué te pidieron a ti?\nEjemplo: Me pidieron bajar el tiempo de cierre y armar un tablero.",
+            ],
+            [
+              "Acción",
+              action,
+              setAction,
+              "¿Qué hiciste tú (pasos concretos)?\nEjemplo: Armé un tablero en Power BI y un checklist de cierre.",
+            ],
+            [
+              "Resultado",
+              result,
+              setResult,
+              "¿Qué cambió, con número si lo tienes?\nEjemplo: El cierre pasó de 8 a 3 días.",
+            ],
           ] as const
-        ).map(([label, val, set]) => (
+        ).map(([label, val, set, example]) => (
           <label key={label} className="block text-sm">
             {label}
             <textarea
               className="field mt-1 min-h-20"
               value={val}
               onChange={(e) => set(e.target.value)}
+              placeholder={example}
             />
             <DictationButton onResult={(t) => set(`${val} ${t}`.trim())} />
           </label>
         ))}
         <label className="block text-sm">
-          Skills demostradas (opcional)
-          <input className="field mt-1" value={skills} onChange={(e) => setSkills(e.target.value)} />
+          Habilidades que demostraste (opcional)
+          <input
+            className="field mt-1"
+            value={skills}
+            onChange={(e) => setSkills(e.target.value)}
+            placeholder="Ejemplo: Power BI, Excel, coordinación con contabilidad"
+          />
         </label>
         <button type="button" className="btn-primary" onClick={generate}>
           Generar borradores

@@ -69,19 +69,30 @@ export default function CareerBriefPage() {
 
       <div className="bento-card space-y-3">
         <label className="block text-sm">
-          Nombre
-          <input className="field mt-1" value={name} onChange={(e) => setName(e.target.value)} />
+          Tu nombre
+          <input
+            className="field mt-1"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Ejemplo: María Gómez"
+          />
         </label>
         <label className="block text-sm">
           Ciudad / país
-          <input className="field mt-1" value={city} onChange={(e) => setCity(e.target.value)} />
+          <input
+            className="field mt-1"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            placeholder="Ejemplo: Bogotá, Colombia"
+          />
         </label>
         <label className="block text-sm">
-          Rol objetivo
+          Cargo al que apuntas
           <input
             className="field mt-1"
             value={targetRole}
             onChange={(e) => setTargetRole(e.target.value)}
+            placeholder="Ejemplo: Analista de datos"
           />
         </label>
         <label className="block text-sm">
@@ -90,23 +101,25 @@ export default function CareerBriefPage() {
             className="field mt-1 min-h-[80px]"
             value={strengths}
             onChange={(e) => setStrengths(e.target.value)}
-            placeholder="Ej.: lideré migración X; reduje tiempo Y un 30%…"
+            placeholder="Ejemplo: 3 años armando tableros; bajé el cierre de 8 a 3 días; coordino con gerencia."
           />
         </label>
         <label className="block text-sm">
-          Gaps a cerrar
+          Qué te falta o quieres aprender
           <textarea
             className="field mt-1 min-h-[80px]"
             value={gaps}
             onChange={(e) => setGaps(e.target.value)}
+            placeholder="Ejemplo: SQL más avanzado; inglés B2; práctica de entrevistas."
           />
         </label>
         <label className="block text-sm">
-          Plan 30 días
+          Qué harás en los próximos 30 días
           <textarea
             className="field mt-1 min-h-[80px]"
             value={next30}
             onChange={(e) => setNext30(e.target.value)}
+            placeholder="Ejemplo: 2 postulaciones al día; 1 práctica de entrevista; actualizar LinkedIn."
           />
         </label>
         <button type="button" className="btn-primary" onClick={generate}>

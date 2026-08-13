@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { DictationButton } from "@/components/DictationButton";
+import { JobPasteField } from "@/components/CvPasteField";
 import { pickFiltroQuestions, scoreFiltroAnswers, type FiltroQ } from "@/lib/interview/filtro";
 
 export default function FiltroPredictivoPage() {
@@ -130,9 +131,8 @@ Solo JSON.`,
         <p className="text-sm muted">Prefill desde tu workspace ATS si existe.</p>
       </section>
 
+      <JobPasteField value={job} onChange={setJob} />
       <div className="bento-card space-y-2">
-        <label className="text-sm font-medium">Oferta</label>
-        <textarea className="field min-h-28" value={job} onChange={(e) => setJob(e.target.value)} />
         <button type="button" className="btn-primary" disabled={loading} onClick={buildQuestions}>
           {loading ? "Generando…" : "3 preguntas (IA o local)"}
         </button>
@@ -174,6 +174,7 @@ Solo JSON.`,
               next[idx] = e.target.value;
               setAnswers(next);
             }}
+            placeholder="Ejemplo: Sí, puedo empezar en 15 días. Estoy en Bogotá y acepto híbrido."
           />
           <div className="flex gap-2">
             <button type="button" className="btn-secondary" disabled={idx === 0} onClick={() => setIdx((i) => i - 1)}>

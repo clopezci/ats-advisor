@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { CookiePrefsButton } from "@/components/CookieBanner";
+import { PageGuide } from "@/components/PageGuide";
 
 export function AppShell({ children }: { children: ReactNode }) {
   return (
@@ -30,7 +31,10 @@ export function AppShell({ children }: { children: ReactNode }) {
           <Link href="/" className="hover:opacity-80 font-medium" style={{ color: "var(--text)" }}>
             Inicio
           </Link>
-          <Link href="/herramientas" className="hover:opacity-80 font-medium" style={{ color: "var(--text)" }}>
+          <Link href="/guia" className="hover:opacity-80 font-medium" style={{ color: "var(--text)" }}>
+            Mi plan
+          </Link>
+          <Link href="/herramientas" className="hover:opacity-80">
             Herramientas
           </Link>
           <Link href="/capacidades" className="hover:opacity-80">
@@ -48,6 +52,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </nav>
       </header>
       <main id="contenido-principal" className="flex flex-1 flex-col">
+        <PageGuide />
         {children}
       </main>
       <footer

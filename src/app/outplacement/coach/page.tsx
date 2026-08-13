@@ -126,7 +126,7 @@ export default function CoachPage() {
 
       <textarea
         className="field min-h-24"
-        placeholder="Tu pregunta…"
+        placeholder="Ejemplo: me echaron y no sé si mi CV está bien para analista de datos en Bogotá"
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
       />

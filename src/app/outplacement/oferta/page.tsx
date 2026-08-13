@@ -119,8 +119,13 @@ export default function OfertaWizardPage() {
             </select>
           </label>
           <label className="block text-sm">
-            Rol en la oferta
-            <input className="field mt-1" value={role} onChange={(e) => setRole(e.target.value)} />
+            Cargo que te ofrecieron
+            <input
+              className="field mt-1"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              placeholder="Ejemplo: Analista de datos"
+            />
           </label>
           <p className="text-sm">
             Piso <strong>{formatCop(nums.floor)}</strong> · Meta{" "}
@@ -137,20 +142,22 @@ export default function OfertaWizardPage() {
       {step === 1 && (
         <section className="bento-card space-y-3">
           <label className="block text-sm">
-            Empresa
+            Empresa que te hizo la oferta
             <input
               className="field mt-1"
               value={company}
               onChange={(e) => setCompany(e.target.value)}
+              placeholder="Ejemplo: Bancolombia"
             />
           </label>
           <label className="block text-sm">
-            Monto ofrecido (COP mensuales)
+            Sueldo mensual que te dijeron (pesos, sin puntos)
             <input
               className="field mt-1"
               type="number"
               value={state.offerAmount || ""}
               onChange={(e) => persist({ ...state, offerAmount: Number(e.target.value) || 0 })}
+              placeholder="Ejemplo: 4500000"
             />
           </label>
           <label className="flex items-center gap-2 text-sm">

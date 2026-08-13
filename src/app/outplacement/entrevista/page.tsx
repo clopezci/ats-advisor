@@ -74,7 +74,12 @@ export default function EntrevistaPage() {
           <span className="text-xs muted">Tu respuesta</span>
           <DictationButton onResult={(t) => setAnswer((p) => (p ? `${p} ${t}` : t))} />
         </div>
-        <textarea className="field min-h-32" value={answer} onChange={(e) => setAnswer(e.target.value)} />
+        <textarea
+          className="field min-h-32"
+          value={answer}
+          onChange={(e) => setAnswer(e.target.value)}
+          placeholder="Ejemplo: En el banco el cierre tardaba 8 días. Me pidieron bajarlo. Armé un tablero en Power BI y quedó en 3 días."
+        />
         {local && (
           <div className="text-sm space-y-1">
             <p className="font-semibold">Score STAR local: {local.total}%</p>

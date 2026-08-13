@@ -87,11 +87,12 @@ export default function VideoEntrevistaPage() {
 
       <section className="bento-card space-y-2">
         <label className="block text-sm">
-          Pregunta
+          Pregunta que vas a ensayar (como te la harían en una entrevista)
           <textarea
             className="field mt-1 min-h-[70px]"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
+            placeholder="Ejemplo: Cuéntame un logro reciente con números."
           />
         </label>
         <video ref={videoRef} className="w-full rounded-lg bg-black aspect-video" muted playsInline />

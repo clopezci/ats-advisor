@@ -41,10 +41,30 @@ export default function NetworkingPage() {
 
       <section className="bento-card space-y-3">
         <p className="text-sm font-medium">Nuevo contacto</p>
-        <input className="field" placeholder="Nombre" value={name} onChange={(e) => setName(e.target.value)} />
-        <input className="field" placeholder="Empresa" value={company} onChange={(e) => setCompany(e.target.value)} />
-        <input className="field" placeholder="Rol / área" value={role} onChange={(e) => setRole(e.target.value)} />
-        <input className="field" placeholder="Próximo paso" value={nextStep} onChange={(e) => setNextStep(e.target.value)} />
+        <input
+          className="field"
+          placeholder="Ejemplo: Juan Pérez (la persona, no tú)"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          className="field"
+          placeholder="Ejemplo: Bancolombia"
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+        />
+        <input
+          className="field"
+          placeholder="Ejemplo: jefa de analítica"
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+        />
+        <input
+          className="field"
+          placeholder="Ejemplo: escribirle por LinkedIn el jueves"
+          value={nextStep}
+          onChange={(e) => setNextStep(e.target.value)}
+        />
         <button
           type="button"
           className="btn-primary"

@@ -82,7 +82,7 @@ export async function POST(req: Request) {
     const close = body.close !== false;
     const ops = await loadExpertOps();
 
-    let ids: string[] = Array.isArray(body.caseIds)
+    const ids: string[] = Array.isArray(body.caseIds)
       ? body.caseIds.map((x: unknown) => String(x))
       : ops.cases.filter((c) => c.status === "confirmed" && !c.settlementId).map((c) => c.id);
 

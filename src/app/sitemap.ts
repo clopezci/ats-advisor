@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/admin/analytics/pro",
     "/offline",
     "/capacidades",
+    "/guia",
     "/empresa",
     "/empresa/dashboard",
     "/empresa/invitaciones",

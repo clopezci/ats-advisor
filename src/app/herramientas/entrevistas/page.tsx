@@ -90,7 +90,12 @@ export default function BancoEntrevistaPage() {
           <span className="text-xs muted">Tu respuesta</span>
           <DictationButton onResult={(t) => setAnswer((p) => (p ? `${p} ${t}` : t))} />
         </div>
-        <textarea className="field min-h-28" value={answer} onChange={(e) => setAnswer(e.target.value)} />
+        <textarea
+          className="field min-h-28"
+          value={answer}
+          onChange={(e) => setAnswer(e.target.value)}
+          placeholder="Ejemplo: En mi último trabajo el cierre tardaba 8 días. Me pidieron acelerarlo. Armé un tablero en Power BI y quedó en 3 días."
+        />
       </section>
 
       <button type="button" className="btn-primary" disabled={loading || answer.length < 20} onClick={evaluate}>

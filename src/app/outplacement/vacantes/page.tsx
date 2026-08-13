@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { CvPasteField } from "@/components/CvPasteField";
 import { rankJobs } from "@/lib/outplacement/jobFeed";
 
 export default function VacantesPage() {
@@ -38,20 +39,15 @@ export default function VacantesPage() {
         </p>
       </section>
 
-      <section className="bento-card space-y-2">
-        <label className="block text-sm">
-          Texto de tu CV (para rankear)
-          <textarea
-            className="field mt-1 min-h-[120px]"
-            value={cv}
-            onChange={(e) => setCv(e.target.value)}
-            placeholder="Pega tu CV o abre /ats primero para reutilizar el workspace…"
-          />
-        </label>
-        <Link href="/ats" className="btn-secondary">
-          Ir al ATS
-        </Link>
-      </section>
+      <CvPasteField
+        value={cv}
+        onChange={setCv}
+        label="Tu hoja de vida"
+        hint="Con tu CV ordenamos estas vacantes de ejemplo. No postula por ti: después abres el enlace del aviso."
+      />
+      <Link href="/ats" className="btn-secondary">
+        Analizar un CV a fondo
+      </Link>
 
       {ranked.map(({ job, score }) => (
         <article key={job.id} className="bento-card space-y-2">

@@ -8,8 +8,8 @@ export default function NotFound() {
       <Link href="/" className="btn-primary text-center">
         Ir al inicio
       </Link>
-      <Link href="/capacidades" className="btn-secondary text-center">
-        Ver capacidades
+      <Link href="/guia" className="btn-secondary text-center">
+        Armar mi plan
       </Link>
     </div>
   );

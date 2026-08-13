@@ -61,7 +61,7 @@ export default function RemotoBilinguePage() {
         <h2 className="font-semibold">Asistente de viñeta ES → EN</h2>
         <textarea
           className="field min-h-[80px]"
-          placeholder="Pega una viñeta en español…"
+          placeholder="Ejemplo: Reduje el cierre mensual de 8 a 3 días armando un tablero en Power BI."
           value={esBullet}
           onChange={(e) => setEsBullet(e.target.value)}
         />

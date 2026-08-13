@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { AdSlot } from "@/components/AdSlot";
 import {
   AUDIENCE_LABEL,
   CAPABILITIES,
@@ -10,6 +11,7 @@ import {
   type Audience,
   type CapabilityStatus,
 } from "@/lib/catalog/capabilities";
+import { SYSTEM_CAPABILITY_IDS } from "@/lib/catalog/personaFilter";
 
 const AUDIENCES: Audience[] = ["candidato", "empresa", "admin", "tester", "publico"];
 
@@ -22,104 +24,103 @@ const STATUS_STYLE: Record<CapabilityStatus, { bg: string; color: string }> = {
 };
 
 export default function CapacidadesPage() {
-  const [audience, setAudience] = useState<Audience | "todos">("todos");
+  const [lens, setLens] = useState<"persona" | "todo">("persona");
+  const [audience, setAudience] = useState<Audience | "todos">("candidato");
   const [status, setStatus] = useState<CapabilityStatus | "todos">("todos");
 
   const filtered = useMemo(() => {
     return CAPABILITIES.filter((c) => {
+      if (lens === "persona" && SYSTEM_CAPABILITY_IDS.has(c.id)) return false;
       if (audience !== "todos" && !c.audience.includes(audience)) return false;
       if (status !== "todos" && c.status !== status) return false;
       return true;
     });
-  }, [audience, status]);
+  }, [lens, audience, status]);
 
-  const counts = useMemo(() => {
-    const m: Record<string, number> = {};
-    for (const c of CAPABILITIES) m[c.status] = (m[c.status] || 0) + 1;
-    return m;
-  }, []);
-
-  const intro = `Catálogo completo de ATSAdvisor: ${CAPABILITIES.length} capacidades para personas, empresas RH, admin y testers. Filtra por audiencia y estado.`;
+  const intro =
+    lens === "persona"
+      ? "Cosas que puedes hacer y te benefician: analizar tu CV, organizar postulaciones, practicar entrevistas. Sin jerga técnica de la app."
+      : "Catálogo completo, incluido lo interno (pagos, admin, infraestructura).";
 
   return (
     <div className="flex flex-1 flex-col gap-5">
       <section className="bento-card space-y-3">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="pill-brand">Mapa del producto</p>
-            <h1 className="mt-2 text-2xl font-semibold leading-tight">
-              Todo lo que puedes hacer aquí
-            </h1>
+            <p className="pill-brand">Mapa</p>
+            <h1 className="mt-2 text-2xl font-semibold leading-tight">Qué puedes hacer aquí</h1>
           </div>
           <SpeakButton text={intro} />
         </div>
         <p className="text-sm muted leading-relaxed">{intro}</p>
-        <p className="text-xs muted">
-          Incluye lo ya vivo, lo parcial, lo que espera tus keys y lo planificado (B2B, Analytics Pro,
-          etc.).
-        </p>
+        <Link href="/guia" className="btn-primary">
+          Armar mi recorrido (te guiamos)
+        </Link>
       </section>
 
-      <section className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-        {(Object.keys(STATUS_LABEL) as CapabilityStatus[]).map((s) => (
-          <button
-            key={s}
-            type="button"
-            className="bento-card text-left"
-            style={
-              status === s
-                ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
-                : undefined
-            }
-            onClick={() => setStatus(status === s ? "todos" : s)}
-          >
-            <p className="text-xs muted">{STATUS_LABEL[s]}</p>
-            <p className="text-xl font-semibold">{counts[s] || 0}</p>
-          </button>
-        ))}
-      </section>
-
-      <div className="flex flex-col gap-2">
-        <p className="text-sm font-medium">¿Para quién?</p>
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            className="btn-secondary"
-            style={{
-              width: "auto",
-              minHeight: "2.5rem",
-              padding: "0.5rem 0.9rem",
-              ...(audience === "todos"
-                ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
-                : {}),
-            }}
-            onClick={() => setAudience("todos")}
-          >
-            Todos
-          </button>
-          {AUDIENCES.map((a) => (
-            <button
-              key={a}
-              type="button"
-              className="btn-secondary"
-              style={{
-                width: "auto",
-                minHeight: "2.5rem",
-                padding: "0.5rem 0.9rem",
-                ...(audience === a
-                  ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
-                  : {}),
-              }}
-              onClick={() => setAudience(a)}
-            >
-              {AUDIENCE_LABEL[a]}
-            </button>
-          ))}
-        </div>
+      <div className="flex gap-2">
+        <button
+          type="button"
+          className="btn-secondary"
+          style={
+            lens === "persona"
+              ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
+              : undefined
+          }
+          onClick={() => {
+            setLens("persona");
+            setAudience("candidato");
+          }}
+        >
+          Para ti
+        </button>
+        <button
+          type="button"
+          className="btn-secondary"
+          style={
+            lens === "todo" ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" } : undefined
+          }
+          onClick={() => {
+            setLens("todo");
+            setAudience("todos");
+          }}
+        >
+          Técnico / admin
+        </button>
       </div>
 
+      {lens === "todo" && (
+        <>
+          <div className="flex flex-col gap-2">
+            <p className="text-sm font-medium">¿Para quién?</p>
+            <div className="flex flex-wrap gap-2">
+              <button type="button" className="btn-secondary" onClick={() => setAudience("todos")}>
+                Todos
+              </button>
+              {AUDIENCES.map((a) => (
+                <button key={a} type="button" className="btn-secondary" onClick={() => setAudience(a)}>
+                  {AUDIENCE_LABEL[a]}
+                </button>
+              ))}
+            </div>
+          </div>
+          <section className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+            {(Object.keys(STATUS_LABEL) as CapabilityStatus[]).map((s) => (
+              <button
+                key={s}
+                type="button"
+                className="bento-card text-left"
+                onClick={() => setStatus(status === s ? "todos" : s)}
+              >
+                <p className="text-xs muted">{STATUS_LABEL[s]}</p>
+              </button>
+            ))}
+          </section>
+        </>
+      )}
+
       <p className="text-sm muted">
-        Mostrando <strong>{filtered.length}</strong> de {CAPABILITIES.length}
+        {filtered.length} {lens === "persona" ? "acciones para ti" : "ítems"}
       </p>
 
       <div className="flex flex-col gap-3">
@@ -127,19 +128,14 @@ export default function CapacidadesPage() {
           const st = STATUS_STYLE[c.status];
           const body = (
             <article className="bento-card space-y-2">
-              <div className="flex flex-wrap items-center gap-2">
+              {lens === "todo" && (
                 <span
                   className="rounded-full px-2.5 py-0.5 text-xs font-medium"
                   style={{ background: st.bg, color: st.color }}
                 >
                   {STATUS_LABEL[c.status]}
                 </span>
-                {c.audience.map((a) => (
-                  <span key={a} className="text-xs muted">
-                    {AUDIENCE_LABEL[a]}
-                  </span>
-                ))}
-              </div>
+              )}
               <h2 className="text-base font-semibold">{c.title}</h2>
               <p className="text-sm muted leading-relaxed">{c.summary}</p>
               {c.href && (
@@ -158,6 +154,8 @@ export default function CapacidadesPage() {
           );
         })}
       </div>
+
+      <AdSlot slot="mapa" />
 
       <Link href="/" className="btn-secondary">
         Volver al inicio

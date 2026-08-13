@@ -86,6 +86,11 @@ export default function PreciosPage() {
           setMsg(
             `Pago detectado. Plan ${planLabel(plan)} en este dispositivo. El webhook activa cloud si diste correo.`
           );
+          const ret = params.get("next");
+          if (ret && ret.startsWith("/")) {
+            window.location.href = ret;
+            return;
+          }
         } else {
           setMsg(
             "Si el pago fue aprobado, el webhook activa el plan en servidor. Usa el mismo correo en /cuenta → Reclamar pago."

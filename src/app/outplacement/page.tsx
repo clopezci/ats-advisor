@@ -84,7 +84,7 @@ export default function OutplacementPage() {
       {!unlocked && plan !== "paused_90" && (
         <PaywallCard
           currentPlan={plan}
-          reason="El acompañamiento completo (ruta, entrevistas, red, rumbo) está en el plan Carrera. Los cursos a tu medida están en Carrera Plus. Mira precios si quieres desbloquear."
+          reason="El acompañamiento completo (ruta, entrevistas, red, rumbo) está en el plan Carrera. El curso a tu medida se compra aparte (add-on). Mira precios si quieres desbloquear."
         />
       )}
 
@@ -162,8 +162,8 @@ export default function OutplacementPage() {
           {hasOut09
             ? "Crear un curso a mi medida"
             : unlocked
-              ? "Curso a tu medida → está en Plus o se compra extra"
-              : "Curso a tu medida (en Carrera Plus)"}
+              ? "Curso a tu medida (comprar add-on)"
+              : "Curso a tu medida (add-on con Carrera)"}
         </Link>
         <Link href="/outplacement/coach" className="btn-secondary">
           Chat coach (RAG)

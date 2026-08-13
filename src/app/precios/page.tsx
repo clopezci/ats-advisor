@@ -5,7 +5,7 @@ import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { ChannelChooser } from "@/components/ChannelChooser";
-import { planLabel, readEntitlement, setPlan, type PlanId } from "@/lib/entitlements";
+import { canAccessOutplacement, planLabel, readEntitlement, setPlan, type PlanId } from "@/lib/entitlements";
 import {
   CHANNEL_CHOICE_INTRO,
   formatCop,
@@ -48,6 +48,7 @@ export default function PreciosPage() {
   const [dummyPhase, setDummyPhase] = useState<"idle" | "processing" | "done">("idle");
   const [channel, setChannel] = useState<LearningChannel>("telegram");
   const [prices, setPrices] = useState({ carrera: 79000, plus: 99000, out09_extra: 22000, whatsapp_addon: waPrice });
+  const [returnNext, setReturnNext] = useState("/guia?recorrido=1");
 
   useEffect(() => {
     setCurrentPlan(readEntitlement().plan);
@@ -57,6 +58,9 @@ export default function PreciosPage() {
     } catch {
       /* ignore */
     }
+    const params = new URLSearchParams(window.location.search);
+    const next = params.get("next");
+    if (next && next.startsWith("/")) setReturnNext(next);
     fetch("/api/features")
       .then((r) => r.json())
       .then((d) => {
@@ -70,7 +74,6 @@ export default function PreciosPage() {
         }
       })
       .catch(() => undefined);
-    const params = new URLSearchParams(window.location.search);
     const isLocal =
       window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
     if (params.get("paid") === "1") {
@@ -111,8 +114,21 @@ export default function PreciosPage() {
     }
   }, []);
 
-  /** Simula pago real: delay → activa plan → desbloquea outplacement. */
-  async function dummyPay(plan: "carrera" | "plus") {
+  function returnAfterPay() {
+    try {
+      const next = new URLSearchParams(window.location.search).get("next");
+      if (next && next.startsWith("/")) {
+        window.location.href = next;
+        return true;
+      }
+    } catch {
+      /* ignore */
+    }
+    return false;
+  }
+
+  /** Simula pago real: delay → activa plan → vuelve al recorrido si venía de Mi plan. */
+  async function dummyPay(plan: "carrera" | "plus" = "carrera") {
     setDummyPhase("processing");
     setLoading(`dummy-${plan}`);
     setMsg("");
@@ -136,8 +152,9 @@ export default function PreciosPage() {
     setMsg(
       `Pago simulado OK. Plan ${planLabel(plan)} activo${
         addon ? ` + WhatsApp ${formatCop(addon)}/mes (registrado)` : ""
-      }. Ya puedes usar outplacement.`
+      }.`
     );
+    if (returnAfterPay()) return;
   }
 
   async function checkout(plan: "carrera" | "plus" | "out09_extra") {
@@ -209,12 +226,14 @@ export default function PreciosPage() {
           <h1 className="text-2xl font-semibold">Precios</h1>
           <SpeakButton text="El análisis de CV es gratis, con un tope diario. El acompañamiento de carrera cuesta una mínima fracción de lo que cobran las empresas de outplacement. Así lo hacemos accesible, no exclusivo." />
         </div>
-        <p className="text-sm muted">Análisis de CV gratis: 5 por día.</p>
+        <p className="text-sm muted">Análisis de CV y herramientas ATS: gratis (tope diario en análisis).</p>
         <p className="text-sm leading-relaxed">
-          El plan Carrera cuesta solo una mínima fracción de lo que cobran las empresas de outplacement.
+          Un solo plan: <strong>Carrera</strong>. Si necesitas un curso a tu medida, lo compras aparte
+          (add-on). Sin elegir entre dos suscripciones.
         </p>
         <p className="text-sm muted leading-relaxed">
-          Por eso lo llamamos outplacement democratizado: el mismo tipo de guía (CV, mercado, entrevistas, primeros 90 días), al alcance de una persona, no solo de quien sale de una multinacional.
+          Carrera cuesta una mínima fracción del outplacement empresarial: misma idea de guía (CV,
+          mercado, entrevistas, 90 días), al alcance de una persona.
         </p>
         <p className="text-sm">
           Plan actual:{" "}
@@ -264,74 +283,60 @@ export default function PreciosPage() {
         </div>
       </section>
 
-      {[
-        {
-          id: "carrera" as const,
-          name: "Carrera",
-          price: `${formatCop(prices.carrera)}/mes`,
-          points: [
-            "Ruta guiada de 8 semanas: estabilizarte, CV, mercado, entrevistas y primeros 90 días",
-            "Cápsulas diarias por Telegram (incluidas)",
-            "Coach con IA, práctica de entrevista y red de contactos",
-            "El curso a tu medida (tú eliges el tema) está en Plus o se compra aparte",
-          ],
-        },
-        {
-          id: "plus" as const,
-          name: "Carrera Plus",
-          price: `${formatCop(prices.plus)}/mes`,
-          points: [
-            "Todo lo de Carrera",
-            "2 cursos a tu medida por mes: tú dices el tema y la app arma las lecciones",
-            "Más práctica de entrevistas y coach",
-            "WhatsApp es opcional (se suma al mes si lo eliges abajo)",
-          ],
-        },
-        {
-          id: "out09_extra" as const,
-          name: "Curso extra a tu medida",
-          price: formatCop(prices.out09_extra),
-          points: [
-            "Un curso más sobre el tema que tú elijas",
-            "Si tienes Carrera y quieres un tema puntual, o si ya usaste los 2 del mes en Plus",
-            "Lecciones cortas, las mismas que el resto del plan",
-          ],
-        },
-      ].map((p) => (
-        <section key={p.id} className="bento-card space-y-3">
-          <div className="flex items-center justify-between">
-            <h2 className="font-semibold">{p.name}</h2>
-            <span className="pill-brand">{p.price}</span>
-          </div>
-          <ul className="space-y-1 text-sm muted">
-            {p.points.map((x) => (
-              <li key={x}>• {x}</li>
-            ))}
-          </ul>
-          {p.id !== "out09_extra" && (
-            <button
-              type="button"
-              className="btn-primary"
-              disabled={dummyPhase === "processing" || loading === `dummy-${p.id}`}
-              onClick={() => dummyPay(p.id)}
-            >
-              {loading === `dummy-${p.id}`
-                ? "Procesando pago…"
-                : dummyPhase === "done" && currentPlan === p.id
-                  ? `✓ ${p.name} activo — seguir`
-                  : `Pagar ${p.name} (demo)`}
-            </button>
-          )}
-          <button
-            type="button"
-            className="btn-secondary"
-            disabled={loading === p.id}
-            onClick={() => checkout(p.id)}
-          >
-            {loading === p.id ? "Preparando…" : `Checkout real ${p.name}`}
-          </button>
-        </section>
-      ))}
+      <section className="bento-card space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="font-semibold">Carrera</h2>
+          <span className="pill-brand">{formatCop(prices.carrera)}/mes</span>
+        </div>
+        <p className="text-xs muted">El único plan de suscripción</p>
+        <ul className="space-y-1 text-sm muted">
+          <li>• Ruta guiada: estabilizarte, mercado, entrevistas, oferta y primeros 90 días</li>
+          <li>• Cápsulas por Telegram (incluidas); WhatsApp opcional abajo</li>
+          <li>• Coach IA, filtro telefónico, red de contactos, negociación</li>
+          <li>• Las herramientas gratis de CV/ATS siguen disponibles</li>
+        </ul>
+        <button
+          type="button"
+          className="btn-primary"
+          disabled={dummyPhase === "processing" || loading === "dummy-carrera"}
+          onClick={() => dummyPay("carrera")}
+        >
+          {loading === "dummy-carrera"
+            ? "Procesando pago…"
+            : dummyPhase === "done" && canAccessOutplacement(currentPlan)
+              ? "✓ Carrera activo — volver al recorrido"
+              : "Pagar Carrera (demo)"}
+        </button>
+        <button
+          type="button"
+          className="btn-secondary"
+          disabled={loading === "carrera"}
+          onClick={() => checkout("carrera")}
+        >
+          {loading === "carrera" ? "Preparando…" : "Checkout real Carrera"}
+        </button>
+      </section>
+
+      <section className="bento-card space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="font-semibold">Curso a tu medida</h2>
+          <span className="pill-brand">{formatCop(prices.out09_extra)}</span>
+        </div>
+        <p className="text-xs muted">Add-on (no es otro plan mensual)</p>
+        <ul className="space-y-1 text-sm muted">
+          <li>• Un curso sobre el tema que tú elijas</li>
+          <li>• Requiere tener Carrera activo</li>
+          <li>• Lecciones cortas, las mismas del acompañamiento</li>
+        </ul>
+        <button
+          type="button"
+          className="btn-secondary"
+          disabled={loading === "out09_extra"}
+          onClick={() => checkout("out09_extra")}
+        >
+          {loading === "out09_extra" ? "Preparando…" : "Checkout curso extra"}
+        </button>
+      </section>
 
       <section className="bento-card space-y-3">
         <h2 className="font-semibold text-sm">Canal de microlearning</h2>
@@ -352,23 +357,21 @@ export default function PreciosPage() {
         />
         {channel === "whatsapp" && (
           <p className="text-sm font-medium" style={{ color: "var(--brand)" }}>
-            Addon WhatsApp: {formatCop(prices.whatsapp_addon)}/mes. Se suma al checkout de Carrera/Plus.
+            Addon WhatsApp: {formatCop(prices.whatsapp_addon)}/mes. Se suma al checkout de Carrera.
           </p>
         )}
         <p className="text-xs muted">
-          Totales orientativos: Carrera{" "}
+          Total orientativo Carrera
+          {channel === "whatsapp" ? " + WhatsApp" : ""}:{" "}
           {formatCop(prices.carrera + (channel === "whatsapp" ? prices.whatsapp_addon : 0))}
-          {channel === "whatsapp" ? " (plan+WA)" : ""} · Plus{" "}
-          {formatCop(prices.plus + (channel === "whatsapp" ? prices.whatsapp_addon : 0))}
-          {channel === "whatsapp" ? " (plan+WA)" : ""}.
         </p>
       </section>
 
       <section className="bento-card space-y-2">
         <h2 className="font-semibold text-sm">Modo prueba (sin Wompi / MP)</h2>
         <p className="text-sm muted">
-          El botón <strong>Pagar (demo)</strong> simula un cobro (~1 s), activa el plan en este navegador y te deja
-          entrar a outplacement. No cobra dinero. Cuando configures Wompi o Mercado Pago, usa “Checkout real”.
+          El botón <strong>Pagar Carrera (demo)</strong> simula un cobro (~1 s), activa el plan en este
+          navegador y, si venías de Mi plan, te devuelve al mismo paso. No cobra dinero.
         </p>
         {dummyPhase === "processing" && (
           <p className="text-sm" style={{ color: "var(--brand)" }}>
@@ -376,8 +379,8 @@ export default function PreciosPage() {
           </p>
         )}
         {dummyPhase === "done" && (
-          <Link href="/guia" className="btn-primary">
-            Armar mi recorrido paso a paso →
+          <Link href={returnNext} className="btn-primary">
+            Volver a mi recorrido →
           </Link>
         )}
       </section>

@@ -44,8 +44,8 @@ export const PAGE_GUIDES: PageGuideCopy[] = [
   },
   {
     path: "/guia",
-    what: "Arma un recorrido personal: marcas lo que te importa (o lo dictas) y la app te lleva una sola cosa a la vez.",
-    how: "Marca casillas, “Marcar todo”, o escribe/dicta tu prioridad y toca “Marcar según esto”. Luego Empieza el recorrido. Siempre puedes volver a la lista.",
+    what: "Arma un recorrido personal. Lo gratis (CV, ATS, LinkedIn…) es lo mismo que en Herramientas. Carrera es un solo plan de acompañamiento; el curso a tu medida es add-on.",
+    how: "Marca lo que necesitas (hay secciones Gratis / Carrera / Extras). Empieza: primero haces lo gratis. Cuando toque Carrera, guardas correo, pagas y vuelves al mismo paso.",
   },
   {
     path: "/tracker",
@@ -54,8 +54,8 @@ export const PAGE_GUIDES: PageGuideCopy[] = [
   },
   {
     path: "/precios",
-    what: "Ver qué es gratis (análisis de CV, con tope diario) y qué incluye el plan de acompañamiento de carrera.",
-    how: "Lee las tarjetas. El análisis de CV no se paga. Carrera es el acompañamiento guiado. Si solo estás mirando, no hace falta pagar.",
+    what: "Ver qué es gratis (análisis de CV y herramientas) y el único plan de pago: Carrera. El curso a tu medida se compra aparte.",
+    how: "Si viniste desde Mi plan, paga Carrera y te devolvemos al mismo paso. Si solo estás mirando, no hace falta pagar.",
   },
   {
     path: "/capacidades",

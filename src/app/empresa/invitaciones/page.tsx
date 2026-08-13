@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { VoiceTextarea } from "@/components/VoiceField";
 import { addSeatsFromEmails, listSeats, parseInviteCsv, readOrg } from "@/lib/b2b/org";
 
 export default function InvitacionesPage() {
@@ -40,11 +41,13 @@ export default function InvitacionesPage() {
         </p>
       </section>
 
-      <textarea
-        className="field min-h-40 font-mono text-sm"
+      <VoiceTextarea
+        label="Lista de invitaciones"
         value={raw}
-        onChange={(e) => setRaw(e.target.value)}
+        onChange={setRaw}
+        className="field min-h-40 font-mono text-sm"
         placeholder={"Ejemplo:\nMaría Gómez, maria@empresa.com\njuan@empresa.com"}
+        dictationLabel="Dictar lista"
       />
       <button type="button" className="btn-primary" onClick={invite}>
         Cargar invitaciones

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
 import {
   addAlert,
   readAlerts,
@@ -52,28 +53,32 @@ export default function AlertasPage() {
       </section>
 
       <section className="bento-card space-y-3">
-        <p className="text-xs muted">Qué cargo buscas. No aplica por ti; es un recordatorio para cuando entres a los portales.</p>
-        <input
-          className="field"
-          placeholder="Ejemplo: analista de datos Bogotá"
+        <VoiceInput
+          label="Qué cargo buscas"
+          hint="No aplica por ti; es un recordatorio para cuando entres a los portales."
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={setQuery}
+          placeholder="Ejemplo: analista de datos Bogotá"
+          dictationLabel="Dictar cargo"
         />
-        <input
-          className="field"
-          placeholder="Ciudad / país"
+        <VoiceInput
+          label="Ciudad / país"
           value={city}
-          onChange={(e) => setCity(e.target.value)}
+          onChange={setCity}
+          placeholder="Ejemplo: Bogotá / remoto"
+          dictationLabel="Dictar ciudad"
         />
         <label className="flex items-center gap-2 text-sm">
           <input type="checkbox" checked={remoteOk} onChange={(e) => setRemoteOk(e.target.checked)} />
           Acepto remoto
         </label>
-        <textarea
-          className="field min-h-16"
-          placeholder="Notas (portales, empresas target…)"
+        <VoiceTextarea
+          label="Notas (opcional)"
           value={notes}
-          onChange={(e) => setNotes(e.target.value)}
+          onChange={setNotes}
+          className="field min-h-16"
+          placeholder="Ejemplo: mirar Computrabajo y LinkedIn"
+          dictationLabel="Dictar notas"
         />
         <button type="button" className="btn-primary" onClick={save}>
           Guardar alerta

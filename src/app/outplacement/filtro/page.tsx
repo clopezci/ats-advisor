@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
-import { DictationButton } from "@/components/DictationButton";
+import { VoiceTextarea } from "@/components/VoiceField";
 import { JobPasteField } from "@/components/CvPasteField";
 import { pickFiltroQuestions, scoreFiltroAnswers, type FiltroQ } from "@/lib/interview/filtro";
 
@@ -154,27 +154,17 @@ Solo JSON.`,
           </p>
           <p className="font-medium">{questions[idx].q}</p>
           <p className="text-xs muted">{questions[idx].tip}</p>
-          <div className="flex justify-between">
-            <span className="text-xs muted">Tu respuesta</span>
-            <DictationButton
-              onResult={(t) =>
-                setAnswers((prev) => {
-                  const next = [...prev];
-                  next[idx] = next[idx] ? `${next[idx]} ${t}` : t;
-                  return next;
-                })
-              }
-            />
-          </div>
-          <textarea
-            className="field min-h-24"
+          <VoiceTextarea
+            label="Tu respuesta"
             value={answers[idx]}
-            onChange={(e) => {
+            onChange={(t) => {
               const next = [...answers];
-              next[idx] = e.target.value;
+              next[idx] = t;
               setAnswers(next);
             }}
+            className="field min-h-24"
             placeholder="Ejemplo: Sí, puedo empezar en 15 días. Estoy en Bogotá y acepto híbrido."
+            dictationLabel="Dictar respuesta"
           />
           <div className="flex gap-2">
             <button type="button" className="btn-secondary" disabled={idx === 0} onClick={() => setIdx((i) => i - 1)}>

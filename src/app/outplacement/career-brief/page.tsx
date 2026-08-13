@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
 import { loadRiasecResult } from "@/lib/outplacement/riasec";
 import { openCareerBriefPrint } from "@/lib/outplacement/careerBrief";
 
@@ -68,60 +69,51 @@ export default function CareerBriefPage() {
       </section>
 
       <div className="bento-card space-y-3">
-        <label className="block text-sm">
-          Tu nombre
-          <input
-            className="field mt-1"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Ejemplo: María Gómez"
-          />
-        </label>
-        <label className="block text-sm">
-          Ciudad / país
-          <input
-            className="field mt-1"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            placeholder="Ejemplo: Bogotá, Colombia"
-          />
-        </label>
-        <label className="block text-sm">
-          Cargo al que apuntas
-          <input
-            className="field mt-1"
-            value={targetRole}
-            onChange={(e) => setTargetRole(e.target.value)}
-            placeholder="Ejemplo: Analista de datos"
-          />
-        </label>
-        <label className="block text-sm">
-          Fortalezas (3 evidencias)
-          <textarea
-            className="field mt-1 min-h-[80px]"
-            value={strengths}
-            onChange={(e) => setStrengths(e.target.value)}
-            placeholder="Ejemplo: 3 años armando tableros; bajé el cierre de 8 a 3 días; coordino con gerencia."
-          />
-        </label>
-        <label className="block text-sm">
-          Qué te falta o quieres aprender
-          <textarea
-            className="field mt-1 min-h-[80px]"
-            value={gaps}
-            onChange={(e) => setGaps(e.target.value)}
-            placeholder="Ejemplo: SQL más avanzado; inglés B2; práctica de entrevistas."
-          />
-        </label>
-        <label className="block text-sm">
-          Qué harás en los próximos 30 días
-          <textarea
-            className="field mt-1 min-h-[80px]"
-            value={next30}
-            onChange={(e) => setNext30(e.target.value)}
-            placeholder="Ejemplo: 2 postulaciones al día; 1 práctica de entrevista; actualizar LinkedIn."
-          />
-        </label>
+        <VoiceInput
+          label="Tu nombre"
+          value={name}
+          onChange={setName}
+          placeholder="Ejemplo: María Gómez"
+          dictationLabel="Dictar nombre"
+        />
+        <VoiceInput
+          label="Ciudad / país"
+          value={city}
+          onChange={setCity}
+          placeholder="Ejemplo: Bogotá, Colombia"
+          dictationLabel="Dictar ciudad"
+        />
+        <VoiceInput
+          label="Cargo al que apuntas"
+          value={targetRole}
+          onChange={setTargetRole}
+          placeholder="Ejemplo: Analista de datos"
+          dictationLabel="Dictar cargo"
+        />
+        <VoiceTextarea
+          label="Fortalezas (3 evidencias)"
+          value={strengths}
+          onChange={setStrengths}
+          className="field min-h-[80px]"
+          placeholder="Ejemplo: 3 años armando tableros; bajé el cierre de 8 a 3 días; coordino con gerencia."
+          dictationLabel="Dictar fortalezas"
+        />
+        <VoiceTextarea
+          label="Qué te falta o quieres aprender"
+          value={gaps}
+          onChange={setGaps}
+          className="field min-h-[80px]"
+          placeholder="Ejemplo: SQL más avanzado; inglés B2; práctica de entrevistas."
+          dictationLabel="Dictar gaps"
+        />
+        <VoiceTextarea
+          label="Qué harás en los próximos 30 días"
+          value={next30}
+          onChange={setNext30}
+          className="field min-h-[80px]"
+          placeholder="Ejemplo: 2 postulaciones al día; 1 práctica de entrevista; actualizar LinkedIn."
+          dictationLabel="Dictar plan"
+        />
         <button type="button" className="btn-primary" onClick={generate}>
           Generar / imprimir PDF
         </button>

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
-import { DictationButton } from "@/components/DictationButton";
+import { VoiceTextarea } from "@/components/VoiceField";
 import { AdSlot } from "@/components/AdSlot";
 import {
   PERSON_GOALS,
@@ -146,21 +146,17 @@ export default function GuiaPage() {
       </section>
 
       <section className="bento-card space-y-3">
-        <label className="block text-sm font-medium">
-          Dilo con tus palabras (opcional)
-          <textarea
-            className="field mt-1 min-h-24"
-            value={need}
-            onChange={(e) => setNeed(e.target.value)}
-            placeholder="Ej.: me echaron, necesito CV y practicar entrevistas…"
-          />
-        </label>
-        <div className="flex gap-2">
-          <DictationButton onResult={(t) => setNeed((p) => (p ? `${p} ${t}` : t))} />
-          <button type="button" className="btn-secondary" onClick={applyVoice} disabled={need.trim().length < 6}>
-            Marcar según esto
-          </button>
-        </div>
+        <VoiceTextarea
+          label="Dilo con tus palabras (opcional)"
+          value={need}
+          onChange={setNeed}
+          className="field min-h-24"
+          placeholder="Ej.: me echaron, necesito CV y practicar entrevistas…"
+          dictationLabel="Dictar prioridad"
+        />
+        <button type="button" className="btn-secondary" onClick={applyVoice} disabled={need.trim().length < 6}>
+          Marcar según esto
+        </button>
       </section>
 
       <div className="flex gap-2">

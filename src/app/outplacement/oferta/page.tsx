@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { VoiceInput } from "@/components/VoiceField";
 import { formatCop } from "@/lib/channels/pricing";
 import { CITY_MULT, SALARY_BANDS, type CityTier } from "@/lib/salary/bandsCo";
 import {
@@ -118,15 +119,13 @@ export default function OfertaWizardPage() {
               ))}
             </select>
           </label>
-          <label className="block text-sm">
-            Cargo que te ofrecieron
-            <input
-              className="field mt-1"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              placeholder="Ejemplo: Analista de datos"
-            />
-          </label>
+          <VoiceInput
+            label="Cargo que te ofrecieron"
+            value={role}
+            onChange={setRole}
+            placeholder="Ejemplo: Analista de datos"
+            dictationLabel="Dictar cargo"
+          />
           <p className="text-sm">
             Piso <strong>{formatCop(nums.floor)}</strong> · Meta{" "}
             <strong>{formatCop(nums.target)}</strong> · Techo{" "}
@@ -141,15 +140,13 @@ export default function OfertaWizardPage() {
 
       {step === 1 && (
         <section className="bento-card space-y-3">
-          <label className="block text-sm">
-            Empresa que te hizo la oferta
-            <input
-              className="field mt-1"
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
-              placeholder="Ejemplo: Bancolombia"
-            />
-          </label>
+          <VoiceInput
+            label="Empresa que te hizo la oferta"
+            value={company}
+            onChange={setCompany}
+            placeholder="Ejemplo: Bancolombia"
+            dictationLabel="Dictar empresa"
+          />
           <label className="block text-sm">
             Sueldo mensual que te dijeron (pesos, sin puntos)
             <input

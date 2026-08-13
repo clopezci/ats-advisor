@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { DictationButton } from "@/components/DictationButton";
+import { VoiceTextarea } from "@/components/VoiceField";
 import { SpeakButton } from "@/components/SpeakButton";
 import { scoreStarAnswer, STAR_BANK } from "@/lib/interview/star";
 
@@ -70,15 +70,13 @@ export default function EntrevistaPage() {
       <section className="bento-card space-y-3">
         <p className="font-medium">{item.q}</p>
         <p className="text-xs muted">{item.hint}</p>
-        <div className="flex items-center justify-between">
-          <span className="text-xs muted">Tu respuesta</span>
-          <DictationButton onResult={(t) => setAnswer((p) => (p ? `${p} ${t}` : t))} />
-        </div>
-        <textarea
-          className="field min-h-32"
+        <VoiceTextarea
+          label="Tu respuesta"
           value={answer}
-          onChange={(e) => setAnswer(e.target.value)}
+          onChange={setAnswer}
+          className="field min-h-32"
           placeholder="Ejemplo: En el banco el cierre tardaba 8 días. Me pidieron bajarlo. Armé un tablero en Power BI y quedó en 3 días."
+          dictationLabel="Dictar respuesta"
         />
         {local && (
           <div className="text-sm space-y-1">

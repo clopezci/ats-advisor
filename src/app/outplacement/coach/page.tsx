@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
-import { DictationButton } from "@/components/DictationButton";
+import { VoiceTextarea } from "@/components/VoiceField";
 
 type Msg = { role: "user" | "coach"; text: string };
 
@@ -124,13 +124,14 @@ export default function CoachPage() {
         </section>
       ))}
 
-      <textarea
+      <VoiceTextarea
+        label="Tu mensaje al coach"
+        value={prompt}
+        onChange={setPrompt}
         className="field min-h-24"
         placeholder="Ejemplo: me echaron y no sé si mi CV está bien para analista de datos en Bogotá"
-        value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
+        dictationLabel="Dictar mensaje"
       />
-      <DictationButton onResult={(t) => setPrompt((p) => `${p} ${t}`.trim())} />
       <button type="button" className="btn-primary" disabled={loading || prompt.length < 8} onClick={ask}>
         {loading ? "Pensando…" : "Enviar"}
       </button>

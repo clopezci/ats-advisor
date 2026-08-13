@@ -4,6 +4,7 @@ import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { SpeakButton } from "@/components/SpeakButton";
+import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
 import { EXPERT_SPECIALTIES, specialtyLabel } from "@/lib/experts/specialties";
 import { packageById } from "@/lib/outplacement/marketplacePackages";
 
@@ -171,10 +172,14 @@ function ExpertoInner() {
             Valor del servicio:{" "}
             <strong>{selected.servicePriceCop?.toLocaleString("es-CO")} COP</strong>
           </p>
-          <label className="block text-sm">
-            Tu nombre
-            <input className="field mt-1" required value={name} onChange={(e) => setName(e.target.value)} />
-          </label>
+          <VoiceInput
+            label="Tu nombre"
+            value={name}
+            onChange={setName}
+            required
+            placeholder="Ejemplo: María Gómez"
+            dictationLabel="Dictar nombre"
+          />
           <label className="block text-sm">
             Correo
             <input
@@ -185,10 +190,14 @@ function ExpertoInner() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </label>
-          <label className="block text-sm">
-            Teléfono / WhatsApp (opcional)
-            <input className="field mt-1" value={phone} onChange={(e) => setPhone(e.target.value)} />
-          </label>
+          <VoiceInput
+            label="Teléfono / WhatsApp (opcional)"
+            value={phone}
+            onChange={setPhone}
+            type="tel"
+            placeholder="Ejemplo: 3001234567"
+            dictationLabel="Dictar teléfono"
+          />
           <label className="block text-sm">
             ¿Qué necesitas?
             <select
@@ -212,17 +221,16 @@ function ExpertoInner() {
                 ))}
             </select>
           </label>
-          <label className="block text-sm">
-            Cuéntale al experto (contexto breve)
-            <textarea
-              className="field mt-1 min-h-[100px]"
-              required
-              minLength={12}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Ej.: necesito revisión de CV para rol de analista de datos en Bogotá…"
-            />
-          </label>
+          <VoiceTextarea
+            label="Cuéntale al experto (contexto breve)"
+            value={message}
+            onChange={setMessage}
+            required
+            minLength={12}
+            className="field min-h-[100px]"
+            placeholder="Ej.: necesito revisión de CV para rol de analista de datos en Bogotá…"
+            dictationLabel="Dictar mensaje"
+          />
           <div className="flex gap-2">
             <button type="submit" className="btn-primary" disabled={loading}>
               {loading ? "Enviando…" : "Enviar solicitud"}

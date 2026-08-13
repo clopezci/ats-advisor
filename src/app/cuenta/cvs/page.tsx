@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { deleteCvVersion, listCvVersions, saveCvVersion, type CvVersion } from "@/lib/cv/versions";
 import { CvPasteField } from "@/components/CvPasteField";
+import { VoiceInput } from "@/components/VoiceField";
 
 export default function CvsPage() {
   const [items, setItems] = useState<CvVersion[]>([]);
@@ -37,17 +38,19 @@ export default function CvsPage() {
     <div className="flex flex-1 flex-col gap-5">
       <h1 className="text-xl font-semibold">Versiones de CV</h1>
       <p className="text-sm muted">Guarda variantes por rol, industria o empresa (solo en este dispositivo).</p>
-      <input
-        className="field"
+      <VoiceInput
+        label="Nombre de esta versión"
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={setName}
         placeholder="Ejemplo: CV para bancos"
+        dictationLabel="Dictar nombre"
       />
-      <input
-        className="field"
+      <VoiceInput
+        label="Etiqueta (opcional)"
         value={tag}
-        onChange={(e) => setTag(e.target.value)}
-        placeholder="Etiqueta opcional (ej. finanzas, tech)"
+        onChange={setTag}
+        placeholder="Ejemplo: finanzas, tech"
+        dictationLabel="Dictar etiqueta"
       />
       <CvPasteField value={text} onChange={setText} label="Texto de esta versión del CV" />
       <button type="button" className="btn-secondary" onClick={loadFromAts}>

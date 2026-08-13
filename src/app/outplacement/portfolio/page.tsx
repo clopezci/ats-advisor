@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
-import { DictationButton } from "@/components/DictationButton";
+import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
 import { buildPortfolioDraft } from "@/lib/outplacement/portfolioDraft";
 
 export default function PortfolioPage() {
@@ -35,15 +35,13 @@ export default function PortfolioPage() {
       </section>
 
       <section className="bento-card space-y-3">
-        <label className="block text-sm">
-          En qué cargo ocurrió (tu rol, no el de la vacante)
-          <input
-            className="field mt-1"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            placeholder="Ejemplo: Analista de datos en un banco"
-          />
-        </label>
+        <VoiceInput
+          label="En qué cargo ocurrió (tu rol, no el de la vacante)"
+          value={role}
+          onChange={setRole}
+          placeholder="Ejemplo: Analista de datos en un banco"
+          dictationLabel="Dictar cargo"
+        />
         {(
           [
             [
@@ -72,26 +70,23 @@ export default function PortfolioPage() {
             ],
           ] as const
         ).map(([label, val, set, example]) => (
-          <label key={label} className="block text-sm">
-            {label}
-            <textarea
-              className="field mt-1 min-h-20"
-              value={val}
-              onChange={(e) => set(e.target.value)}
-              placeholder={example}
-            />
-            <DictationButton onResult={(t) => set(`${val} ${t}`.trim())} />
-          </label>
-        ))}
-        <label className="block text-sm">
-          Habilidades que demostraste (opcional)
-          <input
-            className="field mt-1"
-            value={skills}
-            onChange={(e) => setSkills(e.target.value)}
-            placeholder="Ejemplo: Power BI, Excel, coordinación con contabilidad"
+          <VoiceTextarea
+            key={label}
+            label={label}
+            value={val}
+            onChange={set}
+            className="field min-h-20"
+            placeholder={example}
+            dictationLabel={`Dictar ${label}`}
           />
-        </label>
+        ))}
+        <VoiceInput
+          label="Habilidades que demostraste (opcional)"
+          value={skills}
+          onChange={setSkills}
+          placeholder="Ejemplo: Power BI, Excel, coordinación con contabilidad"
+          dictationLabel="Dictar habilidades"
+        />
         <button type="button" className="btn-primary" onClick={generate}>
           Generar borradores
         </button>

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { VoiceTextarea } from "@/components/VoiceField";
 
 const RUBRIC = [
   { id: "s", label: "Situación clara en ≤20 s" },
@@ -86,15 +87,14 @@ export default function VideoEntrevistaPage() {
       </section>
 
       <section className="bento-card space-y-2">
-        <label className="block text-sm">
-          Pregunta que vas a ensayar (como te la harían en una entrevista)
-          <textarea
-            className="field mt-1 min-h-[70px]"
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            placeholder="Ejemplo: Cuéntame un logro reciente con números."
-          />
-        </label>
+        <VoiceTextarea
+          label="Pregunta que vas a ensayar (como te la harían en una entrevista)"
+          value={prompt}
+          onChange={setPrompt}
+          className="field min-h-[70px]"
+          placeholder="Ejemplo: Cuéntame un logro reciente con números."
+          dictationLabel="Dictar pregunta"
+        />
         <video ref={videoRef} className="w-full rounded-lg bg-black aspect-video" muted playsInline />
         <div className="flex gap-2">
           {!recording ? (

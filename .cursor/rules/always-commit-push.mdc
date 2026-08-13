@@ -1,0 +1,13 @@
+---
+description: After finishing any user request, commit and push to origin.
+alwaysApply: true
+---
+
+# Commit y push al terminar
+
+Cuando el usuario pida cualquier cambio o tarea y el trabajo esté listo:
+
+1. Haz **commit** de los cambios relevantes (mensaje claro, sin secretos).
+2. Haz **push** a `origin` de la rama actual (`git push -u origin HEAD` si hace falta).
+3. No esperes a que lo pida otra vez: es la regla por defecto de este proyecto.
+4. Si no hay cambios que commitear, dilo en una línea y no crees commit vacío.

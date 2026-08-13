@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { SpeakButton } from "@/components/SpeakButton";
+import { VoiceTextarea } from "@/components/VoiceField";
 import { Suspense } from "react";
 
 function ConfirmInner() {
@@ -120,15 +121,14 @@ function ConfirmInner() {
                   placeholder="Ej. 80000"
                 />
               </label>
-              <label className="block text-sm">
-                Prueba / nota (opcional)
-                <textarea
-                  className="field mt-1 min-h-[80px]"
-                  value={proof}
-                  onChange={(e) => setProof(e.target.value)}
-                  placeholder="Ej.: sesión Zoom 45 min, revisión de CV enviada por correo…"
-                />
-              </label>
+              <VoiceTextarea
+                label="Prueba / nota (opcional)"
+                value={proof}
+                onChange={setProof}
+                className="field min-h-[80px]"
+                placeholder="Ej.: sesión Zoom 45 min, revisión de CV enviada por correo…"
+                dictationLabel="Dictar nota"
+              />
               <button
                 type="button"
                 className="btn-primary"

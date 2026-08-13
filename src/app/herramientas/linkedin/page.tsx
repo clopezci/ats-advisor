@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { DictationButton } from "@/components/DictationButton";
 import { SpeakButton } from "@/components/SpeakButton";
+import { VoiceInput } from "@/components/VoiceField";
 
 export default function LinkedInToolPage() {
   const [role, setRole] = useState("");
@@ -21,7 +21,10 @@ export default function LinkedInToolPage() {
       const job = ws?.jobText || last?.jobText || "";
       if (job) {
         setJobContext(job.slice(0, 600));
-        const first = job.split("\n").map((l: string) => l.trim()).find((l: string) => l.length > 8 && l.length < 80);
+        const first = job
+          .split("\n")
+          .map((l: string) => l.trim())
+          .find((l: string) => l.length > 8 && l.length < 80);
         if (first && !role) setRole(first.slice(0, 60));
       }
       const miss = last?.result?.mustHave?.missing || last?.result?.missingKeywords || [];
@@ -63,45 +66,34 @@ export default function LinkedInToolPage() {
           <p className="text-xs muted">Prefill desde tu último análisis ATS (puedes editar).</p>
         )}
       </section>
-      <label className="text-sm">
-        Cargo objetivo
-        <div className="mt-1 flex gap-2">
-          <input
-            className="field"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            placeholder="Ejemplo: Analista de datos"
-          />
-          <DictationButton onResult={(t) => setRole((p) => (p ? `${p} ${t}` : t))} />
-        </div>
-      </label>
-      <label className="text-sm">
-        Qué quieres destacar (logros o habilidades reales)
-        <input
-          className="field mt-1"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder="Ejemplo: Power BI, SQL, tableros para gerencia"
-        />
-      </label>
-      <label className="text-sm">
-        Sector o industria
-        <input
-          className="field mt-1"
-          value={niche}
-          onChange={(e) => setNiche(e.target.value)}
-          placeholder="Ejemplo: banca, retail, salud"
-        />
-      </label>
-      <label className="text-sm">
-        Palabras de la vacante (opcional)
-        <input
-          className="field mt-1"
-          value={missing}
-          onChange={(e) => setMissing(e.target.value)}
-          placeholder="Ejemplo: Python, inglés B1 (solo si las tienes)"
-        />
-      </label>
+      <VoiceInput
+        label="Cargo objetivo"
+        value={role}
+        onChange={setRole}
+        placeholder="Ejemplo: Analista de datos"
+        dictationLabel="Dictar cargo"
+      />
+      <VoiceInput
+        label="Qué quieres destacar (logros o habilidades reales)"
+        value={value}
+        onChange={setValue}
+        placeholder="Ejemplo: Power BI, SQL, tableros para gerencia"
+        dictationLabel="Dictar logros"
+      />
+      <VoiceInput
+        label="Sector o industria"
+        value={niche}
+        onChange={setNiche}
+        placeholder="Ejemplo: banca, retail, salud"
+        dictationLabel="Dictar sector"
+      />
+      <VoiceInput
+        label="Palabras de la vacante (opcional)"
+        value={missing}
+        onChange={setMissing}
+        placeholder="Ejemplo: Python, inglés B1 (solo si las tienes)"
+        dictationLabel="Dictar palabras"
+      />
       <button type="button" className="btn-primary" disabled={loading || !role} onClick={generate}>
         {loading ? "Generando…" : "Generar"}
       </button>

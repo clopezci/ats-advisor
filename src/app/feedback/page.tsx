@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { VoiceTextarea } from "@/components/VoiceField";
 
 export default function FeedbackPage() {
   const [message, setMessage] = useState("");
@@ -30,12 +31,20 @@ export default function FeedbackPage() {
     <div className="flex flex-1 flex-col gap-5">
       <h1 className="text-xl font-semibold">Feedback</h1>
       <p className="text-sm muted">Cuéntanos qué mejorar. Si Telegram owner está activo, llega al instante.</p>
-      <input className="field" placeholder="Correo (opcional)" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <textarea
-        className="field min-h-32"
+      <input
+        className="field"
+        type="email"
+        placeholder="Correo (opcional)"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <VoiceTextarea
+        label="Tu mensaje"
         value={message}
-        onChange={(e) => setMessage(e.target.value)}
+        onChange={setMessage}
+        className="field min-h-32"
         placeholder="Ejemplo: estaba en comparar vacantes, el recuadro del CV estaba en blanco y no supe qué pegar."
+        dictationLabel="Dictar mensaje"
       />
       <button type="button" className="btn-primary" disabled={loading || message.length < 5} onClick={send}>
         {loading ? "Enviando…" : "Enviar"}

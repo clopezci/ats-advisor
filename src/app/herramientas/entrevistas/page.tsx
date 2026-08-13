@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
-import { DictationButton } from "@/components/DictationButton";
+import { VoiceTextarea } from "@/components/VoiceField";
 
 const BANK: Record<string, string[]> = {
   general: [
@@ -86,15 +86,13 @@ export default function BancoEntrevistaPage() {
 
       <section className="bento-card space-y-3">
         <p className="font-medium">{question}</p>
-        <div className="flex justify-between">
-          <span className="text-xs muted">Tu respuesta</span>
-          <DictationButton onResult={(t) => setAnswer((p) => (p ? `${p} ${t}` : t))} />
-        </div>
-        <textarea
-          className="field min-h-28"
+        <VoiceTextarea
+          label="Tu respuesta"
           value={answer}
-          onChange={(e) => setAnswer(e.target.value)}
+          onChange={setAnswer}
+          className="field min-h-28"
           placeholder="Ejemplo: En mi último trabajo el cierre tardaba 8 días. Me pidieron acelerarlo. Armé un tablero en Power BI y quedó en 3 días."
+          dictationLabel="Dictar respuesta"
         />
       </section>
 

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { VoiceTextarea } from "@/components/VoiceField";
 import {
   assistBulletToEn,
   BULLET_GLOSSARY,
@@ -59,11 +60,13 @@ export default function RemotoBilinguePage() {
 
       <section className="bento-card space-y-3">
         <h2 className="font-semibold">Asistente de viñeta ES → EN</h2>
-        <textarea
+        <VoiceTextarea
+          label="Viñeta en español"
+          value={esBullet}
+          onChange={setEsBullet}
           className="field min-h-[80px]"
           placeholder="Ejemplo: Reduje el cierre mensual de 8 a 3 días armando un tablero en Power BI."
-          value={esBullet}
-          onChange={(e) => setEsBullet(e.target.value)}
+          dictationLabel="Dictar viñeta"
         />
         <button
           type="button"

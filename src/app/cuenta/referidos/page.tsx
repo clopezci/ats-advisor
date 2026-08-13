@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { VoiceInput } from "@/components/VoiceField";
 import {
   bumpShare,
   claimReferral,
@@ -97,11 +98,12 @@ export default function ReferidosPage() {
 
       <section className="bento-card space-y-3">
         <h2 className="font-semibold text-sm">¿Te invitaron?</h2>
-        <input
-          className="field"
+        <VoiceInput
+          label="Código de quien te invitó"
           value={claim}
-          onChange={(e) => setClaim(e.target.value.toUpperCase())}
+          onChange={(v) => setClaim(v.toUpperCase())}
           placeholder="Código LOTIC…"
+          dictationLabel="Dictar código"
         />
         <button type="button" className="btn-secondary" onClick={saveClaim}>
           Guardar código de invitador

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
 
 export default function CulturaPage() {
   const [company, setCompany] = useState("");
@@ -38,13 +39,21 @@ export default function CulturaPage() {
         </div>
         <p className="text-sm muted">Basado en el texto de la vacante, no en scraping externo.</p>
       </section>
-      <input className="field" placeholder="Empresa (opcional)" value={company} onChange={(e) => setCompany(e.target.value)} />
-      <p className="text-xs muted">Pega el aviso completo. No es tu CV: es el texto de la vacante.</p>
-      <textarea
+      <VoiceInput
+        label="Empresa (opcional)"
+        value={company}
+        onChange={setCompany}
+        placeholder="Ejemplo: Bancolombia"
+        dictationLabel="Dictar empresa"
+      />
+      <VoiceTextarea
+        label="El aviso de la vacante"
+        hint="Pega el aviso completo. No es tu CV."
+        value={jd}
+        onChange={setJd}
         className="field min-h-40"
         placeholder="Ejemplo: Analista de datos, retail, Bogotá híbrido. Requisitos: Power BI, SQL…"
-        value={jd}
-        onChange={(e) => setJd(e.target.value)}
+        dictationLabel="Dictar oferta"
       />
       <button type="button" className="btn-primary" disabled={loading || jd.length < 40} onClick={run}>
         {loading ? "Analizando…" : "Sugerir ajustes"}

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
-import { DictationButton } from "@/components/DictationButton";
+import { VoiceTextarea } from "@/components/VoiceField";
 import { PaywallCard } from "@/components/PaywallCard";
 import {
   canAccessOutplacement,
@@ -103,16 +103,14 @@ Devuelve Día 1…14 con título + 2 acciones. Español LATAM.`,
                   </div>
                 ))}
               </div>
-              <label className="block text-sm">
-                Cuéntale tu situación (para personalizar)
-                <textarea
-                  className="field mt-1 min-h-[80px]"
-                  value={context}
-                  onChange={(e) => setContext(e.target.value)}
-                  placeholder="Ejemplo: 8 años en bancos, quiero vender servicios de Excel a pymes en Bogotá, tengo $2 millones para empezar."
-                />
-              </label>
-              <DictationButton onResult={(t) => setContext((c) => `${c} ${t}`.trim())} />
+              <VoiceTextarea
+                label="Cuéntale tu situación (para personalizar)"
+                value={context}
+                onChange={setContext}
+                className="field min-h-[80px]"
+                placeholder="Ejemplo: 8 años en bancos, quiero vender servicios de Excel a pymes en Bogotá, tengo $2 millones para empezar."
+                dictationLabel="Dictar situación"
+              />
               <button
                 type="button"
                 className="btn-primary"

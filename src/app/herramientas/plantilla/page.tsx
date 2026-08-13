@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { DictationButton } from "@/components/DictationButton";
 import { SpeakButton } from "@/components/SpeakButton";
+import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
 import { downloadText } from "@/lib/ats/report";
 
 export default function PlantillaPage() {
@@ -45,45 +45,35 @@ export default function PlantillaPage() {
         </div>
       </section>
 
-      <label className="text-sm">
-        Nombre
-        <div className="mt-1 flex gap-2">
-          <input
-            className="field"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Ejemplo: María Gómez"
-          />
-          <DictationButton onResult={(t) => setName((p) => (p ? `${p} ${t}` : t))} />
-        </div>
-      </label>
-      <label className="text-sm">
-        Cargo objetivo
-        <input
-          className="field mt-1"
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-          placeholder="Ejemplo: Analista de datos"
-        />
-      </label>
-      <label className="text-sm">
-        Skills (separadas por coma)
-        <input
-          className="field mt-1"
-          value={skills}
-          onChange={(e) => setSkills(e.target.value)}
-          placeholder="Ejemplo: Excel, Power BI, SQL"
-        />
-      </label>
-      <label className="text-sm">
-        Un logro STAR
-        <textarea
-          className="field mt-1 min-h-20"
-          value={achievement}
-          onChange={(e) => setAchievement(e.target.value)}
-          placeholder="Ejemplo: En el banco X reduje el cierre mensual de 8 a 3 días armando un tablero en Power BI."
-        />
-      </label>
+      <VoiceInput
+        label="Nombre"
+        value={name}
+        onChange={setName}
+        placeholder="Ejemplo: María Gómez"
+        dictationLabel="Dictar nombre"
+      />
+      <VoiceInput
+        label="Cargo objetivo"
+        value={role}
+        onChange={setRole}
+        placeholder="Ejemplo: Analista de datos"
+        dictationLabel="Dictar cargo"
+      />
+      <VoiceInput
+        label="Skills (separadas por coma)"
+        value={skills}
+        onChange={setSkills}
+        placeholder="Ejemplo: Excel, Power BI, SQL"
+        dictationLabel="Dictar skills"
+      />
+      <VoiceTextarea
+        label="Un logro STAR"
+        value={achievement}
+        onChange={setAchievement}
+        className="field min-h-20"
+        placeholder="Ejemplo: En el banco X reduje el cierre mensual de 8 a 3 días armando un tablero en Power BI."
+        dictationLabel="Dictar logro"
+      />
 
       <pre className="bento-card text-xs whitespace-pre-wrap muted">{doc}</pre>
 

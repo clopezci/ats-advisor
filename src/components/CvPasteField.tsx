@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { DictationButton } from "@/components/DictationButton";
 import { HintTextarea } from "@/components/HintTextarea";
 import { CV_EXAMPLE, JOB_EXAMPLE } from "@/lib/copy/fieldExamples";
 
@@ -45,7 +44,14 @@ export function CvPasteField({
 
   const body = (
     <>
-      <HintTextarea value={value} onChange={onChange} example={CV_EXAMPLE} hint={hint} label={label} />
+      <HintTextarea
+        value={value}
+        onChange={onChange}
+        example={CV_EXAMPLE}
+        hint={hint}
+        label={label}
+        dictationLabel="Dictar texto del CV"
+      />
       <label className="btn-secondary cursor-pointer text-center">
         {uploading ? "Leyendo archivo…" : "Cargar CV (PDF o Word)"}
         <input
@@ -63,10 +69,6 @@ export function CvPasteField({
           {error}
         </p>
       )}
-      <div className="flex items-center gap-2">
-        <DictationButton label="Dictar texto del CV" onResult={(t) => onChange(value ? `${value} ${t}` : t)} />
-        <span className="text-xs muted">O dicta el texto</span>
-      </div>
     </>
   );
 
@@ -90,13 +92,14 @@ export function JobPasteField({
   framed?: boolean;
 }) {
   const body = (
-    <>
-      <HintTextarea value={value} onChange={onChange} example={example} hint={hint} label={label} />
-      <div className="flex items-center gap-2">
-        <DictationButton label="Dictar la oferta" onResult={(t) => onChange(value ? `${value} ${t}` : t)} />
-        <span className="text-xs muted">O dicta el aviso</span>
-      </div>
-    </>
+    <HintTextarea
+      value={value}
+      onChange={onChange}
+      example={example}
+      hint={hint}
+      label={label}
+      dictationLabel="Dictar la oferta"
+    />
   );
   if (!framed) return <div className="space-y-2">{body}</div>;
   return <div className="bento-card space-y-2">{body}</div>;

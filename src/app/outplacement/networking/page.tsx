@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { VoiceInput } from "@/components/VoiceField";
 import {
   CONTACT_STATUS_LABEL,
   deleteContact,
@@ -41,29 +42,29 @@ export default function NetworkingPage() {
 
       <section className="bento-card space-y-3">
         <p className="text-sm font-medium">Nuevo contacto</p>
-        <input
-          className="field"
-          placeholder="Ejemplo: Juan Pérez (la persona, no tú)"
+        <VoiceInput
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={setName}
+          placeholder="Ejemplo: Juan Pérez (la persona, no tú)"
+          dictationLabel="Dictar nombre"
         />
-        <input
-          className="field"
-          placeholder="Ejemplo: Bancolombia"
+        <VoiceInput
           value={company}
-          onChange={(e) => setCompany(e.target.value)}
+          onChange={setCompany}
+          placeholder="Ejemplo: Bancolombia"
+          dictationLabel="Dictar empresa"
         />
-        <input
-          className="field"
-          placeholder="Ejemplo: jefa de analítica"
+        <VoiceInput
           value={role}
-          onChange={(e) => setRole(e.target.value)}
+          onChange={setRole}
+          placeholder="Ejemplo: jefa de analítica"
+          dictationLabel="Dictar rol"
         />
-        <input
-          className="field"
-          placeholder="Ejemplo: escribirle por LinkedIn el jueves"
+        <VoiceInput
           value={nextStep}
-          onChange={(e) => setNextStep(e.target.value)}
+          onChange={setNextStep}
+          placeholder="Ejemplo: escribirle por LinkedIn el jueves"
+          dictationLabel="Dictar siguiente paso"
         />
         <button
           type="button"

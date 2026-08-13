@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { VoiceInput } from "@/components/VoiceField";
 import { wipeHabeasLocal } from "@/lib/habeas/export";
 import { downloadHabeasZip } from "@/lib/habeas/zip";
 import {
@@ -172,15 +173,13 @@ export default function CuentaPage() {
       </section>
 
       <div className="bento-card space-y-3">
-        <label className="block text-sm">
-          Tu nombre
-          <input
-            className="field mt-1"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Ejemplo: María Gómez"
-          />
-        </label>
+        <VoiceInput
+          label="Tu nombre"
+          value={name}
+          onChange={setName}
+          placeholder="Ejemplo: María Gómez"
+          dictationLabel="Dictar nombre"
+        />
         <label className="block text-sm">
           Correo (el mismo si pagaste, para activar el plan)
           <input

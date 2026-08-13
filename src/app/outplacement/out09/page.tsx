@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { DictationButton } from "@/components/DictationButton";
+import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
 import { SpeakButton } from "@/components/SpeakButton";
 import { OUT09_QUESTIONS } from "@/lib/outplacement/modules";
 import {
@@ -126,15 +126,13 @@ export default function Out09Page() {
       {step === 2 && (
         <>
           <div className="bento-card space-y-3">
-            <div className="flex items-center justify-between">
-              <label className="text-sm font-medium">¿Qué quieres mejorar?</label>
-              <DictationButton onResult={(t) => setDescription((p) => (p ? `${p} ${t}` : t))} />
-            </div>
-            <textarea
-              className="field min-h-32"
+            <VoiceTextarea
+              label="¿Qué quieres mejorar?"
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={setDescription}
+              className="field min-h-32"
               placeholder={placeholder}
+              dictationLabel="Dictar"
             />
           </div>
           <button
@@ -177,22 +175,12 @@ export default function Out09Page() {
               </div>
             ) : (
               <>
-                <div className="flex items-center gap-2">
-                  <input
-                    className="field"
-                    value={answers[currentQ.id] || ""}
-                    onChange={(e) => setAnswers((a) => ({ ...a, [currentQ.id]: e.target.value }))}
-                    placeholder="Escribe o dicta tu respuesta"
-                  />
-                  <DictationButton
-                    onResult={(t) =>
-                      setAnswers((a) => ({
-                        ...a,
-                        [currentQ.id]: a[currentQ.id] ? `${a[currentQ.id]} ${t}` : t,
-                      }))
-                    }
-                  />
-                </div>
+                <VoiceInput
+                  value={answers[currentQ.id] || ""}
+                  onChange={(t) => setAnswers((a) => ({ ...a, [currentQ.id]: t }))}
+                  placeholder="Escribe o dicta tu respuesta"
+                  dictationLabel="Dictar"
+                />
                 <button
                   type="button"
                   className="btn-primary"

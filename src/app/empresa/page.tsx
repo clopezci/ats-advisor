@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { VoiceInput } from "@/components/VoiceField";
 import { readOrg, writeOrg, type CompanyOrg } from "@/lib/b2b/org";
 
 export default function EmpresaPage() {
@@ -76,10 +77,13 @@ export default function EmpresaPage() {
 
       <section className="bento-card space-y-3">
         <h2 className="font-semibold">Tu organización</h2>
-        <label className="block text-sm">
-          Nombre empresa
-          <input className="field mt-1" value={name} onChange={(e) => setName(e.target.value)} />
-        </label>
+        <VoiceInput
+          label="Nombre empresa"
+          value={name}
+          onChange={setName}
+          placeholder="Ejemplo: Acme Latam"
+          dictationLabel="Dictar empresa"
+        />
         <label className="block text-sm">
           Correo RH / contacto
           <input
@@ -108,15 +112,13 @@ export default function EmpresaPage() {
       <section className="bento-card space-y-3">
         <h2 className="font-semibold">Marca blanca ligera</h2>
         <p className="text-sm muted">Aparece en certificados de colaboradores (co-brand LOTIC + tu empresa).</p>
-        <label className="block text-sm">
-          Tagline / programa
-          <input
-            className="field mt-1"
-            placeholder="Programa de transición laboral"
-            value={tagline}
-            onChange={(e) => setTagline(e.target.value)}
-          />
-        </label>
+        <VoiceInput
+          label="Tagline / programa"
+          value={tagline}
+          onChange={setTagline}
+          placeholder="Programa de transición laboral"
+          dictationLabel="Dictar tagline"
+        />
         <label className="block text-sm">
           Color acento
           <input

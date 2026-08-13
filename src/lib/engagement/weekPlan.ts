@@ -72,7 +72,7 @@ export function buildWeekPlan(opts?: { hasOut09?: boolean }): WeekSlot[] {
   if (opts?.hasOut09) {
     base[5] = {
       day: "Sáb",
-      focus: "Avanzar OUT-09 personalizado",
+      focus: "Avanzar curso a tu medida",
       href: "/outplacement/out09",
       minutes: 40,
     };

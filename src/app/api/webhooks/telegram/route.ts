@@ -98,7 +98,7 @@ export async function POST(req: Request) {
         quiz: cap.quiz,
       });
     } else if (text.startsWith("/progreso")) {
-      reply = `Hoy te toca ${mod.code} · ${mod.title} (día ${cap.day}/${mod.days}: ${cap.title}).\nCompleta quizzes en la PWA → Outplacement.`;
+      reply = `Hoy te toca ${mod.title} (día ${cap.day}/${mod.days}: ${cap.title}).\nCompleta quizzes en la PWA → Acompañamiento de carrera.`;
     } else if (text.startsWith("/vincular")) {
       const email = text.replace(/^\/vincular\s*/i, "").trim();
       if (!email.includes("@") || !chatId) {

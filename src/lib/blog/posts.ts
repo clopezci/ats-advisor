@@ -81,8 +81,8 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Outplacement democratizado: qué esperar de un plan digital",
     excerpt: "No es coaching corporativo de $millones: es ruta + microcápsulas + voz.",
     body: [
-      "OUT-01 a OUT-08 cubren estabilización, mercado, marca, networking y oferta.",
-      "OUT-09 genera un curso a tu medida cuando el gap es específico.",
+      "La ruta de carrera cubre estabilización, mercado, marca, networking y oferta.",
+      "El curso a tu medida se genera cuando el gap es específico.",
       "Telegram/WhatsApp llevan la cápsula diaria si activas el canal.",
     ],
   },

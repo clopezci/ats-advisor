@@ -118,8 +118,8 @@ export default function BancoEntrevistaPage() {
         </section>
       )}
 
-      <Link href="/outplacement/entrevista" className="btn-secondary">
-        Simulador completo
+      <Link href="/precios" className="btn-secondary">
+        Simulador completo (plan Carrera)
       </Link>
       <Link href="/herramientas" className="btn-secondary">
         Volver

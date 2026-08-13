@@ -63,7 +63,7 @@ export default function EntrevistaPage() {
           <h1 className="text-xl font-semibold">Simulador STAR</h1>
           <SpeakButton text={`${item.q}. Responde con Situación, Tarea, Acción y Resultado.`} />
         </div>
-        <p className="text-sm muted">OUT-07 · banco ampliado + score local STAR + feedback IA.</p>
+        <p className="text-sm muted">Entrevistas · banco ampliado + score local STAR + feedback IA.</p>
         {jobHint && <p className="text-xs muted">Usando extracto de tu última oferta del ATS.</p>}
       </section>
 

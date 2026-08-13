@@ -257,7 +257,7 @@ export const CAPABILITIES: Capability[] = [
   {
     id: "progress-hub",
     title: "Hub de progreso",
-    summary: "XP, racha, OUT-01…08 y cursos externos en un vistazo.",
+    summary: "XP, racha, ruta de 8 módulos y cursos externos en un vistazo.",
     audience: ["candidato"],
     status: "disponible",
     href: "/outplacement/progreso",
@@ -265,7 +265,7 @@ export const CAPABILITIES: Capability[] = [
   {
     id: "week-plan",
     title: "Plan semanal de búsqueda",
-    summary: "7 bloques cortos (ATS, OUT, networking, vacantes, bienestar).",
+    summary: "7 bloques cortos (ATS, ruta, networking, vacantes, bienestar).",
     audience: ["candidato"],
     status: "disponible",
     href: "/outplacement/plan-semana",
@@ -352,7 +352,7 @@ export const CAPABILITIES: Capability[] = [
   },
   {
     id: "out-01-08",
-    title: "Ruta outplacement OUT-01…08",
+    title: "Ruta de carrera (8 módulos)",
     summary: "Estabilización, competencias, mercado, upskilling, marca, networking, entrevistas, 90 días.",
     audience: ["candidato"],
     status: "disponible",
@@ -360,7 +360,7 @@ export const CAPABILITIES: Capability[] = [
   },
   {
     id: "out-09",
-    title: "OUT-09 curso personalizado IA",
+    title: "Curso a tu medida (IA)",
     summary: "Cuestionario corto → curso de microcápsulas a medida (blanda o dura), cascade free→paid.",
     audience: ["candidato"],
     status: "disponible",
@@ -369,7 +369,7 @@ export const CAPABILITIES: Capability[] = [
   {
     id: "out-player",
     title: "Player de microcápsulas + quizzes",
-    summary: "Misma entrega para OUT-01…09: día a día con progreso.",
+    summary: "Misma entrega para la ruta y el curso a medida: día a día con progreso.",
     audience: ["candidato"],
     status: "disponible",
     href: "/outplacement/out09/player",
@@ -468,7 +468,7 @@ export const CAPABILITIES: Capability[] = [
   },
   {
     id: "networking-crm",
-    title: "CRM de networking (OUT-06)",
+    title: "CRM de networking",
     summary: "Contactos, estados, próximos pasos y plantillas LinkedIn locales.",
     audience: ["candidato"],
     status: "disponible",
@@ -518,7 +518,7 @@ export const CAPABILITIES: Capability[] = [
   // —— Monetización / cuenta ——
   {
     id: "pricing",
-    title: "Planes Carrera / Plus / OUT-09 extra",
+    title: "Planes Carrera / Plus / curso extra",
     summary: "Precios COP ~$79k / $99k / ~$22k con margen ≥50%.",
     audience: ["candidato", "admin"],
     status: "disponible",
@@ -535,7 +535,7 @@ export const CAPABILITIES: Capability[] = [
   {
     id: "entitlements",
     title: "Gates de plan (Carrera / Plus / Tester)",
-    summary: "Paywall OUT-09 y outplacement; cuotas mensuales; demo en cuenta.",
+    summary: "Paywall de curso a medida y acompañamiento; cuotas mensuales; demo en cuenta.",
     audience: ["candidato", "tester", "admin"],
     status: "disponible",
     href: "/cuenta",
@@ -606,7 +606,7 @@ export const CAPABILITIES: Capability[] = [
   {
     id: "rate-limits",
     title: "Rate limits en APIs",
-    summary: "Protección soft anti-abuso en analyze, IA, OUT-09 y feedback.",
+    summary: "Protección soft anti-abuso en analyze, IA, curso a medida y feedback.",
     audience: ["admin"],
     status: "disponible",
   },

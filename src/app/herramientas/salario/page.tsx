@@ -71,7 +71,7 @@ export default function SalarioPage() {
       </section>
 
       <section className="bento-card space-y-2">
-        <h2 className="text-sm font-semibold">Checklist negociación (OUT-07)</h2>
+        <h2 className="text-sm font-semibold">Checklist negociación</h2>
         <ul className="text-sm muted space-y-1">
           {NEGOTIATION_CHECKLIST.map((c) => (
             <li key={c}>☐ {c}</li>
@@ -79,11 +79,8 @@ export default function SalarioPage() {
         </ul>
       </section>
 
-      <Link href="/outplacement/entrevista" className="btn-primary">
-        Practicar negociación / STAR
-      </Link>
-      <Link href="/outplacement/filtro" className="btn-secondary">
-        Ensayar filtro telefónico
+      <Link href="/precios" className="btn-primary">
+        Negociación guiada (plan Carrera)
       </Link>
       <Link href="/herramientas" className="btn-secondary">
         Volver

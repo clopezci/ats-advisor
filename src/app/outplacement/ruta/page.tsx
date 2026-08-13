@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import { SpeakButton } from "@/components/SpeakButton";
 import { CapsuleQuiz } from "@/components/CapsuleQuiz";
 import { OUTPLACEMENT_MODULES } from "@/lib/outplacement/modules";
+import { outModuleShort } from "@/lib/outplacement/labels";
 import { getProgress, saveProgress } from "@/lib/progress/courses";
 
 function RutaInner() {
@@ -49,7 +50,7 @@ function RutaInner() {
       <section className="bento-card space-y-3">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-xs muted">{mod.code}</p>
+            <p className="text-xs muted">{outModuleShort(mod.code)}</p>
             <h1 className="text-xl font-semibold">{mod.title}</h1>
           </div>
           <SpeakButton text={`${mod.title}. ${capsule?.title}. ${capsule?.content}`} />
@@ -72,7 +73,7 @@ function RutaInner() {
             style={m.code === code ? { boxShadow: "var(--shadow-brand)" } : undefined}
             onClick={() => setCode(m.code)}
           >
-            {m.code}
+            {outModuleShort(m.code)}
           </button>
         ))}
       </div>

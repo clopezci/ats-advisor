@@ -52,7 +52,7 @@ export default function CareerBriefPage() {
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-xs uppercase tracking-[0.14em] muted">Fase 1 · OUT-02/03</p>
+            <p className="text-xs uppercase tracking-[0.14em] muted">Fase 1 · Autoevaluación y mercado</p>
             <h1 className="mt-1 text-2xl font-semibold">Career Brief</h1>
           </div>
           <SpeakButton text="Genera una página PDF con tu perfil RIASEC, roles LATAM y plan de 30 días." />

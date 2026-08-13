@@ -41,7 +41,7 @@ export default function Out09PlayerPage() {
   if (!course) {
     return (
       <div className="flex flex-col gap-4">
-        <p className="muted">No hay un OUT-09 guardado en este dispositivo.</p>
+        <p className="muted">No hay un curso a tu medida guardado en este dispositivo.</p>
         <Link href="/outplacement/out09" className="btn-primary">
           Crear curso
         </Link>
@@ -59,7 +59,7 @@ export default function Out09PlayerPage() {
       <section className="bento-card space-y-2">
         <div className="flex justify-between gap-2">
           <div>
-            <p className="text-xs muted">OUT-09</p>
+            <p className="text-xs muted">Curso a tu medida</p>
             <h1 className="text-xl font-semibold">{course.title}</h1>
           </div>
           <SpeakButton text={`${course.title}. ${capsule?.title}. ${capsule?.content || ""}`} />
@@ -97,7 +97,7 @@ export default function Out09PlayerPage() {
         {needsQuiz && !quizPassed ? "Responde el quiz para continuar" : "Completar y siguiente"}
       </button>
       <Link href="/outplacement/out09" className="btn-secondary">
-        Generar otro OUT-09
+        Generar otro curso
       </Link>
       <Link href="/outplacement" className="btn-secondary">
         Volver

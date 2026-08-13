@@ -35,7 +35,7 @@ export default function NetworkingPage() {
       <section className="bento-card space-y-2">
         <div className="flex justify-between">
           <h1 className="text-xl font-semibold">Networking CRM</h1>
-          <SpeakButton text="OUT-06: registra contactos, próximos pasos y plantillas de mensaje." />
+          <SpeakButton text="Networking: registra contactos, próximos pasos y plantillas de mensaje." />
         </div>
         <p className="text-sm muted">Hoja de networking en este dispositivo. Sin scrapear LinkedIn.</p>
       </section>

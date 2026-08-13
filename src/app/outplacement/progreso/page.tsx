@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { OUTPLACEMENT_MODULES } from "@/lib/outplacement/modules";
+import { outModuleShort } from "@/lib/outplacement/labels";
 import { readProgress } from "@/lib/progress/courses";
 import { readMissionProgress, xpRank } from "@/lib/engagement/missions";
 import { readStreak } from "@/lib/engagement/streak";
@@ -60,12 +61,12 @@ export default function ProgresoPage() {
       </div>
 
       <section className="bento-card space-y-2">
-        <h2 className="font-semibold text-sm">Ruta OUT-01…08</h2>
+        <h2 className="font-semibold text-sm">Ruta de carrera (8 módulos)</h2>
         {outRows.map((r) => (
           <Link key={r.code} href={`/outplacement/ruta?code=${r.code}`} className="block">
             <div className="flex justify-between text-sm">
               <span>
-                {r.code} · {r.title}
+                {outModuleShort(r.code)} · {r.title}
               </span>
               <span className="muted">{r.pct}%</span>
             </div>

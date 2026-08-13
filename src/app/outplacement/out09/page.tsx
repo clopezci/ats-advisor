@@ -88,7 +88,7 @@ export default function Out09Page() {
   if (gateMsg && !canGenerateOut09(readEntitlement()).ok) {
     return (
       <div className="flex flex-1 flex-col gap-5">
-        <PaywallCard title="OUT-09 bloqueado" reason={gateMsg} currentPlan={plan} />
+        <PaywallCard title="Curso a tu medida bloqueado" reason={gateMsg} currentPlan={plan} />
         <Link href="/outplacement" className="btn-secondary">
           Volver
         </Link>
@@ -101,7 +101,7 @@ export default function Out09Page() {
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-xs muted">OUT-09 · paso {step} de 5</p>
+            <p className="text-xs muted">Curso a tu medida · paso {step} de 5</p>
             <h1 className="text-xl font-semibold">Curso personalizado</h1>
           </div>
           <SpeakButton text="Elige si quieres reforzar una habilidad blanda o técnica, descríbela y responde un cuestionario corto para personalizar tu curso." />

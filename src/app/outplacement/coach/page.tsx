@@ -24,7 +24,7 @@ const OFFLINE: Record<(typeof MODES)[number]["id"], string> = {
   negociacion:
     "Offline negociación: investiga banda, no digas número primero si puedes, pide 24h, negocia paquete total.",
   networking:
-    "Offline networking: 5 mensajes/semana, plantilla corta, follow-up día 4, registra en CRM OUT-06.",
+    "Offline networking: 5 mensajes/semana, plantilla corta, follow-up día 4, registra en tu agenda de contactos.",
 };
 
 export default function CoachPage() {

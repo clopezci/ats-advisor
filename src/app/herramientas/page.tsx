@@ -56,26 +56,6 @@ const TOOLS = [
     desc: "Ancla orientativa en COP para negociar.",
   },
   {
-    href: "/outplacement/oferta",
-    title: "Wizard de oferta",
-    desc: "Piso/meta/techo + scripts de negociación Colombia.",
-  },
-  {
-    href: "/outplacement/assessment",
-    title: "Assessment RIASEC",
-    desc: "Código Holland y roles típicos LATAM.",
-  },
-  {
-    href: "/outplacement/remoto",
-    title: "CV bilingüe + remoto",
-    desc: "Viñetas ES→EN y checklist empleo remoto.",
-  },
-  {
-    href: "/outplacement/bienestar",
-    title: "Bienestar y derechos CO",
-    desc: "Guía de transición + checklist laboral orientativa.",
-  },
-  {
     href: "/herramientas/plantilla",
     title: "Plantilla CV ATS",
     desc: "CV de una columna listo para pegar/analizar.",
@@ -105,7 +85,10 @@ export default function HerramientasPage() {
           <h1 className="text-2xl font-semibold">Herramientas gratis</h1>
           <SpeakButton text="Herramientas gratuitas de ATSAdvisor para mejorar tu CV y pasar filtros." />
         </div>
-        <p className="text-sm muted">SEO orgánico: valor útil sin pagar. Un producto de LOTIC.</p>
+        <p className="text-sm muted">
+          Gratis: CV, ATS, LinkedIn, carta y práctica básica. El acompañamiento completo (oferta,
+          bienestar, rumbo, networking…) está en el plan Carrera.
+        </p>
       </section>
       {TOOLS.map((t) => (
         <Link key={t.href} href={t.href} className="bento-card block">
@@ -113,6 +96,19 @@ export default function HerramientasPage() {
           <p className="mt-1 text-sm muted">{t.desc}</p>
         </Link>
       ))}
+      <section className="bento-card space-y-2">
+        <h2 className="font-semibold">¿Quieres el acompañamiento guiado?</h2>
+        <p className="text-sm muted">
+          Negociación de oferta, bienestar, assessment, CV remoto y la ruta paso a paso están en
+          Carrera (de pago).
+        </p>
+        <Link href="/outplacement" className="btn-secondary">
+          Ver acompañamiento de carrera
+        </Link>
+        <Link href="/precios" className="btn-primary">
+          Ver precios
+        </Link>
+      </section>
       <AdSlot slot="herramientas-hub" />
       <Link href="/" className="btn-secondary">
         Volver

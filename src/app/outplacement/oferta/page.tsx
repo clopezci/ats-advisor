@@ -68,7 +68,7 @@ export default function OfertaWizardPage() {
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-xs uppercase tracking-[0.14em] muted">Fase 1 · OUT-07/08</p>
+            <p className="text-xs uppercase tracking-[0.14em] muted">Fase 1 · Entrevistas y oferta</p>
             <h1 className="mt-1 text-2xl font-semibold">Wizard de oferta</h1>
           </div>
           <SpeakButton text="Define piso, meta y techo con bandas Colombia y genera scripts de negociación." />

@@ -98,7 +98,7 @@ export function canGenerateOut09(
       remaining: 0,
       quota: 0,
       reason:
-        "OUT-09 personalizado está en Carrera Plus (2/mes) o puedes comprar un OUT-09 extra. Carrera incluye la ruta OUT-01…08 sin cursos a medida.",
+        "El curso a tu medida está en Carrera Plus (2/mes) o puedes comprar uno extra. Carrera incluye la ruta de 8 módulos sin cursos a medida.",
     };
   }
   const remaining = Math.max(0, quota - e.out09UsedMonth);
@@ -107,7 +107,7 @@ export function canGenerateOut09(
       ok: false,
       remaining: 0,
       quota,
-      reason: `Ya usaste tus ${quota} OUT-09 de este mes. Compra uno extra o espera al próximo ciclo.`,
+      reason: `Ya usaste tus ${quota} cursos a medida de este mes. Compra uno extra o espera al próximo ciclo.`,
     };
   }
   return { ok: true, remaining, quota };

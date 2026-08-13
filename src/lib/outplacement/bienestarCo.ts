@@ -12,7 +12,7 @@ export const BIENESTAR_SECTIONS: GuideSection[] = [
     title: "Estabilización en los primeros 14 días",
     bullets: [
       "Rutina mínima: sueño, comida, 30–45 min de movimiento, 1 bloque de búsqueda (no 14 horas).",
-      "Separa “duelo laboral” de “plan de acción”: escribe qué terminó y qué conservas (OUT-01).",
+      "Separa “duelo laboral” de “plan de acción”: escribe qué terminó y qué conservas (módulo de estabilización).",
       "Limita doomscroll de LinkedIn a ventanas fijas; el resto es ejecución (CV, networking, ATS).",
       "Si hay crisis de ansiedad o ideas de daño: busca ayuda profesional / líneas de emergencia locales. Esta app no sustituye terapia.",
     ],
@@ -32,7 +32,7 @@ export const BIENESTAR_SECTIONS: GuideSection[] = [
     bullets: [
       "Define horario de “oficina de búsqueda” y hora de cierre.",
       "Celebra micro-wins (1 envío bien hecho > 20 envíos genéricos).",
-      "Si estás en burnout, prioriza OUT-01 y salud antes de OUT-07.",
+      "Si estás en burnout, prioriza estabilización y salud antes de entrevistas y negociación.",
     ],
   },
 ];

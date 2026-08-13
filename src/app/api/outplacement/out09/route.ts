@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   try {
     const settings = await hydrateSettingsFromCloud();
     if (!settings.features.out09) {
-      return NextResponse.json({ error: "OUT-09 está desactivado por el admin." }, { status: 403 });
+      return NextResponse.json({ error: "El curso a tu medida está desactivado por el admin." }, { status: 403 });
     }
 
     const body = await req.json().catch(() => ({}));
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
       );
     }
     if (BLOCKED.test(description)) {
-      await notifyOwnerTelegram(`OUT-09 rechazado (pedido no permitido): ${description.slice(0, 120)}`);
+      await notifyOwnerTelegram(`Curso a medida rechazado (pedido no permitido): ${description.slice(0, 120)}`);
       return NextResponse.json(
         { error: "No podemos generar un curso sobre ese pedido. Elige un objetivo laboral lícito." },
         { status: 400 }
@@ -50,14 +50,17 @@ export async function POST(req: Request) {
     const paidPlans = new Set(["carrera", "plus", "tester"]);
     if (!paidPlans.has(plan) && !allowDemo) {
       return NextResponse.json(
-        { error: "OUT-09 requiere plan Carrera/Plus o compra extra. Revisa /precios.", code: "PAYWALL" },
+        {
+          error: "El curso a tu medida requiere plan Carrera Plus o compra extra. Revisa /precios.",
+          code: "PAYWALL",
+        },
         { status: 402 }
       );
     }
 
     const qa = OUT09_QUESTIONS.map((q) => `${q.label} → ${answers[q.id] || "N/D"}`).join("\n");
     const kb = retrieveKnowledge(`${skillType} ${description} ${qa}`, 5, 5500);
-    const prompt = `Crea un curso OUT-09 personalizado en JSON válido con esta forma:
+    const prompt = `Crea un curso personalizado (carrera) en JSON válido con esta forma:
 {"title":"...","objective":"...","capsules":[{"day":1,"title":"...","content":"...","quiz":{"question":"...","options":["a","b","c"],"answer":0}}]}
 Tipo de habilidad: ${skillType === "hard" ? "técnica (dura)" : "blanda"}.
 Pedido del usuario: ${description}

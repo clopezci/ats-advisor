@@ -55,7 +55,7 @@ export default function CursosExternosPage() {
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-xs uppercase tracking-[0.14em] muted">Fase 3 · OUT-04</p>
+            <p className="text-xs uppercase tracking-[0.14em] muted">Fase 3 · Upskilling</p>
             <h1 className="mt-1 text-2xl font-semibold">Cursos externos low-cost</h1>
           </div>
           <SpeakButton text="Catálogo curado. Marca en curso o hecho para tu corte semanal de upskilling." />
@@ -120,7 +120,7 @@ export default function CursosExternosPage() {
       </div>
 
       <Link href="/outplacement/out09" className="btn-secondary">
-        Preferir curso a medida (OUT-09 · Plus)
+        Preferir curso a tu medida (Carrera Plus)
       </Link>
       <Link href="/outplacement" className="btn-secondary">
         Volver a outplacement

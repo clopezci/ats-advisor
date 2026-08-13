@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { CookiePrefsButton } from "@/components/CookieBanner";
+import { MainNav } from "@/components/MainNav";
 import { PageGuide } from "@/components/PageGuide";
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -24,32 +25,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             </div>
           </Link>
         </div>
-        <nav
-          className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm muted"
-          aria-label="Principal"
-        >
-          <Link href="/" className="hover:opacity-80 font-medium" style={{ color: "var(--text)" }}>
-            Inicio
-          </Link>
-          <Link href="/guia" className="hover:opacity-80 font-medium" style={{ color: "var(--text)" }}>
-            Mi plan
-          </Link>
-          <Link href="/herramientas" className="hover:opacity-80">
-            Herramientas
-          </Link>
-          <Link href="/capacidades" className="hover:opacity-80">
-            Mapa
-          </Link>
-          <Link href="/tracker" className="hover:opacity-80">
-            Tracker
-          </Link>
-          <Link href="/precios" className="hover:opacity-80">
-            Precios
-          </Link>
-          <Link href="/cuenta" className="hover:opacity-80">
-            Cuenta
-          </Link>
-        </nav>
+        <MainNav />
       </header>
       <main id="contenido-principal" className="flex flex-1 flex-col">
         <PageGuide />

@@ -99,7 +99,7 @@ export const OUTPLACEMENT_MODULES: OutModule[] = [
       },
       {
         "day": 7,
-        "title": "Ritual de cierre OUT-01",
+        "title": "Ritual de cierre",
         "content": "Elige 1 frase de identidad profesional y pégala en tu escritorio/LinkedIn.",
         "quiz": {
           "question": "El entregable es:",

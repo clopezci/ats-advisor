@@ -14,7 +14,7 @@ export default function BienestarPage() {
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-xs uppercase tracking-[0.14em] muted">Fase 1 · OUT-01</p>
+            <p className="text-xs uppercase tracking-[0.14em] muted">Fase 1 · Estabilización</p>
             <h1 className="mt-1 text-2xl font-semibold">Bienestar y derechos (CO)</h1>
           </div>
           <SpeakButton text="Guía de estabilización emocional y checklist laboral orientativa para Colombia. No es asesoría legal." />
@@ -48,7 +48,7 @@ export default function BienestarPage() {
 
       <p className="text-xs muted">{DISCLAIMER_CO}</p>
       <Link href="/outplacement/ruta?code=OUT-01" className="btn-primary">
-        Ir a OUT-01 (ruta)
+        Ir a estabilización (ruta)
       </Link>
       <Link href="/outplacement" className="btn-secondary">
         Volver

@@ -128,9 +128,14 @@ export const PAGE_GUIDES: PageGuideCopy[] = [
     how: "Completa lo que sepas (cargo, ciudad, número que te dijeron). Sigue el asistente. Revisa el texto antes de enviarlo.",
   },
   {
+    path: "/outplacement/tablero",
+    what: "Tablero visual de avance: cada curso (ruta de 8 módulos + bienestar) con % y siguiente lección.",
+    how: "Toca un curso. Verás solo títulos; al abrir una lección tienes cómo hacerlo, tips, ejemplo, plantilla y tareas para chequear.",
+  },
+  {
     path: "/outplacement/bienestar",
-    what: "Guía de ánimo y derechos laborales en Colombia, para la transición. No reemplaza a un abogado.",
-    how: "Léela con calma. Si un tema es legal (liquidación, tutela), consulta a un profesional; aquí es orientación.",
+    what: "Curso completo de estabilización y derechos laborales CO: lecciones con pasos, plantillas y tareas.",
+    how: "En el índice toca un título. Completa las tareas y marca la lección. El avance aparece en el tablero.",
   },
   {
     path: "/outplacement/networking",
@@ -139,8 +144,8 @@ export const PAGE_GUIDES: PageGuideCopy[] = [
   },
   {
     path: "/outplacement/ruta",
-    what: "Cápsulas cortas día a día de la transición (estabilizarte, mercado, entrevistas, 90 días).",
-    how: "Entra al módulo de esta semana. Lee o escucha la cápsula. Haz la tarea corta. Vuelve mañana.",
+    what: "La ruta de 8 módulos como cursos: cada día es una lección con práctica, plantilla y tareas.",
+    how: "Elige el módulo arriba. Abre una lección por título. Marca tareas. Telegram/WhatsApp te recuerdan la tarea del día.",
   },
   {
     path: "/outplacement/out09",
@@ -159,8 +164,8 @@ export const PAGE_GUIDES: PageGuideCopy[] = [
   },
   {
     path: "/outplacement/progreso",
-    what: "Resumen de lo que ya avanzaste (módulos, prácticas, cursos).",
-    how: "Solo mira. Si quieres continuar, usa “Mi plan” o la ruta de la semana.",
+    what: "XP, racha y % por curso. El detalle visual está en Tablero de avance.",
+    how: "Revisa barras. Entra al tablero para continuar la lección pendiente.",
   },
   {
     path: "/outplacement/plan-semana",

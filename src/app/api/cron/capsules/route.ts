@@ -1,15 +1,16 @@
 import { NextResponse } from "next/server";
 import { OUTPLACEMENT_MODULES } from "@/lib/outplacement/modules";
+import { moduleToCourse } from "@/lib/courses/catalog";
 import { deliverCapsule } from "@/lib/notify/deliverCapsule";
 import { notifyOwnerTelegram } from "@/lib/notify/channels";
 import { createServiceSupabase } from "@/lib/supabase/client";
 import { requireCronAuth } from "@/lib/admin/auth";
 import { hydrateSettingsFromCloud } from "@/lib/settingsPersist";
 import { reportError } from "@/lib/observability";
+import { outModuleShort } from "@/lib/outplacement/labels";
 
 /**
- * Daily microlearning push.
- * Auth: Authorization: Bearer CRON_SECRET (obligatorio en producción)
+ * Daily microlearning push — lección + tarea del curso (Telegram gratis / WA add-on).
  */
 export async function GET(req: Request) {
   const auth = requireCronAuth(req);
@@ -21,12 +22,18 @@ export async function GET(req: Request) {
     const settings = await hydrateSettingsFromCloud();
     const day = Math.floor(Date.now() / 86400000);
     const mod = OUTPLACEMENT_MODULES[day % OUTPLACEMENT_MODULES.length];
+    const course = moduleToCourse(mod.code);
+    const lesson = course?.lessons[day % (course?.lessons.length || 1)];
     const cap = mod.capsules[day % mod.capsules.length];
+    const taskLine = lesson?.tasks?.[0]?.label
+      ? `\n\n✅ Tarea de hoy: ${lesson.tasks[0].label}`
+      : "";
+    const howLine = lesson?.howTo?.[1] ? `\n\nCómo: ${lesson.howTo[1]}` : "";
     const payload = {
-      moduleCode: mod.code,
+      moduleCode: outModuleShort(mod.code),
       day: cap.day,
-      title: cap.title,
-      content: cap.content,
+      title: lesson?.title || cap.title,
+      content: `${lesson?.why || ""}\n\n${cap.content}${howLine}${taskLine}\n\nAbre la app → Ruta / Tablero y marca la lección.`,
       quiz: cap.quiz,
       footer: settings.microlearning_footer,
     };

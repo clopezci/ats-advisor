@@ -3,9 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
-import { OUTPLACEMENT_MODULES } from "@/lib/outplacement/modules";
-import { outModuleShort } from "@/lib/outplacement/labels";
-import { readProgress } from "@/lib/progress/courses";
+import { allCareerCourses } from "@/lib/courses/catalog";
+import { courseStats } from "@/lib/courses/progress";
 import { readMissionProgress, xpRank } from "@/lib/engagement/missions";
 import { readStreak } from "@/lib/engagement/streak";
 import { readCourseProgress, EXTERNAL_COURSES } from "@/lib/outplacement/externalCourses";
@@ -13,7 +12,7 @@ import { readCourseProgress, EXTERNAL_COURSES } from "@/lib/outplacement/externa
 export default function ProgresoPage() {
   const [xp, setXp] = useState(0);
   const [streak, setStreak] = useState(0);
-  const [outRows, setOutRows] = useState<{ code: string; title: string; pct: number }[]>([]);
+  const [rows, setRows] = useState<{ id: string; title: string; pct: number; href: string }[]>([]);
   const [coursesDone, setCoursesDone] = useState(0);
   const [missionsDone, setMissionsDone] = useState(0);
 
@@ -22,13 +21,10 @@ export default function ProgresoPage() {
     setXp(prog.xpTotal);
     setMissionsDone(prog.done.length);
     setStreak(readStreak().count);
-    const courseProg = readProgress();
-    setOutRows(
-      OUTPLACEMENT_MODULES.map((m) => {
-        const p = courseProg[m.code];
-        const done = p?.completed?.length || 0;
-        const pct = Math.round((done / Math.max(1, m.capsules.length)) * 100);
-        return { code: m.code, title: m.title, pct };
+    setRows(
+      allCareerCourses().map((c) => {
+        const s = courseStats(c);
+        return { id: c.id, title: c.short, pct: s.pct, href: c.href };
       })
     );
     const ext = readCourseProgress();
@@ -39,19 +35,15 @@ export default function ProgresoPage() {
     <div className="flex flex-1 flex-col gap-5">
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between gap-3">
-          <div>
-            <p className="text-xs uppercase tracking-[0.14em] muted">Fase 5 · hábito</p>
-            <h1 className="mt-1 text-2xl font-semibold">Tu progreso</h1>
-          </div>
-          <SpeakButton text="Resumen de XP, racha, módulos OUT y cursos externos en este dispositivo." />
+          <h1 className="text-xl font-semibold">Progreso</h1>
+          <SpeakButton text="XP, racha y avance por curso. El tablero visual está en Tablero de avance." />
         </div>
       </section>
 
       <div className="grid grid-cols-2 gap-3">
         <div className="bento-card">
-          <p className="text-xs muted">XP</p>
+          <p className="text-xs muted">XP · {xpRank(xp)}</p>
           <p className="text-3xl font-semibold">{xp}</p>
-          <p className="text-xs muted">{xpRank(xp)}</p>
         </div>
         <div className="bento-card">
           <p className="text-xs muted">Racha</p>
@@ -61,13 +53,11 @@ export default function ProgresoPage() {
       </div>
 
       <section className="bento-card space-y-2">
-        <h2 className="font-semibold text-sm">Ruta de carrera (8 módulos)</h2>
-        {outRows.map((r) => (
-          <Link key={r.code} href={`/outplacement/ruta?code=${r.code}`} className="block">
+        <h2 className="font-semibold text-sm">Avance por curso</h2>
+        {rows.map((r) => (
+          <Link key={r.id} href={r.href} className="block">
             <div className="flex justify-between text-sm">
-              <span>
-                {outModuleShort(r.code)} · {r.title}
-              </span>
+              <span>{r.title}</span>
               <span className="muted">{r.pct}%</span>
             </div>
             <div className="progress-track mt-1">
@@ -75,6 +65,9 @@ export default function ProgresoPage() {
             </div>
           </Link>
         ))}
+        <Link href="/outplacement/tablero" className="btn-primary">
+          Abrir tablero completo
+        </Link>
       </section>
 
       <section className="bento-card space-y-2 text-sm">
@@ -83,18 +76,12 @@ export default function ProgresoPage() {
           Completados {coursesDone}/{EXTERNAL_COURSES.length}
         </p>
         <Link href="/outplacement/cursos" className="btn-secondary">
-          Abrir catálogo
+          Ver catálogo externo
         </Link>
       </section>
 
-      <Link href="/outplacement/misiones" className="btn-primary">
-        Misiones de hoy
-      </Link>
-      <Link href="/outplacement/plan-semana" className="btn-secondary">
-        Plan de la semana
-      </Link>
-      <Link href="/outplacement/certificado" className="btn-secondary">
-        Certificado de avance
+      <Link href="/outplacement/misiones" className="btn-secondary">
+        Misiones del día
       </Link>
       <Link href="/outplacement" className="btn-secondary">
         Volver

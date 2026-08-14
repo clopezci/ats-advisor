@@ -43,7 +43,7 @@ export const PERSON_GOALS: PersonGoal[] = [
     id: "ruta",
     title: "Ruta de 8 módulos (corazón de Carrera)",
     benefit:
-      "El acompañamiento completo día a día: estabilización → autoevaluación → mercado → upskilling → marca/CV → networking → entrevistas → oferta y 90 días.",
+      "8 cursos día a día (lecciones con plantillas y tareas). El corazón de Carrera.",
     href: "/outplacement/ruta",
     keywords: ["ruta", "cápsula", "capsula", "diario", "outplacement", "módulo", "modulo", "8"],
     access: "carrera",
@@ -107,7 +107,7 @@ export const PERSON_GOALS: PersonGoal[] = [
   {
     id: "bienestar",
     title: "Estabilizarme en la transición",
-    benefit: "Guía de ánimo y derechos laborales (orientativa).",
+    benefit: "Curso completo: rutina, red, liquidación CO — con pasos, plantillas y tareas.",
     href: "/outplacement/bienestar",
     keywords: ["bienestar", "ánimo", "animo", "estrés", "estres", "despido", "derechos"],
     access: "carrera",

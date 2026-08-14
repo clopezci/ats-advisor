@@ -309,7 +309,7 @@ export default function PreciosPage() {
         <ul className="space-y-1 text-sm muted">
           <li>• LinkedIn, carta, plantilla CV, multi-oferta, pack ZIP</li>
           <li>• Coach IA, filtro telefónico, red de contactos, negociación de oferta</li>
-          <li>• Cápsulas por Telegram (WhatsApp opcional abajo)</li>
+          <li>• Cápsulas y recordatorio de tarea por Telegram (gratis) o WhatsApp (add-on más alto)</li>
         </ul>
         <button
           type="button"

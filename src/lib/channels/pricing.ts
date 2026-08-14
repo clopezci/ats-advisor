@@ -29,10 +29,10 @@ export type WhatsappCostModel = {
 };
 
 export const DEFAULT_WA_COST: WhatsappCostModel = {
-  // Recalibrado: Meta utility CO es céntimos/msg; mid realista ~45 cápsulas + BSP liviano
-  metaMidMonthlyCop: 3000,
-  marginPercent: 50,
-  msgsPerMonth: 45,
+  // Recordatorios diarios de tareas de curso + operación Meta/BSP (paquete mensual más alto)
+  metaMidMonthlyCop: 16000,
+  marginPercent: 80,
+  msgsPerMonth: 60,
 };
 
 export function whatsappFinalPriceCop(model: WhatsappCostModel = DEFAULT_WA_COST): number {
@@ -76,9 +76,9 @@ export function channelQuotes(model: WhatsappCostModel = DEFAULT_WA_COST): Chann
       shortBadge: `${formatCop(wa)}/mes`,
       userMessage: [
         `WhatsApp: ${formatCop(wa)} al mes.`,
-        "Ese valor ya incluye el sobrecosto de la mensajería que cobra Meta (y la operación del canal).",
-        "Por eso WhatsApp no es gratis: Meta factura cada mensaje/plantilla que te enviamos.",
-        "Si prefieres el mismo contenido sin ese sobrecosto, elige Telegram (gratis) o solo la app.",
+        "Incluye recordatorios diarios de tu lección/tarea del curso (además del sobrecosto Meta).",
+        "Telegram sigue gratis con el mismo contenido de microlearning.",
+        "Si prefieres sin ese sobrecosto, elige Telegram o solo la app.",
       ].join(" "),
     },
   ];
@@ -89,4 +89,4 @@ export function channelUserMessage(channel: LearningChannel, model?: WhatsappCos
 }
 
 export const CHANNEL_CHOICE_INTRO =
-  "Tú eliges cómo recibir el microlearning: app, Telegram (gratis) o WhatsApp (con tarifa por el sobrecosto de Meta).";
+  "Microlearning diario: app, Telegram (gratis) o WhatsApp (add-on más alto: recordatorios de tareas + costo Meta).";

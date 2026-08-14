@@ -115,8 +115,11 @@ export default function OutplacementPage() {
 
       {showMenu && (
       <div className="flex flex-col gap-3">
-        <Link href="/outplacement/progreso" className="btn-primary">
-          Mi progreso
+        <Link href="/outplacement/tablero" className="btn-primary">
+          Tablero de avance (cursos)
+        </Link>
+        <Link href="/outplacement/progreso" className="btn-secondary">
+          XP y racha
         </Link>
         <Link href="/outplacement/plan-semana" className="btn-secondary">
           Plan de la semana

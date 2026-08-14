@@ -92,9 +92,9 @@ export function defaultSettings(): AppSettings {
       currency: "COP",
     },
     whatsapp_cost: {
-      meta_mid_monthly_cop: 3000,
-      margin_percent: 50,
-      msgs_per_month: 45,
+      meta_mid_monthly_cop: 16000,
+      margin_percent: 80,
+      msgs_per_month: 60,
     },
     ai_limits: {
       free_ats_per_day: 5,
@@ -121,7 +121,8 @@ export function defaultSettings(): AppSettings {
       .split(",")
       .map((s) => s.trim().toLowerCase())
       .filter(Boolean),
-    microlearning_footer: "ATSAdvisor · LOTIC — practica 5–15 min al día.",
+    microlearning_footer:
+      "ATSAdvisor · LOTIC — abre la app, marca la tarea y sigue tu tablero de avance.",
     allies: [],
     alumni: {
       telegram_url: "",

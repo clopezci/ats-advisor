@@ -4,26 +4,20 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { SpeakButton } from "@/components/SpeakButton";
 import { allCareerCourses } from "@/lib/courses/catalog";
-import { courseStats, nextOpenLesson, readLearningCursor } from "@/lib/courses/progress";
+import { courseStats, nextOpenLesson } from "@/lib/courses/progress";
 import type { CourseDef } from "@/lib/courses/types";
+import { DailyCourseReminder } from "@/components/DailyCourseReminder";
 
 export function CourseProgressBoard() {
   const [courses, setCourses] = useState<CourseDef[]>([]);
-  const [cursorLabel, setCursorLabel] = useState("");
 
   useEffect(() => {
-    const list = allCareerCourses();
-    setCourses(list);
-    const cur = readLearningCursor();
-    if (cur) {
-      const c = list.find((x) => x.id === cur.courseId);
-      const l = c?.lessons.find((x) => x.id === cur.lessonId);
-      if (c && l) setCursorLabel(`${c.short}: ${l.title}`);
-    }
+    setCourses(allCareerCourses());
   }, []);
 
   return (
     <div className="flex flex-1 flex-col gap-5">
+      <DailyCourseReminder />
       <section className="bento-card space-y-2">
         <div className="flex justify-between gap-2">
           <h1 className="text-2xl font-semibold">Tablero de avance</h1>
@@ -32,11 +26,6 @@ export function CourseProgressBoard() {
         <p className="text-sm muted">
           Cada tarjeta es un curso. Entras, ves solo títulos, abres la lección y marcas tareas.
         </p>
-        {cursorLabel && (
-          <p className="text-sm">
-            Continúa hoy: <strong>{cursorLabel}</strong>
-          </p>
-        )}
       </section>
 
       {courses.map((c) => {

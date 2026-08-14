@@ -33,7 +33,7 @@ export async function GET(req: Request) {
       moduleCode: outModuleShort(mod.code),
       day: cap.day,
       title: lesson?.title || cap.title,
-      content: `${lesson?.why || ""}\n\n${cap.content}${howLine}${taskLine}\n\nAbre la app → Ruta / Tablero y marca la lección.`,
+      content: `${lesson?.why || ""}\n\n${cap.content}${howLine}${taskLine}\n\n📱 Continúa hoy: abre Tablero → esta lección → marca la tarea.`,
       quiz: cap.quiz,
       footer: settings.microlearning_footer,
     };

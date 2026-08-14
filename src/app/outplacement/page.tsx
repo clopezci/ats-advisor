@@ -5,6 +5,7 @@ import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { PaywallCard } from "@/components/PaywallCard";
 import { ChannelChooser } from "@/components/ChannelChooser";
+import { DailyCourseReminder } from "@/components/DailyCourseReminder";
 import {
   canAccessOutplacement,
   pauseFor90Days,
@@ -44,6 +45,7 @@ export default function OutplacementPage() {
 
   return (
     <div className="flex flex-1 flex-col gap-5">
+      {unlocked && <DailyCourseReminder />}
       <section className="bento-card space-y-3">
         <div className="flex items-start justify-between gap-3">
           <div>
@@ -55,8 +57,9 @@ export default function OutplacementPage() {
           <SpeakButton text={`Plan Carrera: ${CAREER_PATH_LABEL}. Estabilización, mercado, marca, networking, entrevistas y oferta. Un solo plan; el curso a tu medida es add-on.`} />
         </div>
         <p className="muted text-sm leading-relaxed">
-          El corazón es la <strong>{CAREER_PATH_LABEL}</strong>. Gratis solo dejas probar el ATS, el
-          encaje rápido y el tracker; aquí está el acompañamiento completo.
+          El corazón es la <strong>{CAREER_PATH_LABEL}</strong>. Cada área de Carrera (LinkedIn, carta,
+          entrevistas, oferta, networking, bienestar…) es un <strong>curso</strong> con lecciones y
+          tareas, más la herramienta práctica. Gratis solo: ATS, encaje y tracker.
         </p>
         <ul className="space-y-1 text-xs muted">
           {CAREER_MODULE_PITCH.map((m) => (
@@ -65,9 +68,20 @@ export default function OutplacementPage() {
             </li>
           ))}
         </ul>
-        <Link href="/guia" className="btn-primary">
-          ¿Qué quieres hacer? Armar mi recorrido
-        </Link>
+        {unlocked ? (
+          <>
+            <Link href="/outplacement/tablero" className="btn-primary">
+              Tablero de avance
+            </Link>
+            <Link href="/guia" className="btn-secondary">
+              Armar / ajustar mi recorrido
+            </Link>
+          </>
+        ) : (
+          <Link href="/guia" className="btn-primary">
+            ¿Qué quieres hacer? Armar mi recorrido
+          </Link>
+        )}
       </section>
 
       <section className="bento-card space-y-3">

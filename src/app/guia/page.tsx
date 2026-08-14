@@ -5,6 +5,7 @@ import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
 import { AdSlot } from "@/components/AdSlot";
+import { DailyCourseReminder } from "@/components/DailyCourseReminder";
 import {
   PERSON_GOALS,
   accessLabel,
@@ -341,6 +342,7 @@ export default function GuiaPage() {
 
   return (
     <div className="flex flex-1 flex-col gap-5">
+      {paid && <DailyCourseReminder />}
       <section className="bento-card space-y-3">
         <div className="flex items-start justify-between gap-3">
           <div>

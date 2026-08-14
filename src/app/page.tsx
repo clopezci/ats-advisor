@@ -5,14 +5,18 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { OnboardingGate } from "@/components/OnboardingGate";
 import { AdSlot } from "@/components/AdSlot";
+import { DailyCourseReminder } from "@/components/DailyCourseReminder";
 import { useEffect, useState } from "react";
+import { canAccessOutplacement, readEntitlement } from "@/lib/entitlements";
 import { readStreak } from "@/lib/engagement/streak";
 
 function HomeInner() {
   const [streak, setStreak] = useState(0);
+  const [paid, setPaid] = useState(false);
 
   useEffect(() => {
     setStreak(readStreak().count);
+    setPaid(canAccessOutplacement(readEntitlement().plan));
   }, []);
 
   const INTRO =
@@ -28,6 +32,7 @@ function HomeInner() {
           </span>
         </p>
       )}
+      {paid && <DailyCourseReminder />}
       <section className="bento-card space-y-4">
         <div className="flex items-start justify-between gap-3">
           <div>

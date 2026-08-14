@@ -3,6 +3,10 @@ import { outModuleShort } from "@/lib/outplacement/labels";
 import type { CourseDef, CourseLesson } from "@/lib/courses/types";
 import { BIENESTAR_COURSE } from "@/lib/courses/bienestarCourse";
 import { TOOL_COURSES, toolCourseById } from "@/lib/courses/toolCourses";
+import {
+  enrichmentKey,
+  MODULE_LESSON_ENRICHMENTS,
+} from "@/lib/courses/moduleEnrichments";
 
 /** Expande una cápsula corta a lección completa (cómo, tips, plantilla, tareas). */
 function enrichCapsule(
@@ -14,30 +18,37 @@ function enrichCapsule(
   quiz?: CourseLesson["quiz"]
 ): CourseLesson {
   const id = `${code}-d${day}`;
+  const rich = MODULE_LESSON_ENRICHMENTS[enrichmentKey(code, day)];
   return {
     id,
     title,
     teaser: content.length > 90 ? `${content.slice(0, 87)}…` : content,
-    why: `Forma parte de “${moduleTitle}”. Leer no basta: el valor está en el entregable de hoy y en marcarlo en tu tablero.`,
-    howTo: [
+    why:
+      rich?.why ||
+      `Forma parte de “${moduleTitle}”. Leer no basta: el valor está en el entregable de hoy y en marcarlo en tu tablero.`,
+    howTo: rich?.howTo || [
       `Objetivo de hoy: ${title}.`,
       `Práctica central: ${content}`,
       "Hazlo por escrito (nota del celular o doc). No lo dejes “en la cabeza”.",
       "Marca las tareas de abajo. Si te trabas, reduce el alcance a 20 minutos y cierra igual.",
       "Guarda evidencia (texto, captura o audio) para entrevistas y networking.",
     ],
-    tips: [
+    tips: rich?.tips || [
       "Hecho > perfecto. Una versión 70% hoy gana a la versión ideal la próxima semana.",
       "Si puedes, pide feedback a 1 persona de tu red sobre el entregable.",
       quiz
         ? `Autochequeo: ${quiz.question} (repásalo al terminar).`
         : "Al terminar, explica en 2 frases qué aprendiste hoy.",
     ],
-    example: `Ejemplo aplicado a “${title}”:
+    example:
+      rich?.example ||
+      `Ejemplo aplicado a “${title}”:
 Situación: estás en transición y tienes 45–90 minutos hoy.
 Acción: ${content}
 Resultado esperado: un entregable concreto (texto, lista o mensaje enviado) que puedas mostrar mañana.`,
-    template: `Plantilla — ${title}
+    template:
+      rich?.template ||
+      `Plantilla — ${title}
 Fecha: ___
 Contexto (2 líneas): …
 Lo que hice hoy:
@@ -50,7 +61,7 @@ Bloqueadores: …`,
     tasks: [
       {
         id: `${id}-t1`,
-        label: `Completar la práctica: ${content.slice(0, 100)}${content.length > 100 ? "…" : ""}`,
+        label: `Práctica: ${content.slice(0, 100)}${content.length > 100 ? "…" : ""}`,
         minutes: 25,
       },
       {
@@ -60,7 +71,7 @@ Bloqueadores: …`,
       },
       {
         id: `${id}-t3`,
-        label: "Definir el siguiente paso de mañana (1 frase)",
+        label: "Definir siguiente paso de mañana (1 frase)",
         minutes: 5,
       },
     ],

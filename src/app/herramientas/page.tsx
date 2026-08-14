@@ -1,80 +1,16 @@
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { AdSlot } from "@/components/AdSlot";
+import { FREE_TOOL_BLURBS } from "@/lib/entitlements/freePaths";
+import { CAREER_MODULE_PITCH, CAREER_PATH_LABEL } from "@/lib/outplacement/labels";
 
-export const metadata = { title: "Herramientas gratis" };
+export const metadata = { title: "Herramientas" };
 
-const TOOLS = [
-  {
-    href: "/herramientas/calculadora",
-    title: "¿Qué tan bien encaja tu CV?",
-    desc: "Porcentaje rápido de coincidencia entre tu hoja de vida y la oferta. Luego puedes ir al análisis ATS completo.",
-  },
-  {
-    href: "/ats",
-    title: "Analizador ATS",
-    desc: "Compara tu CV con una oferta y obtén score + acciones.",
-  },
-  {
-    href: "/ats/multi",
-    title: "Multi-oferta",
-    desc: "Rankea varias vacantes y decide dónde postular primero.",
-  },
-  {
-    href: "/ats/screening",
-    title: "Preguntas del formulario",
-    desc: "Cuando LinkedIn o Computrabajo te preguntan disponibilidad o años de experiencia, aquí armas la respuesta con tu CV.",
-  },
-  {
-    href: "/ats/portales",
-    title: "Sitios donde postulas",
-    desc: "Listas para completar tu perfil en Computrabajo, elempleo, LinkedIn o Magneto. No postula por ti.",
-  },
-  {
-    href: "/ats/pack",
-    title: "Pack ZIP",
-    desc: "CV + carta + LinkedIn + screening listos para enviar.",
-  },
-  {
-    href: "/herramientas/checklist",
-    title: "Checklist CV ATS",
-    desc: "Lista rápida de formato compatible con robots.",
-  },
-  {
-    href: "/herramientas/linkedin",
-    title: "Optimizador LinkedIn",
-    desc: "Headline y About alineados a ATS.",
-  },
-  {
-    href: "/herramientas/carta",
-    title: "Carta de presentación",
-    desc: "Carta corta fiel a tu experiencia y a la oferta.",
-  },
-  {
-    href: "/herramientas/salario",
-    title: "Banda salarial",
-    desc: "Ancla orientativa en COP para negociar.",
-  },
-  {
-    href: "/herramientas/plantilla",
-    title: "Plantilla CV ATS",
-    desc: "CV de una columna listo para pegar/analizar.",
-  },
-  {
-    href: "/herramientas/entrevistas",
-    title: "Banco de entrevistas",
-    desc: "Preguntas por perfil + feedback IA.",
-  },
-  {
-    href: "/herramientas/cultura",
-    title: "Ajuste cultural",
-    desc: "Adapta lenguaje a la cultura de la oferta.",
-  },
-  {
-    href: "/tracker",
-    title: "Tracker de postulaciones",
-    desc: "Kanban simple de tu búsqueda.",
-  },
+const PAID_TEASERS = [
+  { title: "LinkedIn, carta y plantilla CV", desc: "Textos listos para postular." },
+  { title: "Multi-oferta, screening y pack ZIP", desc: "Compara vacantes y arma el paquete de envío." },
+  { title: "Entrevistas, filtro y negociación", desc: "Práctica STAR y scripts de oferta." },
+  { title: CAREER_PATH_LABEL, desc: "El acompañamiento completo, semana a semana." },
 ];
 
 export default function HerramientasPage() {
@@ -82,33 +18,55 @@ export default function HerramientasPage() {
     <div className="flex flex-1 flex-col gap-5">
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between">
-          <h1 className="text-2xl font-semibold">Herramientas gratis</h1>
-          <SpeakButton text="Herramientas gratuitas de ATSAdvisor para mejorar tu CV y pasar filtros." />
+          <h1 className="text-2xl font-semibold">Herramientas</h1>
+          <SpeakButton text="Solo tres cosas son gratis: analizador ATS, encaje rápido y tracker. Todo lo demás está en el plan Carrera, con la ruta de 8 módulos." />
         </div>
-        <p className="text-sm muted">
-          Gratis: CV, ATS, LinkedIn, carta y práctica básica. El acompañamiento completo (oferta,
-          bienestar, rumbo, networking…) está en el plan Carrera.
+        <p className="text-sm muted leading-relaxed">
+          <strong>Gratis (3):</strong> probar el ATS, un encaje rápido y anotar postulaciones. El resto —
+          LinkedIn, carta, entrevistas, negociación y la {CAREER_PATH_LABEL} — es el plan{" "}
+          <strong>Carrera</strong>.
         </p>
       </section>
-      {TOOLS.map((t) => (
-        <Link key={t.href} href={t.href} className="bento-card block">
-          <h2 className="font-semibold">{t.title}</h2>
-          <p className="mt-1 text-sm muted">{t.desc}</p>
-        </Link>
-      ))}
-      <section className="bento-card space-y-2">
-        <h2 className="font-semibold">¿Quieres el acompañamiento guiado?</h2>
+
+      <section className="space-y-2">
+        <h2 className="text-sm font-semibold">Gratis</h2>
+        {FREE_TOOL_BLURBS.map((t) => (
+          <Link key={t.href} href={t.href} className="bento-card block">
+            <h3 className="font-semibold">{t.title}</h3>
+            <p className="mt-1 text-sm muted">{t.desc}</p>
+          </Link>
+        ))}
+      </section>
+
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold">Con plan Carrera</h2>
         <p className="text-sm muted">
-          Negociación de oferta, bienestar, assessment, CV remoto y la ruta paso a paso están en
-          Carrera (de pago).
+          Un solo plan. El corazón es la {CAREER_PATH_LABEL}; además desbloqueas las herramientas de
+          postulación y práctica.
         </p>
-        <Link href="/outplacement" className="btn-secondary">
-          Ver acompañamiento de carrera
-        </Link>
+        <ul className="space-y-2 text-sm muted">
+          {PAID_TEASERS.map((t) => (
+            <li key={t.title}>
+              <strong style={{ color: "var(--text)" }}>{t.title}.</strong> {t.desc}
+            </li>
+          ))}
+        </ul>
+        <p className="text-xs font-medium">Los 8 módulos incluyen:</p>
+        <ul className="space-y-1 text-xs muted">
+          {CAREER_MODULE_PITCH.map((m) => (
+            <li key={m.code}>
+              <strong style={{ color: "var(--text)" }}>{m.short}</strong> — {m.value}
+            </li>
+          ))}
+        </ul>
         <Link href="/precios" className="btn-primary">
-          Ver precios
+          Ver plan Carrera
+        </Link>
+        <Link href="/guia" className="btn-secondary">
+          Armar mi recorrido
         </Link>
       </section>
+
       <AdSlot slot="herramientas-hub" />
       <Link href="/" className="btn-secondary">
         Volver

@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     if (!paidPlans.has(plan) && !allowDemo) {
       return NextResponse.json(
         {
-          error: "El curso a tu medida requiere plan Carrera Plus o compra extra. Revisa /precios.",
+          error: "El curso a tu medida requiere el plan Carrera y compra del add-on. Revisa /precios.",
           code: "PAYWALL",
         },
         { status: 402 }

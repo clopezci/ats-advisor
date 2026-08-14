@@ -45,21 +45,21 @@ function HomeInner() {
           className="btn-primary"
           style={{ minHeight: "4.5rem", fontSize: "1.15rem", lineHeight: 1.3 }}
         >
-          Mejorar mi CV para una oferta
-          <span className="block text-xs font-normal opacity-90">Gratis · te llevamos de la mano</span>
+          Probar el analizador ATS
+          <span className="block text-xs font-normal opacity-90">Gratis · CV vs una oferta</span>
         </Link>
         <Link
           href="/guia"
           className="btn-primary"
           style={{ minHeight: "4.5rem", fontSize: "1.15rem", lineHeight: 1.3 }}
         >
-          Armar mi plan de búsqueda
+          Armar mi plan (Carrera)
           <span className="block text-xs font-normal opacity-90">
-            Marcas qué necesitas (o lo dictas) y avanzas uno a uno
+            Ruta de 8 módulos + herramientas · empiezas con lo gratis
           </span>
         </Link>
         <Link href="/tracker" className="btn-secondary">
-          Anotar una postulación
+          Anotar una postulación (gratis)
         </Link>
       </div>
 

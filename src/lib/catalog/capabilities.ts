@@ -142,7 +142,7 @@ export const CAPABILITIES: Capability[] = [
   {
     id: "ats-free-limit",
     title: "ATS gratis con límite diario",
-    summary: "Freemium: análisis diarios gratis; planes premium amplían cupo.",
+    summary: "Freemium estrecho: ATS + encaje + tracker gratis; Carrera desbloquea el resto.",
     audience: ["candidato"],
     status: "disponible",
     href: "/precios",
@@ -518,8 +518,8 @@ export const CAPABILITIES: Capability[] = [
   // —— Monetización / cuenta ——
   {
     id: "pricing",
-    title: "Planes Carrera / Plus / curso extra",
-    summary: "Precios COP ~$79k / $99k / ~$22k con margen ≥50%.",
+    title: "Plan Carrera / curso extra",
+    summary: "Un solo plan (Carrera ~COP) y add-on de curso a tu medida.",
     audience: ["candidato", "admin"],
     status: "disponible",
     href: "/precios",
@@ -534,8 +534,8 @@ export const CAPABILITIES: Capability[] = [
   },
   {
     id: "entitlements",
-    title: "Gates de plan (Carrera / Plus / Tester)",
-    summary: "Paywall de curso a medida y acompañamiento; cuotas mensuales; demo en cuenta.",
+    title: "Gates de plan (Carrera / Tester)",
+    summary: "Paywall de acompañamiento y curso add-on; demo en cuenta.",
     audience: ["candidato", "tester", "admin"],
     status: "disponible",
     href: "/cuenta",

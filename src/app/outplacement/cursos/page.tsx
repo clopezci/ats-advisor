@@ -120,7 +120,7 @@ export default function CursosExternosPage() {
       </div>
 
       <Link href="/outplacement/out09" className="btn-secondary">
-        Preferir curso a tu medida (Carrera Plus)
+        Preferir curso a tu medida (add-on)
       </Link>
       <Link href="/outplacement" className="btn-secondary">
         Volver a outplacement

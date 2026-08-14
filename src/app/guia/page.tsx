@@ -19,6 +19,7 @@ import {
   type PersonGoal,
 } from "@/lib/flows/personGoals";
 import { canAccessOutplacement, readEntitlement } from "@/lib/entitlements";
+import { CAREER_MODULE_PITCH } from "@/lib/outplacement/labels";
 
 type SoftGate = "none" | "save" | "pay";
 
@@ -234,9 +235,9 @@ export default function GuiaPage() {
           <section className="bento-card space-y-3">
             <h2 className="font-semibold text-sm">Siguiente: acompañamiento Carrera</h2>
             <p className="text-sm muted">
-              Hasta aquí pudiste usar lo gratis (como en Herramientas). Este paso es del plan único
-              Carrera. Primero guardamos tu correo para no perder el avance; luego pagas y vuelves
-              exactamente aquí.
+              Hasta aquí usaste lo gratis (ATS / encaje / tracker). Este paso es del plan Carrera —
+              sobre todo la ruta de 8 módulos y las herramientas de acompañamiento. Guardamos tu
+              correo para no perder el avance; pagas y vuelves aquí.
             </p>
             <button type="button" className="btn-primary" onClick={openLockedFlow}>
               Continuar (guardar y desbloquear)
@@ -346,12 +347,13 @@ export default function GuiaPage() {
             <p className="text-xs uppercase tracking-[0.14em] muted">Un paso a la vez</p>
             <h1 className="mt-1 text-2xl font-semibold">¿Qué necesitas ahora?</h1>
           </div>
-          <SpeakButton text="Primero elige lo gratis. Si marcas acompañamiento, empezamos por lo gratis y luego te pedimos guardar correo y pagar Carrera, sin perder el hilo." />
+          <SpeakButton text="Solo tres cosas son gratis. El valor está en Carrera: la ruta de 8 módulos más LinkedIn, carta, entrevistas y negociación. Empiezas gratis y, al llegar a Carrera, guardas correo, pagas y vuelves al mismo paso." />
         </div>
         <p className="text-sm muted leading-relaxed">
-          <strong>Gratis</strong> = las mismas herramientas de CV/ATS (también en el menú
-          Herramientas). <strong>Carrera</strong> = un solo plan de acompañamiento. El{" "}
-          <strong>curso a tu medida</strong> es un add-on, no otro plan.
+          <strong>Gratis (3):</strong> analizador ATS, encaje rápido y tracker.{" "}
+          <strong>Carrera (un plan):</strong> la ruta de 8 módulos es el núcleo; además LinkedIn,
+          carta, entrevistas, filtro, rumbo, oferta y red. El <strong>curso a tu medida</strong> es
+          add-on.
         </p>
       </section>
 
@@ -387,8 +389,8 @@ export default function GuiaPage() {
       </div>
 
       <section className="space-y-2">
-        <h2 className="text-sm font-semibold">Gratis ahora ({freeCount})</h2>
-        <p className="text-xs muted">Disponible sin pagar. También está en Herramientas.</p>
+        <h2 className="text-sm font-semibold">Gratis ({freeCount}/3)</h2>
+        <p className="text-xs muted">Solo estas tres. El resto pide Carrera.</p>
         {freeGoals.map((g) => (
           <GoalRow key={g.id} g={g} checked={Boolean(selected[g.id])} onToggle={() => toggle(g.id)} />
         ))}
@@ -397,9 +399,19 @@ export default function GuiaPage() {
       <section className="space-y-2">
         <h2 className="text-sm font-semibold">Plan Carrera ({carreraCount})</h2>
         <p className="text-xs muted">
-          Un solo plan. En el recorrido primero haces lo gratis; al llegar aquí te pedimos correo y
-          pago, y vuelves al mismo paso.
+          Empieza por la “Ruta de 8 módulos”: es el acompañamiento completo. El resto son piezas del
+          mismo plan. Al llegar aquí: correo → pago → vuelves al mismo paso.
         </p>
+        <div className="bento-card space-y-1 text-xs muted">
+          <p className="font-medium" style={{ color: "var(--text)" }}>
+            Los 8 módulos (valor de Carrera)
+          </p>
+          {CAREER_MODULE_PITCH.map((m) => (
+            <p key={m.code}>
+              <strong style={{ color: "var(--text)" }}>{m.short}</strong> — {m.value}
+            </p>
+          ))}
+        </div>
         {carreraGoals.map((g) => (
           <GoalRow key={g.id} g={g} checked={Boolean(selected[g.id])} onToggle={() => toggle(g.id)} />
         ))}

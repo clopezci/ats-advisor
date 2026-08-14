@@ -59,7 +59,7 @@ export default function ReferidosPage() {
           <SpeakButton text="Comparte tu código. Quien se registre con tu enlace queda atribuido a tu referido." />
         </div>
         <p className="text-sm muted">
-          Programa soft: el cobro de recompensas (días Plus / descuento) se activa cuando habilitemos
+          Programa soft: el cobro de recompensas (días de Carrera / descuento) se activa cuando habilitemos
           pagos. Mientras tanto acumulas compartidos y atribución.
         </p>
       </section>

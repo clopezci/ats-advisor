@@ -12,6 +12,7 @@ import {
   whatsappFinalPriceCop,
   type LearningChannel,
 } from "@/lib/channels/pricing";
+import { CAREER_MODULE_PITCH, CAREER_PATH_LABEL } from "@/lib/outplacement/labels";
 
 const waPrice = whatsappFinalPriceCop();
 
@@ -229,16 +230,18 @@ export default function PreciosPage() {
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between">
           <h1 className="text-2xl font-semibold">Precios</h1>
-          <SpeakButton text="El análisis de CV es gratis, con un tope diario. El acompañamiento de carrera cuesta una mínima fracción de lo que cobran las empresas de outplacement. Así lo hacemos accesible, no exclusivo." />
+          <SpeakButton text="Gratis solo el analizador ATS, el encaje rápido y el tracker. Un solo plan: Carrera, con la ruta de 8 módulos y todas las herramientas de acompañamiento. El curso a tu medida se compra aparte." />
         </div>
-        <p className="text-sm muted">Análisis de CV y herramientas ATS: gratis (tope diario en análisis).</p>
+        <p className="text-sm muted">
+          Gratis (3): analizador ATS, encaje rápido, tracker. Todo lo demás es Carrera.
+        </p>
         <p className="text-sm leading-relaxed">
-          Un solo plan: <strong>Carrera</strong>. Si necesitas un curso a tu medida, lo compras aparte
-          (add-on). Sin elegir entre dos suscripciones.
+          Un solo plan: <strong>Carrera</strong>. El corazón es la {CAREER_PATH_LABEL}. Si necesitas un
+          curso puntual sobre un tema tuyo, lo compras como add-on.
         </p>
         <p className="text-sm muted leading-relaxed">
-          Carrera cuesta una mínima fracción del outplacement empresarial: misma idea de guía (CV,
-          mercado, entrevistas, 90 días), al alcance de una persona.
+          Carrera cuesta una mínima fracción del outplacement empresarial: la misma idea de guía,
+          al alcance de una persona.
         </p>
         <p className="text-sm">
           Plan actual:{" "}
@@ -293,12 +296,20 @@ export default function PreciosPage() {
           <h2 className="font-semibold">Carrera</h2>
           <span className="pill-brand">{formatCop(prices.carrera)}/mes</span>
         </div>
-        <p className="text-xs muted">El único plan de suscripción</p>
+        <p className="text-xs muted">Único plan · incluye {CAREER_PATH_LABEL}</p>
+        <p className="text-sm font-medium">Qué incluye la ruta de 8 módulos</p>
+        <ul className="space-y-2 text-sm muted">
+          {CAREER_MODULE_PITCH.map((m) => (
+            <li key={m.code}>
+              <strong style={{ color: "var(--text)" }}>{m.short}</strong> — {m.value}
+            </li>
+          ))}
+        </ul>
+        <p className="text-sm font-medium">También con Carrera</p>
         <ul className="space-y-1 text-sm muted">
-          <li>• Ruta guiada: estabilizarte, mercado, entrevistas, oferta y primeros 90 días</li>
-          <li>• Cápsulas por Telegram (incluidas); WhatsApp opcional abajo</li>
-          <li>• Coach IA, filtro telefónico, red de contactos, negociación</li>
-          <li>• Las herramientas gratis de CV/ATS siguen disponibles</li>
+          <li>• LinkedIn, carta, plantilla CV, multi-oferta, pack ZIP</li>
+          <li>• Coach IA, filtro telefónico, red de contactos, negociación de oferta</li>
+          <li>• Cápsulas por Telegram (WhatsApp opcional abajo)</li>
         </ul>
         <button
           type="button"

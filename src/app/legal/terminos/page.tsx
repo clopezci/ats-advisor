@@ -16,7 +16,8 @@ export default function TerminosPage() {
           empleo ni entrevistas.
         </p>
         <p>
-          <strong>Planes de pago:</strong> Carrera / Plus / curso a tu medida extra según /precios. Los pagos se
+          <strong>Planes de pago:</strong> un solo plan (Carrera) y, opcional, curso a tu medida (add-on)
+          según /precios. Los pagos se
           procesan vía Wompi o Mercado Pago. Activaciones demo locales no sustituyen un pago real.
         </p>
         <p>

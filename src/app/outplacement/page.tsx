@@ -14,6 +14,7 @@ import {
 } from "@/lib/entitlements";
 import { whatsappFinalPriceCop, type LearningChannel } from "@/lib/channels/pricing";
 import { CHANNEL_CHOICE_INTRO } from "@/lib/channels/pricing";
+import { CAREER_MODULE_PITCH, CAREER_PATH_LABEL, outModuleShort } from "@/lib/outplacement/labels";
 
 type Mod = { code: string; title: string; summary: string; days: number };
 
@@ -51,12 +52,19 @@ export default function OutplacementPage() {
             </p>
             <h1 className="mt-1 text-2xl font-semibold">Acompañamiento de carrera</h1>
           </div>
-          <SpeakButton text="No elijas entre veinte pantallas. Arma tu plan: marcas lo que necesitas o lo dictas, y avanzas un paso a la vez." />
+          <SpeakButton text={`Plan Carrera: ${CAREER_PATH_LABEL}. Estabilización, mercado, marca, networking, entrevistas y oferta. Un solo plan; el curso a tu medida es add-on.`} />
         </div>
         <p className="muted text-sm leading-relaxed">
-          Esto es lo que en empresas llaman outplacement: guiarte desde el CV hasta entrevistas y los
-          primeros 90 días. Aquí lo haces a tu ritmo, con voz e IA.
+          El corazón es la <strong>{CAREER_PATH_LABEL}</strong>. Gratis solo dejas probar el ATS, el
+          encaje rápido y el tracker; aquí está el acompañamiento completo.
         </p>
+        <ul className="space-y-1 text-xs muted">
+          {CAREER_MODULE_PITCH.map((m) => (
+            <li key={m.code}>
+              <strong style={{ color: "var(--text)" }}>{m.short}</strong> — {m.value}
+            </li>
+          ))}
+        </ul>
         <Link href="/guia" className="btn-primary">
           ¿Qué quieres hacer? Armar mi recorrido
         </Link>
@@ -196,7 +204,7 @@ export default function OutplacementPage() {
         <div className="space-y-3">
           {modules.map((m) => (
             <Link key={m.code} href={`/outplacement/ruta?code=${m.code}`} className="bento-card block">
-              <p className="text-xs muted">{m.days} días</p>
+              <p className="text-xs muted">{outModuleShort(m.code)} · {m.days} días</p>
               <h2 className="mt-2 text-base font-semibold">{m.title}</h2>
               <p className="mt-1 text-sm muted">{m.summary}</p>
             </Link>

@@ -44,8 +44,8 @@ export const PAGE_GUIDES: PageGuideCopy[] = [
   },
   {
     path: "/guia",
-    what: "Arma un recorrido personal. Lo gratis (CV, ATS, LinkedIn…) es lo mismo que en Herramientas. Carrera es un solo plan de acompañamiento; el curso a tu medida es add-on.",
-    how: "Marca lo que necesitas (hay secciones Gratis / Carrera / Extras). Empieza: primero haces lo gratis. Cuando toque Carrera, guardas correo, pagas y vuelves al mismo paso.",
+    what: "Arma un recorrido personal. Gratis solo: ATS, encaje rápido y tracker. El valor está en Carrera: la ruta de 8 módulos más LinkedIn, carta, entrevistas y negociación.",
+    how: "Marca lo que necesitas. Empiezas por lo gratis; al llegar a Carrera guardas correo, pagas y vuelves al mismo paso. La tarjeta “Ruta de 8 módulos” es el corazón del plan.",
   },
   {
     path: "/tracker",
@@ -54,8 +54,8 @@ export const PAGE_GUIDES: PageGuideCopy[] = [
   },
   {
     path: "/precios",
-    what: "Ver qué es gratis (análisis de CV y herramientas) y el único plan de pago: Carrera. El curso a tu medida se compra aparte.",
-    how: "Si viniste desde Mi plan, paga Carrera y te devolvemos al mismo paso. Si solo estás mirando, no hace falta pagar.",
+    what: "Un solo plan: Carrera (ruta de 8 módulos + herramientas de postulación). El curso a tu medida se compra aparte. Gratis: ATS, encaje rápido y tracker.",
+    how: "Si viniste desde Mi plan, paga Carrera y te devolvemos al mismo paso. Lee los 8 módulos para ver todo lo que incluye.",
   },
   {
     path: "/capacidades",
@@ -104,8 +104,8 @@ export const PAGE_GUIDES: PageGuideCopy[] = [
   },
   {
     path: "/herramientas",
-    what: "Atajos gratis: encaje rápido, carta, LinkedIn, plantilla. Si no sabes por dónde, mejor usa “Mi plan”.",
-    how: "Toca una tarjeta. Cada una explica para qué sirve al abrirla. Vuelve aquí cuando termines.",
+    what: "Solo 3 gratis: ATS, encaje rápido y tracker. El resto (LinkedIn, carta, entrevistas, ruta de 8 módulos…) es el plan Carrera.",
+    how: "Usa las tres gratis si quieres probar. Para el acompañamiento completo, ve a Precios o Mi plan.",
   },
   {
     path: "/outplacement/entrevista",
@@ -144,7 +144,7 @@ export const PAGE_GUIDES: PageGuideCopy[] = [
   },
   {
     path: "/outplacement/out09",
-    what: "Un mini-curso sobre el tema que TÚ elijas (la app arma lecciones cortas). Incluido en Carrera Plus.",
+    what: "Un mini-curso sobre el tema que TÚ elijas (la app arma lecciones cortas). Es un add-on: se compra aparte del plan Carrera.",
     how: "Escribe el tema (ej. “Excel para analistas”, “entrevistas en inglés”). Genera. Estudia cápsula por cápsula.",
   },
   {

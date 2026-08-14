@@ -8,6 +8,7 @@ import {
   readEntitlement,
   type PlanId,
 } from "@/lib/entitlements";
+import { CAREER_PATH_LABEL } from "@/lib/outplacement/labels";
 
 /** Rutas abiertas sin plan (hub, marketplace de expertos). */
 function isOpenPath(path: string) {
@@ -49,7 +50,7 @@ export function OutplacementLayoutGate({ children }: { children: ReactNode }) {
         <PaywallCard
           currentPlan={plan}
           title="Esto es parte del plan Carrera"
-          reason="Esta herramienta de acompañamiento (entrevistas, red, rumbo, bienestar, oferta…) está incluida en Carrera. Las herramientas gratis de CV y ATS siguen en Herramientas."
+          reason={`Esta herramienta de acompañamiento está en el plan Carrera (${CAREER_PATH_LABEL} + práctica, red, oferta…). Gratis: analizador ATS, encaje rápido y tracker.`}
         />
       </div>
     );

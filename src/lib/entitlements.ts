@@ -89,7 +89,7 @@ export function canGenerateOut09(
   limits?: { carrera: number; plus: number }
 ): { ok: boolean; remaining: number; quota: number; reason?: string } {
   if (!canAccessOutplacement(e.plan)) {
-    return { ok: false, remaining: 0, quota: 0, reason: "Necesitas un plan Carrera o Plus." };
+    return { ok: false, remaining: 0, quota: 0, reason: "Necesitas el plan Carrera (o comprar el curso extra)." };
   }
   const quota = out09Quota(e.plan, limits);
   if (quota <= 0) {
@@ -98,7 +98,7 @@ export function canGenerateOut09(
       remaining: 0,
       quota: 0,
       reason:
-        "El curso a tu medida está en Carrera Plus (2/mes) o puedes comprar uno extra. Carrera incluye la ruta de 8 módulos sin cursos a medida.",
+        "El curso a tu medida se compra aparte (add-on). Carrera incluye la ruta de 8 módulos y las herramientas de acompañamiento.",
     };
   }
   const remaining = Math.max(0, quota - e.out09UsedMonth);
@@ -124,7 +124,8 @@ export function planLabel(plan: PlanId) {
   const map: Record<PlanId, string> = {
     free: "Gratis",
     carrera: "Carrera",
-    plus: "Carrera Plus",
+    /** Legado interno: se muestra como Carrera (un solo plan). */
+    plus: "Carrera",
     tester: "Tester",
     paused_90: "Pausa · 90 días",
   };

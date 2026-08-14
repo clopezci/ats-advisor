@@ -65,7 +65,7 @@ Devuelve Día 1…14 con título + 2 acciones. Español LATAM.`,
       {!unlocked && (
         <PaywallCard
           currentPlan={plan}
-          reason="Segunda carrera profunda está en Carrera / Plus."
+          reason="Segunda carrera profunda está en el plan Carrera."
         />
       )}
 

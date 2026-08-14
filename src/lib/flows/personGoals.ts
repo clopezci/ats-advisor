@@ -1,6 +1,6 @@
 /**
- * Metas en lenguaje de persona (no códigos internos).
- * El wizard arma un recorrido uno-a-uno: primero lo gratis, luego Carrera.
+ * Metas en lenguaje de persona.
+ * Solo 2–3 gratis; el valor está en el plan Carrera (ruta de 8 módulos + herramientas).
  */
 
 export type GoalAccess = "free" | "carrera" | "curso" | "open";
@@ -10,86 +10,80 @@ export type PersonGoal = {
   title: string;
   benefit: string;
   href: string;
-  /** Palabras para auto-marcar desde texto/voz */
   keywords: string[];
-  /**
-   * free = herramientas ATS sin pagar
-   * carrera = acompañamiento (un solo plan)
-   * curso = add-on “curso a tu medida”
-   * open = marketplace / 90 días (sin suscripción)
-   */
   access: GoalAccess;
 };
 
 export const PERSON_GOALS: PersonGoal[] = [
   {
     id: "cv",
-    title: "Que mi CV pase el filtro automático",
-    benefit: "Subes o pegas tu hoja de vida, la comparas con una oferta y ves qué mejorar.",
+    title: "Probar el analizador ATS (gratis)",
+    benefit: "Compara tu CV con una oferta y ve el puntaje. Tope diario.",
     href: "/ats",
-    keywords: ["cv", "hoja de vida", "ats", "filtro", "puntaje", "score", "analizar"],
+    keywords: ["cv", "hoja de vida", "ats", "filtro", "puntaje", "score", "analizar", "gratis"],
     access: "free",
   },
   {
     id: "encaje",
-    title: "Ver si encajo en una oferta (rápido)",
-    benefit: "En un minuto ves un porcentaje de coincidencia, sin el análisis completo.",
+    title: "Encaje rápido CV–oferta (gratis)",
+    benefit: "Porcentaje de coincidencia en un minuto.",
     href: "/herramientas/calculadora",
     keywords: ["encaje", "match", "coincid", "rápido", "rapido", "calculadora"],
     access: "free",
   },
   {
     id: "tracker",
-    title: "Organizar mis postulaciones",
-    benefit: "Anotas cargo y empresa y sigues el estado: interés, aplicado, entrevista, oferta.",
+    title: "Anotar postulaciones (gratis)",
+    benefit: "Cargo, empresa y estado: interés, aplicado, entrevista, oferta.",
     href: "/tracker",
     keywords: ["postul", "tracker", "vacante", "organizar", "kanban", "seguimiento"],
     access: "free",
   },
   {
-    id: "carta",
-    title: "Escribir una carta o mensaje de postulación",
-    benefit: "Borrador alineado a la oferta, para revisar y enviar.",
-    href: "/herramientas/carta",
-    keywords: ["carta", "mensaje", "postulaci", "cover"],
-    access: "free",
+    id: "ruta",
+    title: "Ruta de 8 módulos (corazón de Carrera)",
+    benefit:
+      "El acompañamiento completo día a día: estabilización → autoevaluación → mercado → upskilling → marca/CV → networking → entrevistas → oferta y 90 días.",
+    href: "/outplacement/ruta",
+    keywords: ["ruta", "cápsula", "capsula", "diario", "outplacement", "módulo", "modulo", "8"],
+    access: "carrera",
   },
   {
     id: "linkedin",
-    title: "Mejorar mi LinkedIn",
-    benefit: "Headline y About más claros para reclutadores y filtros.",
+    title: "Optimizar LinkedIn",
+    benefit: "Headline y About alineados a lo que buscan los reclutadores.",
     href: "/herramientas/linkedin",
     keywords: ["linkedin", "perfil", "headline", "marca personal"],
-    access: "free",
+    access: "carrera",
   },
   {
-    id: "entrevista",
-    title: "Preparar entrevistas (práctica gratis)",
-    benefit: "Banco de preguntas por perfil y feedback con IA. Lo mismo que en Herramientas.",
-    href: "/herramientas/entrevistas",
-    keywords: ["entrevista", "star", "simulador", "preguntas", "practicar"],
-    access: "free",
+    id: "carta",
+    title: "Carta o mensaje de postulación",
+    benefit: "Borrador fiel a tu CV y a esa oferta.",
+    href: "/herramientas/carta",
+    keywords: ["carta", "mensaje", "postulaci", "cover"],
+    access: "carrera",
   },
   {
     id: "plantilla",
-    title: "Armar una plantilla de CV ATS",
+    title: "Plantilla CV ATS",
     benefit: "CV de una columna listo para pegar y analizar.",
     href: "/herramientas/plantilla",
     keywords: ["plantilla", "formato", "una columna"],
-    access: "free",
+    access: "carrera",
   },
   {
-    id: "salario",
-    title: "Ver una banda salarial orientativa",
-    benefit: "Piso / meta / techo en pesos para negociar (orientativo).",
-    href: "/herramientas/salario",
-    keywords: ["salario", "banda", "sueldo", "cop"],
-    access: "free",
+    id: "entrevista",
+    title: "Practicar entrevistas",
+    benefit: "Banco de preguntas + feedback IA y simulador STAR.",
+    href: "/outplacement/entrevista",
+    keywords: ["entrevista", "star", "simulador", "preguntas", "practicar"],
+    access: "carrera",
   },
   {
     id: "filtro",
-    title: "Practicar el filtro telefónico",
-    benefit: "Ensayas las 3 preguntas típicas de la primera llamada, con score.",
+    title: "Filtro telefónico",
+    benefit: "Las 3 preguntas típicas de la primera llamada, con score.",
     href: "/outplacement/filtro",
     keywords: ["filtro", "telefón", "telefon", "screening", "llamada"],
     access: "carrera",
@@ -97,7 +91,7 @@ export const PERSON_GOALS: PersonGoal[] = [
   {
     id: "rumbo",
     title: "Definir mi rumbo profesional",
-    benefit: "Un test corto (RIASEC) y roles típicos en LATAM.",
+    benefit: "Test RIASEC y roles típicos en LATAM.",
     href: "/outplacement/assessment",
     keywords: ["rumbo", "carrera", "riasec", "vocaci", "qué estudiar", "que estudiar", "rol"],
     access: "carrera",
@@ -105,15 +99,15 @@ export const PERSON_GOALS: PersonGoal[] = [
   {
     id: "oferta",
     title: "Negociar salario u oferta",
-    benefit: "Piso, meta y techo en pesos, más un texto de contraoferta.",
+    benefit: "Piso, meta, techo y texto de contraoferta.",
     href: "/outplacement/oferta",
-    keywords: ["oferta", "negoci", "pretensi", "contraoferta"],
+    keywords: ["oferta", "negoci", "pretensi", "contraoferta", "salario", "sueldo"],
     access: "carrera",
   },
   {
     id: "bienestar",
     title: "Estabilizarme en la transición",
-    benefit: "Guía de ánimo y derechos laborales (orientativa, no es abogado).",
+    benefit: "Guía de ánimo y derechos laborales (orientativa).",
     href: "/outplacement/bienestar",
     keywords: ["bienestar", "ánimo", "animo", "estrés", "estres", "despido", "derechos"],
     access: "carrera",
@@ -121,47 +115,39 @@ export const PERSON_GOALS: PersonGoal[] = [
   {
     id: "red",
     title: "Activar mi red de contactos",
-    benefit: "Anotas personas y el siguiente paso (mensaje, café, LinkedIn).",
+    benefit: "Agenda de personas y siguientes pasos (mercado oculto).",
     href: "/outplacement/networking",
     keywords: ["red", "network", "contactos", "referido"],
     access: "carrera",
   },
   {
-    id: "ruta",
-    title: "Seguir una ruta día a día",
-    benefit: "Cápsulas cortas: estabilizarte, mercado, entrevistas, primeros 90 días.",
-    href: "/outplacement/ruta",
-    keywords: ["ruta", "cápsula", "capsula", "diario", "outplacement", "módulo", "modulo"],
-    access: "carrera",
-  },
-  {
-    id: "star",
-    title: "Simulador STAR completo",
-    benefit: "Score local + feedback de coach IA sobre tus historias de entrevista.",
-    href: "/outplacement/entrevista",
-    keywords: ["star completo", "coach entrevista"],
+    id: "multi",
+    title: "Comparar varias ofertas",
+    benefit: "Rankea vacantes y elige dónde postular primero.",
+    href: "/ats/multi",
+    keywords: ["multi", "varias", "rank", "comparar ofertas"],
     access: "carrera",
   },
   {
     id: "curso",
-    title: "Un curso a mi medida",
-    benefit: "Tú dices el tema; la app arma lecciones cortas. Se compra aparte (add-on).",
+    title: "Curso a mi medida",
+    benefit: "Tú eliges el tema; la app arma lecciones. Se compra aparte (add-on).",
     href: "/outplacement/out09",
-    keywords: ["curso", "aprender", "skill", "capacita", "out-09", "out09", "personalizado"],
+    keywords: ["curso", "aprender", "skill", "capacita", "personalizado"],
     access: "curso",
   },
   {
     id: "experto",
     title: "Hablar con un experto humano",
-    benefit: "Un aliado revisa CV o entrevista. El precio lo ves antes de pedir.",
+    benefit: "Aliado revisa CV o entrevista. Precio antes de pedir.",
     href: "/outplacement/experto",
     keywords: ["experto", "coach", "humano", "aliado", "revisión", "revision"],
     access: "open",
   },
   {
     id: "90dias",
-    title: "Ya conseguí empleo: primeros 90 días",
-    benefit: "Checklist para el periodo de prueba (sin cobro de suscripción).",
+    title: "Primeros 90 días en el empleo nuevo",
+    benefit: "Checklist del periodo de prueba (con Carrera o en pausa post-empleo).",
     href: "/outplacement/90-dias",
     keywords: ["90", "empleo nuevo", "prueba", "onboarding", "conseguí", "consegui"],
     access: "open",
@@ -180,7 +166,7 @@ export function accessLabel(access: GoalAccess): string {
     case "curso":
       return "Add-on";
     case "open":
-      return "Sin suscripción";
+      return "Extra";
   }
 }
 
@@ -197,7 +183,6 @@ export function accessRank(access: GoalAccess): number {
   }
 }
 
-/** Orden del recorrido: gratis → abiertos → Carrera → curso. */
 export function orderGoalsForWalk(goals: PersonGoal[]): PersonGoal[] {
   return [...goals].sort((a, b) => accessRank(a.access) - accessRank(b.access));
 }
@@ -213,7 +198,7 @@ export function matchGoalsFromText(text: string): string[] {
   }
   if (!ids.size && t.trim().length > 8) {
     ids.add("cv");
-    ids.add("rumbo");
+    ids.add("ruta");
   }
   return [...ids];
 }
@@ -261,9 +246,8 @@ export function goalsByIds(ids: string[]) {
   return ids.map((id) => PERSON_GOALS.find((g) => g.id === id)).filter(Boolean) as PersonGoal[];
 }
 
-/** ¿Este paso requiere desbloquear Carrera? */
 export function goalNeedsCarrera(g: PersonGoal, hasCarrera: boolean): boolean {
   if (g.access === "carrera") return !hasCarrera;
-  if (g.access === "curso") return !hasCarrera; // primero Carrera; el cupo del curso se resuelve en la pantalla
+  if (g.access === "curso") return !hasCarrera;
   return false;
 }

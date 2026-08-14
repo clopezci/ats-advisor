@@ -98,7 +98,7 @@ export function defaultSettings(): AppSettings {
     },
     ai_limits: {
       free_ats_per_day: 5,
-      out09_included_carrera: 0, // OUT-09 solo en Plus (o compra extra)
+      out09_included_carrera: 0, // curso a medida = add-on (no incluido en Carrera base)
       out09_included_plus: 2,
       quality_threshold: 0.72,
       max_paid_escalations: 1,

@@ -1,5 +1,8 @@
 "use client";
 
+
+import { CourseWithTool } from "@/components/CourseWithTool";
+import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
@@ -17,7 +20,7 @@ const DAYS = [
   { d: 90, t: "Revisión de trayectoria", c: "Pide feedback formal y acuerda siguientes metas." },
 ];
 
-export default function NoventaPage() {
+function Dias90Tool() {
   const [done, setDone] = useState<number[]>([]);
 
   useEffect(() => {
@@ -69,5 +72,16 @@ export default function NoventaPage() {
         Volver
       </Link>
     </div>
+  );
+}
+
+
+export default function Page() {
+  const course = toolCourseById("primeros-90-dias");
+  if (!course) return null;
+  return (
+    <CourseWithTool course={course}>
+      <Dias90Tool />
+    </CourseWithTool>
   );
 }

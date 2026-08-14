@@ -1,5 +1,8 @@
 "use client";
 
+
+import { CourseWithTool } from "@/components/CourseWithTool";
+import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
@@ -15,7 +18,7 @@ import {
 
 const STEPS = ["Mercado", "Oferta", "Scripts", "Cierre"];
 
-export default function OfertaWizardPage() {
+function OfertaTool() {
   const [step, setStep] = useState(0);
   const [name, setName] = useState("");
   const [role, setRole] = useState("Analista");
@@ -260,5 +263,16 @@ export default function OfertaWizardPage() {
         Volver
       </Link>
     </div>
+  );
+}
+
+
+export default function Page() {
+  const course = toolCourseById("negociacion-oferta");
+  if (!course) return null;
+  return (
+    <CourseWithTool course={course}>
+      <OfertaTool />
+    </CourseWithTool>
   );
 }

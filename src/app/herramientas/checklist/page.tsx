@@ -1,7 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
-
-export const metadata = { title: "Checklist CV ATS" };
+import { CourseWithTool } from "@/components/CourseWithTool";
+import { toolCourseById } from "@/lib/courses/toolCourses";
 
 const ITEMS = [
   "Una sola columna, sin tablas complejas",
@@ -12,7 +14,7 @@ const ITEMS = [
   "Sin texto blanco ni font 1px",
 ];
 
-export default function ChecklistPage() {
+function ChecklistTool() {
   return (
     <div className="flex flex-1 flex-col gap-5">
       <section className="bento-card space-y-2">
@@ -33,5 +35,15 @@ export default function ChecklistPage() {
         Volver
       </Link>
     </div>
+  );
+}
+
+export default function ChecklistPage() {
+  const course = toolCourseById("checklist-ats");
+  if (!course) return null;
+  return (
+    <CourseWithTool course={course}>
+      <ChecklistTool />
+    </CourseWithTool>
   );
 }

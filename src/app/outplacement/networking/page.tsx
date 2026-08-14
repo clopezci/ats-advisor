@@ -1,5 +1,8 @@
 "use client";
 
+
+import { CourseWithTool } from "@/components/CourseWithTool";
+import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
@@ -14,7 +17,7 @@ import {
   type NetworkContact,
 } from "@/lib/networking/contacts";
 
-export default function NetworkingPage() {
+function NetworkingTool() {
   const [items, setItems] = useState<NetworkContact[]>([]);
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
@@ -161,5 +164,16 @@ export default function NetworkingPage() {
         Outplacement
       </Link>
     </div>
+  );
+}
+
+
+export default function Page() {
+  const course = toolCourseById("networking-crm");
+  if (!course) return null;
+  return (
+    <CourseWithTool course={course}>
+      <NetworkingTool />
+    </CourseWithTool>
   );
 }

@@ -1,12 +1,15 @@
 "use client";
 
+
+import { CourseWithTool } from "@/components/CourseWithTool";
+import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { VoiceTextarea } from "@/components/VoiceField";
 import { SpeakButton } from "@/components/SpeakButton";
 import { scoreStarAnswer, STAR_BANK } from "@/lib/interview/star";
 
-export default function EntrevistaPage() {
+function EntrevistaTool() {
   const [qIndex, setQIndex] = useState(0);
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState("");
@@ -125,5 +128,16 @@ export default function EntrevistaPage() {
         Volver
       </Link>
     </div>
+  );
+}
+
+
+export default function Page() {
+  const course = toolCourseById("entrevistas-star");
+  if (!course) return null;
+  return (
+    <CourseWithTool course={course}>
+      <EntrevistaTool />
+    </CourseWithTool>
   );
 }

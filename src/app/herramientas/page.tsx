@@ -22,9 +22,9 @@ export default function HerramientasPage() {
           <SpeakButton text="Solo tres cosas son gratis: analizador ATS, encaje rápido y tracker. Todo lo demás está en el plan Carrera, con la ruta de 8 módulos." />
         </div>
         <p className="text-sm muted leading-relaxed">
-          <strong>Gratis (3):</strong> probar el ATS, un encaje rápido y anotar postulaciones. El resto —
-          LinkedIn, carta, entrevistas, negociación y la {CAREER_PATH_LABEL} — es el plan{" "}
-          <strong>Carrera</strong>.
+          <strong>Gratis (3):</strong> probar el ATS, un encaje rápido y anotar postulaciones. Todo lo
+          demás de Carrera son <strong>cursos</strong> (lecciones + tareas + tablero), no anuncios
+          cortos — LinkedIn, carta, entrevistas, oferta, networking, ruta de 8 módulos, bienestar…
         </p>
       </section>
 
@@ -39,10 +39,10 @@ export default function HerramientasPage() {
       </section>
 
       <section className="bento-card space-y-3">
-        <h2 className="font-semibold">Con plan Carrera</h2>
+        <h2 className="font-semibold">Con plan Carrera (cursos + práctica)</h2>
         <p className="text-sm muted">
-          Un solo plan. El corazón es la {CAREER_PATH_LABEL}; además desbloqueas las herramientas de
-          postulación y práctica.
+          Cada tema abre como curso (solo títulos → lección completa). Luego usas la herramienta.
+          El corazón sigue siendo la {CAREER_PATH_LABEL}.
         </p>
         <ul className="space-y-2 text-sm muted">
           {PAID_TEASERS.map((t) => (

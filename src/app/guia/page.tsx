@@ -351,9 +351,8 @@ export default function GuiaPage() {
         </div>
         <p className="text-sm muted leading-relaxed">
           <strong>Gratis (3):</strong> analizador ATS, encaje rápido y tracker.{" "}
-          <strong>Carrera (un plan):</strong> la ruta de 8 módulos es el núcleo; además LinkedIn,
-          carta, entrevistas, filtro, rumbo, oferta y red. El <strong>curso a tu medida</strong> es
-          add-on.
+          <strong>Carrera:</strong> cada área es un <strong>curso completo</strong> (índice → lección con
+          cómo/tips/plantilla/tareas) más la herramienta práctica. La ruta de 8 módulos es el núcleo.
         </p>
       </section>
 

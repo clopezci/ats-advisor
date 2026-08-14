@@ -1,12 +1,15 @@
 "use client";
 
+
+import { CourseWithTool } from "@/components/CourseWithTool";
+import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
 import { buildPortfolioDraft } from "@/lib/outplacement/portfolioDraft";
 
-export default function PortfolioPage() {
+function PortfolioTool() {
   const [role, setRole] = useState("");
   const [situation, setSituation] = useState("");
   const [task, setTask] = useState("");
@@ -117,5 +120,16 @@ export default function PortfolioPage() {
         Volver
       </Link>
     </div>
+  );
+}
+
+
+export default function Page() {
+  const course = toolCourseById("portfolio-star");
+  if (!course) return null;
+  return (
+    <CourseWithTool course={course}>
+      <PortfolioTool />
+    </CourseWithTool>
   );
 }

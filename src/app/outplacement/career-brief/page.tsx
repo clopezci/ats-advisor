@@ -1,5 +1,8 @@
 "use client";
 
+
+import { CourseWithTool } from "@/components/CourseWithTool";
+import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
@@ -7,7 +10,7 @@ import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
 import { loadRiasecResult } from "@/lib/outplacement/riasec";
 import { openCareerBriefPrint } from "@/lib/outplacement/careerBrief";
 
-export default function CareerBriefPage() {
+function CareerBriefTool() {
   const [name, setName] = useState("");
   const [targetRole, setTargetRole] = useState("");
   const [city, setCity] = useState("Colombia");
@@ -124,5 +127,16 @@ export default function CareerBriefPage() {
         Volver
       </Link>
     </div>
+  );
+}
+
+
+export default function Page() {
+  const course = toolCourseById("career-brief");
+  if (!course) return null;
+  return (
+    <CourseWithTool course={course}>
+      <CareerBriefTool />
+    </CourseWithTool>
   );
 }

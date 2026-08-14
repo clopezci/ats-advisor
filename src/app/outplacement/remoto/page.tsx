@@ -1,5 +1,8 @@
 "use client";
 
+
+import { CourseWithTool } from "@/components/CourseWithTool";
+import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
@@ -12,7 +15,7 @@ import {
   REMOTE_STORAGE_KEY,
 } from "@/lib/outplacement/remoteBilingual";
 
-export default function RemotoBilinguePage() {
+function RemotoTool() {
   const [esBullet, setEsBullet] = useState("");
   const [enBullet, setEnBullet] = useState("");
   const [checks, setChecks] = useState<Record<string, boolean>>({});
@@ -119,5 +122,16 @@ export default function RemotoBilinguePage() {
         Volver
       </Link>
     </div>
+  );
+}
+
+
+export default function Page() {
+  const course = toolCourseById("remoto-bilingue");
+  if (!course) return null;
+  return (
+    <CourseWithTool course={course}>
+      <RemotoTool />
+    </CourseWithTool>
   );
 }

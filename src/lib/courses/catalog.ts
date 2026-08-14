@@ -2,6 +2,7 @@ import { OUTPLACEMENT_MODULES } from "@/lib/outplacement/modules";
 import { outModuleShort } from "@/lib/outplacement/labels";
 import type { CourseDef, CourseLesson } from "@/lib/courses/types";
 import { BIENESTAR_COURSE } from "@/lib/courses/bienestarCourse";
+import { TOOL_COURSES, toolCourseById } from "@/lib/courses/toolCourses";
 
 /** Expande una cápsula corta a lección completa (cómo, tips, plantilla, tareas). */
 function enrichCapsule(
@@ -84,10 +85,12 @@ export function moduleToCourse(code: string): CourseDef | null {
 
 export function allCareerCourses(): CourseDef[] {
   const mods = OUTPLACEMENT_MODULES.map((m) => moduleToCourse(m.code)!).filter(Boolean);
-  return [BIENESTAR_COURSE, ...mods];
+  return [BIENESTAR_COURSE, ...mods, ...TOOL_COURSES];
 }
 
 export function getCourseById(id: string): CourseDef | null {
   if (id === BIENESTAR_COURSE.id) return BIENESTAR_COURSE;
+  const tool = toolCourseById(id);
+  if (tool) return tool;
   return moduleToCourse(id);
 }

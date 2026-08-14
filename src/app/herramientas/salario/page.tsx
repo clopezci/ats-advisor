@@ -1,5 +1,8 @@
 "use client";
 
+
+import { CourseWithTool } from "@/components/CourseWithTool";
+import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
@@ -19,7 +22,7 @@ function fmt(n: number) {
   }).format(n);
 }
 
-export default function SalarioPage() {
+function SalarioTool() {
   const [role, setRole] = useState(SALARY_BANDS[0].id);
   const [city, setCity] = useState<CityTier>("bogota_medellin");
   const est = useMemo(() => estimateBand(role, city), [role, city]);
@@ -86,5 +89,16 @@ export default function SalarioPage() {
         Volver
       </Link>
     </div>
+  );
+}
+
+
+export default function Page() {
+  const course = toolCourseById("bandas-salario");
+  if (!course) return null;
+  return (
+    <CourseWithTool course={course}>
+      <SalarioTool />
+    </CourseWithTool>
   );
 }

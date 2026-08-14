@@ -1,5 +1,8 @@
 "use client";
 
+
+import { CourseWithTool } from "@/components/CourseWithTool";
+import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
@@ -12,7 +15,7 @@ import {
 } from "@/lib/entitlements";
 import { DEEP_TRACKS, getDeepTrack } from "@/lib/outplacement/deepTracks";
 
-export default function SegundaCarreraPage() {
+function SegundaCarreraTool() {
   const [plan, setPlan] = useState<PlanId>("free");
   const [trackId, setTrackId] = useState<string | null>(null);
   const [context, setContext] = useState("");
@@ -132,5 +135,16 @@ Devuelve Día 1…14 con título + 2 acciones. Español LATAM.`,
         Volver
       </Link>
     </div>
+  );
+}
+
+
+export default function Page() {
+  const course = toolCourseById("segunda-carrera");
+  if (!course) return null;
+  return (
+    <CourseWithTool course={course}>
+      <SegundaCarreraTool />
+    </CourseWithTool>
   );
 }

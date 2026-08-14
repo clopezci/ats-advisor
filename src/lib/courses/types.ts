@@ -33,4 +33,7 @@ export type CourseDef = {
   short: string;
   href: string;
   lessons: CourseLesson[];
+  /** Si hay herramienta práctica asociada */
+  toolHref?: string;
+  toolLabel?: string;
 };

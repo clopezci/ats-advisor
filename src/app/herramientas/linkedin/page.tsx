@@ -1,11 +1,14 @@
 "use client";
 
+
+import { CourseWithTool } from "@/components/CourseWithTool";
+import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceInput } from "@/components/VoiceField";
 
-export default function LinkedInToolPage() {
+function LinkedInTool() {
   const [role, setRole] = useState("");
   const [value, setValue] = useState("");
   const [niche, setNiche] = useState("");
@@ -125,5 +128,16 @@ export default function LinkedInToolPage() {
         Herramientas
       </Link>
     </div>
+  );
+}
+
+
+export default function Page() {
+  const course = toolCourseById("linkedin-opt");
+  if (!course) return null;
+  return (
+    <CourseWithTool course={course}>
+      <LinkedInTool />
+    </CourseWithTool>
   );
 }

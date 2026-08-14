@@ -129,9 +129,11 @@ function LessonBody({
 export function CoursePlayer({
   course,
   backHref = "/outplacement/tablero",
+  onOpenTool,
 }: {
   course: CourseDef;
   backHref?: string;
+  onOpenTool?: () => void;
 }) {
   const [lessonId, setLessonId] = useState<string | null>(null);
   const [tick, setTick] = useState(0);
@@ -247,6 +249,16 @@ export function CoursePlayer({
       <Link href={backHref} className="btn-secondary">
         Tablero de avance
       </Link>
+      {onOpenTool && (
+        <button type="button" className="btn-primary" onClick={onOpenTool}>
+          {course.toolLabel || "Ir a la práctica / herramienta"}
+        </button>
+      )}
+      {!onOpenTool && course.toolHref && (
+        <Link href={course.toolHref} className="btn-primary">
+          {course.toolLabel || "Ir a la práctica / herramienta"}
+        </Link>
+      )}
     </div>
   );
 }

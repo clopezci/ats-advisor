@@ -1,5 +1,8 @@
 "use client";
 
+
+import { CourseWithTool } from "@/components/CourseWithTool";
+import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
@@ -11,7 +14,7 @@ import {
   scoreRiasec,
 } from "@/lib/outplacement/riasec";
 
-export default function AssessmentPage() {
+function AssessmentTool() {
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [done, setDone] = useState(false);
   const result = useMemo(() => {
@@ -132,5 +135,16 @@ export default function AssessmentPage() {
         Volver a outplacement
       </Link>
     </div>
+  );
+}
+
+
+export default function Page() {
+  const course = toolCourseById("rumbo-riasec");
+  if (!course) return null;
+  return (
+    <CourseWithTool course={course}>
+      <AssessmentTool />
+    </CourseWithTool>
   );
 }

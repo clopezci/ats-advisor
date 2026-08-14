@@ -5,6 +5,11 @@ import { useEffect, useState } from "react";
 import { allCareerCourses, getCourseById } from "@/lib/courses/catalog";
 import { nextOpenLesson, readLearningCursor } from "@/lib/courses/progress";
 
+function lessonHref(courseHref: string, lessonId: string) {
+  const join = courseHref.includes("?") ? "&" : "?";
+  return `${courseHref}${join}lesson=${encodeURIComponent(lessonId)}`;
+}
+
 /**
  * Recordatorio local: continúa la lección pendiente (cursor o siguiente abierta).
  */
@@ -19,7 +24,7 @@ export function DailyCourseReminder() {
       const lesson = course?.lessons.find((l) => l.id === cur.lessonId);
       if (course && lesson) {
         setLabel(`${course.short}: ${lesson.title}`);
-        setHref(course.href);
+        setHref(lessonHref(course.href, lesson.id));
         return;
       }
     }
@@ -27,7 +32,7 @@ export function DailyCourseReminder() {
       const n = nextOpenLesson(c);
       if (n) {
         setLabel(`${c.short}: ${n.title}`);
-        setHref(c.href);
+        setHref(lessonHref(c.href, n.id));
         return;
       }
     }

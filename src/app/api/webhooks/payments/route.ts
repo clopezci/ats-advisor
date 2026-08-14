@@ -10,6 +10,7 @@ type Normalized = {
   reference: string;
   status: string;
   planHint: string | null;
+  verified: boolean;
 };
 
 function planFromReference(reference: string) {
@@ -17,7 +18,7 @@ function planFromReference(reference: string) {
   return planMatch?.[1]?.toLowerCase() || null;
 }
 
-function normalizeWompi(body: Record<string, unknown>): Normalized {
+function normalizeWompi(body: Record<string, unknown>, verified: boolean): Normalized {
   const data = (body.data || body) as Record<string, unknown>;
   const reference =
     String(
@@ -37,6 +38,7 @@ function normalizeWompi(body: Record<string, unknown>): Normalized {
     reference,
     status,
     planHint: planFromReference(reference),
+    verified,
   };
 }
 
@@ -54,6 +56,7 @@ async function normalizeMercadoPago(
   const token = process.env.MP_ACCESS_TOKEN || process.env.MERCADOPAGO_ACCESS_TOKEN;
   let reference = "sin-ref";
   let status = "n/d";
+  let verified = false;
 
   if (token && dataId && (topic === "payment" || topic.includes("payment"))) {
     try {
@@ -65,14 +68,13 @@ async function normalizeMercadoPago(
         reference = String(pay.external_reference || reference);
         status = String(pay.status || status).toUpperCase();
         if (status === "APPROVED" || status === "approved") status = "APPROVED";
+        verified = true;
       }
     } catch {
       /* ignore fetch errors; still ack webhook */
     }
-  } else if (body.external_reference) {
-    reference = String(body.external_reference);
-    status = String(body.status || "n/d").toUpperCase();
   }
+  // Sin consulta API no confiamos en body.external_reference (evita forge).
 
   return {
     provider: "mercadopago",
@@ -80,6 +82,7 @@ async function normalizeMercadoPago(
     reference,
     status,
     planHint: planFromReference(reference),
+    verified,
   };
 }
 
@@ -94,10 +97,14 @@ function looksLikeMercadoPago(body: Record<string, unknown>, url: URL) {
   );
 }
 
+function isProdRuntime() {
+  return process.env.VERCEL_ENV === "production" || process.env.NODE_ENV === "production";
+}
+
 /**
  * Webhook unificado Wompi + Mercado Pago.
- * Wompi: checksum con WOMPI_EVENTS_SECRET (fail closed) salvo WOMPI_CHECKSUM_MODE=skip.
- * MP: consulta payment si hay MP_ACCESS_TOKEN.
+ * Wompi: checksum obligatorio en prod (salvo WOMPI_CHECKSUM_MODE=skip).
+ * MP: solo activa si se verificó el payment vía API.
  */
 export async function POST(req: Request) {
   const raw = await req.text();
@@ -106,7 +113,6 @@ export async function POST(req: Request) {
   try {
     body = raw ? JSON.parse(raw) : {};
   } catch {
-    // MP a veces manda query-only
     body = {};
   }
 
@@ -119,6 +125,12 @@ export async function POST(req: Request) {
     const checksum = req.headers.get("x-event-checksum") || "";
     const skip = process.env.WOMPI_CHECKSUM_MODE === "skip";
 
+    if (!secret && isProdRuntime() && !skip) {
+      await notifyOwnerTelegram("Webhook Wompi rechazado: falta WOMPI_EVENTS_SECRET en producción");
+      return NextResponse.json({ error: "Webhook no configurado" }, { status: 503 });
+    }
+
+    let verified = false;
     if (secret && !skip && Object.keys(body).length) {
       if (!checksum) {
         return NextResponse.json({ error: "Falta x-event-checksum" }, { status: 401 });
@@ -130,20 +142,25 @@ export async function POST(req: Request) {
         await notifyOwnerTelegram("Webhook pagos: checksum inválido (rechazado)");
         return NextResponse.json({ error: "Checksum inválido" }, { status: 401 });
       }
+      verified = true;
+    } else if (skip || !isProdRuntime()) {
+      verified = Boolean(Object.keys(body).length);
     }
-    normalized = normalizeWompi(body);
+
+    normalized = normalizeWompi(body, verified);
   }
 
   await notifyOwnerTelegram(
     `Pago webhook (${normalized.provider}): ${normalized.event} · ${normalized.status} · ${normalized.reference}${
       normalized.planHint ? ` · plan=${normalized.planHint}` : ""
-    }`
+    }${normalized.verified ? "" : " · UNVERIFIED"}`
   );
 
   const sb = createServiceSupabase();
   const approved =
-    normalized.status.toUpperCase() === "APPROVED" ||
-    normalized.status.toLowerCase() === "approved";
+    normalized.verified &&
+    (normalized.status.toUpperCase() === "APPROVED" ||
+      normalized.status.toLowerCase() === "approved");
 
   let entitlement: Awaited<ReturnType<typeof activatePlanFromPayment>> | null = null;
   if (approved) {
@@ -170,7 +187,6 @@ export async function POST(req: Request) {
 }
 
 export async function GET(req: Request) {
-  // Mercado Pago IPN a veces usa GET
   const url = new URL(req.url);
   if (url.searchParams.get("topic") || url.searchParams.get("id")) {
     return POST(

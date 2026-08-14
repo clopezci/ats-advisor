@@ -3,6 +3,8 @@ import { completeWithCascade, type AiTask } from "@/lib/ai/router";
 import { withKnowledgeContext } from "@/lib/ai/knowledge";
 import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
 import { reportError } from "@/lib/observability";
+import { clampText, isValidEmail } from "@/lib/validation";
+import { getCloudPlanByEmail, isPaidCloudPlan } from "@/lib/payments/entitlementsCloud";
 
 export const runtime = "nodejs";
 
@@ -21,6 +23,9 @@ const GROUNDED_TASKS = new Set([
   "out09_outline",
 ]);
 
+/** Tareas permitidas sin plan cloud (ATS gratis + límites de rate). */
+const FREE_AI_TASKS = new Set<AiTask>(["ats_suggest", "cv_rewrite", "application_advice", "general"]);
+
 export async function POST(req: Request) {
   const limited = rateLimit(req, "ai-complete", { limit: 20, windowMs: 60_000 });
   if (!limited.ok) return rateLimitedResponse(limited.retryAfterSec);
@@ -38,12 +43,31 @@ export async function POST(req: Request) {
       "general",
     ];
     const task: AiTask = (allowed.includes(rawTask as AiTask) ? rawTask : "general") as AiTask;
-    const prompt = String(body.prompt || "").trim();
+    const prompt = clampText(body.prompt || "", 12000).trim();
     if (prompt.length < 8) {
       return NextResponse.json({ error: "Escribe un poco más de contexto." }, { status: 400 });
     }
     if (prompt.length > 12000) {
       return NextResponse.json({ error: "Prompt demasiado largo (máx. 12000 caracteres)." }, { status: 400 });
+    }
+
+    const isProd = process.env.VERCEL_ENV === "production" || process.env.NODE_ENV === "production";
+    if (!FREE_AI_TASKS.has(task) && isProd) {
+      const email = clampText(body.email || "", 120).trim().toLowerCase();
+      let ok = false;
+      if (isValidEmail(email)) {
+        const cloud = await getCloudPlanByEmail(email);
+        ok = isPaidCloudPlan(cloud?.plan);
+      }
+      if (!ok) {
+        return NextResponse.json(
+          {
+            error: "Esta IA requiere plan Carrera con correo verificado en cloud. Entra a /cuenta o /precios.",
+            code: "PAYWALL",
+          },
+          { status: 402 }
+        );
+      }
     }
 
     const grounded =

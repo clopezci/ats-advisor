@@ -9,6 +9,7 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
 import { JobPasteField } from "@/components/CvPasteField";
 import { pickFiltroQuestions, scoreFiltroAnswers, type FiltroQ } from "@/lib/interview/filtro";
+import { storedProfileEmail } from "@/lib/client/storedEmail";
 
 function FiltroTool() {
   const [job, setJob] = useState("");
@@ -57,6 +58,7 @@ function FiltroTool() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          email: storedProfileEmail(),
           task: "interview_feedback",
           useKnowledge: true,
           prompt: `A partir de esta oferta, genera EXACTAMENTE 3 preguntas típicas de filtro telefónico (screening) en JSON:
@@ -94,6 +96,7 @@ Solo JSON.`,
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          email: storedProfileEmail(),
           task: "interview_feedback",
           useKnowledge: true,
           prompt: `Evalúa estas 3 respuestas de filtro telefónico.

@@ -115,16 +115,30 @@ export default function CuentaPage() {
     setPlanState("free");
     if (email.includes("@")) {
       try {
-        await fetch("/api/account/habeas", {
+        const sb = createBrowserSupabase();
+        const { data: sess } = sb ? await sb.auth.getSession() : { data: { session: null } };
+        const token = sess.session?.access_token;
+        const headers: Record<string, string> = { "Content-Type": "application/json" };
+        if (token) headers.Authorization = `Bearer ${token}`;
+        const res = await fetch("/api/account/habeas", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers,
           body: JSON.stringify({ email, payload: {}, action: "wipe" }),
         });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          setMsg(
+            data.error ||
+              "Wipe local OK. Cloud requiere sesión (magic link) con el mismo correo."
+          );
+          return;
+        }
       } catch {
-        /* ignore */
+        setMsg("Datos locales eliminados. No se pudo contactar wipe cloud.");
+        return;
       }
     }
-    setMsg("Datos locales eliminados. Si había perfil cloud, quedó en plan free / wipe solicitado.");
+    setMsg("Datos locales eliminados. Si había perfil cloud autenticado, quedó en plan free.");
   }
 
   function deleteLocal() {

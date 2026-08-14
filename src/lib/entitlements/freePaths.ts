@@ -14,6 +14,7 @@ export function isFreeAppPath(pathname: string): boolean {
   // Exact free tools (2–3)
   if (p === "/ats") return true;
   if (p === "/herramientas/calculadora") return true;
+  if (p === "/herramientas/match") return true; // alias del encaje rápido
   if (p === "/tracker") return true;
 
   // Hubs / account / legal / auth always open

@@ -66,6 +66,30 @@ async function alreadyEntitled(reference: string): Promise<boolean> {
   return (data || []).some((row) => (row.detail as { reference?: string })?.reference === reference);
 }
 
+/** True si el webhook (u otro origen confiable) ya registró pago aprobado para esa referencia. */
+export async function wasPaymentApproved(reference: string): Promise<boolean> {
+  const sb = createServiceSupabase();
+  if (!sb || !reference) return false;
+  const ref = reference.trim();
+  if (/^(DUMMY|DEMO)-/i.test(ref)) return false;
+  const { data } = await sb
+    .from("audit_events")
+    .select("detail, kind")
+    .in("kind", ["payment_approved", "payment_entitlement"])
+    .order("created_at", { ascending: false })
+    .limit(120);
+  return (data || []).some((row) => {
+    const d = row.detail as { reference?: string; status?: string };
+    if (d?.reference !== ref) return false;
+    if (row.kind === "payment_entitlement") return true;
+    return String(d.status || "").toUpperCase() === "APPROVED";
+  });
+}
+
+export function isPaidCloudPlan(plan: string | null | undefined): boolean {
+  return ["carrera", "plus", "tester"].includes(String(plan || "").toLowerCase());
+}
+
 /**
  * Activa plan en profiles por email.
  * out09_extra: baja out09_used_this_month en 1 (cupo extra).

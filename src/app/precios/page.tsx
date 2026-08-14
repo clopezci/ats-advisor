@@ -13,8 +13,14 @@ import {
   type LearningChannel,
 } from "@/lib/channels/pricing";
 import { CAREER_MODULE_PITCH, CAREER_PATH_LABEL } from "@/lib/outplacement/labels";
+import { isValidEmail, safeAppPath } from "@/lib/validation";
 
 const waPrice = whatsappFinalPriceCop();
+
+function isLocalHost() {
+  if (typeof window === "undefined") return false;
+  return window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+}
 
 declare global {
   interface Window {
@@ -50,9 +56,11 @@ export default function PreciosPage() {
   const [channel, setChannel] = useState<LearningChannel>("telegram");
   const [prices, setPrices] = useState({ carrera: 79000, plus: 99000, out09_extra: 22000, whatsapp_addon: waPrice });
   const [returnNext, setReturnNext] = useState("/guia?recorrido=1");
+  const [demoAllowed, setDemoAllowed] = useState(false);
 
   useEffect(() => {
     setCurrentPlan(readEntitlement().plan);
+    setDemoAllowed(isLocalHost());
     try {
       const p = JSON.parse(localStorage.getItem("ats_profile") || "null");
       if (p?.email) setEmail(p.email);
@@ -61,7 +69,7 @@ export default function PreciosPage() {
     }
     const params = new URLSearchParams(window.location.search);
     const next = params.get("next");
-    if (next && next.startsWith("/")) setReturnNext(next);
+    if (next) setReturnNext(safeAppPath(next, "/guia?recorrido=1"));
     fetch("/api/features")
       .then((r) => r.json())
       .then((d) => {
@@ -75,66 +83,81 @@ export default function PreciosPage() {
         }
       })
       .catch(() => undefined);
-    const isLocal =
-      window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+
     if (params.get("paid") === "1") {
-      try {
-        const last = JSON.parse(localStorage.getItem("ats_last_checkout") || "null");
-        const plan = String(last?.plan || params.get("plan") || "carrera") as PlanId;
-        if (plan === "carrera" || plan === "plus") {
-          setPlan(plan, "demo_checkout");
-          setCurrentPlan(plan);
-          setMsg(
-            `Pago detectado. Plan ${planLabel(plan)} en este dispositivo. El webhook activa cloud si diste correo.`
-          );
-          const ret = params.get("next");
-          if (ret && ret.startsWith("/")) {
-            window.location.href = ret;
-            return;
+      void (async () => {
+        try {
+          const last = JSON.parse(localStorage.getItem("ats_last_checkout") || "null");
+          const planHint = String(last?.plan || params.get("plan") || "carrera");
+          const em = String(last?.email || "").trim().toLowerCase();
+          const ret = safeAppPath(params.get("next"), returnNext);
+
+          if (isLocalHost()) {
+            if (planHint === "carrera" || planHint === "plus") {
+              setPlan(planHint, "demo_checkout");
+              setCurrentPlan(planHint);
+            }
           }
-        } else {
+
           setMsg(
-            "Si el pago fue aprobado, el webhook activa el plan en servidor. Usa el mismo correo en /cuenta → Reclamar pago."
+            "Pago recibido. Esperamos confirmación del webhook. Si diste correo, reclama en /cuenta o espera unos segundos."
           );
+
+          if (isValidEmail(em) && last?.reference) {
+            const act = await fetch("/api/payments/activate", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email: em, reference: last.reference, plan: last.plan }),
+            });
+            const data = await act.json().catch(() => ({}));
+            if (act.ok && data.profile?.plan && ["carrera", "plus", "tester"].includes(data.profile.plan)) {
+              setPlan(data.profile.plan as PlanId, "webhook");
+              setCurrentPlan(data.profile.plan as PlanId);
+              setMsg(`Plan ${planLabel(data.profile.plan)} sincronizado desde cloud.`);
+              window.location.href = ret;
+              return;
+            }
+            if (data.code === "NOT_APPROVED") {
+              setMsg(
+                "Aún no hay confirmación del proveedor. En unos minutos usa /cuenta → Reclamar pago con el mismo correo."
+              );
+            }
+          }
+
+          if (isLocalHost() && (planHint === "carrera" || planHint === "plus")) {
+            window.location.href = ret;
+          }
+        } catch {
+          setMsg("Pago recibido. Si el plan no aparece, reclámalo en /cuenta con tu correo.");
         }
-        const em = String(last?.email || email || "").trim();
-        if (em.includes("@") && last?.reference) {
-          fetch("/api/payments/activate", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email: em, reference: last.reference, plan: last.plan }),
-          }).catch(() => undefined);
-        }
-      } catch {
-        setMsg("Pago recibido. Activa Carrera demo si el plan no se reflejó aún.");
-      }
+      })();
     }
     if (params.get("demo") === "carrera") {
-      if (isLocal) {
+      if (isLocalHost()) {
         setPlan("carrera", "demo_checkout");
         setCurrentPlan("carrera");
         setMsg("Plan Carrera activado en este dispositivo (demo local).");
       } else {
-        setMsg("La activación ?demo=carrera solo está disponible en localhost. Usa checkout o el botón demo.");
+        setMsg("La activación demo solo está disponible en localhost. Usa checkout real.");
       }
     }
   }, []);
 
   function returnAfterPay() {
-    try {
-      const next = new URLSearchParams(window.location.search).get("next");
-      if (next && next.startsWith("/")) {
-        window.location.href = next;
-        return true;
-      }
-    } catch {
-      /* ignore */
-    }
-    return false;
+    const next = safeAppPath(
+      new URLSearchParams(window.location.search).get("next") || returnNext,
+      "/guia?recorrido=1"
+    );
+    window.location.href = next;
+    return true;
   }
 
-  /** Simula pago real: delay → activa plan → vuelve al recorrido si venía de Mi plan. */
+  /** Solo localhost: simula pago real. */
   async function dummyPay(plan: "carrera" | "plus" = "carrera") {
+    if (!isLocalHost()) {
+      setMsg("El pago demo solo está disponible en localhost. Usa Checkout real Carrera.");
+      return;
+    }
     setDummyPhase("processing");
     setLoading(`dummy-${plan}`);
     setMsg("");
@@ -160,26 +183,43 @@ export default function PreciosPage() {
         addon ? ` + WhatsApp ${formatCop(addon)}/mes (registrado)` : ""
       }.`
     );
-    if (returnAfterPay()) return;
+    returnAfterPay();
   }
 
   async function checkout(plan: "carrera" | "plus" | "out09_extra") {
     setLoading(plan);
     setMsg("");
+    if (!isValidEmail(email)) {
+      setMsg("Ingresa un correo válido para asociar el pago y poder reclamarlo.");
+      setLoading(null);
+      return;
+    }
     try {
       const res = await fetch("/api/payments/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan, email, provider, coupon, channel }),
+        body: JSON.stringify({
+          plan,
+          email: email.trim().toLowerCase(),
+          provider,
+          coupon,
+          channel,
+          next: returnNext,
+        }),
       });
       const data = await res.json();
       if (data.mode === "demo") {
-        setMsg(data.message + " Mientras tanto puedes activar Carrera demo local.");
+        setMsg(
+          data.message +
+            (isLocalHost()
+              ? " En localhost puedes usar el botón demo."
+              : " Configura Wompi o Mercado Pago en el servidor.")
+        );
         localStorage.setItem("ats_last_checkout", JSON.stringify(data));
         return;
       }
 
-      localStorage.setItem("ats_last_checkout", JSON.stringify(data));
+      localStorage.setItem("ats_last_checkout", JSON.stringify({ ...data, email }));
 
       if (data.mode === "mercadopago" && data.initPoint) {
         window.location.href = data.initPoint;
@@ -198,17 +238,22 @@ export default function PreciosPage() {
           reference: data.reference,
           publicKey: data.publicKey,
           redirectUrl: data.redirectUrl,
-          customerData: email.includes("@") ? { email } : undefined,
+          customerData: { email: email.trim().toLowerCase() },
         });
         checkoutWidget.open((result) => {
           if (result?.status === "APPROVED") {
-            const map: Record<string, PlanId> = {
-              carrera: "carrera",
-              plus: "plus",
-              out09_extra: "carrera",
-            };
-            setPlan(map[plan] || "carrera", "demo_checkout");
-            setMsg(`Pago aprobado. Plan ${planLabel(map[plan] || "carrera")} activo en este dispositivo.`);
+            setMsg(
+              "Pago aprobado en widget. Esperamos el webhook para activar cloud; mientras, reclama en /cuenta si no se refleja."
+            );
+            if (isLocalHost()) {
+              const map: Record<string, PlanId> = {
+                carrera: "carrera",
+                plus: "plus",
+                out09_extra: "carrera",
+              };
+              setPlan(map[plan] || "carrera", "demo_checkout");
+              setCurrentPlan(map[plan] || "carrera");
+            }
           } else {
             setMsg(`Checkout cerrado (${result?.status || "sin estado"}). Si pagaste, espera el webhook.`);
           }
@@ -311,25 +356,27 @@ export default function PreciosPage() {
           <li>• Coach IA, filtro telefónico, red de contactos, negociación de oferta</li>
           <li>• Cápsulas y recordatorio de tarea por Telegram (gratis) o WhatsApp (add-on más alto)</li>
         </ul>
+        {demoAllowed && (
+          <button
+            type="button"
+            className="btn-secondary"
+            disabled={dummyPhase === "processing" || loading === "dummy-carrera"}
+            onClick={() => dummyPay("carrera")}
+          >
+            {loading === "dummy-carrera"
+              ? "Procesando pago…"
+              : dummyPhase === "done" && canAccessOutplacement(currentPlan)
+                ? "✓ Carrera activo — volver al recorrido"
+                : "Pagar Carrera (demo local)"}
+          </button>
+        )}
         <button
           type="button"
           className="btn-primary"
-          disabled={dummyPhase === "processing" || loading === "dummy-carrera"}
-          onClick={() => dummyPay("carrera")}
-        >
-          {loading === "dummy-carrera"
-            ? "Procesando pago…"
-            : dummyPhase === "done" && canAccessOutplacement(currentPlan)
-              ? "✓ Carrera activo — volver al recorrido"
-              : "Pagar Carrera (demo)"}
-        </button>
-        <button
-          type="button"
-          className="btn-secondary"
           disabled={loading === "carrera"}
           onClick={() => checkout("carrera")}
         >
-          {loading === "carrera" ? "Preparando…" : "Checkout real Carrera"}
+          {loading === "carrera" ? "Preparando…" : "Pagar Carrera"}
         </button>
       </section>
 
@@ -383,23 +430,25 @@ export default function PreciosPage() {
         </p>
       </section>
 
-      <section className="bento-card space-y-2">
-        <h2 className="font-semibold text-sm">Modo prueba (sin Wompi / MP)</h2>
-        <p className="text-sm muted">
-          El botón <strong>Pagar Carrera (demo)</strong> simula un cobro (~1 s), activa el plan en este
-          navegador y, si venías de Mi plan, te devuelve al mismo paso. No cobra dinero.
-        </p>
-        {dummyPhase === "processing" && (
-          <p className="text-sm" style={{ color: "var(--brand)" }}>
-            Simulando pasarela… no cierres esta pestaña.
+      {demoAllowed && (
+        <section className="bento-card space-y-2">
+          <h2 className="font-semibold text-sm">Modo prueba (solo localhost)</h2>
+          <p className="text-sm muted">
+            El botón demo simula un cobro, activa el plan en este navegador y vuelve a tu recorrido. No
+            aparece en producción.
           </p>
-        )}
-        {dummyPhase === "done" && (
-          <Link href={returnNext} className="btn-primary">
-            Volver a mi recorrido →
-          </Link>
-        )}
-      </section>
+          {dummyPhase === "processing" && (
+            <p className="text-sm" style={{ color: "var(--brand)" }}>
+              Simulando pasarela… no cierres esta pestaña.
+            </p>
+          )}
+          {dummyPhase === "done" && (
+            <Link href={returnNext} className="btn-primary">
+              Volver a mi recorrido →
+            </Link>
+          )}
+        </section>
+      )}
 
       {msg && <p className="text-sm muted">{msg}</p>}
       <Link href="/guia" className="btn-secondary">

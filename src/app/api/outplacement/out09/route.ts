@@ -6,6 +6,8 @@ import { retrieveKnowledge } from "@/lib/ai/knowledge";
 import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
 import { reportError } from "@/lib/observability";
 import { hydrateSettingsFromCloud } from "@/lib/settingsPersist";
+import { clampText, isValidEmail } from "@/lib/validation";
+import { getCloudPlanByEmail, isPaidCloudPlan } from "@/lib/payments/entitlementsCloud";
 
 export const runtime = "nodejs";
 
@@ -23,12 +25,11 @@ export async function POST(req: Request) {
 
     const body = await req.json().catch(() => ({}));
     const skillType = body.skillType === "hard" ? "hard" : "soft";
-    const description = String(body.description || "").trim();
-    const answers = body.answers || {};
-    const plan = String(body.plan || "free");
+    const description = clampText(body.description || "", settings.ai_limits.max_out09_prompt_chars || 2000).trim();
+    const answers = body.answers && typeof body.answers === "object" ? body.answers : {};
+    const email = clampText(body.email || "", 120).trim().toLowerCase();
     const maxChars = settings.ai_limits.max_out09_prompt_chars || 2000;
     const isProd = process.env.VERCEL_ENV === "production" || process.env.NODE_ENV === "production";
-    // allowDemo solo en no-producción (evita bypass de paywall)
     const allowDemo = !isProd && body.allowDemo === true;
 
     if (description.length < 12) {
@@ -47,11 +48,22 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    const paidPlans = new Set(["carrera", "plus", "tester"]);
-    if (!paidPlans.has(plan) && !allowDemo) {
+
+    let allowed = allowDemo;
+    if (!allowed && isValidEmail(email)) {
+      const cloud = await getCloudPlanByEmail(email);
+      allowed = isPaidCloudPlan(cloud?.plan);
+    }
+    // Fallback no-prod: aceptar plan local solo fuera de producción
+    if (!allowed && !isProd) {
+      const clientPlan = String(body.plan || "free");
+      allowed = isPaidCloudPlan(clientPlan);
+    }
+    if (!allowed) {
       return NextResponse.json(
         {
-          error: "El curso a tu medida requiere el plan Carrera y compra del add-on. Revisa /precios.",
+          error:
+            "El curso a tu medida requiere plan Carrera verificado (correo con magic link / pago cloud) y el add-on. Revisa /precios.",
           code: "PAYWALL",
         },
         { status: 402 }

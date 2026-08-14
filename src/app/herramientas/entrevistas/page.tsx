@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
+import { storedProfileEmail } from "@/lib/client/storedEmail";
 
 const BANK: Record<string, string[]> = {
   general: [
@@ -49,6 +50,7 @@ function EntrevistasBankTool() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          email: storedProfileEmail(),
           task: "interview_feedback",
           prompt: `Pregunta de entrevista (${track}): ${question}. Respuesta: ${answer}. Feedback breve STAR en español, qué mejorar y versión mejorada corta. No inventes hechos.`,
         }),

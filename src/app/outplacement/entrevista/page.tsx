@@ -8,6 +8,7 @@ import Link from "next/link";
 import { VoiceTextarea } from "@/components/VoiceField";
 import { SpeakButton } from "@/components/SpeakButton";
 import { scoreStarAnswer, STAR_BANK } from "@/lib/interview/star";
+import { storedProfileEmail } from "@/lib/client/storedEmail";
 
 function EntrevistaTool() {
   const [qIndex, setQIndex] = useState(0);
@@ -36,6 +37,7 @@ function EntrevistaTool() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          email: storedProfileEmail(),
           task: "interview_feedback",
           useKnowledge: true,
           prompt: [

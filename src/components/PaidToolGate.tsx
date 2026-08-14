@@ -32,14 +32,18 @@ export function PaidToolGate({ children }: { children: ReactNode }) {
 
   if (canAccessOutplacement(plan)) return <>{children}</>;
 
+  const resume = path.startsWith("/") ? path : "/guia?recorrido=1";
+  const preciosHref = `/precios?plan=carrera&next=${encodeURIComponent(resume)}`;
+
   return (
     <div className="flex flex-1 flex-col gap-5">
       <PaywallCard
         currentPlan={plan}
+        nextHref={resume}
         title="Incluido en el plan Carrera"
         reason={`Esta herramienta forma parte del acompañamiento Carrera (${CAREER_PATH_LABEL}, LinkedIn, carta, entrevistas, negociación…). Gratis solo dejamos el analizador ATS, el encaje rápido y el tracker.`}
       />
-      <Link href="/precios?plan=carrera&next=/guia?recorrido=1" className="btn-primary">
+      <Link href={preciosHref} className="btn-primary">
         Ver plan Carrera
       </Link>
       <Link href="/ats" className="btn-secondary">

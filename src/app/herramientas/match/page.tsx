@@ -1,7 +1,6 @@
-import { MatchCalculator } from "@/components/MatchCalculator";
+import { redirect } from "next/navigation";
 
-export const metadata = { title: "¿Qué tan bien encaja tu CV?" };
-
+/** Alias legacy → encaje rápido gratis. */
 export default function MatchPage() {
-  return <MatchCalculator />;
+  redirect("/herramientas/calculadora");
 }

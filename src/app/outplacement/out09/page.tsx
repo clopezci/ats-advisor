@@ -64,6 +64,14 @@ export default function Out09Page() {
           description,
           answers,
           plan: entitlement.plan,
+          email: (() => {
+            try {
+              const p = JSON.parse(localStorage.getItem("ats_profile") || "null");
+              return p?.email || "";
+            } catch {
+              return "";
+            }
+          })(),
           allowDemo: entitlement.plan === "tester",
         }),
       });

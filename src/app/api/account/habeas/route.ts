@@ -1,13 +1,27 @@
 import { NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 import { sendResendEmail, notifyOwnerTelegram } from "@/lib/notify/channels";
 import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
-import { escapeHtml, clampText } from "@/lib/validation";
+import { escapeHtml, clampText, isValidEmail } from "@/lib/validation";
 import { reportError } from "@/lib/observability";
-import { createServiceSupabase } from "@/lib/supabase/client";
+import { createServiceSupabase, hasSupabase } from "@/lib/supabase/client";
+
+async function userEmailFromBearer(req: Request): Promise<string | null> {
+  const auth = req.headers.get("authorization") || "";
+  const token = auth.startsWith("Bearer ") ? auth.slice(7).trim() : "";
+  if (!token || !hasSupabase()) return null;
+  const sb = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    { global: { headers: { Authorization: `Bearer ${token}` } }, auth: { persistSession: false } }
+  );
+  const { data } = await sb.auth.getUser();
+  return (data.user?.email || "").toLowerCase() || null;
+}
 
 /**
  * Habeas Data: export por correo + opcional wipe cloud (action=wipe).
- * Wipe borra filas del perfil (scans, courses, jobs) y resetea plan a free — no borra auth.users.
+ * Wipe exige sesión magic-link cuyo email coincida con el solicitado.
  */
 export async function POST(req: Request) {
   const limited = rateLimit(req, "habeas", { limit: 5, windowMs: 60_000 });
@@ -21,8 +35,22 @@ export async function POST(req: Request) {
     const email = clampText(body.email || "", 120).trim().toLowerCase();
     const payload = body.payload || {};
     const action = String(body.action || "export");
-    if (!email.includes("@") || email.length < 5) {
+    if (!isValidEmail(email)) {
       return NextResponse.json({ error: "Correo inválido" }, { status: 400 });
+    }
+
+    if (action === "wipe") {
+      const sessionEmail = await userEmailFromBearer(req);
+      if (!sessionEmail || sessionEmail !== email) {
+        return NextResponse.json(
+          {
+            error:
+              "Para borrar datos cloud inicia sesión (magic link) con el mismo correo y reintenta.",
+            code: "AUTH_REQUIRED",
+          },
+          { status: 401 }
+        );
+      }
     }
 
     const sb = createServiceSupabase();

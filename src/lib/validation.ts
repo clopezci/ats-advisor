@@ -151,6 +151,25 @@ export function clampText(v: unknown, max: number): string {
   return String(v ?? "").slice(0, max);
 }
 
+/** Email usable (formato básico + longitud). */
+export function isValidEmail(v: unknown): boolean {
+  const s = String(v ?? "")
+    .trim()
+    .toLowerCase();
+  if (s.length < 5 || s.length > 120) return false;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
+}
+
+/**
+ * Ruta interna segura para ?next= (solo path relativo, sin // ni protocol-relative).
+ */
+export function safeAppPath(v: unknown, fallback = "/guia"): string {
+  const s = String(v ?? "").trim();
+  if (!s.startsWith("/") || s.startsWith("//") || s.includes("://")) return fallback;
+  if (s.length > 400) return fallback;
+  return s;
+}
+
 export function escapeHtml(s: string): string {
   return s
     .replace(/&/g, "&amp;")

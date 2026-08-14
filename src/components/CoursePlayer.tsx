@@ -145,9 +145,17 @@ export function CoursePlayer({
   );
 
   useEffect(() => {
+    try {
+      const q = new URLSearchParams(window.location.search).get("lesson");
+      if (q && course.lessons.some((l) => l.id === q)) {
+        setLessonId(q);
+        return;
+      }
+    } catch {
+      /* ignore */
+    }
     if (!lessonId) {
       const n = nextOpenLesson(course);
-      // stay on outline by default
       if (n) setLearningCursor({ courseId: course.id, lessonId: n.id, updatedAt: Date.now() });
     }
   }, [course, lessonId]);

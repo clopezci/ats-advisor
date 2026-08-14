@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { applyPromotion, readSettings, resolveWhatsappAddonCop } from "@/lib/settings";
 import { notifyOwnerTelegram } from "@/lib/notify/channels";
 import { hydrateSettingsFromCloud } from "@/lib/settingsPersist";
-import { parseCheckoutPlan, clampText } from "@/lib/validation";
+import { parseCheckoutPlan, clampText, safeAppPath } from "@/lib/validation";
 import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
 import { reportError } from "@/lib/observability";
 import { recordPaymentIntent } from "@/lib/payments/entitlementsCloud";
@@ -37,6 +37,8 @@ export async function POST(req: Request) {
     const amount = priced.amount + waAddon;
     const base = process.env.NEXT_PUBLIC_APP_URL || "https://ats-advisor-two.vercel.app";
     const reference = `ATS-${plan}${waAddon ? "-WA" : ""}-${Date.now()}`;
+    const nextPath = safeAppPath(body.next, "/guia?recorrido=1");
+    const nextQ = encodeURIComponent(nextPath);
 
     await recordPaymentIntent({
       reference,
@@ -75,9 +77,9 @@ export async function POST(req: Request) {
             ],
             payer: email.includes("@") ? { email } : undefined,
             back_urls: {
-              success: `${base}/precios?paid=1&provider=mp&plan=${plan}`,
-              pending: `${base}/precios?paid=pending&provider=mp`,
-              failure: `${base}/precios?paid=0&provider=mp`,
+              success: `${base}/precios?paid=1&provider=mp&plan=${plan}&next=${nextQ}`,
+              pending: `${base}/precios?paid=pending&provider=mp&next=${nextQ}`,
+              failure: `${base}/precios?paid=0&provider=mp&next=${nextQ}`,
             },
             auto_return: "approved",
             notification_url: `${base}/api/webhooks/payments`,
@@ -133,7 +135,7 @@ export async function POST(req: Request) {
         email: email.includes("@") ? email : null,
         coupon: priced.applied,
         discount: priced.discount,
-        redirectUrl: `${base}/precios?paid=1&plan=${plan}`,
+        redirectUrl: `${base}/precios?paid=1&plan=${plan}&next=${nextQ}`,
       });
     }
 

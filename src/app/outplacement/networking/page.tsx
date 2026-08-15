@@ -8,11 +8,13 @@ import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceInput } from "@/components/VoiceField";
 import {
+  CONTACT_CATEGORY_LABEL,
   CONTACT_STATUS_LABEL,
   deleteContact,
   listContacts,
   messageTemplate,
   upsertContact,
+  type ContactCategory,
   type ContactStatus,
   type NetworkContact,
 } from "@/lib/networking/contacts";
@@ -24,6 +26,7 @@ function NetworkingTool() {
   const [role, setRole] = useState("");
   const [nextStep, setNextStep] = useState("Enviar mensaje LinkedIn");
   const [draft, setDraft] = useState("");
+  const [category, setCategory] = useState<ContactCategory>("otro");
 
   function refresh() {
     setItems(listContacts());
@@ -69,6 +72,20 @@ function NetworkingTool() {
           placeholder="Ejemplo: escribirle por LinkedIn el jueves"
           dictationLabel="Dictar siguiente paso"
         />
+        <label className="block text-sm">
+          Categoría
+          <select
+            className="field mt-1"
+            value={category}
+            onChange={(e) => setCategory(e.target.value as ContactCategory)}
+          >
+            {(Object.keys(CONTACT_CATEGORY_LABEL) as ContactCategory[]).map((k) => (
+              <option key={k} value={k}>
+                {CONTACT_CATEGORY_LABEL[k]}
+              </option>
+            ))}
+          </select>
+        </label>
         <button
           type="button"
           className="btn-primary"
@@ -78,6 +95,7 @@ function NetworkingTool() {
               name: name.trim(),
               company: company.trim(),
               role: role.trim() || undefined,
+              category,
               channel: "linkedin",
               status: "por_contactar",
               nextStep: nextStep.trim() || "Contactar",
@@ -134,7 +152,10 @@ function NetworkingTool() {
           <h2 className="font-semibold">
             {c.name} · {c.company}
           </h2>
-          <p className="text-xs muted">{c.role || "—"} · {CONTACT_STATUS_LABEL[c.status]}</p>
+          <p className="text-xs muted">
+            {c.role || "—"} · {CONTACT_CATEGORY_LABEL[c.category] || c.category} ·{" "}
+            {CONTACT_STATUS_LABEL[c.status]}
+          </p>
           <p className="text-sm muted">Próximo: {c.nextStep}</p>
           <select
             className="field"

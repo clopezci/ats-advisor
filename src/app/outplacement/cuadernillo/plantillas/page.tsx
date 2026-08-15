@@ -104,6 +104,39 @@ export default function PlantillasNetworkingPage() {
         </div>
       </section>
 
+      {tpl.subject ? (
+        <section className="bento-card space-y-2">
+          <h2 className="font-semibold text-sm">Asunto (email)</h2>
+          <pre className="text-sm whitespace-pre-wrap font-sans">
+            {fillNetworkTemplate(tpl.subject, vars)}
+          </pre>
+          <button
+            type="button"
+            className="btn-secondary"
+            onClick={() => copy(fillNetworkTemplate(tpl.subject!, vars), "subj")}
+          >
+            {copied === "subj" ? "Copiado" : "Copiar asunto"}
+          </button>
+        </section>
+      ) : null}
+
+      {tpl.inmail ? (
+        <section className="bento-card space-y-2">
+          <h2 className="font-semibold text-sm">InMail / mensaje corto (~200)</h2>
+          <p className="text-xs muted">{fillNetworkTemplate(tpl.inmail, vars).length} caracteres</p>
+          <pre className="text-sm whitespace-pre-wrap font-sans">
+            {fillNetworkTemplate(tpl.inmail, vars)}
+          </pre>
+          <button
+            type="button"
+            className="btn-secondary"
+            onClick={() => copy(fillNetworkTemplate(tpl.inmail!, vars), "inmail")}
+          >
+            {copied === "inmail" ? "Copiado" : "Copiar InMail"}
+          </button>
+        </section>
+      ) : null}
+
       <section className="bento-card space-y-3">
         <div className="flex items-start justify-between gap-2">
           <h2 className="font-semibold text-sm">Versión corta</h2>

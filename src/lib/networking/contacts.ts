@@ -1,16 +1,41 @@
-const KEY = "ats_network_contacts";
+/** CRM unificado de networking (herramienta + cuadernillo). */
 
-export type ContactStatus = "por_contactar" | "escrito" | "hablado" | "seguimiento" | "cerrado";
+const KEY = "ats_network_contacts";
+const MIGRATED_KEY = "ats_network_contacts_migrated_v2";
+
+export type ContactStatus =
+  | "por_contactar"
+  | "enviado"
+  | "respondio"
+  | "intro"
+  | "escrito"
+  | "hablado"
+  | "seguimiento"
+  | "cerrado";
+
+export type ContactCategory =
+  | "cercano"
+  | "excolega"
+  | "exjefe"
+  | "puente"
+  | "reclutador"
+  | "empresa_objetivo"
+  | "conector"
+  | "aliado"
+  | "otro";
 
 export type NetworkContact = {
   id: string;
   name: string;
   company: string;
   role?: string;
-  channel: "linkedin" | "email" | "otro";
+  category: ContactCategory;
+  channel: string;
+  favorAsked?: string;
   status: ContactStatus;
   nextStep: string;
-  nextDate?: string; // YYYY-MM-DD
+  nextDate?: string;
+  lastTouch?: string;
   notes?: string;
   createdAt: number;
   updatedAt: number;
@@ -18,17 +43,96 @@ export type NetworkContact = {
 
 export const CONTACT_STATUS_LABEL: Record<ContactStatus, string> = {
   por_contactar: "Por contactar",
+  enviado: "Mensaje enviado",
   escrito: "Mensaje enviado",
+  respondio: "Respondió",
   hablado: "Conversamos",
+  intro: "Intro / referido",
   seguimiento: "Seguimiento",
   cerrado: "Cerrado",
 };
 
+export const CONTACT_CATEGORY_LABEL: Record<ContactCategory, string> = {
+  cercano: "Cercano",
+  excolega: "Excolega",
+  exjefe: "Exjefe / mentor",
+  puente: "Puente",
+  reclutador: "Reclutador / HH",
+  empresa_objetivo: "Empresa objetivo",
+  conector: "Conector",
+  aliado: "Aliado",
+  otro: "Otro",
+};
+
+function normalizeStatus(s: string): ContactStatus {
+  if (s === "escrito") return "enviado";
+  if ((Object.keys(CONTACT_STATUS_LABEL) as string[]).includes(s)) return s as ContactStatus;
+  return "por_contactar";
+}
+
 export function listContacts(): NetworkContact[] {
+  if (typeof window === "undefined") return [];
+  tryMigrateFromWorkbook();
   try {
-    return JSON.parse(localStorage.getItem(KEY) || "[]");
+    const raw = JSON.parse(localStorage.getItem(KEY) || "[]");
+    if (!Array.isArray(raw)) return [];
+    return raw.map((c: Partial<NetworkContact> & { id: string }) => ({
+      id: c.id,
+      name: c.name || "",
+      company: c.company || "",
+      role: c.role,
+      category: (c.category as ContactCategory) || "otro",
+      channel: c.channel || "linkedin",
+      favorAsked: c.favorAsked,
+      status: normalizeStatus(String(c.status || "por_contactar")),
+      nextStep: c.nextStep || "",
+      nextDate: c.nextDate,
+      lastTouch: c.lastTouch,
+      notes: c.notes,
+      createdAt: c.createdAt || Date.now(),
+      updatedAt: c.updatedAt || Date.now(),
+    }));
   } catch {
     return [];
+  }
+}
+
+function tryMigrateFromWorkbook() {
+  try {
+    if (localStorage.getItem(MIGRATED_KEY)) return;
+    const existing = JSON.parse(localStorage.getItem(KEY) || "[]");
+    const wb = JSON.parse(localStorage.getItem("ats_workbook_v1") || "null");
+    const fromWb: unknown[] = Array.isArray(wb?.network?.contacts) ? wb.network.contacts : [];
+    if (!Array.isArray(existing)) return;
+    const now = Date.now();
+    const migrated: NetworkContact[] = [...existing];
+    for (const row of fromWb) {
+      const c = row as Record<string, string>;
+      if (!c?.name?.trim()) continue;
+      const dup = migrated.some(
+        (m) => m.name.toLowerCase() === c.name.trim().toLowerCase() && m.company === (c.channel || "")
+      );
+      if (dup) continue;
+      migrated.push({
+        id: `net_mig_${now}_${Math.random().toString(36).slice(2, 6)}`,
+        name: c.name.trim(),
+        company: c.channel || c.notes || "—",
+        category: (c.category as ContactCategory) || "otro",
+        channel: c.channel || "otro",
+        favorAsked: c.favorAsked,
+        status: normalizeStatus(c.status || "por_contactar"),
+        nextStep: c.nextFollowUp ? `Follow-up ${c.nextFollowUp}` : "Contactar",
+        nextDate: c.nextFollowUp,
+        lastTouch: c.lastTouch,
+        notes: c.notes,
+        createdAt: now,
+        updatedAt: now,
+      });
+    }
+    localStorage.setItem(KEY, JSON.stringify(migrated.slice(0, 200)));
+    localStorage.setItem(MIGRATED_KEY, "1");
+  } catch {
+    /* ignore */
   }
 }
 
@@ -54,10 +158,13 @@ export function upsertContact(
     name: input.name,
     company: input.company,
     role: input.role,
-    channel: input.channel,
-    status: input.status,
+    category: input.category || "otro",
+    channel: input.channel || "linkedin",
+    favorAsked: input.favorAsked,
+    status: normalizeStatus(input.status),
     nextStep: input.nextStep,
     nextDate: input.nextDate,
+    lastTouch: input.lastTouch,
     notes: input.notes,
     createdAt: now,
     updatedAt: now,
@@ -71,7 +178,7 @@ export function deleteContact(id: string) {
   saveContacts(listContacts().filter((c) => c.id !== id));
 }
 
-/** Plantillas locales (sin IA). */
+/** Plantillas locales cortas (sin IA). */
 export function messageTemplate(
   kind: "reclutador" | "referido" | "followup",
   vars: { name?: string; role?: string; company?: string }

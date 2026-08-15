@@ -62,6 +62,9 @@ export default function EmprendimientoPage() {
           ["weekConversations", "5. Conversaciones esta semana", "Meta y resultado"],
           ["monthCosts", "6. Costos fijos del mes", "Qué implica sostener la vía"],
           ["goNoGo", "7. Criterio a 30 días (sigo / pauso)", "Señales medibles"],
+          ["segments", "Canvas · segmentos", "Quiénes son tus 2–3 segmentos"],
+          ["channels", "Canvas · canales", "Cómo llegas a ellos"],
+          ["pipeline", "Canvas · pipeline clientes", "Leads → charlas → propuestas → cierres"],
         ] as const
       ).map(([key, label, ph]) => (
         <section key={key} className="bento-card space-y-2">

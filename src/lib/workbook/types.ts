@@ -149,6 +149,12 @@ export type MarketChannelCompany = {
   lastCheck: string;
   /** Qué te atrae / EVP percibido (cultura, impacto, aprendizaje…). */
   evp: string;
+  /** Atributos EVP estructurados (cultura, impacto, aprendizaje, compensación, scope). */
+  evpCulture: string;
+  evpImpact: string;
+  evpLearning: string;
+  evpComp: string;
+  evpScope: string;
   notes: string;
 };
 
@@ -167,6 +173,10 @@ export type SoarEntry = {
   action: string;
   result: string;
   oneLiner: string;
+  /** Competencias / skills técnicas evidenciadas en este logro. */
+  techSkills: string;
+  /** Competencias blandas / liderazgo evidenciadas. */
+  softSkills: string;
 };
 
 export type SoarBankData = {
@@ -233,6 +243,10 @@ export type VentureData = {
   weekConversations: string;
   monthCosts: string;
   goNoGo: string;
+  /** Canvas corto: segmentos, canales, pipeline. */
+  segments: string;
+  channels: string;
+  pipeline: string;
   updatedAt?: number;
 };
 
@@ -263,6 +277,9 @@ export type FunnelData = {
 export type CompetenciesData = {
   ratings: { id: string; score: number; evidence: string }[];
   gap30Days: string;
+  /** Perfil de estilo de comunicación (instrumento propio ATSAdvisor). */
+  styleAnswers: Record<string, string>;
+  styleSummary: string;
   updatedAt?: number;
 };
 
@@ -277,6 +294,7 @@ export type CompensationData = {
   stretch: string;
   dealbreakers: string;
   negotiables: string;
+  objectionScripts: string;
   updatedAt?: number;
 };
 
@@ -311,6 +329,10 @@ export const FINANCE_LIQUIDATION_CHECKS = [
   { id: "cert", label: "Guardé certificado laboral / terminación" },
   { id: "salud", label: "Revisé cobertura salud / caja / fechas" },
   { id: "deudas", label: "Ajusté mínimos de deudas al flujo semanal" },
+  { id: "cesantias", label: "Revisé cesantías / intereses (si aplica CO)" },
+  { id: "vacaciones", label: "Validé vacaciones pendientes en la liquidación" },
+  { id: "arl", label: "Confirmé fin de cobertura ARL / riesgos" },
+  { id: "cuenta", label: "Tengo cuenta y documentos listos para nueva vinculación" },
 ];
 
 export const EVAL_CHECKS = [
@@ -318,11 +340,36 @@ export const EVAL_CHECKS = [
   { id: "filtro", label: "Tengo pitch 60s + logística + pretensión" },
   { id: "hm", label: "3 historias STAR/SOAR listas para hiring manager" },
   { id: "panel", label: "2 preguntas inteligentes por etapa" },
+  { id: "assess", label: "Sé qué suele medir un assessment / caso" },
+  { id: "refs", label: "Avisé a 2 referencias y alineé mensajes" },
   { id: "post", label: "Después de cada entrevista anoto qué midieron" },
 ];
 
 export function emptySoarEntry(): SoarEntry {
-  return { situation: "", obstacle: "", action: "", result: "", oneLiner: "" };
+  return {
+    situation: "",
+    obstacle: "",
+    action: "",
+    result: "",
+    oneLiner: "",
+    techSkills: "",
+    softSkills: "",
+  };
+}
+
+export function emptyMarketCompany(): MarketChannelCompany {
+  return {
+    name: "",
+    careersUrl: "",
+    lastCheck: "",
+    evp: "",
+    evpCulture: "",
+    evpImpact: "",
+    evpLearning: "",
+    evpComp: "",
+    evpScope: "",
+    notes: "",
+  };
 }
 
 export function emptyNetworkContact(): NetworkContact {
@@ -373,11 +420,7 @@ export function emptyWorkbook(): WorkbookState {
     scripts: { pitch: "", exitReason: "", matrixNotes: "" },
     market: {
       timeMixNote: "40% red · 35% empresas · 25% portales",
-      companies: [
-        { name: "", careersUrl: "", lastCheck: "", evp: "", notes: "" },
-        { name: "", careersUrl: "", lastCheck: "", evp: "", notes: "" },
-        { name: "", careersUrl: "", lastCheck: "", evp: "", notes: "" },
-      ],
+      companies: [emptyMarketCompany(), emptyMarketCompany(), emptyMarketCompany()],
       evpTopSummary: "",
       weeklyChecklistDone: [],
     },
@@ -409,6 +452,9 @@ export function emptyWorkbook(): WorkbookState {
       weekConversations: "",
       monthCosts: "",
       goNoGo: "",
+      segments: "",
+      channels: "",
+      pipeline: "",
     },
     evaluation: {
       notesByStage: "",
@@ -422,6 +468,8 @@ export function emptyWorkbook(): WorkbookState {
     competencies: {
       ratings: [],
       gap30Days: "",
+      styleAnswers: {},
+      styleSummary: "",
     },
     compensation: {
       base: "",
@@ -434,6 +482,7 @@ export function emptyWorkbook(): WorkbookState {
       stretch: "",
       dealbreakers: "",
       negotiables: "",
+      objectionScripts: "",
     },
     meta: { updatedAt: 0 },
   };
@@ -461,11 +510,7 @@ export function readWorkbook(): WorkbookState {
         ...base.market,
         ...raw.market,
         companies: mergeList(raw.market?.companies, base.market.companies, (c) => ({
-          name: "",
-          careersUrl: "",
-          lastCheck: "",
-          evp: "",
-          notes: "",
+          ...emptyMarketCompany(),
           ...c,
         })),
       },
@@ -508,8 +553,16 @@ export function readWorkbook(): WorkbookState {
         ...base.competencies,
         ...raw.competencies,
         ratings: Array.isArray(raw.competencies?.ratings) ? raw.competencies.ratings : [],
+        styleAnswers: {
+          ...base.competencies.styleAnswers,
+          ...(raw.competencies?.styleAnswers || {}),
+        },
       },
-      compensation: { ...base.compensation, ...raw.compensation },
+      compensation: {
+        ...base.compensation,
+        ...raw.compensation,
+        objectionScripts: raw.compensation?.objectionScripts || "",
+      },
       meta: { ...base.meta, ...raw.meta },
     };
   } catch {
@@ -549,18 +602,30 @@ export function nextWorkbookModule(state: WorkbookState): WorkbookModuleDef | nu
 }
 
 export function composeSoarOneLiner(e: SoarEntry): string {
-  const r = e.result.trim();
-  const a = e.action.trim();
   const s = e.situation.trim();
   const o = e.obstacle.trim();
-  if (!r && !a) return "";
+  const a = e.action.trim();
+  const r = e.result.trim();
+  if (!a && !r) return "";
   const parts = [
     r ? `Logré ${r}` : "Logré [resultado]",
-    a ? `mediante ${a}` : null,
-    s ? `en ${s}` : null,
-    o ? `superando ${o}` : null,
+    a ? `mediante ${a}` : "",
+    s ? `en ${s}` : "",
+    o ? `superando ${o}` : "",
   ].filter(Boolean);
-  return parts.join(" ") + ".";
+  return parts.join(" ").replace(/\s+/g, " ").trim() + ".";
+}
+
+/** Export plano para CV / LinkedIn (una línea por logro). */
+export function exportSoarForCv(entries: SoarEntry[]): string {
+  return entries
+    .filter((e) => e.oneLiner.trim() || e.result.trim())
+    .map((e, i) => {
+      const line = e.oneLiner.trim() || composeSoarOneLiner(e);
+      const skills = [e.techSkills, e.softSkills].filter((x) => x.trim()).join(" · ");
+      return `${i + 1}. ${line}${skills ? `\n   Skills: ${skills}` : ""}`;
+    })
+    .join("\n\n");
 }
 
 /** Texto plano para exportar / imprimir. */
@@ -578,7 +643,12 @@ export function workbookToPlainText(state: WorkbookState): string {
   lines.push("## Guiones", `Pitch: ${state.scripts.pitch}`, `Salida: ${state.scripts.exitReason}`, "");
   lines.push("## SOAR");
   state.soar.entries.forEach((e, i) => {
-    if (e.oneLiner || e.result) lines.push(`${i + 1}. ${e.oneLiner || e.result}`);
+    if (e.oneLiner || e.result) {
+      lines.push(`${i + 1}. ${e.oneLiner || e.result}`);
+      if (e.techSkills || e.softSkills) {
+        lines.push(`   Skills: ${[e.techSkills, e.softSkills].filter(Boolean).join(" · ")}`);
+      }
+    }
   });
   lines.push("", "## Red");
   state.network.contacts.forEach((c) => {

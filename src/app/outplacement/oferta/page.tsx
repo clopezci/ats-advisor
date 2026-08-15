@@ -8,7 +8,7 @@ import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceInput } from "@/components/VoiceField";
 import { formatCop } from "@/lib/channels/pricing";
-import { CITY_MULT, SALARY_BANDS, type CityTier } from "@/lib/salary/bandsCo";
+import { CITY_MULT, SALARY_BANDS, BANDS_DISCLAIMER, type CityTier } from "@/lib/salary/bandsCo";
 import {
   buildScriptsCo,
   computeNegotiationNumbers,
@@ -77,6 +77,7 @@ function OfertaTool() {
           <SpeakButton text="Define piso, meta y techo con bandas Colombia y genera scripts de negociación." />
         </div>
         <p className="text-sm muted">Paso {step + 1}/4 · {STEPS[step]}</p>
+        <p className="text-xs muted leading-relaxed">{BANDS_DISCLAIMER}</p>
         <div className="flex gap-1">
           {STEPS.map((s, i) => (
             <button

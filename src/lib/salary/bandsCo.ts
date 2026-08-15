@@ -9,15 +9,26 @@ export type SalaryBand = {
 };
 
 export const SALARY_BANDS: SalaryBand[] = [
-  { id: "analista_junior", label: "Analista junior", min: 2_800_000, max: 4_200_000, note: "0–2 años" },
+  { id: "analista_junior", label: "Analista junior", min: 2_800_000, max: 4_200_000, note: "0–2 años · genérico" },
   { id: "analista_semi", label: "Analista semi-senior", min: 4_200_000, max: 6_500_000, note: "2–4 años" },
   { id: "especialista", label: "Especialista / senior IC", min: 6_500_000, max: 9_500_000, note: "Skills escasas" },
   { id: "coordinador", label: "Coordinador / lead", min: 5_500_000, max: 8_500_000, note: "Liderazgo de equipo" },
   { id: "gerente", label: "Gerente / manager", min: 9_000_000, max: 16_000_000, note: "Varía por industria" },
+  { id: "dir_ops", label: "Director / head", min: 14_000_000, max: 28_000_000, note: "Orientativo · industria" },
   { id: "dev_mid", label: "Desarrollador mid", min: 5_500_000, max: 9_000_000, note: "Tech productivas" },
   { id: "dev_senior", label: "Desarrollador senior", min: 9_000_000, max: 15_000_000, note: "Remoto/híbrido sube techo" },
+  { id: "data_mid", label: "Data / analytics mid", min: 5_000_000, max: 8_500_000, note: "BI / analytics" },
+  { id: "data_senior", label: "Data senior / ML ops", min: 8_500_000, max: 14_000_000, note: "Escasez relativa" },
+  { id: "finanzas_mid", label: "Finanzas / controlling mid", min: 5_000_000, max: 8_000_000, note: "Industria / servicios" },
+  { id: "finanzas_senior", label: "Finanzas senior / FP&A", min: 8_000_000, max: 13_000_000, note: "Empresa mediana+" },
+  { id: "ops_supply", label: "Ops / supply mid-senior", min: 5_500_000, max: 10_000_000, note: "Industrial / retail" },
   { id: "rh_bp", label: "HRBP / Talent", min: 5_000_000, max: 9_000_000, note: "Empresas medianas+" },
+  { id: "comercial_b2b", label: "Comercial B2B mid-senior", min: 4_500_000, max: 9_000_000, note: "Variable suele ser alto %" },
 ];
+
+export const BANDS_DISCLAIMER =
+  "Bandas orientativas COP brutos mensuales (autoría ATSAdvisor, no encuesta oficial). " +
+  "Verifica con fuentes públicas, hunters y tu red antes de negociar.";
 
 export type CityTier = "bogota_medellin" | "otras_capitales" | "intermedio" | "remoto_usd";
 

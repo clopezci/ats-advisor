@@ -12,6 +12,10 @@ import {
   type DirectoryEntry,
   type WorkbookState,
 } from "@/lib/workbook/types";
+import {
+  HUNTER_LEGAL_NOTICE,
+  SUGGESTED_HUNTERS,
+} from "@/lib/networking/suggestedHunters";
 
 const INTRO =
   "Arma tu directorio: hunters, HRBP y portales. Es tuyo, por industria y ciudad — no una lista mágica de terceros.";
@@ -75,6 +79,49 @@ export default function DirectorioPage() {
           placeholder="Bogotá híbrido / remoto LATAM…"
           dictationLabel="Dictar ciudad"
         />
+      </section>
+
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold text-sm">Lista sugerida (orientativa)</h2>
+        <p className="text-xs muted leading-relaxed">{HUNTER_LEGAL_NOTICE}</p>
+        <ul className="space-y-3">
+          {SUGGESTED_HUNTERS.map((h) => (
+            <li key={h.name} className="text-sm leading-relaxed">
+              <span className="font-medium">{h.name}</span>
+              <span className="muted">
+                {" "}
+                · {h.focus} · {h.region}
+              </span>
+              <br />
+              <span className="text-xs muted">{h.note}</span>
+              <button
+                type="button"
+                className="btn-secondary mt-2 text-xs"
+                onClick={() =>
+                  save({
+                    ...wb,
+                    directory: {
+                      ...d,
+                      entries: [
+                        ...d.entries,
+                        {
+                          ...emptyDirectoryEntry(),
+                          name: "",
+                          org: h.name,
+                          roles: h.focus,
+                          notes: `Sugerido ATSAdvisor — verificar. ${h.note}`,
+                        },
+                      ],
+                      updatedAt: Date.now(),
+                    },
+                  })
+                }
+              >
+                Agregar a mi directorio (borrador)
+              </button>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {d.entries.map((e, i) => (

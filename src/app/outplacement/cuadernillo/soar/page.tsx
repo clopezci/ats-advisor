@@ -8,6 +8,7 @@ import { CoachAsk } from "@/components/workbook/CoachAsk";
 import {
   composeSoarOneLiner,
   emptySoarEntry,
+  exportSoarForCv,
   readWorkbook,
   writeWorkbook,
   type SoarEntry,
@@ -133,6 +134,22 @@ export default function SoarWizardPage() {
             placeholder="Logré … mediante … en … superando …"
             dictationLabel="Dictar frase"
           />
+          <VoiceTextarea
+            label="Skills técnicas (este logro)"
+            value={e.techSkills || ""}
+            onChange={(v) => setEntry(i, { techSkills: v })}
+            className="field min-h-12"
+            placeholder="SQL, Excel, SAP, Python…"
+            dictationLabel="Dictar"
+          />
+          <VoiceTextarea
+            label="Skills blandas / liderazgo"
+            value={e.softSkills || ""}
+            onChange={(v) => setEntry(i, { softSkills: v })}
+            className="field min-h-12"
+            placeholder="Influencia, priorización, coaching…"
+            dictationLabel="Dictar"
+          />
           <button
             type="button"
             className="btn-secondary text-sm"
@@ -147,6 +164,25 @@ export default function SoarWizardPage() {
         Agregar otro logro
       </button>
 
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold text-sm">Export a CV / perfil</h2>
+        <pre className="text-sm whitespace-pre-wrap font-sans muted">
+          {exportSoarForCv(wb.soar.entries) || "Completa al menos un logro con resultado o frase."}
+        </pre>
+        <button
+          type="button"
+          className="btn-secondary"
+          onClick={async () => {
+            const t = exportSoarForCv(wb.soar.entries);
+            if (!t) return;
+            await navigator.clipboard.writeText(t);
+            setMsg("Export copiado al portapapeles.");
+          }}
+        >
+          Copiar export
+        </button>
+      </section>
+
       <CoachAsk
         coachModule="marca personal y SOAR"
         placeholder="Ej.: ¿cómo cuantifico un logro sin tener el % exacto?"
@@ -157,6 +193,9 @@ export default function SoarWizardPage() {
       </button>
       {msg ? <p className="text-sm muted">{msg}</p> : null}
 
+      <Link href="/outplacement/cuadernillo/marca" className="btn-secondary">
+        Checklist identidad digital
+      </Link>
       <Link href="/herramientas/linkedin" className="btn-secondary">
         Llevar frases a la herramienta de perfil
       </Link>

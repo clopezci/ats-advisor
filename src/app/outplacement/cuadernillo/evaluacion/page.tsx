@@ -13,7 +13,40 @@ import {
 } from "@/lib/workbook/types";
 
 const INTRO =
-  "Cada etapa mide cosas distintas: ATS, filtro, hiring manager, panel. Prepara evidencia y anota qué evaluaron después de cada ronda.";
+  "Cada etapa mide cosas distintas. Revisa la serie corta, marca el checklist y deja evidencia lista.";
+
+const STAGES = [
+  {
+    id: "ats",
+    title: "1. ATS / screening CV",
+    tip: "Keywords honestas del JD, formato limpio, logros cuantificados. El bot no lee diseño fancy.",
+  },
+  {
+    id: "filtro",
+    title: "2. Filtro reclutador",
+    tip: "Pitch 60s, disponibilidad, pretensión con rango, motivación sincera. Prueba logística.",
+  },
+  {
+    id: "hm",
+    title: "3. Hiring manager",
+    tip: "Profundidad: 3 historias SOAR, ownership, cómo priorizas. Pregunta por éxito a 90 días.",
+  },
+  {
+    id: "panel",
+    title: "4. Panel / peers",
+    tip: "Colaboración y estilo. Evita contradecir al HM; muestra cómo trabajas con otros.",
+  },
+  {
+    id: "assess",
+    title: "5. Assessment / caso",
+    tip: "Estructura: hipótesis → datos → plan. Comunica trade-offs; no solo la respuesta 'correcta'.",
+  },
+  {
+    id: "refs",
+    title: "6. Referencias",
+    tip: "Alinea a 2 personas: logros, contexto de salida, debilidad honesta. Avisa con anticipación.",
+  },
+];
 
 export default function EvaluacionPage() {
   const [wb, setWb] = useState<WorkbookState | null>(null);
@@ -66,6 +99,16 @@ export default function EvaluacionPage() {
       </section>
 
       <section className="bento-card space-y-3">
+        <h2 className="font-semibold text-sm">Serie: cómo te evalúan</h2>
+        {STAGES.map((s) => (
+          <div key={s.id} className="space-y-1 border-t pt-3 first:border-0 first:pt-0" style={{ borderColor: "var(--border)" }}>
+            <p className="text-sm font-medium">{s.title}</p>
+            <p className="text-xs muted leading-relaxed">{s.tip}</p>
+          </div>
+        ))}
+      </section>
+
+      <section className="bento-card space-y-3">
         <h2 className="font-semibold text-sm">Checklist por etapa</h2>
         {EVAL_CHECKS.map((c) => (
           <label key={c.id} className="flex items-start gap-2 text-sm cursor-pointer">
@@ -113,6 +156,9 @@ export default function EvaluacionPage() {
       </button>
       {msg ? <p className="text-sm muted">{msg}</p> : null}
 
+      <Link href="/outplacement/cuadernillo/simulaciones" className="btn-secondary">
+        Simulaciones por caso
+      </Link>
       <Link href="/outplacement/roleplay" className="btn-secondary">
         Roleplay de entrevista
       </Link>

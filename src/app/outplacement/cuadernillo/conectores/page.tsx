@@ -121,6 +121,23 @@ export default function ConectoresPage() {
         {msg ? <p className="text-sm muted">{msg}</p> : null}
       </section>
 
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold text-sm">Roleplay: pedir una intro</h2>
+        <p className="text-sm leading-relaxed">
+          Practica en voz alta (60–90 s): contexto → por qué esa persona → favor concreto →
+          cómo facilitas la intro → cierre con fecha.
+        </p>
+        <ol className="text-xs muted space-y-2 list-decimal pl-4 leading-relaxed">
+          <li>“Estoy explorando roles de [X] en [sector].”</li>
+          <li>“Vi que conoces a [Nombre] en [empresa].”</li>
+          <li>“¿Me presentarías para una charla de 15 min sobre el mercado (no pedirle empleo)?”</li>
+          <li>“Te dejo un párrafo listo para reenviar + mi LinkedIn.”</li>
+        </ol>
+        <Link href="/outplacement/roleplay" className="btn-secondary">
+          Practicar con coach Gabriel / Irene
+        </Link>
+      </section>
+
       <CoachAsk
         coachModule="networking"
         placeholder="Ej.: ¿cómo le pido una intro a un conector sin sonar interesad@?"

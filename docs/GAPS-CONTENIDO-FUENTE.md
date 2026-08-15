@@ -1,55 +1,48 @@
 # Gaps de contenido (fuente DocumentacionOutplacement → app)
 
-Actualizado: 2026-08-15.  
+Actualizado: 2026-08-15 (sprint integración flujo).  
 Criterio: qué **aún no está completo** respecto a la carpeta fuente (sin PII ni copyright).  
-Úsalo para decidir qué completar y qué dejar fuera.
+Producto: **un flujo en 6 fases** + herramientas satélite dentro de cada fase (no menú infinito).
 
 ## Leyenda
-- **Parcial** = hay módulo/curso/wizard, pero falta profundidad del material fuente.
-- **No** = no implementado (o solo método genérico).
-- **Omitido a propósito** = no debemos completar tal cual (legal / PII).
+- **Hecho** = cubierto en app (método propio / sugerido).
+- **Omitido a propósito** = no debemos completar tal cual (legal / PII / copyright).
 
 ---
 
-## Lista para decidir
+## Lista
 
-| # | Tema / fuente | Estado | Qué faltaría para “completar” | ¿Completar? (tú decides) |
-| --- | --- | --- | --- | --- |
-| 1 | Banco guiones networking (docx Patricia) | **Parcial → mejorado** | Ya hay banco ATSAdvisor corto/largo por audiencia + UI. Falta: variantes por canal (solo InMail 200 chars), ejemplos de “asunto” email. | [ ] Sí / [ ] No |
-| 2 | Marco conectores (PDF resumen Robinett) | **Parcial → mejorado** | Ya hay lección/KB/wizard cercanos-aliados-conectores (sin citar libro). Falta: más ejercicios de “cómo ser nodo” / roleplay de intro. | [ ] Sí / [ ] No |
-| 3 | Lominger / Career Architect (67 comps) | **Omitido a propósito** | Solo competencias propias (12). Completar = riesgo legal. | [ ] No (recomendado) |
-| 4 | Listado Head Hunters PLV (xlsx) | **Omitido lista / método sí** | No pegar lista propietaria. Opcional: más tips de cómo investigar hunters por industria. | [ ] Solo tips / [ ] No |
-| 5 | PPT Negocie paquete de compensación | **Parcial** | Wizard paquete + bandas + scripts. Falta: pasos del PPT (objeciones, timing, roleplay negociación largo). | [ ] Sí / [ ] No |
-| 6 | Valores mercado Sector Industrial CO (xls) | **Parcial** | Bandas orientativas genéricas. Falta: tabla por rol/industria más rica (datos propios o fuentes públicas citadas). | [ ] Sí / [ ] No |
-| 7 | Serie de charlas.docx (cómo te evalúan) | **Parcial / delgado** | Checklist + roleplay. Falta: serie de lecciones por etapa (ATS, filtro, panel, assessment, referencias). | [ ] Sí / [ ] No |
-| 8 | Tabla simulaciones CELC.xls | **Parcial** | Roleplay/STAR/filtro. Falta: escenarios simulados tipo tabla (casos + rúbrica por caso). | [ ] Sí / [ ] No |
-| 9 | Pruebas cuadernillo (temperamento, comunicador, 360) | **Parcial** | RIASEC + 12 competencias. Falta: tests propios equivalentes (sin copiar instrumentos de terceros). | [ ] Sí / [ ] No |
-| 10 | Marca personal (HV keywords, identidad digital hoja) | **Parcial** | SOAR + LinkedIn/ATS tools + cursos. Falta: checklist identidad digital unificado en un solo wizard. | [ ] Sí / [ ] No |
-| 11 | Mercado laboral hoja (industria→empresa→EVP) | **Parcial → bueno** | 3 canales + EVP top 5. Falta: plantilla EVP más estructurada (atributos fijos). | [ ] Sí / [ ] No |
-| 12 | Ruta 14 sesiones coach humano | **Parcial** | Cuadernillo + OUT + coaches IA. Falta: calendario 14 sesiones con % y coach asignado por sesión (humano o persona-IA). | [ ] Sí / [ ] No |
-| 13 | Feedback entrevista (hoja rúbrica) | **Parcial** | Roleplay con rúbrica. Falta: rúbrica idéntica a la hoja + historial de scores. | [ ] Sí / [ ] No |
-| 14 | SOAR xlsx (habilidades técnicas por logro) | **Parcial** | Wizard SOAR. Falta: columna competencias técnicas/blandas por logro + export a CV. | [ ] Sí / [ ] No |
-| 15 | Info candidatos / PII del Excel | **Omitido a propósito** | No implementar. | [ ] No |
-| 16 | Emprendimiento profundo | **Parcial** | Filtro 7 días + tracks 14. Falta: canvas de oferta, pricing, pipeline de clientes. | [ ] Sí / [ ] No |
-| 17 | Finanzas 4 pilares (detalle legal/nómina CO) | **Parcial** | Wizard educativo. Falta: checklists país-específicos más largos (sin asesoría legal). | [ ] Sí / [ ] No |
-| 18 | Unificación CRM herramienta vs CRM cuadernillo | **Parcial** | Dos CRMs locales. Falta: un solo modelo de contactos. | [ ] Sí / [ ] No |
-
----
-
-## Hecho en este sprint (networking)
-
-- KB `conectores-y-red.md` + `plantillas-networking.md`
-- UI `/outplacement/cuadernillo/conectores`
-- UI `/outplacement/cuadernillo/plantillas` (copiar corto/largo)
-- Curso Networking: +2 lecciones
-- Enlaces desde Red, Guiones y CRM herramienta
-- Coach Irene actualizado
+| # | Tema / fuente | Estado | Notas |
+| --- | --- | --- | --- |
+| 1 | Banco guiones networking | **Hecho** | Plantillas corto/largo + asunto email + InMail ~200 |
+| 2 | Marco conectores | **Hecho** | Wizard + roleplay pedir intro |
+| 3 | Lominger / Career Architect | **Omitido** | Solo 12 competencias propias |
+| 4 | Listado Head Hunters PLV | **Hecho (sugerido)** | Lista pública orientativa + aviso legal: verificar/actualizar |
+| 5 | Negocie paquete compensación | **Hecho** | Wizard + objeciones + scripts |
+| 6 | Valores mercado CO | **Hecho** | Bandas ampliadas + disclaimer |
+| 7 | Serie cómo te evalúan | **Hecho** | Serie 6 etapas + checklist |
+| 8 | Tabla simulaciones | **Hecho** | Casos + rúbrica por caso |
+| 9 | Pruebas temperamento/estilo | **Hecho** | Quiz estilo propio (no instrumentos de terceros) |
+| 10 | Marca personal / identidad digital | **Hecho** | Checklist unificado + SOAR |
+| 11 | Mercado EVP estructurado | **Hecho** | Atributos cultura/impacto/aprendizaje/comp/scope |
+| 12 | Ruta 14 sesiones | **Hecho** | Calendario % + coach hint (extra del flujo) |
+| 13 | Feedback entrevista | **Hecho** | Historial de scores |
+| 14 | SOAR skills + export CV | **Hecho** | Técnicas/blandas + copiar export |
+| 15 | PII candidatos Excel | **Omitido** | No implementar |
+| 16 | Emprendimiento canvas | **Hecho** | Filtro 7 días + segmentos/canales/pipeline |
+| 17 | Finanzas checklists CO | **Hecho** | Checklist liquidación ampliado (educativo) |
+| 18 | CRM unificado | **Hecho** | Un store `ats_network_contacts` (herramienta + red) |
 
 ---
 
-## Recomendación de producto (si hay que priorizar)
+## Flujo (para no saturar)
 
-1. Unificar CRM (fila 18) — menos confusión de usuario.  
-2. Serie “cómo te evalúan” (fila 7) — alto valor entrevista.  
-3. Profundizar compensación/negociación (fila 5).  
-4. Dejar fuera: Lominger (3), lista HH propietaria (4), PII (15).
+1. Diagnóstico → 2. Mercado y red → 3. Marca y evidencia → 4. Entrevistas → 5. Oferta y cierre → 6. Extra  
+CTA principal: **Continuar** en el hub. Ruta 14 / simulaciones / plantillas viven como satélites de su fase.
+
+---
+
+## Omitidos a propósito
+
+- **#3 Lominger** — riesgo legal / copyright.
+- **#15 PII** — no cargar datos personales de terceros.

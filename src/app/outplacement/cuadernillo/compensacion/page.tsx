@@ -81,6 +81,32 @@ export default function CompensacionPage() {
         </section>
       ))}
 
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold text-sm">Objeciones frecuentes</h2>
+        <ul className="text-xs muted space-y-2 leading-relaxed">
+          <li>
+            <strong>“No hay presupuesto”</strong> — Agradece; pregunta qué sí es movible (bono,
+            remoto, revisión a 6 meses). Ofrece paquete total.
+          </li>
+          <li>
+            <strong>“Estás fuera de banda”</strong> — Pide el rango; ancla a mercado + impacto 90
+            días; contraoferta concreta.
+          </li>
+          <li>
+            <strong>“Necesitamos respuesta hoy”</strong> — Pide 24–48 h; confirma por escrito lo
+            ofrecido.
+          </li>
+        </ul>
+        <VoiceTextarea
+          label="Tus scripts de objeción (piso/meta/techo)"
+          value={c.objectionScripts || ""}
+          onChange={(v) => patch({ objectionScripts: v })}
+          className="field min-h-24"
+          placeholder="Si dicen X, yo digo…"
+          dictationLabel="Dictar"
+        />
+      </section>
+
       <CoachAsk
         coachModule="compensación y oferta"
         placeholder="Ej.: ¿cómo pido la banda sin sonar agresivo?"

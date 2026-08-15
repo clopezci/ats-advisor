@@ -10,6 +10,7 @@ import {
   competencyLabel,
   topCompetencies,
 } from "@/lib/workbook/competencies";
+import { STYLE_QUESTIONS, summarizeStyle } from "@/lib/workbook/styleQuiz";
 import { readWorkbook, writeWorkbook, type WorkbookState } from "@/lib/workbook/types";
 
 const INTRO =
@@ -131,6 +132,49 @@ export default function PruebasPage() {
           className="field min-h-16"
           dictationLabel="Dictar"
         />
+      </section>
+
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold text-sm">Estilo de comunicación (opcional)</h2>
+        <p className="text-xs muted">
+          Instrumento propio ATSAdvisor — no es MBTI/DISC de terceros. 4 preguntas para ajustar
+          mensajes y entrevistas.
+        </p>
+        {STYLE_QUESTIONS.map((q) => (
+          <label key={q.id} className="block text-sm space-y-1">
+            <span>{q.q}</span>
+            <select
+              className="field"
+              value={wb.competencies.styleAnswers?.[q.id] || ""}
+              onChange={(e) => {
+                const styleAnswers = {
+                  ...(wb.competencies.styleAnswers || {}),
+                  [q.id]: e.target.value,
+                };
+                const styleSummary = summarizeStyle(styleAnswers);
+                save({
+                  ...wb,
+                  competencies: {
+                    ...wb.competencies,
+                    styleAnswers,
+                    styleSummary,
+                    updatedAt: Date.now(),
+                  },
+                });
+              }}
+            >
+              <option value="">Elegir…</option>
+              {q.options.map((o) => (
+                <option key={o.id} value={o.id}>
+                  {o.label}
+                </option>
+              ))}
+            </select>
+          </label>
+        ))}
+        {wb.competencies.styleSummary ? (
+          <p className="text-sm leading-relaxed">{wb.competencies.styleSummary}</p>
+        ) : null}
       </section>
 
       <CoachAsk

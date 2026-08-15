@@ -6,6 +6,7 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
 import {
+  emptyMarketCompany,
   readWorkbook,
   writeWorkbook,
   type MarketChannelCompany,
@@ -48,10 +49,7 @@ export default function MercadoWizardPage() {
       ...wb!,
       market: {
         ...wb!.market,
-        companies: [
-          ...wb!.market.companies,
-          { name: "", careersUrl: "", lastCheck: "", evp: "", notes: "" },
-        ],
+        companies: [...wb!.market.companies, emptyMarketCompany()],
         updatedAt: Date.now(),
       },
     });
@@ -144,12 +142,32 @@ export default function MercadoWizardPage() {
               dictationLabel="Dictar fecha"
             />
             <VoiceTextarea
-              label="EVP / por qué te atrae (cultura, impacto, aprendizaje…)"
+              label="EVP / por qué te atrae (resumen libre)"
               value={c.evp || ""}
               onChange={(v) => setCompany(i, { evp: v })}
               className="field min-h-16"
               dictationLabel="Dictar EVP"
             />
+            <div className="grid gap-2 sm:grid-cols-2">
+              {(
+                [
+                  ["evpCulture", "Cultura"],
+                  ["evpImpact", "Impacto"],
+                  ["evpLearning", "Aprendizaje"],
+                  ["evpComp", "Compensación"],
+                  ["evpScope", "Scope / rol"],
+                ] as const
+              ).map(([key, label]) => (
+                <VoiceInput
+                  key={key}
+                  label={label}
+                  value={c[key] || ""}
+                  onChange={(v) => setCompany(i, { [key]: v })}
+                  className="field"
+                  dictationLabel={label}
+                />
+              ))}
+            </div>
             <VoiceTextarea
               label="Notas / personas / vacantes"
               value={c.notes}

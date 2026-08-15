@@ -91,10 +91,19 @@ Componentes esperados en outplacement 2025–26: coaching estructurado, CV/Linke
 2. Wizard Guiones + Matriz ← **hecho**
 3. Wizard Mapa ← **hecho**
 4. Wizard Mercado + EVP / shortlist empresas ← **hecho (3 canales)**
-5. SOAR + CRM guiones (próximo)
-6. Coaches personas + roleplay
-7. Finanzas + directorio reclutadores + emprendimiento
-8. Funnel + PDF
+5. SOAR + CRM guiones ← **hecho (sprint actual)**
+6. Cascada IA Groq → Gemini → pago (OpenRouter/DeepSeek) ← **hecho**
+7. Coaches personas + roleplay
+8. Finanzas + directorio reclutadores + emprendimiento
+9. Funnel + PDF
+
+### Cascada IA (propia, estilo OpenRouter)
+1. **Gratis calidad:** Groq (`llama-3.3-70b-versatile`, fallback 8b)
+2. **Gratis:** Gemini Flash
+3. **Gratis calidad extra:** Kimi/Moonshot en Groq (si umbral de calidad no se cumple)
+4. **Pago precio/calidad:** OpenRouter → DeepSeek (default); si no, OpenAI `gpt-4o-mini`; luego Gemini 2.5
+
+Env: `GROQ_API_KEY`, `GOOGLE_AI_API_KEY`, `OPENROUTER_API_KEY`, `OPENAI_API_KEY`. Admin puede apagar capas.
 
 ### Nota de autoría
 Todo el contenido nuevo es autoría ATSAdvisor. No usar marcas ni materiales de firmas de outplacement de terceros.

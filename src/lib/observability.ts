@@ -144,6 +144,7 @@ export function buildHealthSnapshot(): HealthSnapshot {
     groq: Boolean(process.env.GROQ_API_KEY),
     gemini: Boolean(process.env.GOOGLE_AI_API_KEY),
     openai: Boolean(process.env.OPENAI_API_KEY),
+    openrouter: Boolean(process.env.OPENROUTER_API_KEY),
     telegram: Boolean(process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_OWNER_CHAT_ID),
     whatsapp: Boolean(process.env.WHATSAPP_TOKEN && process.env.WHATSAPP_PHONE_NUMBER_ID),
     supabase: Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY),
@@ -183,7 +184,7 @@ export async function reportHealthToTelegram(opts?: { force?: boolean }) {
     `🩺 Salud ATSAdvisor ${snap.ts}`,
     `Estado: ${snap.ok ? "OK" : "DEGRADADO"}`,
     snap.degraded.length ? `Faltantes/degradados: ${snap.degraded.join(", ")}` : "Integraciones críticas presentes.",
-    `Groq:${snap.checks.groq ? "✓" : "✗"} Gemini:${snap.checks.gemini ? "✓" : "✗"} TG:${snap.checks.telegram ? "✓" : "✗"} SB:${snap.checks.supabase ? "✓" : "✗"}`,
+    `Groq:${snap.checks.groq ? "✓" : "✗"} Gemini:${snap.checks.gemini ? "✓" : "✗"} OR:${snap.checks.openrouter ? "✓" : "✗"} TG:${snap.checks.telegram ? "✓" : "✗"} SB:${snap.checks.supabase ? "✓" : "✗"}`,
   ];
   await notifyOwnerTelegram(lines.join("\n"));
   s.lastSent.set(key, Date.now());

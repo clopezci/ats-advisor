@@ -57,6 +57,8 @@ export type AppSettings = {
     prefer_groq: boolean;
     prefer_gemini: boolean;
     prefer_openai: boolean;
+    /** OpenRouter (DeepSeek u otro modelo barato de calidad). */
+    prefer_openrouter: boolean;
   };
   promotions: { name: string; percent: number; amount: number; starts: string; ends: string; code: string }[];
   tester_emails: string[];
@@ -115,7 +117,7 @@ export function defaultSettings(): AppSettings {
       guarantee: false, // descontinuada: no controlamos entrevistas del mercado
       experts: true,
     },
-    llm: { prefer_groq: true, prefer_gemini: true, prefer_openai: true },
+    llm: { prefer_groq: true, prefer_gemini: true, prefer_openai: true, prefer_openrouter: true },
     promotions: [],
     tester_emails: (process.env.ADMIN_TESTER_EMAILS || "")
       .split(",")

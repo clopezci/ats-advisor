@@ -12,4 +12,6 @@ Una frase: “Logré [resultado] mediante [acción] en [contexto], superando [ob
 ## Tips
 - Sin número, busca proxy: tiempo, %, personas, $, NPS, errores, ciclos.
 - Un logro → 1–2 competencias técnicas + 1 blanda.
-- Banco de 8–12 logros alimenta CV, LinkedIn, pitch y entrevistas.
+- Banco de 8–12 logros alimenta CV, perfil profesional, pitch y entrevistas.
+- En el cuadernillo: completa S-O-A-R y genera la frase en una línea; edítala a tu voz.
+- No inventes métricas: si no tienes el % exacto, di “aprox.” o usa antes/después cualitativo honesto.

@@ -234,7 +234,7 @@ export default function AdminPage() {
 
       <section className="bento-card space-y-3">
         <h2 className="font-semibold">Preferencias LLM</h2>
-        {(["prefer_groq", "prefer_gemini", "prefer_openai"] as const).map((k) => (
+        {(["prefer_groq", "prefer_gemini", "prefer_openai", "prefer_openrouter"] as const).map((k) => (
           <label key={k} className="flex items-center gap-2 text-sm">
             <input
               type="checkbox"

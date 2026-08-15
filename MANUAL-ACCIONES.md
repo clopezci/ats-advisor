@@ -216,15 +216,19 @@ Sin esto: siguen funcionando **email + Telegram**.
 
 ---
 
-## 12. Fallbacks de IA y Sentry (opcional)
+## 12. Cascada de IA (tipo OpenRouter)
 
-**Para qué:** si Groq se cae o quieres embeddings mejores / errores en Sentry.
-**Vercel (solo los que quieras):**
-- `GOOGLE_AI_API_KEY`
-- `OPENAI_API_KEY`
-- `HF_TOKEN`
-- `SENTRY_DSN`
-Luego **Redeploy**.
+**Orden automático:** Groq gratis (Llama 3.3) → Gemini gratis → Kimi/Moonshot en Groq (calidad) → pago (OpenRouter DeepSeek → OpenAI gpt-4o-mini → Gemini 2.5).
+
+**Vercel (recomendado):**
+- `GROQ_API_KEY` — capa 1 gratis
+- `GOOGLE_AI_API_KEY` — capa 2 gratis
+- `OPENROUTER_API_KEY` — capa de pago (mejor precio/calidad; modelo default `deepseek/deepseek-chat`)
+- `OPENAI_API_KEY` — alternativa de pago (`gpt-4o-mini`)
+- Opcional: `GROQ_MODEL`, `OPENROUTER_MODEL`, `AI_QUALITY_THRESHOLD`
+- `HF_TOKEN`, `SENTRY_DSN` si los usas
+
+Luego **Redeploy**. En Admin → Preferencias LLM puedes apagar capas.
 - [ ] Hecho / [ ] No necesito aún
 
 ---

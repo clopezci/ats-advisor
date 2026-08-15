@@ -84,6 +84,7 @@ export function sanitizeSettingsPatch(body: unknown): AppSettings {
       prefer_groq: bool(llmIn.prefer_groq, base.llm.prefer_groq),
       prefer_gemini: bool(llmIn.prefer_gemini, base.llm.prefer_gemini),
       prefer_openai: bool(llmIn.prefer_openai, base.llm.prefer_openai),
+      prefer_openrouter: bool(llmIn.prefer_openrouter, base.llm.prefer_openrouter ?? true),
     },
     promotions,
     tester_emails: emails,

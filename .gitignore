@@ -44,3 +44,6 @@ next-env.d.ts
 *.docx
 .DS_Store
 Thumbs.db
+
+# Outplacement personal docs (PII / copyrighted third-party) — never commit
+/DocumentacionOutplacement/

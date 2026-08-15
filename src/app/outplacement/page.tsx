@@ -196,11 +196,17 @@ export default function OutplacementPage() {
               ? "Curso a tu medida (comprar add-on)"
               : "Curso a tu medida (add-on con Carrera)"}
         </Link>
+        <Link href="/outplacement/coaches" className="btn-secondary">
+          Coaches por especialidad
+        </Link>
+        <Link href="/outplacement/roleplay" className="btn-secondary">
+          Roleplay de entrevista
+        </Link>
         <Link href="/outplacement/coach" className="btn-secondary">
-          Chat coach (RAG)
+          Chat coach rápido (modos)
         </Link>
         <Link href="/outplacement/entrevista" className="btn-secondary">
-          Simulador de entrevista
+          Simulador STAR (curso)
         </Link>
         <Link href="/outplacement/filtro" className="btn-secondary">
           Score predictivo de filtro
@@ -256,6 +262,9 @@ export default function OutplacementPage() {
           </button>
           <Link href="/outplacement/networking" className="btn-secondary">
             Red de contactos
+          </Link>
+          <Link href="/outplacement/coaches" className="btn-secondary">
+            Coaches por especialidad
           </Link>
           <Link href="/outplacement/coach" className="btn-secondary">
             Coach multi-turno

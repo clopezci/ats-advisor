@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { completeWithCascade, type AiTask } from "@/lib/ai/router";
 import { withKnowledgeContext, careerCoachSystemPrompt } from "@/lib/ai/knowledge";
+import { getCoachPersona, coachPersonaSystemPrompt } from "@/lib/coaches/personas";
 import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
 import { reportError } from "@/lib/observability";
 import { clampText } from "@/lib/validation";
@@ -88,8 +89,12 @@ export async function POST(req: Request) {
     };
 
     const coachModule = clampText(body.coachModule || "", 80);
-    const defaultSystem =
-      grounded || coachModule
+    const coachPersonaId = clampText(body.coachPersona || "", 40);
+    const persona = coachPersonaId ? getCoachPersona(coachPersonaId) : null;
+
+    const defaultSystem = persona
+      ? coachPersonaSystemPrompt(persona)
+      : grounded || coachModule
         ? careerCoachSystemPrompt(coachModule || undefined)
         : "Eres un coach de empleabilidad hispanohablante (LATAM). Responde en español claro, accionable y honesto. No inventes experiencia del usuario.";
 
@@ -104,7 +109,12 @@ export async function POST(req: Request) {
       ],
     });
 
-    return NextResponse.json({ ok: true, ...result });
+    return NextResponse.json({
+      ok: true,
+      ...result,
+      coachPersona: persona?.id,
+      coachName: persona?.name,
+    });
   } catch (error) {
     await reportError({ where: "api/ai/complete", error, notifyOwner: true });
     return NextResponse.json({ error: "La IA no respondió. Reintenta." }, { status: 500 });

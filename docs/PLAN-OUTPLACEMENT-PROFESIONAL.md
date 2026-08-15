@@ -69,9 +69,8 @@ Componentes esperados en outplacement 2025–26: coaching estructurado, CV/Linke
 **Valor:** entregables reales del outplacement, no solo lecciones.
 
 ### F2 — Coaches personas (2 semanas)
-- Olga, Juliana, Patricia, John, Carlos, Johan (finanzas educativas).
-- Panel “Pregúntale a tu coach” + TTS.
-- Roleplay entrevista con rúbrica (estilo feedback del cuadernillo).
+- Personas ATSAdvisor por especialidad + panel Q&A + TTS. ← hecho
+- Roleplay entrevista con rúbrica. ← hecho
 
 **Valor:** sensación de charla con especialista.
 
@@ -93,9 +92,12 @@ Componentes esperados en outplacement 2025–26: coaching estructurado, CV/Linke
 4. Wizard Mercado + EVP / shortlist empresas ← **hecho (3 canales)**
 5. SOAR + CRM guiones ← **hecho (sprint actual)**
 6. Cascada IA Groq → Gemini → pago (OpenRouter/DeepSeek) ← **hecho**
-7. Coaches personas + roleplay
+7. Coaches personas + roleplay ← **hecho (sprint actual)**
 8. Finanzas + directorio reclutadores + emprendimiento
 9. Funnel + PDF
+
+### Coaches (autoría ATSAdvisor)
+Personas propias (Elena, Marcos, Valeria, Tomás, Irene, Gabriel, Natalia) — no reutilizar nombres de firmas ajenas. UI: `/outplacement/coaches` + roleplay `/outplacement/roleplay`.
 
 ### Cascada IA (propia, estilo OpenRouter)
 1. **Gratis calidad:** Groq (`llama-3.3-70b-versatile`, fallback 8b)

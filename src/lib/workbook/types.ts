@@ -63,8 +63,8 @@ export const WORKBOOK_MODULES: WorkbookModuleDef[] = [
   {
     id: "entrevistas",
     title: "Entrevistas",
-    goal: "STAR/filtro y práctica con feedback.",
-    href: "/outplacement/entrevista",
+    goal: "Roleplay con rúbrica y práctica STAR.",
+    href: "/outplacement/roleplay",
     coachModule: "entrevistas",
     minutes: 35,
   },

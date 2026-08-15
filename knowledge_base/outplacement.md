@@ -17,6 +17,11 @@
 - Red: favors concretos, intros, informational interviews — mejor probabilidad de entrevista.
 No uses el mito del “80% oculto” como cifra; sí enseña mix de tiempo (p. ej. 40% red / 35% empresas / 25% portales).
 
+## Finanzas y outcomes
+- 4 pilares de transición (pista, flujo, liquidación, piso de oferta) — educativo.
+- Funnel semanal: outreach → empresas → postulaciones → filtros → entrevistas → ofertas.
+- Directorio de reclutadores = lista personal del usuario, no bases de terceros.
+
 ## Principios
 - Microlearning diario (5–15 min)
 - Evidencia > promesas

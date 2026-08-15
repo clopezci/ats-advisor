@@ -1,4 +1,5 @@
 import type { CourseDef, CourseLesson } from "@/lib/courses/types";
+import { normalizeHowTo } from "@/lib/courses/types";
 import {
   TOOL_LESSON_ENRICHMENTS,
   toolEnrichmentKey,
@@ -22,13 +23,26 @@ function lesson(courseId: string, i: number, s: Sketch): CourseLesson {
     title: s.title,
     teaser: s.teaser,
     why: rich?.why || s.why,
-    howTo: rich?.howTo || [
-      `Objetivo: ${s.title}.`,
-      s.practice,
-      "Hazlo por escrito (nota o doc). No lo dejes solo en la cabeza.",
-      "Marca las tareas. Si te trabas, reduce a 20 minutos y cierra igual.",
-      "Guarda evidencia para usarla en CV, LinkedIn o entrevistas.",
-    ],
+    howTo: rich?.howTo?.length
+      ? normalizeHowTo(rich.howTo)
+      : normalizeHowTo([
+          {
+            title: `Objetivo: ${s.title}`,
+            detail: `${s.why} Hoy practicas: ${s.practice}. Al terminar debes tener un entregable escrito, no solo una idea.`,
+            minutes: 5,
+          },
+          {
+            title: "Haz la práctica por escrito",
+            detail: `${s.practice} Trabájalo en una nota o doc. Si te trabas, reduce a 20 minutos y cierra una versión 70%. El error típico es dejarlo “en la cabeza” y no poder usarlo mañana en CV, LinkedIn o entrevista.`,
+            minutes: 25,
+          },
+          {
+            title: "Guarda evidencia y define el siguiente paso",
+            detail:
+              "Completa la plantilla, guarda captura o texto, y escribe una frase: “Mañana haré ___”. Si el entregable es público, pide feedback a 1 persona.",
+            minutes: 10,
+          },
+        ]),
     tips: rich?.tips ||
       s.tips || [
         "Hecho > perfecto.",

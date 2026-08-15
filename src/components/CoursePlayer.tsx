@@ -5,6 +5,7 @@ import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { CapsuleQuiz } from "@/components/CapsuleQuiz";
 import type { CourseDef, CourseLesson } from "@/lib/courses/types";
+import { howToSpeakText, normalizeHowTo } from "@/lib/courses/types";
 import {
   courseStats,
   getLessonState,
@@ -27,6 +28,7 @@ function LessonBody({
   onChange: (s: LessonProgress) => void;
 }) {
   const [quizOk, setQuizOk] = useState(!lesson.quiz);
+  const howTo = normalizeHowTo(lesson.howTo);
 
   useEffect(() => {
     setQuizOk(!lesson.quiz);
@@ -39,7 +41,7 @@ function LessonBody({
         <div className="flex justify-between gap-2">
           <h2 className="text-xl font-semibold">{lesson.title}</h2>
           <SpeakButton
-            text={`${lesson.title}. ${lesson.why}. ${lesson.howTo.join(". ")}`}
+            text={`${lesson.title}. ${lesson.why}. ${howToSpeakText(howTo)}`}
           />
         </div>
         <p className="text-sm muted">{lesson.teaser}</p>
@@ -47,14 +49,32 @@ function LessonBody({
 
       <section className="bento-card space-y-2">
         <h3 className="font-semibold text-sm">Por qué importa</h3>
-        <p className="text-sm leading-relaxed">{lesson.why}</p>
+        <p className="text-sm leading-relaxed whitespace-pre-wrap">{lesson.why}</p>
       </section>
 
-      <section className="bento-card space-y-2">
-        <h3 className="font-semibold text-sm">Cómo hacerlo</h3>
-        <ol className="list-decimal pl-4 space-y-2 text-sm leading-relaxed">
-          {lesson.howTo.map((step) => (
-            <li key={step.slice(0, 48)}>{step}</li>
+      <section className="bento-card space-y-4">
+        <div>
+          <h3 className="font-semibold text-sm">Cómo hacerlo</h3>
+          <p className="text-xs muted mt-1">
+            Cada paso es una mini-práctica. Léelo completo, hazlo, y recién entonces pasa al
+            siguiente.
+          </p>
+        </div>
+        <ol className="space-y-4">
+          {howTo.map((step, idx) => (
+            <li key={`${idx}-${step.title.slice(0, 32)}`} className="space-y-1.5">
+              <p className="text-sm font-semibold" style={{ color: "var(--text)" }}>
+                <span className="muted font-normal">{idx + 1}.</span> {step.title}
+                {step.minutes ? (
+                  <span className="muted font-normal text-xs"> · ~{step.minutes} min</span>
+                ) : null}
+              </p>
+              <p className="text-sm leading-relaxed muted whitespace-pre-wrap pl-4 border-l-2"
+                style={{ borderColor: "var(--brand)" }}
+              >
+                {step.detail}
+              </p>
+            </li>
           ))}
         </ol>
       </section>

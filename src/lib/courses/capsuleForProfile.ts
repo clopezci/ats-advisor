@@ -4,6 +4,7 @@
 import { OUTPLACEMENT_MODULES } from "@/lib/outplacement/modules";
 import { getCourseById, moduleToCourse } from "@/lib/courses/catalog";
 import { outModuleShort } from "@/lib/outplacement/labels";
+import { howToPlainLine, normalizeHowTo } from "@/lib/courses/types";
 
 export type CapsulePayloadBuilt = {
   moduleCode: string;
@@ -20,10 +21,11 @@ export function buildGlobalDayCapsule(footer?: string): CapsulePayloadBuilt {
   const course = moduleToCourse(mod.code);
   const lesson = course?.lessons[day % (course?.lessons.length || 1)];
   const cap = mod.capsules[day % mod.capsules.length];
+  const steps = lesson ? normalizeHowTo(lesson.howTo) : [];
   const taskLine = lesson?.tasks?.[0]?.label
     ? `\n\n✅ Tarea de hoy: ${lesson.tasks[0].label}`
     : "";
-  const howLine = lesson?.howTo?.[1] ? `\n\nCómo: ${lesson.howTo[1]}` : "";
+  const howLine = steps[1] ? `\n\nCómo: ${howToPlainLine(steps[1])}` : "";
   return {
     moduleCode: outModuleShort(mod.code),
     day: cap.day,
@@ -43,10 +45,11 @@ export function buildCapsuleForCursor(
     const course = getCourseById(courseId);
     const lesson = course?.lessons.find((l) => l.id === lessonId);
     if (course && lesson) {
+      const steps = normalizeHowTo(lesson.howTo);
       const taskLine = lesson.tasks?.[0]?.label
         ? `\n\n✅ Tarea de hoy: ${lesson.tasks[0].label}`
         : "";
-      const howLine = lesson.howTo?.[1] ? `\n\nCómo: ${lesson.howTo[1]}` : "";
+      const howLine = steps[0] ? `\n\nCómo: ${howToPlainLine(steps[0])}` : "";
       const dayNum = Math.max(1, course.lessons.findIndex((l) => l.id === lessonId) + 1);
       return {
         moduleCode: course.short,

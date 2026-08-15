@@ -75,12 +75,13 @@ Componentes esperados en outplacement 2025–26: coaching estructurado, CV/Linke
 **Valor:** sensación de charla con especialista.
 
 ### F3 — Gaps de mercado (2–3 semanas)
-- Finanzas, emprendimiento, HH/portales, bandas CO, “cómo te evalúan”.
+- Finanzas, emprendimiento, directorio reclutadores, “cómo te evalúan”. ← hecho
 
 **Valor:** cobertura premium del mercado.
 
 ### F4 — Outcomes (continuo)
-- Funnel medible, export PDF cuadernillo, accountability Telegram.
+- Funnel medible + export PDF/txt del cuadernillo. ← hecho (base)
+- Accountability Telegram (opcional, ops).
 
 **Valor:** “está funcionando” con números.
 
@@ -92,12 +93,20 @@ Componentes esperados en outplacement 2025–26: coaching estructurado, CV/Linke
 4. Wizard Mercado + EVP / shortlist empresas ← **hecho (3 canales)**
 5. SOAR + CRM guiones ← **hecho (sprint actual)**
 6. Cascada IA Groq → Gemini → pago (OpenRouter/DeepSeek) ← **hecho**
-7. Coaches personas + roleplay ← **hecho (sprint actual)**
-8. Finanzas + directorio reclutadores + emprendimiento
-9. Funnel + PDF
+7. Coaches personas + roleplay ← **hecho**
+8. Finanzas + directorio reclutadores + emprendimiento + cómo te evalúan ← **hecho**
+9. Funnel + export PDF ← **hecho**
 
 ### Coaches (autoría ATSAdvisor)
 Personas propias (Elena, Marcos, Valeria, Tomás, Irene, Gabriel, Natalia) — no reutilizar nombres de firmas ajenas. UI: `/outplacement/coaches` + roleplay `/outplacement/roleplay`.
+
+### F3/F4 rutas
+- Finanzas: `/outplacement/cuadernillo/finanzas`
+- Directorio: `/outplacement/cuadernillo/directorio`
+- Emprendimiento: `/outplacement/cuadernillo/emprendimiento`
+- Evaluación: `/outplacement/cuadernillo/evaluacion`
+- Funnel: `/outplacement/cuadernillo/funnel`
+- Export PDF: `/outplacement/cuadernillo/export`
 
 ### Cascada IA (propia, estilo OpenRouter)
 1. **Gratis calidad:** Groq (`llama-3.3-70b-versatile`, fallback 8b)

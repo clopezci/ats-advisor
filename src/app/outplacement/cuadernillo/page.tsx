@@ -51,6 +51,14 @@ export default function CuadernilloHubPage() {
         ) : (
           <p className="text-sm">Cuadernillo completo. Revisa o profundiza cualquier bloque.</p>
         )}
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <Link href="/outplacement/cuadernillo/funnel" className="btn-secondary">
+            Funnel semanal
+          </Link>
+          <Link href="/outplacement/cuadernillo/export" className="btn-secondary">
+            Exportar / PDF
+          </Link>
+        </div>
       </section>
 
       <section className="bento-card space-y-2">

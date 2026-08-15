@@ -70,7 +70,10 @@ export default function OutplacementPage() {
         </ul>
         {unlocked ? (
           <>
-            <Link href="/outplacement/tablero" className="btn-primary">
+            <Link href="/outplacement/cuadernillo" className="btn-primary">
+              Mi cuadernillo (wizards)
+            </Link>
+            <Link href="/outplacement/tablero" className="btn-secondary">
               Tablero de avance
             </Link>
             <Link href="/guia" className="btn-secondary">
@@ -131,6 +134,9 @@ export default function OutplacementPage() {
       <div className="flex flex-col gap-3">
         <Link href="/outplacement/tablero" className="btn-primary">
           Tablero de avance (cursos)
+        </Link>
+        <Link href="/outplacement/cuadernillo" className="btn-secondary">
+          Mi cuadernillo (mapa, mercado, guiones)
         </Link>
         <Link href="/outplacement/progreso" className="btn-secondary">
           XP y racha

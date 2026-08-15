@@ -53,6 +53,9 @@ export function DailyCourseReminder() {
       <Link href="/outplacement/tablero" className="btn-secondary">
         Ver tablero
       </Link>
+      <Link href="/outplacement/cuadernillo" className="btn-secondary">
+        Mi cuadernillo
+      </Link>
     </section>
   );
 }

@@ -1,6 +1,6 @@
 # Plan: Outplacement profesional (Cuadernillo → ATSAdvisor)
 
-Documento de producto (sin PII). Fuente estructural: `DocumentacionOutplacement/` (cuadernillo Way UP + materiales).
+Documento de producto (sin PII). Fuente estructural interna: materiales de transición de carrera (carpeta local gitignored). Contenido de producto = autoría ATSAdvisor.
 
 ## Resumen ejecutivo
 
@@ -87,14 +87,17 @@ Componentes esperados en outplacement 2025–26: coaching estructurado, CV/Linke
 
 ## Orden de build sugerido
 
-1. KB + guardrails  
-2. Wizard Guiones + Matriz  
-3. Wizard Mapa  
-4. Wizard Mercado + EVP  
-5. SOAR + CRM guiones  
-6. Coaches + roleplay  
-7. Finanzas + HH + emprendimiento  
-8. Funnel + PDF  
+1. KB + guardrails + mercado de 3 canales ← **hecho (sprint actual)**
+2. Wizard Guiones + Matriz ← **hecho**
+3. Wizard Mapa ← **hecho**
+4. Wizard Mercado + EVP / shortlist empresas ← **hecho (3 canales)**
+5. SOAR + CRM guiones (próximo)
+6. Coaches personas + roleplay
+7. Finanzas + directorio reclutadores + emprendimiento
+8. Funnel + PDF
+
+### Nota de autoría
+Todo el contenido nuevo es autoría ATSAdvisor. No usar marcas ni materiales de firmas de outplacement de terceros.
 
 ## Cómo lo vive el usuario
 

@@ -3,13 +3,19 @@
 ## Fases
 1. Estabilización emocional y narrativa
 2. Mapa de competencias / FODA
-3. Inteligencia de mercado (roles, salario, gaps)
+3. Inteligencia de mercado (roles, salario, gaps) — **tres canales**: red, páginas de carrera de empresas, portales
 4. Re-skilling priorizado
 5. Marca personal CV/LinkedIn ATS
-6. Mercado oculto y networking
+6. Mercado oculto y networking (conversión > volumen)
 7. Entrevistas y negociación
 8. Oferta y primeros 90 días
 9. Curso personalizado (OUT-09) según necesidad del usuario
+
+## Tres canales de búsqueda (recordatorio)
+- Portales: volumen controlado, CV ajustado, pocas postulaciones de calidad.
+- Sitios de carrera de empresas: revisar shortlist 2×/semana; postular ahí primero.
+- Red: favors concretos, intros, informational interviews — mejor probabilidad de entrevista.
+No uses el mito del “80% oculto” como cifra; sí enseña mix de tiempo (p. ej. 40% red / 35% empresas / 25% portales).
 
 ## Principios
 - Microlearning diario (5–15 min)
@@ -18,6 +24,7 @@
 - Honestidad: no inventar experiencia
 - Voz y dictado para inclusión
 - Progreso unificado PWA / Telegram / WhatsApp
+- Autoría propia ATSAdvisor: no atribuir a firmas de outplacement de terceros
 
 ## Entregables por fase (OUT-01…08)
 - OUT-01: frase de identidad + audio 60s + red de apoyo

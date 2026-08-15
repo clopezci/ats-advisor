@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { completeWithCascade, type AiTask } from "@/lib/ai/router";
-import { withKnowledgeContext } from "@/lib/ai/knowledge";
+import { withKnowledgeContext, careerCoachSystemPrompt } from "@/lib/ai/knowledge";
 import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
 import { reportError } from "@/lib/observability";
-import { clampText, isValidEmail } from "@/lib/validation";
+import { clampText } from "@/lib/validation";
 import { requirePaidCloud } from "@/lib/entitlements/requirePaidApi";
 
 export const runtime = "nodejs";
@@ -79,19 +79,26 @@ export async function POST(req: Request) {
         "Formato: 1) DISCLAIMER corto, 2) resumen de cambios, 3) CV reescrito completo en texto plano (secciones claras), 4) lista de keywords insertados vs omitidos por honestidad.",
       application_advice:
         "Eres coach de postulaciones LATAM. Das un plan accionable de cómo postular bien a ESTA vacante, " +
-        "basado en cómo filtran los ATS (parse → match keywords/semántica → ranking → humano). Español claro, checklist numerado, sin relleno.",
+        "basado en cómo filtran los ATS (parse → match keywords/semántica → ranking → humano). Español claro, checklist numerado, sin relleno. " +
+        "Recuerda mix de canales: red, portal de la empresa y portales generales.",
       ats_suggest:
         "Eres coach ATS LATAM. Sugieres reescrituras de viñetas fieles (sin inventar). Explica por qué cada cambio ayuda al parse/match.",
+      interview_feedback:
+        careerCoachSystemPrompt("entrevistas"),
     };
+
+    const coachModule = clampText(body.coachModule || "", 80);
+    const defaultSystem =
+      grounded || coachModule
+        ? careerCoachSystemPrompt(coachModule || undefined)
+        : "Eres un coach de empleabilidad hispanohablante (LATAM). Responde en español claro, accionable y honesto. No inventes experiencia del usuario.";
 
     const result = await completeWithCascade({
       task,
       messages: [
         {
           role: "system",
-          content:
-            systemByTask[task] ||
-            "Eres un coach de empleabilidad hispanohablante (LATAM). Responde en español claro, accionable y honesto. No inventes experiencia del usuario.",
+          content: systemByTask[task] || defaultSystem,
         },
         { role: "user", content: userContent },
       ],

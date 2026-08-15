@@ -24,7 +24,7 @@ const OFFLINE: Record<(typeof MODES)[number]["id"], string> = {
   negociacion:
     "Offline negociación: investiga banda, no digas número primero si puedes, pide 24h, negocia paquete total.",
   networking:
-    "Offline networking: 5 mensajes/semana, plantilla corta, follow-up día 4, registra en tu agenda de contactos.",
+    "Offline networking: 40% red / 35% páginas de carrera de empresas / 25% portales. 5 mensajes/semana con favor concreto, follow-up día 5–7, registra en CRM.",
 };
 
 export default function CoachPage() {
@@ -69,9 +69,9 @@ export default function CoachPage() {
         body: JSON.stringify({
           task: "general",
           useKnowledge: true,
+          coachModule: mode,
           prompt: [
-            `Eres coach de outplacement LATAM. Modo: ${mode} (${MODES.find((m) => m.id === mode)?.hint}).`,
-            "Responde concreto (3–6 pasos). Cita ideas de la knowledge base cuando apliquen. No inventes experiencia del usuario.",
+            `Modo: ${mode} (${MODES.find((m) => m.id === mode)?.hint}).`,
             "Historial reciente:",
             prior,
             "Responde solo el mensaje del coach (sin prefijo).",

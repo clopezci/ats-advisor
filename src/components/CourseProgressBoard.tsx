@@ -49,6 +49,9 @@ export function CourseProgressBoard() {
         );
       })}
 
+      <Link href="/outplacement/cuadernillo" className="btn-primary">
+        Mi cuadernillo
+      </Link>
       <Link href="/outplacement" className="btn-secondary">
         Volver
       </Link>

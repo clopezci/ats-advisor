@@ -19,183 +19,140 @@ Marca el checkbox cuando termines. Si algo ya lo hiciste antes, márcalo y salta
 
 ---
 
-## 1. Confirmar deploy del código nuevo
+## 1. Confirmar deploy
 
-**Para qué:** que Production tenga cuadernillo, cascada IA, coaches y roleplay.
-
-1. Vercel → **ats-advisor** → Deployments → último de `main` en **Ready**.
-2. Si el push no disparó deploy: **⋯ → Redeploy** (sin build cache si falla).
-3. Abre https://ats-advisor-two.vercel.app/api/health — no debe ser 404/500.
-4. Humo rápido:
-   - `/outplacement/cuadernillo`
-   - `/outplacement/cuadernillo/pruebas`
-   - `/outplacement/cuadernillo/compensacion`
-   - `/outplacement/cuadernillo/finanzas`
-   - `/outplacement/cuadernillo/funnel`
-   - `/outplacement/cuadernillo/export`
-   - `/outplacement/coaches`
-   - `/outplacement/roleplay`
-5. Telegram (si el bot está vivo): `/cuadernillo` debe devolver tip + links.
+1. Vercel → **ats-advisor** → último `main` en **Ready** (Redeploy si hace falta).
+2. https://ats-advisor-two.vercel.app/api/health — OK.
+3. Humo: `/outplacement/cuadernillo` (botón Sync cloud), `/outplacement/alumni`, `/outplacement/coaches`.
+4. Telegram: `/cuadernillo` → tip + links.
 
 - [ ] Hecho
 
 ---
 
-## 2. Claves de IA (cascada Groq → Gemini → pago)
+## 2. SQL sync del cuadernillo (Supabase) — **nuevo**
 
-**Orden automático en código:** Groq gratis → Gemini gratis → Kimi (Groq) si baja calidad → pago OpenRouter (DeepSeek) → OpenAI → Gemini 2.5.
+**Para qué:** guardar el cuadernillo en cloud (multi-dispositivo) y no perderlo al cambiar de browser.
 
-**Vercel → Settings → Environment Variables → Production** (pon solo las que tengas):
+1. Supabase → SQL Editor.
+2. Ejecuta el contenido de `supabase/alter_workbook_cloud.sql` (o estas 2 líneas):
 
-| Variable | Para qué | Dónde sacar |
-| --- | --- | --- |
-| `GROQ_API_KEY` | Capa 1 gratis (recomendada) | https://console.groq.com |
-| `GOOGLE_AI_API_KEY` | Capa 2 gratis | Google AI Studio |
-| `OPENROUTER_API_KEY` | Pago mejor precio/calidad (DeepSeek) | https://openrouter.ai |
-| `OPENAI_API_KEY` | Alternativa pago (`gpt-4o-mini`) | OpenAI platform |
+```sql
+alter table profiles add column if not exists workbook_json jsonb;
+alter table profiles add column if not exists workbook_updated_at timestamptz;
+```
 
-Opcional: `OPENROUTER_MODEL`, `GROQ_MODEL`, `AI_QUALITY_THRESHOLD`, `HF_TOKEN`, `SENTRY_DSN`.
+3. Prueba: entra a la PWA con correo de plan Carrera → edita el cuadernillo → “Sync cloud ahora” → otro dispositivo / ventana privada con el mismo correo → debe bajar.
 
-Tras guardar variables → **Redeploy**.
-
-**Probar:** `/outplacement/coaches` → pregunta corta → debe responder (no solo tip offline). En Admin → Preferencias LLM puedes apagar capas.
-
-- [ ] Groq puesto  
-- [ ] Gemini puesto  
-- [ ] OpenRouter **o** OpenAI (al menos uno de pago si quieres escalar calidad)  
-- [ ] Redeploy + prueba OK  
+- [ ] SQL ejecutado  
+- [ ] Sync probado  
 
 ---
 
-## 3. Cobros reales (si aún no cobras en vivo)
+## 3. Claves de IA (cascada)
 
-Sin esto, “Pagar (demo)” solo vale en localhost; en producción no te entra plata.
+Vercel Production:
 
-Elige **una** pasarela:
+| Variable | Rol |
+| --- | --- |
+| `GROQ_API_KEY` | Gratis calidad (recomendada) |
+| `GOOGLE_AI_API_KEY` | Gratis Gemini |
+| `OPENROUTER_API_KEY` | Pago precio/calidad (DeepSeek) |
+| `OPENAI_API_KEY` | Alternativa pago |
 
-### A) Wompi (Colombia)
-1. Dashboard Wompi → keys Sandbox: public, private, events secret.
-2. Vercel: `WOMPI_PUBLIC_KEY`, `WOMPI_PRIVATE_KEY`, `WOMPI_EVENTS_SECRET`.
-3. Webhook: `https://ats-advisor-two.vercel.app/api/webhooks/payments`
-4. Redeploy → prueba `/precios` con correo real.
-5. Luego pasa a keys **Live** (quita cualquier `WOMPI_CHECKSUM_MODE=skip`).
+→ Redeploy → prueba `/outplacement/coaches`.
 
-### B) Mercado Pago
-1. `MP_ACCESS_TOKEN` en Vercel.
-2. Mismo webhook de pagos.
-3. Redeploy + prueba `/precios`.
+- [ ] Groq  
+- [ ] Gemini  
+- [ ] OpenRouter o OpenAI  
+- [ ] Prueba OK  
 
-- [ ] Sandbox OK  
-- [ ] Live OK (después)  
+---
+
+## 4. Cobros reales (si aún no cobras)
+
+Wompi o Mercado Pago + webhook  
+`https://ats-advisor-two.vercel.app/api/webhooks/payments` → Redeploy → sandbox → live.
+
+- [ ] Sandbox  
+- [ ] Live  
 - [ ] No aplica aún  
 
 ---
 
-## 4. Un aliado experto en Admin (si usas marketplace)
+## 5. Alumni / AMA (si ya tienes grupo)
 
-1. `/admin` → **Aliados expertos** → Añadir (nombre, correo, precio COP, comisión %).
-2. Flag **experts** ON → Guardar.
-3. Probar `/outplacement/experto`.
-
-- [ ] Hecho  
-- [ ] Después  
-
----
-
-## 5. Resend + dominio (correos fiables)
-
-1. resend.com → verifica dominio (DNS).
-2. Vercel: `RESEND_FROM` = `ATSAdvisor <noreply@tudominio.com>`
-3. Redeploy → prueba solicitud a aliado o mail de cuenta.
-
-- [ ] Hecho  
-- [ ] Más adelante  
-
----
-
-## 6. WhatsApp Business (opcional)
-
-Vercel: `WHATSAPP_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID` → Redeploy → número en aliado Admin.
-
-Sin esto siguen email + Telegram.
-
-- [ ] Hecho  
-- [ ] Después  
-
----
-
-## 7. Google AdSense (paralelo, no bloquea)
-
-1. Solicita sitio en AdSense.
-2. Si aprueban: `NEXT_PUBLIC_ADSENSE_CLIENT_ID` + Redeploy.
-3. Mientras: house ads (ArriendoSeguro) con flag **ads** ON.
-
-- [ ] Solicitud enviada  
-- [ ] Aprobado + variable  
-
----
-
-## 8. Dominio propio (cuando lo tengas)
-
-1. Vercel → Domains.
-2. `NEXT_PUBLIC_APP_URL` = tu HTTPS.
-3. Supabase Auth URLs + webhooks Wompi/MP/Telegram al dominio nuevo.
-4. Redeploy.
-
-- [ ] Hecho  
-- [ ] Después  
-
----
-
-## 9. Logo + tarjeta Live en LOTIC
-
-1. Sustituye `public/logo.svg` / favicons **o** envíaselos al agente.
-2. En lotic-soluciones: tarjeta ATSAdvisor → Live + URL de la app.
-
-- [ ] Logo  
-- [ ] Tarjeta LOTIC  
-
----
-
-## 10. Alumni (solo si ya tienes grupo)
-
-`/admin` → Alumni → URL Telegram/Discord → Guardar → `/outplacement/alumni`.
+`/admin` → Alumni: URL Telegram (y Discord), nota, **próximo AMA** (fecha) y **tema** → Guardar.  
+Probar `/outplacement/alumni`.
 
 - [ ] Hecho  
 - [ ] No aplica  
 
 ---
 
-## 11. Comisiones de aliados (cuando haya casos reales)
+## 6. Aliado experto (marketplace)
 
-`/admin/expertos` → Confirmados sin corte → Cerrar corte semanal → liquidar según modo de cobro.
+`/admin` → Aliados → precio + comisión → flag **experts** ON.
 
-- [ ] Entendido / probado  
-
----
-
-# Orden sugerido esta semana
-
-| Prioridad | Punto |
-| --- | --- |
-| Hoy | **1** deploy + **2** claves IA (mínimo Groq) |
-| Esta semana | **3** pagos sandbox si aún no cobras |
-| Cuando toque | 4–11 según negocio |
+- [ ] Hecho  
+- [ ] Después  
 
 ---
 
-# Webhooks (referencia)
+## 7. Resend + dominio
 
-| Sistema | URL |
-| --- | --- |
-| Wompi / Mercado Pago | `https://ats-advisor-two.vercel.app/api/webhooks/payments` |
-| Telegram | el que ya configuraste con `TELEGRAM_WEBHOOK_SECRET` |
+Verificar dominio → `RESEND_FROM` → Redeploy.
 
-**Regla:** cada cambio de variable en Vercel → **Redeploy**.
+- [ ] Hecho  
+- [ ] Más adelante  
 
 ---
 
-# Ya está en código (no lo reconfigures “porque salió en el chat”)
+## 8. WhatsApp Business (opcional)
 
-Cuadernillo (mapa, mercado 3 canales, guiones, SOAR, CRM), cascada IA, coaches por especialidad, roleplay, cursos, freemium, pagos demo local, Telegram OTP, etc.  
-Si algo de infra vieja (Supabase, Telegram bot, `ADMIN_SECRET`, cron) **deja de funcionar**, dilo y lo reparamos puntual — no hace falta rehacerlo “por checklist”.
+`WHATSAPP_TOKEN` + `WHATSAPP_PHONE_NUMBER_ID` → Redeploy.
+
+- [ ] Hecho  
+- [ ] Después  
+
+---
+
+## 9. AdSense (paralelo)
+
+Solicitud → si aprueban, `NEXT_PUBLIC_ADSENSE_CLIENT_ID`.
+
+- [ ] Enviado  
+- [ ] Aprobado  
+
+---
+
+## 10. Dominio propio (cuando toque)
+
+Vercel Domains + `NEXT_PUBLIC_APP_URL` + Auth/webhooks al dominio nuevo.
+
+- [ ] Después  
+
+---
+
+## 11. Logo + tarjeta Live LOTIC
+
+- [ ] Logo  
+- [ ] Tarjeta  
+
+---
+
+## 12. Comisiones aliados (cuando haya casos)
+
+`/admin/expertos` → cerrar corte semanal.
+
+- [ ] Entendido  
+
+---
+
+# Ya corre solo (no lo configures a mano)
+
+- Cron cápsulas diarias (`/api/cron/capsules`)
+- Cron accountability cuadernillo **lunes** (`/api/cron/cuadernillo`) — tip a Telegram de perfiles Carrera vinculados
+- Sync local del cuadernillo al editar (si hay correo + columnas SQL + plan)
+
+**Regla:** cada variable nueva en Vercel → Redeploy.

@@ -70,6 +70,9 @@ export type AppSettings = {
     telegram_url: string;
     discord_url: string;
     ama_note: string;
+    /** Fecha próxima AMA (texto libre o ISO corto). */
+    ama_next: string;
+    ama_topic: string;
   };
   /** Comisión por defecto % si el aliado no define una */
   expert_default_commission_percent: number;
@@ -130,6 +133,8 @@ export function defaultSettings(): AppSettings {
       telegram_url: "",
       discord_url: "",
       ama_note: "AMA mensual con alumni (próximamente — configura el enlace aquí).",
+      ama_next: "",
+      ama_topic: "",
     },
     expert_default_commission_percent: 15,
     expert_default_service_price_cop: 80000,

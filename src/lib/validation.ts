@@ -122,6 +122,8 @@ export function sanitizeSettingsPatch(body: unknown): AppSettings {
       telegram_url: str((b.alumni as { telegram_url?: string } | undefined)?.telegram_url, base.alumni.telegram_url, 300),
       discord_url: str((b.alumni as { discord_url?: string } | undefined)?.discord_url, base.alumni.discord_url, 300),
       ama_note: str((b.alumni as { ama_note?: string } | undefined)?.ama_note, base.alumni.ama_note, 400),
+      ama_next: str((b.alumni as { ama_next?: string } | undefined)?.ama_next, base.alumni.ama_next || "", 80),
+      ama_topic: str((b.alumni as { ama_topic?: string } | undefined)?.ama_topic, base.alumni.ama_topic || "", 160),
     },
     expert_default_commission_percent: num(
       b.expert_default_commission_percent,

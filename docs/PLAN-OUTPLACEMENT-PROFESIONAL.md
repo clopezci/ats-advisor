@@ -94,6 +94,13 @@ Componentes esperados en outplacement 2025–26: coaching estructurado, CV/Linke
 
 **Valor:** programa operable de punta a punta.
 
+### F6 — Ops cloud + comunidad
+- Sync cuadernillo cloud (`workbook_json` + API + botón Sync). ← hecho
+- Cron lunes `/api/cron/cuadernillo` accountability Telegram. ← hecho
+- Alumni AMA (fecha/tema en admin). ← hecho
+
+**Valor:** no se pierde el trabajo; comunidad y recordatorios vivos.
+
 ## Orden de build sugerido
 
 1. KB + guardrails + mercado de 3 canales ← **hecho (sprint actual)**
@@ -106,6 +113,7 @@ Componentes esperados en outplacement 2025–26: coaching estructurado, CV/Linke
 8. Finanzas + directorio reclutadores + emprendimiento + cómo te evalúan ← **hecho**
 9. Funnel + export PDF ← **hecho**
 10. F5 polish (competencias, EVP, compensación, Continúa hoy, Telegram `/cuadernillo`) ← **hecho**
+11. F6 sync cloud + cron cuadernillo + alumni AMA ← **hecho**
 
 ### Coaches (autoría ATSAdvisor)
 Personas propias (Elena, Marcos, Valeria, Tomás, Irene, Gabriel, Natalia) — no reutilizar nombres de firmas ajenas. UI: `/outplacement/coaches` + roleplay `/outplacement/roleplay`.
@@ -141,4 +149,4 @@ Todo el contenido nuevo es autoría ATSAdvisor. No usar marcas ni materiales de 
 
 ## Siguiente decisión
 
-F0–F5 del plan profesional están en código. Próximo foco de producto (si aplica): sync cloud del cuadernillo, accountability cron Telegram, o alumni/AMA.
+F0–F6 en código. Pendiente operativo del owner: SQL `alter_workbook_cloud.sql`, claves IA, pagos, enlaces alumni (ver `MANUAL-ACCIONES.md`).

@@ -585,6 +585,28 @@ export default function AdminPage() {
             })
           }
         />
+        <input
+          className="field"
+          placeholder="Próximo AMA (fecha, ej. 2026-09-05 18:00 COT)"
+          value={settings.alumni?.ama_next || ""}
+          onChange={(e) =>
+            setSettings({
+              ...settings,
+              alumni: { ...settings.alumni, ama_next: e.target.value },
+            })
+          }
+        />
+        <input
+          className="field"
+          placeholder="Tema del próximo AMA"
+          value={settings.alumni?.ama_topic || ""}
+          onChange={(e) =>
+            setSettings({
+              ...settings,
+              alumni: { ...settings.alumni, ama_topic: e.target.value },
+            })
+          }
+        />
       </section>
 
       <section className="bento-card space-y-3">

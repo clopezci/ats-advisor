@@ -142,3 +142,7 @@ alter table profiles add column if not exists learning_cursor_at timestamptz;
 alter table profiles add column if not exists telegram_link_code text;
 alter table profiles add column if not exists telegram_link_expires timestamptz;
 alter table profiles add column if not exists telegram_link_chat_id text;
+
+-- Cuadernillo digital (sync multi-dispositivo)
+alter table profiles add column if not exists workbook_json jsonb;
+alter table profiles add column if not exists workbook_updated_at timestamptz;

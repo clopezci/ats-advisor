@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { pullAndMergeWorkbook, pushWorkbookToCloud } from "@/lib/workbook/cloudSync";
+import { storedProfileEmail } from "@/lib/client/storedEmail";
 import {
   WORKBOOK_MODULES,
   nextWorkbookModule,
@@ -13,10 +15,41 @@ import {
 
 export default function CuadernilloHubPage() {
   const [wb, setWb] = useState<WorkbookState | null>(null);
+  const [syncMsg, setSyncMsg] = useState("");
+  const [syncing, setSyncing] = useState(false);
 
   useEffect(() => {
-    setWb(readWorkbook());
+    let cancelled = false;
+    (async () => {
+      const r = await pullAndMergeWorkbook();
+      if (cancelled) return;
+      setWb(r.state);
+      if (r.applied === "cloud") setSyncMsg("Cuadernillo restaurado desde cloud.");
+      else if (r.applied === "local_pushed") setSyncMsg("Cambios locales subidos a cloud.");
+      else if (storedProfileEmail()) setSyncMsg("Sync listo (local = cloud o sin cambios).");
+      else setSyncMsg("Guarda tu correo en /cuenta para sync multi-dispositivo.");
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
+
+  async function syncNow() {
+    if (!wb) return;
+    setSyncing(true);
+    const r = await pushWorkbookToCloud(wb);
+    setSyncing(false);
+    if (r.ok && !("skipped" in r && r.skipped === "cloud_newer")) {
+      setSyncMsg("Subido a cloud.");
+    } else if (r && "skipped" in r && r.skipped === "cloud_newer") {
+      setSyncMsg("Cloud tiene una versión más nueva. Recarga para bajarla.");
+    } else if (r && "error" in r) {
+      setSyncMsg(String((r as { error?: string }).error || "No se pudo sync."));
+    } else {
+      setSyncMsg("Sync no disponible (correo/plan/perfil).");
+    }
+    setWb(readWorkbook());
+  }
 
   if (!wb) {
     return <p className="text-sm muted">Cargando cuadernillo…</p>;
@@ -25,7 +58,7 @@ export default function CuadernilloHubPage() {
   const prog = workbookProgress(wb);
   const next = nextWorkbookModule(wb);
   const intro =
-    "Tu cuadernillo digital. Completa cada bloque con entregables reales: mapa, tres canales de mercado, guiones y más. El coach te guía y puedes preguntarle.";
+    "Tu cuadernillo digital. Completa cada bloque con entregables reales. Con correo de Carrera se sincroniza en cloud.";
 
   return (
     <div className="flex flex-1 flex-col gap-5">
@@ -58,15 +91,18 @@ export default function CuadernilloHubPage() {
           <Link href="/outplacement/cuadernillo/export" className="btn-secondary">
             Exportar / PDF
           </Link>
+          <button type="button" className="btn-secondary" disabled={syncing} onClick={syncNow}>
+            {syncing ? "Sincronizando…" : "Sync cloud ahora"}
+          </button>
         </div>
+        {syncMsg ? <p className="text-xs muted">{syncMsg}</p> : null}
       </section>
 
       <section className="bento-card space-y-2">
         <h2 className="font-semibold text-sm">Los tres canales (no solo portales)</h2>
         <p className="text-sm muted leading-relaxed">
           Portales concentran volumen y poca respuesta. Las mejores conversaciones suelen venir de tu
-          red; muchas vacantes se ven primero (o solo) en la página de carrera de la empresa. En el
-          bloque Mercado aprendes el mix de tiempo y el método semanal.
+          red; muchas vacantes se ven primero (o solo) en la página de carrera de la empresa.
         </p>
         <Link href="/outplacement/cuadernillo/mercado" className="btn-secondary">
           Abrir: Mercado · 3 canales
@@ -88,6 +124,9 @@ export default function CuadernilloHubPage() {
         })}
       </div>
 
+      <Link href="/outplacement/alumni" className="btn-secondary">
+        Comunidad alumni / AMA
+      </Link>
       <Link href="/outplacement/tablero" className="btn-secondary">
         Ver tablero de cursos
       </Link>

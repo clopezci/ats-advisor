@@ -294,6 +294,7 @@ export type WorkbookState = {
   funnel: FunnelData;
   competencies: CompetenciesData;
   compensation: CompensationData;
+  meta?: { updatedAt: number; syncedAt?: number };
 };
 
 export const NETWORK_CATEGORIES: { id: NetworkCategory; label: string }[] = [
@@ -434,6 +435,7 @@ export function emptyWorkbook(): WorkbookState {
       dealbreakers: "",
       negotiables: "",
     },
+    meta: { updatedAt: 0 },
   };
 }
 
@@ -508,14 +510,32 @@ export function readWorkbook(): WorkbookState {
         ratings: Array.isArray(raw.competencies?.ratings) ? raw.competencies.ratings : [],
       },
       compensation: { ...base.compensation, ...raw.compensation },
+      meta: { ...base.meta, ...raw.meta },
     };
   } catch {
     return emptyWorkbook();
   }
 }
 
-export function writeWorkbook(state: WorkbookState) {
-  localStorage.setItem(KEY, JSON.stringify(state));
+export function writeWorkbook(
+  state: WorkbookState,
+  opts?: { skipCloudPush?: boolean }
+) {
+  const next: WorkbookState = {
+    ...state,
+    meta: {
+      syncedAt: state.meta?.syncedAt,
+      updatedAt: opts?.skipCloudPush
+        ? Number(state.meta?.updatedAt) || Date.now()
+        : Date.now(),
+    },
+  };
+  localStorage.setItem(KEY, JSON.stringify(next));
+  if (!opts?.skipCloudPush && typeof window !== "undefined") {
+    void import("@/lib/workbook/cloudSync")
+      .then((m) => m.scheduleWorkbookCloudPush(next))
+      .catch(() => undefined);
+  }
 }
 
 export function workbookProgress(state: WorkbookState) {

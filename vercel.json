@@ -7,6 +7,10 @@
     {
       "path": "/api/cron/capsules",
       "schedule": "0 14 * * *"
+    },
+    {
+      "path": "/api/cron/cuadernillo",
+      "schedule": "0 15 * * 1"
     }
   ]
 }

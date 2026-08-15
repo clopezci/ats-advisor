@@ -34,9 +34,9 @@ export default function CuadernilloHubPage() {
       const next = nextWorkbookModule(r.state);
       if (next) {
         const phase = WORKBOOK_PHASES.find((p) => p.moduleIds.includes(next.id));
-        setOpenPhase(phase?.id || WORKBOOK_PHASES[0].id);
+        setOpenPhase(phase?.id || null);
       } else {
-        setOpenPhase(WORKBOOK_PHASES[0].id);
+        setOpenPhase(null);
       }
       if (r.applied === "cloud") setSyncMsg("Restaurado desde cloud.");
       else if (storedProfileEmail()) setSyncMsg("Sync listo.");
@@ -81,7 +81,11 @@ export default function CuadernilloHubPage() {
           {prog.done}/{prog.total} · {prog.pct}%
         </p>
         {next ? (
-          <Link href={next.href} className="btn-primary">
+          <Link
+            href={next.href}
+            className="btn-primary"
+            style={{ minHeight: "4rem", fontSize: "1.1rem" }}
+          >
             Continuar: {next.title}
           </Link>
         ) : (
@@ -89,16 +93,21 @@ export default function CuadernilloHubPage() {
             Completo — ir al funnel
           </Link>
         )}
-        <div className="flex flex-col gap-2 sm:flex-row">
-          <button type="button" className="btn-secondary" disabled={syncing} onClick={syncNow}>
-            {syncing ? "…" : "Sync cloud"}
-          </button>
-          <Link href="/outplacement/tablero" className="btn-secondary">
-            Tablero de cursos
-          </Link>
-        </div>
-        {syncMsg ? <p className="text-xs muted">{syncMsg}</p> : null}
+        <details className="text-sm">
+          <summary className="muted cursor-pointer">Más opciones</summary>
+          <div className="mt-2 flex flex-col gap-2">
+            <button type="button" className="btn-secondary" disabled={syncing} onClick={syncNow}>
+              {syncing ? "…" : "Sync cloud"}
+            </button>
+            <Link href="/outplacement/tablero" className="btn-secondary">
+              Tablero de cursos
+            </Link>
+            {syncMsg ? <p className="text-xs muted">{syncMsg}</p> : null}
+          </div>
+        </details>
       </section>
+
+      <p className="text-xs muted text-center">Fases (opcional · el botón Continuar basta)</p>
 
       {WORKBOOK_PHASES.map((phase) => {
         const mods = phase.moduleIds.map(modDef).filter(Boolean);

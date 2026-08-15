@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { allCareerCourses, getCourseById } from "@/lib/courses/catalog";
 import { nextOpenLesson, readLearningCursor } from "@/lib/courses/progress";
-import { nextWorkbookModule, readWorkbook, workbookProgress } from "@/lib/workbook/types";
+import { resolveContinueTarget, type ContinueTarget } from "@/lib/engagement/focusPath";
 
 function lessonHref(courseHref: string, lessonId: string) {
   const join = courseHref.includes("?") ? "&" : "?";
@@ -12,19 +12,18 @@ function lessonHref(courseHref: string, lessonId: string) {
 }
 
 /**
- * Continúa hoy: lección de curso + siguiente bloque del cuadernillo.
+ * Un solo Continuar (cuadernillo). El curso queda como enlace secundario.
  */
 export function DailyCourseReminder() {
-  const [label, setLabel] = useState("");
-  const [href, setHref] = useState("/outplacement/tablero");
-  const [wbLabel, setWbLabel] = useState("");
-  const [wbHref, setWbHref] = useState("/outplacement/cuadernillo");
-  const [wbPct, setWbPct] = useState(0);
+  const [target, setTarget] = useState<ContinueTarget | null>(null);
+  const [courseLabel, setCourseLabel] = useState("");
+  const [courseHref, setCourseHref] = useState("");
 
   useEffect(() => {
-    let courseLabel = "";
-    let courseHref = "/outplacement/tablero";
+    setTarget(resolveContinueTarget());
 
+    let courseLabel = "";
+    let courseHref = "";
     const cur = readLearningCursor();
     if (cur) {
       const course = getCourseById(cur.courseId);
@@ -44,47 +43,28 @@ export function DailyCourseReminder() {
         }
       }
     }
-    setLabel(courseLabel);
-    setHref(courseHref);
-
-    const wb = readWorkbook();
-    const prog = workbookProgress(wb);
-    setWbPct(prog.pct);
-    const next = nextWorkbookModule(wb);
-    if (next) {
-      setWbLabel(next.title);
-      setWbHref(next.href);
-    } else {
-      setWbLabel("Cuadernillo completo — revisa funnel");
-      setWbHref("/outplacement/cuadernillo/funnel");
-    }
+    setCourseLabel(courseLabel);
+    setCourseHref(courseHref);
   }, []);
 
-  if (!label && !wbLabel) return null;
+  if (!target) return null;
 
   return (
     <section className="bento-card space-y-3" style={{ borderColor: "var(--brand)" }}>
       <p className="text-xs uppercase tracking-[0.12em] muted">Continúa hoy</p>
-      {label ? (
-        <div className="space-y-2">
-          <p className="text-sm font-medium">Curso: {label}</p>
-          <Link href={href} className="btn-primary">
-            Seguir esta lección
-          </Link>
-        </div>
-      ) : null}
-      {wbLabel ? (
-        <div className="space-y-2">
-          <p className="text-sm font-medium">Cuadernillo: {wbLabel}</p>
-          <p className="text-xs muted">Avance {wbPct}% · Telegram: /cuadernillo</p>
-          <Link href={wbHref} className="btn-secondary">
-            Abrir bloque del cuadernillo
-          </Link>
-        </div>
-      ) : null}
-      <Link href="/outplacement/tablero" className="btn-secondary">
-        Ver tablero
+      <Link
+        href={target.href}
+        className="btn-primary"
+        style={{ minHeight: "3.5rem", lineHeight: 1.3 }}
+      >
+        {target.label}
+        <span className="block text-xs font-normal opacity-90">{target.hint}</span>
       </Link>
+      {courseLabel && courseHref ? (
+        <Link href={courseHref} className="text-sm muted underline">
+          Opcional · lección: {courseLabel}
+        </Link>
+      ) : null}
     </section>
   );
 }

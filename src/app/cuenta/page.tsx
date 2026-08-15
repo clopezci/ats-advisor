@@ -146,7 +146,7 @@ export default function CuentaPage() {
     setName("");
     setEmail("");
     setPlanState("free");
-    setMsg("Datos locales eliminados (perfil, tracker, CVs, racha, plan, historial).");
+    window.location.href = "/";
   }
 
   function save() {
@@ -224,6 +224,10 @@ export default function CuentaPage() {
         <p className="text-sm muted">
           {planLabel(plan)}. En producción el plan se confirma vía pago/webhook. El cambio local solo
           está disponible en localhost (o con unlock admin).
+        </p>
+        <p className="text-xs muted leading-relaxed">
+          Probar de cero: 1) Eliminar datos locales → bienvenida. 2) Elige Carrera. 3) Aquí activa
+          Tester/Carrera. 4) Inicio → Continuar.
         </p>
         {allowLocalPlans && (
           <div className="flex flex-col gap-2">

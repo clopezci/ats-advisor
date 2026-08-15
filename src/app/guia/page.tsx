@@ -21,6 +21,7 @@ import {
 } from "@/lib/flows/personGoals";
 import { canAccessOutplacement, readEntitlement } from "@/lib/entitlements";
 import { CAREER_MODULE_PITCH } from "@/lib/outplacement/labels";
+import { writeFocusPath } from "@/lib/engagement/focusPath";
 
 type SoftGate = "none" | "save" | "pay";
 
@@ -340,6 +341,20 @@ export default function GuiaPage() {
   const freeCount = freeGoals.filter((g) => selected[g.id]).length;
   const carreraCount = carreraGoals.filter((g) => selected[g.id]).length;
 
+  function startStandardCarrera() {
+    writeFocusPath("carrera");
+    if (paid) {
+      window.location.href = "/outplacement/cuadernillo";
+      return;
+    }
+    selectCarreraPack();
+    // Prefill and go to unlock path via outplacement hub (less checkbox maze)
+    const ids = orderGoalsForWalk([...freeGoals, ...carreraGoals]).map((g) => g.id);
+    writeGuidePlan(ids);
+    writeGuideResume({ ids, idx: 0, phase: "recorrido" });
+    window.location.href = "/outplacement";
+  }
+
   return (
     <div className="flex flex-1 flex-col gap-5">
       {paid && <DailyCourseReminder />}
@@ -347,18 +362,44 @@ export default function GuiaPage() {
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="text-xs uppercase tracking-[0.14em] muted">Un paso a la vez</p>
-            <h1 className="mt-1 text-2xl font-semibold">¿Qué necesitas ahora?</h1>
+            <h1 className="mt-1 text-2xl font-semibold">Empieza aquí</h1>
           </div>
-          <SpeakButton text="Solo tres cosas son gratis. El valor está en Carrera: la ruta de 8 módulos más LinkedIn, carta, entrevistas y negociación. Empiezas gratis y, al llegar a Carrera, guardas correo, pagas y vuelves al mismo paso." />
+          <SpeakButton text="Un solo botón para el flujo Carrera. Personalizar es opcional y para usuarios avanzados." />
         </div>
         <p className="text-sm muted leading-relaxed">
-          <strong>Gratis (3):</strong> analizador ATS, encaje rápido y tracker.{" "}
-          <strong>Carrera:</strong> cada área es un <strong>curso completo</strong> (índice → lección con
-          cómo/tips/plantilla/tareas) más la herramienta práctica. La ruta de 8 módulos es el núcleo.
+          Las mejores apps no te piden armar un menú: te dan un camino. Aquí el estándar es el
+          cuadernillo con Continuar.
         </p>
+        <button
+          type="button"
+          className="btn-primary"
+          style={{ minHeight: "4rem", fontSize: "1.1rem" }}
+          onClick={startStandardCarrera}
+        >
+          {paid ? "Continuar mi cuadernillo" : "Empezar flujo Carrera"}
+        </button>
+        {!paid ? (
+          <p className="text-xs muted">
+            Si estás probando: activa Tester/Carrera en{" "}
+            <Link href="/cuenta" style={{ color: "var(--brand)" }}>
+              Cuenta
+            </Link>
+            .
+          </p>
+        ) : null}
+        <Link href="/ats" className="btn-secondary">
+          Solo ATS gratis
+        </Link>
       </section>
 
-      <section className="bento-card space-y-3">
+      <details className="bento-card space-y-3">
+        <summary className="font-semibold text-sm cursor-pointer">
+          Personalizar recorrido (avanzado)
+        </summary>
+        <p className="text-xs muted leading-relaxed">
+          Solo si quieres mezclar piezas a mano. Si no, ignora esta sección.
+        </p>
+
         <VoiceTextarea
           label="Dilo con tus palabras (opcional)"
           value={need}
@@ -375,65 +416,69 @@ export default function GuiaPage() {
         >
           Marcar según esto
         </button>
-      </section>
 
-      <div className="flex flex-wrap gap-2">
-        <button type="button" className="btn-secondary" onClick={selectFree}>
-          Solo lo gratis
-        </button>
-        <button type="button" className="btn-secondary" onClick={selectCarreraPack}>
-          Gratis + Carrera
-        </button>
-        <button type="button" className="btn-secondary" onClick={() => setSelected({})}>
-          Limpiar
-        </button>
-      </div>
-
-      <section className="space-y-2">
-        <h2 className="text-sm font-semibold">Gratis ({freeCount}/3)</h2>
-        <p className="text-xs muted">Solo estas tres. El resto pide Carrera.</p>
-        {freeGoals.map((g) => (
-          <GoalRow key={g.id} g={g} checked={Boolean(selected[g.id])} onToggle={() => toggle(g.id)} />
-        ))}
-      </section>
-
-      <section className="space-y-2">
-        <h2 className="text-sm font-semibold">Plan Carrera ({carreraCount})</h2>
-        <p className="text-xs muted">
-          Empieza por la “Ruta de 8 módulos”: es el acompañamiento completo. El resto son piezas del
-          mismo plan. Al llegar aquí: correo → pago → vuelves al mismo paso.
-        </p>
-        <div className="bento-card space-y-1 text-xs muted">
-          <p className="font-medium" style={{ color: "var(--text)" }}>
-            Los 8 módulos (valor de Carrera)
-          </p>
-          {CAREER_MODULE_PITCH.map((m) => (
-            <p key={m.code}>
-              <strong style={{ color: "var(--text)" }}>{m.short}</strong> — {m.value}
-            </p>
-          ))}
+        <div className="flex flex-wrap gap-2">
+          <button type="button" className="btn-secondary" onClick={selectFree}>
+            Solo lo gratis
+          </button>
+          <button type="button" className="btn-secondary" onClick={selectCarreraPack}>
+            Gratis + Carrera
+          </button>
+          <button type="button" className="btn-secondary" onClick={() => setSelected({})}>
+            Limpiar
+          </button>
         </div>
-        {carreraGoals.map((g) => (
-          <GoalRow key={g.id} g={g} checked={Boolean(selected[g.id])} onToggle={() => toggle(g.id)} />
-        ))}
-      </section>
 
-      <section className="space-y-2">
-        <h2 className="text-sm font-semibold">Extras</h2>
-        <p className="text-xs muted">Curso add-on, experto humano o checklist de 90 días.</p>
-        {extraGoals.map((g) => (
-          <GoalRow key={g.id} g={g} checked={Boolean(selected[g.id])} onToggle={() => toggle(g.id)} />
-        ))}
-      </section>
+        <section className="space-y-2">
+          <h2 className="text-sm font-semibold">Gratis ({freeCount}/3)</h2>
+          {freeGoals.map((g) => (
+            <GoalRow
+              key={g.id}
+              g={g}
+              checked={Boolean(selected[g.id])}
+              onToggle={() => toggle(g.id)}
+            />
+          ))}
+        </section>
 
-      <button type="button" className="btn-primary" disabled={!chosen.length} onClick={startWalk}>
-        Empezar mi recorrido ({chosen.length})
-      </button>
-      <p className="text-xs muted text-center">
-        Orden automático: primero gratis, después Carrera.
-      </p>
+        <section className="space-y-2">
+          <h2 className="text-sm font-semibold">Plan Carrera ({carreraCount})</h2>
+          <div className="bento-card space-y-1 text-xs muted">
+            {CAREER_MODULE_PITCH.map((m) => (
+              <p key={m.code}>
+                <strong style={{ color: "var(--text)" }}>{m.short}</strong> — {m.value}
+              </p>
+            ))}
+          </div>
+          {carreraGoals.map((g) => (
+            <GoalRow
+              key={g.id}
+              g={g}
+              checked={Boolean(selected[g.id])}
+              onToggle={() => toggle(g.id)}
+            />
+          ))}
+        </section>
+
+        <section className="space-y-2">
+          <h2 className="text-sm font-semibold">Extras</h2>
+          {extraGoals.map((g) => (
+            <GoalRow
+              key={g.id}
+              g={g}
+              checked={Boolean(selected[g.id])}
+              onToggle={() => toggle(g.id)}
+            />
+          ))}
+        </section>
+
+        <button type="button" className="btn-primary" disabled={!chosen.length} onClick={startWalk}>
+          Empezar recorrido personalizado ({chosen.length})
+        </button>
+      </details>
+
       <AdSlot slot="guia" />
-      <Link href="/" className="btn-secondary">
+      <Link href="/" className="text-center text-sm muted">
         Volver al inicio
       </Link>
     </div>

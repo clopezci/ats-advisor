@@ -41,11 +41,11 @@ export const PERSON_GOALS: PersonGoal[] = [
   },
   {
     id: "ruta",
-    title: "Ruta de 8 módulos (corazón de Carrera)",
+    title: "Cuadernillo Carrera (flujo guiado)",
     benefit:
-      "8 cursos día a día (lecciones con plantillas y tareas). El corazón de Carrera.",
-    href: "/outplacement/ruta",
-    keywords: ["ruta", "cápsula", "capsula", "diario", "outplacement", "módulo", "modulo", "8"],
+      "6 fases con un solo Continuar: mapa, mercado, marca, entrevistas, oferta. El corazón práctico de Carrera.",
+    href: "/outplacement/cuadernillo",
+    keywords: ["ruta", "cápsula", "capsula", "diario", "outplacement", "módulo", "modulo", "8", "cuadernillo"],
     access: "carrera",
   },
   {

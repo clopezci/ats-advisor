@@ -28,11 +28,14 @@ Marca el checkbox cuando termines. Si algo ya lo hiciste antes, márcalo y salta
 3. Abre https://ats-advisor-two.vercel.app/api/health — no debe ser 404/500.
 4. Humo rápido:
    - `/outplacement/cuadernillo`
+   - `/outplacement/cuadernillo/pruebas`
+   - `/outplacement/cuadernillo/compensacion`
    - `/outplacement/cuadernillo/finanzas`
    - `/outplacement/cuadernillo/funnel`
    - `/outplacement/cuadernillo/export`
    - `/outplacement/coaches`
    - `/outplacement/roleplay`
+5. Telegram (si el bot está vivo): `/cuadernillo` debe devolver tip + links.
 
 - [ ] Hecho
 

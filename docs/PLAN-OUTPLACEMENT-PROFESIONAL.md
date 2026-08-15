@@ -80,10 +80,19 @@ Componentes esperados en outplacement 2025–26: coaching estructurado, CV/Linke
 **Valor:** cobertura premium del mercado.
 
 ### F4 — Outcomes (continuo)
-- Funnel medible + export PDF/txt del cuadernillo. ← hecho (base)
-- Accountability Telegram (opcional, ops).
+- Funnel medible + export PDF/txt del cuadernillo. ← hecho
+- Accountability Telegram `/cuadernillo`. ← hecho (F5)
 
 **Valor:** “está funcionando” con números.
+
+### F5 — Cierre profesional (polish)
+- Autoeval competencias propias (no Lominger). ← hecho
+- EVP top 5 en Mercado. ← hecho
+- Compensación integrada al cuadernillo. ← hecho
+- Continúa hoy = curso + siguiente bloque cuadernillo. ← hecho
+- Telegram `/cuadernillo` tip diario. ← hecho
+
+**Valor:** programa operable de punta a punta.
 
 ## Orden de build sugerido
 
@@ -96,6 +105,7 @@ Componentes esperados en outplacement 2025–26: coaching estructurado, CV/Linke
 7. Coaches personas + roleplay ← **hecho**
 8. Finanzas + directorio reclutadores + emprendimiento + cómo te evalúan ← **hecho**
 9. Funnel + export PDF ← **hecho**
+10. F5 polish (competencias, EVP, compensación, Continúa hoy, Telegram `/cuadernillo`) ← **hecho**
 
 ### Coaches (autoría ATSAdvisor)
 Personas propias (Elena, Marcos, Valeria, Tomás, Irene, Gabriel, Natalia) — no reutilizar nombres de firmas ajenas. UI: `/outplacement/coaches` + roleplay `/outplacement/roleplay`.
@@ -107,6 +117,8 @@ Personas propias (Elena, Marcos, Valeria, Tomás, Irene, Gabriel, Natalia) — n
 - Evaluación: `/outplacement/cuadernillo/evaluacion`
 - Funnel: `/outplacement/cuadernillo/funnel`
 - Export PDF: `/outplacement/cuadernillo/export`
+- Competencias: `/outplacement/cuadernillo/pruebas`
+- Compensación: `/outplacement/cuadernillo/compensacion`
 
 ### Cascada IA (propia, estilo OpenRouter)
 1. **Gratis calidad:** Groq (`llama-3.3-70b-versatile`, fallback 8b)
@@ -129,4 +141,4 @@ Todo el contenido nuevo es autoría ATSAdvisor. No usar marcas ni materiales de 
 
 ## Siguiente decisión
 
-Aprobar F0+F1 (KB + Guiones/Matriz + Mapa) como primer sprint de implementación.
+F0–F5 del plan profesional están en código. Próximo foco de producto (si aplica): sync cloud del cuadernillo, accountability cron Telegram, o alumni/AMA.

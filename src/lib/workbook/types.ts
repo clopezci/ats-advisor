@@ -2,6 +2,7 @@
 
 export type WorkbookModuleId =
   | "mapa"
+  | "pruebas"
   | "mercado"
   | "guiones"
   | "marca"
@@ -30,6 +31,14 @@ export const WORKBOOK_MODULES: WorkbookModuleDef[] = [
     href: "/outplacement/cuadernillo/mapa",
     coachModule: "mapa de carrera",
     minutes: 45,
+  },
+  {
+    id: "pruebas",
+    title: "Competencias (autoeval)",
+    goal: "12 competencias propias con evidencia — top 5 al mapa/CV.",
+    href: "/outplacement/cuadernillo/pruebas",
+    coachModule: "mapa de carrera",
+    minutes: 30,
   },
   {
     id: "mercado",
@@ -82,8 +91,8 @@ export const WORKBOOK_MODULES: WorkbookModuleDef[] = [
   {
     id: "compensacion",
     title: "Compensación",
-    goal: "Paquete total y criterios de negociación.",
-    href: "/outplacement/oferta",
+    goal: "Paquete total, criterios y piso/meta/techo.",
+    href: "/outplacement/cuadernillo/compensacion",
     coachModule: "compensación y oferta",
     minutes: 30,
   },
@@ -138,12 +147,16 @@ export type MarketChannelCompany = {
   name: string;
   careersUrl: string;
   lastCheck: string;
+  /** Qué te atrae / EVP percibido (cultura, impacto, aprendizaje…). */
+  evp: string;
   notes: string;
 };
 
 export type MarketChannelsData = {
   timeMixNote: string;
   companies: MarketChannelCompany[];
+  /** Resumen top 5 empresas por EVP / fit. */
+  evpTopSummary: string;
   weeklyChecklistDone: string[];
   updatedAt?: number;
 };
@@ -247,6 +260,26 @@ export type FunnelData = {
   updatedAt?: number;
 };
 
+export type CompetenciesData = {
+  ratings: { id: string; score: number; evidence: string }[];
+  gap30Days: string;
+  updatedAt?: number;
+};
+
+export type CompensationData = {
+  base: string;
+  variable: string;
+  benefits: string;
+  flexibility: string;
+  growth: string;
+  floor: string;
+  target: string;
+  stretch: string;
+  dealbreakers: string;
+  negotiables: string;
+  updatedAt?: number;
+};
+
 export type WorkbookState = {
   completed: Partial<Record<WorkbookModuleId, boolean>>;
   map: CareerMapData;
@@ -259,6 +292,8 @@ export type WorkbookState = {
   venture: VentureData;
   evaluation: EvaluationData;
   funnel: FunnelData;
+  competencies: CompetenciesData;
+  compensation: CompensationData;
 };
 
 export const NETWORK_CATEGORIES: { id: NetworkCategory; label: string }[] = [
@@ -338,10 +373,11 @@ export function emptyWorkbook(): WorkbookState {
     market: {
       timeMixNote: "40% red · 35% empresas · 25% portales",
       companies: [
-        { name: "", careersUrl: "", lastCheck: "", notes: "" },
-        { name: "", careersUrl: "", lastCheck: "", notes: "" },
-        { name: "", careersUrl: "", lastCheck: "", notes: "" },
+        { name: "", careersUrl: "", lastCheck: "", evp: "", notes: "" },
+        { name: "", careersUrl: "", lastCheck: "", evp: "", notes: "" },
+        { name: "", careersUrl: "", lastCheck: "", evp: "", notes: "" },
       ],
+      evpTopSummary: "",
       weeklyChecklistDone: [],
     },
     soar: {
@@ -382,6 +418,22 @@ export function emptyWorkbook(): WorkbookState {
     funnel: {
       weeks: [{ ...emptyFunnelWeek(), weekLabel: "Esta semana" }],
     },
+    competencies: {
+      ratings: [],
+      gap30Days: "",
+    },
+    compensation: {
+      base: "",
+      variable: "",
+      benefits: "",
+      flexibility: "",
+      growth: "",
+      floor: "",
+      target: "",
+      stretch: "",
+      dealbreakers: "",
+      negotiables: "",
+    },
   };
 }
 
@@ -403,7 +455,18 @@ export function readWorkbook(): WorkbookState {
       ...raw,
       map: { ...base.map, ...raw.map },
       scripts: { ...base.scripts, ...raw.scripts },
-      market: { ...base.market, ...raw.market },
+      market: {
+        ...base.market,
+        ...raw.market,
+        companies: mergeList(raw.market?.companies, base.market.companies, (c) => ({
+          name: "",
+          careersUrl: "",
+          lastCheck: "",
+          evp: "",
+          notes: "",
+          ...c,
+        })),
+      },
       soar: {
         ...base.soar,
         ...raw.soar,
@@ -439,6 +502,12 @@ export function readWorkbook(): WorkbookState {
           ...w,
         })),
       },
+      competencies: {
+        ...base.competencies,
+        ...raw.competencies,
+        ratings: Array.isArray(raw.competencies?.ratings) ? raw.competencies.ratings : [],
+      },
+      compensation: { ...base.compensation, ...raw.compensation },
     };
   } catch {
     return emptyWorkbook();
@@ -496,8 +565,15 @@ export function workbookToPlainText(state: WorkbookState): string {
     if (c.name) lines.push(`- ${c.name} (${c.category}) · ${c.status} · ${c.favorAsked}`);
   });
   lines.push("", "## Finanzas", `Pista (meses): ${state.finance.runwayMonths}`, state.finance.offerFloorNote, "");
+  lines.push("## Compensación", `Piso: ${state.compensation.floor}`, `Meta: ${state.compensation.target}`, "");
   lines.push("## Emprendimiento", state.venture.offerOneLiner, state.venture.goNoGo, "");
-  lines.push("## Funnel");
+  lines.push("## Competencias top");
+  [...state.competencies.ratings]
+    .filter((r) => r.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 5)
+    .forEach((r) => lines.push(`- ${r.id}: ${r.score}/5 ${r.evidence}`));
+  lines.push("", "## Funnel");
   state.funnel.weeks.forEach((w) => {
     lines.push(
       `${w.weekLabel}: outreach ${w.outreach}, empresas ${w.companyPages}, postulaciones ${w.applications}, filtros ${w.screens}, entrevistas ${w.interviews}, ofertas ${w.offers}`

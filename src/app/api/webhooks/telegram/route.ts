@@ -162,11 +162,13 @@ export async function POST(req: Request) {
 
     const { mod, cap } = capsuleForChat(Number(chatId || 0));
 
-    let reply = "ATSAdvisor: /start /capsula /progreso /vincular /confirmar /ayuda";
+    let reply =
+      "ATSAdvisor: /start /capsula /progreso /cuadernillo /vincular /confirmar /ayuda";
     if (text.startsWith("/start")) {
       if (chatId) await persistTelegramChat(chatId, username);
       reply =
         "Bienvenido a ATSAdvisor. Usa /capsula para tu microaprendizaje del día.\n" +
+        "Usa /cuadernillo para el tip de accountability de transición.\n" +
         "Para vincular tu cuenta: /vincular tu@correo.com → te enviamos un código → /confirmar 123456\n" +
         "El progreso detallado vive en la PWA.";
     } else if (text.startsWith("/capsula")) {
@@ -236,9 +238,13 @@ export async function POST(req: Request) {
           reply = "No pude confirmar (Supabase). Avisa al owner.";
         }
       }
+    } else if (text.startsWith("/cuadernillo")) {
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://ats-advisor-two.vercel.app";
+      const { formatCuadernilloTelegramReply } = await import("@/lib/workbook/accountability");
+      reply = formatCuadernilloTelegramReply(appUrl);
     } else if (text.startsWith("/ayuda")) {
       reply =
-        "Comandos: /start /capsula /progreso /vincular correo@x.com /confirmar 123456 /ayuda";
+        "Comandos: /start /capsula /progreso /cuadernillo /vincular correo@x.com /confirmar 123456 /ayuda";
     } else if (text.startsWith("/alerta_owner_test")) {
       if (String(chatId) === String(process.env.TELEGRAM_OWNER_CHAT_ID || "")) {
         await notifyOwnerTelegram("Test de alerta desde bot Telegram");

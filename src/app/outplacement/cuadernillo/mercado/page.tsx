@@ -50,7 +50,7 @@ export default function MercadoWizardPage() {
         ...wb!.market,
         companies: [
           ...wb!.market.companies,
-          { name: "", careersUrl: "", lastCheck: "", notes: "" },
+          { name: "", careersUrl: "", lastCheck: "", evp: "", notes: "" },
         ],
         updatedAt: Date.now(),
       },
@@ -144,6 +144,13 @@ export default function MercadoWizardPage() {
               dictationLabel="Dictar fecha"
             />
             <VoiceTextarea
+              label="EVP / por qué te atrae (cultura, impacto, aprendizaje…)"
+              value={c.evp || ""}
+              onChange={(v) => setCompany(i, { evp: v })}
+              className="field min-h-16"
+              dictationLabel="Dictar EVP"
+            />
+            <VoiceTextarea
               label="Notas / personas / vacantes"
               value={c.notes}
               onChange={(v) => setCompany(i, { notes: v })}
@@ -155,6 +162,23 @@ export default function MercadoWizardPage() {
         <button type="button" className="btn-secondary" onClick={addCompany}>
           Agregar empresa
         </button>
+      </section>
+
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold text-sm">Top 5 por EVP / fit</h2>
+        <p className="text-xs muted">
+          Ordena mentalmente tus mejores empresas y resume por qué (no solo “pagan bien”).
+        </p>
+        <VoiceTextarea
+          label="Resumen top 5"
+          value={wb.market.evpTopSummary || ""}
+          onChange={(v) =>
+            save({ ...wb, market: { ...wb.market, evpTopSummary: v, updatedAt: Date.now() } })
+          }
+          className="field min-h-24"
+          placeholder="1) Empresa — por …&#10;2) …"
+          dictationLabel="Dictar top 5"
+        />
       </section>
 
       <section className="bento-card space-y-3">

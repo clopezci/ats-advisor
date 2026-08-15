@@ -31,6 +31,13 @@ export function readEntitlement(): Entitlement {
       e.out09Month = monthKey();
       e.out09UsedMonth = 0;
       writeEntitlement(e);
+    } else {
+      // Mantener cookie alineada (middleware)
+      try {
+        document.cookie = `ats_plan=${encodeURIComponent(e.plan)}; path=/; max-age=${60 * 60 * 24 * 90}; SameSite=Lax`;
+      } catch {
+        /* ignore */
+      }
     }
     return e;
   } catch {
@@ -40,6 +47,12 @@ export function readEntitlement(): Entitlement {
 
 export function writeEntitlement(e: Entitlement) {
   localStorage.setItem(KEY, JSON.stringify(e));
+  try {
+    const maxAge = 60 * 60 * 24 * 90;
+    document.cookie = `ats_plan=${encodeURIComponent(e.plan)}; path=/; max-age=${maxAge}; SameSite=Lax`;
+  } catch {
+    /* ignore */
+  }
 }
 
 export function setPlan(plan: PlanId, source: Entitlement["source"] = "local") {

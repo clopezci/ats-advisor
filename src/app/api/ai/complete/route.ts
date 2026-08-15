@@ -4,7 +4,7 @@ import { withKnowledgeContext } from "@/lib/ai/knowledge";
 import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
 import { reportError } from "@/lib/observability";
 import { clampText, isValidEmail } from "@/lib/validation";
-import { getCloudPlanByEmail, isPaidCloudPlan } from "@/lib/payments/entitlementsCloud";
+import { requirePaidCloud } from "@/lib/entitlements/requirePaidApi";
 
 export const runtime = "nodejs";
 
@@ -51,23 +51,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Prompt demasiado largo (máx. 12000 caracteres)." }, { status: 400 });
     }
 
-    const isProd = process.env.VERCEL_ENV === "production" || process.env.NODE_ENV === "production";
-    if (!FREE_AI_TASKS.has(task) && isProd) {
-      const email = clampText(body.email || "", 120).trim().toLowerCase();
-      let ok = false;
-      if (isValidEmail(email)) {
-        const cloud = await getCloudPlanByEmail(email);
-        ok = isPaidCloudPlan(cloud?.plan);
-      }
-      if (!ok) {
-        return NextResponse.json(
-          {
-            error: "Esta IA requiere plan Carrera con correo verificado en cloud. Entra a /cuenta o /precios.",
-            code: "PAYWALL",
-          },
-          { status: 402 }
-        );
-      }
+    if (!FREE_AI_TASKS.has(task)) {
+      const gate = await requirePaidCloud({
+        email: body.email,
+        allowLocalDev: true,
+        errorMessage:
+          "Esta IA requiere plan Carrera con correo verificado en cloud. Entra a /cuenta o /precios.",
+      });
+      if (!gate.ok) return gate.response;
     }
 
     const grounded =

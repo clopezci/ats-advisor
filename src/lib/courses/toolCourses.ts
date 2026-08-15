@@ -1,4 +1,8 @@
 import type { CourseDef, CourseLesson } from "@/lib/courses/types";
+import {
+  TOOL_LESSON_ENRICHMENTS,
+  toolEnrichmentKey,
+} from "@/lib/courses/toolEnrichments";
 
 type Sketch = {
   title: string;
@@ -12,27 +16,31 @@ type Sketch = {
 
 function lesson(courseId: string, i: number, s: Sketch): CourseLesson {
   const id = `${courseId}-l${i + 1}`;
+  const rich = TOOL_LESSON_ENRICHMENTS[toolEnrichmentKey(courseId, i)];
   return {
     id,
     title: s.title,
     teaser: s.teaser,
-    why: s.why,
-    howTo: [
+    why: rich?.why || s.why,
+    howTo: rich?.howTo || [
       `Objetivo: ${s.title}.`,
       s.practice,
       "Hazlo por escrito (nota o doc). No lo dejes solo en la cabeza.",
       "Marca las tareas. Si te trabas, reduce a 20 minutos y cierra igual.",
       "Guarda evidencia para usarla en CV, LinkedIn o entrevistas.",
     ],
-    tips: s.tips || [
-      "Hecho > perfecto.",
-      "Pide feedback a 1 persona si el entregable es público (CV, mensaje).",
-      "Mañana: un solo siguiente paso concreto.",
-    ],
+    tips: rich?.tips ||
+      s.tips || [
+        "Hecho > perfecto.",
+        "Pide feedback a 1 persona si el entregable es público (CV, mensaje).",
+        "Mañana: un solo siguiente paso concreto.",
+      ],
     example:
+      rich?.example ||
       s.example ||
       `Ejemplo: con 45–60 min hoy aplicas “${s.title}”. Entregable: texto o lista que puedas mostrar mañana.`,
     template:
+      rich?.template ||
       s.template ||
       `Plantilla — ${s.title}
 Fecha: ___

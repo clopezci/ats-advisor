@@ -86,6 +86,11 @@ export function nextOpenLesson(course: CourseDef): CourseLesson | null {
 
 export function setLearningCursor(c: LearningCursor) {
   localStorage.setItem(CURSOR_KEY, JSON.stringify(c));
+  try {
+    void import("@/lib/supabase/sync").then((m) => m.syncLearningCursor(c)).catch(() => undefined);
+  } catch {
+    /* ignore */
+  }
 }
 
 export function readLearningCursor(): LearningCursor | null {

@@ -6,8 +6,9 @@ import { retrieveKnowledge } from "@/lib/ai/knowledge";
 import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
 import { reportError } from "@/lib/observability";
 import { hydrateSettingsFromCloud } from "@/lib/settingsPersist";
-import { clampText, isValidEmail } from "@/lib/validation";
-import { getCloudPlanByEmail, isPaidCloudPlan } from "@/lib/payments/entitlementsCloud";
+import { clampText } from "@/lib/validation";
+import { requirePaidCloud } from "@/lib/entitlements/requirePaidApi";
+import { isPaidCloudPlan } from "@/lib/payments/entitlementsCloud";
 
 export const runtime = "nodejs";
 
@@ -29,8 +30,7 @@ export async function POST(req: Request) {
     const answers = body.answers && typeof body.answers === "object" ? body.answers : {};
     const email = clampText(body.email || "", 120).trim().toLowerCase();
     const maxChars = settings.ai_limits.max_out09_prompt_chars || 2000;
-    const isProd = process.env.VERCEL_ENV === "production" || process.env.NODE_ENV === "production";
-    const allowDemo = !isProd && body.allowDemo === true;
+    const allowDemo = body.allowDemo === true;
 
     if (description.length < 12) {
       return NextResponse.json({ error: "Describe con más detalle qué quieres mejorar." }, { status: 400 });
@@ -49,26 +49,13 @@ export async function POST(req: Request) {
       );
     }
 
-    let allowed = allowDemo;
-    if (!allowed && isValidEmail(email)) {
-      const cloud = await getCloudPlanByEmail(email);
-      allowed = isPaidCloudPlan(cloud?.plan);
-    }
-    // Fallback no-prod: aceptar plan local solo fuera de producción
-    if (!allowed && !isProd) {
-      const clientPlan = String(body.plan || "free");
-      allowed = isPaidCloudPlan(clientPlan);
-    }
-    if (!allowed) {
-      return NextResponse.json(
-        {
-          error:
-            "El curso a tu medida requiere plan Carrera verificado (correo con magic link / pago cloud) y el add-on. Revisa /precios.",
-          code: "PAYWALL",
-        },
-        { status: 402 }
-      );
-    }
+    const gate = await requirePaidCloud({
+      email,
+      allowLocalDev: allowDemo || isPaidCloudPlan(String(body.plan || "")),
+      errorMessage:
+        "El curso a tu medida requiere plan Carrera verificado (correo con magic link / pago cloud) y el add-on. Revisa /precios.",
+    });
+    if (!gate.ok) return gate.response;
 
     const qa = OUT09_QUESTIONS.map((q) => `${q.label} → ${answers[q.id] || "N/D"}`).join("\n");
     const kb = retrieveKnowledge(`${skillType} ${description} ${qa}`, 5, 5500);

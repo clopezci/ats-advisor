@@ -46,7 +46,28 @@ export async function syncJobApplication(job: {
   return { ok: !error, skipped: false, error: error?.message };
 }
 
-export async function syncProfilePlan(plan: string) {
+export async function syncProfilePlan(_plan: string) {
+  if (!hasSupabase() || typeof window === "undefined") return { ok: false, skipped: true };
+  const sb = createBrowserSupabase();
+  if (!sb) return { ok: false, skipped: true };
+  const { data: sess } = await sb.auth.getSession();
+  const userId = sess.session?.user?.id;
+  const email = sess.session?.user?.email;
+  if (!userId) return { ok: false, skipped: true };
+  // No empujar plan desde el cliente: el plan cloud lo escribe el webhook / service role.
+  const { error } = await sb.from("profiles").upsert({
+    id: userId,
+    email,
+    updated_at: new Date().toISOString(),
+  });
+  return { ok: !error, skipped: false, error: error?.message };
+}
+
+export async function syncLearningCursor(cursor: {
+  courseId: string;
+  lessonId: string;
+  updatedAt?: number;
+}) {
   if (!hasSupabase() || typeof window === "undefined") return { ok: false, skipped: true };
   const sb = createBrowserSupabase();
   if (!sb) return { ok: false, skipped: true };
@@ -57,7 +78,9 @@ export async function syncProfilePlan(plan: string) {
   const { error } = await sb.from("profiles").upsert({
     id: userId,
     email,
-    plan,
+    learning_course_id: cursor.courseId,
+    learning_lesson_id: cursor.lessonId,
+    learning_cursor_at: new Date(cursor.updatedAt || Date.now()).toISOString(),
     updated_at: new Date().toISOString(),
   });
   return { ok: !error, skipped: false, error: error?.message };

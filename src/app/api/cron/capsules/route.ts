@@ -1,16 +1,14 @@
 import { NextResponse } from "next/server";
-import { OUTPLACEMENT_MODULES } from "@/lib/outplacement/modules";
-import { moduleToCourse } from "@/lib/courses/catalog";
 import { deliverCapsule } from "@/lib/notify/deliverCapsule";
 import { notifyOwnerTelegram } from "@/lib/notify/channels";
 import { createServiceSupabase } from "@/lib/supabase/client";
 import { requireCronAuth } from "@/lib/admin/auth";
 import { hydrateSettingsFromCloud } from "@/lib/settingsPersist";
 import { reportError } from "@/lib/observability";
-import { outModuleShort } from "@/lib/outplacement/labels";
+import { buildCapsuleForCursor, buildGlobalDayCapsule } from "@/lib/courses/capsuleForProfile";
 
 /**
- * Daily microlearning push — lección + tarea del curso (Telegram gratis / WA add-on).
+ * Daily microlearning push — lección del cursor del usuario (o del día global).
  */
 export async function GET(req: Request) {
   const auth = requireCronAuth(req);
@@ -20,23 +18,7 @@ export async function GET(req: Request) {
 
   try {
     const settings = await hydrateSettingsFromCloud();
-    const day = Math.floor(Date.now() / 86400000);
-    const mod = OUTPLACEMENT_MODULES[day % OUTPLACEMENT_MODULES.length];
-    const course = moduleToCourse(mod.code);
-    const lesson = course?.lessons[day % (course?.lessons.length || 1)];
-    const cap = mod.capsules[day % mod.capsules.length];
-    const taskLine = lesson?.tasks?.[0]?.label
-      ? `\n\n✅ Tarea de hoy: ${lesson.tasks[0].label}`
-      : "";
-    const howLine = lesson?.howTo?.[1] ? `\n\nCómo: ${lesson.howTo[1]}` : "";
-    const payload = {
-      moduleCode: outModuleShort(mod.code),
-      day: cap.day,
-      title: lesson?.title || cap.title,
-      content: `${lesson?.why || ""}\n\n${cap.content}${howLine}${taskLine}\n\n📱 Continúa hoy: abre Tablero → esta lección → marca la tarea.`,
-      quiz: cap.quiz,
-      footer: settings.microlearning_footer,
-    };
+    const fallback = buildGlobalDayCapsule(settings.microlearning_footer);
 
     const results: { channel: string; ok: boolean; skipped?: boolean }[] = [];
 
@@ -47,7 +29,7 @@ export async function GET(req: Request) {
 
     if (settings.features.telegram) {
       for (const id of telegramIds) {
-        const r = await deliverCapsule("telegram", id, payload);
+        const r = await deliverCapsule("telegram", id, fallback);
         results.push({ channel: `telegram:${id}`, ok: r.ok, skipped: "skipped" in r ? r.skipped : false });
       }
     }
@@ -55,29 +37,37 @@ export async function GET(req: Request) {
     if (settings.features.whatsapp) {
       const waTo = process.env.WHATSAPP_BROADCAST_TO || "";
       if (waTo) {
-        const r = await deliverCapsule("whatsapp", waTo, payload);
+        const r = await deliverCapsule("whatsapp", waTo, fallback);
         results.push({ channel: "whatsapp", ok: r.ok, skipped: "skipped" in r ? r.skipped : false });
       }
     }
 
     const sb = createServiceSupabase();
     let cloudProfiles = 0;
+    let personalized = 0;
     if (sb && settings.features.telegram) {
       const { data } = await sb
         .from("profiles")
-        .select("learning_channel, email, telegram_chat_id, plan")
+        .select(
+          "learning_channel, email, telegram_chat_id, plan, learning_course_id, learning_lesson_id"
+        )
         .not("telegram_chat_id", "is", null)
         .limit(500);
       cloudProfiles = data?.length || 0;
       for (const p of data || []) {
         const chat = String(p.telegram_chat_id || "").trim();
         if (!chat) continue;
-        if (p.learning_channel && p.learning_channel !== "telegram" && p.learning_channel !== "pwa") {
-          // still send if they linked telegram
-        }
         const paid = ["carrera", "plus", "tester"].includes(String(p.plan || ""));
-        if (!paid) continue; // cápsulas outplacement solo planes pagos
-        if (telegramIds.includes(chat)) continue; // evitar duplicar owner/broadcast
+        if (!paid) continue;
+        if (telegramIds.includes(chat)) continue;
+
+        const payload = buildCapsuleForCursor(
+          p.learning_course_id,
+          p.learning_lesson_id,
+          settings.microlearning_footer
+        );
+        if (p.learning_course_id && p.learning_lesson_id) personalized += 1;
+
         const r = await deliverCapsule("telegram", chat, payload);
         results.push({
           channel: `telegram:user:${chat}`,
@@ -91,10 +81,16 @@ export async function GET(req: Request) {
     }
 
     await notifyOwnerTelegram(
-      `Cron cápsulas: ${mod.code} · ${cap.title} · envíos OK ${results.filter((x) => x.ok).length} · perfiles cloud ${cloudProfiles}`
+      `Cron cápsulas: ${fallback.moduleCode} · ${fallback.title} · OK ${results.filter((x) => x.ok).length} · perfiles ${cloudProfiles} · personalizadas ${personalized}`
     );
 
-    return NextResponse.json({ ok: true, module: mod.code, capsule: cap.title, results, cloudProfiles });
+    return NextResponse.json({
+      ok: true,
+      fallback: { module: fallback.moduleCode, title: fallback.title },
+      results,
+      cloudProfiles,
+      personalized,
+    });
   } catch (e) {
     await reportError({ where: "api/cron/capsules", error: e, notifyOwner: true });
     return NextResponse.json({ error: "Cron cápsulas falló" }, { status: 500 });

@@ -132,3 +132,13 @@ alter table audit_events enable row level security;
 -- telegram chat ids para fan-out de cápsulas
 alter table profiles add column if not exists telegram_chat_id text;
 alter table profiles add column if not exists whatsapp_phone text;
+
+-- Cursor de aprendizaje (cápsulas personalizadas + Continúa hoy)
+alter table profiles add column if not exists learning_course_id text;
+alter table profiles add column if not exists learning_lesson_id text;
+alter table profiles add column if not exists learning_cursor_at timestamptz;
+
+-- OTP vincular Telegram ↔ email (pending codes viven también en audit_events)
+alter table profiles add column if not exists telegram_link_code text;
+alter table profiles add column if not exists telegram_link_expires timestamptz;
+alter table profiles add column if not exists telegram_link_chat_id text;

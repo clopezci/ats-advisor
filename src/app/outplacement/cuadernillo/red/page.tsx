@@ -197,6 +197,12 @@ export default function RedCrmPage() {
       </button>
       {msg ? <p className="text-sm muted">{msg}</p> : null}
 
+      <Link href="/outplacement/cuadernillo/conectores" className="btn-secondary">
+        Cercanos / aliados / conectores
+      </Link>
+      <Link href="/outplacement/cuadernillo/plantillas" className="btn-secondary">
+        Plantillas por audiencia
+      </Link>
       <Link href="/outplacement/cuadernillo/guiones" className="btn-secondary">
         Usar guiones por audiencia
       </Link>

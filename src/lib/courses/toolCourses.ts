@@ -398,6 +398,18 @@ Headline elegida: …`,
         practice: "Redacta 1 mensaje LinkedIn/email con CTA sí/no.",
       },
       {
+        title: "Cercanos, aliados y conectores",
+        teaser: "Calidad de red, no solo cantidad.",
+        why: "Un conector multiplica intros; un “drena” te quita tiempo.",
+        practice: "Clasifica 15 contactos y elige 3 acciones esta semana.",
+      },
+      {
+        title: "Plantillas por audiencia",
+        teaser: "HH, excolegas, frío, follow-up.",
+        why: "El mismo párrafo para todos quema capital social.",
+        practice: "Copia 2 plantillas del banco y personalízalas.",
+      },
+      {
         title: "Seguimiento",
         teaser: "Día 4–7 sin acosar.",
         why: "La mayoría del valor está en el follow-up.",

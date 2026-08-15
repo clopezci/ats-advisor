@@ -138,8 +138,17 @@ export default function GuionesWizardPage() {
       </button>
       {msg ? <p className="text-sm muted">{msg}</p> : null}
 
+      <Link href="/outplacement/cuadernillo/plantillas" className="btn-secondary">
+        Banco de plantillas (corto / largo)
+      </Link>
+      <Link href="/outplacement/cuadernillo/conectores" className="btn-secondary">
+        Cercanos, aliados, conectores
+      </Link>
+      <Link href="/outplacement/cuadernillo/red" className="btn-secondary">
+        Ir a CRM del cuadernillo
+      </Link>
       <Link href="/outplacement/networking" className="btn-secondary">
-        Ir a red de contactos
+        CRM herramienta (curso)
       </Link>
       <Link href="/outplacement/cuadernillo" className="text-center text-sm muted">
         Volver al cuadernillo

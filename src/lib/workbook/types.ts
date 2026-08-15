@@ -49,6 +49,14 @@ export const WORKBOOK_MODULES: WorkbookModuleDef[] = [
     minutes: 40,
   },
   {
+    id: "red",
+    title: "Red de contactos (CRM)",
+    goal: "Contactos por categoría, favor concreto y follow-up.",
+    href: "/outplacement/cuadernillo/red",
+    coachModule: "networking",
+    minutes: 30,
+  },
+  {
     id: "guiones",
     title: "Guiones y matriz",
     goal: "Pitch, razón de salida y mensajes por audiencia.",
@@ -63,14 +71,6 @@ export const WORKBOOK_MODULES: WorkbookModuleDef[] = [
     href: "/outplacement/cuadernillo/soar",
     coachModule: "marca personal y SOAR",
     minutes: 40,
-  },
-  {
-    id: "red",
-    title: "Red de contactos (CRM)",
-    goal: "Contactos por categoría, favor concreto y follow-up.",
-    href: "/outplacement/cuadernillo/red",
-    coachModule: "networking",
-    minutes: 30,
   },
   {
     id: "entrevistas",

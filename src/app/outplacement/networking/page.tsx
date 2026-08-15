@@ -106,6 +106,12 @@ function NetworkingTool() {
             </button>
           ))}
         </div>
+        <Link href="/outplacement/cuadernillo/plantillas" className="btn-secondary">
+          Banco completo por audiencia
+        </Link>
+        <Link href="/outplacement/cuadernillo/conectores" className="btn-secondary">
+          Cercanos / aliados / conectores
+        </Link>
         {draft && (
           <>
             <pre className="text-sm muted whitespace-pre-wrap">{draft}</pre>

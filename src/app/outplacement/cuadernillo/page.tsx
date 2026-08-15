@@ -107,6 +107,12 @@ export default function CuadernilloHubPage() {
         <Link href="/outplacement/cuadernillo/mercado" className="btn-secondary">
           Abrir: Mercado · 3 canales
         </Link>
+        <Link href="/outplacement/cuadernillo/conectores" className="btn-secondary">
+          Cercanos / aliados / conectores
+        </Link>
+        <Link href="/outplacement/cuadernillo/plantillas" className="btn-secondary">
+          Plantillas de networking
+        </Link>
       </section>
 
       <div className="flex flex-col gap-3">

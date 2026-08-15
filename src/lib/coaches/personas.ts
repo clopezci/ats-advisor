@@ -86,10 +86,11 @@ export const COACH_PERSONAS: CoachPersona[] = [
     coachModule: "networking",
     tone: "Práctica, relacional, insiste en cerrar el ciclo.",
     offlineTip:
-      "Offline: 5 contactos con favor <20 min, follow-up día 5–7, actualiza estado en el CRM del cuadernillo.",
+      "Offline: clasifica 15 contactos (cercano/aliado/conector), 5 mensajes con plantilla por audiencia, follow-up día 5–7, actualiza CRM.",
     starterQuestions: [
-      "¿Cómo pido una intro sin sonar insistente?",
+      "¿Cómo pido una intro a un conector sin sonar interesad@?",
       "Redáctame un follow-up corto para alguien que no respondió",
+      "¿Cómo escribo a un headhunter que no me conoce?",
     ],
   },
   {

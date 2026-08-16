@@ -80,17 +80,22 @@ function HomeInner() {
         </span>
       </Link>
 
-      {target ? (
+      {careerTarget ? (
         <Link
-          href={target.href}
+          href={careerTarget.href}
           className="btn-primary"
           style={{ minHeight: "4.75rem", fontSize: "1.15rem", lineHeight: 1.35 }}
+          onClick={() => writeFocusPath("carrera")}
         >
-          {target.label}
-          <span className="block text-xs font-normal opacity-90">{target.hint}</span>
+          {careerTarget.label}
+          <span className="block text-xs font-normal opacity-90">{careerTarget.hint}</span>
         </Link>
       ) : (
-        <Link href="/outplacement/cuadernillo" className="btn-primary">
+        <Link
+          href="/outplacement/cuadernillo"
+          className="btn-primary"
+          onClick={() => writeFocusPath("carrera")}
+        >
           Continuar: mi acompañamiento
         </Link>
       )}

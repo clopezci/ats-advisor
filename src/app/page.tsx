@@ -10,7 +10,7 @@ import { canAccessOutplacement, readEntitlement } from "@/lib/entitlements";
 import { readStreak } from "@/lib/engagement/streak";
 import {
   readFocusPath,
-  resolveContinueTarget,
+  resolveCareerContinueTarget,
   writeFocusPath,
   type ContinueTarget,
   type FocusPath,
@@ -20,27 +20,25 @@ function HomeInner() {
   const [streak, setStreak] = useState(0);
   const [paid, setPaid] = useState(false);
   const [path, setPath] = useState<FocusPath | null>(null);
-  const [target, setTarget] = useState<ContinueTarget | null>(null);
+  const [careerTarget, setCareerTarget] = useState<ContinueTarget | null>(null);
   const [showSwitch, setShowSwitch] = useState(false);
 
   useEffect(() => {
     setStreak(readStreak().count);
     setPaid(canAccessOutplacement(readEntitlement().plan));
     setPath(readFocusPath());
-    setTarget(resolveContinueTarget());
+    setCareerTarget(resolveCareerContinueTarget());
   }, []);
 
   function switchPath(next: FocusPath) {
     writeFocusPath(next);
     setPath(next);
-    setTarget(resolveContinueTarget());
+    setCareerTarget(resolveCareerContinueTarget());
     setShowSwitch(false);
   }
 
   const INTRO =
-    path === "ats"
-      ? "Un solo botón. Analiza, ajusta, repite. El resto del menú puede esperar."
-      : "Un solo botón Continuar. Cierras un entregable y vuelves. Así lo hacen las mejores apps de hábito.";
+    "Dos caminos siempre a la vista: el ATS gratis (el más usado) y Continuar tu acompañamiento. Elige uno y avanza.";
 
   return (
     <div className="flex flex-1 flex-col gap-6">
@@ -57,9 +55,7 @@ function HomeInner() {
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="pill-brand">LOTIC · un paso a la vez</p>
-            <h1 className="mt-3 text-2xl font-semibold leading-tight">
-              {path === "ats" ? "Tu ATS de hoy" : "Tu siguiente paso"}
-            </h1>
+            <h1 className="mt-3 text-2xl font-semibold leading-tight">Tu siguiente paso</h1>
           </div>
           <SpeakButton text={INTRO} />
         </div>
@@ -72,6 +68,18 @@ function HomeInner() {
         ) : null}
       </section>
 
+      <Link
+        href="/ats"
+        className="btn-primary"
+        style={{ minHeight: "4.75rem", fontSize: "1.15rem", lineHeight: 1.35 }}
+        onClick={() => writeFocusPath("ats")}
+      >
+        ATS gratis
+        <span className="block text-xs font-normal opacity-90">
+          Compara tu CV con una oferta · score accionable
+        </span>
+      </Link>
+
       {target ? (
         <Link
           href={target.href}
@@ -83,7 +91,7 @@ function HomeInner() {
         </Link>
       ) : (
         <Link href="/outplacement/cuadernillo" className="btn-primary">
-          Continuar
+          Continuar: mi acompañamiento
         </Link>
       )}
 

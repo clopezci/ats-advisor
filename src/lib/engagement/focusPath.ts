@@ -36,20 +36,9 @@ export type ContinueTarget = {
   hint: string;
 };
 
-/** Un solo destino “Continuar” según camino + plan + avance. */
-export function resolveContinueTarget(): ContinueTarget {
-  const path = readFocusPath();
+/** Destino Continuar del camino Carrera (para Inicio, junto al ATS fijo). */
+export function resolveCareerContinueTarget(): ContinueTarget {
   const paid = canAccessOutplacement(readEntitlement().plan);
-
-  if (path === "ats") {
-    return {
-      href: "/ats",
-      label: "Continuar: analizador ATS",
-      hint: "CV vs una oferta · gratis",
-    };
-  }
-
-  // Default / carrera
   if (!paid) {
     return {
       href: "/outplacement",
@@ -57,7 +46,6 @@ export function resolveContinueTarget(): ContinueTarget {
       hint: "Desbloquea Carrera o activa Tester en Cuenta para el cuadernillo",
     };
   }
-
   try {
     const next = nextWorkbookModule(readWorkbook());
     if (next) {
@@ -79,6 +67,19 @@ export function resolveContinueTarget(): ContinueTarget {
       hint: "Flujo en 6 fases",
     };
   }
+}
+
+/** Un solo destino “Continuar” según camino + plan + avance. */
+export function resolveContinueTarget(): ContinueTarget {
+  const path = readFocusPath();
+  if (path === "ats") {
+    return {
+      href: "/ats",
+      label: "Continuar: analizador ATS",
+      hint: "CV vs una oferta · gratis",
+    };
+  }
+  return resolveCareerContinueTarget();
 }
 
 export function focusHomeHref(): string {

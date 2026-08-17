@@ -21,6 +21,8 @@ import { bumpStreak } from "@/lib/engagement/streak";
 import { canAccessOutplacement, readEntitlement } from "@/lib/entitlements";
 import { upsertJob } from "@/lib/tracker/jobs";
 import { syncAtsScan } from "@/lib/supabase/sync";
+import { AtsStepCoach } from "@/components/ats/AtsStepCoach";
+import { buildScoreSummary } from "@/lib/ats/scoreSummary";
 
 const PROFILES: { id: AtsProfile; label: string; hint: string }[] = [
   { id: "generic", label: "No lo sé", hint: "Sirve para la mayoría de avisos" },
@@ -99,6 +101,8 @@ export default function AtsPage() {
     if (step === 3) return "Si no sabes con qué programa filtra la empresa, deja No lo sé y continúa.";
     return "Tu resultado. Un paso a la vez: entiende el puntaje, luego ajusta el CV, luego carta y guardar.";
   }, [step]);
+
+  const scoreSummary = useMemo(() => (result ? buildScoreSummary(result) : null), [result]);
 
   async function askAiRewrite() {
     if (!result) return;
@@ -383,6 +387,7 @@ export default function AtsPage() {
               hint="El CV tuyo (PDF o Word). No pongas aquí el aviso de la vacante: eso va en el siguiente paso."
             />
           </div>
+          <AtsStepCoach step={1} cvText={cvText} />
           {error && step === 1 && (
             <p className="text-sm" style={{ color: "var(--danger)" }}>
               {error}
@@ -442,6 +447,7 @@ export default function AtsPage() {
             />
             {detectMsg && <p className="text-xs muted">{detectMsg}</p>}
           </div>
+          <AtsStepCoach step={2} cvText={cvText} jobText={jobText} />
           <div className="flex flex-col gap-3">
             <button type="button" className="btn-primary" disabled={jobText.trim().length < 40} onClick={() => setStep(3)}>
               Continuar
@@ -480,6 +486,7 @@ export default function AtsPage() {
               ))}
             </div>
           </div>
+          <AtsStepCoach step={3} cvText={cvText} jobText={jobText} atsProfile={atsProfile} />
           {error && (
             <p className="text-sm" style={{ color: "var(--danger)" }}>
               {error}
@@ -522,6 +529,89 @@ export default function AtsPage() {
               Umbral típico para que un reclutador lo vea: ~70%+. Esto es orientación, no garantía de entrevista.
             </p>
           </section>
+
+          {scoreSummary && resultPhase >= 1 && (
+            <section className="bento-card space-y-4" style={{ borderColor: "var(--brand)" }}>
+              <div>
+                <span className="pill-brand">{scoreSummary.bandLabel}</span>
+                <p className="mt-2 text-sm leading-relaxed">{scoreSummary.headline}</p>
+              </div>
+
+              <div className="space-y-2">
+                <h2 className="text-sm font-semibold">Por qué este puntaje</h2>
+                <ul className="text-sm muted space-y-1.5 leading-relaxed">
+                  {scoreSummary.whyScore.map((line) => (
+                    <li key={line}>• {line}</li>
+                  ))}
+                </ul>
+              </div>
+
+              {scoreSummary.blockers.length > 0 && (
+                <div className="space-y-2">
+                  <h2 className="text-sm font-semibold">Lo que más te baja el score</h2>
+                  <ul className="space-y-2">
+                    {scoreSummary.blockers.map((b) => (
+                      <li key={b.label + b.detail.slice(0, 40)} className="text-sm">
+                        <span
+                          className="text-xs font-medium uppercase tracking-wide"
+                          style={{ color: b.impact === "alto" ? "var(--danger, #b42318)" : "var(--brand)" }}
+                        >
+                          {b.impact === "alto" ? "Impacto alto" : "Impacto medio"} · {b.label}
+                        </span>
+                        <p className="muted mt-0.5 leading-relaxed">{b.detail}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {result.score < 70 && scoreSummary.toReach70.length > 0 && (
+                <div className="space-y-2">
+                  <h2 className="text-sm font-semibold">Para llegar a 70%+ (visible para reclutador)</h2>
+                  <ul className="text-sm muted space-y-1.5 leading-relaxed">
+                    {scoreSummary.toReach70.map((line) => (
+                      <li key={line}>• {line}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {result.score < 85 && scoreSummary.toReach85.length > 0 && (
+                <div className="space-y-2">
+                  <h2 className="text-sm font-semibold">Para un puntaje alto (85%+)</h2>
+                  <ul className="text-sm muted space-y-1.5 leading-relaxed">
+                    {scoreSummary.toReach85.map((line) => (
+                      <li key={line}>• {line}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </section>
+          )}
+
+          <ResultBlock title="Qué hacer ahora (prioridad)" items={result.nextSteps || result.actions} />
+
+          {(result.mustHave?.missing?.length ?? 0) > 0 && (
+            <ChipBlock
+              title="Must-have que aún no detectamos en tu CV"
+              items={result.mustHave!.missing}
+              tone="warn"
+            />
+          )}
+
+          {result.exclusiveGaps.length > 0 && (
+            <ResultBlock title="Requisitos excluyentes a resolver primero" items={result.exclusiveGaps} />
+          )}
+
+          <AtsStepCoach
+            step={4}
+            resultPhase={resultPhase}
+            atsProfile={atsProfile}
+            result={result}
+            summary={scoreSummary}
+            cvText={cvText}
+            jobText={jobText}
+          />
 
           {result.recruiterSkim && (
             <section className="bento-card space-y-2">
@@ -588,9 +678,13 @@ export default function AtsPage() {
             </section>
           )}
 
-          <ResultBlock title="Cómo avanza ahora (prioridad)" items={result.nextSteps || result.actions} />
-          <ResultBlock title="Cómo filtra este ATS" items={result.atsInsights || []} />
-          <ResultBlock title="Qué explica el score" items={result.explanation} />
+          <details className="bento-card space-y-2">
+            <summary className="text-sm font-semibold cursor-pointer">Detalle técnico del cálculo</summary>
+            <div className="mt-3 space-y-3">
+              <ResultBlock title="Qué explica el score (motor)" items={result.explanation} />
+              <ResultBlock title="Cómo filtra este ATS" items={result.atsInsights || []} />
+            </div>
+          </details>
 
           {resultPhase < 2 && (
             <button type="button" className="btn-primary" onClick={() => setResultPhase(2)}>

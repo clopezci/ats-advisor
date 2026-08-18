@@ -5,6 +5,7 @@ import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
+import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 import {
   emptyMarketCompany,
   readWorkbook,
@@ -224,12 +225,8 @@ export default function MercadoWizardPage() {
       </button>
       {msg ? <p className="text-sm muted">{msg}</p> : null}
 
-      <Link href="/outplacement/cuadernillo/guiones" className="btn-secondary">
-        Siguiente: Guiones y matriz
-      </Link>
-      <Link href="/outplacement/cuadernillo" className="text-center text-sm muted">
-        Volver al cuadernillo
-      </Link>
+
+      <WorkbookModuleFooter />
     </div>
   );
 }

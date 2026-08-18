@@ -43,9 +43,6 @@ export function PaidToolGate({ children }: { children: ReactNode }) {
         title="Incluido en el plan Carrera"
         reason={`Esta herramienta forma parte del acompañamiento Carrera (${CAREER_PATH_LABEL}, LinkedIn, carta, entrevistas, negociación…). Gratis solo dejamos el analizador ATS, el encaje rápido y el tracker.`}
       />
-      <Link href={preciosHref} className="btn-primary">
-        Ver plan Carrera
-      </Link>
       <Link href="/ats" className="btn-secondary">
         Seguir con ATS gratis
       </Link>

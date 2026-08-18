@@ -16,6 +16,21 @@ export function MatchCalculator() {
     setResult(quickMatch(cv, job));
   }
 
+  const whyLines =
+    result && result.score > 0
+      ? [
+          result.matched.length > 0
+            ? `${result.matched.length} palabras de la oferta aparecen en tu CV.`
+            : "Pocas palabras clave de la oferta coinciden con tu CV.",
+          result.missing.length > 0
+            ? `Faltan visibles: ${result.missing.slice(0, 6).join(", ")}${result.missing.length > 6 ? "…" : ""}.`
+            : "Buen vocabulario compartido con la oferta.",
+          result.score >= 70
+            ? "El ATS completo validará must-haves, formato y parseo."
+            : "Integra requisitos reales del aviso (sin inventar) para subir el score ATS.",
+        ]
+      : [];
+
   return (
     <div className="flex flex-1 flex-col gap-5">
       <section className="bento-card space-y-2">
@@ -54,6 +69,16 @@ export function MatchCalculator() {
         <section className="bento-card space-y-3">
           <p className="text-4xl font-semibold score-ring">{result.score}%</p>
           <p className="text-sm muted">{result.tip}</p>
+          {whyLines.length > 0 && (
+            <div className="space-y-1">
+              <p className="text-xs font-medium">Por qué este %</p>
+              <ul className="text-sm muted space-y-1">
+                {whyLines.map((line) => (
+                  <li key={line}>• {line}</li>
+                ))}
+              </ul>
+            </div>
+          )}
           {result.matched.length > 0 && (
             <div>
               <p className="text-xs muted mb-1">Coinciden</p>

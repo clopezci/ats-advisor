@@ -5,6 +5,7 @@ import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
+import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 import {
   FINANCE_LIQUIDATION_CHECKS,
   readWorkbook,
@@ -136,9 +137,8 @@ export default function FinanzasWizardPage() {
       <Link href="/outplacement/oferta" className="btn-secondary">
         Ir a wizard de compensación
       </Link>
-      <Link href="/outplacement/cuadernillo" className="text-center text-sm muted">
-        Volver al cuadernillo
-      </Link>
+
+      <WorkbookModuleFooter />
     </div>
   );
 }

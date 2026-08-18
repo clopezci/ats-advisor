@@ -3,22 +3,15 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { readFocusPath, resolveContinueTarget } from "@/lib/engagement/focusPath";
-import { isOnboarded } from "@/lib/engagement/streak";
+import { resolveContinueTarget } from "@/lib/engagement/focusPath";
 
-/**
- * Nav lean (estilo Headspace/Duolingo): Hoy + Cuenta.
- * El resto vive en “Más” para no saturar al usuario nuevo.
- */
+/** Nav lean: Inicio, Hoy (Continuar), Cuenta + Más siempre visible. */
 export function MainNav() {
   const pathname = usePathname() || "/";
   const [hoyHref, setHoyHref] = useState("/");
-  const [lean, setLean] = useState(true);
   const [more, setMore] = useState(false);
 
   useEffect(() => {
-    const focused = Boolean(readFocusPath()) || isOnboarded();
-    setLean(focused);
     try {
       setHoyHref(resolveContinueTarget().href);
     } catch {
@@ -40,31 +33,14 @@ export function MainNav() {
   ];
 
   const extras = [
-    { href: "/guia", label: "Mi plan" },
-    { href: "/herramientas", label: "Herramientas" },
+    { href: "/ats", label: "ATS gratis" },
     { href: "/tracker", label: "Tracker" },
+    { href: "/herramientas", label: "Herramientas" },
+    { href: "/guia", label: "Mi plan" },
     { href: "/outplacement", label: "Carrera" },
     { href: "/capacidades", label: "Mapa" },
     { href: "/precios", label: "Precios" },
   ];
-
-  if (!lean) {
-    return (
-      <nav className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm" aria-label="Principal">
-        {primary.map((item) => (
-          <Link
-            key={item.label}
-            href={item.href}
-            aria-current={item.active ? "page" : undefined}
-            className={item.active ? "font-semibold" : "muted hover:opacity-80"}
-            style={item.active ? { color: "var(--text)" } : undefined}
-          >
-            {item.label}
-          </Link>
-        ))}
-      </nav>
-    );
-  }
 
   return (
     <nav className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm" aria-label="Principal">

@@ -13,6 +13,7 @@ import {
   type JobItem,
   type JobStatus,
 } from "@/lib/tracker/jobs";
+import { FlowContinueBar } from "@/components/FlowContinueBar";
 
 const STATUSES = Object.keys(STATUS_LABEL) as JobStatus[];
 
@@ -199,6 +200,8 @@ export default function TrackerPage() {
       ))}
 
       <AdSlot slot="tracker" />
+
+      <FlowContinueBar label="Seguir" />
 
       <Link href="/ats" className="btn-secondary">
         Analizar un CV para una vacante

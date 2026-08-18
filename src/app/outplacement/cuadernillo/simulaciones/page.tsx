@@ -6,6 +6,7 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
 import { SIMULATION_CASES, saveFeedbackScore } from "@/lib/workbook/simulations";
+import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 
 const INTRO =
   "Simulaciones por caso: elige escenario, responde en voz alta o por escrito, y autoevalúa con la rúbrica. Guarda el score en historial.";
@@ -124,9 +125,8 @@ export default function SimulacionesPage() {
       <Link href="/outplacement/roleplay" className="btn-secondary">
         Roleplay con coach
       </Link>
-      <Link href="/outplacement/cuadernillo" className="text-center text-sm muted">
-        Volver al cuadernillo
-      </Link>
+
+      <WorkbookModuleFooter />
     </div>
   );
 }

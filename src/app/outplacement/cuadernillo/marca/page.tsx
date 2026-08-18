@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
+import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 
 const INTRO =
   "Checklist de identidad digital: un solo lugar para alinear CV, perfil profesional, foto y keywords con tu banco SOAR.";
@@ -95,9 +96,8 @@ export default function MarcaDigitalPage() {
       <Link href="/herramientas/linkedin" className="btn-secondary">
         Herramienta de perfil
       </Link>
-      <Link href="/outplacement/cuadernillo" className="text-center text-sm muted">
-        Volver al cuadernillo
-      </Link>
+
+      <WorkbookModuleFooter />
     </div>
   );
 }

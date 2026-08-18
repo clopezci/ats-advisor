@@ -5,6 +5,7 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { OnboardingGate } from "@/components/OnboardingGate";
 import { AdSlot } from "@/components/AdSlot";
+import { DailyCourseReminder } from "@/components/DailyCourseReminder";
 import { useEffect, useState } from "react";
 import { canAccessOutplacement, readEntitlement } from "@/lib/entitlements";
 import { readStreak } from "@/lib/engagement/streak";
@@ -51,6 +52,8 @@ function HomeInner() {
         </p>
       )}
 
+      {paid ? <DailyCourseReminder /> : null}
+
       <section className="bento-card space-y-4">
         <div className="flex items-start justify-between gap-3">
           <div>
@@ -83,7 +86,7 @@ function HomeInner() {
       {careerTarget ? (
         <Link
           href={careerTarget.href}
-          className="btn-primary"
+          className="btn-secondary"
           style={{ minHeight: "4.75rem", fontSize: "1.15rem", lineHeight: 1.35 }}
           onClick={() => writeFocusPath("carrera")}
         >
@@ -93,7 +96,7 @@ function HomeInner() {
       ) : (
         <Link
           href="/outplacement/cuadernillo"
-          className="btn-primary"
+          className="btn-secondary"
           onClick={() => writeFocusPath("carrera")}
         >
           Continuar: mi acompañamiento

@@ -12,6 +12,7 @@ import {
   type DirectoryEntry,
   type WorkbookState,
 } from "@/lib/workbook/types";
+import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 import {
   HUNTER_LEGAL_NOTICE,
   SUGGESTED_HUNTERS,
@@ -216,9 +217,8 @@ export default function DirectorioPage() {
       <Link href="/outplacement/cuadernillo/mercado" className="btn-secondary">
         Mercado · 3 canales
       </Link>
-      <Link href="/outplacement/cuadernillo" className="text-center text-sm muted">
-        Volver al cuadernillo
-      </Link>
+
+      <WorkbookModuleFooter />
     </div>
   );
 }

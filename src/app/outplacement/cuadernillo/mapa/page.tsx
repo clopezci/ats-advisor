@@ -5,6 +5,7 @@ import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
+import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 import {
   readWorkbook,
   writeWorkbook,
@@ -160,12 +161,7 @@ export default function MapaWizardPage() {
       </button>
       {msg ? <p className="text-sm muted">{msg}</p> : null}
 
-      <Link href="/outplacement/cuadernillo/mercado" className="btn-secondary">
-        Siguiente: Mercado · 3 canales
-      </Link>
-      <Link href="/outplacement/cuadernillo" className="text-center text-sm muted">
-        Volver al cuadernillo
-      </Link>
+      <WorkbookModuleFooter />
     </div>
   );
 }

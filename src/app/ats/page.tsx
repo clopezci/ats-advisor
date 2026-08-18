@@ -23,6 +23,7 @@ import { upsertJob } from "@/lib/tracker/jobs";
 import { syncAtsScan } from "@/lib/supabase/sync";
 import { AtsStepCoach } from "@/components/ats/AtsStepCoach";
 import { buildScoreSummary } from "@/lib/ats/scoreSummary";
+import { FlowContinueBar } from "@/components/FlowContinueBar";
 
 const PROFILES: { id: AtsProfile; label: string; hint: string }[] = [
   { id: "generic", label: "No lo sé", hint: "Sirve para la mayoría de avisos" },
@@ -467,24 +468,62 @@ export default function AtsPage() {
               Workday, Greenhouse, etc. son programas de RH. Si no lo sabes, deja “Genérico” y continúa. No pasa nada.
             </p>
             {detectMsg && <p className="text-xs" style={{ color: "var(--brand)" }}>{detectMsg}</p>}
-            <div className="grid grid-cols-2 gap-2">
-              {PROFILES.map((p) => (
-                <button
-                  key={p.id}
-                  type="button"
-                  className="btn-secondary text-left"
-                  style={
-                    atsProfile === p.id
-                      ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
-                      : undefined
-                  }
-                  onClick={() => setAtsProfile(p.id)}
-                >
-                  <span className="block font-medium">{p.label}</span>
-                  <span className="block text-xs muted">{p.hint}</span>
-                </button>
-              ))}
-            </div>
+            {(() => {
+              const generic = PROFILES.find((p) => p.id === "generic")!;
+              const selected = PROFILES.find((p) => p.id === atsProfile) ?? generic;
+              const named = PROFILES.filter((p) => p.id !== "generic");
+              return (
+                <>
+                  <button
+                    type="button"
+                    className="btn-secondary w-full text-left"
+                    style={
+                      atsProfile === generic.id
+                        ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
+                        : undefined
+                    }
+                    onClick={() => setAtsProfile(generic.id)}
+                  >
+                    <span className="block font-medium">{generic.label}</span>
+                    <span className="block text-xs muted">{generic.hint}</span>
+                  </button>
+                  {atsProfile !== generic.id ? (
+                    <button
+                      type="button"
+                      className="btn-secondary w-full text-left"
+                      style={{ borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }}
+                      onClick={() => setAtsProfile(selected.id)}
+                    >
+                      <span className="block font-medium">{selected.label}</span>
+                      <span className="block text-xs muted">{selected.hint}</span>
+                    </button>
+                  ) : null}
+                  <details className="rounded-xl border p-3" style={{ borderColor: "var(--border)" }}>
+                    <summary className="cursor-pointer text-sm font-medium">
+                      Conozco el sistema (Workday, Greenhouse…)
+                    </summary>
+                    <div className="mt-3 grid grid-cols-2 gap-2">
+                      {named.map((p) => (
+                        <button
+                          key={p.id}
+                          type="button"
+                          className="btn-secondary text-left"
+                          style={
+                            atsProfile === p.id
+                              ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
+                              : undefined
+                          }
+                          onClick={() => setAtsProfile(p.id)}
+                        >
+                          <span className="block font-medium">{p.label}</span>
+                          <span className="block text-xs muted">{p.hint}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </details>
+                </>
+              );
+            })()}
           </div>
           <AtsStepCoach step={3} cvText={cvText} jobText={jobText} atsProfile={atsProfile} />
           {error && (
@@ -613,7 +652,7 @@ export default function AtsPage() {
             jobText={jobText}
           />
 
-          {result.recruiterSkim && (
+          {resultPhase >= 2 && result.recruiterSkim && (
             <section className="bento-card space-y-2">
               <h2 className="text-sm font-semibold">Ojo del reclutador · {result.recruiterSkim.seconds}s</h2>
               <p className="text-sm font-medium">{result.recruiterSkim.verdict}</p>
@@ -657,7 +696,7 @@ export default function AtsPage() {
             </section>
           )}
 
-          {typeof result.authenticityScore === "number" && (
+          {resultPhase >= 2 && typeof result.authenticityScore === "number" && (
             <section className="bento-card space-y-2">
               <div className="flex items-center justify-between gap-2">
                 <h2 className="text-sm font-semibold">Autenticidad / anti-IA</h2>
@@ -1056,8 +1095,9 @@ export default function AtsPage() {
             >
               Exportar informe (PDF / imprimir)
             </button>
-            <Link href="/guia" className="btn-primary">
-              Seguir con mi plan de búsqueda
+            <FlowContinueBar label="Seguir" />
+            <Link href="/guia" className="btn-secondary">
+              Ver mi plan de búsqueda
             </Link>
             <button
               type="button"

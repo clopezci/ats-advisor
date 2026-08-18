@@ -15,6 +15,11 @@ import {
 import { createBrowserSupabase } from "@/lib/supabase/client";
 import { ChannelChooser } from "@/components/ChannelChooser";
 import { whatsappFinalPriceCop, type LearningChannel } from "@/lib/channels/pricing";
+import {
+  readFocusPath,
+  writeFocusPath,
+  type FocusPath,
+} from "@/lib/engagement/focusPath";
 
 export default function CuentaPage() {
   const [name, setName] = useState("");
@@ -24,6 +29,7 @@ export default function CuentaPage() {
   const [plan, setPlanState] = useState<PlanId>("free");
   const [sessionEmail, setSessionEmail] = useState<string | null>(null);
   const [allowLocalPlans, setAllowLocalPlans] = useState(false);
+  const [focusPath, setFocusPath] = useState<FocusPath | null>(null);
   const waPrice = whatsappFinalPriceCop();
 
   useEffect(() => {
@@ -35,6 +41,7 @@ export default function CuentaPage() {
         setChannel(p.channel || "pwa");
       }
       setPlanState(readEntitlement().plan);
+      setFocusPath(readFocusPath());
       const host = window.location.hostname;
       setAllowLocalPlans(
         host === "localhost" ||
@@ -184,6 +191,47 @@ export default function CuentaPage() {
           Plan: <span className="font-medium" style={{ color: "var(--brand)" }}>{planLabel(plan)}</span>
           {sessionEmail ? ` · sesión ${sessionEmail}` : " · sin sesión Supabase"}
         </p>
+      </section>
+
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold text-sm">Mi camino principal</h2>
+        <p className="text-xs muted">
+          Define qué botón &quot;Hoy&quot; y &quot;Continuar&quot; te llevan primero: ATS gratis o cuadernillo Carrera.
+        </p>
+        <div className="flex flex-col gap-2">
+          <button
+            type="button"
+            className="btn-secondary"
+            style={
+              focusPath === "carrera"
+                ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
+                : undefined
+            }
+            onClick={() => {
+              writeFocusPath("carrera");
+              setFocusPath("carrera");
+              setMsg("Camino Carrera activo. Inicio y Hoy te llevan al cuadernillo.");
+            }}
+          >
+            Carrera (cuadernillo)
+          </button>
+          <button
+            type="button"
+            className="btn-secondary"
+            style={
+              focusPath === "ats"
+                ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
+                : undefined
+            }
+            onClick={() => {
+              writeFocusPath("ats");
+              setFocusPath("ats");
+              setMsg("Camino ATS activo. Inicio y Hoy te llevan al analizador.");
+            }}
+          >
+            ATS gratis
+          </button>
+        </div>
       </section>
 
       <div className="bento-card space-y-3">

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
+import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 import {
   composeSoarOneLiner,
   emptySoarEntry,
@@ -193,18 +194,7 @@ export default function SoarWizardPage() {
       </button>
       {msg ? <p className="text-sm muted">{msg}</p> : null}
 
-      <Link href="/outplacement/cuadernillo/marca" className="btn-secondary">
-        Checklist identidad digital
-      </Link>
-      <Link href="/herramientas/linkedin" className="btn-secondary">
-        Llevar frases a la herramienta de perfil
-      </Link>
-      <Link href="/outplacement/cuadernillo/red" className="btn-secondary">
-        Siguiente: Red (CRM)
-      </Link>
-      <Link href="/outplacement/cuadernillo" className="text-center text-sm muted">
-        Volver al cuadernillo
-      </Link>
+      <WorkbookModuleFooter />
     </div>
   );
 }

@@ -12,6 +12,7 @@ import {
   type CapabilityStatus,
 } from "@/lib/catalog/capabilities";
 import { SYSTEM_CAPABILITY_IDS } from "@/lib/catalog/personaFilter";
+import { FlowContinueBar } from "@/components/FlowContinueBar";
 
 const AUDIENCES: Audience[] = ["candidato", "empresa", "admin", "tester", "publico"];
 
@@ -53,8 +54,9 @@ export default function CapacidadesPage() {
           <SpeakButton text={intro} />
         </div>
         <p className="text-sm muted leading-relaxed">{intro}</p>
-        <Link href="/guia" className="btn-primary">
-          Armar mi recorrido (te guiamos)
+        <FlowContinueBar label="Seguir" />
+        <Link href="/outplacement/cuadernillo" className="btn-secondary">
+          Abrir cuadernillo
         </Link>
       </section>
 

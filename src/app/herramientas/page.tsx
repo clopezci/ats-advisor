@@ -3,6 +3,7 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { AdSlot } from "@/components/AdSlot";
 import { FREE_TOOL_BLURBS } from "@/lib/entitlements/freePaths";
 import { CAREER_MODULE_PITCH, CAREER_PATH_LABEL } from "@/lib/outplacement/labels";
+import { FlowContinueBar } from "@/components/FlowContinueBar";
 
 export const metadata = { title: "Herramientas" };
 
@@ -27,6 +28,8 @@ export default function HerramientasPage() {
           cortos — LinkedIn, carta, entrevistas, oferta, networking, ruta de 8 módulos, bienestar…
         </p>
       </section>
+
+      <FlowContinueBar label="Seguir" />
 
       <section className="space-y-2">
         <h2 className="text-sm font-semibold">Gratis</h2>
@@ -62,8 +65,8 @@ export default function HerramientasPage() {
         <Link href="/precios" className="btn-primary">
           Ver plan Carrera
         </Link>
-        <Link href="/guia" className="btn-secondary">
-          Armar mi recorrido
+        <Link href="/outplacement/cuadernillo" className="btn-secondary">
+          Ir al cuadernillo
         </Link>
       </section>
 

@@ -12,6 +12,7 @@ import {
   type WorkbookState,
 } from "@/lib/workbook/types";
 import { listJobs } from "@/lib/tracker/jobs";
+import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 
 const INTRO =
   "Funnel semanal: mide outreach, páginas de empresa, postulaciones, filtros, entrevistas y ofertas. Sin números no sabes si el mix de canales funciona.";
@@ -149,9 +150,8 @@ export default function FunnelPage() {
       <Link href="/outplacement/cuadernillo/export" className="btn-secondary">
         Exportar / imprimir PDF
       </Link>
-      <Link href="/outplacement/cuadernillo" className="text-center text-sm muted">
-        Volver al cuadernillo
-      </Link>
+
+      <WorkbookModuleFooter />
     </div>
   );
 }

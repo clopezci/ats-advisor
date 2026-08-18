@@ -272,6 +272,15 @@ export default function PreciosPage() {
   return (
     <div className="flex flex-1 flex-col gap-5">
       <InstallPrompt />
+      {returnNext !== "/guia?recorrido=1" ? (
+        <section className="bento-card space-y-2" style={{ borderColor: "var(--brand)" }}>
+          <p className="text-sm font-medium">Después de pagar volverás a:</p>
+          <Link href={returnNext} className="btn-primary">
+            {returnNext.startsWith("/outplacement/cuadernillo") ? "Continuar cuadernillo" : "Continuar donde ibas"}
+          </Link>
+          <p className="text-xs muted break-all">{returnNext}</p>
+        </section>
+      ) : null}
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between">
           <h1 className="text-2xl font-semibold">Precios</h1>

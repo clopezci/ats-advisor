@@ -6,6 +6,7 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
 import { readWorkbook, writeWorkbook, type WorkbookState } from "@/lib/workbook/types";
+import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 
 const INTRO =
   "Filtro de 7 días: ¿emprendimiento como puente, destino o pausa? Evidencia primero; no abandones la búsqueda si tu pista es corta.";
@@ -95,9 +96,8 @@ export default function EmprendimientoPage() {
       <Link href="/outplacement/cuadernillo/finanzas" className="btn-secondary">
         Revisar pista financiera
       </Link>
-      <Link href="/outplacement/cuadernillo" className="text-center text-sm muted">
-        Volver al cuadernillo
-      </Link>
+
+      <WorkbookModuleFooter />
     </div>
   );
 }

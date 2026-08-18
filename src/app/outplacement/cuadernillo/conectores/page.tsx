@@ -6,6 +6,7 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
 import { readWorkbook, writeWorkbook, type WorkbookState } from "@/lib/workbook/types";
+import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 
 const INTRO =
   "Clasifica tu red: cercanos de confianza, aliados de objetivo y conectores. Evita relaciones que solo drenan. Anota 3 acciones de esta semana.";
@@ -149,9 +150,8 @@ export default function ConectoresPage() {
       <Link href="/outplacement/cuadernillo/red" className="btn-secondary">
         CRM del cuadernillo
       </Link>
-      <Link href="/outplacement/cuadernillo" className="text-center text-sm muted">
-        Volver al cuadernillo
-      </Link>
+
+      <WorkbookModuleFooter />
     </div>
   );
 }

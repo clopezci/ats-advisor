@@ -6,6 +6,7 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
 import { readWorkbook, writeWorkbook, type WorkbookState } from "@/lib/workbook/types";
+import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 
 const INTRO =
   "Negocia paquete total, no solo el sueldo base. Define piso, meta y techo antes de la llamada. Educativo: no es asesoría legal.";
@@ -123,9 +124,8 @@ export default function CompensacionPage() {
       <Link href="/outplacement/cuadernillo/finanzas" className="btn-secondary">
         Revisar finanzas / pista
       </Link>
-      <Link href="/outplacement/cuadernillo" className="text-center text-sm muted">
-        Volver al cuadernillo
-      </Link>
+
+      <WorkbookModuleFooter />
     </div>
   );
 }

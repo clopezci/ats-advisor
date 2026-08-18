@@ -12,6 +12,7 @@ import {
 } from "@/lib/workbook/competencies";
 import { STYLE_QUESTIONS, summarizeStyle } from "@/lib/workbook/styleQuiz";
 import { readWorkbook, writeWorkbook, type WorkbookState } from "@/lib/workbook/types";
+import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 
 const INTRO =
   "Autoevalúa 12 competencias de ATSAdvisor. Sé honesto: un 5 sin evidencia no sirve en entrevista. Lleva tu top 5 al mapa y al CV.";
@@ -193,9 +194,8 @@ export default function PruebasPage() {
       <Link href="/outplacement/cuadernillo/soar" className="btn-secondary">
         Banco SOAR
       </Link>
-      <Link href="/outplacement/cuadernillo" className="text-center text-sm muted">
-        Volver al cuadernillo
-      </Link>
+
+      <WorkbookModuleFooter />
     </div>
   );
 }

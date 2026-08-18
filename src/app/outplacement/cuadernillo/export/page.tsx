@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 import {
   readWorkbook,
   workbookProgress,
@@ -123,9 +124,8 @@ export default function ExportCuadernilloPage() {
       <Link href="/outplacement/cuadernillo/funnel" className="btn-secondary print:hidden">
         Ver funnel
       </Link>
-      <Link href="/outplacement/cuadernillo" className="text-center text-sm muted print:hidden">
-        Volver al cuadernillo
-      </Link>
+
+      <WorkbookModuleFooter />
     </div>
   );
 }

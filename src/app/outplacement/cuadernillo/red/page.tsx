@@ -16,6 +16,7 @@ import {
   type NetworkContact,
 } from "@/lib/networking/contacts";
 import { readWorkbook, writeWorkbook } from "@/lib/workbook/types";
+import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 
 const INTRO =
   "CRM único de red: el mismo listado sirve al curso Networking y al cuadernillo. Pide un favor concreto y haz follow-up.";
@@ -205,9 +206,8 @@ export default function RedCrmPage() {
       <Link href="/outplacement/networking" className="btn-secondary">
         Misma CRM en el curso Networking
       </Link>
-      <Link href="/outplacement/cuadernillo" className="text-center text-sm muted">
-        Volver al cuadernillo
-      </Link>
+
+      <WorkbookModuleFooter />
     </div>
   );
 }

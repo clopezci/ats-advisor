@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
+import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 import {
   deleteFeedbackScore,
   listFeedbackScores,
@@ -78,9 +79,8 @@ export default function FeedbackHistorialPage() {
       <Link href="/outplacement/cuadernillo/simulaciones" className="btn-secondary">
         Nueva simulación
       </Link>
-      <Link href="/outplacement/cuadernillo" className="text-center text-sm muted">
-        Volver al cuadernillo
-      </Link>
+
+      <WorkbookModuleFooter />
     </div>
   );
 }

@@ -12,6 +12,8 @@ import {
   INDUSTRIES,
   NEGOTIATION_CHECKLIST,
   ROLE_FAMILIES,
+  SALARY_DISCLAIMER_SHORT,
+  SALARY_LEGAL_NOTICE,
   estimateSalary,
   type CityTier,
   type CompanySize,
@@ -135,6 +137,13 @@ function SalarioTool() {
         <p className="text-sm muted leading-relaxed">
           El mismo cargo paga distinto en startup, mediana o multilatina, y según la industria.
           Ingresa tu último fijo para anclar piso/meta al segmento comparable.
+        </p>
+        <p
+          className="text-xs leading-relaxed rounded-lg p-2"
+          style={{ background: "rgba(0,0,0,0.04)", border: "1px solid var(--border)" }}
+          role="note"
+        >
+          {SALARY_DISCLAIMER_SHORT}
         </p>
       </section>
 
@@ -271,6 +280,7 @@ function SalarioTool() {
             {fmt(est.previousSegment.p50)}).
           </p>
         ) : null}
+        <p className="text-xs muted leading-relaxed pt-1">{SALARY_DISCLAIMER_SHORT}</p>
       </section>
 
       {est.warnings.length > 0 ? (
@@ -331,7 +341,10 @@ function SalarioTool() {
         </ul>
       </section>
 
-      <p className="text-xs muted leading-relaxed">{methodNote}</p>
+      <p className="text-xs muted leading-relaxed" role="note">
+        {SALARY_LEGAL_NOTICE}
+        {methodNote ? ` Actualización: ${methodNote}` : ""}
+      </p>
 
       {!paid ? (
         <CareerUpsell

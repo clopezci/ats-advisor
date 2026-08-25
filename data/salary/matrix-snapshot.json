@@ -1,18 +1,18 @@
 {
   "asOf": "2026-08-01",
   "currency": "COP",
-  "method": "Baseline autoría ATSAdvisor (bandas base × industria × tamaño × ciudad). Ajuste mensual por factor CPI en cron.",
+  "method": "Baseline autoría ATSAdvisor: rangos COP por cargo × industria × tamaño, calibrados con información de mercado de fuentes públicas diversas. No es encuesta oficial ni API de proveedor salarial. Ajuste mensual por factor CPI en cron.",
   "sources": [
     {
-      "name": "Baseline ATSAdvisor",
-      "detail": "Calibración interna a rangos observados en mercado laboral CO 2025–2026"
+      "name": "Calibración de mercado (fuentes públicas)",
+      "detail": "Síntesis interna de rangos observados en el mercado laboral colombiano de acceso público; no afiliado a Glassdoor, Levels, Mercer u otros proveedores"
     },
     {
       "name": "Ajuste CPI mensual",
-      "detail": "Factor aplicado por /api/cron/salary-refresh"
+      "detail": "Factor aplicado por /api/cron/salary-refresh (proxy; no microdato oficial por cargo)"
     }
   ],
   "cpiFactorFromSeed": 1,
   "version": 1,
-  "notes": "Primera versión. Sin feed externo configurado."
+  "notes": "Información orientativa. Cada empresa fija sus propias condiciones; no se garantiza exactitud."
 }

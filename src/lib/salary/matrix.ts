@@ -197,15 +197,16 @@ export const SEED_META: MatrixMeta = {
   asOf: "2026-08-01",
   currency: "COP",
   method:
-    "Baseline autoría ATSAdvisor (bandas base × industria × tamaño × ciudad). Ajuste mensual por factor CPI en cron. No es encuesta Mercer/Hay ni scraping de portales.",
+    "Baseline autoría ATSAdvisor: rangos COP por cargo × industria × tamaño, calibrados con información de mercado de fuentes públicas diversas (portales, tendencias de industria, referencias abiertas). No es encuesta Mercer/Hay ni scraping propietario. Ajuste mensual por factor CPI en cron cuando no hay SALARY_FEED_URL.",
   sources: [
     {
-      name: "Baseline ATSAdvisor",
-      detail: "Calibración interna a rangos observados en mercado laboral CO 2025–2026",
+      name: "Calibración de mercado (fuentes públicas)",
+      detail:
+        "Síntesis interna de rangos observados en el mercado laboral colombiano de acceso público; no afiliado a Glassdoor, Levels, Mercer u otros proveedores",
     },
     {
       name: "Ajuste CPI mensual",
-      detail: "Factor en data/salary/matrix-snapshot.json vía /api/cron/salary-refresh",
+      detail: "Factor en snapshot vía /api/cron/salary-refresh (proxy de actualización, no microdato oficial DANE por cargo)",
     },
   ],
   cpiFactorFromSeed: 1,
@@ -432,8 +433,19 @@ export const SALARY_BANDS = ROLE_FAMILIES.map((r) => ({
 }));
 
 export const BANDS_DISCLAIMER =
-  "Bandas orientativas COP brutos mensuales por cargo × industria × tamaño. " +
-  "No sustituyen encuesta salarial formal ni asesoría laboral. Verifica con ofertas reales y tu red.";
+  "Orientativo y educativo. Rangos elaborados por ATSAdvisor a partir de información de mercado de diversas fuentes públicas y calibración interna (no encuesta oficial ni API de un proveedor salarial). Cada empresa fija sus propias bandas y condiciones; los montos pueden diferir. No constituye asesoría laboral, legal, tributaria ni promesa de contratación o compensación. Verifica siempre con ofertas reales, reclutadores y tu red.";
+
+/** Texto corto siempre visible junto a resultados salariales. */
+export const SALARY_DISCLAIMER_SHORT =
+  "Rangos orientativos de mercado (fuentes públicas diversas + calibración ATSAdvisor). No son exactos ni oficiales: cada empresa maneja sus condiciones. Úsalos como guía, no como garantía.";
+
+/** Bloque legal/política de uso (pantalla de salarios y oferta). */
+export const SALARY_LEGAL_NOTICE =
+  "Los rangos mostrados son información orientativa y de carácter educativo, elaborada por ATSAdvisor con base en observaciones de mercado laboral de acceso público y calibración interna. " +
+  "No provienen de una encuesta salarial certificada, ni de una API oficial de salarios, ni de datos confidenciales de empleadores. " +
+  "Cada organización define de forma independiente su estructura de compensación; por tanto, no podemos garantizar exactitud, actualidad ni aplicabilidad a un caso concreto. " +
+  "Esta herramienta no constituye asesoría laboral, legal, tributaria ni financiera, ni implica oferta de empleo o compromiso de remuneración. " +
+  "Te recomendamos contrastar siempre con vacantes reales, profesionales de reclutamiento y tu red de contactos antes de negociar.";
 
 export const NEGOTIATION_CHECKLIST = [
   "Define piso / meta / techo antes de la llamada (no improvises).",

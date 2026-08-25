@@ -46,6 +46,8 @@ export async function GET(req: Request) {
       method: snapshot.method,
       sources: snapshot.sources,
       notes: snapshot.notes,
+      disclaimer:
+        "Rangos orientativos elaborados por ATSAdvisor con información de mercado de fuentes públicas diversas y calibración interna. No son oficiales ni exactos; cada empresa fija sus condiciones. No constituyen asesoría laboral, legal ni tributaria.",
     },
     catalogs: {
       roles: ROLE_FAMILIES.map((r) => ({ id: r.id, label: r.label, note: r.note })),

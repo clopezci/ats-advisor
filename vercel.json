@@ -11,6 +11,10 @@
     {
       "path": "/api/cron/cuadernillo",
       "schedule": "0 15 * * 1"
+    },
+    {
+      "path": "/api/cron/salary-refresh",
+      "schedule": "0 12 1 * *"
     }
   ]
 }

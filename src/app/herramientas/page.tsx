@@ -4,13 +4,14 @@ import { AdSlot } from "@/components/AdSlot";
 import { FREE_TOOL_BLURBS } from "@/lib/entitlements/freePaths";
 import { CAREER_MODULE_PITCH, CAREER_PATH_LABEL } from "@/lib/outplacement/labels";
 import { FlowContinueBar } from "@/components/FlowContinueBar";
+import { CareerUpsell } from "@/components/CareerUpsell";
 
 export const metadata = { title: "Herramientas" };
 
 const PAID_TEASERS = [
   { title: "LinkedIn, carta y plantilla CV", desc: "Textos listos para postular." },
   { title: "Multi-oferta, screening y pack ZIP", desc: "Compara vacantes y arma el paquete de envío." },
-  { title: "Entrevistas, filtro y negociación", desc: "Práctica STAR y scripts de oferta." },
+  { title: "Entrevistas, filtro y negociación guiada", desc: "Práctica STAR y scripts de oferta." },
   { title: CAREER_PATH_LABEL, desc: "El acompañamiento completo, semana a semana." },
 ];
 
@@ -20,12 +21,12 @@ export default function HerramientasPage() {
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between">
           <h1 className="text-2xl font-semibold">Herramientas</h1>
-          <SpeakButton text="Solo tres cosas son gratis: analizador ATS, encaje rápido y tracker. Todo lo demás está en el plan Carrera, con la ruta de 8 módulos." />
+          <SpeakButton text="Gratis: analizador ATS, encaje, tracker, checklist CV y bandas salariales por industria y tamaño. Carrera es el acompañamiento completo." />
         </div>
         <p className="text-sm muted leading-relaxed">
-          <strong>Gratis (3):</strong> probar el ATS, un encaje rápido y anotar postulaciones. Todo lo
-          demás de Carrera son <strong>cursos</strong> (lecciones + tareas + tablero), no anuncios
-          cortos — LinkedIn, carta, entrevistas, oferta, networking, ruta de 8 módulos, bienestar…
+          <strong>Gratis:</strong> lo que necesitas para postular hoy (ATS, encaje, tracker, checklist y
+          salarios por segmento). <strong>Carrera</strong> es el proceso: cursos, red, entrevistas y
+          negociación con guía — una mínima fracción de un outplacement empresarial.
         </p>
       </section>
 
@@ -62,13 +63,12 @@ export default function HerramientasPage() {
             </li>
           ))}
         </ul>
-        <Link href="/precios" className="btn-primary">
-          Ver plan Carrera
-        </Link>
         <Link href="/outplacement/cuadernillo" className="btn-secondary">
           Ir al cuadernillo
         </Link>
       </section>
+
+      <CareerUpsell nextHref="/outplacement/cuadernillo" />
 
       <AdSlot slot="herramientas-hub" />
       <Link href="/" className="btn-secondary">

@@ -1,6 +1,7 @@
 /**
  * Qué es gratis vs plan Carrera (un solo plan).
- * Solo 2–3 productos free para que el valor esté en Carrera.
+ * Free = herramientas del momento (postular hoy).
+ * Carrera = acompañamiento completo (mapa, red, entrevistas, oferta, cuadernillo).
  */
 
 /** Rutas que cualquiera puede usar sin pagar. */
@@ -11,11 +12,13 @@ export const FREE_PATH_PREFIXES = [
 export function isFreeAppPath(pathname: string): boolean {
   const p = pathname.replace(/\/$/, "") || "/";
 
-  // Exact free tools (2–3)
+  // Exact free tools
   if (p === "/ats") return true;
   if (p === "/herramientas/calculadora") return true;
   if (p === "/herramientas/match") return true; // alias del encaje rápido
   if (p === "/tracker") return true;
+  if (p === "/herramientas/checklist") return true;
+  if (p === "/herramientas/salario") return true;
 
   // Hubs / account / legal / auth always open
   if (p === "/herramientas") return true;
@@ -40,16 +43,26 @@ export const FREE_TOOL_BLURBS = [
   {
     href: "/ats",
     title: "Analizador ATS",
-    desc: "Compara tu CV con una oferta y ve el puntaje + qué mejorar.",
+    desc: "Compara tu CV con una vacante y mira el puntaje y qué ajustar.",
   },
   {
     href: "/herramientas/calculadora",
     title: "Encaje rápido",
-    desc: "Porcentaje de coincidencia en un minuto (sin el análisis completo).",
+    desc: "Qué tan bien encaja tu CV en un minuto (sin el análisis completo).",
   },
   {
     href: "/tracker",
     title: "Tracker de postulaciones",
-    desc: "Anota cargo, empresa y en qué vas.",
+    desc: "Anota el cargo, la empresa y en qué etapa vas.",
+  },
+  {
+    href: "/herramientas/checklist",
+    title: "Checklist CV ATS",
+    desc: "Revisa formato y secciones antes de enviar o analizar.",
+  },
+  {
+    href: "/herramientas/salario",
+    title: "Bandas salariales",
+    desc: "Rangos por cargo, industria y tamaño — anclados a tu último fijo.",
   },
 ] as const;

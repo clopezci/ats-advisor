@@ -341,10 +341,14 @@ function SalarioTool() {
         </ul>
       </section>
 
-      <p className="text-xs muted leading-relaxed" role="note">
-        {SALARY_LEGAL_NOTICE}
-        {methodNote ? ` Actualización: ${methodNote}` : ""}
-      </p>
+        <p className="text-xs muted leading-relaxed">
+          {SALARY_LEGAL_NOTICE} Ver también{" "}
+          <Link href="/legal/terminos" style={{ color: "var(--brand)" }}>
+            Términos de uso
+          </Link>
+          .
+          {methodNote ? ` Actualización técnica: ${methodNote}` : ""}
+        </p>
 
       {!paid ? (
         <CareerUpsell

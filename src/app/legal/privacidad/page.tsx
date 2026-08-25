@@ -57,7 +57,15 @@ export default function PrivacidadPage() {
           Más detalle de cookies: <Link href="/legal/cookies">/legal/cookies</Link>. Quiénes
           somos: <Link href="/legal/quienes-somos">/legal/quienes-somos</Link>.
         </p>
-        <p className="muted text-xs">Última actualización: 2026-08-09.</p>
+        <p className="muted text-xs">Última actualización: 2026-08-25.</p>
+        <p className="text-xs muted leading-relaxed">
+          El uso del servicio implica orientación educativa; límites de responsabilidad y naturaleza
+          del producto están en{" "}
+          <Link href="/legal/terminos" style={{ color: "var(--brand)" }}>
+            Términos de uso
+          </Link>
+          .
+        </p>
       </section>
       <Link href="/" className="btn-secondary">
         Volver

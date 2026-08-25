@@ -17,8 +17,14 @@ export default function QuienesSomosPage() {
           en inglés y outplacement corporativo de millones de pesos.
         </p>
         <p>
-          Principios: voz inclusiva, máximo 2 decisiones por pantalla, Habeas Data 1-click, margen ≥
-          50% en planes pagos, y motor ATS nuevo (no un port del TFM Python).
+          Principios: voz inclusiva, máximo 2 decisiones por pantalla, Habeas Data 1-click, y motor
+          ATS propio. Ofrecemos <strong>orientación y herramientas educativas</strong> para la
+          búsqueda de empleo; no reemplazamos asesoría jurídica, laboral, tributaria ni psicológica
+          clínica. Detalle en{" "}
+          <Link href="/legal/terminos" style={{ color: "var(--brand)" }}>
+            Términos de uso
+          </Link>
+          .
         </p>
         <p>
           Contacto: /legal/contacto · Feedback: /feedback · Empresas RH: /empresa

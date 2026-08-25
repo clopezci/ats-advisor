@@ -79,7 +79,12 @@ function OfertaTool() {
         <p className="text-sm muted">Paso {step + 1}/4 · {STEPS[step]}</p>
         <p className="text-xs muted leading-relaxed">{BANDS_DISCLAIMER}</p>
         <p className="text-xs muted leading-relaxed" role="note">
-          Rangos orientativos: cada empresa maneja sus propias condiciones; no se garantiza información exacta.
+          Rangos orientativos: cada empresa maneja sus propias condiciones; no se garantiza
+          información exacta. Marco completo en{" "}
+          <Link href="/legal/terminos" style={{ color: "var(--brand)" }}>
+            Términos de uso
+          </Link>
+          .
         </p>
         <div className="flex gap-1">
           {STEPS.map((s, i) => (

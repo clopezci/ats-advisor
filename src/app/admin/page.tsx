@@ -901,6 +901,43 @@ export default function AdminPage() {
                 Guardar costo / umbral
               </button>
             </div>
+            <div className="flex flex-wrap gap-2 items-end">
+              <button
+                type="button"
+                className="btn-secondary"
+                disabled={walletBusy}
+                onClick={async () => {
+                  setWalletBusy(true);
+                  try {
+                    const res = await fetch("/api/admin/jobicy-meta", {
+                      method: "POST",
+                      headers: { "x-admin-secret": secret },
+                    });
+                    const data = await res.json();
+                    if (res.ok) {
+                      setMsg(
+                        data.meta?.notes ||
+                          `Metadata Jobicy: ${data.meta?.countries?.length || 0} países, ${data.meta?.positions?.length || 0} posiciones`
+                      );
+                    } else {
+                      setMsg(data.error || "No se pudo sync metadata");
+                    }
+                  } catch {
+                    setMsg("Error de red sync metadata Jobicy");
+                  } finally {
+                    setWalletBusy(false);
+                  }
+                }}
+              >
+                Sync metadata Jobicy (países/posiciones)
+              </button>
+              <p className="text-xs muted leading-relaxed w-full">
+                Opcional: baja catálogo oficial con tu API key. Si Jobicy cambia las URLs de
+                metadata, define{" "}
+                <code>JOBICY_META_COUNTRIES_URL</code> / <code>JOBICY_META_POSITIONS_URL</code> en
+                Vercel. No hace falta que me pases la key.
+              </p>
+            </div>
           </>
         ) : (
           <p className="text-sm muted">Cargando wallet…</p>

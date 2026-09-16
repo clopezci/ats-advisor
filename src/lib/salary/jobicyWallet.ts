@@ -173,15 +173,24 @@ export async function getJobicyWallet(opts?: { notifyIfAlert?: boolean }): Promi
   return toView(state, cloud);
 }
 
-/** Registra un lookup. Solo resta saldo si billable (dato nuevo Jobicy $0.109). */
+/** Registra un lookup. Usa request_cost de Jobicy cuando viene; si no, default billable. */
 export async function recordJobicyLookup(opts: {
   role: string;
   country: string;
   billable?: boolean;
+  /** Costo real reportado por Jobicy (`request_cost`). */
+  costUsd?: number;
 }): Promise<JobicyWalletView> {
   let { state, cloud } = await loadFromCloud();
-  const billable = opts.billable !== false;
-  const cost = billable ? Math.max(0.001, state.costPerLookupUsd) : 0;
+  let cost = 0;
+  let billable = false;
+  if (typeof opts.costUsd === "number" && Number.isFinite(opts.costUsd)) {
+    cost = Math.max(0, Math.round(opts.costUsd * 1000) / 1000);
+    billable = cost > 0;
+  } else if (opts.billable !== false) {
+    cost = Math.max(0.001, state.costPerLookupUsd);
+    billable = true;
+  }
   const entry: JobicyLookupEntry = {
     at: new Date().toISOString(),
     role: opts.role.slice(0, 80),

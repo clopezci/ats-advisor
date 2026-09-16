@@ -3,15 +3,14 @@ import type { PremiumSalaryResult } from "@/lib/salary/premiumTypes";
 import {
   JOBICY_DEFAULT_COUNTRY,
   isJobicyCountry,
+  jobicyCountryCode,
 } from "@/lib/salary/jobicyIntl";
 import { getJobicyCached, setJobicyCached } from "@/lib/salary/jobicyCache";
 import { recordJobicyLookup } from "@/lib/salary/jobicyWallet";
 
 /**
  * Validación salarial internacional (Jobicy).
- * Pricing: $0.109 lookup con dato nuevo; mismo title+country sin cambio = $0 / 30 días.
- * Cacheamos 30 días para no re-cobrar ni quemar wallet.
- *
+ * Pricing: request_cost en respuesta ($0.109 o $0 repeat). Cache 30 días + updated_at.
  * Docs: https://jobicy.com/salary-api
  */
 export async function GET(req: Request) {
@@ -35,6 +34,7 @@ export async function GET(req: Request) {
   }
 
   const country = countryRaw;
+  const countryParam = jobicyCountryCode(country);
   const key = process.env.JOBICY_API_KEY || process.env.SALARY_API_KEY || "";
   if (!key) {
     const body: PremiumSalaryResult = {
@@ -51,7 +51,12 @@ export async function GET(req: Request) {
     const cached = await getJobicyCached(role, country);
     if (cached && cached.source === "jobicy") {
       try {
-        await recordJobicyLookup({ role: cached.role, country: cached.country, billable: false });
+        await recordJobicyLookup({
+          role: cached.role,
+          country: cached.country,
+          billable: false,
+          costUsd: 0,
+        });
       } catch {
         /* ignore */
       }
@@ -60,7 +65,7 @@ export async function GET(req: Request) {
 
     const endpoint =
       process.env.JOBICY_SALARY_URL ||
-      `https://jobicy.com/api/v2/salary?title=${encodeURIComponent(role)}&country=${encodeURIComponent(country)}`;
+      `https://jobicy.com/api/v2/salary?title=${encodeURIComponent(role)}&country=${encodeURIComponent(countryParam)}`;
 
     const res = await fetch(endpoint, {
       headers: {
@@ -72,16 +77,20 @@ export async function GET(req: Request) {
 
     if (!res.ok) {
       const errText = await res.text().catch(() => "");
-      const status = res.status === 429 ? 429 : 502;
+      const lowBalance = /balance|insufficient|wallet|fund/i.test(errText);
+      const status = res.status === 429 ? 429 : res.status === 401 ? 401 : 502;
       return NextResponse.json(
         {
           source: "unavailable",
           role,
           country,
-          message:
-            res.status === 429
+          message: lowBalance
+            ? "Wallet Jobicy sin saldo. Fondea en el dashboard y registra el monto con /jobicy_fondeo N. No descuentes crédito."
+            : res.status === 429
               ? "Jobicy rate limit (máx. 10 req/s). Espera un momento. No descuentes crédito."
-              : `El proveedor internacional no respondió (${res.status}). No descuentes crédito e inténtalo luego.`,
+              : res.status === 401
+                ? "API key Jobicy inválida o expirada. No descuentes crédito."
+                : `El proveedor internacional no respondió (${res.status}). No descuentes crédito e inténtalo luego.`,
           rawNote: errText.slice(0, 200),
         } satisfies PremiumSalaryResult,
         { status }
@@ -89,12 +98,32 @@ export async function GET(req: Request) {
     }
 
     const data = (await res.json()) as Record<string, unknown>;
+    if (data.success === false) {
+      return NextResponse.json({
+        source: "unavailable",
+        role,
+        country,
+        message:
+          String(data.message || data.error || "Jobicy rechazó la consulta.") +
+          " No descuentes crédito.",
+        rawNote: JSON.stringify(data).slice(0, 300),
+      } satisfies PremiumSalaryResult);
+    }
+
     const min = num(data.min ?? data.salary_min ?? nested(data, "salary_tiers", "middle", "min"));
     const max = num(data.max ?? data.salary_max ?? nested(data, "salary_tiers", "middle", "max"));
     const median = num(data.median ?? data.salary_median ?? nested(data, "salary_tiers", "middle", "median"));
     const currency = String(data.currency || "USD");
     const confidence = num(data.confidence);
     const updatedAt = String(data.updated_at || data.updatedAt || "");
+    const requestCost = num(data.request_cost ?? data.requestCost);
+    const billable = requestCost == null ? true : requestCost > 0;
+    const costLabel =
+      requestCost == null
+        ? "~$0.109 (estimado)"
+        : requestCost > 0
+          ? `$${requestCost}`
+          : "$0 (unchanged repeat)";
 
     const body: PremiumSalaryResult = {
       source: "jobicy",
@@ -107,9 +136,11 @@ export async function GET(req: Request) {
       confidence: confidence ?? undefined,
       updatedAt: updatedAt || undefined,
       cached: false,
-      billable: true,
+      billable,
       message:
-        "Validación internacional (Jobicy · lookup billable ~$0.109). Orientativo del mercado de ese país; no es banda Colombia. Compáralo con tu matriz local.",
+        `Validación internacional (Jobicy · ${costLabel}` +
+        (updatedAt ? ` · updated_at ${updatedAt}` : "") +
+        "). Orientativo; no es banda Colombia. Compáralo con tu matriz local.",
     };
 
     if (body.min == null && body.median == null && body.max == null) {
@@ -125,7 +156,12 @@ export async function GET(req: Request) {
 
     try {
       await setJobicyCached(role, country, body);
-      await recordJobicyLookup({ role: body.role, country: body.country, billable: true });
+      await recordJobicyLookup({
+        role: body.role,
+        country: body.country,
+        billable,
+        costUsd: requestCost ?? undefined,
+      });
     } catch {
       /* no bloquees la respuesta al usuario */
     }

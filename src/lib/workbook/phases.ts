@@ -25,7 +25,7 @@ export const WORKBOOK_PHASES: WorkbookPhase[] = [
     id: "mercado_red",
     step: 2,
     title: "Mercado y red",
-    blurb: "Tres canales, directorio, CRM único, guiones y plantillas.",
+    blurb: "Tres canales, directorio, contactos, guiones y plantillas.",
     moduleIds: ["mercado", "directorio", "red", "guiones"],
     tools: [
       { label: "Cercanos / aliados / conectores", href: "/outplacement/cuadernillo/conectores" },
@@ -63,10 +63,10 @@ export const WORKBOOK_PHASES: WorkbookPhase[] = [
     id: "extra",
     step: 6,
     title: "Extra (si aplica)",
-    blurb: "Emprendimiento puente, funnel y export.",
+    blurb: "Emprendimiento puente, seguimiento semanal y export.",
     moduleIds: ["emprendimiento"],
     tools: [
-      { label: "Funnel semanal", href: "/outplacement/cuadernillo/funnel" },
+      { label: "Seguimiento semanal", href: "/outplacement/cuadernillo/funnel" },
       { label: "Exportar / PDF", href: "/outplacement/cuadernillo/export" },
       { label: "Ruta 14 sesiones", href: "/outplacement/cuadernillo/ruta14" },
       { label: "Alumni / AMA", href: "/outplacement/alumni" },

@@ -29,7 +29,7 @@ export function PageGuide() {
   return (
     <section className="bento-card space-y-2 mb-5">
       <div className="flex items-start justify-between gap-2">
-        <p className="text-xs uppercase tracking-[0.14em] muted">Para qué sirve y cómo usarla</p>
+        <p className="text-xs uppercase tracking-[0.14em] muted">Para qué es y cómo usarla</p>
         <SpeakButton text={`${guide.what} ${guide.how}`} />
       </div>
       <p className="text-sm leading-relaxed">

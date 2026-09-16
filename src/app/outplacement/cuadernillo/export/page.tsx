@@ -107,7 +107,7 @@ export default function ExportCuadernilloPage() {
         </section>
 
         <section className="space-y-1">
-          <h3 className="font-semibold text-sm">Funnel</h3>
+          <h3 className="font-semibold text-sm">Seguimiento semanal</h3>
           {wb.funnel.weeks.map((w, i) => (
             <p key={i} className="text-sm">
               {w.weekLabel}: red {w.outreach} · empresas {w.companyPages} · post {w.applications} ·

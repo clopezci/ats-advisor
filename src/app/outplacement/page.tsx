@@ -49,7 +49,7 @@ export default function OutplacementPage() {
       setContinueLabel(`Continuar: ${next.title}`);
     } else {
       setContinueHref("/outplacement/cuadernillo/funnel");
-      setContinueLabel("Continuar: funnel semanal");
+      setContinueLabel("Continuar: seguimiento semanal");
     }
   }, []);
 
@@ -70,8 +70,8 @@ export default function OutplacementPage() {
           />
         </div>
         <p className="muted text-sm leading-relaxed">
-          No explores el menú. Pulsa <strong>Continuar</strong>, cierra el entregable y vuelve
-          mañana. Las herramientas satélite viven dentro de cada fase.
+          No te disperses en el menú. Toca <strong>Continuar</strong>, termina lo de hoy y vuelve
+          mañana. El resto de herramientas está dentro de cada fase.
         </p>
         {unlocked ? (
           <>
@@ -100,8 +100,7 @@ export default function OutplacementPage() {
               <Link href="/cuenta" style={{ color: "var(--brand)" }}>
                 Cuenta
               </Link>{" "}
-              activa plan local <strong>Tester</strong> o <strong>Carrera</strong>, luego vuelve y
-              pulsa Continuar.
+              activa <strong>Tester</strong> o <strong>Carrera</strong>, vuelve aquí y toca Continuar.
             </p>
           </>
         )}
@@ -110,7 +109,7 @@ export default function OutplacementPage() {
       {!unlocked && plan !== "paused_90" && (
         <PaywallCard
           currentPlan={plan}
-          reason="El acompañamiento completo está en el plan Carrera. Gratis: ATS, encaje y tracker."
+          reason="Todo el acompañamiento está en el plan Carrera. Gratis tienes el analizador de CV, el encaje rápido, el tracker, el checklist y las bandas salariales."
         />
       )}
 

@@ -74,7 +74,7 @@ export function AtsStepCoach({
       if (!res.ok) throw new Error(data.error || "IA no disponible ahora");
       setA(String(data.text || ""));
     } catch (e) {
-      setA(e instanceof Error ? e.message : "No se pudo consultar. Reintenta en un momento.");
+      setA(e instanceof Error ? e.message : "No pudimos responder. Intenta de nuevo en un rato.");
     } finally {
       setLoading(false);
     }
@@ -88,7 +88,7 @@ export function AtsStepCoach({
         <div>
           <h3 className="font-semibold text-sm">Pregunta sobre este paso</h3>
           <p className="text-xs muted">
-            Respuestas con los datos de tu análisis (cuando ya hay resultado). No inventa experiencia.
+            Responde con lo que salió en tu análisis. No inventa experiencia que no tengas.
           </p>
         </div>
         {a ? <SpeakButton text={a} /> : null}
@@ -107,7 +107,7 @@ export function AtsStepCoach({
         disabled={loading || !canAsk}
         onClick={ask}
       >
-        {loading ? "Consultando…" : "Preguntar al coach ATS"}
+        {loading ? "Consultando…" : "Preguntar al asistente"}
       </button>
       {a ? <p className="text-sm leading-relaxed whitespace-pre-wrap">{a}</p> : null}
     </section>

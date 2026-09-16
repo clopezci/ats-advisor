@@ -87,7 +87,7 @@ export default function MultiMatchPage() {
         value={cv}
         onChange={setCv}
         label="1. Tu hoja de vida"
-        hint="Una sola vez: el CV tuyo. Sirve para compararlo con varias vacantes. No pongas aquí los avisos."
+        hint="Una sola vez: tu hoja de vida. La usamos para comparar varias vacantes. Los avisos van abajo."
       />
 
       <div className="bento-card space-y-2">
@@ -96,7 +96,7 @@ export default function MultiMatchPage() {
           value={bulk}
           onChange={setBulk}
           label="2. Las vacantes (avisos de empleo)"
-          hint="Copia el texto del aviso. Si tienes varias, pega todas y sepáralas con una línea que diga --- luego toca Agregar."
+          hint="Pega el aviso. Si tienes varios, sepáralos con una línea que diga --- y toca Agregar."
           example={JOBS_MULTI_EXAMPLE}
         />
         <div className="flex flex-col gap-2">

@@ -7,13 +7,13 @@ import { CoachAsk } from "@/components/workbook/CoachAsk";
 import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 
 const INTRO =
-  "Checklist de identidad digital: un solo lugar para alinear CV, perfil profesional, foto y keywords con tu banco SOAR.";
+  "Checklist de tu presencia online: alinea CV, perfil, foto y palabras clave con tus logros SOAR.";
 
 const CHECKS = [
   { id: "foto", label: "Foto profesional coherente (mismo estilo CV/perfil)" },
   { id: "headline", label: "Headline con rol target + 1 resultado (no solo título actual)" },
   { id: "about", label: "About / resumen con pitch + 2 logros SOAR" },
-  { id: "keywords", label: "Keywords del rol target (honestas) en CV y perfil" },
+  { id: "keywords", label: "Palabras clave del rol objetivo (honestas) en CV y perfil" },
   { id: "experiencias", label: "Experiencias con verbos + métricas (no listas de tareas)" },
   { id: "skills", label: "Skills alineadas a top 5 competencias + SOAR" },
   { id: "url", label: "URL limpia / contacto fácil de encontrar" },

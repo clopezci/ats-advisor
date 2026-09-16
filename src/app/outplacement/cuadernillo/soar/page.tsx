@@ -17,7 +17,7 @@ import {
 } from "@/lib/workbook/types";
 
 const INTRO =
-  "Banco SOAR: Situación, Obstáculo, Acción y Resultado. Cada logro debe poder usarse en CV, perfil profesional y entrevistas. Apunta a 8–12 entradas; empieza con 3 sólidas.";
+  "Tus logros en formato SOAR: situación, obstáculo, acción y resultado. Cada uno debe servirte en el CV, tu perfil y en entrevistas. Apunta a 8–12 entradas; empieza con 3 sólidas.";
 
 export default function SoarWizardPage() {
   const [wb, setWb] = useState<WorkbookState | null>(null);
@@ -71,7 +71,7 @@ export default function SoarWizardPage() {
     });
     setMsg(
       filled >= 3
-        ? "Banco SOAR guardado. Copia las frases a tu CV y perfil. Sigue con Red (CRM)."
+        ? "Banco SOAR guardado. Copia las frases a tu CV y perfil. Sigue con la red de contactos."
         : "Guardado. Ideal: al menos 3 logros con resultado medible antes de marcar completo."
     );
   }

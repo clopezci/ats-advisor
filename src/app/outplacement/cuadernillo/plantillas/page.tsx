@@ -14,7 +14,7 @@ import {
 } from "@/lib/networking/templates";
 
 const INTRO =
-  "Banco de plantillas por audiencia. Elige el público, copia la versión corta o larga, personaliza los corchetes y registra el envío en tu CRM.";
+  "Plantillas según a quién le escribes. Elige el público, copia la versión corta o larga, cambia lo que va entre corchetes y anota a quién se lo enviaste.";
 
 export default function PlantillasNetworkingPage() {
   const [audience, setAudience] = useState<NetworkAudienceId>("excolega");
@@ -168,13 +168,13 @@ export default function PlantillasNetworkingPage() {
       />
 
       <Link href="/outplacement/cuadernillo/red" className="btn-secondary">
-        Registrar envío en CRM
+        Anotar envío en contactos
       </Link>
       <Link href="/outplacement/cuadernillo/conectores" className="btn-secondary">
         Marco: cercanos, aliados, conectores
       </Link>
       <Link href="/outplacement/networking" className="btn-secondary">
-        CRM herramienta (curso)
+        Contactos del curso Networking
       </Link>
 
       <WorkbookModuleFooter />

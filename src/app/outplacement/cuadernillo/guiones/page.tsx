@@ -14,7 +14,7 @@ import {
 } from "@/lib/workbook/types";
 
 const INTRO =
-  "Vamos a dejar listos tres textos: tu pitch de presentación, tu razón de salida o cambio, y notas de matriz por audiencia. Cada público necesita un mensaje distinto: no copies el mismo párrafo a todos.";
+  "Dejemos listos tres textos: cómo te presentas, por qué cambias o sales, y qué decirle a cada tipo de contacto. Cada público necesita un mensaje distinto: no copies el mismo párrafo a todos.";
 
 const AUDIENCES = [
   "Reclutadores que ya te conocen",
@@ -146,10 +146,10 @@ export default function GuionesWizardPage() {
         Cercanos, aliados, conectores
       </Link>
       <Link href="/outplacement/cuadernillo/red" className="btn-secondary">
-        Ir a CRM del cuadernillo
+        Ir a contactos del cuadernillo
       </Link>
       <Link href="/outplacement/networking" className="btn-secondary">
-        CRM herramienta (curso)
+        Contactos del curso Networking
       </Link>
 
       <WorkbookModuleFooter />

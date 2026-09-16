@@ -19,7 +19,7 @@ import { readWorkbook, writeWorkbook } from "@/lib/workbook/types";
 import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 
 const INTRO =
-  "CRM único de red: el mismo listado sirve al curso Networking y al cuadernillo. Pide un favor concreto y haz follow-up.";
+  "Tu libreta de contactos: la misma lista sirve para el curso y el cuadernillo. Pide un favor concreto y haz seguimiento.";
 
 const STATUSES = (Object.keys(CONTACT_STATUS_LABEL) as ContactStatus[]).filter(
   (s) => s !== "escrito"
@@ -57,7 +57,7 @@ export default function RedCrmPage() {
       <section className="bento-card space-y-3">
         <div className="flex items-start justify-between gap-2">
           <div>
-            <p className="text-xs muted">Fase 2 · CRM único</p>
+            <p className="text-xs muted">Fase 2 · Contactos</p>
             <h1 className="text-2xl font-semibold">Red de contactos</h1>
           </div>
           <SpeakButton text={INTRO} />
@@ -147,8 +147,8 @@ export default function RedCrmPage() {
             refresh();
           }}
         >
-          Guardar en CRM
-        </button>
+          Guardar contacto
+      </button>
       </section>
 
       {items.map((c) => (
@@ -204,7 +204,7 @@ export default function RedCrmPage() {
         Cercanos / aliados / conectores
       </Link>
       <Link href="/outplacement/networking" className="btn-secondary">
-        Misma CRM en el curso Networking
+        Misma lista en el curso Networking
       </Link>
 
       <WorkbookModuleFooter />

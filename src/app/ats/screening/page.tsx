@@ -77,19 +77,19 @@ export default function ScreeningPage() {
         value={cv}
         onChange={setCv}
         label="Tu hoja de vida"
-        hint="El CV tuyo. Con eso armamos respuestas honestas. No pongas aquí las preguntas del portal."
+        hint="Tu hoja de vida. Con eso preparamos respuestas honestas. Las preguntas del portal van abajo."
       />
       <JobPasteField
         value={job}
         onChange={setJob}
         label="El aviso de la vacante"
-        hint="El texto del empleo. Así las respuestas coinciden con lo que piden. No es tu CV."
+        hint="El aviso del empleo. Así las respuestas coinciden con lo que piden. Acá no va tu CV."
       />
 
       <div className="bento-card space-y-2">
         <HintTextarea
           label="Preguntas que te hizo el portal (opcional)"
-          hint="Si LinkedIn o Computrabajo ya te mostró preguntas, pégalas (una por línea). Si no, déjalo vacío."
+          hint="Si LinkedIn o Computrabajo ya te hizo preguntas, pégalas aquí (una por línea). Si no, déjalo en blanco."
           example={SCREENING_Q_EXAMPLE}
           value={extraQ}
           onChange={setExtraQ}

@@ -17,7 +17,7 @@ export function CvPasteField({
   value,
   onChange,
   label = "Tu hoja de vida",
-  hint = "Esto es el CV TUYO (PDF o Word), no el aviso de empleo. Súbelo, pégalo o dicta.",
+  hint = "Aquí va tu hoja de vida (PDF o Word), no la vacante. Súbela, pégala o dicta.",
   framed = true,
 }: {
   value: string;
@@ -53,7 +53,7 @@ export function CvPasteField({
         dictationLabel="Dictar texto del CV"
       />
       <label className="btn-secondary cursor-pointer text-center">
-        {uploading ? "Leyendo archivo…" : "Cargar CV (PDF o Word)"}
+        {uploading ? "Leyendo archivo…" : "Subir hoja de vida (PDF o Word)"}
         <input
           type="file"
           className="sr-only"
@@ -79,8 +79,8 @@ export function CvPasteField({
 export function JobPasteField({
   value,
   onChange,
-  label = "La oferta de empleo",
-  hint = "Copia el aviso completo (título, requisitos y funciones) desde el portal o el correo. Esto NO es tu CV.",
+  label = "El aviso de la vacante",
+  hint = "Pega el aviso completo: cargo, requisitos y funciones. Desde el portal o el correo. Acá no va tu CV.",
   example = JOB_EXAMPLE,
   framed = true,
 }: {

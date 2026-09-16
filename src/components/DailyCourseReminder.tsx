@@ -51,7 +51,7 @@ export function DailyCourseReminder() {
 
   return (
     <section className="bento-card space-y-3" style={{ borderColor: "var(--brand)" }}>
-      <p className="text-xs uppercase tracking-[0.12em] muted">Continúa hoy</p>
+      <p className="text-xs uppercase tracking-[0.12em] muted">Sigue hoy</p>
       <Link
         href={target.href}
         className="btn-primary"
@@ -62,7 +62,7 @@ export function DailyCourseReminder() {
       </Link>
       {courseLabel && courseHref ? (
         <Link href={courseHref} className="text-sm muted underline">
-          Opcional · lección: {courseLabel}
+          Si quieres · lección: {courseLabel}
         </Link>
       ) : null}
     </section>

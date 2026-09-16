@@ -44,7 +44,7 @@ export const PAGE_GUIDES: PageGuideCopy[] = [
   },
   {
     path: "/guia",
-    what: "Arma un recorrido personal. Gratis solo: ATS, encaje rápido y tracker. El valor está en Carrera: la ruta de 8 módulos más LinkedIn, carta, entrevistas y negociación.",
+    what: "Arma un recorrido personal. Gratis: analizador de CV, encaje rápido, tracker, checklist y bandas salariales. El valor profundo está en Carrera: la ruta de 8 módulos más LinkedIn, carta, entrevistas y negociación.",
     how: "Marca lo que necesitas. Empiezas por lo gratis; al llegar a Carrera guardas correo, pagas y vuelves al mismo paso. La tarjeta “Ruta de 8 módulos” es el corazón del plan.",
   },
   {
@@ -54,7 +54,7 @@ export const PAGE_GUIDES: PageGuideCopy[] = [
   },
   {
     path: "/precios",
-    what: "Un solo plan: Carrera (ruta de 8 módulos + herramientas de postulación). El curso a tu medida se compra aparte. Gratis: ATS, encaje rápido y tracker.",
+    what: "Un solo plan: Carrera (ruta de 8 módulos + herramientas de postulación). El curso a tu medida se compra aparte. Gratis: analizador, encaje, tracker, checklist y bandas salariales.",
     how: "Si viniste desde Mi plan, paga Carrera y te devolvemos al mismo paso. Lee los 8 módulos para ver todo lo que incluye.",
   },
   {
@@ -94,8 +94,8 @@ export const PAGE_GUIDES: PageGuideCopy[] = [
   },
   {
     path: "/herramientas/salario",
-    what: "Una banda orientativa en pesos para no pedir a ciegas. No es una encuesta salarial oficial.",
-    how: "Indica cargo y ciudad si te lo pide. Usa el rango como ancla, no como promesa.",
+    what: "Bandas orientativas en pesos por cargo, industria y tamaño de empresa. No es una encuesta salarial oficial; cada empresa maneja sus condiciones.",
+    how: "Elige cargo, ciudad, industria y tamaño de la oferta. Si puedes, agrega tu último fijo e industria/tamaño anteriores. Usa el rango como ancla, no como promesa.",
   },
   {
     path: "/herramientas/cultura",

@@ -5,7 +5,7 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { planLabel, type PlanId } from "@/lib/entitlements";
 
 export function PaywallCard({
-  title = "Esto es parte de Carrera",
+  title = "Esto va con el plan Carrera",
   reason,
   currentPlan = "free",
   nextHref,
@@ -30,10 +30,10 @@ export function PaywallCard({
       </div>
       <p className="text-sm muted">{reason}</p>
       <Link href={preciosHref} className="btn-primary">
-        Ver precios / Activar Carrera
+        Ver precios y activar Carrera
       </Link>
       <Link href="/ats" className="btn-secondary">
-        Seguir con ATS gratis
+        Seguir con el analizador gratis
       </Link>
     </section>
   );

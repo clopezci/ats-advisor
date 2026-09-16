@@ -14,7 +14,7 @@ import { CAREER_PATH_LABEL } from "@/lib/outplacement/labels";
 
 /**
  * Bloquea herramientas / ATS avanzado si no hay Carrera.
- * Deja pasar las 2–3 rutas gratis.
+ * Deja pasar las rutas gratis (ATS, encaje, tracker, checklist, salario, hubs).
  */
 export function PaidToolGate({ children }: { children: ReactNode }) {
   const path = usePathname() || "/";
@@ -41,10 +41,10 @@ export function PaidToolGate({ children }: { children: ReactNode }) {
         currentPlan={plan}
         nextHref={resume}
         title="Incluido en el plan Carrera"
-        reason={`Esta herramienta forma parte del acompañamiento Carrera (${CAREER_PATH_LABEL}, LinkedIn, carta, entrevistas, negociación…). Gratis: analizador ATS, encaje rápido, tracker, checklist CV y bandas salariales.`}
+        reason={`Esta herramienta forma parte del acompañamiento Carrera (${CAREER_PATH_LABEL}, LinkedIn, carta, entrevistas, negociación…). Gratis: analizador de CV, encaje rápido, tracker, checklist y bandas salariales.`}
       />
       <Link href="/ats" className="btn-secondary">
-        Seguir con ATS gratis
+        Seguir con el analizador gratis
       </Link>
     </div>
   );

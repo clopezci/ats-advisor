@@ -14,7 +14,7 @@ import {
 } from "@/lib/workbook/types";
 
 const INTRO =
-  "Finanzas de transición: cuatro pilares educativos. Calcula tu pista de aterrizaje y ancla el piso de oferta a esa realidad — sin asesoría legal ni tributaria.";
+  "Finanzas mientras buscas trabajo: cuatro temas clave. Calcula cuánto te alcanza el dinero y fija un sueldo mínimo realista — esto no reemplaza un contador ni un abogado.";
 
 export default function FinanzasWizardPage() {
   const [wb, setWb] = useState<WorkbookState | null>(null);

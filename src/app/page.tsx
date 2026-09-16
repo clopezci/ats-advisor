@@ -39,7 +39,7 @@ function HomeInner() {
   }
 
   const INTRO =
-    "Dos caminos siempre a la vista: el ATS gratis (el más usado) y Continuar tu acompañamiento. Elige uno y avanza.";
+    "Siempre verás dos opciones: el analizador de CV gratis y seguir tu acompañamiento. Elige una y avanza.";
 
   return (
     <div className="flex flex-1 flex-col gap-6">
@@ -65,8 +65,8 @@ function HomeInner() {
         <p className="muted text-sm leading-relaxed">{INTRO}</p>
         {path === "carrera" && !paid ? (
           <p className="text-xs muted leading-relaxed">
-            Tip de prueba: en <Link href="/cuenta" style={{ color: "var(--brand)" }}>Cuenta</Link>{" "}
-            puedes activar plan local Tester / Carrera para recorrer el cuadernillo sin fricción.
+            Para probar: en <Link href="/cuenta" style={{ color: "var(--brand)" }}>Cuenta</Link>{" "}
+            activa Tester o Carrera y recorre el cuadernillo completo.
           </p>
         ) : null}
       </section>
@@ -79,7 +79,7 @@ function HomeInner() {
       >
         ATS gratis
         <span className="block text-xs font-normal opacity-90">
-          Compara tu CV con una oferta · score accionable
+          Compara tu CV con una vacante · puntaje y qué mejorar
         </span>
       </Link>
 

@@ -14,7 +14,7 @@ import {
 } from "@/lib/workbook/types";
 
 const INTRO =
-  "Vamos a armar tu mapa de carrera. No es motivación vacía: saldrás con objetivo en una línea, propósito, visión y fortalezas que puedas defender en entrevista.";
+  "Armemos tu mapa de carrera. No es frases bonitas: saldrás con un objetivo claro, tu propósito y fortalezas que puedas defender en entrevista.";
 
 export default function MapaWizardPage() {
   const [wb, setWb] = useState<WorkbookState | null>(null);

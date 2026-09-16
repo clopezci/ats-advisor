@@ -27,12 +27,12 @@ import { FlowContinueBar } from "@/components/FlowContinueBar";
 
 const PROFILES: { id: AtsProfile; label: string; hint: string }[] = [
   { id: "generic", label: "No lo sé", hint: "Sirve para la mayoría de avisos" },
-  { id: "workday", label: "Workday", hint: "Semántico + formato estricto" },
-  { id: "greenhouse", label: "Greenhouse", hint: "Parse limpio + scorecard humano" },
-  { id: "taleo", label: "Taleo", hint: "Keywords literales" },
-  { id: "successfactors", label: "SuccessFactors", hint: "Parse estricto SAP" },
-  { id: "lever", label: "Lever", hint: "Relevancia + 1 columna" },
-  { id: "sap", label: "SAP", hint: "Títulos literales" },
+  { id: "workday", label: "Workday", hint: "Entiende el sentido y exige formato limpio" },
+  { id: "greenhouse", label: "Greenhouse", hint: "Lee bien el texto; luego lo revisa una persona" },
+  { id: "taleo", label: "Taleo", hint: "Busca las palabras exactas del aviso" },
+  { id: "successfactors", label: "SuccessFactors", hint: "Formato estricto (SAP)" },
+  { id: "lever", label: "Lever", hint: "Relevancia + CV de una columna" },
+  { id: "sap", label: "SAP", hint: "Títulos literales del aviso" },
 ];
 
 export default function AtsPage() {
@@ -97,10 +97,10 @@ export default function AtsPage() {
   }, [jobUrl, jobText, companyDomain, companyName]);
 
   const intro = useMemo(() => {
-    if (step === 1) return "Sube tu CV (PDF/DOCX/TXT), pégalo o dicta el texto.";
-    if (step === 2) return "Ahora pega o dicta la oferta laboral.";
+    if (step === 1) return "Sube tu hoja de vida (PDF, Word o texto), pégala o dicta.";
+    if (step === 2) return "Ahora pega o dicta el aviso de la vacante.";
     if (step === 3) return "Si no sabes con qué programa filtra la empresa, deja No lo sé y continúa.";
-    return "Tu resultado. Un paso a la vez: entiende el puntaje, luego ajusta el CV, luego carta y guardar.";
+    return "Tu resultado. Paso a paso: entiende el puntaje, ajusta tu CV, arma la carta y guárdalo.";
   }, [step]);
 
   const scoreSummary = useMemo(() => (result ? buildScoreSummary(result) : null), [result]);
@@ -385,7 +385,7 @@ export default function AtsPage() {
               value={cvText}
               onChange={setCvText}
               label="Tu hoja de vida"
-              hint="El CV tuyo (PDF o Word). No pongas aquí el aviso de la vacante: eso va en el siguiente paso."
+              hint="Tu hoja de vida (PDF o Word). La vacante va en el siguiente paso."
             />
           </div>
           <AtsStepCoach step={1} cvText={cvText} />
@@ -413,7 +413,7 @@ export default function AtsPage() {
               value={jobText}
               onChange={setJobText}
               label="El aviso de la vacante"
-              hint="Copia el texto del empleo (título, requisitos, funciones). Esto NO es tu CV."
+              hint="Pega el aviso: cargo, requisitos y funciones. Acá no va tu CV."
             />
             <div className="flex items-center justify-between">
               <label className="text-sm font-medium">URL de la vacante (opcional)</label>

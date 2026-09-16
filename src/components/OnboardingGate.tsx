@@ -30,7 +30,7 @@ export function OnboardingGate({ children }: { children: ReactNode }) {
   if (!show) return <>{children}</>;
 
   const intro =
-    "Elige una sola cosa. Luego la app te lleva con un botón Continuar — sin menús que te confundan.";
+    "Elige por dónde empezar. Después solo sigues con Continuar — sin perderte en menús.";
 
   return (
     <div className="flex flex-1 flex-col gap-5">
@@ -51,9 +51,9 @@ export function OnboardingGate({ children }: { children: ReactNode }) {
         style={{ minHeight: "4.75rem", fontSize: "1.1rem", lineHeight: 1.35 }}
         onClick={() => choose("carrera")}
       >
-        Reconstruir mi carrera
+        Retomar mi carrera
         <span className="block text-xs font-normal opacity-90">
-          Un botón Continuar · flujo guiado
+          Un paso a la vez, con Continuar
         </span>
       </Link>
 
@@ -63,12 +63,12 @@ export function OnboardingGate({ children }: { children: ReactNode }) {
         style={{ minHeight: "4.25rem", lineHeight: 1.35 }}
         onClick={() => choose("ats")}
       >
-        Solo probar el ATS (gratis)
-        <span className="block text-xs font-normal muted">CV vs una oferta · 2 minutos</span>
+        Probar el analizador de CV (gratis)
+        <span className="block text-xs font-normal muted">Tu CV contra una vacante · en 2 minutos</span>
       </Link>
 
       <p className="text-center text-xs muted">
-        Podrás cambiar después en Cuenta. Si Carrera está bloqueado, activa plan o Tester allí.
+        Puedes cambiar de camino en Cuenta. Si Carrera está bloqueado, activa el plan o Tester desde ahí.
       </p>
     </div>
   );

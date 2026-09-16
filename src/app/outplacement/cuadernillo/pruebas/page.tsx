@@ -15,7 +15,7 @@ import { readWorkbook, writeWorkbook, type WorkbookState } from "@/lib/workbook/
 import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 
 const INTRO =
-  "Autoevalúa 12 competencias de ATSAdvisor. Sé honesto: un 5 sin evidencia no sirve en entrevista. Lleva tu top 5 al mapa y al CV.";
+  "Autoevalúa 12 competencias. Sé honesto: un 5 sin ejemplo real no te sirve en entrevista. Lleva tu top 5 al mapa y al CV.";
 
 export default function PruebasPage() {
   const [wb, setWb] = useState<WorkbookState | null>(null);

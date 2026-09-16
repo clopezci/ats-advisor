@@ -52,7 +52,7 @@ export default function ConectoresPage() {
       ...wb,
       completed: { ...wb.completed, red: wb.completed.red || false },
     });
-    setMsg("Notas guardadas. Sigue con plantillas y CRM.");
+    setMsg("Notas guardadas. Sigue con plantillas y contactos.");
   }
 
   return (
@@ -148,7 +148,7 @@ export default function ConectoresPage() {
         Banco de plantillas por audiencia
       </Link>
       <Link href="/outplacement/cuadernillo/red" className="btn-secondary">
-        CRM del cuadernillo
+        Libreta de contactos
       </Link>
 
       <WorkbookModuleFooter />

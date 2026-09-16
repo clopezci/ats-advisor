@@ -24,7 +24,7 @@ export function WorkbookModuleFooter() {
         </Link>
       ) : (
         <Link href="/outplacement/cuadernillo/funnel" className="btn-primary">
-          Continuar: funnel semanal
+          Continuar: seguimiento semanal
         </Link>
       )}
       <Link href="/outplacement/cuadernillo" className="text-center text-sm muted">

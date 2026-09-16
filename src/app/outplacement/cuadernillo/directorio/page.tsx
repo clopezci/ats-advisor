@@ -19,7 +19,7 @@ import {
 } from "@/lib/networking/suggestedHunters";
 
 const INTRO =
-  "Arma tu directorio: hunters, HRBP y portales. Es tuyo, por industria y ciudad — no una lista mágica de terceros.";
+  "Arma tu directorio: cazatalentos, personas de RR.HH. y portales. Es tuyo, por industria y ciudad — no una lista mágica de internet.";
 
 export default function DirectorioPage() {
   const [wb, setWb] = useState<WorkbookState | null>(null);
@@ -47,7 +47,7 @@ export default function DirectorioPage() {
       completed: { ...wb!.completed, directorio: true },
       directory: { ...wb!.directory, updatedAt: Date.now() },
     });
-    setMsg("Directorio guardado. Combínalo con CRM de red y páginas de carrera.");
+    setMsg("Directorio guardado. Combínalo con tu libreta de contactos y las páginas de carrera.");
   }
 
   const d = wb.directory;

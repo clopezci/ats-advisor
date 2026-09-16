@@ -50,7 +50,7 @@ export const WORKBOOK_MODULES: WorkbookModuleDef[] = [
   },
   {
     id: "red",
-    title: "Red de contactos (CRM)",
+    title: "Red de contactos",
     goal: "Contactos por categoría, favor concreto y follow-up.",
     href: "/outplacement/cuadernillo/red",
     coachModule: "networking",

@@ -11,7 +11,7 @@ import {
 } from "@/lib/workbook/simulations";
 
 const INTRO =
-  "Historial de scores de simulaciones. Úsalo para ver tendencia: qué mejora y qué se queda corto.";
+  "Historial de puntajes de tus prácticas. Úsalo para ver tendencia: qué mejora y qué se queda corto.";
 
 export default function FeedbackHistorialPage() {
   const [items, setItems] = useState<FeedbackScore[]>([]);

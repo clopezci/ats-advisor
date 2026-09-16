@@ -15,7 +15,7 @@ import {
 } from "@/lib/workbook/types";
 
 const INTRO =
-  "Los portales de empleo concentran muchas postulaciones y poca respuesta. Una parte importante de las mejores oportunidades se mueve por networking, y otro bloque aparece primero —o solo— en la página de carrera de la empresa. Aquí aprendes a repartir tu tiempo entre los tres canales.";
+  "En los portales hay mucha gente postulando y pocas respuestas. Buena parte de las mejores vacantes se mueve por contactos, y otra aparece primero —o solo— en la página de carrera de la empresa. Aquí aprendes a repartir tu tiempo entre los tres canales.";
 
 const CHECKS = [
   { id: "net5", label: "5 mensajes de red personalizados" },

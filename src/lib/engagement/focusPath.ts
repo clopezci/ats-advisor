@@ -43,7 +43,7 @@ export function resolveCareerContinueTarget(): ContinueTarget {
     return {
       href: "/outplacement",
       label: "Continuar: mi acompañamiento",
-      hint: "Desbloquea Carrera o activa Tester en Cuenta para el cuadernillo",
+      hint: "Activa Carrera o Tester en Cuenta para abrir el cuadernillo",
     };
   }
   try {
@@ -52,13 +52,13 @@ export function resolveCareerContinueTarget(): ContinueTarget {
       return {
         href: next.href,
         label: `Continuar: ${next.title}`,
-        hint: "Un entregable · vuelve cuando termines",
+        hint: "Una tarea · vuelve cuando la termines",
       };
     }
     return {
       href: "/outplacement/cuadernillo/funnel",
-      label: "Continuar: funnel semanal",
-      hint: "Cuadernillo completo · mide el ritmo",
+      label: "Continuar: seguimiento semanal",
+      hint: "Cuadernillo completo · mira cómo vas",
     };
   } catch {
     return {
@@ -75,8 +75,8 @@ export function resolveContinueTarget(): ContinueTarget {
   if (path === "ats") {
     return {
       href: "/ats",
-      label: "Continuar: analizador ATS",
-      hint: "CV vs una oferta · gratis",
+      label: "Continuar: analizar mi CV",
+      hint: "Tu CV contra una vacante · gratis",
     };
   }
   return resolveCareerContinueTarget();

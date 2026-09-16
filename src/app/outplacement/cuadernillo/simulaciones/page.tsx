@@ -9,7 +9,7 @@ import { SIMULATION_CASES, saveFeedbackScore } from "@/lib/workbook/simulations"
 import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 
 const INTRO =
-  "Simulaciones por caso: elige escenario, responde en voz alta o por escrito, y autoevalúa con la rúbrica. Guarda el score en historial.";
+  "Practica por escenario: elige uno, responde en voz alta o por escrito, y califica tu respuesta con la guía. Guarda el puntaje en el historial.";
 
 export default function SimulacionesPage() {
   const [caseId, setCaseId] = useState(SIMULATION_CASES[0].id);

@@ -15,7 +15,7 @@ import { listJobs } from "@/lib/tracker/jobs";
 import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 
 const INTRO =
-  "Funnel semanal: mide outreach, páginas de empresa, postulaciones, filtros, entrevistas y ofertas. Sin números no sabes si el mix de canales funciona.";
+  "Seguimiento semanal: anota mensajes enviados, páginas de empresas, postulaciones, llamadas, entrevistas y ofertas. Sin números no sabes qué canal te está funcionando.";
 
 export default function FunnelPage() {
   const [wb, setWb] = useState<WorkbookState | null>(null);
@@ -62,7 +62,7 @@ export default function FunnelPage() {
   }
 
   function markCompensacionHint() {
-    setMsg("Funnel guardado en este dispositivo. Exporta el cuadernillo cuando quieras un PDF.");
+    setMsg("Seguimiento guardado en este dispositivo. Exporta el cuadernillo cuando quieras un PDF.");
   }
 
   const latest = wb.funnel.weeks[0];
@@ -77,7 +77,7 @@ export default function FunnelPage() {
         <div className="flex items-start justify-between gap-2">
           <div>
             <p className="text-xs muted">Outcomes · F4</p>
-            <h1 className="text-2xl font-semibold">Funnel de búsqueda</h1>
+            <h1 className="text-2xl font-semibold">Seguimiento semanal</h1>
           </div>
           <SpeakButton text={INTRO} />
         </div>

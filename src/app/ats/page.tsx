@@ -24,6 +24,12 @@ import { syncAtsScan } from "@/lib/supabase/sync";
 import { AtsStepCoach } from "@/components/ats/AtsStepCoach";
 import { buildScoreSummary } from "@/lib/ats/scoreSummary";
 import { FlowContinueBar } from "@/components/FlowContinueBar";
+import {
+  buildCvPatchPlan,
+  buildSurgicalCvPrompt,
+  kindLabel,
+  splitSurgicalCvResponse,
+} from "@/lib/ats/cvPatch";
 
 const PROFILES: { id: AtsProfile; label: string; hint: string }[] = [
   { id: "generic", label: "No lo sé", hint: "Sirve para la mayoría de avisos" },
@@ -50,6 +56,8 @@ export default function AtsPage() {
   const [aiTip, setAiTip] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
   const [rewriteText, setRewriteText] = useState("");
+  const [rewriteChangelog, setRewriteChangelog] = useState("");
+  const [rewriteMode, setRewriteMode] = useState<"surgical" | "full" | null>(null);
   const [rewriteLoading, setRewriteLoading] = useState(false);
   const [applyTips, setApplyTips] = useState("");
   const [applyLoading, setApplyLoading] = useState(false);
@@ -104,6 +112,7 @@ export default function AtsPage() {
   }, [step]);
 
   const scoreSummary = useMemo(() => (result ? buildScoreSummary(result) : null), [result]);
+  const patchPlan = useMemo(() => (result ? buildCvPatchPlan(result) : null), [result]);
 
   async function askAiRewrite() {
     if (!result) return;
@@ -129,36 +138,62 @@ export default function AtsPage() {
     }
   }
 
-  async function adjustCv() {
+  async function adjustCv(mode: "surgical" | "full" = "surgical") {
     if (!result) return;
     setRewriteLoading(true);
     setRewriteText("");
+    setRewriteChangelog("");
+    setRewriteMode(mode);
+    setDiffLines([]);
     try {
+      const plan = buildCvPatchPlan(result);
+      const prompt =
+        mode === "surgical"
+          ? buildSurgicalCvPrompt({
+              atsProfile,
+              score: result.score,
+              cvText,
+              jobText,
+              plan,
+            })
+          : [
+              `Perfil ATS objetivo: ${atsProfile}`,
+              `Score actual: ${result.score}% · semántico ${result.semanticScore}%`,
+              `Must-have faltantes: ${(result.mustHave?.missing || []).slice(0, 15).join(", ")}`,
+              `Hard skills faltantes: ${result.hardSkills.missing.slice(0, 12).join(", ")}`,
+              `Soft faltantes: ${result.softSkills.missing.slice(0, 8).join(", ")}`,
+              `Cómo filtra este ATS: ${(result.atsInsights || []).join(" ")}`,
+              `OFERTA (extracto): ${jobText.slice(0, 1800)}`,
+              `CV ACTUAL COMPLETO:\n${cvText.slice(0, 7000)}`,
+              "Tarea: reescribe SOLO la hoja de vida lista para pegar en Word y postular.",
+              "Estructura: Nombre, contacto, perfil profesional, experiencia (viñetas), educación, habilidades, idiomas/certificaciones si aplican.",
+              "NO escribas títulos internos como «Resumen de cambios», «CV reescrito», «texto plano» ni disclaimers.",
+              "Teje keywords faltantes SOLO si el CV actual ya lo soporta. No inventes. Si algo es dudoso, deja [REVISAR] dentro de la misma viñeta.",
+            ].join("\n\n");
+
       const res = await fetch("/api/ai/complete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           task: "cv_rewrite",
           useKnowledge: true,
-          prompt: [
-            `Perfil ATS objetivo: ${atsProfile}`,
-            `Score actual: ${result.score}% · semántico ${result.semanticScore}%`,
-            `Must-have faltantes: ${(result.mustHave?.missing || []).slice(0, 15).join(", ")}`,
-            `Hard skills faltantes: ${result.hardSkills.missing.slice(0, 12).join(", ")}`,
-            `Soft faltantes: ${result.softSkills.missing.slice(0, 8).join(", ")}`,
-            `Cómo filtra este ATS: ${(result.atsInsights || []).join(" ")}`,
-            `OFERTA (extracto): ${jobText.slice(0, 1800)}`,
-            `CV ACTUAL COMPLETO:\n${cvText.slice(0, 7000)}`,
-            "Tarea: reescribe SOLO la hoja de vida lista para pegar en Word y postular.",
-            "Estructura: Nombre, contacto, perfil profesional, experiencia (viñetas), educación, habilidades, idiomas/certificaciones si aplican.",
-            "NO escribas títulos internos como «Resumen de cambios», «CV reescrito», «texto plano» ni disclaimers.",
-            "Teje keywords faltantes SOLO si el CV actual ya lo soporta. No inventes. Si algo es dudoso, deja [REVISAR] dentro de la misma viñeta.",
-          ].join("\n\n"),
+          prompt,
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "IA no disponible");
-      setRewriteText(extractPlainCv(String(data.text || "")) || String(data.text || ""));
+      const raw = String(data.text || "");
+      if (mode === "surgical") {
+        const split = splitSurgicalCvResponse(raw);
+        const plain = extractPlainCv(split.cv) || split.cv;
+        setRewriteText(plain);
+        setRewriteChangelog(split.changelog);
+        setDiffLines(lineDiff(cvText, plain));
+      } else {
+        const plain = extractPlainCv(raw) || raw;
+        setRewriteText(plain);
+        setDiffLines(lineDiff(cvText, plain));
+      }
     } catch (e) {
       setRewriteText(e instanceof Error ? e.message : "No se pudo ajustar el CV");
     } finally {
@@ -918,7 +953,7 @@ export default function AtsPage() {
 
           {resultPhase === 2 && (
             <button type="button" className="btn-primary" onClick={() => setResultPhase(3)}>
-              Siguiente: ajustar la hoja de vida
+              Siguiente: aplicar solo los cambios al CV
             </button>
           )}
 
@@ -926,17 +961,88 @@ export default function AtsPage() {
           <section className="bento-card space-y-3">
             <h2 className="text-sm font-semibold">Ajustar hoja de vida</h2>
             <p className="text-xs muted">{DISCLAIMER_CV_REWRITE}</p>
-            <button type="button" className="btn-primary" disabled={rewriteLoading} onClick={adjustCv}>
-              {rewriteLoading ? "Ajustando con IA…" : "Ajustar hoja de vida"}
+            <p className="text-sm leading-relaxed">
+              Recomendado: aplicar <strong>solo los cambios del análisis</strong> (no reescribir todo el CV).
+            </p>
+            {patchPlan && patchPlan.items.length > 0 ? (
+              <div className="space-y-2">
+                <p className="text-xs muted">{patchPlan.summary}</p>
+                <ul className="text-sm muted space-y-1.5 max-h-48 overflow-auto">
+                  {patchPlan.items.map((item) => (
+                    <li key={item.id}>
+                      <span className="font-medium" style={{ color: "var(--text)" }}>
+                        {kindLabel(item.kind)}:
+                      </span>{" "}
+                      {item.label}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <p className="text-xs muted">Pocos gaps detectados; el parche será mínimo.</p>
+            )}
+            <button
+              type="button"
+              className="btn-primary"
+              disabled={rewriteLoading}
+              onClick={() => adjustCv("surgical")}
+            >
+              {rewriteLoading && rewriteMode === "surgical"
+                ? "Aplicando solo esos cambios…"
+                : "Aplicar solo estos cambios"}
+            </button>
+            <button
+              type="button"
+              className="btn-secondary"
+              disabled={rewriteLoading}
+              onClick={() => adjustCv("full")}
+            >
+              {rewriteLoading && rewriteMode === "full"
+                ? "Reescribiendo…"
+                : "Reescritura completa (opcional)"}
             </button>
             {rewriteText && (
               <>
+                {rewriteMode === "surgical" ? (
+                  <p className="text-xs font-medium" style={{ color: "var(--brand)" }}>
+                    Modo cirugía: se preservó la estructura; revisa el diff antes de usar.
+                  </p>
+                ) : (
+                  <p className="text-xs muted">Modo reescritura completa — revisa con más cuidado.</p>
+                )}
+                {rewriteChangelog ? (
+                  <div className="rounded-lg p-3 text-xs muted whitespace-pre-wrap" style={{ background: "var(--surface-2, #f6f4fb)" }}>
+                    <p className="font-medium text-sm mb-1" style={{ color: "var(--text)" }}>
+                      Qué se aplicó / omitió
+                    </p>
+                    {rewriteChangelog}
+                  </div>
+                ) : null}
                 <SpeakButton text={rewriteText.slice(0, 400)} />
-                <pre className="text-sm muted whitespace-pre-wrap max-h-96 overflow-auto rounded-lg p-3" style={{ background: "var(--surface-2, #f6f4fb)" }}>
+                {diffLines.length > 0 && (
+                  <div className="max-h-64 overflow-auto text-xs space-y-1 rounded-lg p-3" style={{ background: "var(--surface-2, #f6f4fb)" }}>
+                    <p className="font-medium text-sm">Diff (antes → después)</p>
+                    <p className="muted mb-1">− quitado · + agregado</p>
+                    {diffLines.slice(0, 50).map((d, i) => (
+                      <p
+                        key={`${d.type}-${i}`}
+                        style={{
+                          color:
+                            d.type === "add" ? "var(--brand)" : d.type === "del" ? "var(--danger, #b42318)" : undefined,
+                          opacity: d.type === "same" ? 0.45 : 1,
+                        }}
+                      >
+                        {d.type === "add" ? "+ " : d.type === "del" ? "− " : "  "}
+                        {d.text.slice(0, 180)}
+                      </p>
+                    ))}
+                  </div>
+                )}
+                <pre className="text-sm muted whitespace-pre-wrap max-h-72 overflow-auto rounded-lg p-3" style={{ background: "var(--surface-2, #f6f4fb)" }}>
                   {rewriteText}
                 </pre>
                 <button type="button" className="btn-secondary" onClick={applyRewriteToEditor}>
-                  Cargar texto ajustado al editor (revisar antes de usar)
+                  Cargar texto al editor (revisar antes de usar)
                 </button>
                 <button type="button" className="btn-primary" disabled={rescoring} onClick={rescoreAfterRewrite}>
                   {rescoring ? "Re-analizando…" : "Re-analizar score (antes → después)"}
@@ -956,29 +1062,14 @@ export default function AtsPage() {
                   className="btn-primary"
                   onClick={async () => {
                     const blob = await buildCvDocx(extractPlainCv(rewriteText) || rewriteText);
-                    downloadBlob(`CV-ajustado-ATSAdvisor.docx`, blob);
+                    downloadBlob(
+                      rewriteMode === "surgical" ? `CV-parche-ATSAdvisor.docx` : `CV-ajustado-ATSAdvisor.docx`,
+                      blob
+                    );
                   }}
                 >
-                  Descargar DOCX del ajuste
+                  Descargar DOCX {rewriteMode === "surgical" ? "(solo cambios)" : "(ajuste completo)"}
                 </button>
-                {diffLines.length > 0 && (
-                  <div className="max-h-64 overflow-auto text-xs space-y-1">
-                    <p className="font-medium text-sm">Diff rápido</p>
-                    {diffLines.slice(0, 40).map((d, i) => (
-                      <p
-                        key={`${d.type}-${i}`}
-                        style={{
-                          color:
-                            d.type === "add" ? "var(--brand)" : d.type === "del" ? "var(--danger, #b42318)" : undefined,
-                          opacity: d.type === "same" ? 0.55 : 1,
-                        }}
-                      >
-                        {d.type === "add" ? "+ " : d.type === "del" ? "− " : "  "}
-                        {d.text.slice(0, 160)}
-                      </p>
-                    ))}
-                  </div>
-                )}
               </>
             )}
           </section>

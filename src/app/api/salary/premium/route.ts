@@ -1,18 +1,5 @@
 import { NextResponse } from "next/server";
-
-export type PremiumSalaryResult = {
-  source: "jobicy" | "unavailable";
-  role: string;
-  country: string;
-  currency?: string;
-  min?: number;
-  median?: number;
-  max?: number;
-  confidence?: number;
-  updatedAt?: string;
-  message: string;
-  rawNote?: string;
-};
+import type { PremiumSalaryResult } from "@/lib/salary/premiumTypes";
 
 /**
  * Consulta salarial premium (proveedor externo).
@@ -42,7 +29,6 @@ export async function GET(req: Request) {
   }
 
   try {
-    // Jobicy: GET with position + country (API shapes may vary; normalize best-effort)
     const endpoint =
       process.env.JOBICY_SALARY_URL ||
       `https://jobicy.com/api/v2/salary?position=${encodeURIComponent(role)}&country=${encodeURIComponent(country)}`;
@@ -77,7 +63,6 @@ export async function GET(req: Request) {
     const confidence = num(data.confidence);
     const updatedAt = String(data.updated_at || data.updatedAt || "");
 
-    // Jobicy often returns annual; convert hint for CO users if USD annual
     const body: PremiumSalaryResult = {
       source: "jobicy",
       role: String(data.job_title || data.position || role),

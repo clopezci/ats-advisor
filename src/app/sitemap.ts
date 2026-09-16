@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/ats/historial",
     "/ats/screening",
     "/ats/multi",
+    "/ats/radar",
     "/ats/portales",
     "/ats/pack",
     "/ats/benchmark",

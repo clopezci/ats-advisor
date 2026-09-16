@@ -19,6 +19,7 @@ export function isFreeAppPath(pathname: string): boolean {
   if (p === "/tracker") return true;
   if (p === "/herramientas/checklist") return true;
   if (p === "/herramientas/salario") return true;
+  if (p === "/ats/radar") return true;
 
   // Hubs / account / legal / auth always open
   if (p === "/herramientas") return true;
@@ -59,6 +60,11 @@ export const FREE_TOOL_BLURBS = [
     href: "/herramientas/checklist",
     title: "Checklist CV ATS",
     desc: "Revisa formato y secciones antes de enviar o analizar.",
+  },
+  {
+    href: "/ats/radar",
+    title: "Radar de vacantes",
+    desc: "Tus filtros + avisos en lote: postula, revisa o descarta sin recorrer LinkedIn a ciegas.",
   },
   {
     href: "/herramientas/salario",

@@ -98,14 +98,19 @@ export const PAGE_GUIDES: PageGuideCopy[] = [
     how: "Elige cargo, ciudad, industria y tamaño de la oferta. Si puedes, agrega tu último fijo e industria/tamaño anteriores. Usa el rango como ancla, no como promesa.",
   },
   {
-    path: "/herramientas/cultura",
-    what: "Lee el tono de una oferta (qué valoran: ritmo, autonomía, horario) para ver si te encaja más allá del sueldo.",
-    how: "Pega el aviso completo. Lee el resultado. Es orientación, no un test psicológico.",
+    path: "/ats/radar",
+    what: "Tus filtros (salario, modalidad, must-haves) + varios avisos pegados. Te dice postula, revisa o descarta sin scrapear LinkedIn.",
+    how: "Guarda tus filtros. Copia el texto de cada vacante desde el portal, pégalo (varios con ---) y toca Evaluar lote. Luego abre el ATS solo en las prioritarias.",
   },
   {
     path: "/herramientas",
-    what: "Solo 3 gratis: ATS, encaje rápido y tracker. El resto (LinkedIn, carta, entrevistas, ruta de 8 módulos…) es el plan Carrera.",
-    how: "Usa las tres gratis si quieres probar. Para el acompañamiento completo, ve a Precios o Mi plan.",
+    what: "Gratis: analizador ATS, encaje, tracker, checklist, bandas salariales y radar de vacantes. Carrera es el acompañamiento completo.",
+    how: "Usa lo gratis para postular hoy. Para el proceso guiado (red, entrevistas, oferta), ve a Precios o Carrera.",
+  },
+  {
+    path: "/herramientas/cultura",
+    what: "Lee el tono de una oferta (qué valoran: ritmo, autonomía, horario) para ver si te encaja más allá del sueldo.",
+    how: "Pega el aviso completo. Lee el resultado. Es orientación, no un test psicológico.",
   },
   {
     path: "/outplacement/entrevista",

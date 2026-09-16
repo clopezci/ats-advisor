@@ -1,21 +1,39 @@
 import { NextResponse } from "next/server";
 import type { PremiumSalaryResult } from "@/lib/salary/premiumTypes";
+import {
+  JOBICY_DEFAULT_COUNTRY,
+  isJobicyCountry,
+} from "@/lib/salary/jobicyIntl";
+import { recordJobicyLookup } from "@/lib/salary/jobicyWallet";
 
 /**
- * Consulta salarial premium (proveedor externo).
- * Configura JOBICY_API_KEY (Bearer). Sin clave: responde unavailable (no cobres crédito en cliente).
+ * Validación salarial internacional (Jobicy).
+ * Solo países soportados por Jobicy (sin Colombia / LATAM).
+ * Configura JOBICY_API_KEY (Bearer). Sin clave: unavailable (no cobres crédito).
  *
  * Docs: https://jobicy.com/salary-api
  */
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const role = (url.searchParams.get("role") || "").trim().slice(0, 80);
-  const country = (url.searchParams.get("country") || "Colombia").trim().slice(0, 60);
+  const countryRaw = (url.searchParams.get("country") || JOBICY_DEFAULT_COUNTRY).trim();
 
   if (role.length < 3) {
     return NextResponse.json({ error: "Indica un cargo (role) de al menos 3 caracteres." }, { status: 400 });
   }
 
+  if (!isJobicyCountry(countryRaw)) {
+    const body: PremiumSalaryResult = {
+      source: "unavailable",
+      role,
+      country: countryRaw,
+      message:
+        "Jobicy no cubre ese país (Colombia y LATAM no están disponibles). Elige un país de la lista internacional. No descuentes crédito.",
+    };
+    return NextResponse.json(body, { status: 400 });
+  }
+
+  const country = countryRaw;
   const key = process.env.JOBICY_API_KEY || process.env.SALARY_API_KEY || "";
   if (!key) {
     const body: PremiumSalaryResult = {
@@ -23,7 +41,7 @@ export async function GET(req: Request) {
       role,
       country,
       message:
-        "Consulta premium no configurada en el servidor (falta JOBICY_API_KEY). Sigue usando la matriz gratuita. Cuando actives la clave, cada consulta gastará 1 crédito.",
+        "Validación internacional no configurada en el servidor (falta JOBICY_API_KEY). Usa la matriz Colombia gratuita.",
     };
     return NextResponse.json(body);
   }
@@ -48,7 +66,7 @@ export async function GET(req: Request) {
           source: "unavailable",
           role,
           country,
-          message: `El proveedor no respondió (${res.status}). No descuentes crédito e inténtalo luego.`,
+          message: `El proveedor internacional no respondió (${res.status}). No descuentes crédito e inténtalo luego.`,
           rawNote: errText.slice(0, 200),
         } satisfies PremiumSalaryResult,
         { status: 502 }
@@ -74,7 +92,7 @@ export async function GET(req: Request) {
       confidence: confidence ?? undefined,
       updatedAt: updatedAt || undefined,
       message:
-        "Fuente externa (Jobicy). Orientativo: no es la banda interna de una empresa concreta. Compáralo con tu matriz local.",
+        "Validación internacional (Jobicy). Orientativo del mercado de ese país; no es banda Colombia ni oferta de una empresa concreta. Compáralo con tu matriz local.",
     };
 
     if (body.min == null && body.median == null && body.max == null) {
@@ -82,9 +100,17 @@ export async function GET(req: Request) {
         source: "unavailable",
         role,
         country,
-        message: "El proveedor no trajo rangos para ese cargo/país. Prueba otro nombre de rol. No descuentes crédito.",
+        message:
+          "Jobicy no trajo rangos para ese cargo/país. Prueba otro título en inglés o otro país de la lista. No descuentes crédito.",
         rawNote: JSON.stringify(data).slice(0, 300),
       } satisfies PremiumSalaryResult);
+    }
+
+    // Solo cobramos wallet interno en lookups con datos (billable estimado).
+    try {
+      await recordJobicyLookup({ role: body.role, country: body.country });
+    } catch {
+      /* no bloquees la respuesta al usuario */
     }
 
     return NextResponse.json(body);
@@ -94,7 +120,7 @@ export async function GET(req: Request) {
         source: "unavailable",
         role,
         country,
-        message: e instanceof Error ? e.message : "Error al consultar proveedor premium.",
+        message: e instanceof Error ? e.message : "Error al consultar validación internacional.",
       } satisfies PremiumSalaryResult,
       { status: 500 }
     );

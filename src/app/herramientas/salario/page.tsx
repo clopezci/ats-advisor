@@ -29,6 +29,15 @@ import {
   type SalaryCreditPackId,
 } from "@/lib/salary/credits";
 import type { PremiumSalaryResult } from "@/lib/salary/premiumTypes";
+import {
+  COLOMBIA_CALIBRATION_SOURCES,
+  INTL_PURCHASE_DISCLAIMER,
+  JOBICY_COUNTRIES,
+  JOBICY_DEFAULT_COUNTRY,
+  jobicyTitleForRole,
+  type JobicyCountry,
+} from "@/lib/salary/jobicyIntl";
+import { INTL_SALARY_UI_NOTICE } from "@/lib/legal/notices";
 
 function fmt(n: number) {
   return new Intl.NumberFormat("es-CO", {
@@ -67,6 +76,8 @@ function SalarioTool() {
   const [premiumLoading, setPremiumLoading] = useState(false);
   const [premium, setPremium] = useState<PremiumSalaryResult | null>(null);
   const [premiumMsg, setPremiumMsg] = useState("");
+  const [intlCountry, setIntlCountry] = useState<JobicyCountry>(JOBICY_DEFAULT_COUNTRY);
+  const [showIntlInfo, setShowIntlInfo] = useState(false);
 
   useEffect(() => {
     setPaid(canAccessOutplacement(readEntitlement().plan));
@@ -142,8 +153,8 @@ function SalarioTool() {
       <section className="bento-card space-y-2">
         <div className="flex justify-between gap-2">
           <div>
-            <p className="text-xs muted">Gratis · actualizado {asOf}</p>
-            <h1 className="text-xl font-semibold">Bandas por cargo, industria y tamaño</h1>
+            <p className="text-xs muted">Gratis · Colombia · actualizado {asOf}</p>
+            <h1 className="text-xl font-semibold">Bandas Colombia por cargo, industria y tamaño</h1>
           </div>
           <SpeakButton text="Compara tu expectativa contra el mismo tipo de empresa e industria. Un sueldo alto en una grande no se traslada solo a una pequeña." />
         </div>
@@ -345,17 +356,76 @@ function SalarioTool() {
           : null}
       </section>
 
-      <section className="bento-card space-y-3">
-        <h2 className="text-sm font-semibold">Consulta premium (prepago, opcional)</h2>
+      <section className="bento-card space-y-2">
+        <h2 className="text-sm font-semibold">Fuentes de calibración (Colombia)</h2>
         <p className="text-xs muted leading-relaxed">
-          La matriz de arriba es gratis (calibración ATSAdvisor). Si quieres contrastar con un
-          proveedor externo de mercado, usa créditos prepago. Sin clave de proveedor en el servidor,
-          no se descuenta crédito.
+          La matriz gratis se calibra con referencias públicas locales. No hay API oficial de
+          salarios exactos para Colombia; por eso mostramos rangos orientativos y citamos las
+          fuentes.
         </p>
+        <ul className="text-xs muted space-y-2">
+          {COLOMBIA_CALIBRATION_SOURCES.map((s) => (
+            <li key={s.name}>
+              <span className="font-medium" style={{ color: "var(--fg)" }}>
+                {s.name}
+              </span>
+              {" — "}
+              {s.detail}
+              {s.url ? (
+                <>
+                  {" "}
+                  <a href={s.url} target="_blank" rel="noreferrer" style={{ color: "var(--brand)" }}>
+                    ver
+                  </a>
+                </>
+              ) : null}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="bento-card space-y-3">
+        <div className="flex items-start justify-between gap-2">
+          <div>
+            <h2 className="text-sm font-semibold">Validación de rangos internacionales (opcional)</h2>
+            <p className="text-xs muted leading-relaxed mt-1">{INTL_SALARY_UI_NOTICE}</p>
+          </div>
+          <button
+            type="button"
+            className="shrink-0 rounded-full border text-xs font-semibold px-2 py-1"
+            style={{ borderColor: "var(--border)", color: "var(--brand)" }}
+            aria-label="Países Jobicy y precios de packs"
+            title="Ver países Jobicy y precios"
+            onClick={() => setShowIntlInfo((v) => !v)}
+          >
+            ⓘ
+          </button>
+        </div>
+
+        {showIntlInfo ? (
+          <div
+            className="rounded-lg p-3 space-y-2 text-xs"
+            style={{ background: "rgba(0,0,0,0.04)", border: "1px solid var(--border)" }}
+            role="note"
+          >
+            <p className="font-medium">Países disponibles en Jobicy (sin Colombia ni LATAM)</p>
+            <p className="muted leading-relaxed">{JOBICY_COUNTRIES.join(" · ")}</p>
+            <p className="font-medium pt-1">Planes / packs</p>
+            <ul className="muted space-y-1">
+              {SALARY_CREDIT_PACKS.map((p) => (
+                <li key={p.id}>
+                  {p.label}: {fmt(p.priceCop)} ({p.credits} créditos) — {p.hint}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+
         <p className="text-sm">
-          Créditos disponibles:{" "}
+          Créditos internacionales:{" "}
           <strong style={{ color: "var(--brand)" }}>{credits}</strong>
         </p>
+
         <div className="flex flex-col gap-2">
           {SALARY_CREDIT_PACKS.map((p) => (
             <button
@@ -363,10 +433,14 @@ function SalarioTool() {
               type="button"
               className="btn-secondary text-left"
               onClick={() => {
+                const ok = window.confirm(
+                  `${INTL_PURCHASE_DISCLAIMER}\n\n¿Activar ${p.label} (${fmt(p.priceCop)})?`
+                );
+                if (!ok) return;
                 const next = purchaseSalaryPackDemo(p.id as SalaryCreditPackId);
                 setCredits(next);
                 setPremiumMsg(
-                  `Pack demo activado: +${p.credits} créditos (${fmt(p.priceCop)} orientativo). En producción esto irá a checkout.`
+                  `Pack demo: +${p.credits} créditos internacionales (${fmt(p.priceCop)}). En producción irá a checkout.`
                 );
               }}
             >
@@ -377,18 +451,40 @@ function SalarioTool() {
             </button>
           ))}
         </div>
+
+        <label className="text-sm block">
+          País a validar (solo lista Jobicy)
+          <select
+            className="field mt-1"
+            value={intlCountry}
+            onChange={(e) => setIntlCountry(e.target.value as JobicyCountry)}
+          >
+            {JOBICY_COUNTRIES.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </label>
+
         <button
           type="button"
           className="btn-primary"
           disabled={premiumLoading}
           onClick={async () => {
+            const ok = window.confirm(
+              `${INTL_PURCHASE_DISCLAIMER}\n\nPaís elegido: ${intlCountry}.\n¿Usar 1 crédito para validar el rango internacional?`
+            );
+            if (!ok) return;
+
             setPremiumMsg("");
             setPremium(null);
             const roleLabel = ROLE_FAMILIES.find((r) => r.id === roleId)?.label || roleId;
+            const titleEn = jobicyTitleForRole(roleId, roleLabel);
             setPremiumLoading(true);
             try {
               const res = await fetch(
-                `/api/salary/premium?role=${encodeURIComponent(roleLabel)}&country=${encodeURIComponent("Colombia")}`
+                `/api/salary/premium?role=${encodeURIComponent(titleEn)}&country=${encodeURIComponent(intlCountry)}`
               );
               const data = (await res.json()) as PremiumSalaryResult & { error?: string };
               if (!res.ok && data.error) {
@@ -397,40 +493,59 @@ function SalarioTool() {
               }
               setPremium(data);
               if (data.source === "jobicy") {
-                const spent = consumeSalaryCredit(`Premium ${roleLabel}`);
+                const spent = consumeSalaryCredit(`Intl ${titleEn} · ${intlCountry}`);
                 setCredits(spent.balance);
                 if (!spent.ok) {
-                  setPremiumMsg("La consulta funcionó pero no había créditos; recarga un pack para la próxima.");
+                  setPremiumMsg(
+                    "La validación funcionó pero no había créditos; activa un pack para la próxima."
+                  );
                 } else {
-                  setPremiumMsg("Consulta premium OK. Se descontó 1 crédito.");
+                  setPremiumMsg("Validación internacional OK. Se descontó 1 crédito.");
                 }
               } else {
                 setPremiumMsg(data.message);
               }
             } catch {
-              setPremiumMsg("No se pudo consultar el proveedor premium.");
+              setPremiumMsg("No se pudo consultar la validación internacional.");
             } finally {
               setPremiumLoading(false);
             }
           }}
         >
-          {premiumLoading ? "Consultando proveedor…" : "Contrastar con fuente premium (1 crédito)"}
+          {premiumLoading
+            ? "Validando rango internacional…"
+            : "Validar rango salarial internacional (1 crédito)"}
         </button>
         {premiumMsg ? <p className="text-xs muted leading-relaxed">{premiumMsg}</p> : null}
         {premium && premium.source === "jobicy" ? (
-          <div className="rounded-lg p-3 space-y-1 text-sm" style={{ background: "var(--surface-2, #f6f4fb)" }}>
-            <p className="font-medium">Fuente externa · {premium.role}</p>
-            <p className="text-xs muted">{premium.country} · {premium.currency || "—"}</p>
+          <div
+            className="rounded-lg p-3 space-y-1 text-sm"
+            style={{ background: "var(--surface-2, #f6f4fb)" }}
+          >
+            <p className="font-medium">Jobicy · {premium.role}</p>
+            <p className="text-xs muted">
+              {premium.country} · {premium.currency || "—"} (no es banda Colombia)
+            </p>
             <ul className="text-sm muted space-y-1">
-              {premium.min != null ? <li>Mín: {premium.min.toLocaleString("es-CO")} {premium.currency}</li> : null}
-              {premium.median != null ? (
-                <li>Mediana: {premium.median.toLocaleString("es-CO")} {premium.currency}</li>
+              {premium.min != null ? (
+                <li>
+                  Mín: {premium.min.toLocaleString("es-CO")} {premium.currency}
+                </li>
               ) : null}
-              {premium.max != null ? <li>Máx: {premium.max.toLocaleString("es-CO")} {premium.currency}</li> : null}
+              {premium.median != null ? (
+                <li>
+                  Mediana: {premium.median.toLocaleString("es-CO")} {premium.currency}
+                </li>
+              ) : null}
+              {premium.max != null ? (
+                <li>
+                  Máx: {premium.max.toLocaleString("es-CO")} {premium.currency}
+                </li>
+              ) : null}
             </ul>
             <p className="text-xs muted leading-relaxed">{premium.message}</p>
             <p className="text-xs muted">
-              Compáralo con tu segmento local: {fmt(est.target.p25)} – {fmt(est.target.p75)} COP.
+              Matriz Colombia (tu segmento): {fmt(est.target.p25)} – {fmt(est.target.p75)} COP.
             </p>
           </div>
         ) : null}

@@ -69,6 +69,12 @@ export default function TerminosPage() {
             Eso no convierte la información en una encuesta oficial ni en un dato vinculante para
             ninguna empresa.
           </p>
+          <p>
+            La validación salarial internacional opcional (proveedor Jobicy) solo aplica a países
+            extranjeros listados en el producto. <strong>No incluye Colombia ni LATAM</strong>. Al
+            adquirir créditos de esa opción aceptas que los resultados son orientativos del mercado
+            internacional indicado y no sustituyen la matriz Colombia ni una oferta real.
+          </p>
         </div>
 
         <div className="space-y-2">

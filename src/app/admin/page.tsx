@@ -5,6 +5,7 @@ import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import type { AppSettings } from "@/lib/settings";
 import { EXPERT_SPECIALTIES } from "@/lib/experts/specialties";
+import type { JobicyWalletView } from "@/lib/salary/jobicyWallet";
 
 export default function AdminPage() {
   const [secret, setSecret] = useState("");
@@ -13,6 +14,9 @@ export default function AdminPage() {
   const [msg, setMsg] = useState("");
   const [health, setHealth] = useState<string>("…");
   const [testingAlert, setTestingAlert] = useState(false);
+  const [jobicyWallet, setJobicyWallet] = useState<JobicyWalletView | null>(null);
+  const [fundAmount, setFundAmount] = useState("10");
+  const [walletBusy, setWalletBusy] = useState(false);
 
   async function load() {
     try {
@@ -34,8 +38,42 @@ export default function AdminPage() {
           ? `OK · degradados: ${(hj.degraded || []).join(", ") || "ninguno"}`
           : `Degradado · ${JSON.stringify(hj.checks || {})}`
       );
+      const w = await fetch("/api/admin/jobicy-wallet", {
+        headers: { "x-admin-secret": secret },
+      });
+      const wj = await w.json();
+      if (w.ok && wj.wallet) setJobicyWallet(wj.wallet);
     } catch {
       setMsg("Error de red al cargar admin");
+    }
+  }
+
+  async function jobicyAction(body: Record<string, unknown>) {
+    setWalletBusy(true);
+    try {
+      const res = await fetch("/api/admin/jobicy-wallet", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-secret": secret,
+        },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+      if (res.ok && data.wallet) {
+        setJobicyWallet(data.wallet);
+        setMsg(
+          body.action === "funded"
+            ? "Fondeo Jobicy registrado · alerta apagada"
+            : "Wallet Jobicy actualizado"
+        );
+      } else {
+        setMsg(data.error || "Error wallet Jobicy");
+      }
+    } catch {
+      setMsg("Error de red wallet Jobicy");
+    } finally {
+      setWalletBusy(false);
     }
   }
 
@@ -706,6 +744,161 @@ export default function AdminPage() {
         >
           Añadir promoción
         </button>
+      </section>
+
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold">Wallet Jobicy (validación internacional)</h2>
+        <p className="text-sm muted leading-relaxed">
+          Control interno de saldo estimado: cada consulta internacional exitosa resta el costo por
+          lookup. Al llegar a ≤ ${jobicyWallet?.alertThresholdUsd ?? 5} USD se activa la alerta
+          (Telegram + banner) hasta que pulses «Ya fondeé».
+        </p>
+        {jobicyWallet ? (
+          <>
+            {jobicyWallet.needsFundAck ? (
+              <p
+                className="text-sm rounded-lg p-3 font-medium"
+                style={{
+                  background: "rgba(180, 35, 24, 0.1)",
+                  border: "1px solid var(--danger, #b42318)",
+                  color: "var(--danger, #b42318)",
+                }}
+                role="alert"
+              >
+                Alerta activa: saldo estimado ~${jobicyWallet.balanceUsd.toFixed(2)} USD. Fondea en
+                Jobicy y confirma abajo; la alerta no se apaga sola.
+              </p>
+            ) : null}
+            <ul className="text-sm muted space-y-1">
+              <li>
+                Saldo estimado:{" "}
+                <strong style={{ color: "var(--brand)" }}>
+                  ${jobicyWallet.balanceUsd.toFixed(2)} USD
+                </strong>
+                {jobicyWallet.cloud ? " · cloud" : " · local/memoria"}
+              </li>
+              <li>
+                Usos billables: {jobicyWallet.lookupCount} · gastado ~$
+                {jobicyWallet.spentUsd.toFixed(2)} · fondeado total $
+                {jobicyWallet.fundedTotalUsd.toFixed(2)}
+              </li>
+              <li>
+                Costo/lookup: ${jobicyWallet.costPerLookupUsd} · lookups restantes ≈{" "}
+                {jobicyWallet.remainingLookupsEst}
+              </li>
+              <li>Umbral alerta: ${jobicyWallet.alertThresholdUsd} USD</li>
+              {jobicyWallet.lastFundedAt ? (
+                <li>
+                  Último fondeo: +${jobicyWallet.lastFundAmountUsd} ·{" "}
+                  {new Date(jobicyWallet.lastFundedAt).toLocaleString("es-CO")}
+                </li>
+              ) : null}
+            </ul>
+            {jobicyWallet.recentLookups.length > 0 ? (
+              <div className="text-xs muted space-y-1">
+                <p className="font-medium" style={{ color: "var(--text)" }}>
+                  Últimos usos
+                </p>
+                <ul className="space-y-1 max-h-36 overflow-auto">
+                  {jobicyWallet.recentLookups.slice(0, 10).map((e) => (
+                    <li key={`${e.at}-${e.role}-${e.country}`}>
+                      {new Date(e.at).toLocaleString("es-CO")} · {e.role} · {e.country} · $
+                      {e.costUsd}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <p className="text-xs muted">Aún no hay usos registrados en la app.</p>
+            )}
+            <div className="flex flex-wrap items-end gap-2">
+              <label className="text-sm">
+                Monto fondeado (USD)
+                <input
+                  className="field mt-1"
+                  type="number"
+                  min={1}
+                  step={1}
+                  value={fundAmount}
+                  onChange={(e) => setFundAmount(e.target.value)}
+                />
+              </label>
+              <button
+                type="button"
+                className="btn-primary"
+                disabled={walletBusy}
+                onClick={() =>
+                  jobicyAction({
+                    action: "funded",
+                    amountUsd: Number(fundAmount) || 10,
+                  })
+                }
+              >
+                {walletBusy ? "Guardando…" : "Ya fondeé"}
+              </button>
+              <button
+                type="button"
+                className="btn-secondary"
+                disabled={walletBusy}
+                onClick={() => {
+                  if (
+                    !window.confirm(
+                      "¿Reiniciar contadores con saldo inicial $10? Solo si quieres empezar de cero el tracking."
+                    )
+                  )
+                    return;
+                  jobicyAction({ action: "reset", fundedUsd: 10 });
+                }}
+              >
+                Reiniciar a $10
+              </button>
+            </div>
+            <div className="flex flex-wrap gap-2 items-end">
+              <label className="text-sm">
+                Costo/lookup USD
+                <input
+                  className="field mt-1"
+                  type="number"
+                  step={0.001}
+                  min={0.01}
+                  defaultValue={jobicyWallet.costPerLookupUsd}
+                  id="jobicy-cost"
+                />
+              </label>
+              <label className="text-sm">
+                Umbral alerta USD
+                <input
+                  className="field mt-1"
+                  type="number"
+                  step={0.5}
+                  min={0}
+                  defaultValue={jobicyWallet.alertThresholdUsd}
+                  id="jobicy-threshold"
+                />
+              </label>
+              <button
+                type="button"
+                className="btn-secondary"
+                disabled={walletBusy}
+                onClick={() => {
+                  const costEl = document.getElementById("jobicy-cost") as HTMLInputElement | null;
+                  const thrEl = document.getElementById(
+                    "jobicy-threshold"
+                  ) as HTMLInputElement | null;
+                  jobicyAction({
+                    action: "set_meta",
+                    costPerLookupUsd: Number(costEl?.value) || jobicyWallet.costPerLookupUsd,
+                    alertThresholdUsd: Number(thrEl?.value) || jobicyWallet.alertThresholdUsd,
+                  });
+                }}
+              >
+                Guardar costo / umbral
+              </button>
+            </div>
+          </>
+        ) : (
+          <p className="text-sm muted">Cargando wallet…</p>
+        )}
       </section>
 
       <section className="bento-card space-y-2 text-sm muted">

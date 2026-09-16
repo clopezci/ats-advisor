@@ -15,16 +15,16 @@ export const SALARY_CREDIT_PACKS: {
   {
     id: "pack5",
     credits: 5,
-    label: "5 consultas premium",
+    label: "5 validaciones internacionales",
     priceCop: 19_000,
-    hint: "Para validar 1–2 roles con fuente externa",
+    hint: "Jobicy · países extranjeros listados (no Colombia)",
   },
   {
     id: "pack20",
     credits: 20,
-    label: "20 consultas premium",
+    label: "20 validaciones internacionales",
     priceCop: 49_000,
-    hint: "Búsqueda activa (varias industrias / tamaños)",
+    hint: "Varios roles / países Jobicy (no Colombia ni LATAM)",
   },
 ];
 

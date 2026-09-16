@@ -194,15 +194,27 @@ export const ROLE_FAMILIES: RoleFamily[] = [
 
 /** Seed metadata before first cron run. */
 export const SEED_META: MatrixMeta = {
-  asOf: "2026-08-01",
+  asOf: "2026-09-01",
   currency: "COP",
   method:
-    "Baseline autoría ATSAdvisor: rangos COP por cargo × industria × tamaño, calibrados con información de mercado de fuentes públicas diversas (portales, tendencias de industria, referencias abiertas). No es encuesta Mercer/Hay ni scraping propietario. Ajuste mensual por factor CPI en cron cuando no hay SALARY_FEED_URL.",
+    "Baseline autoría ATSAdvisor: rangos COP por cargo × industria × tamaño, calibrados con guías y reportes públicos de Colombia (Buk, Levels.fyi tech, SalariosTech, La Plaza Devs y portales). No es encuesta Mercer/Hay ni scraping propietario. Ajuste mensual por factor CPI en cron cuando no hay SALARY_FEED_URL. Jobicy no se usa para bandas Colombia.",
   sources: [
     {
-      name: "Calibración de mercado (fuentes públicas)",
+      name: "Guía Salarial Buk Colombia",
       detail:
-        "Síntesis interna de rangos observados en el mercado laboral colombiano de acceso público; no afiliado a Glassdoor, Levels, Mercer u otros proveedores",
+        "Referencia de bandas por cargo desde registros de nómina del sector privado formal; calibración editorial, no API en vivo ni afiliación",
+    },
+    {
+      name: "Levels.fyi (Colombia, roles tech)",
+      detail: "Compensación reportada en tecnología; ancla de techos, no nómina estándar de todos los sectores",
+    },
+    {
+      name: "SalariosTech",
+      detail: "Medianas y percentiles de la comunidad tech en Colombia",
+    },
+    {
+      name: "La Plaza Devs · salarios",
+      detail: "Encuestas abiertas de desarrolladores (datos comunitarios para calibración)",
     },
     {
       name: "Ajuste CPI mensual",
@@ -210,7 +222,7 @@ export const SEED_META: MatrixMeta = {
     },
   ],
   cpiFactorFromSeed: 1,
-  version: 1,
+  version: 2,
 };
 
 export function roundCop(n: number): number {

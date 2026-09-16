@@ -493,14 +493,20 @@ function SalarioTool() {
               }
               setPremium(data);
               if (data.source === "jobicy") {
-                const spent = consumeSalaryCredit(`Intl ${titleEn} · ${intlCountry}`);
-                setCredits(spent.balance);
-                if (!spent.ok) {
+                if (data.billable === false || data.cached) {
                   setPremiumMsg(
-                    "La validación funcionó pero no había créditos; activa un pack para la próxima."
+                    "OK · caché 30 días (mismo título+país). Jobicy $0 · no se descontó crédito."
                   );
                 } else {
-                  setPremiumMsg("Validación internacional OK. Se descontó 1 crédito.");
+                  const spent = consumeSalaryCredit(`Intl ${titleEn} · ${intlCountry}`);
+                  setCredits(spent.balance);
+                  if (!spent.ok) {
+                    setPremiumMsg(
+                      "La validación funcionó pero no había créditos; activa un pack para la próxima."
+                    );
+                  } else {
+                    setPremiumMsg("Validación internacional OK (~$0.109 Jobicy). Se descontó 1 crédito.");
+                  }
                 }
               } else {
                 setPremiumMsg(data.message);
@@ -522,7 +528,10 @@ function SalarioTool() {
             className="rounded-lg p-3 space-y-1 text-sm"
             style={{ background: "var(--surface-2, #f6f4fb)" }}
           >
-            <p className="font-medium">Jobicy · {premium.role}</p>
+            <p className="font-medium">
+              Jobicy · {premium.role}
+              {premium.cached ? " · caché $0" : " · lookup ~$0.109"}
+            </p>
             <p className="text-xs muted">
               {premium.country} · {premium.currency || "—"} (no es banda Colombia)
             </p>

@@ -163,7 +163,7 @@ export async function POST(req: Request) {
     const { mod, cap } = capsuleForChat(Number(chatId || 0));
 
     let reply =
-      "ATSAdvisor: /start /capsula /progreso /cuadernillo /vincular /confirmar /ayuda";
+      "ATSAdvisor: /start /capsula /progreso /cuadernillo /vincular /confirmar /jobicy_fondeo /ayuda";
     if (text.startsWith("/start")) {
       if (chatId) await persistTelegramChat(chatId, username);
       reply =
@@ -242,9 +242,32 @@ export async function POST(req: Request) {
       const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://ats-advisor-two.vercel.app";
       const { formatCuadernilloTelegramReply } = await import("@/lib/workbook/accountability");
       reply = formatCuadernilloTelegramReply(appUrl);
+    } else if (text.startsWith("/jobicy_fondeo") || text.startsWith("/fondeo_jobicy") || text.startsWith("/fondeo")) {
+      const ownerId = String(process.env.TELEGRAM_OWNER_CHAT_ID || "");
+      if (!chatId || String(chatId) !== ownerId) {
+        reply = "Comando solo disponible para el owner.";
+      } else {
+        const raw = text.replace(/^\/(jobicy_fondeo|fondeo_jobicy|fondeo)\s*/i, "").trim().replace(",", ".");
+        const amount = Number(raw);
+        if (!Number.isFinite(amount) || amount <= 0) {
+          reply =
+            "Uso: /jobicy_fondeo 10\n" +
+            "Pon el monto USD que acabas de fondear en Jobicy. Eso suma al saldo estimado, apaga la alerta y sigue restando en los próximos lookups hasta el umbral.";
+        } else {
+          const { acknowledgeJobicyFund } = await import("@/lib/salary/jobicyWallet");
+          const wallet = await acknowledgeJobicyFund(amount, { notify: false });
+          reply =
+            `✓ Fondeo Jobicy +$${amount.toFixed(2)} registrado.\n` +
+            `Saldo estimado: ~$${wallet.balanceUsd.toFixed(2)} USD\n` +
+            `Billables: ${wallet.lookupCount} · free repeats: ${wallet.freeRepeatCount}\n` +
+            `Alerta apagada. Se reactivará cuando el saldo vuelva a ≤ $${wallet.alertThresholdUsd}.\n` +
+            `(También puedes hacerlo en /admin → Ya fondeé.)`;
+        }
+      }
     } else if (text.startsWith("/ayuda")) {
       reply =
-        "Comandos: /start /capsula /progreso /cuadernillo /vincular correo@x.com /confirmar 123456 /ayuda";
+        "Comandos: /start /capsula /progreso /cuadernillo /vincular correo@x.com /confirmar 123456 /ayuda\n" +
+        "Owner: /jobicy_fondeo 10 (recarga saldo Jobicy y apaga alerta)";
     } else if (text.startsWith("/alerta_owner_test")) {
       if (String(chatId) === String(process.env.TELEGRAM_OWNER_CHAT_ID || "")) {
         await notifyOwnerTelegram("Test de alerta desde bot Telegram");

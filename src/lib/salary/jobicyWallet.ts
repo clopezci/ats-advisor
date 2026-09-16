@@ -15,6 +15,8 @@ export type JobicyLookupEntry = {
   role: string;
   country: string;
   costUsd: number;
+  /** false = repeat unchanged / caché 30 días ($0). */
+  billable: boolean;
 };
 
 export type JobicyWalletState = {
@@ -22,7 +24,10 @@ export type JobicyWalletState = {
   /** Suma de fondeos confirmados por el owner (“Ya fondeé”). */
   fundedTotalUsd: number;
   spentUsd: number;
+  /** Lookups que costaron $ (dato nuevo). */
   lookupCount: number;
+  /** Lookups servidos desde caché / free repeat. */
+  freeRepeatCount: number;
   alertThresholdUsd: number;
   /**
    * true cuando el saldo ≤ umbral.
@@ -52,6 +57,7 @@ export function defaultJobicyWallet(): JobicyWalletState {
     fundedTotalUsd: JOBICY_DEFAULT_FUNDED_USD,
     spentUsd: 0,
     lookupCount: 0,
+    freeRepeatCount: 0,
     alertThresholdUsd: JOBICY_ALERT_THRESHOLD_USD,
     alertActive: false,
     lastAlertAt: null,
@@ -70,6 +76,7 @@ function normalize(raw: Partial<JobicyWalletState> | null | undefined): JobicyWa
     fundedTotalUsd: num(raw.fundedTotalUsd, d.fundedTotalUsd),
     spentUsd: num(raw.spentUsd, d.spentUsd),
     lookupCount: Math.max(0, Math.floor(num(raw.lookupCount, d.lookupCount))),
+    freeRepeatCount: Math.max(0, Math.floor(num(raw.freeRepeatCount, d.freeRepeatCount))),
     alertThresholdUsd: num(raw.alertThresholdUsd, d.alertThresholdUsd),
     alertActive: Boolean(raw.alertActive),
     lastAlertAt: typeof raw.lastAlertAt === "string" ? raw.lastAlertAt : null,
@@ -80,7 +87,8 @@ function normalize(raw: Partial<JobicyWalletState> | null | undefined): JobicyWa
           at: String(e.at || ""),
           role: String(e.role || "").slice(0, 80),
           country: String(e.country || "").slice(0, 60),
-          costUsd: num(e.costUsd, d.costPerLookupUsd),
+          costUsd: num(e.costUsd, 0),
+          billable: e.billable !== false && num(e.costUsd, 0) > 0,
         }))
       : [],
     updatedAt: typeof raw.updatedAt === "string" ? raw.updatedAt : d.updatedAt,
@@ -147,8 +155,10 @@ async function maybeNotifyLowBalance(w: JobicyWalletState, force: boolean): Prom
   const bal = balanceOf(w);
   await notifyOwnerTelegram(
     `⚠ Jobicy wallet bajo: ~$${bal.toFixed(2)} USD (umbral $${w.alertThresholdUsd}).\n` +
-      `Usos: ${w.lookupCount} · gastado ~$${w.spentUsd.toFixed(2)} · fondeado $${w.fundedTotalUsd.toFixed(2)}.\n` +
-      `Fondea en Jobicy y en /admin pulsa «Ya fondeé» para silenciar esta alerta.`
+      `Usos billables: ${w.lookupCount} · gastado ~$${w.spentUsd.toFixed(2)} · fondeado $${w.fundedTotalUsd.toFixed(2)}.\n` +
+      `Fondea en Jobicy y responde con el monto, por ejemplo:\n` +
+      `/jobicy_fondeo 10\n` +
+      `(usa el valor exacto que agregaste al wallet). Eso recarga el saldo para los próximos cálculos y apaga la alerta hasta que vuelva a bajar del umbral.`
   );
   return { ...w, lastAlertAt: new Date().toISOString() };
 }
@@ -163,32 +173,38 @@ export async function getJobicyWallet(opts?: { notifyIfAlert?: boolean }): Promi
   return toView(state, cloud);
 }
 
-/** Registra un lookup billable exitoso y activa alerta si saldo ≤ umbral. */
+/** Registra un lookup. Solo resta saldo si billable (dato nuevo Jobicy $0.109). */
 export async function recordJobicyLookup(opts: {
   role: string;
   country: string;
+  billable?: boolean;
 }): Promise<JobicyWalletView> {
   let { state, cloud } = await loadFromCloud();
-  const cost = Math.max(0.001, state.costPerLookupUsd);
+  const billable = opts.billable !== false;
+  const cost = billable ? Math.max(0.001, state.costPerLookupUsd) : 0;
   const entry: JobicyLookupEntry = {
     at: new Date().toISOString(),
     role: opts.role.slice(0, 80),
     country: opts.country.slice(0, 60),
     costUsd: cost,
+    billable,
   };
   state = {
     ...state,
-    spentUsd: Math.round((state.spentUsd + cost) * 1000) / 1000,
-    lookupCount: state.lookupCount + 1,
+    spentUsd: billable ? Math.round((state.spentUsd + cost) * 1000) / 1000 : state.spentUsd,
+    lookupCount: billable ? state.lookupCount + 1 : state.lookupCount,
+    freeRepeatCount: billable ? state.freeRepeatCount : state.freeRepeatCount + 1,
     recentLookups: [entry, ...state.recentLookups].slice(0, 40),
   };
 
-  const bal = balanceOf(state);
-  const crossed = bal <= state.alertThresholdUsd;
-  if (crossed) {
-    const first = !state.alertActive;
-    state = { ...state, alertActive: true };
-    state = await maybeNotifyLowBalance(state, first);
+  if (billable) {
+    const bal = balanceOf(state);
+    const crossed = bal <= state.alertThresholdUsd;
+    if (crossed) {
+      const first = !state.alertActive;
+      state = { ...state, alertActive: true };
+      state = await maybeNotifyLowBalance(state, first);
+    }
   }
 
   const saved = await saveState(state);
@@ -196,7 +212,10 @@ export async function recordJobicyLookup(opts: {
 }
 
 /** Owner confirma fondeo: suma monto, apaga alerta. */
-export async function acknowledgeJobicyFund(amountUsd: number): Promise<JobicyWalletView> {
+export async function acknowledgeJobicyFund(
+  amountUsd: number,
+  opts?: { notify?: boolean }
+): Promise<JobicyWalletView> {
   const amount = Math.max(0.01, Math.round(amountUsd * 100) / 100);
   let { state, cloud } = await loadFromCloud();
   state = {
@@ -208,10 +227,13 @@ export async function acknowledgeJobicyFund(amountUsd: number): Promise<JobicyWa
     lastAlertAt: null,
   };
   const saved = await saveState(state);
-  await notifyOwnerTelegram(
-    `✓ Jobicy fondeo registrado: +$${amount.toFixed(2)} USD.\n` +
-      `Saldo estimado ahora: ~$${balanceOf(state).toFixed(2)} · usos acumulados: ${state.lookupCount}.`
-  );
+  if (opts?.notify !== false) {
+    await notifyOwnerTelegram(
+      `✓ Jobicy fondeo registrado: +$${amount.toFixed(2)} USD.\n` +
+        `Saldo estimado ahora: ~$${balanceOf(state).toFixed(2)} · usos billables: ${state.lookupCount}.\n` +
+        `La alerta se reactivará cuando el saldo vuelva a ≤ $${state.alertThresholdUsd}.`
+    );
+  }
   return toView(state, saved.cloud || cloud);
 }
 

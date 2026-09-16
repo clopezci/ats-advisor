@@ -10,4 +10,8 @@ export type PremiumSalaryResult = {
   updatedAt?: string;
   message: string;
   rawNote?: string;
+  /** true si salió de caché local (repeat Jobicy $0 / 30 días). */
+  cached?: boolean;
+  /** false = no cobró Jobicy ni wallet interno. */
+  billable?: boolean;
 };

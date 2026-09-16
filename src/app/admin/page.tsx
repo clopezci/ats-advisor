@@ -749,9 +749,11 @@ export default function AdminPage() {
       <section className="bento-card space-y-3">
         <h2 className="font-semibold">Wallet Jobicy (validación internacional)</h2>
         <p className="text-sm muted leading-relaxed">
-          Control interno de saldo estimado: cada consulta internacional exitosa resta el costo por
-          lookup. Al llegar a ≤ ${jobicyWallet?.alertThresholdUsd ?? 5} USD se activa la alerta
-          (Telegram + banner) hasta que pulses «Ya fondeé».
+          Control interno de saldo estimado según pricing Jobicy:{" "}
+          <strong style={{ color: "var(--text)" }}>$0.109</strong> por lookup con dato nuevo;{" "}
+          <strong style={{ color: "var(--text)" }}>$0</strong> si es el mismo título+país sin cambio
+          (caché 30 días). Al llegar a ≤ ${jobicyWallet?.alertThresholdUsd ?? 5} USD se activa la
+          alerta (Telegram + banner) hasta que pulses «Ya fondeé».
         </p>
         {jobicyWallet ? (
           <>
@@ -766,7 +768,8 @@ export default function AdminPage() {
                 role="alert"
               >
                 Alerta activa: saldo estimado ~${jobicyWallet.balanceUsd.toFixed(2)} USD. Fondea en
-                Jobicy y confirma abajo; la alerta no se apaga sola.
+                Jobicy y confirma el monto abajo (o por Telegram: /jobicy_fondeo 10). Eso recarga el
+                saldo para los próximos cálculos; la alerta no se apaga sola.
               </p>
             ) : null}
             <ul className="text-sm muted space-y-1">
@@ -778,12 +781,13 @@ export default function AdminPage() {
                 {jobicyWallet.cloud ? " · cloud" : " · local/memoria"}
               </li>
               <li>
-                Usos billables: {jobicyWallet.lookupCount} · gastado ~$
+                Usos billables: {jobicyWallet.lookupCount} · free repeats:{" "}
+                {jobicyWallet.freeRepeatCount ?? 0} · gastado ~$
                 {jobicyWallet.spentUsd.toFixed(2)} · fondeado total $
                 {jobicyWallet.fundedTotalUsd.toFixed(2)}
               </li>
               <li>
-                Costo/lookup: ${jobicyWallet.costPerLookupUsd} · lookups restantes ≈{" "}
+                Costo/lookup nuevo: ${jobicyWallet.costPerLookupUsd} · lookups de pago restantes ≈{" "}
                 {jobicyWallet.remainingLookupsEst}
               </li>
               <li>Umbral alerta: ${jobicyWallet.alertThresholdUsd} USD</li>
@@ -802,8 +806,10 @@ export default function AdminPage() {
                 <ul className="space-y-1 max-h-36 overflow-auto">
                   {jobicyWallet.recentLookups.slice(0, 10).map((e) => (
                     <li key={`${e.at}-${e.role}-${e.country}`}>
-                      {new Date(e.at).toLocaleString("es-CO")} · {e.role} · {e.country} · $
-                      {e.costUsd}
+                      {new Date(e.at).toLocaleString("es-CO")} · {e.role} · {e.country} ·{" "}
+                      {e.billable === false || e.costUsd === 0
+                        ? "$0 (caché/free)"
+                        : `$${e.costUsd}`}
                     </li>
                   ))}
                 </ul>
@@ -834,7 +840,7 @@ export default function AdminPage() {
                   })
                 }
               >
-                {walletBusy ? "Guardando…" : "Ya fondeé"}
+                {walletBusy ? "Guardando…" : "Ya fondeé (recargar saldo)"}
               </button>
               <button
                 type="button"

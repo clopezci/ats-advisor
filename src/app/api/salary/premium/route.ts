@@ -4,12 +4,13 @@ import {
   JOBICY_DEFAULT_COUNTRY,
   isJobicyCountry,
 } from "@/lib/salary/jobicyIntl";
+import { getJobicyCached, setJobicyCached } from "@/lib/salary/jobicyCache";
 import { recordJobicyLookup } from "@/lib/salary/jobicyWallet";
 
 /**
  * Validación salarial internacional (Jobicy).
- * Solo países soportados por Jobicy (sin Colombia / LATAM).
- * Configura JOBICY_API_KEY (Bearer). Sin clave: unavailable (no cobres crédito).
+ * Pricing: $0.109 lookup con dato nuevo; mismo title+country sin cambio = $0 / 30 días.
+ * Cacheamos 30 días para no re-cobrar ni quemar wallet.
  *
  * Docs: https://jobicy.com/salary-api
  */
@@ -47,6 +48,16 @@ export async function GET(req: Request) {
   }
 
   try {
+    const cached = await getJobicyCached(role, country);
+    if (cached && cached.source === "jobicy") {
+      try {
+        await recordJobicyLookup({ role: cached.role, country: cached.country, billable: false });
+      } catch {
+        /* ignore */
+      }
+      return NextResponse.json(cached);
+    }
+
     const endpoint =
       process.env.JOBICY_SALARY_URL ||
       `https://jobicy.com/api/v2/salary?title=${encodeURIComponent(role)}&country=${encodeURIComponent(country)}`;
@@ -61,15 +72,19 @@ export async function GET(req: Request) {
 
     if (!res.ok) {
       const errText = await res.text().catch(() => "");
+      const status = res.status === 429 ? 429 : 502;
       return NextResponse.json(
         {
           source: "unavailable",
           role,
           country,
-          message: `El proveedor internacional no respondió (${res.status}). No descuentes crédito e inténtalo luego.`,
+          message:
+            res.status === 429
+              ? "Jobicy rate limit (máx. 10 req/s). Espera un momento. No descuentes crédito."
+              : `El proveedor internacional no respondió (${res.status}). No descuentes crédito e inténtalo luego.`,
           rawNote: errText.slice(0, 200),
         } satisfies PremiumSalaryResult,
-        { status: 502 }
+        { status }
       );
     }
 
@@ -91,8 +106,10 @@ export async function GET(req: Request) {
       max: max ?? undefined,
       confidence: confidence ?? undefined,
       updatedAt: updatedAt || undefined,
+      cached: false,
+      billable: true,
       message:
-        "Validación internacional (Jobicy). Orientativo del mercado de ese país; no es banda Colombia ni oferta de una empresa concreta. Compáralo con tu matriz local.",
+        "Validación internacional (Jobicy · lookup billable ~$0.109). Orientativo del mercado de ese país; no es banda Colombia. Compáralo con tu matriz local.",
     };
 
     if (body.min == null && body.median == null && body.max == null) {
@@ -106,9 +123,9 @@ export async function GET(req: Request) {
       } satisfies PremiumSalaryResult);
     }
 
-    // Solo cobramos wallet interno en lookups con datos (billable estimado).
     try {
-      await recordJobicyLookup({ role: body.role, country: body.country });
+      await setJobicyCached(role, country, body);
+      await recordJobicyLookup({ role: body.role, country: body.country, billable: true });
     } catch {
       /* no bloquees la respuesta al usuario */
     }

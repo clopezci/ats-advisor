@@ -21,6 +21,14 @@ import {
   type SalaryEstimate,
 } from "@/lib/salary/matrix";
 import { canAccessOutplacement, readEntitlement } from "@/lib/entitlements";
+import {
+  SALARY_CREDIT_PACKS,
+  consumeSalaryCredit,
+  purchaseSalaryPackDemo,
+  readSalaryCredits,
+  type SalaryCreditPackId,
+} from "@/lib/salary/credits";
+import type { PremiumSalaryResult } from "@/lib/salary/premiumTypes";
 
 function fmt(n: number) {
   return new Intl.NumberFormat("es-CO", {
@@ -55,9 +63,14 @@ function SalarioTool() {
   const [methodNote, setMethodNote] = useState("");
   const [showFullMatrix, setShowFullMatrix] = useState(false);
   const [paid, setPaid] = useState(false);
+  const [credits, setCredits] = useState(0);
+  const [premiumLoading, setPremiumLoading] = useState(false);
+  const [premium, setPremium] = useState<PremiumSalaryResult | null>(null);
+  const [premiumMsg, setPremiumMsg] = useState("");
 
   useEffect(() => {
     setPaid(canAccessOutplacement(readEntitlement().plan));
+    setCredits(readSalaryCredits());
     try {
       const raw = JSON.parse(localStorage.getItem(PROFILE_KEY) || "null") as SavedProfile | null;
       if (raw) {
@@ -330,6 +343,97 @@ function SalarioTool() {
               </div>
             ))
           : null}
+      </section>
+
+      <section className="bento-card space-y-3">
+        <h2 className="text-sm font-semibold">Consulta premium (prepago, opcional)</h2>
+        <p className="text-xs muted leading-relaxed">
+          La matriz de arriba es gratis (calibración ATSAdvisor). Si quieres contrastar con un
+          proveedor externo de mercado, usa créditos prepago. Sin clave de proveedor en el servidor,
+          no se descuenta crédito.
+        </p>
+        <p className="text-sm">
+          Créditos disponibles:{" "}
+          <strong style={{ color: "var(--brand)" }}>{credits}</strong>
+        </p>
+        <div className="flex flex-col gap-2">
+          {SALARY_CREDIT_PACKS.map((p) => (
+            <button
+              key={p.id}
+              type="button"
+              className="btn-secondary text-left"
+              onClick={() => {
+                const next = purchaseSalaryPackDemo(p.id as SalaryCreditPackId);
+                setCredits(next);
+                setPremiumMsg(
+                  `Pack demo activado: +${p.credits} créditos (${fmt(p.priceCop)} orientativo). En producción esto irá a checkout.`
+                );
+              }}
+            >
+              <span className="font-medium">{p.label}</span>
+              <span className="block text-xs muted">
+                {fmt(p.priceCop)} · {p.hint}
+              </span>
+            </button>
+          ))}
+        </div>
+        <button
+          type="button"
+          className="btn-primary"
+          disabled={premiumLoading}
+          onClick={async () => {
+            setPremiumMsg("");
+            setPremium(null);
+            const roleLabel = ROLE_FAMILIES.find((r) => r.id === roleId)?.label || roleId;
+            setPremiumLoading(true);
+            try {
+              const res = await fetch(
+                `/api/salary/premium?role=${encodeURIComponent(roleLabel)}&country=${encodeURIComponent("Colombia")}`
+              );
+              const data = (await res.json()) as PremiumSalaryResult & { error?: string };
+              if (!res.ok && data.error) {
+                setPremiumMsg(data.error);
+                return;
+              }
+              setPremium(data);
+              if (data.source === "jobicy") {
+                const spent = consumeSalaryCredit(`Premium ${roleLabel}`);
+                setCredits(spent.balance);
+                if (!spent.ok) {
+                  setPremiumMsg("La consulta funcionó pero no había créditos; recarga un pack para la próxima.");
+                } else {
+                  setPremiumMsg("Consulta premium OK. Se descontó 1 crédito.");
+                }
+              } else {
+                setPremiumMsg(data.message);
+              }
+            } catch {
+              setPremiumMsg("No se pudo consultar el proveedor premium.");
+            } finally {
+              setPremiumLoading(false);
+            }
+          }}
+        >
+          {premiumLoading ? "Consultando proveedor…" : "Contrastar con fuente premium (1 crédito)"}
+        </button>
+        {premiumMsg ? <p className="text-xs muted leading-relaxed">{premiumMsg}</p> : null}
+        {premium && premium.source === "jobicy" ? (
+          <div className="rounded-lg p-3 space-y-1 text-sm" style={{ background: "var(--surface-2, #f6f4fb)" }}>
+            <p className="font-medium">Fuente externa · {premium.role}</p>
+            <p className="text-xs muted">{premium.country} · {premium.currency || "—"}</p>
+            <ul className="text-sm muted space-y-1">
+              {premium.min != null ? <li>Mín: {premium.min.toLocaleString("es-CO")} {premium.currency}</li> : null}
+              {premium.median != null ? (
+                <li>Mediana: {premium.median.toLocaleString("es-CO")} {premium.currency}</li>
+              ) : null}
+              {premium.max != null ? <li>Máx: {premium.max.toLocaleString("es-CO")} {premium.currency}</li> : null}
+            </ul>
+            <p className="text-xs muted leading-relaxed">{premium.message}</p>
+            <p className="text-xs muted">
+              Compáralo con tu segmento local: {fmt(est.target.p25)} – {fmt(est.target.p75)} COP.
+            </p>
+          </div>
+        ) : null}
       </section>
 
       <section className="bento-card space-y-2">

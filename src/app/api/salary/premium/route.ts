@@ -31,7 +31,7 @@ export async function GET(req: Request) {
   try {
     const endpoint =
       process.env.JOBICY_SALARY_URL ||
-      `https://jobicy.com/api/v2/salary?position=${encodeURIComponent(role)}&country=${encodeURIComponent(country)}`;
+      `https://jobicy.com/api/v2/salary?title=${encodeURIComponent(role)}&country=${encodeURIComponent(country)}`;
 
     const res = await fetch(endpoint, {
       headers: {

@@ -12,6 +12,7 @@ import { analyzeBullets } from "@/lib/ats/bulletQuality";
 import { buildPlacementGuide, type PlacementTip } from "@/lib/ats/placementGuide";
 import { analyzeAuthenticity } from "@/lib/ats/aiTells";
 import { recruiterSkim, type RecruiterSkim } from "@/lib/ats/recruiterSkim";
+import { isJunkPhrase, normalizePhrase } from "@/lib/ats/phraseFilter";
 
 export type AtsProfile =
   | "generic"
@@ -181,79 +182,94 @@ const HARD_HINTS = [
   "kpis",
 ];
 
-const NOISE = new Set([
-  "para",
-  "como",
-  "entre",
-  "sobre",
-  "desde",
-  "hasta",
-  "donde",
-  "cuando",
-  "tiene",
-  "deben",
-  "experiencia",
-  "años",
-  "anos",
-  "requisitos",
-  "funciones",
-  "empresa",
-  "equipo",
-  "trabajo",
-  "personas",
-  "colombia",
-  "bogota",
-  "remoto",
-  "presencial",
-  "hibrido",
-  "híbrido",
-]);
-
 function normalize(text: string) {
-  return text
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/\p{M}/gu, "")
-    .replace(/[^a-z0-9áéíóúñü+#.\s/-]/gi, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+  return normalizePhrase(text);
 }
 
-function tokenize(text: string) {
-  return normalize(text)
-    .split(" ")
-    .map((t) => t.trim())
-    .filter((t) => t.length > 2 && !NOISE.has(t));
+/** Match de término en texto normalizado (evita que "ui" pegue dentro de "digital"). */
+function jobHasTerm(jobN: string, term: string) {
+  const t = normalize(term);
+  if (!t) return false;
+  if (t.length <= 3) {
+    return new RegExp(`(^|[^a-z0-9])${t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}([^a-z0-9]|$)`).test(jobN);
+  }
+  return jobN.includes(t);
 }
 
+/** Keywords / skills: solo catálogo conocido presente de verdad en la oferta. */
 function extractPhrases(job: string) {
   const n = normalize(job);
   const phrases = new Set<string>();
   for (const s of [...SOFT, ...HARD_HINTS]) {
-    if (n.includes(normalize(s))) phrases.add(s);
+    if (jobHasTerm(n, s)) phrases.add(s);
   }
-  const tokens = tokenize(job);
-  for (let i = 0; i < tokens.length - 1; i++) {
-    const bigram = `${tokens[i]} ${tokens[i + 1]}`;
-    if (bigram.length >= 6 && !NOISE.has(tokens[i])) phrases.add(bigram);
+  return [...phrases].filter((p) => !isJunkPhrase(p));
+}
+
+/**
+ * Must-have: skills del catálogo + formación/años/viñetas de requisitos.
+ * Nunca bigramas del intro (“acerca del empleo…”).
+ */
+function extractMustPhrases(mustSection: string, fullJob: string) {
+  const corpus = mustSection.trim().length >= 40 ? mustSection : fullJob;
+  const n = normalize(corpus);
+  const phrases = new Set<string>();
+
+  for (const s of [...HARD_HINTS, ...SOFT]) {
+    if (jobHasTerm(n, s)) phrases.add(s);
   }
-  // Unigrams técnicos cortos (sql, sap, aws…)
-  for (const t of tokens) {
-    if (HARD_HINTS.some((h) => normalize(h) === t) || (t.length >= 4 && /[a-z]#|\d/.test(t))) {
-      phrases.add(t);
+
+  const eduHits = corpus.match(
+    /\b(?:ingenier[ií]a(?:\s+(?:de\s+)?(?:sistemas|software|inform[aá]tica))?|licenciatura(?:\s+en\s+[a-záéíóúñü]+)?|tecn[oó]log[oa](?:\s+en\s+[a-záéíóúñü]+)?|maestr[ií]a(?:\s+en\s+[a-záéíóúñü]+)?|mba)\b/gi
+  );
+  for (const e of eduHits || []) {
+    const cleaned = e.trim().toLowerCase();
+    if (cleaned.length >= 8 && cleaned.length <= 50 && !isJunkPhrase(cleaned)) phrases.add(cleaned);
+  }
+
+  const yearHit = normalize(corpus).match(/(\d+)\s*\+?\s*(anos|años|years)/);
+  if (yearHit) phrases.add(`${yearHit[1]} años`);
+
+  for (const line of mustSection.split("\n")) {
+    const t = line.replace(/^[-•●*]+\s*/, "").trim();
+    if (t.length < 12 || t.length > 90 || isJunkPhrase(t)) continue;
+    for (const s of HARD_HINTS) {
+      if (jobHasTerm(normalize(t), s)) phrases.add(s);
     }
   }
-  return [...phrases];
+
+  return [...phrases].filter((p) => !isJunkPhrase(p)).slice(0, 24);
 }
 
 function matchPhrases(cvN: string, phrases: string[]) {
   const matched: string[] = [];
   const missing: string[] = [];
-  for (const p of phrases) {
-    if (textHasTerm(cvN, p) || cvN.includes(normalize(p))) matched.push(p);
+  for (const p of dedupeTerms(phrases)) {
+    if (isJunkPhrase(p)) continue;
+    if (textHasTerm(cvN, p) || jobHasTerm(cvN, p)) matched.push(p);
     else missing.push(p);
   }
   return { matched, missing };
+}
+
+/** Skills: solo términos del catálogo con match real en la oferta. */
+function skillsFromCatalog(jobN: string, cvN: string, catalog: string[]) {
+  const inJob = dedupeTerms(catalog.filter((h) => jobHasTerm(jobN, h)));
+  const matched = inJob.filter((h) => textHasTerm(cvN, h) || jobHasTerm(cvN, h));
+  const missing = inJob.filter((h) => !matched.includes(h));
+  return { matched, missing };
+}
+
+function dedupeTerms(list: string[]) {
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const raw of list) {
+    const key = normalize(raw).replace(/á/g, "a").replace(/é/g, "e").replace(/í/g, "i").replace(/ó/g, "o").replace(/ú/g, "u");
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(raw);
+  }
+  return out;
 }
 
 function yearsRequired(job: string): number | null {
@@ -355,15 +371,17 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
   const allPhrases = extractPhrases(input.jobText);
   const { matched, missing } = matchPhrases(cvN, allPhrases);
 
-  const mustPhrases = extractPhrases(jobParts.must);
+  const mustPhrases = extractMustPhrases(jobParts.must, input.jobText);
   const nicePhrases = jobParts.nice ? extractPhrases(jobParts.nice) : [];
   const mustHave = matchPhrases(cvN, mustPhrases);
-  const niceToHave = matchPhrases(cvN, nicePhrases.length ? nicePhrases : []);
+  const niceToHave = matchPhrases(cvN, nicePhrases);
 
-  const hardMatched = matched.filter((p) => HARD_HINTS.some((h) => normalize(p).includes(normalize(h))));
-  const hardMissing = missing.filter((p) => HARD_HINTS.some((h) => normalize(p).includes(normalize(h))));
-  const softMatched = matched.filter((p) => SOFT.some((h) => normalize(p).includes(normalize(h))));
-  const softMissing = missing.filter((p) => SOFT.some((h) => normalize(p).includes(normalize(h))));
+  const hard = skillsFromCatalog(jobN, cvN, HARD_HINTS);
+  const soft = skillsFromCatalog(jobN, cvN, SOFT);
+  const hardMatched = hard.matched;
+  const hardMissing = hard.missing;
+  const softMatched = soft.matched;
+  const softMissing = soft.missing;
 
   const exclusiveGaps: string[] = [];
   if (
@@ -420,7 +438,7 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
   );
 
   const trainingSuggestions = hardMissing.slice(0, 5).map(
-    (k) => `Si aún no dominas “${k}”, un curso corto + un mini-proyecto medible en el CV ayuda más que solo listarlo.`
+    (k) => `Si aún no manejas ${k}, un curso corto y un proyecto real en el CV sirven más que solo nombrarlo.`
   );
 
   const hasMetrics = /\d+%|\d+\s*(usuarios|clientes|millones|mil|personas|equipo)|\$\s*\d+|cop\s*\d+/i.test(
@@ -429,14 +447,18 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
 
   const actions: string[] = [];
   if (mustHave.missing.length) {
-    actions.push(`Prioridad must-have (si es tu experiencia real): ${mustHave.missing.slice(0, 8).join(", ")}.`);
+    actions.push(
+      `Si de verdad los cumples, déjalos ver en el CV: ${mustHave.missing.slice(0, 8).join(", ")}.`
+    );
   } else if (missing.length) {
-    actions.push(`Integra de forma natural: ${missing.slice(0, 8).join(", ")}.`);
+    actions.push(`Si aplica a tu experiencia, menciona: ${missing.slice(0, 8).join(", ")}.`);
   }
-  if (exclusiveGaps.length) actions.push("Resuelve primero los requisitos excluyentes (honestidad > keyword stuffing).");
-  if (!hasMetrics) actions.push("Cuantifica logros (%, dinero, tiempo, alcance, personas).");
-  if (!sections.skills) actions.push("Añade bloque Skills con términos literales de la oferta (sin inventar).");
-  actions.push("Adapta el CV a esta oferta concreta; luego completa bien el formulario del portal.");
+  if (exclusiveGaps.length) {
+    actions.push("Primero resuelve con honestidad lo excluyente (idioma, años, título, ciudad). No lo inventes.");
+  }
+  if (!hasMetrics) actions.push("Pon números en al menos 3 logros (%, plata, tiempo, personas).");
+  if (!sections.skills) actions.push("Agrega un bloque de habilidades con términos de la oferta que sí domines.");
+  actions.push("Ajusta el CV a esta oferta y vuelve a analizar antes de postular.");
 
   const heatTerms = [...new Set([...mustHave.missing, ...mustHave.matched, ...hardMissing, ...hardMatched, ...missing, ...matched])];
   const heatmap = buildKeywordHeatmap(input.cvText, input.jobText, heatTerms, 28);

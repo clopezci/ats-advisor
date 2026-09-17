@@ -962,7 +962,7 @@ export default function AtsPage() {
             <h2 className="text-sm font-semibold">Ajustar hoja de vida</h2>
             <p className="text-xs muted">{DISCLAIMER_CV_REWRITE}</p>
             <p className="text-sm leading-relaxed">
-              Recomendado: aplicar <strong>solo los cambios del análisis</strong> (no reescribir todo el CV).
+              Recomendado: aplica <strong>solo estos ajustes</strong> (no reescribas todo el CV).
             </p>
             {patchPlan && patchPlan.items.length > 0 ? (
               <div className="space-y-2">
@@ -979,7 +979,7 @@ export default function AtsPage() {
                 </ul>
               </div>
             ) : (
-              <p className="text-xs muted">Pocos gaps detectados; el parche será mínimo.</p>
+              <p className="text-xs muted">Casi no hay huecos; el ajuste será mínimo.</p>
             )}
             <button
               type="button"
@@ -988,7 +988,7 @@ export default function AtsPage() {
               onClick={() => adjustCv("surgical")}
             >
               {rewriteLoading && rewriteMode === "surgical"
-                ? "Aplicando solo esos cambios…"
+                ? "Aplicando cambios…"
                 : "Aplicar solo estos cambios"}
             </button>
             <button
@@ -1005,10 +1005,10 @@ export default function AtsPage() {
               <>
                 {rewriteMode === "surgical" ? (
                   <p className="text-xs font-medium" style={{ color: "var(--brand)" }}>
-                    Modo cirugía: se preservó la estructura; revisa el diff antes de usar.
+                    Se mantuvo tu estructura. Revisa el diff antes de usarlo.
                   </p>
                 ) : (
-                  <p className="text-xs muted">Modo reescritura completa — revisa con más cuidado.</p>
+                  <p className="text-xs muted">Reescritura completa: revísala con más cuidado.</p>
                 )}
                 {rewriteChangelog ? (
                   <div className="rounded-lg p-3 text-xs muted whitespace-pre-wrap" style={{ background: "var(--surface-2, #f6f4fb)" }}>

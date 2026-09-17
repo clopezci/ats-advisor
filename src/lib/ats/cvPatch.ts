@@ -1,4 +1,5 @@
 import type { AtsAnalyzeResult } from "@/lib/ats/engine";
+import { isJunkPhrase } from "@/lib/ats/phraseFilter";
 
 export type CvPatchItem = {
   id: string;
@@ -12,70 +13,81 @@ export type CvPatchPlan = {
   summary: string;
 };
 
+function cleanLabel(t: string) {
+  return String(t || "").trim();
+}
+
+function isUsefulGap(t: string) {
+  const s = cleanLabel(t);
+  if (s.length < 2 || s.length > 60) return false;
+  return !isJunkPhrase(s);
+}
+
 /**
- * Lista cerrada de cambios a aplicar — solo gaps del análisis, no reescritura libre.
+ * Cambios puntuales a partir del análisis. Sin relleno.
  */
 export function buildCvPatchPlan(result: AtsAnalyzeResult): CvPatchPlan {
   const items: CvPatchItem[] = [];
   let n = 0;
 
-  for (const t of (result.mustHave?.missing || []).slice(0, 8)) {
+  for (const t of (result.mustHave?.missing || []).filter(isUsefulGap).slice(0, 6)) {
     n += 1;
     items.push({
       id: `mh_${n}`,
       kind: "must_have",
-      label: t,
-      detail: "Requisito indispensable detectado en la oferta y no visible en el CV. Solo intégralo si ya lo tienes.",
+      label: cleanLabel(t),
+      detail: "La oferta lo pide y en tu CV no se ve. Solo agrégalo si es cierto.",
     });
   }
 
-  for (const t of result.hardSkills.missing.slice(0, 6)) {
+  for (const t of (result.hardSkills?.missing || []).filter(isUsefulGap).slice(0, 5)) {
     if (items.some((i) => i.label.toLowerCase() === t.toLowerCase())) continue;
     n += 1;
     items.push({
       id: `hs_${n}`,
       kind: "hard_skill",
-      label: t,
-      detail: "Habilidad técnica nombrada en la oferta. Agrégala en Skills o en una viñeta real.",
+      label: cleanLabel(t),
+      detail: "Herramienta o skill de la oferta. Ponla en Habilidades o en un logro real.",
     });
   }
 
-  for (const t of result.missingKeywords.slice(0, 8)) {
+  for (const t of (result.missingKeywords || []).filter(isUsefulGap).slice(0, 5)) {
     if (items.some((i) => i.label.toLowerCase() === t.toLowerCase())) continue;
     n += 1;
     items.push({
       id: `kw_${n}`,
       kind: "keyword",
-      label: t,
-      detail: "Palabra de la oferta poco visible. Úsala solo si es verdad en tu experiencia.",
+      label: cleanLabel(t),
+      detail: "Palabra de la oferta que no aparece. Úsala solo si ya la vives en el trabajo.",
     });
   }
 
-  for (const b of (result.bulletQuality?.weakest || []).slice(0, 3)) {
+  for (const b of (result.bulletQuality?.weakest || []).slice(0, 2)) {
     n += 1;
     items.push({
       id: `bu_${n}`,
       kind: "bullet",
-      label: b.text.slice(0, 80) + (b.text.length > 80 ? "…" : ""),
-      detail: b.tips[0] || "Refuerza verbo + resultado medible (sin inventar).",
+      label: b.text.slice(0, 72) + (b.text.length > 72 ? "…" : ""),
+      detail: b.tips[0] || "Hazla más concreta: verbo + qué hiciste + número si lo tienes.",
     });
   }
 
-  for (const a of (result.formatAlerts || []).slice(0, 3)) {
+  for (const a of (result.formatAlerts || []).slice(0, 2)) {
+    if (/must-have|keyword stuffing|semántic/i.test(a)) continue;
     n += 1;
     items.push({
       id: `fm_${n}`,
       kind: "format",
       label: a.slice(0, 90),
-      detail: "Ajuste de formato ATS (una columna, secciones claras, sin tablas).",
+      detail: "Una columna, texto seleccionable, sin tablas raras.",
     });
   }
 
-  const capped = items.slice(0, 14);
+  const capped = items.slice(0, 12);
   const summary =
     capped.length === 0
-      ? "No hay gaps fuertes: solo pulido menor si quieres."
-      : `${capped.length} cambios concretos del análisis (must-haves, skills, keywords y viñetas débiles).`;
+      ? "Casi no hay huecos fuertes. Solo un repaso fino si quieres."
+      : `${capped.length} ajustes puntuales (nada de reescribir el CV entero).`;
 
   return { items: capped, summary };
 }
@@ -88,31 +100,35 @@ export function buildSurgicalCvPrompt(opts: {
   plan: CvPatchPlan;
 }): string {
   const list = opts.plan.items
-    .map((i, idx) => `${idx + 1}. [${i.kind}] ${i.label} — ${i.detail}`)
+    .map((i, idx) => `${idx + 1}. ${i.label} — ${i.detail}`)
     .join("\n");
 
   return [
-    `Modo CIRUGÍA de CV (no reescritura total). Perfil ATS: ${opts.atsProfile}. Score actual: ${opts.score}%.`,
+    "Edita este CV con cambios mínimos. No lo reescribas de cero.",
+    `Perfil del portal: ${opts.atsProfile}. Puntaje actual: ${opts.score}%.`,
     "",
-    "LISTA CERRADA DE CAMBIOS PERMITIDOS (solo estos):",
-    list || "(ninguno crítico)",
+    "Solo puedes tocar estos puntos:",
+    list || "Ninguno crítico.",
     "",
-    `OFERTA (extracto):\n${opts.jobText.slice(0, 1400)}`,
+    `Oferta (recorte):\n${opts.jobText.slice(0, 1200)}`,
     "",
-    `CV ACTUAL (base a preservar):\n${opts.cvText.slice(0, 6500)}`,
+    `CV actual:\n${opts.cvText.slice(0, 6500)}`,
     "",
-    "REGLAS OBLIGATORIAS:",
-    "1) Devuelve el CV COMPLETO en texto plano listo para Word, partiendo del CV actual.",
-    "2) Aplica ÚNICAMENTE los cambios de la lista. No reordenes secciones, no cambies el tono global, no borres logros.",
-    "3) No inventes experiencia, cargos, fechas, métricas ni herramientas. Si un ítem no está soportado por el CV, déjalo igual y márcalo en el changelog como OMITIDO.",
-    "4) Keywords: intégralas en Skills o en viñetas existentes solo si el CV ya lo sostiene.",
-    "5) Formato: una columna, secciones claras, viñetas con - ",
-    "6) NO escribas títulos como «Resumen de cambios», «CV reescrito» dentro del cuerpo del CV.",
+    "Cómo escribir:",
+    "- Español claro, tono profesional humano (LATAM). Frases cortas.",
+    "- Sin emojis, sin markdown, sin guiones tipográficos raros.",
+    "- Evita clichés vacíos de LinkedIn o brochure corporativo.",
+    "- No inventes cargos, fechas, logros, métricas ni herramientas.",
+    "- Si un punto de la lista no se sostiene con el CV, no lo agregues; anótalo como omitido al final.",
+    "- Conserva el orden de secciones y el estilo del CV original.",
+    "- Viñetas con guion simple (-).",
     "",
-    "Al FINAL del mensaje (después del CV), agrega exactamente este bloque:",
+    "Responde así:",
+    "1) Primero el CV completo en texto plano (listo para Word).",
+    "2) Al final, exactamente:",
     "=== CAMBIOS ===",
-    "- APLICADO: …",
-    "- OMITIDO: … (si aplica)",
+    "- Hecho: …",
+    "- Omitido: … (si aplica)",
   ].join("\n");
 }
 
@@ -121,12 +137,25 @@ export function splitSurgicalCvResponse(raw: string): { cv: string; changelog: s
   const text = (raw || "").replace(/\r\n/g, "\n").trim();
   const marker = text.search(/\n===\s*CAMBIOS\s*===\s*\n/i);
   if (marker < 0) {
-    return { cv: text, changelog: "" };
+    return { cv: stripAiDecorations(text), changelog: "" };
   }
   return {
-    cv: text.slice(0, marker).trim(),
+    cv: stripAiDecorations(text.slice(0, marker).trim()),
     changelog: text.slice(marker).replace(/^\n===\s*CAMBIOS\s*===\s*\n/i, "").trim(),
   };
+}
+
+/** Quita adornos típicos de respuestas IA en el cuerpo del CV. */
+function stripAiDecorations(cv: string) {
+  return cv
+    .replace(/^#+\s+/gm, "")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/__([^_]+)__/g, "$1")
+    .replace(/[“”«»]/g, '"')
+    .replace(/[–—]/g, "-")
+    .replace(/\u2026/g, "...")
+    .replace(/[^\S\n]{3,}/g, "  ")
+    .trim();
 }
 
 export function kindLabel(kind: CvPatchItem["kind"]): string {
@@ -134,9 +163,9 @@ export function kindLabel(kind: CvPatchItem["kind"]): string {
     case "must_have":
       return "Indispensable";
     case "hard_skill":
-      return "Skill técnica";
+      return "Skill";
     case "keyword":
-      return "Palabra clave";
+      return "Palabra de la oferta";
     case "bullet":
       return "Viñeta";
     case "format":

@@ -1,10 +1,14 @@
 /** Extrae requisitos must-have vs nice-to-have de una oferta (heurística LATAM/ES). */
 
 const MUST_HEADERS =
-  /requisitos?\s*(excluyentes?|obligatorios?|indispensables?)|experiencia\s+requerida|obligatorio|imprescindible|must[- ]have|required\s+qualifications?|requirements?|perfil\s+buscado|qué\s+buscamos|que\s+buscamos/i;
+  /requisitos?\s*(excluyentes?|obligatorios?|indispensables?)?|experiencia\s+requerida|obligatorio|imprescindible|must[- ]have|required\s+qualifications?|requirements?|perfil\s+buscado|qué\s+buscamos|que\s+buscamos|conocimientos?\s+(requeridos?|necesarios?|técnicos?|tecnicos?)|habilidades?\s+requeridas?/i;
 
 const NICE_HEADERS =
   /deseable|plus|nice[- ]to[- ]have|valoraremos|se\s+valora|preferible|idealmente|optional|ventaja|conocimientos?\s+adicionales/i;
+
+/** Encabezados de intro/portales: NUNCA son sección must. */
+const ABOUT_HEADERS =
+  /acerca\s+del\s+empleo|acerca\s+de\s+la\s+oferta|descripci[oó]n\s+del\s+(empleo|puesto|rol|cargo)|sobre\s+(el\s+)?(empleo|puesto|rol|cargo|nosotros)|job\s+description|about\s+the\s+(job|role)/i;
 
 const SECTION_SPLIT = /\n(?=[A-ZÁÉÍÓÚÑÜ][^\n]{0,60}:?\s*$)|(?=requisitos|funciones|responsabilidades|ofrecemos|beneficios)/i;
 
@@ -19,6 +23,10 @@ export function splitJobSections(jobText: string): { must: string; nice: string;
   for (const line of lines) {
     const t = line.trim();
     if (!t) continue;
+    if (ABOUT_HEADERS.test(t) && t.length < 100) {
+      mode = "rest";
+      continue;
+    }
     if (MUST_HEADERS.test(t) && t.length < 80) {
       mode = "must";
       continue;
@@ -27,7 +35,12 @@ export function splitJobSections(jobText: string): { must: string; nice: string;
       mode = "nice";
       continue;
     }
-    if (/^(funciones|responsabilidades|qué harás|que haras|actividades|beneficios|ofrecemos)/i.test(t) && t.length < 80) {
+    if (
+      /^(funciones|responsabilidades|qué harás|que haras|actividades|beneficios|ofrecemos|acerca del|descripción|descripcion)/i.test(
+        t
+      ) &&
+      t.length < 80
+    ) {
       mode = "rest";
       continue;
     }
@@ -36,17 +49,37 @@ export function splitJobSections(jobText: string): { must: string; nice: string;
     else rest.push(t);
   }
 
-  // Si no hubo sección must, usa requisitos genéricos del cuerpo
+  // Si no hubo sección must, busca bloque "requisitos" en el cuerpo (no uses el intro).
   if (!must.length) {
     const blob = text;
     const m = blob.match(
-      /(?:requisitos?|requirements?|perfil)[:\s]+([\s\S]{80,1200}?)(?=\n\s*(?:beneficios|ofrecemos|funciones|responsabilidades)|$)/i
+      /(?:requisitos?(?:\s+(?:excluyentes?|obligatorios?|indispensables?))?|requirements?|perfil\s+buscado|conocimientos?\s+requeridos?)[:\s]+([\s\S]{40,1500}?)(?=\n\s*(?:beneficios|ofrecemos|funciones|responsabilidades|acerca\s+del|descripci[oó]n)|$)/i
     );
-    if (m) must.push(m[1]);
+    if (m?.[1] && !ABOUT_HEADERS.test(m[1].slice(0, 80))) {
+      must.push(m[1]);
+    }
+  }
+
+  // Extrae viñetas que parecen requisitos (formación / años / stack) del cuerpo completo
+  if (must.join("\n").length < 60) {
+    const reqish = lines.filter((l) => {
+      const t = l.trim();
+      if (t.length < 12 || t.length > 160) return false;
+      if (ABOUT_HEADERS.test(t)) return false;
+      return (
+        /^[-•●*]/.test(t) ||
+        /\d+\s*\+?\s*(a[nñ]os|years)/i.test(t) ||
+        /(ingenier[ií]a|licenciatura|tecn[oó]log[oa]|profesional\s+en|experiencia\s+en|conocimiento\s+(en|de)|manejo\s+de)/i.test(
+          t
+        )
+      );
+    });
+    if (reqish.length) must.push(...reqish.slice(0, 20));
   }
 
   return {
-    must: must.join("\n") || text.slice(0, 800),
+    // Nunca caigas al intro "Acerca del empleo…" como must-have
+    must: must.join("\n"),
     nice: nice.join("\n"),
     rest: rest.join("\n"),
   };

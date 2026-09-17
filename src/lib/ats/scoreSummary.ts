@@ -67,15 +67,15 @@ export function buildScoreSummary(result: AtsAnalyzeResult): AtsScoreSummary {
   const mustMissing = result.mustHave?.missing || [];
   if (mustMissing.length) {
     blockers.push({
-      label: "Must-have sin evidencia en el CV",
-      detail: `No aparecen (o no se detectan) requisitos indispensables: ${mustMissing.slice(0, 6).join(", ")}${mustMissing.length > 6 ? "…" : ""}.`,
+      label: "Requisito de la oferta sin evidencia en el CV",
+      detail: `No se ve claro en tu CV: ${mustMissing.slice(0, 6).join(", ")}${mustMissing.length > 6 ? "…" : ""}.`,
       impact: "alto",
     });
   }
 
   if (result.formatAlerts.length) {
     blockers.push({
-      label: "Formato que confunde al parser",
+      label: "Formato que confunde al lector automático",
       detail: result.formatAlerts[0],
       impact: "medio",
     });
@@ -84,7 +84,7 @@ export function buildScoreSummary(result: AtsAnalyzeResult): AtsScoreSummary {
   const hardMissing = result.hardSkills.missing.slice(0, 4);
   if (hardMissing.length) {
     blockers.push({
-      label: "Skills técnicas ausentes",
+      label: "Habilidades técnicas ausentes",
       detail: `Faltan en el CV: ${hardMissing.join(", ")}.`,
       impact: "medio",
     });
@@ -94,12 +94,12 @@ export function buildScoreSummary(result: AtsAnalyzeResult): AtsScoreSummary {
   if (sections && (!sections.experience || !sections.skills)) {
     const miss = [
       !sections.experience ? "Experiencia" : null,
-      !sections.skills ? "Skills" : null,
+      !sections.skills ? "Habilidades" : null,
       !sections.education ? "Educación" : null,
       !sections.contact ? "Contacto" : null,
     ].filter(Boolean);
     blockers.push({
-      label: "Secciones que el robot no encontró",
+      label: "Secciones que no se detectaron bien",
       detail: `Revisa que el CV tenga bloques claros: ${miss.join(", ")}.`,
       impact: "medio",
     });
@@ -107,28 +107,28 @@ export function buildScoreSummary(result: AtsAnalyzeResult): AtsScoreSummary {
 
   if (result.semanticScore != null && result.semanticScore < 55 && result.score < 75) {
     blockers.push({
-      label: "Poco encaje semántico",
-      detail: `El significado del CV y la oferta no calzan del todo (${result.semanticScore}% semántico). Usa el mismo vocabulario del aviso en logros reales.`,
+      label: "Poco encaje de contenido",
+      detail: `El CV y la oferta no se parecen mucho (${result.semanticScore}% de solape). Usa el mismo vocabulario del aviso en logros reales.`,
       impact: "medio",
     });
   }
 
   if (typeof result.authenticityScore === "number" && result.authenticityScore < 60) {
     blockers.push({
-      label: "Tono genérico o keyword stuffing",
-      detail: "El texto suena poco concreto o muy cargado de palabras clave vacías. Humaniza con logros medibles.",
+      label: "Texto genérico o overloaded de palabras clave",
+      detail: "Suena poco concreto. Mejor logros reales con números.",
       impact: "medio",
     });
   }
 
   const whyScore: string[] = [
-    `Puntaje ${result.score}% combina coincidencia de palabras clave de la oferta en tu CV + encaje semántico (${result.semanticScore}%).`,
+    `Puntaje ${result.score}%: coincidencia de términos de la oferta en tu CV + parecido de contenido (${result.semanticScore}%).`,
     `Probabilidad orientativa de entrevista: ${result.interviewProbability}% (no es garantía).`,
   ];
 
   if (result.mustHave?.matched?.length) {
     whyScore.push(
-      `A favor: ya cubres ${result.mustHave.matched.length} must-have (${result.mustHave.matched.slice(0, 4).join(", ")}${result.mustHave.matched.length > 4 ? "…" : ""}).`
+      `A favor: ya cubres ${result.mustHave.matched.length} requisitos clave (${result.mustHave.matched.slice(0, 4).join(", ")}${result.mustHave.matched.length > 4 ? "…" : ""}).`
     );
   }
 
@@ -149,36 +149,36 @@ export function buildScoreSummary(result: AtsAnalyzeResult): AtsScoreSummary {
     }
     if (mustMissing.length) {
       toReach70.push(
-        `Integra must-have que SÍ tengas en viñetas de logro (no solo en Skills): ${mustMissing.slice(0, 5).join(", ")}.`
+        `Si de verdad los cumples, hazlos visibles en logros (no solo en la lista de skills): ${mustMissing.slice(0, 5).join(", ")}.`
       );
     }
     if (result.missingKeywords.length) {
       toReach70.push(
-        `Teje 5–8 keywords de la oferta en experiencia real: ${result.missingKeywords.slice(0, 6).join(", ")}.`
+        `Menciona en tu experiencia real (si aplica): ${result.missingKeywords.slice(0, 6).join(", ")}.`
       );
     }
     if (result.formatAlerts.length) {
-      toReach70.push("Pasa a formato 1 columna, texto seleccionable (PDF/DOCX), sin tablas que oculten palabras.");
+      toReach70.push("Usa una sola columna, texto que se pueda seleccionar, sin tablas que escondan palabras.");
     }
-    if (result.actions.some((a) => /cuantifica/i.test(a))) {
-      toReach70.push("Cuantifica al menos 3 logros (%, COP, tiempo, personas, antes/después).");
+    if (result.actions.some((a) => /números|cuantifica/i.test(a))) {
+      toReach70.push("Pon números en al menos 3 logros (%, COP, tiempo, personas).");
     }
-    toReach70.push("Adapta este CV a ESTA vacante y vuelve a analizar antes de postular.");
+    toReach70.push("Adapta este CV a esta vacante y vuelve a analizar antes de postular.");
   }
 
   const toReach85: string[] = [];
   if (result.score >= 85) {
-    toReach85.push("Mantén coherencia entre CV, formulario del portal y LinkedIn. Postula pronto al aviso.");
+    toReach85.push("Mantén coherencia entre CV, formulario del portal y LinkedIn. Postula pronto.");
   } else {
-    toReach85.push("Must-have cubiertos con evidencia en 2+ viñetas (no solo listados).");
-    toReach85.push("Resumen profesional alineado al cargo target (primeras 3 líneas).");
-    toReach85.push("Skills: top 8–12 términos literales de la oferta que domines.");
+    toReach85.push("Que lo indispensable se vea en 2 o más viñetas, no solo listado.");
+    toReach85.push("Resumen alineado al cargo (primeras 3 líneas).");
+    toReach85.push("Habilidades: 8–12 términos de la oferta que sí domines.");
     if (result.niceToHave?.missing?.length) {
       toReach85.push(
-        `Sumar deseables reales refina el ranking: ${result.niceToHave.missing.slice(0, 4).join(", ")}.`
+        `Si los tienes, suma deseables: ${result.niceToHave.missing.slice(0, 4).join(", ")}.`
       );
     }
-    toReach85.push("Primera viñeta de cada cargo = logro medible + keyword del rol.");
+    toReach85.push("Primera viñeta de cada cargo: logro concreto + término del rol.");
   }
 
   return {

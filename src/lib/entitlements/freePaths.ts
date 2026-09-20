@@ -20,6 +20,7 @@ export function isFreeAppPath(pathname: string): boolean {
   if (p === "/herramientas/checklist") return true;
   if (p === "/herramientas/salario") return true;
   if (p === "/ats/radar") return true;
+  if (p === "/ats/repaso" || p.startsWith("/ats/repaso/")) return true;
 
   // Hubs / account / legal / auth always open
   if (p === "/herramientas") return true;
@@ -65,6 +66,11 @@ export const FREE_TOOL_BLURBS = [
     href: "/ats/radar",
     title: "Radar de vacantes",
     desc: "Tus filtros + avisos en lote: postula, revisa o descarta sin recorrer LinkedIn a ciegas.",
+  },
+  {
+    href: "/ats/repaso",
+    title: "Repaso del rol",
+    desc: "Plan + retos del trabajo diario anclados a una vacante. Aprende lo que marcaste con honestidad.",
   },
   {
     href: "/herramientas/salario",

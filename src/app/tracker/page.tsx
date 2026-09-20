@@ -8,7 +8,9 @@ import { AdSlot } from "@/components/AdSlot";
 import {
   STATUS_LABEL,
   deleteJob,
+  formatAppliedAt,
   listJobs,
+  markJobApplied,
   upsertJob,
   type JobItem,
   type JobStatus,
@@ -136,6 +138,9 @@ export default function TrackerPage() {
             </div>
             <span className="pill-brand">{STATUS_LABEL[job.status]}</span>
           </div>
+          {job.appliedAt ? (
+            <p className="text-xs muted">Postulé: {formatAppliedAt(job.appliedAt)}</p>
+          ) : null}
           <div className="flex gap-2">
             <textarea
               className="field min-h-16 text-sm"
@@ -160,7 +165,16 @@ export default function TrackerPage() {
             value={job.status}
             onChange={(e) => {
               const nextStatus = e.target.value as JobStatus;
-              upsertJob({ ...job, status: nextStatus, id: job.id });
+              if (nextStatus === "aplicado" && !job.appliedAt) {
+                markJobApplied(job.id);
+              } else {
+                upsertJob({
+                  ...job,
+                  status: nextStatus,
+                  id: job.id,
+                  appliedAt: nextStatus === "aplicado" ? job.appliedAt || Date.now() : job.appliedAt,
+                });
+              }
               refresh();
             }}
           >
@@ -170,6 +184,40 @@ export default function TrackerPage() {
               </option>
             ))}
           </select>
+          {job.status !== "aplicado" ? (
+            <button
+              type="button"
+              className="btn-primary"
+              onClick={() => {
+                markJobApplied(job.id);
+                refresh();
+              }}
+            >
+              Ya postulé (hoy)
+            </button>
+          ) : null}
+          <Link
+            href={`/ats/repaso?jobId=${encodeURIComponent(job.id)}`}
+            className="btn-secondary"
+            onClick={() => {
+              try {
+                const last = JSON.parse(localStorage.getItem("ats_last_result") || "null");
+                localStorage.setItem(
+                  "ats_last_result",
+                  JSON.stringify({
+                    ...(last || {}),
+                    jobText: job.jobText || last?.jobText,
+                    companyName: job.company,
+                    jobId: job.id,
+                  })
+                );
+              } catch {
+                /* ignore */
+              }
+            }}
+          >
+            Repasar este rol (plan + retos)
+          </Link>
           <Link
             href="/ats"
             className="btn-secondary"

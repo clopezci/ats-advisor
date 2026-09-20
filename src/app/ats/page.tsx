@@ -1152,21 +1152,99 @@ export default function AtsPage() {
                 try {
                   const last = JSON.parse(localStorage.getItem("ats_last_result") || "null");
                   const score = last?.result?.score ?? result.score;
-                  upsertJob({
+                  const saved = upsertJob({
                     title: companyName.trim() || "Vacante desde ATS",
                     company: companyName.trim() || "Por completar",
                     url: jobUrl.trim() || undefined,
                     status: "interes",
                     score,
+                    jobText: jobText.trim() || undefined,
                     notes: `Score ATS ${score}%. Edita cargo/empresa en el tracker.`,
                   });
+                  try {
+                    localStorage.setItem(
+                      "ats_last_result",
+                      JSON.stringify({
+                        ...(last || {}),
+                        result,
+                        jobText,
+                        companyName,
+                        jobId: saved.id,
+                      })
+                    );
+                  } catch {
+                    /* ignore */
+                  }
                   window.location.href = "/tracker?from=ats";
                 } catch {
                   window.location.href = "/tracker";
                 }
               }}
             >
-              Guardar esta vacante en el tracker
+              Guardar interés en el tracker
+            </button>
+            <button
+              type="button"
+              className="btn-primary"
+              onClick={() => {
+                try {
+                  const last = JSON.parse(localStorage.getItem("ats_last_result") || "null");
+                  const score = last?.result?.score ?? result.score;
+                  const appliedAt = Date.now();
+                  const saved = upsertJob({
+                    title: companyName.trim() || "Vacante desde ATS",
+                    company: companyName.trim() || "Por completar",
+                    url: jobUrl.trim() || undefined,
+                    status: "aplicado",
+                    appliedAt,
+                    score,
+                    jobText: jobText.trim() || undefined,
+                    notes: `Postulé ${new Date(appliedAt).toLocaleDateString("es-CO")}. Score ATS ${score}%.`,
+                  });
+                  try {
+                    localStorage.setItem(
+                      "ats_last_result",
+                      JSON.stringify({
+                        ...(last || {}),
+                        result,
+                        jobText,
+                        companyName,
+                        jobId: saved.id,
+                      })
+                    );
+                  } catch {
+                    /* ignore */
+                  }
+                  window.location.href = `/tracker?from=ats&applied=${saved.id}`;
+                } catch {
+                  window.location.href = "/tracker";
+                }
+              }}
+            >
+              Ya postulé (guarda con fecha)
+            </button>
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() => {
+                try {
+                  const last = JSON.parse(localStorage.getItem("ats_last_result") || "null");
+                  localStorage.setItem(
+                    "ats_last_result",
+                    JSON.stringify({
+                      ...(last || {}),
+                      result,
+                      jobText,
+                      companyName,
+                    })
+                  );
+                } catch {
+                  /* ignore */
+                }
+                window.location.href = "/ats/repaso";
+              }}
+            >
+              Quiero repasar este rol (plan + retos)
             </button>
             <button
               type="button"

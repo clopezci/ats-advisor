@@ -4,6 +4,7 @@ export type AiTask =
   | "application_advice"
   | "out09_outline"
   | "out09_capsule"
+  | "role_review"
   | "interview_feedback"
   | "general";
 
@@ -49,6 +50,38 @@ const MODELS = {
 };
 
 function localFallback(task: AiTask, prompt: string): string {
+  if (task === "role_review") {
+    return JSON.stringify({
+      title: "Repaso del rol (modo local)",
+      objective: "Practicar el aviso con retos diarios aunque no haya IA online.",
+      days: [
+        {
+          day: 1,
+          title: "Mapa del aviso",
+          learnTopics: ["responsabilidades"],
+          explain: "Lista qué pide el aviso y qué vas a practicar esta semana.",
+          realWorld: "En la empresa, el rol se mide por entregables semanales, no por títulos.",
+          practices: ["Prioriza 3 temas", "No inventes experiencia"],
+          interviewQ: "¿Cuáles son las 3 responsabilidades más críticas de este rol?",
+          doneWhen: ["Tienes 3 temas priorizados", "Completaste el reto"],
+          challengeId: "ch1",
+        },
+      ],
+      challenges: [
+        {
+          id: "ch1",
+          day: 1,
+          title: "Ticket: resumen ejecutivo del aviso",
+          brief: "Tu jefe te pide un resumen de 10 líneas de qué harás en el cargo.",
+          jdAnchor: prompt.slice(0, 100),
+          steps: ["Subraya responsabilidades", "Escribe el resumen", "Marca 2 gaps a practicar"],
+          deliverable: "Nota de 10 líneas",
+          timeMin: 25,
+          pitfalls: ["Copiar el aviso sin interpretar"],
+        },
+      ],
+    });
+  }
   if (task === "out09_outline") {
     return JSON.stringify({
       title: "Curso personalizado de refuerzo",

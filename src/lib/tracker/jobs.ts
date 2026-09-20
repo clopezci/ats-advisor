@@ -8,6 +8,14 @@ export type JobItem = {
   status: JobStatus;
   notes?: string;
   score?: number;
+  /** Texto del aviso (para repaso del rol). */
+  jobText?: string;
+  /** Epoch ms cuando el usuario marcó que postulé. */
+  appliedAt?: number;
+  /** Temas que marcó “quiero aprenderlos”. */
+  learnTopics?: string[];
+  /** Plan de repaso asociado. */
+  roleReviewPlanId?: string;
   createdAt: number;
   updatedAt: number;
 };
@@ -24,6 +32,10 @@ export function listJobs(): JobItem[] {
 
 export function saveJobs(jobs: JobItem[]) {
   localStorage.setItem(KEY, JSON.stringify(jobs));
+}
+
+export function getJob(id: string): JobItem | null {
+  return listJobs().find((j) => j.id === id) || null;
 }
 
 export function upsertJob(job: Omit<JobItem, "id" | "createdAt" | "updatedAt"> & { id?: string }) {
@@ -45,12 +57,29 @@ export function upsertJob(job: Omit<JobItem, "id" | "createdAt" | "updatedAt"> &
     status: job.status,
     notes: job.notes,
     score: job.score,
+    jobText: job.jobText,
+    appliedAt: job.appliedAt,
+    learnTopics: job.learnTopics,
+    roleReviewPlanId: job.roleReviewPlanId,
     createdAt: now,
     updatedAt: now,
   };
   jobs.unshift(item);
   saveJobs(jobs);
   return item;
+}
+
+/** Marca postulación con fecha (hoy o la indicada). */
+export function markJobApplied(id: string, appliedAt = Date.now(), extra?: Partial<JobItem>) {
+  const job = getJob(id);
+  if (!job) return null;
+  return upsertJob({
+    ...job,
+    ...extra,
+    id,
+    status: "aplicado",
+    appliedAt,
+  });
 }
 
 export function deleteJob(id: string) {
@@ -65,3 +94,16 @@ export const STATUS_LABEL: Record<JobStatus, string> = {
   rechazo: "Rechazo",
   archivado: "Archivado",
 };
+
+export function formatAppliedAt(ms?: number) {
+  if (!ms) return "";
+  try {
+    return new Date(ms).toLocaleDateString("es-CO", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  } catch {
+    return "";
+  }
+}

@@ -163,12 +163,13 @@ export async function POST(req: Request) {
     const { mod, cap } = capsuleForChat(Number(chatId || 0));
 
     let reply =
-      "ATSAdvisor: /start /capsula /progreso /cuadernillo /vincular /confirmar /jobicy_fondeo /ayuda";
+      "ATSAdvisor: /start /capsula /progreso /cuadernillo /repaso /vincular /confirmar /jobicy_fondeo /ayuda";
     if (text.startsWith("/start")) {
       if (chatId) await persistTelegramChat(chatId, username);
       reply =
         "Bienvenido a ATSAdvisor. Usa /capsula para tu microaprendizaje del día.\n" +
         "Usa /cuadernillo para el tip de accountability de transición.\n" +
+        "Usa /repaso para el tip del Repaso del rol (práctica anclada a tu vacante).\n" +
         "Para vincular tu cuenta: /vincular tu@correo.com → te enviamos un código → /confirmar 123456\n" +
         "El progreso detallado vive en la PWA.";
     } else if (text.startsWith("/capsula")) {
@@ -242,6 +243,10 @@ export async function POST(req: Request) {
       const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://ats-advisor-two.vercel.app";
       const { formatCuadernilloTelegramReply } = await import("@/lib/workbook/accountability");
       reply = formatCuadernilloTelegramReply(appUrl);
+    } else if (text.startsWith("/repaso") || text.startsWith("/rol")) {
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://ats-advisor-two.vercel.app";
+      const { formatRoleReviewTelegramReply } = await import("@/lib/roleReview/accountability");
+      reply = formatRoleReviewTelegramReply(appUrl);
     } else if (text.startsWith("/jobicy_fondeo") || text.startsWith("/fondeo_jobicy") || text.startsWith("/fondeo")) {
       const ownerId = String(process.env.TELEGRAM_OWNER_CHAT_ID || "");
       if (!chatId || String(chatId) !== ownerId) {
@@ -266,7 +271,7 @@ export async function POST(req: Request) {
       }
     } else if (text.startsWith("/ayuda")) {
       reply =
-        "Comandos: /start /capsula /progreso /cuadernillo /vincular correo@x.com /confirmar 123456 /ayuda\n" +
+        "Comandos: /start /capsula /progreso /cuadernillo /repaso /vincular correo@x.com /confirmar 123456 /ayuda\n" +
         "Owner: /jobicy_fondeo 10 (recarga saldo Jobicy y apaga alerta)";
     } else if (text.startsWith("/alerta_owner_test")) {
       if (String(chatId) === String(process.env.TELEGRAM_OWNER_CHAT_ID || "")) {

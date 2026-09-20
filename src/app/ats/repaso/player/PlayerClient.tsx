@@ -13,8 +13,10 @@ import {
   markWeek1Done,
   planProgressPct,
   saveStarAnswer,
+  setReminders,
 } from "@/lib/roleReview/storage";
 import { ROLE_REVIEW_FAMILY_LABEL, type RoleReviewPlan } from "@/lib/roleReview/types";
+import { roleReviewAccountabilityTip } from "@/lib/roleReview/accountability";
 
 type Tab = "dia" | "ticket" | "star" | "semana1";
 
@@ -24,6 +26,7 @@ export default function PlayerClient() {
   const [plan, setPlan] = useState<RoleReviewPlan | null>(null);
   const [day, setDay] = useState(1);
   const [tab, setTab] = useState<Tab>("dia");
+  const [remindMsg, setRemindMsg] = useState("");
 
   useEffect(() => {
     const p = id ? getRoleReviewPlan(id) : null;
@@ -33,6 +36,30 @@ export default function PlayerClient() {
       setDay(firstOpen?.day || p.days[0].day);
     }
   }, [id]);
+
+  useEffect(() => {
+    if (!plan?.remindersOn || typeof window === "undefined") return;
+    if (!("Notification" in window)) return;
+    const tip = roleReviewAccountabilityTip();
+    const key = `rr_reminded_${plan.id}_${new Date().toISOString().slice(0, 10)}`;
+    try {
+      if (localStorage.getItem(key) === "1") return;
+    } catch {
+      /* ignore */
+    }
+    const run = async () => {
+      let perm = Notification.permission;
+      if (perm === "default") perm = await Notification.requestPermission();
+      if (perm !== "granted") return;
+      new Notification("Repaso del rol · hoy", { body: tip, tag: `rr-${plan.id}` });
+      try {
+        localStorage.setItem(key, "1");
+      } catch {
+        /* ignore */
+      }
+    };
+    void run();
+  }, [plan?.id, plan?.remindersOn]);
 
   const current = useMemo(
     () => plan?.days?.find((d) => d.day === day) || null,
@@ -92,6 +119,58 @@ export default function PlayerClient() {
           <div className="progress-fill" style={{ width: `${pct}%` }} />
         </div>
       </section>
+
+      <section className="bento-card space-y-2">
+        <h2 className="text-sm font-semibold">Recordatorio diario</h2>
+        <p className="text-xs muted">
+          En este dispositivo (notificación del navegador) y en Telegram con /repaso.
+        </p>
+        <div className="flex flex-wrap items-center gap-2">
+          <input
+            type="time"
+            className="field w-auto"
+            value={plan.remindAt || "09:00"}
+            onChange={(e) => {
+              const next = setReminders(plan.id, Boolean(plan.remindersOn), e.target.value);
+              if (next) setPlan({ ...next });
+            }}
+          />
+          <button
+            type="button"
+            className={plan.remindersOn ? "btn-primary" : "btn-secondary"}
+            onClick={async () => {
+              if (!plan.remindersOn && "Notification" in window) {
+                const perm = await Notification.requestPermission();
+                if (perm !== "granted") {
+                  setRemindMsg("Activa notificaciones del navegador para el recordatorio local.");
+                }
+              }
+              const next = setReminders(plan.id, !plan.remindersOn, plan.remindAt || "09:00");
+              if (next) setPlan({ ...next });
+              setRemindMsg(
+                !plan.remindersOn
+                  ? "Recordatorio local activado. En Telegram: /repaso"
+                  : "Recordatorio local apagado."
+              );
+            }}
+          >
+            {plan.remindersOn ? "Recordatorios ON" : "Activar recordatorios"}
+          </button>
+        </div>
+        {remindMsg ? <p className="text-xs muted">{remindMsg}</p> : null}
+      </section>
+
+      {pct >= 100 ? (
+        <section className="bento-card space-y-2" style={{ borderColor: "var(--brand)" }}>
+          <h2 className="text-sm font-semibold">Plan completado</h2>
+          <p className="text-sm muted">
+            Re-analiza el CV con la misma vacante y mira si bajaron los gaps. Luego practica el 1:1.
+          </p>
+          <Link href="/ats" className="btn-primary">
+            Re-analizar CV vs esta vacante
+          </Link>
+        </section>
+      ) : null}
 
       <div className="flex gap-2 overflow-x-auto pb-1">
         {plan.days.map((d) => (
@@ -356,6 +435,15 @@ export default function PlayerClient() {
       ) : null}
 
       <div className="flex flex-col gap-2">
+        <Link
+          href={`/ats/repaso/player/coach?id=${encodeURIComponent(plan.id)}`}
+          className="btn-primary"
+        >
+          Simulacro 1:1 con el jefe
+        </Link>
+        <Link href="/ats" className="btn-secondary">
+          Re-analizar CV vs esta vacante
+        </Link>
         <Link href="/ats/repaso" className="btn-secondary">
           Nuevo repaso
         </Link>

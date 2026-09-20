@@ -1,4 +1,5 @@
 import type {
+  RoleReviewFamily,
   RoleReviewLearnTopic,
   RoleReviewMode,
   RoleReviewPlan,
@@ -14,10 +15,13 @@ export function buildRoleReviewPrompt(opts: {
   jobText: string;
   learnTopics: RoleReviewLearnTopic[];
   knownStrengths: string[];
+  roleFamily?: RoleReviewFamily;
+  maxDays?: number;
 }): string {
   const toLearn = opts.learnTopics.filter((t) => t.optIn).map((t) => t.term);
   const known = opts.knownStrengths.slice(0, 12);
-  const family = detectRoleFamily(opts.jobTitle, opts.jobText);
+  const family = opts.roleFamily || detectRoleFamily(opts.jobTitle, opts.jobText);
+  const maxDays = Math.min(7, Math.max(3, opts.maxDays || 7));
 
   return [
     "Eres un tutor de oficio (LATAM). Armas un plan de REPASO DEL ROL anclado a UNA vacante.",
@@ -89,7 +93,8 @@ export function buildRoleReviewPrompt(opts: {
     }),
     "",
     `Modo: ${opts.mode}`,
-    `Familia de rol detectada: ${family}`,
+    `Familia de rol: ${family}`,
+    `Días del plan (exacto): ${maxDays}`,
     `Minutos/día objetivo: ${opts.minutesPerDay}`,
     `Cargo: ${opts.jobTitle || "N/D"} · Empresa: ${opts.company || "N/D"}`,
     `Fortalezas ya detectadas en CV (no reinventarlas como si faltaran): ${known.join(", ") || "N/D"}`,
@@ -99,7 +104,7 @@ export function buildRoleReviewPrompt(opts: {
     opts.jobText.slice(0, 4500),
     "",
     "Reglas:",
-    "- 5 a 7 días (no más).",
+    `- Exactamente ${maxDays} días (ni más ni menos).`,
     "- Cada día tiene UN reto (challenge) y UN ticket ligados.",
     "- starBank: 1 pregunta STAR por día (plantilla vacía; el usuario pone SU verdad).",
     "- week1Checklist: 5–7 ítems de primera semana (más detallado si modo=dia1).",
@@ -118,6 +123,8 @@ export function buildFallbackRoleReviewPlan(opts: {
   jobTitle: string;
   learnTopics: RoleReviewLearnTopic[];
   jobText: string;
+  roleFamily?: RoleReviewFamily;
+  maxDays?: number;
 }): Omit<
   RoleReviewPlan,
   | "id"
@@ -134,11 +141,12 @@ export function buildFallbackRoleReviewPlan(opts: {
   const seed = topics.length
     ? topics
     : ["responsabilidades del rol", "herramientas del aviso", "comunicación con el equipo"];
-  const family = detectRoleFamily(opts.jobTitle, opts.jobText);
+  const family = opts.roleFamily || detectRoleFamily(opts.jobTitle, opts.jobText);
+  const maxDays = Math.min(7, Math.max(3, opts.maxDays || 5));
   const tickets = seedTicketsForFamily(family, opts.jobTitle, opts.jobText);
   const week1Checklist = seedWeek1Checklist(opts.jobTitle);
 
-  const days = seed.slice(0, 5).map((term, i) => {
+  const days = seed.slice(0, maxDays).map((term, i) => {
     const day = i + 1;
     const challengeId = `ch${day}`;
     const ticketId = tickets[i % tickets.length]?.id || `tk${day}`;
@@ -160,6 +168,27 @@ export function buildFallbackRoleReviewPlan(opts: {
       starId,
     };
   });
+
+  // Si hay menos temas que días, rellena con tickets de familia
+  while (days.length < maxDays) {
+    const day = days.length + 1;
+    const t = tickets[(day - 1) % tickets.length];
+    const challengeId = `ch${day}`;
+    const starId = `st${day}`;
+    days.push({
+      day,
+      title: t?.title || `Práctica día ${day}`,
+      learnTopics: [t?.title || "práctica del rol"],
+      explain: `Sesión ${day}: práctica anclada al aviso (${family}).`,
+      realWorld: "Trabajo real: entregable corto + update a jefe.",
+      practices: ["Entregable mínimo", "No inventes experiencia"],
+      interviewQ: "¿Cómo priorizarías el trabajo de esta semana en el rol?",
+      doneWhen: ["Completaste el reto", "Cerraste el ticket"],
+      challengeId,
+      ticketId: t?.id || `tk${day}`,
+      starId,
+    });
+  }
 
   const challenges = days.map((d) => ({
     id: d.challengeId,

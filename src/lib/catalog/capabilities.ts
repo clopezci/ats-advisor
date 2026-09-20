@@ -135,7 +135,7 @@ export const CAPABILITIES: Capability[] = [
     id: "ats-repaso",
     title: "Repaso del rol",
     summary:
-      "Plan anclado a la vacante: honestidad (¿quieres aprenderlo?), tickets tipo Jira, retos diarios, STAR y checklist semana 1.",
+      "Plan anclado a la vacante: honestidad, tickets, retos, STAR, semana 1, 1:1 manager, cupos por plan y métricas locales.",
     audience: ["candidato"],
     status: "disponible",
     href: "/ats/repaso",

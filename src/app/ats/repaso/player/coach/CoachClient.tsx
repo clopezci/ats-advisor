@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { SpeakButton } from "@/components/SpeakButton";
 import { DictationButton } from "@/components/DictationButton";
 import { appendCoachMessage, getRoleReviewPlan } from "@/lib/roleReview/storage";
+import { bumpRoleReviewMetric } from "@/lib/roleReview/metrics";
 import { getJob } from "@/lib/tracker/jobs";
 import type { RoleReviewPlan } from "@/lib/roleReview/types";
 
@@ -154,7 +155,10 @@ export default function CoachClient() {
             type="button"
             className="btn-primary"
             disabled={loading}
-            onClick={() => askManager()}
+            onClick={() => {
+              bumpRoleReviewMetric("coachSessions");
+              void askManager();
+            }}
           >
             {loading ? "Abriendo…" : "Empezar 1:1"}
           </button>

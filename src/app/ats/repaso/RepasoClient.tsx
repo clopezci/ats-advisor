@@ -7,8 +7,21 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { DictationButton } from "@/components/DictationButton";
 import { getJob, listJobs, upsertJob, type JobItem } from "@/lib/tracker/jobs";
 import { upsertRoleReviewPlan } from "@/lib/roleReview/storage";
+import { detectRoleFamily } from "@/lib/roleReview/templates";
 import {
+  completionRatePct,
+  readRoleReviewMetrics,
+  bumpRoleReviewMetric,
+} from "@/lib/roleReview/metrics";
+import {
+  canGenerateRoleReview,
+  recordRoleReviewGenerate,
+  roleReviewMaxDays,
+} from "@/lib/limits/roleReviewFree";
+import {
+  ROLE_REVIEW_FAMILY_LABEL,
   ROLE_REVIEW_MODE_LABEL,
+  type RoleReviewFamily,
   type RoleReviewLearnTopic,
   type RoleReviewMode,
   type RoleReviewPlan,
@@ -27,14 +40,26 @@ export default function RepasoClient() {
   const [jobText, setJobText] = useState("");
   const [mode, setMode] = useState<RoleReviewMode>("refuerzo");
   const [minutes, setMinutes] = useState(30);
+  const [family, setFamily] = useState<RoleReviewFamily>("general");
   const [gaps, setGaps] = useState<GapRow[]>([]);
   const [strengths, setStrengths] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
+  const [quotaLabel, setQuotaLabel] = useState("");
+  const [metricsLabel, setMetricsLabel] = useState("");
 
   useEffect(() => {
     const list = listJobs();
     setJobs(list);
+
+    const gate = canGenerateRoleReview();
+    setQuotaLabel(`Cupo este mes: ${gate.used}/${gate.quota} · quedan ${gate.remaining}`);
+    const m = readRoleReviewMetrics();
+    setMetricsLabel(
+      m.plansCreated
+        ? `Tus métricas: ${m.plansCreated} planes · ${completionRatePct(m)}% terminados · ${m.ticketsClosed} tickets`
+        : ""
+    );
 
     let fromAts: {
       missing?: string[];
@@ -67,9 +92,11 @@ export default function RepasoClient() {
       setJobTitle(job.title);
       setCompany(job.company);
       setJobText(job.jobText || fromAts?.jobText || "");
+      setFamily(detectRoleFamily(job.title, job.jobText || fromAts?.jobText || ""));
     } else if (fromAts?.jobText) {
       setJobText(fromAts.jobText);
       if (fromAts.title) setJobTitle(String(fromAts.title));
+      setFamily(detectRoleFamily(String(fromAts.title || ""), fromAts.jobText));
     }
 
     const terms = new Map<string, GapRow>();
@@ -105,6 +132,11 @@ export default function RepasoClient() {
 
   async function generate() {
     setMsg("");
+    const gate = canGenerateRoleReview();
+    if (!gate.ok) {
+      setMsg(gate.reason || "Límite alcanzado.");
+      return;
+    }
     setLoading(true);
     try {
       const learnTopics: RoleReviewLearnTopic[] = gaps.map((g) => ({
@@ -112,6 +144,7 @@ export default function RepasoClient() {
         optIn: g.wantLearn,
         source: g.source,
       }));
+      const maxDays = roleReviewMaxDays(gate.plan);
 
       const res = await fetch("/api/role-review", {
         method: "POST",
@@ -124,6 +157,8 @@ export default function RepasoClient() {
           jobText,
           learnTopics,
           knownStrengths: strengths,
+          roleFamily: family,
+          maxDays,
         }),
       });
       const data = await res.json();
@@ -132,6 +167,9 @@ export default function RepasoClient() {
         return;
       }
 
+      recordRoleReviewGenerate();
+      bumpRoleReviewMetric("plansCreated");
+
       const now = Date.now();
       const plan: RoleReviewPlan = {
         id: `rr_${now}_${Math.random().toString(36).slice(2, 6)}`,
@@ -139,7 +177,7 @@ export default function RepasoClient() {
         title: data.plan.title,
         objective: data.plan.objective,
         mode: data.plan.mode || mode,
-        roleFamily: data.plan.roleFamily,
+        roleFamily: data.plan.roleFamily || family,
         learnTopics: data.plan.learnTopics || learnTopics,
         days: data.plan.days,
         challenges: data.plan.challenges,
@@ -192,6 +230,8 @@ export default function RepasoClient() {
           Para no enfriar el oficio mientras buscas empleo: estudias lo del aviso y haces retos como
           los de un día real de trabajo. Si algo no lo sabes, márcalo y entra al plan.
         </p>
+        {quotaLabel ? <p className="text-xs muted">{quotaLabel}</p> : null}
+        {metricsLabel ? <p className="text-xs muted">{metricsLabel}</p> : null}
       </section>
 
       <section className="bento-card space-y-3">
@@ -304,7 +344,7 @@ export default function RepasoClient() {
       </section>
 
       <section className="bento-card space-y-3">
-        <h2 className="text-sm font-semibold">3. Modo y tiempo</h2>
+        <h2 className="text-sm font-semibold">3. Modo, familia y tiempo</h2>
         <label className="text-sm block">
           Modo
           <select
@@ -315,6 +355,20 @@ export default function RepasoClient() {
             {(Object.keys(ROLE_REVIEW_MODE_LABEL) as RoleReviewMode[]).map((m) => (
               <option key={m} value={m}>
                 {ROLE_REVIEW_MODE_LABEL[m]}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="text-sm block">
+          Familia del rol (plantillas de tickets)
+          <select
+            className="field mt-1"
+            value={family}
+            onChange={(e) => setFamily(e.target.value as RoleReviewFamily)}
+          >
+            {(Object.keys(ROLE_REVIEW_FAMILY_LABEL) as RoleReviewFamily[]).map((f) => (
+              <option key={f} value={f}>
+                {ROLE_REVIEW_FAMILY_LABEL[f]}
               </option>
             ))}
           </select>
@@ -331,6 +385,9 @@ export default function RepasoClient() {
             <option value={45}>45</option>
           </select>
         </label>
+        <p className="text-xs muted">
+          Plan free: 3 días. Carrera/Plus: hasta 7. Cupo mensual según tu plan.
+        </p>
         <button
           type="button"
           className="btn-primary"

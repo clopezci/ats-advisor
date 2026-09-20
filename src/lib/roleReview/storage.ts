@@ -1,4 +1,5 @@
 import type { RoleReviewPlan } from "@/lib/roleReview/types";
+import { bumpRoleReviewMetric } from "@/lib/roleReview/metrics";
 
 const KEY = "ats_role_review_plans_v1";
 
@@ -50,21 +51,31 @@ export function upsertRoleReviewPlan(plan: RoleReviewPlan) {
 export function markDayDone(planId: string, day: number) {
   const plan = getRoleReviewPlan(planId);
   if (!plan) return null;
+  if (plan.completedDays.includes(day)) return plan;
   const completedDays = Array.from(new Set([...plan.completedDays, day])).sort((a, b) => a - b);
-  return upsertRoleReviewPlan({ ...plan, completedDays });
+  const next = upsertRoleReviewPlan({ ...plan, completedDays });
+  bumpRoleReviewMetric("daysCompleted");
+  if (completedDays.length >= (plan.days?.length || 0) && (plan.days?.length || 0) > 0) {
+    bumpRoleReviewMetric("plansCompleted");
+  }
+  return next;
 }
 
 export function markChallengeDone(planId: string, challengeId: string) {
   const plan = getRoleReviewPlan(planId);
   if (!plan) return null;
+  if (plan.completedChallenges.includes(challengeId)) return plan;
   const completedChallenges = Array.from(new Set([...plan.completedChallenges, challengeId]));
+  bumpRoleReviewMetric("challengesDone");
   return upsertRoleReviewPlan({ ...plan, completedChallenges });
 }
 
 export function markTicketDone(planId: string, ticketId: string) {
   const plan = getRoleReviewPlan(planId);
   if (!plan) return null;
+  if (plan.completedTickets.includes(ticketId)) return plan;
   const completedTickets = Array.from(new Set([...plan.completedTickets, ticketId]));
+  bumpRoleReviewMetric("ticketsClosed");
   return upsertRoleReviewPlan({ ...plan, completedTickets });
 }
 

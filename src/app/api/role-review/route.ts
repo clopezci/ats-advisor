@@ -5,7 +5,8 @@ import { reportError } from "@/lib/observability";
 import { hydrateSettingsFromCloud } from "@/lib/settingsPersist";
 import { clampText } from "@/lib/validation";
 import { buildFallbackRoleReviewPlan, buildRoleReviewPrompt } from "@/lib/roleReview/prompt";
-import type { RoleReviewLearnTopic, RoleReviewMode } from "@/lib/roleReview/types";
+import type { RoleReviewFamily, RoleReviewLearnTopic, RoleReviewMode } from "@/lib/roleReview/types";
+import { detectRoleFamily } from "@/lib/roleReview/templates";
 
 export const runtime = "nodejs";
 
@@ -13,6 +14,21 @@ function asMode(v: unknown): RoleReviewMode {
   const s = String(v || "");
   if (s === "total" || s === "entrevista" || s === "dia1" || s === "refuerzo") return s;
   return "refuerzo";
+}
+
+function asFamily(v: unknown, jobTitle: string, jobText: string): RoleReviewFamily {
+  const s = String(v || "");
+  if (
+    s === "tech" ||
+    s === "data" ||
+    s === "finanzas" ||
+    s === "ops" ||
+    s === "comercial" ||
+    s === "general"
+  ) {
+    return s;
+  }
+  return detectRoleFamily(jobTitle, jobText);
 }
 
 function parseLearnTopics(raw: unknown): RoleReviewLearnTopic[] {
@@ -52,6 +68,8 @@ export async function POST(req: Request) {
     const knownStrengths = Array.isArray(body.knownStrengths)
       ? body.knownStrengths.map((s: unknown) => clampText(String(s), 60)).filter(Boolean).slice(0, 20)
       : [];
+    const maxDays = Math.min(7, Math.max(3, Number(body.maxDays) || 7));
+    const roleFamily = asFamily(body.roleFamily, jobTitle, jobText);
 
     if (jobText.length < 40) {
       return NextResponse.json(
@@ -73,6 +91,8 @@ export async function POST(req: Request) {
       jobText,
       learnTopics,
       knownStrengths,
+      roleFamily,
+      maxDays,
     });
 
     const threshold = settings.ai_limits.quality_threshold ?? 0.72;
@@ -118,6 +138,8 @@ export async function POST(req: Request) {
       jobTitle,
       learnTopics,
       jobText,
+      roleFamily,
+      maxDays,
     });
 
     const days = Array.isArray(parsed?.days) && parsed!.days!.length ? parsed!.days : fallback.days;
@@ -149,7 +171,7 @@ export async function POST(req: Request) {
         title: String(parsed?.title || fallback.title),
         objective: String(parsed?.objective || fallback.objective),
         mode,
-        roleFamily: parsed?.roleFamily || fallback.roleFamily,
+        roleFamily: parsed?.roleFamily || fallback.roleFamily || roleFamily,
         learnTopics,
         days,
         challenges,

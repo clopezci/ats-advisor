@@ -79,8 +79,12 @@ export async function POST(req: Request) {
     let parsed: {
       title?: string;
       objective?: string;
+      roleFamily?: string;
       days?: unknown[];
       challenges?: unknown[];
+      tickets?: unknown[];
+      starBank?: unknown[];
+      week1Checklist?: unknown[];
     } | null = null;
     let provider = "local";
     let usedPaid = false;
@@ -121,6 +125,16 @@ export async function POST(req: Request) {
       Array.isArray(parsed?.challenges) && parsed!.challenges!.length
         ? parsed!.challenges
         : fallback.challenges;
+    const tickets =
+      Array.isArray(parsed?.tickets) && parsed!.tickets!.length ? parsed!.tickets : fallback.tickets;
+    const starBank =
+      Array.isArray(parsed?.starBank) && parsed!.starBank!.length
+        ? parsed!.starBank
+        : fallback.starBank;
+    const week1Checklist =
+      Array.isArray(parsed?.week1Checklist) && parsed!.week1Checklist!.length
+        ? parsed!.week1Checklist
+        : fallback.week1Checklist;
 
     if (!days.length || !challenges.length) {
       return NextResponse.json({ error: "No se pudo armar el plan. Reintenta." }, { status: 502 });
@@ -135,9 +149,13 @@ export async function POST(req: Request) {
         title: String(parsed?.title || fallback.title),
         objective: String(parsed?.objective || fallback.objective),
         mode,
+        roleFamily: parsed?.roleFamily || fallback.roleFamily,
         learnTopics,
         days,
         challenges,
+        tickets,
+        starBank,
+        week1Checklist,
       },
     });
   } catch (error) {

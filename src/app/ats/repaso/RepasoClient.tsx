@@ -138,14 +138,22 @@ export default function RepasoClient() {
         jobId: jobId || undefined,
         title: data.plan.title,
         objective: data.plan.objective,
-        mode: data.plan.mode,
+        mode: data.plan.mode || mode,
+        roleFamily: data.plan.roleFamily,
         learnTopics: data.plan.learnTopics || learnTopics,
         days: data.plan.days,
         challenges: data.plan.challenges,
+        tickets: data.plan.tickets || [],
+        starBank: data.plan.starBank || [],
+        week1Checklist: data.plan.week1Checklist || [],
         createdAt: now,
         updatedAt: now,
         completedDays: [],
         completedChallenges: [],
+        completedTickets: [],
+        completedWeek1: [],
+        starAnswers: {},
+        coachTranscript: [],
       };
       upsertRoleReviewPlan(plan);
 

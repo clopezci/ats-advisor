@@ -132,6 +132,15 @@ export const CAPABILITIES: Capability[] = [
     href: "/ats/benchmark",
   },
   {
+    id: "ats-repaso",
+    title: "Repaso del rol",
+    summary:
+      "Plan anclado a la vacante: honestidad (¿quieres aprenderlo?), tickets tipo Jira, retos diarios, STAR y checklist semana 1.",
+    audience: ["candidato"],
+    status: "disponible",
+    href: "/ats/repaso",
+  },
+  {
     id: "ats-rewrite",
     title: "Ajuste coherente de hoja de vida",
     summary: "Rewrite + re-score antes/después, DOCX, carta y LinkedIn ligados al análisis.",
@@ -142,7 +151,7 @@ export const CAPABILITIES: Capability[] = [
   {
     id: "ats-free-limit",
     title: "ATS gratis con límite diario",
-    summary: "Freemium estrecho: ATS + encaje + tracker gratis; Carrera desbloquea el resto.",
+    summary: "Freemium estrecho: ATS + encaje + tracker + repaso del rol gratis; Carrera desbloquea el resto.",
     audience: ["candidato"],
     status: "disponible",
     href: "/precios",

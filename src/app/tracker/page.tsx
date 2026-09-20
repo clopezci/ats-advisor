@@ -15,6 +15,7 @@ import {
   type JobItem,
   type JobStatus,
 } from "@/lib/tracker/jobs";
+import { getRoleReviewPlan, planProgressPct } from "@/lib/roleReview/storage";
 import { FlowContinueBar } from "@/components/FlowContinueBar";
 
 const STATUSES = Object.keys(STATUS_LABEL) as JobStatus[];
@@ -141,6 +142,14 @@ export default function TrackerPage() {
           {job.appliedAt ? (
             <p className="text-xs muted">Postulé: {formatAppliedAt(job.appliedAt)}</p>
           ) : null}
+          {job.roleReviewPlanId ? (
+            <p className="text-xs" style={{ color: "var(--brand)" }}>
+              {(() => {
+                const p = getRoleReviewPlan(job.roleReviewPlanId!);
+                return p ? `Repaso del rol: ${planProgressPct(p)}%` : "Repaso del rol guardado";
+              })()}
+            </p>
+          ) : null}
           <div className="flex gap-2">
             <textarea
               className="field min-h-16 text-sm"
@@ -197,7 +206,11 @@ export default function TrackerPage() {
             </button>
           ) : null}
           <Link
-            href={`/ats/repaso?jobId=${encodeURIComponent(job.id)}`}
+            href={
+              job.roleReviewPlanId
+                ? `/ats/repaso/player?id=${encodeURIComponent(job.roleReviewPlanId)}`
+                : `/ats/repaso?jobId=${encodeURIComponent(job.id)}`
+            }
             className="btn-secondary"
             onClick={() => {
               try {
@@ -216,7 +229,7 @@ export default function TrackerPage() {
               }
             }}
           >
-            Repasar este rol (plan + retos)
+            {job.roleReviewPlanId ? "Continuar repaso del rol" : "Repasar este rol (plan + retos)"}
           </Link>
           <Link
             href="/ats"

@@ -54,6 +54,7 @@ function localFallback(task: AiTask, prompt: string): string {
     return JSON.stringify({
       title: "Repaso del rol (modo local)",
       objective: "Practicar el aviso con retos diarios aunque no haya IA online.",
+      roleFamily: "general",
       days: [
         {
           day: 1,
@@ -65,6 +66,8 @@ function localFallback(task: AiTask, prompt: string): string {
           interviewQ: "¿Cuáles son las 3 responsabilidades más críticas de este rol?",
           doneWhen: ["Tienes 3 temas priorizados", "Completaste el reto"],
           challengeId: "ch1",
+          ticketId: "tk1",
+          starId: "st1",
         },
       ],
       challenges: [
@@ -78,6 +81,36 @@ function localFallback(task: AiTask, prompt: string): string {
           deliverable: "Nota de 10 líneas",
           timeMin: 25,
           pitfalls: ["Copiar el aviso sin interpretar"],
+        },
+      ],
+      tickets: [
+        {
+          id: "tk1",
+          day: 1,
+          title: "Prioriza el backlog del rol",
+          priority: "P1",
+          type: "task",
+          description: "Ordena 5 tareas típicas del aviso por impacto.",
+          acceptance: ["Lista priorizada", "Criterio escrito"],
+          jdAnchor: prompt.slice(0, 80),
+          timeMin: 25,
+        },
+      ],
+      starBank: [
+        {
+          id: "st1",
+          day: 1,
+          question: "Cuéntame cómo priorizaste trabajo bajo presión (o cómo lo practicarías).",
+          hint: "STAR con hechos tuyos; no inventes.",
+          jdAnchor: prompt.slice(0, 80),
+        },
+      ],
+      week1Checklist: [
+        {
+          id: "w1",
+          dayHint: "Día 1",
+          title: "Mapa de stakeholders",
+          why: "Quién decide y quién usa tu trabajo.",
         },
       ],
     });

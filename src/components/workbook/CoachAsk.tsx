@@ -4,6 +4,7 @@ import { useState } from "react";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
 import { storedProfileEmail } from "@/lib/client/storedEmail";
+import { withUserAiHeaders } from "@/lib/ai/userKeysClient";
 
 /** Pregunta al coach del módulo (TTS-friendly, grounded). */
 export function CoachAsk({
@@ -24,7 +25,7 @@ export function CoachAsk({
     try {
       const res = await fetch("/api/ai/complete", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: withUserAiHeaders({ "Content-Type": "application/json" }),
         body: JSON.stringify({
           task: "general",
           useKnowledge: true,

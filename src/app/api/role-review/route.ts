@@ -58,6 +58,22 @@ export async function POST(req: Request) {
   const limited = rateLimit(req, "role-review", { limit: 10, windowMs: 60_000 });
   if (!limited.ok) return rateLimitedResponse(limited.retryAfterSec);
 
+  // Cupo mensual por IP (free ≈ 1–2; evita bypass de localStorage)
+  const monthly = rateLimit(req, "role-review-month", {
+    limit: 3,
+    windowMs: 30 * 86_400_000,
+  });
+  if (!monthly.ok) {
+    return NextResponse.json(
+      {
+        error:
+          "Llegaste al tope mensual de planes de repaso gratis. Configura Mi IA en /cuenta/mi-ia o activa Carrera.",
+        code: "MONTHLY_ROLE_REVIEW_LIMIT",
+      },
+      { status: 429, headers: { "Retry-After": String(monthly.retryAfterSec) } }
+    );
+  }
+
   try {
     const settings = await hydrateSettingsFromCloud();
     const body = await req.json().catch(() => ({}));

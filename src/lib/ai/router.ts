@@ -131,32 +131,22 @@ function localFallback(task: AiTask, prompt: string): string {
       })),
     });
   }
+  if (task === "ats_suggest") {
+    return "ATS_LOCAL_BULLET_REWRITES";
+  }
   if (task === "cv_rewrite") {
-    return [
-      "DISCLAIMER: Esto es un apoyo. Debes revisar y ajustar según tu experiencia real.",
-      "",
-      "Sin claves IA online, aplica este patrón a tus viñetas:",
-      "1) Copia 1 logro real que ya tengas.",
-      "2) Inserta 1–2 keywords faltantes de la oferta SOLO si son verdad.",
-      "3) Formato: Verbo + acción + herramienta/skill + resultado medible.",
-      "Ejemplo: 'Lideré migración a [herramienta de la oferta], reduciendo tiempo de cierre 25%.'",
-      "",
-      `Contexto pedido: ${prompt.slice(0, 400)}`,
-    ].join("\n");
+    // Nunca devolver tips como si fueran un CV (rompe Diff/DOCX).
+    return "ATS_LOCAL_NO_AI";
   }
   if (task === "application_advice") {
-    return [
-      "Checklist de buena postulación (modo local):",
-      "1) CV adaptado a ESTA vacante (keywords en logros, no stuffing).",
-      "2) PDF texto seleccionable / DOCX; 1 columna.",
-      "3) Formulario del portal completo con los mismos términos.",
-      "4) Mensaje corto: encaje + 1 logro + disponibilidad.",
-      "5) Perfil profesional alineado; postula pronto; prepara STAR.",
-      "",
-      `Contexto: ${prompt.slice(0, 280)}`,
-    ].join("\n");
+    // Si el prompt pide una CARTA, no devolver checklist (rompe UX).
+    if (/carta|mensaje de postulaci[oó]n|cover\s*letter/i.test(prompt)) {
+      return "ATS_LOCAL_COVER_LETTER";
+    }
+    return "ATS_LOCAL_APPLICATION_TIPS";
   }
-  return `Sugerencia local (sin claves IA): revisa tu descripción y concreta un logro medible. Pedido: ${prompt.slice(0, 280)}`;
+  // NUNCA concatenar el prompt del sistema (se filtraba a la UI).
+  return "ATS_LOCAL_GENERIC";
 }
 
 type ChatOk = { text: string; model: string };
@@ -264,11 +254,16 @@ async function callOpenRouter(messages: AiMessage[]): Promise<ChatOk | null> {
 
 export function scoreQuality(text: string, task: AiTask): number {
   if (!text || text.length < 40) return 0.1;
+  if (/^ATS_LOCAL_/.test(text.trim())) return 0.05;
+  if (/sin claves ia|pedido:\s*eres |contexto:\s*eres /i.test(text)) return 0.05;
   let score = 0.5;
   if (text.length > 200) score += 0.1;
   if (text.length > 800) score += 0.1;
   if (/objetivo|cápsula|capsula|quiz|práctica|practica/i.test(text)) score += 0.15;
   if (task.startsWith("out09") && text.includes("{") && text.includes("}")) score += 0.15;
+  if (task === "cv_rewrite" && /experiencia|habilidades|educaci/i.test(text) && text.length > 500) {
+    score += 0.2;
+  }
   if (/lorem ipsum|as an ai|como modelo de lenguaje/i.test(text)) score -= 0.3;
   return Math.max(0, Math.min(1, score));
 }

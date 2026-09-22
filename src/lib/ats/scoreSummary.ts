@@ -149,7 +149,7 @@ export function buildScoreSummary(result: AtsAnalyzeResult): AtsScoreSummary {
     }
     if (mustMissing.length) {
       toReach70.push(
-        `Si de verdad los cumples, hazlos visibles en logros (no solo en la lista de skills): ${mustMissing.slice(0, 5).join(", ")}.`
+        `Si de verdad los cumples, hazlos visibles en logros con viñetas de texto simple (no solo en Skills): ${mustMissing.slice(0, 5).join(", ")}.`
       );
     }
     if (result.missingKeywords.length) {
@@ -170,7 +170,7 @@ export function buildScoreSummary(result: AtsAnalyzeResult): AtsScoreSummary {
   if (result.score >= 85) {
     toReach85.push("Mantén coherencia entre CV, formulario del portal y LinkedIn. Postula pronto.");
   } else {
-    toReach85.push("Que lo indispensable se vea en 2 o más viñetas, no solo listado.");
+    toReach85.push("Que lo indispensable se vea en 2 o más logros concretos (viñetas de texto simple), no solo listado.");
     toReach85.push("Resumen alineado al cargo (primeras 3 líneas).");
     toReach85.push("Habilidades: 8–12 términos de la oferta que sí domines.");
     if (result.niceToHave?.missing?.length) {
@@ -178,7 +178,7 @@ export function buildScoreSummary(result: AtsAnalyzeResult): AtsScoreSummary {
         `Si los tienes, suma deseables: ${result.niceToHave.missing.slice(0, 4).join(", ")}.`
       );
     }
-    toReach85.push("Primera viñeta de cada cargo: logro concreto + término del rol.");
+    toReach85.push("Primera línea de cada cargo: logro concreto + término del rol (viñeta simple -, no tabla).");
   }
 
   return {

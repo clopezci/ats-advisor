@@ -12,7 +12,8 @@ import { analyzeBullets } from "@/lib/ats/bulletQuality";
 import { buildPlacementGuide, type PlacementTip } from "@/lib/ats/placementGuide";
 import { analyzeAuthenticity } from "@/lib/ats/aiTells";
 import { recruiterSkim, type RecruiterSkim } from "@/lib/ats/recruiterSkim";
-import { isJunkPhrase, normalizePhrase } from "@/lib/ats/phraseFilter";
+import { isJunkPhrase, normalizePhrase, filterSkillTerms } from "@/lib/ats/phraseFilter";
+import { normalizeJobText } from "@/lib/ats/jdNormalize";
 
 export type AtsProfile =
   | "generic"
@@ -152,16 +153,10 @@ const HARD_HINTS = [
   "data warehouse",
   "etl",
   "figma",
-  "ux",
-  "ui",
-  "seo",
-  "sem",
   "google analytics",
   "nómina",
   "nomina",
   "hcm",
-  "mm",
-  "fi/co",
   "fico",
   "abap",
   "netsuite",
@@ -169,17 +164,43 @@ const HARD_HINTS = [
   "postgresql",
   "mysql",
   "mongodb",
-  "git",
   "ci/cd",
   "devops",
+  "finops",
+  "aiops",
+  "mlops",
+  "sre",
+  "site reliability",
+  "observabilidad",
+  "monitoreo",
+  "drp",
+  "disaster recovery",
+  "on-premise",
+  "on premise",
+  "híbrida",
+  "hibrida",
+  "infraestructura",
   "seguridad de la información",
   "iso 27001",
   "pmp",
   "itil",
+  "itil 4",
+  "cobit",
+  "togaf",
   "six sigma",
   "lean",
   "okrs",
+  "okr",
   "kpis",
+  "kpi",
+  "slas",
+  "sla",
+  "xlas",
+  "xla",
+  "team topologies",
+  "servicios compartidos",
+  "automatización",
+  "automatizacion",
 ];
 
 function normalize(text: string) {
@@ -201,22 +222,33 @@ function extractPhrases(job: string) {
   const n = normalize(job);
   const phrases = new Set<string>();
   for (const s of [...SOFT, ...HARD_HINTS]) {
-    if (jobHasTerm(n, s)) phrases.add(s);
+    if (jobHasTerm(n, s) && !isJunkPhrase(s)) phrases.add(s);
   }
-  return [...phrases].filter((p) => !isJunkPhrase(p));
+  return filterSkillTerms([...phrases]);
 }
 
 /**
- * Must-have: skills del catálogo + formación/años/viñetas de requisitos.
- * Nunca bigramas del intro (“acerca del empleo…”).
+ * Must-have: skills del catálogo + formación/años en sección de requisitos.
+ * Nunca bigramas del intro (“estamos buscando…”) ni beneficios.
  */
 function extractMustPhrases(mustSection: string, fullJob: string) {
-  const corpus = mustSection.trim().length >= 40 ? mustSection : fullJob;
+  const corpus =
+    mustSection.trim().length >= 40
+      ? mustSection
+      : fullJob
+          .split("\n")
+          .filter((l) => {
+            const t = l.trim();
+            if (t.length < 6) return false;
+            if (/estamos buscando|nuestro cliente|ofrecemos|salario|bono|auxilio/i.test(t)) return false;
+            return true;
+          })
+          .join("\n");
   const n = normalize(corpus);
   const phrases = new Set<string>();
 
   for (const s of [...HARD_HINTS, ...SOFT]) {
-    if (jobHasTerm(n, s)) phrases.add(s);
+    if (jobHasTerm(n, s) && !isJunkPhrase(s)) phrases.add(s);
   }
 
   const eduHits = corpus.match(
@@ -230,15 +262,20 @@ function extractMustPhrases(mustSection: string, fullJob: string) {
   const yearHit = normalize(corpus).match(/(\d+)\s*\+?\s*(anos|años|years)/);
   if (yearHit) phrases.add(`${yearHit[1]} años`);
 
+  // Frases de requisito largas (línea completa corta), no bigramas deslizantes
   for (const line of mustSection.split("\n")) {
-    const t = line.replace(/^[-•●*]+\s*/, "").trim();
-    if (t.length < 12 || t.length > 90 || isJunkPhrase(t)) continue;
+    const t = line.replace(/^[-•●*🔑⭐]+\s*/, "").trim();
+    if (t.length < 8 || t.length > 100 || isJunkPhrase(t)) continue;
+    if (/^(devops|finops|aiops|itil|aws|azure|gcp|sre|observabilidad)/i.test(t) && t.length <= 40) {
+      phrases.add(t.replace(/\s+/g, " "));
+      continue;
+    }
     for (const s of HARD_HINTS) {
-      if (jobHasTerm(normalize(t), s)) phrases.add(s);
+      if (jobHasTerm(normalize(t), s) && !isJunkPhrase(s)) phrases.add(s);
     }
   }
 
-  return [...phrases].filter((p) => !isJunkPhrase(p)).slice(0, 24);
+  return filterSkillTerms([...phrases]).slice(0, 24);
 }
 
 function matchPhrases(cvN: string, phrases: string[]) {
@@ -310,7 +347,7 @@ function formatAlerts(cv: string, profile: AtsProfile, sections: ReturnType<type
   if (cv.length > 12000) {
     alerts.push("CV muy largo: muchos parsers y reclutadores prefieren 1–2 páginas enfocadas a la vacante.");
   }
-  if (/\|/.test(cv) || /\t\t/.test(cv)) {
+  if ((cv.match(/\|/g) || []).length >= 8 || /\t\t/.test(cv)) {
     alerts.push("Posible diseño multi-columna o tablas: Workday/Taleo suelen fallar al parsear.");
   }
   if ((cv.match(/•|●|◆|★|✓/g) || []).length > 40) {
@@ -363,25 +400,26 @@ function profileWeights(profile: AtsProfile): { kw: number; sem: number } {
 
 export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
   const profile = input.atsProfile || "generic";
+  const jobText = normalizeJobText(input.jobText);
   const cvN = normalize(input.cvText);
-  const jobN = normalize(input.jobText);
+  const jobN = normalize(jobText);
   const sections = detectCvSections(input.cvText);
-  const jobParts = splitJobSections(input.jobText);
+  const jobParts = splitJobSections(jobText);
 
-  const allPhrases = extractPhrases(input.jobText);
+  const allPhrases = extractPhrases(jobText);
   const { matched, missing } = matchPhrases(cvN, allPhrases);
 
-  const mustPhrases = extractMustPhrases(jobParts.must, input.jobText);
+  const mustPhrases = extractMustPhrases(jobParts.must, jobText);
   const nicePhrases = jobParts.nice ? extractPhrases(jobParts.nice) : [];
   const mustHave = matchPhrases(cvN, mustPhrases);
   const niceToHave = matchPhrases(cvN, nicePhrases);
 
   const hard = skillsFromCatalog(jobN, cvN, HARD_HINTS);
   const soft = skillsFromCatalog(jobN, cvN, SOFT);
-  const hardMatched = hard.matched;
-  const hardMissing = hard.missing;
-  const softMatched = soft.matched;
-  const softMissing = soft.missing;
+  const hardMatched = filterSkillTerms(hard.matched);
+  const hardMissing = filterSkillTerms(hard.missing);
+  const softMatched = filterSkillTerms(soft.matched);
+  const softMissing = filterSkillTerms(soft.missing);
 
   const exclusiveGaps: string[] = [];
   if (
@@ -391,7 +429,7 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
   ) {
     exclusiveGaps.push("La oferta exige inglés y no aparece claramente en tu CV.");
   }
-  const yr = yearsRequired(input.jobText);
+  const yr = yearsRequired(jobText);
   const yc = yearsInCv(input.cvText);
   if (yr && (yc === null || yc < yr)) {
     exclusiveGaps.push(`La oferta pide ~${yr} años de experiencia; en el CV se detectó ${yc ?? "poco claro"}.`);
@@ -401,10 +439,17 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
   const loc = locationGap(jobN, cvN);
   if (loc) exclusiveGaps.push(loc);
 
+  const mustMatched = filterSkillTerms(mustHave.matched);
+  const mustMissing = filterSkillTerms(mustHave.missing);
+  const niceMatched = filterSkillTerms(niceToHave.matched);
+  const niceMissing = filterSkillTerms(niceToHave.missing);
+  const kwMatched = filterSkillTerms(matched);
+  const kwMissing = filterSkillTerms(missing);
+
   // Must-have coverage pesa más que nice-to-have
-  const mustCov = mustPhrases.length ? mustHave.matched.length / mustPhrases.length : 0;
-  const allCov = allPhrases.length ? matched.length / allPhrases.length : 0.5;
-  const niceCov = nicePhrases.length ? niceToHave.matched.length / nicePhrases.length : 1;
+  const mustCov = mustPhrases.length ? mustMatched.length / mustPhrases.length : 0;
+  const allCov = allPhrases.length ? kwMatched.length / allPhrases.length : 0.5;
+  const niceCov = nicePhrases.length ? niceMatched.length / nicePhrases.length : 1;
   const coverage = mustPhrases.length >= 3 ? mustCov * 0.7 + allCov * 0.25 + niceCov * 0.05 : allCov;
 
   const format = formatAlerts(input.cvText, profile, sections);
@@ -420,7 +465,7 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
   );
   const embeddingProvider: EmbeddingProvider = input.semanticOverride?.provider || "local-tfidf";
   const semanticScore =
-    input.semanticOverride?.score ?? localTfidfScore(input.cvText, input.jobText);
+    input.semanticOverride?.score ?? localTfidfScore(input.cvText, jobText);
   const w = profileWeights(profile);
   const score = Math.round(Math.max(0, Math.min(100, keywordScore * w.kw + semanticScore * w.sem)));
 
@@ -431,7 +476,7 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
         95,
         score * 0.82 +
           (softMatched.length > 0 ? 4 : 0) +
-          (mustHave.matched.length > 3 ? 5 : 0) -
+          (mustMatched.length > 3 ? 5 : 0) -
           exclusiveGaps.length * 8
       )
     )
@@ -446,12 +491,12 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
   );
 
   const actions: string[] = [];
-  if (mustHave.missing.length) {
+  if (mustMissing.length) {
     actions.push(
-      `Si de verdad los cumples, déjalos ver en el CV: ${mustHave.missing.slice(0, 8).join(", ")}.`
+      `Si de verdad los cumples, déjalos ver en el CV: ${mustMissing.slice(0, 8).join(", ")}.`
     );
-  } else if (missing.length) {
-    actions.push(`Si aplica a tu experiencia, menciona: ${missing.slice(0, 8).join(", ")}.`);
+  } else if (kwMissing.length) {
+    actions.push(`Si aplica a tu experiencia, menciona: ${kwMissing.slice(0, 8).join(", ")}.`);
   }
   if (exclusiveGaps.length) {
     actions.push("Primero resuelve con honestidad lo excluyente (idioma, años, título, ciudad). No lo inventes.");
@@ -460,24 +505,31 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
   if (!sections.skills) actions.push("Agrega un bloque de habilidades con términos de la oferta que sí domines.");
   actions.push("Ajusta el CV a esta oferta y vuelve a analizar antes de postular.");
 
-  const heatTerms = [...new Set([...mustHave.missing, ...mustHave.matched, ...hardMissing, ...hardMatched, ...missing, ...matched])];
-  const heatmap = buildKeywordHeatmap(input.cvText, input.jobText, heatTerms, 28);
-  const sectionHits = sectionKeywordHits(input.cvText, [...matched, ...missing].slice(0, 40));
-  const bulletRaw = analyzeBullets(input.cvText, [...hardMatched, ...hardMissing, ...matched].slice(0, 30));
+  const heatTerms = filterSkillTerms([
+    ...mustMissing,
+    ...mustMatched,
+    ...hardMissing,
+    ...hardMatched,
+    ...kwMissing,
+    ...kwMatched,
+  ]);
+  const heatmap = buildKeywordHeatmap(input.cvText, jobText, heatTerms, 28);
+  const sectionHits = sectionKeywordHits(input.cvText, [...kwMatched, ...kwMissing].slice(0, 40));
+  const bulletRaw = analyzeBullets(input.cvText, [...hardMatched, ...hardMissing, ...kwMatched].slice(0, 30));
   const bulletQuality = {
     avgScore: bulletRaw.avgScore,
     total: bulletRaw.total,
     weakest: bulletRaw.weakest.map((b) => ({ text: b.text, score: b.score, tips: b.tips })),
   };
   const placementGuide = buildPlacementGuide({
-    missingMust: mustHave.missing,
+    missingMust: mustMissing,
     missingHard: hardMissing,
     missingSoft: softMissing,
     sectionHits,
   });
   const parsePreview = parseCvPreview(input.cvText);
   const authenticity = analyzeAuthenticity(input.cvText);
-  const skim = recruiterSkim(input.cvText, mustHave.matched[0] || matched[0]);
+  const skim = recruiterSkim(input.cvText, mustMatched[0] || kwMatched[0]);
 
   const explanation = [
     `Cobertura ponderada (must-have + keywords): ${Math.round(coverage * 100)}%.`,
@@ -493,7 +545,7 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
   const nextSteps = buildNextSteps({
     score,
     exclusiveGaps,
-    missingMust: mustHave.missing,
+    missingMust: mustMissing,
     formatAlerts: format,
     hasMetrics,
   });
@@ -515,17 +567,17 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
     interviewProbability,
     semanticScore,
     embeddingProvider,
-    matchedKeywords: matched.slice(0, 40),
-    missingKeywords: missing.slice(0, 40),
+    matchedKeywords: kwMatched.slice(0, 40),
+    missingKeywords: kwMissing.slice(0, 40),
     hardSkills: { matched: hardMatched.slice(0, 25), missing: hardMissing.slice(0, 25) },
     softSkills: { matched: softMatched.slice(0, 25), missing: softMissing.slice(0, 25) },
     mustHave: {
-      matched: mustHave.matched.slice(0, 25),
-      missing: mustHave.missing.slice(0, 25),
+      matched: mustMatched.slice(0, 25),
+      missing: mustMissing.slice(0, 25),
     },
     niceToHave: {
-      matched: niceToHave.matched.slice(0, 20),
-      missing: niceToHave.missing.slice(0, 20),
+      matched: niceMatched.slice(0, 20),
+      missing: niceMissing.slice(0, 20),
     },
     sectionCoverage: sections,
     exclusiveGaps,

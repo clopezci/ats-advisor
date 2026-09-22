@@ -1,10 +1,10 @@
 /** Extrae requisitos must-have vs nice-to-have de una oferta (heurística LATAM/ES). */
 
 const MUST_HEADERS =
-  /requisitos?\s*(excluyentes?|obligatorios?|indispensables?)?|experiencia\s+requerida|obligatorio|imprescindible|must[- ]have|required\s+qualifications?|requirements?|perfil\s+buscado|qué\s+buscamos|que\s+buscamos|conocimientos?\s+(requeridos?|necesarios?|técnicos?|tecnicos?)|habilidades?\s+requeridas?/i;
+  /requisitos?\s*(excluyentes?|obligatorios?|indispensables?)?|experiencia\s+(requerida|debe|necesari)|qué\s+experiencia|que\s+experiencia|obligatorio|imprescindible|must[- ]have|required\s+qualifications?|requirements?|perfil\s+buscado|qué\s+buscamos|que\s+buscamos|conocimientos?\s+(requeridos?|necesarios?|técnicos?|tecnicos?)|habilidades?\s+requeridas?|experiencia\s+debes\s+tener/i;
 
 const NICE_HEADERS =
-  /deseable|plus|nice[- ]to[- ]have|valoraremos|se\s+valora|preferible|idealmente|optional|ventaja|conocimientos?\s+adicionales/i;
+  /deseable|plus|nice[- ]to[- ]have|valoraremos|se\s+valora|preferible|idealmente|optional|ventaja|conocimientos?\s+adicionales|será\s+un\s+plus|sera\s+un\s+plus/i;
 
 /** Encabezados de intro/portales: NUNCA son sección must. */
 const ABOUT_HEADERS =
@@ -36,7 +36,7 @@ export function splitJobSections(jobText: string): { must: string; nice: string;
       continue;
     }
     if (
-      /^(funciones|responsabilidades|qué harás|que haras|actividades|beneficios|ofrecemos|acerca del|descripción|descripcion)/i.test(
+      /^(funciones|responsabilidades|qué harás|que haras|actividades|beneficios|ofrecemos|qué te ofrecemos|que te ofrecemos|acerca del|descripción|descripcion)/i.test(
         t
       ) &&
       t.length < 80
@@ -60,21 +60,26 @@ export function splitJobSections(jobText: string): { must: string; nice: string;
     }
   }
 
-  // Extrae viñetas que parecen requisitos (formación / años / stack) del cuerpo completo
+  // Extrae viñetas/líneas que parecen requisitos (formación / años / stack) del cuerpo completo
   if (must.join("\n").length < 60) {
     const reqish = lines.filter((l) => {
       const t = l.trim();
-      if (t.length < 12 || t.length > 160) return false;
+      if (t.length < 8 || t.length > 160) return false;
       if (ABOUT_HEADERS.test(t)) return false;
+      if (NICE_HEADERS.test(t)) return false;
+      if (/ofrecemos|salario|bono|auxilio|contrato|postúlate|postulate/i.test(t)) return false;
+      // No meter el encabezado "plus / experiencia en:" como must
+      if (/plus|experiencia\s+en\s*:?\s*$/i.test(t) && t.length < 50) return false;
       return (
         /^[-•●*]/.test(t) ||
         /\d+\s*\+?\s*(a[nñ]os|years)/i.test(t) ||
-        /(ingenier[ií]a|licenciatura|tecn[oó]log[oa]|profesional\s+en|experiencia\s+en|conocimiento\s+(en|de)|manejo\s+de)/i.test(
+        /^(devops|finops|aiops|itil|aws|azure|gcp|sre|observabilidad|okrs?|kpis?|slas?)/i.test(t) ||
+        /(ingenier[ií]a|licenciatura|tecn[oó]log[oa]|profesional\s+en|experiencia\s+en|conocimiento\s+(en|de)|manejo\s+de|gesti[oó]n\s+de|liderazgo\s+de|certificaci[oó]n)/i.test(
           t
         )
       );
     });
-    if (reqish.length) must.push(...reqish.slice(0, 20));
+    if (reqish.length) must.push(...reqish.slice(0, 24));
   }
 
   return {

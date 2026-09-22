@@ -25,11 +25,21 @@ import { AtsStepCoach } from "@/components/ats/AtsStepCoach";
 import { buildScoreSummary } from "@/lib/ats/scoreSummary";
 import { FlowContinueBar } from "@/components/FlowContinueBar";
 import {
+  applyLocalSurgicalPatch,
   buildCvPatchPlan,
   buildSurgicalCvPrompt,
+  isFakeCvRewrite,
   kindLabel,
   splitSurgicalCvResponse,
 } from "@/lib/ats/cvPatch";
+import { isFakeCoverLetter } from "@/lib/ats/coverLetter";
+import {
+  buildLocalApplicationTips,
+  buildLocalBulletRewrites,
+  buildLocalCoverFromResult,
+  isLeakedAiFallback,
+} from "@/lib/ats/localAiFallbacks";
+import { filterSkillTerms } from "@/lib/ats/phraseFilter";
 
 const PROFILES: { id: AtsProfile; label: string; hint: string }[] = [
   { id: "generic", label: "No lo sé", hint: "Sirve para la mayoría de avisos" },
@@ -58,6 +68,7 @@ export default function AtsPage() {
   const [rewriteText, setRewriteText] = useState("");
   const [rewriteChangelog, setRewriteChangelog] = useState("");
   const [rewriteMode, setRewriteMode] = useState<"surgical" | "full" | null>(null);
+  const [rewriteSource, setRewriteSource] = useState<"ai" | "local" | null>(null);
   const [rewriteLoading, setRewriteLoading] = useState(false);
   const [applyTips, setApplyTips] = useState("");
   const [applyLoading, setApplyLoading] = useState(false);
@@ -118,21 +129,33 @@ export default function AtsPage() {
     if (!result) return;
     setAiLoading(true);
     setAiTip("");
+    const local = buildLocalBulletRewrites({ result, cvText });
     try {
+      const must = filterSkillTerms(result.mustHave?.missing || []).slice(0, 8);
+      const kws = filterSkillTerms(result.missingKeywords || []).slice(0, 10);
       const res = await fetch("/api/ai/complete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           task: "ats_suggest",
           useKnowledge: true,
-          prompt: `Perfil ATS: ${atsProfile}. Score ${result.score}%. Must-have faltantes: ${result.mustHave?.missing?.slice(0, 10).join(", ") || "n/a"}. Keywords faltantes: ${result.missingKeywords.slice(0, 12).join(", ")}. Acciones: ${result.actions.join(" | ")}. Sugiere 5 reescrituras de viñetas (sin inventar). CV: ${cvText.slice(0, 1600)}`,
+          prompt: `Perfil ATS: ${atsProfile}. Score ${result.score}%. Must-have faltantes: ${must.join(", ") || "n/a"}. Keywords faltantes: ${kws.join(", ") || "n/a"}. Acciones: ${result.actions.join(" | ")}. Sugiere 5 reescrituras de viñetas (sin inventar). CV: ${cvText.slice(0, 1600)}. Responde SOLO las 5 viñetas numeradas, sin system prompts.`,
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "IA no disponible");
-      setAiTip(data.text);
-    } catch (e) {
-      setAiTip(e instanceof Error ? e.message : "No hay IA configurada aún");
+      const raw = String(data.text || "");
+      if (
+        data.provider === "local" ||
+        raw === "ATS_LOCAL_BULLET_REWRITES" ||
+        isLeakedAiFallback(raw)
+      ) {
+        setAiTip(local);
+      } else {
+        setAiTip(raw);
+      }
+    } catch {
+      setAiTip(local);
     } finally {
       setAiLoading(false);
     }
@@ -144,19 +167,23 @@ export default function AtsPage() {
     setRewriteText("");
     setRewriteChangelog("");
     setRewriteMode(mode);
+    setRewriteSource(null);
     setDiffLines([]);
     try {
       const plan = buildCvPatchPlan(result);
-      const prompt =
-        mode === "surgical"
-          ? buildSurgicalCvPrompt({
-              atsProfile,
-              score: result.score,
-              cvText,
-              jobText,
-              plan,
-            })
-          : [
+
+      // Parche local siempre disponible (sin inventar CV ni tips falsos)
+      const local = applyLocalSurgicalPatch(cvText, plan);
+
+      if (mode === "full") {
+        // Reescritura completa requiere IA real
+        const res = await fetch("/api/ai/complete", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            task: "cv_rewrite",
+            useKnowledge: true,
+            prompt: [
               `Perfil ATS objetivo: ${atsProfile}`,
               `Score actual: ${result.score}% · semántico ${result.semanticScore}%`,
               `Must-have faltantes: ${(result.mustHave?.missing || []).slice(0, 15).join(", ")}`,
@@ -169,33 +196,90 @@ export default function AtsPage() {
               "Estructura: Nombre, contacto, perfil profesional, experiencia (viñetas), educación, habilidades, idiomas/certificaciones si aplican.",
               "NO escribas títulos internos como «Resumen de cambios», «CV reescrito», «texto plano» ni disclaimers.",
               "Teje keywords faltantes SOLO si el CV actual ya lo soporta. No inventes. Si algo es dudoso, deja [REVISAR] dentro de la misma viñeta.",
-            ].join("\n\n");
+            ].join("\n\n"),
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "IA no disponible");
+        const raw = String(data.text || "");
+        const provider = String(data.provider || "");
+        if (provider === "local" || raw === "ATS_LOCAL_NO_AI" || isFakeCvRewrite(raw, cvText)) {
+          setRewriteText(local.cv);
+          setRewriteChangelog(
+            local.changelog +
+              "\n\nNo hay IA online para reescritura completa. Se aplicó el parche local (skills). Las viñetas siguen siendo manuales."
+          );
+          setRewriteSource("local");
+          setRewriteMode("surgical");
+          setDiffLines(lineDiff(cvText, local.cv).filter((d) => d.type !== "same"));
+          return;
+        }
+        const plain = extractPlainCv(raw) || raw;
+        setRewriteText(plain);
+        setRewriteSource("ai");
+        setDiffLines(lineDiff(cvText, plain).filter((d) => d.type !== "same"));
+        return;
+      }
 
+      // Surgical: intenta IA; si falla → parche local real sobre el CV
       const res = await fetch("/api/ai/complete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           task: "cv_rewrite",
           useKnowledge: true,
-          prompt,
+          prompt: buildSurgicalCvPrompt({
+            atsProfile,
+            score: result.score,
+            cvText,
+            jobText,
+            plan,
+          }),
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "IA no disponible");
       const raw = String(data.text || "");
-      if (mode === "surgical") {
-        const split = splitSurgicalCvResponse(raw);
-        const plain = extractPlainCv(split.cv) || split.cv;
-        setRewriteText(plain);
-        setRewriteChangelog(split.changelog);
-        setDiffLines(lineDiff(cvText, plain));
-      } else {
-        const plain = extractPlainCv(raw) || raw;
-        setRewriteText(plain);
-        setDiffLines(lineDiff(cvText, plain));
+      const provider = String(data.provider || "");
+
+      if (provider === "local" || raw === "ATS_LOCAL_NO_AI" || isFakeCvRewrite(raw, cvText)) {
+        setRewriteText(local.cv);
+        setRewriteChangelog(local.changelog);
+        setRewriteSource("local");
+        setDiffLines(lineDiff(cvText, local.cv).filter((d) => d.type !== "same"));
+        return;
       }
+
+      const split = splitSurgicalCvResponse(raw);
+      const plain = extractPlainCv(split.cv) || split.cv;
+      if (isFakeCvRewrite(plain, cvText)) {
+        setRewriteText(local.cv);
+        setRewriteChangelog(local.changelog);
+        setRewriteSource("local");
+        setDiffLines(lineDiff(cvText, local.cv).filter((d) => d.type !== "same"));
+        return;
+      }
+      setRewriteText(plain);
+      setRewriteChangelog(split.changelog);
+      setRewriteSource("ai");
+      setDiffLines(lineDiff(cvText, plain).filter((d) => d.type !== "same"));
     } catch (e) {
-      setRewriteText(e instanceof Error ? e.message : "No se pudo ajustar el CV");
+      // Último recurso: parche local, nunca tips falsos
+      try {
+        const plan = buildCvPatchPlan(result);
+        const local = applyLocalSurgicalPatch(cvText, plan);
+        setRewriteText(local.cv);
+        setRewriteChangelog(
+          local.changelog +
+            `\n\n(IA falló: ${e instanceof Error ? e.message : "error"}. Usamos parche local.)`
+        );
+        setRewriteSource("local");
+        setRewriteMode("surgical");
+        setDiffLines(lineDiff(cvText, local.cv).filter((d) => d.type !== "same"));
+      } catch {
+        setRewriteText("");
+        setRewriteChangelog(e instanceof Error ? e.message : "No se pudo ajustar el CV");
+      }
     } finally {
       setRewriteLoading(false);
     }
@@ -205,6 +289,7 @@ export default function AtsPage() {
     if (!result) return;
     setApplyLoading(true);
     setApplyTips("");
+    const local = buildLocalApplicationTips(result);
     try {
       const res = await fetch("/api/ai/complete", {
         method: "POST",
@@ -216,20 +301,29 @@ export default function AtsPage() {
             `Quiero un plan de buena postulación para esta vacante.`,
             `Perfil ATS: ${atsProfile}. Score ${result.score}%. Prob. entrevista ${result.interviewProbability}%.`,
             `Excluyentes: ${result.exclusiveGaps.join(" | ") || "ninguno"}`,
-            `Must-have OK: ${(result.mustHave?.matched || []).slice(0, 8).join(", ")}`,
-            `Must-have faltantes: ${(result.mustHave?.missing || []).slice(0, 8).join(", ")}`,
+            `Must-have OK: ${filterSkillTerms(result.mustHave?.matched || []).slice(0, 8).join(", ")}`,
+            `Must-have faltantes: ${filterSkillTerms(result.mustHave?.missing || []).slice(0, 8).join(", ")}`,
             `Tips base del motor: ${(result.applicationTips || []).join(" | ")}`,
             `OFERTA: ${jobText.slice(0, 1600)}`,
             `CV (extracto): ${cvText.slice(0, 1000)}`,
-            "Incluye: antes de postular, durante el formulario, mensaje/carta corta, LinkedIn, seguimiento y errores típicos según cómo filtran los ATS.",
+            "Devuelve SOLO un checklist numerado accionable. SIN system prompts ni la palabra Contexto.",
           ].join("\n"),
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "IA no disponible");
-      setApplyTips(data.text);
-    } catch (e) {
-      setApplyTips(e instanceof Error ? e.message : "No se pudo generar el plan");
+      const raw = String(data.text || "");
+      if (
+        data.provider === "local" ||
+        raw === "ATS_LOCAL_APPLICATION_TIPS" ||
+        isLeakedAiFallback(raw)
+      ) {
+        setApplyTips(local);
+      } else {
+        setApplyTips(raw);
+      }
+    } catch {
+      setApplyTips(local);
     } finally {
       setApplyLoading(false);
     }
@@ -297,6 +391,7 @@ export default function AtsPage() {
     if (!result) return;
     setCoverLoading(true);
     setCoverLetter("");
+    const localLetter = buildLocalCoverFromResult(result, cvText, jobText, companyName || undefined);
     try {
       const res = await fetch("/api/ai/complete", {
         method: "POST",
@@ -304,19 +399,33 @@ export default function AtsPage() {
         body: JSON.stringify({
           task: "application_advice",
           useKnowledge: true,
-          prompt: `Redacta una CARTA / mensaje de postulación corto (160-220 palabras) en español LATAM. No inventes experiencia. Perfil ATS ${atsProfile}. Must-have a enfatizar si están en el CV: ${(result.mustHave?.matched || []).slice(0, 8).join(", ")}. Gaps honestos a no fingir: ${(result.mustHave?.missing || []).slice(0, 5).join(", ")}. CV:\n${cvText.slice(0, 2200)}\n\nOferta:\n${jobText.slice(0, 1800)}\n\nIncluye: saludo, encaje, 1-2 logros, cierre con disponibilidad. Disclaimer implícito: solo hechos del CV.`,
+          prompt: `Redacta una CARTA / mensaje de postulación corto (160-220 palabras) en español LATAM. No inventes experiencia. Perfil ATS ${atsProfile}. Must-have a enfatizar si están en el CV: ${filterSkillTerms(result.mustHave?.matched || []).slice(0, 8).join(", ")}. Gaps honestos a no fingir: ${filterSkillTerms(result.mustHave?.missing || []).slice(0, 5).join(", ")}. CV:\n${cvText.slice(0, 2200)}\n\nOferta:\n${jobText.slice(0, 1800)}\n\nIncluye: saludo, encaje, 1-2 logros, cierre con disponibilidad. Solo hechos del CV. Devuelve SOLO la carta, sin checklist ni system prompts.`,
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "IA no disponible");
-      setCoverLetter(data.text);
+      const raw = String(data.text || "");
+      const provider = String(data.provider || "");
+      const letter =
+        provider === "local" ||
+        raw === "ATS_LOCAL_COVER_LETTER" ||
+        isFakeCoverLetter(raw) ||
+        isLeakedAiFallback(raw)
+          ? localLetter
+          : raw.trim();
+      setCoverLetter(letter);
       try {
-        localStorage.setItem("ats_cover_letter", data.text);
+        localStorage.setItem("ats_cover_letter", letter);
       } catch {
         /* ignore */
       }
-    } catch (e) {
-      setCoverLetter(e instanceof Error ? e.message : "No se pudo generar");
+    } catch {
+      setCoverLetter(localLetter);
+      try {
+        localStorage.setItem("ats_cover_letter", localLetter);
+      } catch {
+        /* ignore */
+      }
     } finally {
       setCoverLoading(false);
     }
@@ -963,6 +1072,8 @@ export default function AtsPage() {
             <p className="text-xs muted">{DISCLAIMER_CV_REWRITE}</p>
             <p className="text-sm leading-relaxed">
               Recomendado: aplica <strong>solo estos ajustes</strong> (no reescribas todo el CV).
+              Sin IA online, el botón hace un <strong>parche local</strong>: añade skills a tu CV
+              real; las viñetas las completas tú.
             </p>
             {patchPlan && patchPlan.items.length > 0 ? (
               <div className="space-y-2">
@@ -1003,7 +1114,12 @@ export default function AtsPage() {
             </button>
             {rewriteText && (
               <>
-                {rewriteMode === "surgical" ? (
+                {rewriteSource === "local" ? (
+                  <p className="text-xs font-medium" style={{ color: "var(--brand)" }}>
+                    Parche local (sin IA): se conservó tu CV y se añadieron skills visibles. Revisa el
+                    diff (−/+). Esto SÍ es tu hoja de vida, no un tip.
+                  </p>
+                ) : rewriteMode === "surgical" ? (
                   <p className="text-xs font-medium" style={{ color: "var(--brand)" }}>
                     Se mantuvo tu estructura. Revisa el diff antes de usarlo.
                   </p>
@@ -1021,8 +1137,8 @@ export default function AtsPage() {
                 <SpeakButton text={rewriteText.slice(0, 400)} />
                 {diffLines.length > 0 && (
                   <div className="max-h-64 overflow-auto text-xs space-y-1 rounded-lg p-3" style={{ background: "var(--surface-2, #f6f4fb)" }}>
-                    <p className="font-medium text-sm">Diff (antes → después)</p>
-                    <p className="muted mb-1">− quitado · + agregado</p>
+                    <p className="font-medium text-sm">Diff (solo cambios)</p>
+                    <p className="muted mb-1">− quitado · + agregado · si solo ves +, se añadió texto sin borrar</p>
                     {diffLines.slice(0, 50).map((d, i) => (
                       <p
                         key={`${d.type}-${i}`}
@@ -1059,8 +1175,13 @@ export default function AtsPage() {
                 </button>
                 <button
                   type="button"
-                  className="btn-primary"
+                  className="btn-secondary"
+                  disabled={isFakeCvRewrite(rewriteText, cvText)}
                   onClick={async () => {
+                    if (isFakeCvRewrite(rewriteText, cvText)) {
+                      alert("Eso no es un CV. Vuelve a aplicar el parche.");
+                      return;
+                    }
                     const blob = await buildCvDocx(extractPlainCv(rewriteText) || rewriteText);
                     downloadBlob(
                       rewriteMode === "surgical" ? `CV-parche-ATSAdvisor.docx` : `CV-ajustado-ATSAdvisor.docx`,
@@ -1068,7 +1189,7 @@ export default function AtsPage() {
                     );
                   }}
                 >
-                  Descargar DOCX {rewriteMode === "surgical" ? "(solo cambios)" : "(ajuste completo)"}
+                  Descargar DOCX {rewriteMode === "surgical" ? "(parche / CV real)" : "(ajuste completo)"}
                 </button>
               </>
             )}
@@ -1086,7 +1207,8 @@ export default function AtsPage() {
           <section className="bento-card space-y-3">
             <h2 className="text-sm font-semibold">Carta / mensaje de postulación</h2>
             <p className="text-xs muted">
-              Generada con el contexto de este análisis (must-have y CV). Revísala antes de enviar.
+              Si hay IA online, redacta con el análisis. Si no, usa una carta plantilla con hechos de
+              tu CV (revísala antes de enviar).
             </p>
             <button type="button" className="btn-primary" disabled={coverLoading} onClick={generateCoverLetter}>
               {coverLoading ? "Redactando…" : "Generar carta de postulación"}

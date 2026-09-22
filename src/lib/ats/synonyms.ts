@@ -19,6 +19,23 @@ export const SYNONYMS: Record<string, string[]> = {
   marketing: ["mercadeo", "digital marketing", "growth", "seo", "sem"],
   scrum: ["agile", "ágil", "kanban", "sprint"],
   jira: ["atlassian", "confluence"],
+  // Ops / plataforma / SRE (LATAM)
+  itil: ["itil 4", "gestion de servicios", "gestión de servicios", "incidentes", "continuidad"],
+  devops: ["ci/cd", "cicd", "pipeline", "despliegues", "despliegue"],
+  finops: ["fintech", "costo cloud", "optimizacion de costos", "optimización de costos"],
+  aiops: ["automatizacion con ia", "automatización con ia", "ia aplicada", "agentes"],
+  observabilidad: ["monitoreo", "monitoring", "indicadores operativos", "telemetria", "telemetría"],
+  monitoreo: ["observabilidad", "seguimiento y control", "indicadores operativos", "kpis"],
+  sre: ["site reliability", "confiabilidad", "reliability", "disponibilidad"],
+  drp: ["continuidad del negocio", "continuidad operativa", "disaster recovery", "bcp"],
+  "on-premise": ["on premise", "onprem", "hibrida", "híbrida", "infraestructura"],
+  hibrida: ["híbrida", "on-premise", "on premise", "cloud", "infraestructura"],
+  infraestructura: ["plataforma", "infraestructura ti", "operaciones ti", "cloud"],
+  kpis: ["indicadores", "indicadores operativos", "metricas", "métricas", "okrs"],
+  slas: ["acuerdos de servicio", "niveles de servicio", "sla", "xla"],
+  okrs: ["objetivos", "kpis", "indicadores"],
+  gcp: ["google cloud", "google cloud platform"],
+  automatizacion: ["automatización", "rpa", "blueprism", "automation"],
 };
 
 export function expandTerm(term: string): string[] {

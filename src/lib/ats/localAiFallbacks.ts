@@ -2,6 +2,16 @@ import type { AtsAnalyzeResult } from "@/lib/ats/engine";
 import { filterSkillTerms } from "@/lib/ats/phraseFilter";
 import { buildLocalCoverLetter } from "@/lib/ats/coverLetter";
 
+/** Borrador de viñeta anclado al texto original (sin inventar métricas nuevas). */
+function draftBulletExample(original: string, skillHint: string): string {
+  const base = original.replace(/^[-•●*]\s*/, "").replace(/\s+/g, " ").trim().replace(/\.$/, "");
+  const skill = (skillHint || "").trim();
+  if (!skill || new RegExp(`\\b${skill.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i").test(base)) {
+    return `${base} (añade un número concreto si lo tienes: %, COP, personas o tiempo).`;
+  }
+  return `${base}, integrando ${skill} cuando haya evidencia real en tu rol.`;
+}
+
 /** Tips de postulación accionables (sin filtrar system prompts). */
 export function buildLocalApplicationTips(result: AtsAnalyzeResult): string {
   const must = filterSkillTerms(result.mustHave?.missing || []).slice(0, 5);
@@ -62,18 +72,19 @@ export function buildLocalBulletRewrites(opts: {
       const kw = missing[i] || missing[0] || "herramienta del aviso";
       lines.push(`${i + 1}) Original: ${b}`);
       lines.push(
-        `   Patrón: Verbo en pasado + qué hiciste + (${kw} solo si es verdad) + resultado con número.`
+        `   Ejemplo (edítalo; no inventes): ${draftBulletExample(b, kw)}`
       );
       lines.push("");
     }
   } else {
     weak.forEach((b, i) => {
       const kw = missing[i] || missing[0];
-      lines.push(`${i + 1}) Original: ${b.text.slice(0, 140)}${b.text.length > 140 ? "…" : ""}`);
+      const original = b.text.slice(0, 140) + (b.text.length > 140 ? "…" : "");
+      lines.push(`${i + 1}) Original: ${original}`);
       if (b.tips?.[0]) lines.push(`   Tip: ${b.tips[0]}`);
       lines.push(
         kw
-          ? `   Si aplica de verdad, menciona “${kw}” en esta viñeta con evidencia.`
+          ? `   Ejemplo (edítalo; solo si es verdad): ${draftBulletExample(b.text, kw)}`
           : "   Añade un número (% / COP / personas / tiempo) si lo tienes."
       );
       lines.push("");

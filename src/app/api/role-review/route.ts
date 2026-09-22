@@ -7,6 +7,8 @@ import { clampText } from "@/lib/validation";
 import { buildFallbackRoleReviewPlan, buildRoleReviewPrompt } from "@/lib/roleReview/prompt";
 import type { RoleReviewFamily, RoleReviewLearnTopic, RoleReviewMode } from "@/lib/roleReview/types";
 import { detectRoleFamily } from "@/lib/roleReview/templates";
+import { parseUserKeysFromRequest } from "@/lib/ai/userKeysServer";
+import { requirePaidCloud } from "@/lib/entitlements/requirePaidApi";
 
 export const runtime = "nodejs";
 
@@ -110,6 +112,11 @@ export async function POST(req: Request) {
     let usedPaid = false;
     let qualityScore = 0.5;
 
+    const userKeys = parseUserKeysFromRequest(req);
+    const paid = await requirePaidCloud({ email: body.email, allowLocalDev: false });
+    const allowSharedKeys = paid.ok;
+    const maxPaidEscalations = paid.ok ? settings.ai_limits.max_paid_escalations : 0;
+
     try {
       const ai = await completeWithCascade({
         task: "role_review",
@@ -122,7 +129,9 @@ export async function POST(req: Request) {
           { role: "user", content: prompt },
         ],
         qualityThreshold: threshold,
-        maxPaidEscalations: settings.ai_limits.max_paid_escalations,
+        maxPaidEscalations,
+        keys: userKeys,
+        allowSharedKeys,
       });
       provider = ai.provider;
       usedPaid = ai.usedPaid;

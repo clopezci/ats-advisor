@@ -18,6 +18,7 @@ import {
   recordRoleReviewGenerate,
   roleReviewMaxDays,
 } from "@/lib/limits/roleReviewFree";
+import { withUserAiHeaders } from "@/lib/ai/userKeysClient";
 import {
   ROLE_REVIEW_FAMILY_LABEL,
   ROLE_REVIEW_MODE_LABEL,
@@ -148,7 +149,7 @@ export default function RepasoClient() {
 
       const res = await fetch("/api/role-review", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: withUserAiHeaders({ "Content-Type": "application/json" }),
         body: JSON.stringify({
           mode,
           minutesPerDay: minutes,

@@ -14,18 +14,32 @@ export function buildLocalCoverLetter(opts: {
     cv
       .split("\n")
       .map((l) => l.trim())
-      .find((l) => l.length > 5 && l.length < 60 && !/@/.test(l) && !/perfil|experiencia|linkedin/i.test(l)) ||
-    "Candidato/a";
+      .find(
+        (l) =>
+          l.length > 5 &&
+          l.length < 70 &&
+          !/@/.test(l) &&
+          !/https?:|www\.|linkedin|perfil|experiencia|habilidades|tel|celular|\+\d/i.test(l) &&
+          /^[A-ZÁÉÍÓÚÑÜa-záéíóúñü][A-Za-zÁÉÍÓÚáéíóúÑñüÜ\s.'’-]+$/.test(l)
+      ) || "Candidato/a";
 
   const roleMatch = job.match(
     /(?:gerente|director|l[ií]der|analista|ingenier[oa]|desarrollador|coordinador)[^\n.]{0,60}/i
   );
   const role = (roleMatch?.[0] || "la vacante").replace(/\s+/g, " ").trim().slice(0, 80);
 
-  const company =
+  const companyRaw =
     opts.companyHint ||
-    (job.match(/(?:compa[nñ][ií]a|empresa|cliente)[^\n,]{0,40}/i)?.[0] || "").slice(0, 60) ||
-    "su organización";
+    (job.match(/(?:compa[nñ][ií]a|empresa)\s+del\s+sector\s+[^\n,]{0,40}/i)?.[0] || "") ||
+    (job.match(/sector\s+(financiero|energ[eé]tico|salud|retail|telecomunicaciones)/i)?.[0]
+      ? `empresa del ${job.match(/sector\s+(financiero|energ[eé]tico|salud|retail|telecomunicaciones)/i)?.[0]}`
+      : "") ||
+    "";
+  const company = (companyRaw || "su organización")
+    .replace(/nuestro cliente,?\s*/i, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 60);
 
   const strengths = (opts.matched || []).filter(Boolean).slice(0, 5);
   const gaps = (opts.missing || []).filter(Boolean).slice(0, 3);

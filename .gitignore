@@ -47,3 +47,8 @@ Thumbs.db
 
 # Outplacement personal docs (PII / copyrighted third-party) — never commit
 /DocumentacionOutplacement/
+
+# Temp extracts / smoke artifacts (may contain PII CVs)
+scripts/.tmp*
+scripts/**/.tmp*
+.tmp-cv*

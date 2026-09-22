@@ -446,11 +446,15 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
   const kwMatched = filterSkillTerms(matched);
   const kwMissing = filterSkillTerms(missing);
 
-  // Must-have coverage pesa más que nice-to-have
-  const mustCov = mustPhrases.length ? mustMatched.length / mustPhrases.length : 0;
-  const allCov = allPhrases.length ? kwMatched.length / allPhrases.length : 0.5;
-  const niceCov = nicePhrases.length ? niceMatched.length / nicePhrases.length : 1;
-  const coverage = mustPhrases.length >= 3 ? mustCov * 0.7 + allCov * 0.25 + niceCov * 0.05 : allCov;
+  // Cobertura sobre términos YA filtrados (no basura JD). Antes se dividía por
+  // mustPhrases crudas → scores artificialmente bajos (19–30%) con CVs fuertes.
+  const mustPool = mustMatched.length + mustMissing.length;
+  const kwPool = kwMatched.length + kwMissing.length;
+  const nicePool = niceMatched.length + niceMissing.length;
+  const mustCov = mustPool ? mustMatched.length / mustPool : 0;
+  const allCov = kwPool ? kwMatched.length / kwPool : 0.5;
+  const niceCov = nicePool ? niceMatched.length / nicePool : 1;
+  const coverage = mustPool >= 3 ? mustCov * 0.7 + allCov * 0.25 + niceCov * 0.05 : allCov;
 
   const format = formatAlerts(input.cvText, profile, sections);
   const traps = trapAlerts(input.cvText);

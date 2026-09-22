@@ -79,7 +79,7 @@ assert(byDomain.company?.name === "Bancolombia", "company name");
 
 assert(localTfidfScore(cv, job) > 0, "tfidf");
 assert(analyzeBullets(cv).total > 0, "bullets");
-assert(whatsappFinalPriceCop() === 4500, `wa price ${whatsappFinalPriceCop()}`);
+assert(whatsappFinalPriceCop() === 28800, `wa price ${whatsappFinalPriceCop()}`);
 
 console.log("ats engine tests ok", {
   strong: result.score,

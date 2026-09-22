@@ -1,5 +1,6 @@
 import type { AtsAnalyzeResult } from "@/lib/ats/engine";
 import { isJunkPhrase } from "@/lib/ats/phraseFilter";
+import { textHasTerm } from "@/lib/ats/synonyms";
 
 export type CvPatchItem = {
   id: string;
@@ -208,18 +209,25 @@ export function applyLocalSurgicalPatch(
     .filter((l) => l.length >= 2 && l.length <= 40 && !isJunkPhrase(l));
 
   const toInsert: string[] = [];
-  const cvLower = cv.toLowerCase();
+  const cvNorm = cv
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "");
   for (const label of skillLabels) {
-    if (cvLower.includes(label.toLowerCase())) {
+    if (cv.toLowerCase().includes(label.toLowerCase())) {
       omitted.push(`${label} (ya aparece en el CV)`);
       continue;
     }
-    // No insertar frases largas tipo requisitos; solo skills cortas
     if (label.split(/\s+/).length > 4) {
       omitted.push(`${label} (revisión manual: frase larga)`);
       continue;
     }
-    toInsert.push(label);
+    // Solo hace visible el término del aviso si el CV YA tiene evidencia (sinónimo/relacionado).
+    if (textHasTerm(cvNorm, label)) {
+      toInsert.push(label);
+      continue;
+    }
+    omitted.push(`${label} (manual: agrégalo solo si es verdad en tu experiencia)`);
   }
 
   for (const item of plan.items) {

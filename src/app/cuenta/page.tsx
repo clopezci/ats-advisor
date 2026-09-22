@@ -309,6 +309,17 @@ export default function CuentaPage() {
       </div>
 
       <div className="bento-card space-y-3">
+        <h2 className="font-semibold">Mi IA (clave propia)</h2>
+        <p className="text-xs muted leading-relaxed">
+          En plan gratis puedes pegar tu clave de Groq o Gemini (2 min). Se guarda solo en este
+          dispositivo — igual que en Aquí Entiendes — y no gasta el cupo compartido de la app.
+        </p>
+        <Link href="/cuenta/mi-ia" className="btn-primary">
+          Configurar Mi IA
+        </Link>
+      </div>
+
+      <div className="bento-card space-y-3">
         <h2 className="font-semibold">Habeas Data y baja</h2>
         <Link href="/cuenta/referidos" className="btn-secondary">
           Invitar amigos (referidos)

@@ -6,6 +6,9 @@ import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
 import { reportError } from "@/lib/observability";
 import { clampText } from "@/lib/validation";
 import { requirePaidCloud } from "@/lib/entitlements/requirePaidApi";
+import { hasAnyUserKey, parseUserKeysFromRequest } from "@/lib/ai/userKeysServer";
+import { isLeakedAiFallback } from "@/lib/ats/localAiFallbacks";
+import { readSettings } from "@/lib/settings";
 
 export const runtime = "nodejs";
 
@@ -52,6 +55,15 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Prompt demasiado largo (máx. 12000 caracteres)." }, { status: 400 });
     }
 
+    const userKeys = parseUserKeysFromRequest(req);
+    const hasByok = hasAnyUserKey(userKeys);
+    const settings = readSettings();
+
+    // Plan pago → puede usar claves de la app + escalado.
+    // Plan gratis → SOLO BYOK (o local). No quemar cupo Groq/OpenAI del dueño.
+    let allowSharedKeys = false;
+    let maxPaidEscalations = 0;
+
     if (!FREE_AI_TASKS.has(task)) {
       const gate = await requirePaidCloud({
         email: body.email,
@@ -60,6 +72,24 @@ export async function POST(req: Request) {
           "Esta IA requiere plan Carrera con correo verificado en cloud. Entra a /cuenta o /precios.",
       });
       if (!gate.ok) return gate.response;
+      allowSharedKeys = true;
+      maxPaidEscalations = settings.ai_limits.max_paid_escalations;
+    } else {
+      const paid = await requirePaidCloud({
+        email: body.email,
+        allowLocalDev: false,
+      });
+      if (paid.ok) {
+        allowSharedKeys = true;
+        maxPaidEscalations = settings.ai_limits.max_paid_escalations;
+      } else if (hasByok) {
+        allowSharedKeys = false;
+        // Con BYOK no escalamos a APIs de pago de la app
+        maxPaidEscalations = 0;
+      } else {
+        allowSharedKeys = false;
+        maxPaidEscalations = 0;
+      }
     }
 
     const grounded =
@@ -84,8 +114,7 @@ export async function POST(req: Request) {
         "Recuerda mix de canales: red, portal de la empresa y portales generales.",
       ats_suggest:
         "Eres coach ATS LATAM. Sugieres reescrituras de viñetas fieles (sin inventar). Explica por qué cada cambio ayuda al parse/match.",
-      interview_feedback:
-        careerCoachSystemPrompt("entrevistas"),
+      interview_feedback: careerCoachSystemPrompt("entrevistas"),
     };
 
     const coachModule = clampText(body.coachModule || "", 80);
@@ -107,13 +136,28 @@ export async function POST(req: Request) {
         },
         { role: "user", content: userContent },
       ],
+      keys: userKeys,
+      allowSharedKeys,
+      maxPaidEscalations,
     });
+
+    let text = result.text;
+    // Nunca devolver marcadores crudos ni prompts filtrados a coaches / UI genérica
+    if (/^ATS_LOCAL_/.test(text.trim()) || isLeakedAiFallback(text)) {
+      text =
+        "No hay IA online en este momento. Configura tu clave gratis en /cuenta/mi-ia (Groq o Gemini) " +
+        "o usa las plantillas locales del analizador ATS (carta, tips y parche de CV).";
+    }
 
     return NextResponse.json({
       ok: true,
       ...result,
+      text,
+      byok: hasByok,
+      usedSharedKeys: allowSharedKeys && !hasByok,
       coachPersona: persona?.id,
       coachName: persona?.name,
+      hintMiIa: !hasByok && !allowSharedKeys ? "/cuenta/mi-ia" : undefined,
     });
   } catch (error) {
     await reportError({ where: "api/ai/complete", error, notifyOwner: true });

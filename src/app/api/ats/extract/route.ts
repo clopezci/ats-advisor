@@ -18,6 +18,21 @@ export async function POST(req: Request) {
     if (file.size > 8 * 1024 * 1024) {
       return NextResponse.json({ error: "El archivo supera 8 MB." }, { status: 400 });
     }
+    const name = (file.name || "").toLowerCase();
+    const allowed =
+      name.endsWith(".pdf") ||
+      name.endsWith(".docx") ||
+      name.endsWith(".txt") ||
+      name.endsWith(".md") ||
+      file.type === "application/pdf" ||
+      file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+      file.type === "text/plain";
+    if (!allowed) {
+      return NextResponse.json(
+        { error: "Formato no permitido. Usa PDF, DOCX o TXT." },
+        { status: 400 }
+      );
+    }
     const text = await extractTextFromFile(file);
     if (text.trim().length < 40) {
       return NextResponse.json(
@@ -25,11 +40,11 @@ export async function POST(req: Request) {
         { status: 422 }
       );
     }
-    return NextResponse.json({ ok: true, text, filename: file.name });
+    return NextResponse.json({ ok: true, text, filename: file.name.slice(0, 180) });
   } catch (e) {
     await reportError({ where: "api/ats/extract", error: e });
     return NextResponse.json(
-      { error: e instanceof Error ? e.message : "No se pudo leer el archivo." },
+      { error: "No se pudo leer el archivo. Prueba otro formato o pega el texto." },
       { status: 500 }
     );
   }

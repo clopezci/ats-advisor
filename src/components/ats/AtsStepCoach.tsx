@@ -4,8 +4,9 @@ import { useMemo, useState } from "react";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
 import type { AtsAnalyzeResult } from "@/lib/ats/engine";
-import { atsStepCoachPlaceholder, buildAtsStepCoachContext } from "@/lib/ats/stepCoachContext";
 import type { AtsScoreSummary } from "@/lib/ats/scoreSummary";
+import { atsStepCoachPlaceholder, buildAtsStepCoachContext } from "@/lib/ats/stepCoachContext";
+import { withUserAiHeaders } from "@/lib/ai/userKeysClient";
 
 type Props = {
   step: 1 | 2 | 3 | 4;
@@ -62,7 +63,7 @@ export function AtsStepCoach({
       const task = step === 4 && result ? "ats_suggest" : step >= 2 ? "application_advice" : "general";
       const res = await fetch("/api/ai/complete", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: withUserAiHeaders({ "Content-Type": "application/json" }),
         body: JSON.stringify({
           task,
           useKnowledge: true,
@@ -72,7 +73,12 @@ export function AtsStepCoach({
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "IA no disponible ahora");
-      setA(String(data.text || ""));
+      const text = String(data.text || "");
+      setA(
+        data.hintMiIa
+          ? `${text}\n\n→ Para IA online gratis: configura tu clave en /cuenta/mi-ia`
+          : text
+      );
     } catch (e) {
       setA(e instanceof Error ? e.message : "No pudimos responder. Intenta de nuevo en un rato.");
     } finally {

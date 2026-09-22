@@ -4,12 +4,34 @@ import { computeSemanticScore } from "@/lib/ats/embeddings";
 import { detectAtsProfile } from "@/lib/ats/detectAts";
 import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
 import { reportError } from "@/lib/observability";
+import { readSettings } from "@/lib/settings";
 
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
   const limited = rateLimit(req, "ats-analyze", { limit: 40, windowMs: 60_000 });
   if (!limited.ok) return rateLimitedResponse(limited.retryAfterSec);
+
+  // Cupo diario por IP (servidor) — alinea free_ats_per_day; no solo localStorage
+  let dayLimit = 5;
+  try {
+    dayLimit = readSettings().ai_limits.free_ats_per_day || 5;
+  } catch {
+    /* ignore */
+  }
+  const daily = rateLimit(req, "ats-analyze-day", {
+    limit: Math.max(dayLimit, 3),
+    windowMs: 86_400_000,
+  });
+  if (!daily.ok) {
+    return NextResponse.json(
+      {
+        error: `Llegaste al tope diario de análisis gratis (${dayLimit}). Vuelve mañana o activa plan Carrera.`,
+        code: "DAILY_ATS_LIMIT",
+      },
+      { status: 429, headers: { "Retry-After": String(daily.retryAfterSec) } }
+    );
+  }
 
   try {
     const body = await req.json().catch(() => null);

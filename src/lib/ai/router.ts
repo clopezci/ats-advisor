@@ -1,3 +1,5 @@
+import type { UserLlmKeys } from "@/lib/ai/userKeysServer";
+
 export type AiTask =
   | "ats_suggest"
   | "cv_rewrite"
@@ -183,8 +185,29 @@ async function openAiCompatibleChat(opts: {
   }
 }
 
-async function callGroq(messages: AiMessage[], model: string): Promise<ChatOk | null> {
-  const key = process.env.GROQ_API_KEY;
+type KeyBag = {
+  keys?: UserLlmKeys;
+  /** Si false, no usa process.env (protege cupo de la app en plan gratis). */
+  allowSharedKeys?: boolean;
+};
+
+function resolveKey(
+  userVal: string | undefined,
+  envName: string,
+  allowShared: boolean
+): string | undefined {
+  if (userVal) return userVal;
+  if (!allowShared) return undefined;
+  return process.env[envName] || undefined;
+}
+
+async function callGroq(
+  messages: AiMessage[],
+  model: string,
+  bag: KeyBag = {}
+): Promise<ChatOk | null> {
+  const allowShared = bag.allowSharedKeys !== false;
+  const key = resolveKey(bag.keys?.groq, "GROQ_API_KEY", allowShared);
   if (!key) return null;
   return openAiCompatibleChat({
     url: "https://api.groq.com/openai/v1/chat/completions",
@@ -194,8 +217,15 @@ async function callGroq(messages: AiMessage[], model: string): Promise<ChatOk | 
   });
 }
 
-async function callGemini(messages: AiMessage[], model: string): Promise<ChatOk | null> {
-  const key = process.env.GOOGLE_AI_API_KEY;
+async function callGemini(
+  messages: AiMessage[],
+  model: string,
+  bag: KeyBag = {}
+): Promise<ChatOk | null> {
+  const allowShared = bag.allowSharedKeys !== false;
+  const key =
+    resolveKey(bag.keys?.gemini, "GOOGLE_AI_API_KEY", allowShared) ||
+    (allowShared ? process.env.GEMINI_API_KEY : undefined);
   if (!key) return null;
   try {
     const contents = messages
@@ -224,8 +254,9 @@ async function callGemini(messages: AiMessage[], model: string): Promise<ChatOk 
   }
 }
 
-async function callOpenAI(messages: AiMessage[]): Promise<ChatOk | null> {
-  const key = process.env.OPENAI_API_KEY;
+async function callOpenAI(messages: AiMessage[], bag: KeyBag = {}): Promise<ChatOk | null> {
+  const allowShared = bag.allowSharedKeys !== false;
+  const key = resolveKey(bag.keys?.openai, "OPENAI_API_KEY", allowShared);
   if (!key) return null;
   return openAiCompatibleChat({
     url: "https://api.openai.com/v1/chat/completions",
@@ -236,13 +267,18 @@ async function callOpenAI(messages: AiMessage[]): Promise<ChatOk | null> {
   });
 }
 
-async function callOpenRouter(messages: AiMessage[]): Promise<ChatOk | null> {
-  const key = process.env.OPENROUTER_API_KEY;
+async function callOpenRouter(messages: AiMessage[], bag: KeyBag = {}): Promise<ChatOk | null> {
+  const allowShared = bag.allowSharedKeys !== false;
+  const key = resolveKey(bag.keys?.openrouter, "OPENROUTER_API_KEY", allowShared);
   if (!key) return null;
+  const model =
+    bag.keys?.openrouter && !allowShared
+      ? process.env.OPENROUTER_FREE_MODEL || "openrouter/auto"
+      : MODELS.openrouter;
   return openAiCompatibleChat({
     url: "https://openrouter.ai/api/v1/chat/completions",
     apiKey: key,
-    model: MODELS.openrouter,
+    model,
     messages,
     temperature: 0.3,
     extraHeaders: {
@@ -287,6 +323,13 @@ export async function completeWithCascade(opts: {
   messages: AiMessage[];
   qualityThreshold?: number;
   maxPaidEscalations?: number;
+  /** Claves BYOK del usuario (prioridad sobre env). */
+  keys?: UserLlmKeys;
+  /**
+   * Si false, no usa GROQ/GEMINI/OPENAI/OPENROUTER de la app.
+   * Plan gratis sin BYOK → solo local (protege cupo del dueño).
+   */
+  allowSharedKeys?: boolean;
 }): Promise<AiResult> {
   let threshold = opts.qualityThreshold ?? Number(process.env.AI_QUALITY_THRESHOLD || 0.72);
   let maxPaid = opts.maxPaidEscalations ?? 1;
@@ -311,6 +354,11 @@ export async function completeWithCascade(opts: {
     /* ignore */
   }
 
+  const bag: KeyBag = {
+    keys: opts.keys,
+    allowSharedKeys: opts.allowSharedKeys !== false,
+  };
+
   const prompt = opts.messages.map((m) => m.content).join("\n");
 
   let text: string | null = null;
@@ -318,11 +366,11 @@ export async function completeWithCascade(opts: {
   let model: string | undefined;
   let usedPaid = false;
 
-  // —— Free tier ——
+  // —— Free tier (BYOK primero; shared solo si allowSharedKeys) ——
   if (prefs.prefer_groq) {
     const g =
-      (await callGroq(opts.messages, MODELS.groqFree)) ||
-      (await callGroq(opts.messages, MODELS.groqFast));
+      (await callGroq(opts.messages, MODELS.groqFree, bag)) ||
+      (await callGroq(opts.messages, MODELS.groqFast, bag));
     if (g) {
       text = g.text;
       provider = "groq";
@@ -331,11 +379,21 @@ export async function completeWithCascade(opts: {
   }
 
   if (!text && prefs.prefer_gemini) {
-    const gem = await callGemini(opts.messages, MODELS.geminiFree);
+    const gem = await callGemini(opts.messages, MODELS.geminiFree, bag);
     if (gem) {
       text = gem.text;
       provider = "gemini";
       model = gem.model;
+    }
+  }
+
+  // OpenRouter free (solo con clave del usuario o shared permitido)
+  if (!text && prefs.prefer_openrouter && (opts.keys?.openrouter || bag.allowSharedKeys)) {
+    const or = await callOpenRouter(opts.messages, bag);
+    if (or) {
+      text = or.text;
+      provider = "openrouter";
+      model = or.model;
     }
   }
 
@@ -348,8 +406,8 @@ export async function completeWithCascade(opts: {
   let qualityScore = scoreQuality(text, opts.task);
 
   // —— Free quality boost (Kimi / Moonshot en Groq) antes de pagar ——
-  if (qualityScore < threshold && prefs.prefer_groq && maxPaid > 0) {
-    const kimi = await callGroq(opts.messages, MODELS.groqKimi);
+  if (qualityScore < threshold && prefs.prefer_groq) {
+    const kimi = await callGroq(opts.messages, MODELS.groqKimi, bag);
     if (kimi) {
       const q = scoreQuality(kimi.text, opts.task);
       if (q > qualityScore) {
@@ -357,7 +415,6 @@ export async function completeWithCascade(opts: {
         provider = "groq";
         model = kimi.model;
         qualityScore = q;
-        // Kimi en Groq free no cuenta como paid
       }
     }
   }
@@ -366,24 +423,24 @@ export async function completeWithCascade(opts: {
     return { text, provider, usedPaid, qualityScore, model };
   }
 
-  // —— Paid escalate (mejor precio/calidad primero) ——
+  // —— Paid escalate (solo con allowSharedKeys o claves de pago del usuario) ——
   const paidAttempts: Array<() => Promise<{ ok: ChatOk; provider: AiProvider; paid: boolean } | null>> = [];
 
   if (prefs.prefer_openrouter) {
     paidAttempts.push(async () => {
-      const r = await callOpenRouter(opts.messages);
-      return r ? { ok: r, provider: "openrouter", paid: true } : null;
+      const r = await callOpenRouter(opts.messages, bag);
+      return r ? { ok: r, provider: "openrouter", paid: !opts.keys?.openrouter } : null;
     });
   }
   if (prefs.prefer_openai) {
     paidAttempts.push(async () => {
-      const r = await callOpenAI(opts.messages);
-      return r ? { ok: r, provider: "openai", paid: true } : null;
+      const r = await callOpenAI(opts.messages, bag);
+      return r ? { ok: r, provider: "openai", paid: !opts.keys?.openai } : null;
     });
   }
   if (prefs.prefer_gemini) {
     paidAttempts.push(async () => {
-      const r = await callGemini(opts.messages, MODELS.geminiPaid);
+      const r = await callGemini(opts.messages, MODELS.geminiPaid, bag);
       return r ? { ok: r, provider: "gemini", paid: true } : null;
     });
   }

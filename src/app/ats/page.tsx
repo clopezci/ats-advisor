@@ -40,6 +40,7 @@ import {
   isLeakedAiFallback,
 } from "@/lib/ats/localAiFallbacks";
 import { filterSkillTerms } from "@/lib/ats/phraseFilter";
+import { withUserAiHeaders, hasUserAiKeys } from "@/lib/ai/userKeysClient";
 
 const PROFILES: { id: AtsProfile; label: string; hint: string }[] = [
   { id: "generic", label: "No lo sé", hint: "Sirve para la mayoría de avisos" },
@@ -135,7 +136,7 @@ export default function AtsPage() {
       const kws = filterSkillTerms(result.missingKeywords || []).slice(0, 10);
       const res = await fetch("/api/ai/complete", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: withUserAiHeaders({ "Content-Type": "application/json" }),
         body: JSON.stringify({
           task: "ats_suggest",
           useKnowledge: true,
@@ -179,7 +180,7 @@ export default function AtsPage() {
         // Reescritura completa requiere IA real
         const res = await fetch("/api/ai/complete", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: withUserAiHeaders({ "Content-Type": "application/json" }),
           body: JSON.stringify({
             task: "cv_rewrite",
             useKnowledge: true,
@@ -224,7 +225,7 @@ export default function AtsPage() {
       // Surgical: intenta IA; si falla → parche local real sobre el CV
       const res = await fetch("/api/ai/complete", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: withUserAiHeaders({ "Content-Type": "application/json" }),
         body: JSON.stringify({
           task: "cv_rewrite",
           useKnowledge: true,
@@ -293,7 +294,7 @@ export default function AtsPage() {
     try {
       const res = await fetch("/api/ai/complete", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: withUserAiHeaders({ "Content-Type": "application/json" }),
         body: JSON.stringify({
           task: "application_advice",
           useKnowledge: true,
@@ -395,7 +396,7 @@ export default function AtsPage() {
     try {
       const res = await fetch("/api/ai/complete", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: withUserAiHeaders({ "Content-Type": "application/json" }),
         body: JSON.stringify({
           task: "application_advice",
           useKnowledge: true,
@@ -516,6 +517,15 @@ export default function AtsPage() {
           <SpeakButton text={intro} />
         </div>
         <p className="muted text-sm">{intro}</p>
+        {!hasUserAiKeys() && (
+          <p className="text-xs leading-relaxed rounded-lg border border-[var(--border)] px-3 py-2">
+            IA online en plan gratis:{" "}
+            <Link href="/cuenta/mi-ia" className="underline" style={{ color: "var(--brand)" }}>
+              configura tu clave Groq/Gemini (Mi IA)
+            </Link>
+            . Sin clave usamos plantillas locales útiles (no gastamos el cupo compartido).
+          </p>
+        )}
         <div className="progress-track">
           <div className="progress-fill" style={{ width: `${(step / 4) * 100}%` }} />
         </div>

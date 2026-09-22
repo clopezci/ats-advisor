@@ -9,6 +9,7 @@ import { appendCoachMessage, getRoleReviewPlan } from "@/lib/roleReview/storage"
 import { bumpRoleReviewMetric } from "@/lib/roleReview/metrics";
 import { getJob } from "@/lib/tracker/jobs";
 import type { RoleReviewPlan } from "@/lib/roleReview/types";
+import { withUserAiHeaders } from "@/lib/ai/userKeysClient";
 
 export default function CoachClient() {
   const params = useSearchParams();
@@ -53,7 +54,7 @@ export default function CoachClient() {
         "";
       const res = await fetch("/api/role-review/coach", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: withUserAiHeaders({ "Content-Type": "application/json" }),
         body: JSON.stringify({
           jobTitle,
           company,

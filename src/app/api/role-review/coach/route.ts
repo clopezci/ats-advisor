@@ -4,6 +4,8 @@ import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
 import { reportError } from "@/lib/observability";
 import { hydrateSettingsFromCloud } from "@/lib/settingsPersist";
 import { clampText } from "@/lib/validation";
+import { parseUserKeysFromRequest } from "@/lib/ai/userKeysServer";
+import { requirePaidCloud } from "@/lib/entitlements/requirePaidApi";
 
 export const runtime = "nodejs";
 
@@ -66,6 +68,9 @@ export async function POST(req: Request) {
     let done = false;
     let provider = "local";
 
+    const userKeys = parseUserKeysFromRequest(req);
+    const paid = await requirePaidCloud({ email: body.email, allowLocalDev: false });
+
     try {
       const ai = await completeWithCascade({
         task: "interview_feedback",
@@ -74,7 +79,9 @@ export async function POST(req: Request) {
           { role: "user", content: prompt },
         ],
         qualityThreshold: settings.ai_limits.quality_threshold ?? 0.7,
-        maxPaidEscalations: Math.min(1, settings.ai_limits.max_paid_escalations ?? 1),
+        maxPaidEscalations: paid.ok ? Math.min(1, settings.ai_limits.max_paid_escalations ?? 1) : 0,
+        keys: userKeys,
+        allowSharedKeys: paid.ok,
       });
       provider = ai.provider;
       const cleaned = ai.text.replace(/^```json\s*|\s*```$/g, "").trim();
@@ -90,9 +97,9 @@ export async function POST(req: Request) {
       }
     }
 
-    return NextResponse.json({ ok: true, provider, manager, nudge, done });
+    return NextResponse.json({ ok: true, manager, nudge, done, provider });
   } catch (error) {
-    await reportError({ where: "api/role-review/coach", error, notifyOwner: true });
-    return NextResponse.json({ error: "No pude simular el 1:1 ahora." }, { status: 500 });
+    await reportError({ where: "api/role-review/coach", error });
+    return NextResponse.json({ error: "No pudimos simular el 1:1." }, { status: 500 });
   }
 }

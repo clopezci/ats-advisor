@@ -1,0 +1,1781 @@
+{
+  "generado": "2026-09-23",
+  "limites": {
+    "titulo": 60,
+    "regla": 260,
+    "ejemplo": 170
+  },
+  "materias": [
+    {
+      "id": "exa.psico-numerico",
+      "nombre": "Psicotécnicas · Numérico y verbal",
+      "corto": "Psico numérico",
+      "nivel": "colegio",
+      "verificador": "sympy",
+      "prompt": "Preparas las pruebas psicotécnicas de selección de personal en la parte numérica y verbal. Enseñas como un buen profesor de trucos: primero cómo reconocer el tipo de ejercicio en dos segundos, después el atajo, y solo al final la teoría. Muestras el patrón con ejemplos y das el tiempo objetivo de cada uno.",
+      "temario": [
+        "Qué son y para qué las usan las empresas",
+        "Series numéricas: los 8 patrones que se repiten",
+        "Series alfanuméricas",
+        "Porcentajes y proporciones rápidas",
+        "Tablas y gráficas: encontrar el dato",
+        "Problemas de razonamiento con datos",
+        "Analogías verbales",
+        "Sinónimos, antónimos y vocabulario",
+        "Comprensión de lectura contrarreloj",
+        "Cálculo mental y atajos",
+        "Trabajar desde las opciones, no desde el enunciado",
+        "Cuántos números hay entre dos números",
+        "Velocidades: cruzarse y alcanzarse",
+        "Repartos: proporcional y con diferencias",
+        "Problemas clásicos: patos y conejos, náufragos y el que no paga",
+        "Regla de tres directa e inversa",
+        "Fracciones encadenadas: la palabra «de»",
+        "Combinatoria de columnas: claves, palabras y parejas",
+        "Potencias y raíces sin calculadora",
+        "Edades",
+        "Dos que trabajan juntos",
+        "Probabilidad básica",
+        "Números romanos",
+        "Cómo administrar el tiempo y cuándo saltarse una"
+      ],
+      "ejemplos": [
+        {
+          "topic": "Series",
+          "text": "Enséñame a resolver series numéricas: 2, 6, 12, 20, ¿qué sigue?"
+        },
+        {
+          "topic": "Truco",
+          "text": "Dame los trucos de cálculo mental para porcentajes"
+        },
+        {
+          "topic": "Analogías",
+          "text": "¿Cómo se resuelven las analogías verbales? Dame ejemplos"
+        },
+        {
+          "topic": "Práctica",
+          "text": "Hazme 10 ejercicios cronometrados de razonamiento numérico"
+        }
+      ]
+    },
+    {
+      "id": "exa.psico-abstracto",
+      "nombre": "Psicotécnicas · Abstracto y lógico",
+      "corto": "Psico abstracto",
+      "nivel": "colegio",
+      "verificador": "rubrica",
+      "prompt": "Preparas la parte de razonamiento abstracto, lógico y espacial de las pruebas de selección. Como las figuras no se pueden dibujar en un chat, las describes con precisión (posición, giro, cantidad, color, tamaño) y enseñas a buscar QUÉ cambia entre una figura y la siguiente.",
+      "temario": [
+        "Qué mide el razonamiento abstracto",
+        "Qué cambia entre una figura y la siguiente",
+        "Giros y rotaciones",
+        "Reflejos y simetrías",
+        "Secuencias de figuras",
+        "Matrices tipo test de inteligencia",
+        "Razonamiento diagramático: los símbolos son órdenes",
+        "Series de dominó y de cartas",
+        "Razonamiento espacial: armar y desarmar cubos",
+        "Razonamiento mecánico: poleas, engranajes y palancas",
+        "Memoria: la lámina que te muestran dos minutos",
+        "Lógica: silogismos y deducción",
+        "Problemas de ingenio",
+        "Contar figuras: cuadrados y triángulos",
+        "Ordenación: quién está por encima de quién",
+        "Relaciones familiares",
+        "Perímetros y tamaños a ojo",
+        "Piezas que encajan: pletinas y plantillas",
+        "Tiempo por pregunta y cuándo adivinar"
+      ],
+      "ejemplos": [
+        {
+          "topic": "Método",
+          "text": "Explícame el método para resolver cualquier serie de figuras"
+        },
+        {
+          "topic": "Matrices",
+          "text": "¿Cómo se resuelven las matrices de figuras?"
+        },
+        {
+          "topic": "Diagramático",
+          "text": "Explícame las pruebas donde cada símbolo es una orden sobre una fila de figuras"
+        },
+        {
+          "topic": "Mecánico",
+          "text": "Enséñame a resolver los ejercicios de poleas, engranajes y palancas"
+        },
+        {
+          "topic": "Memoria",
+          "text": "¿Cómo memorizo una lámina en dos minutos para el test de memoria?"
+        },
+        {
+          "topic": "Dominó",
+          "text": "Enséñame las series de dominó, nunca las entiendo"
+        },
+        {
+          "topic": "Lógica",
+          "text": "Hazme ejercicios de silogismos con la explicación"
+        }
+      ]
+    },
+    {
+      "id": "exa.psico-personalidad",
+      "nombre": "Psicotécnicas · Personalidad y entrevista",
+      "corto": "Psico y entrevista",
+      "nivel": "colegio",
+      "verificador": "checklist",
+      "prompt": "Explicas cómo funcionan los test de personalidad de las empresas (16PF, DISC, Big Five, Wartegg) y cómo es una entrevista por competencias. No enseñas a hacer trampa —los test detectan las respuestas fingidas y eso descalifica— sino a entender qué miden, a responder con coherencia y a preparar ejemplos reales de la propia experiencia.",
+      "temario": [
+        "Qué miden los test de personalidad",
+        "Juicio situacional: el formato de los concursos públicos",
+        "Competencias comportamentales: el cuestionario de acuerdo y desacuerdo",
+        "Acciones y Actitudes: el bloque grande del concurso de patrulleros",
+        "Por qué mentir sale mal: las escalas de sinceridad",
+        "Responder con coherencia",
+        "El test de Wartegg y los de dibujo",
+        "Pruebas de atención y concentración",
+        "Entrevista por competencias: método STAR",
+        "Preguntas difíciles y cómo responderlas",
+        "Hablar de debilidades sin hundirse",
+        "Preguntas sobre salario",
+        "Qué preguntar uno al final",
+        "Hoja de vida y perfil profesional"
+      ],
+      "ejemplos": [
+        {
+          "topic": "Test",
+          "text": "¿Qué miden realmente los test de personalidad? ¿Debo responder lo que quieren oír?"
+        },
+        {
+          "topic": "Situacional",
+          "text": "Hazme preguntas de juicio situacional como las de la CNSC y explícame la respuesta"
+        },
+        {
+          "topic": "Patrulleros",
+          "text": "¿Cómo es el bloque de Acciones y Actitudes del concurso de patrulleros?"
+        },
+        {
+          "topic": "STAR",
+          "text": "Enséñame el método STAR con un ejemplo de mi trabajo"
+        },
+        {
+          "topic": "Entrevista",
+          "text": "Practiquemos una entrevista: hazme las preguntas y me corriges"
+        },
+        {
+          "topic": "Debilidades",
+          "text": "¿Qué respondo cuando me preguntan por mis defectos?"
+        }
+      ]
+    }
+  ],
+  "fichas": [
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Cálculo mental y atajos",
+      "titulo": "¿Se divide por 3?",
+      "regla": "Suma los dígitos. Si esa suma se divide por 3, el número también. Si la suma todavía es grande, vuelve a sumarla.",
+      "ejemplo": "3.417 → 3+4+1+7 = 15 → 15 sí se divide por 3 → 3.417 también."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Cálculo mental y atajos",
+      "titulo": "¿Se divide por 9?",
+      "regla": "El mismo truco del 3, pero la suma de los dígitos tiene que dar un múltiplo de 9.",
+      "ejemplo": "4.518 → 4+5+1+8 = 18 → 18 es múltiplo de 9 → 4.518 también."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Cálculo mental y atajos",
+      "titulo": "¿Se divide por 4?",
+      "regla": "Mira solo las dos últimas cifras. Si ese número de dos cifras se divide por 4, el número entero también. Lo de adelante no importa.",
+      "ejemplo": "7.312 → las dos últimas son 12 → 12 sí → 7.312 sí."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Cálculo mental y atajos",
+      "titulo": "¿Se divide por 11?",
+      "regla": "Suma los dígitos de las posiciones impares, suma los de las pares y resta las dos sumas. Si da 0 o un múltiplo de 11, sí se divide.",
+      "ejemplo": "2.937 → (2+3) − (9+7) = 5 − 16 = −11 → sí."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Cálculo mental y atajos",
+      "titulo": "¿Se divide por 2, por 5 o por 10?",
+      "regla": "Solo mira la última cifra. Por 2 si termina en par; por 5 si termina en 0 o 5; por 10 si termina en 0.",
+      "ejemplo": "8.435 → termina en 5 → se divide por 5, no por 2 ni por 10."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Cálculo mental y atajos",
+      "titulo": "El 10 %, el 5 % y el 15 %",
+      "regla": "El 10 % es correr la coma un lugar. El 5 % es la mitad de eso. El 15 % es sumar los dos.",
+      "ejemplo": "15 % de 8.400 → 840 + 420 = 1.260."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Porcentajes y proporciones rápidas",
+      "titulo": "El 20 %, el 25 % y el 12,5 %",
+      "regla": "El 20 % es la quinta parte, el 25 % es la cuarta y el 12,5 % es la octava. Dividir es más rápido que multiplicar por un decimal.",
+      "ejemplo": "25 % de 3.600 → 3.600 ÷ 4 = 900."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Porcentajes y proporciones rápidas",
+      "titulo": "El porcentaje se puede voltear",
+      "regla": "El x % de y es lo mismo que el y % de x. Cuando uno de los dos es un número redondo, voltéalo.",
+      "ejemplo": "4 % de 75 es difícil; 75 % de 4 son 3. Misma respuesta."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Porcentajes y proporciones rápidas",
+      "titulo": "Subir 20 % y bajar 20 % no vuelve al mismo sitio",
+      "regla": "El segundo porcentaje se calcula sobre un número distinto. Siempre se queda por debajo del original.",
+      "ejemplo": "100 → +20 % = 120 → −20 % de 120 = 96, no 100."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Cálculo mental y atajos",
+      "titulo": "Multiplicar por 5",
+      "regla": "Multiplica por 10 y parte por 2. Nunca al revés: es más fácil partir un número redondo.",
+      "ejemplo": "86 × 5 → 860 ÷ 2 = 430."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Cálculo mental y atajos",
+      "titulo": "Multiplicar por 25",
+      "regla": "Multiplica por 100 y parte por 4.",
+      "ejemplo": "32 × 25 → 3.200 ÷ 4 = 800."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Cálculo mental y atajos",
+      "titulo": "Multiplicar por 11 un número de dos cifras",
+      "regla": "Separa las dos cifras y mete la suma de ellas en la mitad. Si esa suma pasa de 9, le sumas 1 a la cifra de la izquierda.",
+      "ejemplo": "35 × 11 → 3_5 con 3+5=8 en la mitad → 385."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Cálculo mental y atajos",
+      "titulo": "El cuadrado de un número terminado en 5",
+      "regla": "Toma la cifra de adelante, multiplícala por la siguiente y pégale 25 al final.",
+      "ejemplo": "75² → 7 × 8 = 56 → pégale 25 → 5.625."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Cálculo mental y atajos",
+      "titulo": "Multiplicar por 9, 99 o 999",
+      "regla": "Multiplica por 10, 100 o 1.000 y réstale el número una vez.",
+      "ejemplo": "47 × 9 → 470 − 47 = 423."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Porcentajes y proporciones rápidas",
+      "titulo": "Cuál fracción es mayor",
+      "regla": "Multiplica en cruz y compara los dos productos. El lado que dé más grande es la fracción mayor. No hay que buscar denominador común.",
+      "ejemplo": "5/8 contra 7/11 → 5×11 = 55 y 7×8 = 56 → 7/11 es mayor."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Porcentajes y proporciones rápidas",
+      "titulo": "De fracción a porcentaje, sin dividir",
+      "regla": "Apréndete cuatro: 1/2 = 50 %, 1/4 = 25 %, 1/5 = 20 %, 1/8 = 12,5 %. Casi todas las demás salen sumando o partiendo esas.",
+      "ejemplo": "3/8 → 1/4 + 1/8 → 25 % + 12,5 % = 37,5 %."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Problemas de razonamiento con datos",
+      "titulo": "Suma de 1 hasta cualquier número",
+      "regla": "Multiplica el último por el siguiente y parte por 2.",
+      "ejemplo": "1+2+…+100 → 100 × 101 ÷ 2 = 5.050."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Problemas de razonamiento con datos",
+      "titulo": "El problema del tanque y las dos llaves",
+      "regla": "No sumes tiempos: suma lo que cada una hace en una hora. Una que lo llena en 3 horas hace 1/3 por hora.",
+      "ejemplo": "3 h y 6 h → 1/3 + 1/6 = 1/2 por hora → entre las dos, 2 horas."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Problemas de razonamiento con datos",
+      "titulo": "Dos que salen al encuentro",
+      "regla": "Si van uno hacia el otro, suma las velocidades. Si uno persigue al otro, réstalas. Después, distancia dividida por ese número.",
+      "ejemplo": "300 km, uno a 60 y otro a 40 → 100 km/h juntos → se encuentran en 3 h."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Problemas de razonamiento con datos",
+      "titulo": "«Cada 4 días» y «cada 6 días»: cuándo coinciden",
+      "regla": "Es el mínimo común múltiplo, y no es multiplicarlos. Descompón los dos y toma cada factor con el mayor exponente.",
+      "ejemplo": "4 = 2×2 y 6 = 2×3 → 2×2×3 = 12 días, no 24."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Problemas de razonamiento con datos",
+      "titulo": "Cuánto necesito en la última nota",
+      "regla": "Multiplica la nota que quieres por el número de notas y réstale lo que ya tienes sumado.",
+      "ejemplo": "Quiero 4,0 en 5 notas y llevo 15,2 → 4×5 − 15,2 = 4,8."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Tablas y gráficas: encontrar el dato",
+      "titulo": "Estima antes de calcular",
+      "regla": "Redondea, saca el resultado aproximado y tacha las opciones que se alejen. En opción múltiple casi siempre queda una sola.",
+      "ejemplo": "19 % de 24.500 ≈ 20 % = 4.900 → la respuesta es la que esté un poco por debajo."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Cómo administrar el tiempo y cuándo saltarse una",
+      "titulo": "El resultado intermedio es una trampa",
+      "regla": "Si el número que acabas de calcular aparece entre las opciones, no significa que sea la respuesta. Significa que te falta un paso.",
+      "ejemplo": "15 % de 8.400: si te quedas en 840 (el 10 %), esa opción está ahí esperándote."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Series numéricas: los 8 patrones que se repiten",
+      "titulo": "Escribe las diferencias debajo",
+      "regla": "Antes de probar nada, escribe la resta entre cada par de términos. La mayoría de las series se cae sola al hacerlo.",
+      "ejemplo": "3, 6, 12, 21, 33 → debajo: 3, 6, 9, 12 → suman 3 → sigue 48."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Series numéricas: los 8 patrones que se repiten",
+      "titulo": "Comprueba el patrón en todos los saltos",
+      "regla": "Las series se diseñan para que los tres primeros términos encajen con una regla falsa. Si no se cumple en el cuarto, no era.",
+      "ejemplo": "3, 6, 12 parece ×2, pero 12 → 21 no lo es."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Series alfanuméricas",
+      "titulo": "Las letras son números",
+      "regla": "Escribe el alfabeto numerado en el borde de la hoja apenas empiece la prueba. Sirve para toda la sección y evita contar con los dedos.",
+      "ejemplo": "B2, D4, G7, K11 → 2, 4, 7, 11 → sigue 16 → P16."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Analogías verbales",
+      "titulo": "Di la relación en una frase",
+      "regla": "Antes de mirar las opciones, arma una frase con el primer par y pruébala igual con cada opción. Si encajan tres, aprieta la frase.",
+      "ejemplo": "Termómetro : temperatura → «es el aparato que sirve para medir»."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Sinónimos, antónimos y vocabulario",
+      "titulo": "Escribe tu respuesta antes de leer las opciones",
+      "regla": "Define la palabra con tus palabras y escribe el sinónimo o el antónimo que tú pondrías. Recién ahí busca cuál se le parece.",
+      "ejemplo": "Efímero → «dura poco» → el contrario es «dura mucho» → duradero."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Sinónimos, antónimos y vocabulario",
+      "titulo": "En los antónimos, la trampa es un sinónimo",
+      "regla": "Siempre meten entre las opciones una palabra parecida a la del enunciado, para el que lee rápido. Subraya ANTÓNIMO o SINÓNIMO antes de marcar.",
+      "ejemplo": "Antónimo de efímero: «frágil» está ahí para que caigas."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Qué cambia entre una figura y la siguiente",
+      "titulo": "No preguntes qué sigue, pregunta qué cambia",
+      "regla": "Haz una lista de lo que puede moverse —cantidad, posición, giro, reflejo, tamaño, relleno— y sigue cada uno por separado, como columnas.",
+      "ejemplo": "Triángulo que gira 90° y suma un punto: son dos columnas, no una figura."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Giros y rotaciones",
+      "titulo": "El ciclo de cuatro",
+      "regla": "Un giro de 90° repetido cuatro veces vuelve al punto de partida. Contar el ciclo es más rápido y más seguro que imaginarse el giro.",
+      "ejemplo": "Si la figura 5 se ve igual que la 1, la 6 se verá igual que la 2."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Reflejos y simetrías",
+      "titulo": "Giro de 180° o espejo",
+      "regla": "Se ven igual cuando la figura es simétrica, y siempre ponen las dos opciones. Busca un detalle asimétrico y sigue ese detalle, no la figura.",
+      "ejemplo": "Una «R» girada 180° y una «R» en espejo no son la misma: mira hacia dónde queda la patica."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Matrices tipo test de inteligencia",
+      "titulo": "En una matriz hay dos reglas, no una",
+      "regla": "Una corre por las filas y otra por las columnas. Y el color o el relleno casi siempre sigue su propia regla, aparte del número.",
+      "ejemplo": "Resuelve «9» y «negro» por separado, y después busca la opción que tenga los dos."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento diagramático: los símbolos son órdenes",
+      "titulo": "Escribe la fila intermedia",
+      "regla": "Los símbolos son órdenes y se aplican en orden. Después de cada uno, escribe cómo quedó la fila. Hacer dos de cabeza es donde se pierde el punto.",
+      "ejemplo": "Con 2 símbolos todavía se puede de cabeza; con 4 seguidos, nadie puede."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento espacial: armar y desarmar cubos",
+      "titulo": "Las caras opuestas del cubo, sin armarlo",
+      "regla": "Dos caras pegadas quedan contiguas. Dos caras separadas por una sola cara en línea recta quedan opuestas y no se ven nunca juntas.",
+      "ejemplo": "Marca los 3 pares de caras opuestas apenas veas el despliegue: con eso resuelves todo ese cubo."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento espacial: armar y desarmar cubos",
+      "titulo": "Desde un vértice se ven tres caras",
+      "regla": "Nunca más de tres, y esas tres son siempre contiguas entre sí. Cualquier opción que muestre cuatro está mal de entrada.",
+      "ejemplo": "Si la pregunta pide ver 4 símbolos a la vez, la respuesta es «no se puede»."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Series de dominó y de cartas",
+      "titulo": "Las caras opuestas del dado suman 7",
+      "regla": "1 con 6, 2 con 5, 3 con 4. Sirve para deducir la cara que no se ve en cualquier dibujo de dados.",
+      "ejemplo": "Si arriba hay un 2, abajo hay un 5."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Problemas de ingenio",
+      "titulo": "Contar cuadrados en una cuadrícula",
+      "regla": "No cuentes uno por uno. Cuenta por tamaños: los de 1×1, los de 2×2, los de 3×3, y suma.",
+      "ejemplo": "En una de 3×3: 9 pequeños + 4 medianos + 1 grande = 14."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Lógica: silogismos y deducción",
+      "titulo": "«Todos los A son B» no se puede voltear",
+      "regla": "Dibuja el círculo pequeño dentro del grande. Si queda espacio libre en el grande, del dato de que alguien está ahí no se deduce nada.",
+      "ejemplo": "De 100 que hicieron la práctica, puede que solo 60 se hayan graduado."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Tiempo por pregunta y cuándo adivinar",
+      "titulo": "La regla de los 30 segundos",
+      "regla": "Si en medio minuto no sabes ni por dónde empezar, marca cualquiera, señálala y sigue. Una pregunta difícil vale lo mismo que una fácil.",
+      "ejemplo": "3 minutos en una pregunta son 3 preguntas que no alcanzas a leer."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Tiempo por pregunta y cuándo adivinar",
+      "titulo": "Si no penalizan, no dejes nada en blanco",
+      "regla": "En blanco y equivocada valen lo mismo: cero. Marcada al azar entre cinco vale un quinto de punto. Si sí penalizan, adivina solo cuando puedas descartar una.",
+      "ejemplo": "10 preguntas en blanco entre 5 opciones son 2 puntos regalados."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "Dos ruedas que se tocan giran al revés",
+      "regla": "En una fila de engranajes se van alternando: las posiciones impares giran como el primero y las pares al contrario.",
+      "ejemplo": "Si el 1.º va a la derecha: el 2.º a la izquierda, el 3.º a la derecha, el 4.º a la izquierda."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "Con correa cambia todo",
+      "regla": "Unidas por una correa o cadena derecha giran en el MISMO sentido. Si la correa va cruzada en ocho, en sentidos contrarios.",
+      "ejemplo": "2 ruedas que se tocan: al revés. Las mismas 2 con correa derecha: igual."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "El anillo impar se traba",
+      "regla": "Engranajes en círculo cerrado: si son un número impar, el mecanismo no puede girar. Con número par, sí gira.",
+      "ejemplo": "3 o 5 engranajes en anillo → trabado. 4 o 6 → giran."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "Más dientes, más despacio",
+      "regla": "Las vueltas son inversamente proporcionales a los dientes. Multiplica dientes por vueltas en un lado y en el otro: los dos productos son iguales.",
+      "ejemplo": "10 dientes × 4 vueltas = 40 → una de 40 dientes da 1 vuelta."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "La polea fija no ahorra nada",
+      "regla": "Solo cambia la dirección, para tirar hacia abajo. La polea móvil, la que sube con la carga, sí parte la fuerza por dos.",
+      "ejemplo": "60 kg con polea fija: 60. Con una móvil: 30."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "Cuenta las cuerdas que sostienen",
+      "regla": "En un aparejo, mira cuántos tramos de cuerda sostienen de verdad la carga y divide el peso entre ese número.",
+      "ejemplo": "120 kg colgando de 4 tramos → hay que hacer 30."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "La palanca se multiplica",
+      "regla": "Fuerza por su distancia al apoyo = resistencia por la suya. Entre más lejos del apoyo empujes, menos fuerza necesitas.",
+      "ejemplo": "90 kg a 1 m del apoyo; empujando a 3 m bastan 30 kg."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "El agua no sabe de formas",
+      "regla": "En vasos comunicantes el líquido queda al mismo nivel en todos, sin importar si uno es ancho y el otro angosto.",
+      "ejemplo": "3 tubos conectados de grosores distintos → el agua en la misma raya."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Memoria: la lámina que te muestran dos minutos",
+      "titulo": "Los cuatro barridos",
+      "regla": "No mires «con atención»: haz cuatro pasadas en orden. Cuenta cosas, ubícalas por cuadrantes, lee todo lo escrito y busca lo que esté fuera de lugar.",
+      "ejemplo": "2 minutos alcanzan para 4 pasadas de 30 segundos."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Memoria: la lámina que te muestran dos minutos",
+      "titulo": "Lo escrito es lo que más preguntan",
+      "regla": "Letreros, placas, horas, precios y códigos. Es lo favorito de quien arma la prueba porque no se puede deducir: o lo leíste o no.",
+      "ejemplo": "«Farmacia La 14, abre 8:00» → nombre y hora, las dos se preguntan."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Memoria: la lámina que te muestran dos minutos",
+      "titulo": "Dilo por dentro mientras miras",
+      "regla": "Nombrar lo que ves deja una segunda huella, verbal además de visual. Se recuerda mucho más una frase que una imagen suelta.",
+      "ejemplo": "«3 carros, 2 motos, 4 personas» se recuerda mejor que la foto."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Memoria: la lámina que te muestran dos minutos",
+      "titulo": "Para códigos, asociación absurda",
+      "regla": "Cuando hay que memorizar parejas sin sentido —un código y un destino— invéntate una conexión ridícula. Entre más absurda, más se pega.",
+      "ejemplo": "«K-7 va a Archivo» → un kilo de 7 libras archivado."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Memoria: la lámina que te muestran dos minutos",
+      "titulo": "Lo raro se pregunta",
+      "regla": "Un paraguas en un día soleado, una ventana abierta, algo olvidado en el piso. Lo anómalo casi siempre tiene pregunta, porque el que mira sin método no lo ve.",
+      "ejemplo": "1 detalle fuera de lugar en la lámina = 1 pregunta casi segura."
+    },
+    {
+      "subjectId": "exa.psico-personalidad",
+      "tema": "Pruebas de atención y concentración",
+      "titulo": "No te devuelvas",
+      "regla": "Un solo recorrido, de izquierda a derecha y de arriba abajo. Devolverse a comprobar es lo que más puntos cuesta: el reloj no perdona y la duda no se acaba nunca.",
+      "ejemplo": "1 pasada completa rinde más que 2 medias pasadas."
+    },
+    {
+      "subjectId": "exa.psico-personalidad",
+      "tema": "Pruebas de atención y concentración",
+      "titulo": "Mira una sola diferencia",
+      "regla": "No compares la figura entera con el modelo. Quédate con el detalle que las distingue y revisa solo esa esquina en cada una.",
+      "ejemplo": "Modelo con la rayita arriba a la derecha → revisa esa esquina en las 40 de la fila."
+    },
+    {
+      "subjectId": "exa.psico-personalidad",
+      "tema": "Pruebas de atención y concentración",
+      "titulo": "Ritmo parejo, no arranque",
+      "regla": "Casi siempre los errores restan. Correr al principio y equivocarse sale más caro que ir parejo hasta el final.",
+      "ejemplo": "20 aciertos y 5 errores puede puntuar menos que 18 y 0."
+    },
+    {
+      "subjectId": "exa.psico-personalidad",
+      "tema": "Pruebas de atención y concentración",
+      "titulo": "Aquí se falla al final, no al principio",
+      "regla": "Lo que miden es aguante, no inteligencia. Si vas a practicar, hazlo con hojas largas: cinco minutos no entrenan nada.",
+      "ejemplo": "El Toulouse-Piéron trae unas 1.600 figuritas: el cansancio es la prueba."
+    },
+    {
+      "subjectId": "exa.psico-personalidad",
+      "tema": "Juicio situacional: el formato de los concursos públicos",
+      "titulo": "No es qué harías tú",
+      "regla": "Es qué corresponde hacer según el procedimiento y el manual de funciones. Responder con buen corazón en vez de con el reglamento es lo que más puntos cuesta.",
+      "ejemplo": "«Le presto mi usuario para que salga del apuro» → suena solidario y está mal."
+    },
+    {
+      "subjectId": "exa.psico-personalidad",
+      "tema": "Juicio situacional: el formato de los concursos públicos",
+      "titulo": "Lee el enunciado antes que el caso",
+      "regla": "El caso son tres párrafos; el enunciado te dice qué buscar en ellos. Al revés lo lees dos veces.",
+      "ejemplo": "3 párrafos de contexto se leen distinto si ya sabes que preguntan por el plazo."
+    },
+    {
+      "subjectId": "exa.psico-personalidad",
+      "tema": "Juicio situacional: el formato de los concursos públicos",
+      "titulo": "Tacha la que resuelve a medias",
+      "regla": "El distractor más común no es falso: es cierto pero incompleto. Atiende una parte del caso y deja la otra sin resolver. La correcta resuelve todo.",
+      "ejemplo": "De 3 opciones, 2 suelen ser verdaderas; solo 1 cierra el caso completo."
+    },
+    {
+      "subjectId": "exa.psico-personalidad",
+      "tema": "Juicio situacional: el formato de los concursos públicos",
+      "titulo": "Mira el verbo del enunciado",
+      "regla": "«Analizar» no es «nombrar» ni «clasificar». Si pide analizar, la opción que solo cita una norma está mal aunque la norma sea la correcta.",
+      "ejemplo": "Enunciado con «analice» → la respuesta que solo dice «aplicar el artículo 5» no sirve."
+    },
+    {
+      "subjectId": "exa.psico-personalidad",
+      "tema": "Juicio situacional: el formato de los concursos públicos",
+      "titulo": "Lo que no queda escrito no pasó",
+      "regla": "Entre dos opciones que suenen igual de bien, gana la que deja registro: informar, documentar, dejar constancia.",
+      "ejemplo": "«Le aviso al jefe» pierde contra «le informo por escrito y dejo copia»."
+    },
+    {
+      "subjectId": "exa.psico-personalidad",
+      "tema": "Juicio situacional: el formato de los concursos públicos",
+      "titulo": "Aquí adivinar no rinde",
+      "regla": "Las 3 opciones suelen ser razonables, así que marcar al azar no funciona como en las de cálculo. Descartar con criterio es lo único que sube el puntaje.",
+      "ejemplo": "Al azar entre 3 aciertas 1 de cada 3; descartando la incompleta, 1 de cada 2."
+    },
+    {
+      "subjectId": "exa.psico-personalidad",
+      "tema": "Acciones y Actitudes: el bloque grande del concurso de patrulleros",
+      "titulo": "Son 60 de las 150 preguntas",
+      "regla": "Casi la mitad de la psicotécnica de patrulleros, y es la parte que nadie prepara. Llegas ahí después de 90 preguntas: no la respondas de afán.",
+      "ejemplo": "30 cuantitativo + 30 lectura + 30 ciudadanas + 60 de este bloque = 150."
+    },
+    {
+      "subjectId": "exa.psico-personalidad",
+      "tema": "Acciones y Actitudes: el bloque grande del concurso de patrulleros",
+      "titulo": "Son dos escalas distintas, no una",
+      "regla": "En Acciones respondes con qué frecuencia lo haces. En Actitudes, qué tan de acuerdo estás. Confundirlas es lo que rompe la coherencia.",
+      "ejemplo": "Acciones: Nunca → Siempre. Actitudes: Muy en desacuerdo → Muy de acuerdo."
+    },
+    {
+      "subjectId": "exa.psico-personalidad",
+      "tema": "Acciones y Actitudes: el bloque grande del concurso de patrulleros",
+      "titulo": "En Acciones va la frecuencia real",
+      "regla": "No la que te gustaría tener. Pregunta qué haces, no qué deberías hacer, y más adelante vuelve la misma idea escrita de otra forma.",
+      "ejemplo": "«Casi siempre» dicho de verdad vale más que 4 «Siempre» inventados."
+    },
+    {
+      "subjectId": "exa.psico-personalidad",
+      "tema": "Acciones y Actitudes: el bloque grande del concurso de patrulleros",
+      "titulo": "«Algo» existe por algo",
+      "regla": "Las cuatro opciones miden matices. Marcar el extremo en todas no da un perfil: da una alerta.",
+      "ejemplo": "60 respuestas todas en «Muy de acuerdo» no describen a nadie."
+    },
+    {
+      "subjectId": "exa.psico-personalidad",
+      "tema": "Competencias comportamentales: el cuestionario de acuerdo y desacuerdo",
+      "titulo": "Responde rápido y parecido",
+      "regla": "La misma idea vuelve más adelante escrita de otra forma, para ver si coincides. El que contesta lo que cree que quieren oír no se acuerda y se contradice.",
+      "ejemplo": "La pregunta 8 y la 47 pueden ser la misma con otras palabras."
+    },
+    {
+      "subjectId": "exa.psico-personalidad",
+      "tema": "Por qué mentir sale mal: las escalas de sinceridad",
+      "titulo": "El extremo virtuoso te delata",
+      "regla": "Frases que nadie puede sostener —«nunca he llegado tarde»— no miden puntualidad: miden si estás maquillando. Acumularlas marca el perfil como no confiable.",
+      "ejemplo": "Marcar «totalmente de acuerdo» en 20 frases perfectas no da 20 puntos: da una alerta."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Trabajar desde las opciones, no desde el enunciado",
+      "titulo": "¿Y si pruebo las opciones?",
+      "regla": "Antes de resolver, mira si sale más rápido meter cada opción en el enunciado y ver cuál cuadra. En ecuaciones y en «qué número cumple», casi siempre sale más rápido.",
+      "ejemplo": "3x² + 2x − 10 = 6 → prueba x = 2: 12 + 4 − 10 = 6 ✓"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Trabajar desde las opciones, no desde el enunciado",
+      "titulo": "La última cifra te dice cuál es",
+      "regla": "En una raíz exacta, eleva al cuadrado SOLO la última cifra de cada opción y mira cuál termina igual que el número de adentro. Sobrevive una sola.",
+      "ejemplo": "√207.936 → 6×6 = 36 acaba en 6; 5×5 = 25 no; 3×3 = 9 no."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Trabajar desde las opciones, no desde el enunciado",
+      "titulo": "Torneo entre las cuatro opciones",
+      "regla": "Cuando preguntan cuál es mayor, no las compares todas contra todas. Enfrenta las dos primeras, guarda la ganadora y enfréntala con la siguiente. Tres peleas, no seis.",
+      "ejemplo": "1/3 vs 8/11 → gana 8/11 → vs 3/4 → gana 3/4 → vs 7/10 → 3/4"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Potencias y raíces sin calculadora",
+      "titulo": "La raíz de un decimal",
+      "regla": "La respuesta tiene la MITAD de decimales que el número de adentro. Con contar decimales ya descartas casi todas las opciones.",
+      "ejemplo": "√0,0016 tiene 4 decimales → la respuesta tiene 2 → 0,04"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Potencias y raíces sin calculadora",
+      "titulo": "La mitad de una potencia",
+      "regla": "Dividir entre la base es restarle uno al exponente. No hay nada que calcular.",
+      "ejemplo": "La mitad de 2¹⁰⁰ → 2⁹⁹, no 1¹⁰⁰ ni 2⁵⁰."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Cuántos números hay entre dos números",
+      "titulo": "Restar, dividir, sumar 1",
+      "regla": "Siempre esos tres pasos y en ese orden: resta los extremos, divide entre el salto y súmale 1. Sirve para «cuántos números» y para «cuántos múltiplos».",
+      "ejemplo": "Múltiplos de 3 entre 120 y 431 → 429−120 = 309 → 309/3 = 103 → +1 = 104"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Cuántos números hay entre dos números",
+      "titulo": "«Inclusive» o «exclusive»",
+      "regla": "Lo único que cambia son los extremos. Si dice exclusive, táchalos y arranca con los de adentro. La receta de tres pasos queda igual.",
+      "ejemplo": "Entre 103 y 786 exclusive → trabaja con 104 y 785."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Velocidades: cruzarse y alcanzarse",
+      "titulo": "¿Se cruzan o se alcanzan?",
+      "regla": "Van uno hacia el otro: SUMA las velocidades. Uno persigue al otro: RÉSTALAS. Después, distancia dividida entre ese número.",
+      "ejemplo": "1.920 km y juntos 480 km/h → 1.920/480 = 4 horas"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Velocidades: cruzarse y alcanzarse",
+      "titulo": "La ventaja del que salió primero",
+      "regla": "En un alcance la distancia no te la dan: es lo que el de adelante ya llevaba recorrido. Multiplica su velocidad por las horas de ventaja.",
+      "ejemplo": "100 km/h × 3 h = 300 km → 300/(105−100) = 60 horas"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Repartos: proporcional y con diferencias",
+      "titulo": "Tres números seguidos que suman",
+      "regla": "Divide entre 3 y te da el del medio. Uno menos y uno más son los otros dos.",
+      "ejemplo": "Suman 4.533 → 4.533/3 = 1.511 → 1.510, 1.511 y 1.512"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Repartos: proporcional y con diferencias",
+      "titulo": "Repartir con «uno más» y «uno menos»",
+      "regla": "Es el mismo truco de arriba con otra ropa: divide entre el número de partes para tener la del medio, y súmale y réstale la diferencia que te dan.",
+      "ejemplo": "135 en 3 partes con ±5 → 45 → 40, 45 y 50"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Repartos: proporcional y con diferencias",
+      "titulo": "Reparto proporcional, en tres pasos",
+      "regla": "Suma las partes, divide el total entre esa suma y multiplica por la parte que preguntan. Nunca hace falta plantear ecuaciones.",
+      "ejemplo": "450.000 entre 6, 12 y 18 → 450.000/36 = 12.500 → 12 × 12.500 = 150.000"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Problemas clásicos: patos y conejos, náufragos y el que no paga",
+      "titulo": "Patos y conejos",
+      "regla": "Multiplica las cabezas por 2 y réstale la mitad de las patas: eso da cuántos animales son de dos patas. Los demás son de cuatro.",
+      "ejemplo": "90 cabezas y 200 patas → 180 − 100 = 80 patos"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Problemas clásicos: patos y conejos, náufragos y el que no paga",
+      "titulo": "Los que no pagan",
+      "regla": "Lo que se ahorran los que no pagan, dividido entre lo que cada uno puso de más, da cuántos pagaron. Súmale los que entraron gratis.",
+      "ejemplo": "4 gratis × 1.200 = 4.800; ponen 240 de más → 4.800/240 = 20 → van 24"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Problemas clásicos: patos y conejos, náufragos y el que no paga",
+      "titulo": "Náufragos y raciones",
+      "regla": "Más bocas, menos días: es regla de tres INVERSA. Multiplica los de antes por los días y divide entre los de ahora.",
+      "ejemplo": "20 personas para 10 días; ahora son 25 → 20 × 10 / 25 = 8 días"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Regla de tres directa e inversa",
+      "titulo": "Dibuja las dos flechas",
+      "regla": "Escribe las dos columnas y pon una flecha en cada una. Si apuntan al mismo lado, multiplicas en cruz. Si apuntan al revés, multiplicas en línea.",
+      "ejemplo": "120 km/h en 6 h, ahora en 5 h → inversa → 120 × 6 / 5 = 144"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Fracciones encadenadas: la palabra «de»",
+      "titulo": "«De» quiere decir por",
+      "regla": "Escribe todas las fracciones seguidas multiplicando y tacha arriba contra abajo ANTES de hacer una sola cuenta. Casi nunca queda algo grande.",
+      "ejemplo": "1/5 de 3/4 de 2/9 de 3/2 de 10.000 → queda 10.000/(5×4) = 500"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Fracciones encadenadas: la palabra «de»",
+      "titulo": "Cuánto le sumo al numerador",
+      "regla": "Iguala primero los denominadores y resta los numeradores. Lo que falte es la respuesta.",
+      "ejemplo": "1/10 para que dé 3/5 → 3/5 = 6/10 → 6 − 1 = +5"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Porcentajes y proporciones rápidas",
+      "titulo": "El porcentaje es un decimal",
+      "regla": "Corre la coma dos lugares y multiplica. El 23 % es ×0,23 y el 58 % es ×0,58. No hace falta regla de tres.",
+      "ejemplo": "23 % de 1.500 → 0,23 × 1.500 = 345"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Porcentajes y proporciones rápidas",
+      "titulo": "¿Entre cuánto divido para el porcentaje?",
+      "regla": "Voltea la fracción del porcentaje. Para sacar el x % divides entre 100/x, y eso suele ser un número redondo.",
+      "ejemplo": "5 % de 520 → divide entre 100/5 = 20 → 520/20 = 26"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Combinatoria de columnas: claves, palabras y parejas",
+      "titulo": "Cuántas claves tiene un candado",
+      "regla": "Dibuja una columna por rueda, escribe cuántas opciones tiene cada una y multiplícalas. Igual para palabras con letras que se pueden repetir.",
+      "ejemplo": "3 ruedas de 4 números → 4 × 4 × 4 = 64"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Combinatoria de columnas: claves, palabras y parejas",
+      "titulo": "Cuántas parejas salen",
+      "regla": "Cada uno con cada uno, sin repetir, es n por (n−1) dividido entre 2. Sirve para partidos, apretones de manos y brindis.",
+      "ejemplo": "10 equipos → 10 × 9 / 2 = 45 partidos"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Edades",
+      "titulo": "La tabla y el mismo salto",
+      "regla": "Escribe a todos en una fila y súmale a cada uno los mismos años. Después prueba: lo que buscas es el año en que se igualan.",
+      "ejemplo": "44 y 17, 12, 9 → +3 años → 47 y 20+15+12 = 47"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Probabilidad básica",
+      "titulo": "Casos que sirven entre casos que hay",
+      "regla": "Cuenta los que te sirven, divídelos entre todos los posibles y multiplica por 100: las opciones casi siempre vienen en porcentaje.",
+      "ejemplo": "2 de 36 → 0,0555 × 100 = 5,55 %"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Números romanos",
+      "titulo": "Solo tres letras se restan",
+      "regla": "Solo la I, la X y la C se ponen delante para restar, y solo delante de las dos que siguen. Cualquier otra resta que veas es una opción mala.",
+      "ejemplo": "IX = 9 sí. «IL» no existe: 49 se escribe XLIX."
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Series numéricas: los 8 patrones que se repiten",
+      "titulo": "Arcos arriba y arcos abajo",
+      "regla": "Escribe las diferencias en arcos alternando arriba y abajo. Muchas series que parecen imposibles son dos series sencillas intercaladas.",
+      "ejemplo": "0-2-6-12-14-18-24-26-30 → arriba +2, +6; abajo +4, +2"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Series numéricas: los 8 patrones que se repiten",
+      "titulo": "Si la diferencia no basta, multiplica",
+      "regla": "Cuando los saltos no forman serie, anota debajo por cuánto se multiplica cada salto. Ese segundo renglón suele ser el patrón.",
+      "ejemplo": "0-1-2-5-8 → saltos +1, +1, +3, +3 → sigue +9 → 17"
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Contar figuras: cuadrados y triángulos",
+      "titulo": "Contar cuadrados de una cuadrícula",
+      "regla": "Suma los cuadrados de 1 hasta el lado y ya está. Contarlos uno por uno es como se pierde la pregunta.",
+      "ejemplo": "Cuadrícula de 4×4 → 1 + 4 + 9 + 16 = 30"
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Contar figuras: cuadrados y triángulos",
+      "titulo": "Contar triángulos de un abanico",
+      "regla": "Cuenta en cuántos pedazos está partida la base y aplica n por (n+1) dividido entre 2. Es la misma cuenta de sumar de 1 hasta n.",
+      "ejemplo": "Base partida en 3 → 3 × 4 / 2 = 6 triángulos"
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Ordenación: quién está por encima de quién",
+      "titulo": "Dibuja las flechas y después cuenta",
+      "regla": "Haz un mapa con una flecha de cada persona hacia la que está por encima, y una raya sin punta cuando son iguales. Luego cuenta sobre el dibujo.",
+      "ejemplo": "«Pedro mide igual que Bea» → únelos con raya, no con flecha"
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Relaciones familiares",
+      "titulo": "Léelo al revés",
+      "regla": "Empieza por la última persona de la frase y ve subiendo mientras dibujas. Marca con un círculo dónde estás tú.",
+      "ejemplo": "«El abuelo del padre de la hermana del hijo de…» → arranca por el final"
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Perímetros y tamaños a ojo",
+      "titulo": "La vuelta son tres diámetros",
+      "regla": "El contorno de un círculo es poco más de tres veces su diámetro. Con eso escoges el segmento correcto sin calcular nada.",
+      "ejemplo": "π × D ≈ 3,14 diámetros de largo"
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Perímetros y tamaños a ojo",
+      "titulo": "Si parto los dos lados a la mitad",
+      "regla": "El área no queda en la mitad: queda en la cuarta parte. Lo que se parte dos veces se divide entre cuatro.",
+      "ejemplo": "10 × 6 = 60 → 5 × 3 = 15, que es 60 entre 4"
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Piezas que encajan: pletinas y plantillas",
+      "titulo": "Mira un hueco raro, no la pieza entera",
+      "regla": "Escoge el agujero más raro de la plantilla y busca cuál pieza lo tapa. Con ese solo detalle se caen tres opciones de una vez.",
+      "ejemplo": "El hueco de la esquina → solo 1 de las 4 piezas lo cubre"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Dos que trabajan juntos",
+      "titulo": "Multiplica los tiempos, divide entre la suma",
+      "regla": "Dos llaves, dos obreros, dos máquinas: multiplica los dos tiempos y divide entre lo que suman. No promedies nunca, porque juntos siempre tardan menos que el más rápido de los dos.",
+      "ejemplo": "3 h y 12 h → (3 × 12) ÷ (3 + 12) = 36/15 = 2,4 horas"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Problemas clásicos: patos y conejos, náufragos y el que no paga",
+      "titulo": "El rombo, que sirve para todas",
+      "regla": "Dibuja un rombo: cabezas a la izquierda, patas a la derecha, 4 arriba y 2 abajo. La cuenta es (cabezas × 4 − patas) dividido entre (4 − 2). Sirve con cualquier par de números.",
+      "ejemplo": "42 cabezas y 88 patas → (42×4 − 88) ÷ (4−2) = 80/2 = 40 patos"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Porcentajes y proporciones rápidas",
+      "titulo": "Te dan la parte y piden el total",
+      "regla": "Al revés que siempre: en vez de multiplicar, divide entre el porcentaje en decimal. Es la pregunta que más se falla de toda la sección.",
+      "ejemplo": "El 34 % son 170 → 170 ÷ 0,34 = 500"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Porcentajes y proporciones rápidas",
+      "titulo": "El precio ya trae el impuesto",
+      "regla": "Si pagaste el 120 %, divide entre 1,20. Si te hicieron 40 % de descuento, pagaste el 60 %: divide entre 0,60. Nunca le quites el porcentaje al precio ya cobrado.",
+      "ejemplo": "Pagué 1.020 con el 20 % de impuesto → 1.020 ÷ 1,2 = 850"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Porcentajes y proporciones rápidas",
+      "titulo": "Todo se arma desde el 10 %",
+      "regla": "Saca el 10 % corriendo la coma y de ahí construye: el 30 % es ese número por 3, el 5 % es la mitad, el 1 % es la décima parte. Casi nunca hace falta multiplicar por un decimal.",
+      "ejemplo": "30 % de 2.100 → 210 × 3 = 630. Y 5 % de 2.300 → 230 ÷ 2 = 115"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Fracciones encadenadas: la palabra «de»",
+      "titulo": "Lo que te dan en número es lo que sobra",
+      "regla": "Suma las fracciones que sí te dicen y réstalas de 1: esa es la fracción que vale el número suelto. Con eso sacas el total con una regla de tres.",
+      "ejemplo": "Faltan 2/7 y quedan 40 casas → 40 × 7 ÷ 2 = 140 en total"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Fracciones encadenadas: la palabra «de»",
+      "titulo": "En un embudo, multiplica lo que sobrevive",
+      "regla": "Si en cada etapa cae una fracción, lo que pasa es 1 menos esa fracción. Encadena multiplicando los que sobreviven y nunca los que caen.",
+      "ejemplo": "Caen 1/5, luego 1/4, luego 2/7 → 4/5 × 3/4 × 5/7 = 3/7"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Cálculo mental y atajos",
+      "titulo": "Traduce el enunciado a un solo renglón",
+      "regla": "«El doble», «la mitad del cuadrado», «la diferencia de»: ve escribiendo cada trozo en su sitio a medida que lees, sin resolver nada. Cuando termines de leer, la cuenta ya está armada.",
+      "ejemplo": "«La mitad del cuadrado de 3» → 9/2, escrito antes de calcular"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Series numéricas: los 8 patrones que se repiten",
+      "titulo": "Series que alternan dos operaciones",
+      "regla": "Cuando ni las diferencias ni los factores cuadran solos, prueba si se turnan: una suma, una multiplicación, una suma, una multiplicación.",
+      "ejemplo": "0-1-2-3-6-7-14-15 → +1, ×2, +1, ×2, +1, ×2"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Series numéricas: los 8 patrones que se repiten",
+      "titulo": "Cuando los factores llevan su propia serie",
+      "regla": "Si los saltos son multiplicaciones que cambian, escribe los multiplicadores en un renglón aparte: ellos casi siempre sí forman una serie sencilla.",
+      "ejemplo": "1-1-1-3-21 → los factores son ×1, ×1, ×3, ×7"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Potencias y raíces sin calculadora",
+      "titulo": "Exponente negativo y exponente partido",
+      "regla": "El menos del exponente voltea la fracción, no cambia el signo del número. Y el de abajo del exponente partido es el índice de la raíz.",
+      "ejemplo": "2⁻³ᐟ⁵ → 1 dividido entre la raíz quinta de 2³"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Edades",
+      "titulo": "«Hace tantos años» le baja a todos",
+      "regla": "Igual que sumar, pero restando: el mismo número se le quita a cada persona de la tabla. La trampa es restárselo solo a uno.",
+      "ejemplo": "Ella tiene 38 y hablan de hace 8 años → 30, y los hijos también bajan 8"
+    },
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Velocidades: cruzarse y alcanzarse",
+      "titulo": "El rayo y el trueno",
+      "regla": "El sonido va a 340 metros por segundo. Divide los metros entre 340 y ya tienes los segundos; al revés, cada 3 segundos es como un kilómetro.",
+      "ejemplo": "1.700 metros ÷ 340 = 5 segundos"
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "Balancín: masa por distancia",
+      "regla": "Multiplica cada peso por lo lejos que está del apoyo y compara los dos números. Baja el lado que dé más grande; si dan igual, queda nivelado.",
+      "ejemplo": "30 kg × 8 m = 240 y 60 kg × 4 m = 240 → equilibrio"
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "Cada polea móvil parte la fuerza",
+      "regla": "Una polea fija solo cambia la dirección y no ahorra nada. Cada polea MÓVIL parte a la mitad la fuerza que hay que hacer. Cuenta solo las móviles.",
+      "ejemplo": "2 poleas móviles → levantas 100 kg haciendo fuerza de 25"
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "Engranajes pegados giran al revés",
+      "regla": "Dos ruedas dentadas que se tocan nunca giran para el mismo lado. Numéralas: las impares van como la primera y las pares al contrario.",
+      "ejemplo": "1ª a la derecha → 2ª a la izquierda → 3ª a la derecha"
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "Rueda más grande, más avanza",
+      "regla": "Por cada vuelta, una rueda recorre su contorno: π por el diámetro. La grande avanza más aunque las dos den las mismas vueltas.",
+      "ejemplo": "1,5 m → 4,7 m por vuelta; 1,18 m → 3,7 m por vuelta"
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "Péndulo de Newton: salen las que entran",
+      "regla": "Sueltas dos bolas, salen dos por el otro lado. Ni una más ni una menos, y a la misma altura.",
+      "ejemplo": "Sueltas 2 → salen 2. Sueltas 4 → salen 4."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "Qué cae primero",
+      "regla": "Con aire, gana lo pesado y compacto porque a lo liviano lo frena. En el vacío caen igual, sin importar el peso: esa es la pregunta con trampa.",
+      "ejemplo": "Pluma y bola desde 30 m: con aire, la bola. En vacío, las 2 juntas."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "Flota el más gordo",
+      "regla": "Con la misma masa, flota el que ocupe más espacio. No es cuestión de peso sino de cuánta agua desaloja.",
+      "ejemplo": "3 bloques de 5 kg → flota el más grande de los 3"
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "En serie se apaga todo",
+      "regla": "Si al quitar una bombilla se apagan las demás, estaban en serie. Si las otras siguen prendidas, estaban en paralelo.",
+      "ejemplo": "Se funde 1 y la otra sigue → están en paralelo"
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "Los colores de la luz no son los de la pintura",
+      "regla": "Con luz, los que se mezclan son rojo, verde y azul. Rojo con verde da amarillo, que con témpera no pasaría nunca.",
+      "ejemplo": "Rojo + verde = amarillo. Los 3 juntos = blanco."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "Lo que se calienta se dilata",
+      "regla": "Casi todo se estira con el calor y se encoge con el frío. Si la pregunta es qué le pasa a una barra caliente, se alarga.",
+      "ejemplo": "Una barra a 20° calentada a 400° → se alarga"
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "El tiro más lejano va a 45 grados",
+      "regla": "Con la misma fuerza, lo que más lejos llega sale a media altura entre el suelo y la vertical. Ni muy rasante ni muy hacia arriba.",
+      "ejemplo": "45° gana. A 20° cae cerca y a 70° sube pero no avanza."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "titulo": "Las bolitas se amontonan en el centro",
+      "regla": "Cuando muchas cosas caen por un laberinto de obstáculos, se acumulan en el medio y casi ninguna llega a los extremos. Es la campana.",
+      "ejemplo": "Caen 100 bolas → los 2 compartimentos centrales se llenan"
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Perímetros y tamaños a ojo",
+      "titulo": "La fórmula pide radio y te dan diámetro",
+      "regla": "Antes de reemplazar, mira cuál de los dos te dieron. La mitad del diámetro es el radio, y olvidarlo da justo el doble o el cuádruple.",
+      "ejemplo": "Diámetro 120 → radio 60 → 2 × π × 60 = 377 metros"
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Perímetros y tamaños a ojo",
+      "titulo": "Todo volumen es la base por la altura",
+      "regla": "Caja, cilindro o prisma: saca el área de la tapa de abajo y multiplícala por lo alto. Una sola fórmula para las tres figuras.",
+      "ejemplo": "Base 4 × 6 = 24 y altura 12 → 288 m³"
+    }
+  ],
+  "ejercicios": [
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Series numéricas",
+      "enunciado": "¿Qué número sigue? 3, 6, 12, 24, 48, ___",
+      "pasos": [
+        "Primera pregunta de siempre: ¿la serie crece poco o crece rápido? Aquí crece rápido, así que sospechamos multiplicación y no suma.",
+        "Comprobamos la diferencia entre términos: 3, 6, 12, 24. No es constante, así que no es sumar lo mismo cada vez.",
+        "Comprobamos la razón: 6÷3 = 2, 12÷6 = 2, 24÷12 = 2, 48÷24 = 2. Siempre 2.",
+        "La regla es «multiplicar por 2». Entonces el que sigue es 48 × 2."
+      ],
+      "respuesta": "96",
+      "errorComun": "Fijarse solo en las diferencias (3, 6, 12, 24) y responder 48 + 48 = 96 por el camino equivocado. Aquí da lo mismo por casualidad, pero en otras series ese razonamiento falla. El orden correcto es: primero mira si es suma, si no cuadra prueba multiplicación."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Series numéricas: los 8 patrones que se repiten",
+      "enunciado": "¿Qué número sigue en la serie?\n\n3, 6, 12, 21, 33, ___",
+      "pasos": [
+        "Antes de probar operaciones al azar se hace lo único que hay que hacer siempre: escribir las diferencias DEBAJO de la serie. De 3 a 6 hay 3; de 6 a 12 hay 6; de 12 a 21 hay 9; de 21 a 33 hay 12.",
+        "Se mira la fila de abajo: 3, 6, 9, 12. Esa fila sí es una serie sencilla, suma 3 cada vez. Cuando las diferencias forman una serie, la de arriba es de «segundo nivel» y ya está resuelta: no hay que buscar nada más.",
+        "La siguiente diferencia tiene que ser 15, así que el número que sigue es 33 + 15 = 48.",
+        "Se comprueba hacia atrás, que es lo que casi nadie hace y lo que evita perder el punto: 48 − 33 = 15, y 15 − 12 = 3, igual que todas las demás. Cuadra.",
+        "Dónde entra esto en el árbol de cuatro preguntas: (1) ¿la diferencia es siempre la misma? no; (2) ¿se multiplica por lo mismo? 6/3 = 2 pero 12/6 = 2 y 21/12 no es 2, así que no; (3) ¿las diferencias forman serie? sí, y ahí se paró. La tercera pregunta resuelve la mayoría de las series que no son ni aritméticas ni geométricas."
+      ],
+      "respuesta": "48",
+      "errorComun": "Rendirse en la pregunta 2 del árbol. Como 3, 6, 12 arranca multiplicando por 2, mucha gente asume serie geométrica, responde 66 y sigue. La serie está diseñada para eso: los tres primeros términos encajan con una regla falsa. La defensa es mecánica —comprobar SIEMPRE el patrón en todos los saltos, no en el primero— y cuesta cinco segundos."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Series alfanuméricas",
+      "enunciado": "¿Qué par sigue?\n\nB2, D4, G7, K11, ___",
+      "pasos": [
+        "Lo primero es separar: una serie alfanumérica son dos series pegadas, una de letras y otra de números. Se resuelven por aparte y nunca se mezclan.",
+        "Las letras son números disfrazados: se numera el alfabeto (A=1, B=2, C=3…). B=2, D=4, G=7, K=11. Conviene decidir de una si la Ñ cuenta; en estas pruebas normalmente no, y si llegara a importar hay que decirlo.",
+        "Con eso, la serie de letras es 2, 4, 7, 11 y la de números es 2, 4, 7, 11. Son la misma. Cuando las dos coinciden, el trabajo se reduce a la mitad.",
+        "Diferencias de 2, 4, 7, 11: 2, 3, 4. Suman uno cada vez, así que la siguiente diferencia es 5 y el término que sigue es 16.",
+        "Se devuelve el 16 a letra: la 16 del alfabeto es la P. La respuesta es P16."
+      ],
+      "respuesta": "P16",
+      "errorComun": "Contar las letras con los dedos desde la A cada vez que aparece una. Con los nervios, en la quinta o sexta se salta una y todo lo demás sale corrido. Vale más escribir el alfabeto numerado en el borde de la hoja al empezar la prueba —treinta segundos— y consultarlo. Ese papel sirve para todas las preguntas de la sección."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Analogías verbales",
+      "enunciado": "Complete la analogía:\n\nTERMÓMETRO : TEMPERATURA :: BÁSCULA : ___\n\nA) Peso   B) Cocina   C) Balanza   D) Kilogramo   E) Medir",
+      "pasos": [
+        "La regla de oro es no mirar las opciones todavía. Primero se pone en una frase qué relación hay en el primer par: «el termómetro es el aparato que sirve para medir la temperatura».",
+        "Se prueba esa MISMA frase, palabra por palabra, con cada opción: «la báscula es el aparato que sirve para medir el peso» —encaja perfecto—; «…para medir la cocina» —no—; «…para medir la balanza» —no, la balanza es otro aparato, no lo que se mide—; «…para medir el kilogramo» —el kilogramo es la unidad, no la magnitud—; «…para medir el medir» —no es ni sustantivo del mismo tipo—.",
+        "Queda A. La frase encajó en un solo caso y ese es el criterio, no cuál «suena» más relacionada.",
+        "Las otras cuatro no están puestas al azar: C es un sinónimo del primer término (aparato parecido), D es la unidad en vez de la magnitud y B es el lugar donde uno se encuentra el objeto. Son las tres trampas que más se repiten en analogías de instrumento y función.",
+        "Relaciones que más salen en estas pruebas, por si la frase no aparece sola: sinónimo, antónimo, parte y todo, género y especie, causa y efecto, instrumento y función, oficio y lugar, objeto y material, y secuencia (antes y después)."
+      ],
+      "respuesta": "A) Peso",
+      "errorComun": "Armar la frase con una relación demasiado vaga —«tienen que ver con medir»— y descubrir que con esa frase encajan tres opciones. Cuando pasa eso no hay que escoger a ojo: hay que apretar la frase hasta que solo sobreviva una. «Tienen que ver con» no sirve nunca; «es el aparato que sirve para medir» sí."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Sinónimos, antónimos y vocabulario",
+      "enunciado": "Seleccione el ANTÓNIMO de:\n\nEFÍMERO\n\nA) Inmediato   B) Duradero   C) Frágil   D) Escaso   E) Tardío",
+      "pasos": [
+        "Primero se define la palabra con las propias palabras, sin mirar opciones: efímero es lo que dura muy poco. Si la palabra no se conoce, se busca dentro de ella: viene de la misma raíz que «efemérides», lo de un día.",
+        "Se escribe el antónimo que uno mismo pondría, antes de leer la lista: lo contrario de «dura poco» es «dura mucho». Ese paso es el que evita caer en las trampas, porque uno llega a la lista con una respuesta ya formada.",
+        "Ahora sí se busca cuál opción se parece a «dura mucho»: duradero. Es la B.",
+        "Se revisa por qué están las otras. A) Inmediato y E) Tardío hablan de CUÁNDO pasa algo, no de cuánto dura: es otro eje. C) Frágil es lo más peligroso, porque es casi un sinónimo de efímero, no un antónimo; en estas pruebas casi siempre meten un sinónimo entre las opciones para el que lee rápido. D) Escaso es cantidad, no duración.",
+        "Regla para toda la sección: en los antónimos, la trampa número uno es un sinónimo. Antes de marcar, hay que preguntarse en voz baja «¿lo contrario o lo mismo?»."
+      ],
+      "respuesta": "B) Duradero",
+      "errorComun": "Leer «antónimo» y responder como si dijera «sinónimo», sobre todo cuando la prueba mezcla las dos instrucciones en la misma sección y se va rápido. Vale la pena subrayar la palabra ANTÓNIMO o SINÓNIMO en cada enunciado: cuesta un segundo y ahí se pierden más puntos que por vocabulario."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Tablas y gráficas: encontrar el dato",
+      "enunciado": "Una gráfica de barras muestra qué porcentaje de los pedidos del año despachó cada transportadora: Andina 34 %, Costeña 27 %, Rápido Sur 19 %, Enlace 12 %, Otras 8 %. Debajo, una tabla dice que en total se despacharon 24 500 pedidos y que Andina tuvo 340 pedidos devueltos.\n\n¿Cuántos pedidos despachó Rápido Sur?\n\nA) 1 900   B) 4 655   C) 4 900   D) 5 200   E) 6 615",
+      "pasos": [
+        "Este formato se reconoce de una: hay una gráfica con porcentajes y una tabla con números absolutos. La pregunta casi siempre consiste en cruzar las dos, y la mitad de los datos que aparecen no se usan. Lo primero es localizar únicamente los dos que hacen falta: el porcentaje del que preguntan (19 %) y el total (24 500).",
+        "El dato de los 340 pedidos devueltos de Andina está puesto para hacer perder tiempo —y para que quien empiece a operar sin leer termine restándolo—. No entra en esta pregunta.",
+        "Antes de calcular se estima, que es lo que de verdad ahorra tiempo: 19 % es casi 20 %, y el 20 % de 24 500 es la quinta parte, 4 900. La respuesta tiene que estar apenas por debajo de 4 900.",
+        "Con esa sola estimación ya se descartan cuatro opciones: A y D están lejos, E es más del 25 % y C es exactamente el 20 %, que sería la respuesta si el porcentaje fuera 20 y no 19. Queda B.",
+        "Si hay tiempo se confirma con la cuenta exacta: 24 500 × 0,19 = 24 500 × 0,2 − 24 500 × 0,01 = 4 900 − 245 = 4 655."
+      ],
+      "respuesta": "B) 4 655",
+      "errorComun": "Ponerse a operar de entrada con todos los números que aparecen en la hoja. Estas preguntas se diseñan con datos de sobra justamente para eso: el que empieza multiplicando se demora tres minutos, y el que estima primero descarta cuatro opciones en diez segundos. La otra caída típica es marcar C, el 20 % redondo, que está puesto como premio de consolación para el que redondeó y no volvió a ajustar."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Cálculo mental y atajos",
+      "enunciado": "Sin papel y en menos de quince segundos:\n\n¿Cuánto es el 15 % de 8 400?\n\nA) 1 060   B) 1 260   C) 1 380   D) 840   E) 1 680",
+      "pasos": [
+        "El 15 % nunca se calcula multiplicando por 0,15 de cabeza. Se parte en dos pedazos fáciles: 15 % = 10 % + 5 %.",
+        "El 10 % es correr la coma un lugar: 840.",
+        "El 5 % es la mitad del 10 %: 420.",
+        "Se suman: 840 + 420 = 1 260. Es la B.",
+        "Los demás atajos de la misma familia, que salen una y otra vez en esta sección: multiplicar por 5 es multiplicar por 10 y partir por 2; multiplicar por 25 es por 100 y partir por 4; el 20 % es la quinta parte; el 12,5 % es la octava parte. Y una señal que vale oro: si la cuenta sale fea, casi siempre es que había un atajo y no se vio."
+      ],
+      "respuesta": "B) 1 260",
+      "errorComun": "Marcar D, que es el 10 %. Pasa por ir rápido y quedarse en el primer pedazo de la cuenta sin sumar el segundo. En las pruebas de cálculo mental las opciones incorrectas son casi siempre resultados intermedios correctos: el 10 %, el 5 %, el 20 %. Que un número de la lista coincida con lo que uno acaba de calcular no significa que sea la respuesta; significa que hay que terminar."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Problemas de razonamiento con datos",
+      "enunciado": "Marcela hace turno en la droguería cada 4 días y va a natación cada 6 días. Hoy le tocó turno y además fue a natación. ¿Dentro de cuántos días le volverán a coincidir las dos cosas el mismo día?\n\nA) 10 días   B) 24 días   C) 12 días   D) 6 días   E) 4 días",
+      "pasos": [
+        "Lo primero es reconocer el tipo, que es lo único difícil aquí: «dos cosas que se repiten cada cierto número de días y hoy coinciden» es siempre un mínimo común múltiplo. Reconocerlo ahorra todo el resto.",
+        "El mcm de 4 y 6 no es multiplicarlos. Se descomponen: 4 = 2 × 2 y 6 = 2 × 3. Se toma cada factor con el mayor exponente que aparezca: 2 × 2 × 3 = 12.",
+        "Así que vuelven a coincidir a los 12 días. Es la C.",
+        "Si uno duda, se comprueba contando, que con números pequeños toma menos de lo que parece. Turnos: 4, 8, 12. Natación: 6, 12. El primer día que sale en las dos listas es el 12.",
+        "El aviso importante: si los dos números no comparten ningún factor —por ejemplo 3 y 7— el mcm sí es el producto, 21. Por eso no se puede aprender «se multiplican» ni «se busca el menor»: se descompone y ya."
+      ],
+      "respuesta": "C) 12 días",
+      "errorComun": "Multiplicar 4 × 6 = 24 y marcar B. Da un día en que efectivamente coinciden, pero la pregunta es cuándo vuelven a coincidir por primera vez, y 24 es la segunda. La opción está puesta ahí exactamente para eso. El otro error es marcar D (6 días), que es cuando toca natación pero no turno."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Cómo administrar el tiempo y cuándo saltarse una",
+      "enunciado": "Una prueba de razonamiento numérico trae 20 preguntas y da 20 minutos. No descuenta puntos por respuesta incorrecta. A los 12 minutos usted va en la pregunta 9 y lleva casi tres minutos atorado en la 10, que es de una tabla con cuatro columnas. ¿Qué hace?",
+      "pasos": [
+        "Primero el dato que decide todo: 20 preguntas en 20 minutos es un minuto por pregunta. A los 12 minutos uno debería ir en la 12, no en la 9. Se está perdiendo, y la causa está identificada: una sola pregunta se llevó tres minutos, es decir, el tiempo de tres preguntas.",
+        "Segundo dato: todas las preguntas valen lo mismo. La 10 no da más puntos por ser difícil. Tres minutos gastados ahí valen exactamente lo mismo que tres minutos en las preguntas 15, 16 y 17, que ni siquiera se han leído.",
+        "Tercer dato, y el que la gente ignora: no hay penalización por error. Eso significa que una casilla en blanco y una casilla equivocada valen lo mismo —cero—, mientras que una casilla marcada al azar entre cinco opciones vale, en promedio, un quinto de punto. Dejar algo en blanco es regalar puntos.",
+        "La decisión, entonces: se marca cualquier opción en la 10, se le hace una señal al lado para volver, y se sigue de una vez con la 11. La regla general que hay que llevar aprendida a la prueba es de 30 segundos: si en medio minuto uno no sabe siquiera por dónde va, marca y sigue.",
+        "Al final, con los minutos que queden, se vuelve a las marcadas. Y si suena el tiempo, ninguna queda en blanco. Con penalización por error el último paso cambia: ahí solo se adivina cuando se pudo descartar al menos una opción."
+      ],
+      "respuesta": "Marca una opción cualquiera en la 10, la señala y pasa inmediatamente a la 11. Con 8 minutos y 10 preguntas por delante, el objetivo ya no es resolver la 10: es no llegar al final con cinco preguntas sin leer. Y como no hay penalización, al terminar no debe quedar ni una casilla vacía.",
+      "errorComun": "Terminar la prueba orgulloso de no haber dejado ninguna sin resolver bien… y con las últimas seis en blanco. Estas pruebas casi siempre se diseñan para que no dé tiempo de acabarlas: quien las arma sabe que nadie llega al final, y parte de lo que mide es precisamente si el evaluado prioriza o se obsesiona. Quedarse con una pregunta difícil no es constancia, es la manera más rápida de bajar el puntaje."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Trabajar desde las opciones, no desde el enunciado",
+      "enunciado": "Resuelva la ecuación y diga cuánto vale x:\n\n3x² + 2x − 10 = 6\n\nA) 1   B) 2   C) 3   D) 4",
+      "caminoLargo": [
+        "Se pasa todo a un lado para dejar la ecuación igualada a cero: 3x² + 2x − 10 − 6 = 0, o sea 3x² + 2x − 16 = 0.",
+        "Se identifican los tres coeficientes: a = 3, b = 2, c = −16.",
+        "Se aplica la fórmula general, x = (−b ± √(b² − 4ac)) / 2a. El discriminante es 2² − 4×3×(−16) = 4 + 192 = 196.",
+        "La raíz de 196 es 14. Entonces x = (−2 ± 14) / 6, que da dos soluciones: x = 12/6 = 2 y x = −16/6 = −2,67.",
+        "Se mira cuál de las dos está entre las opciones. La negativa no está, así que la respuesta es 2. Tiempo real de un estudiante con nervios: entre minuto y medio y dos minutos, y con tres sitios donde equivocarse de signo."
+      ],
+      "pasos": [
+        "Lo primero es darse cuenta de que NADIE pidió resolver la ecuación. Pidieron decir cuál de los cuatro números es x. No es lo mismo, y confundirlo cuesta dos minutos por pregunta.",
+        "Se empieza por la opción B, no por la A. En estas pruebas la respuesta casi nunca es el número más pequeño, y si B falla ya se sabe hacia qué lado moverse.",
+        "Con x = 2: 3 × 4 = 12, más 2 × 2 = 4, menos 10. Da 6. Y 6 es justo lo que pedía el enunciado.",
+        "Ahí se para. No hay que probar C ni D: la ecuación tiene una sola respuesta entre las opciones y ya apareció. Tiempo: quince segundos, y ninguna fórmula que recordar.",
+        "Cuándo sirve este atajo y cuándo no: sirve siempre que la pregunta sea «cuál de estos números cumple» —ecuaciones, divisibilidad, edades, números que cumplen una condición—. No sirve cuando piden un resultado que no está en la lista, como «¿cuánto suma?», porque ahí no hay nada que probar."
+      ],
+      "respuesta": "B) 2",
+      "errorComun": "Resolver la ecuación completa por costumbre de colegio, llegar al resultado correcto… y haber gastado dos minutos de los cuarenta que dura la prueba. En un examen de cien preguntas contra reloj, el error no es equivocarse: es acertar despacio. Quien resuelve cada pregunta por el camino largo entrega la mitad del examen en blanco, y lo que queda en blanco vale cero igual que lo que está malo."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Cuántos números hay entre dos números",
+      "enunciado": "¿Cuántos múltiplos de 3 hay entre el número 120 y el 431, ambos inclusive?\n\nA) 100   B) 102   C) 104   D) 106",
+      "caminoLargo": [
+        "El camino de siempre es escribirlos: 120, 123, 126, 129, 132… e ir contando.",
+        "Al llegar a 150 ya se llevan diez y quedan casi cien por delante. Con el reloj encima se salta uno, o se cuenta uno dos veces, y no hay forma de saber en cuál.",
+        "El que es un poco más rápido arma la lista de a diez y multiplica, pero igual necesita escribir. Terminar toma más de tres minutos, y la cuenta es tan frágil que ni sirve comprobarla: habría que volver a contar todo."
+      ],
+      "pasos": [
+        "Esta familia entera —cuántos números, cuántos pares, cuántos múltiplos— se resuelve con la misma receta de tres pasos, siempre en el mismo orden: RESTAR, DIVIDIR, SUMAR 1. Vale la pena aprendérsela como se aprende un número de teléfono.",
+        "Antes de la receta, un ajuste: los extremos tienen que ser múltiplos de 3. El 120 sí lo es (1+2+0 = 3). El 431 no (4+3+1 = 8), así que se baja al múltiplo anterior, que es 429 (4+2+9 = 15). La receta se aplica sobre 120 y 429.",
+        "RESTAR: 429 − 120 = 309. DIVIDIR entre el salto, que aquí es 3 porque van de tres en tres: 309 ÷ 3 = 103. SUMAR 1: 104.",
+        "Ese +1 es el paso que más se olvida y tiene una razón de ser: la resta cuenta los SALTOS, no los números. Entre el 1 y el 4 hay tres saltos pero cuatro números. Por eso siempre uno más.",
+        "Tiempo: veinte segundos, y con una comprobación que sí se puede hacer, a diferencia del camino largo."
+      ],
+      "respuesta": "C) 104",
+      "errorComun": "Olvidar el +1 y responder 103, que casi siempre está puesto como opción justo al lado de la buena. La forma de no fallar nunca es comprobarlo con un caso ridículo antes de confiar: ¿cuántos múltiplos de 3 hay entre 3 y 9? Se ven: 3, 6 y 9, son tres. Y la receta da (9−3)/3 = 2, más 1 = 3. Cuadra. Ese ensayo de dos segundos con números chiquitos sirve para toda la sección."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Velocidades: cruzarse y alcanzarse",
+      "enunciado": "Un bus sale de Bogotá a 100 km/h. Tres horas después sale otro por la misma vía a 105 km/h. ¿Cuánto tardará el segundo en alcanzar al primero?\n\nA) 105 horas   B) 55 horas   C) 40 horas   D) 60 horas",
+      "caminoLargo": [
+        "Se le pone nombre al tiempo que se busca: t, las horas que lleva andando el segundo bus.",
+        "Se escribe la posición de cada uno. El primero lleva 3 horas de ventaja, así que su posición es 100 × (t + 3). El segundo es 105 × t.",
+        "Se igualan las dos posiciones, porque alcanzar significa estar en el mismo punto: 105t = 100(t + 3).",
+        "Se resuelve: 105t = 100t + 300, entonces 5t = 300, entonces t = 60 horas.",
+        "Es correcto y es el método que enseña el colegio. Toma alrededor de un minuto y medio, y exige plantear bien la ecuación, que es donde se cae la mayoría."
+      ],
+      "pasos": [
+        "Primero se decide de qué tipo es, porque solo hay dos y cambian una palabra: si los dos van uno HACIA el otro, las velocidades se SUMAN; si uno PERSIGUE al otro, se RESTAN. Aquí van en la misma dirección: se restan.",
+        "La fórmula queda: tiempo = distancia ÷ (resta de las velocidades). La resta es fácil: 105 − 100 = 5 km/h. Eso significa que el de atrás le recorta 5 km cada hora, ni uno más.",
+        "Falta la distancia, y aquí está la parte que tumba a la gente: el enunciado no la da. La distancia es la ventaja que el primero ya llevaba cuando el segundo arrancó. Como iba a 100 km/h durante 3 horas, la ventaja es 100 × 3 = 300 km.",
+        "Se aplica: 300 ÷ 5 = 60 horas. Dos cuentas, veinte segundos, sin plantear ninguna ecuación.",
+        "Vale la pena mirar el resultado con desconfianza un segundo: 60 horas son dos días y medio, un número enorme. Y tiene sentido, porque recortar 300 km a 5 km por hora es lentísimo. Cuando la resta de velocidades es pequeña, el tiempo SIEMPRE sale grande; si a alguien le da un número chiquito, se equivocó."
+      ],
+      "respuesta": "D) 60 horas",
+      "errorComun": "Restar las horas o sumar las velocidades por inercia. La defensa es leer el enunciado buscando una sola cosa: ¿van al encuentro o uno detrás del otro? Esa pregunta decide toda la cuenta y se responde en dos segundos. La otra caída típica es buscar la distancia en el enunciado, no encontrarla y concluir que falta un dato: no falta, hay que fabricarla multiplicando la velocidad del de adelante por su ventaja."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Problemas clásicos: patos y conejos, náufragos y el que no paga",
+      "enunciado": "En una finca hay patos y conejos. Entre todos se cuentan 90 cabezas y 200 patas. ¿Cuántos patos hay?\n\nA) 100   B) 70   C) 80   D) 60",
+      "caminoLargo": [
+        "Se le pone letra a cada animal: p los patos, c los conejos.",
+        "Se arman las dos ecuaciones. Por las cabezas: p + c = 90. Por las patas: 2p + 4c = 200.",
+        "Se despeja una en la otra. De la primera, c = 90 − p. Se reemplaza: 2p + 4(90 − p) = 200.",
+        "Se resuelve: 2p + 360 − 4p = 200, entonces −2p = −160, entonces p = 80.",
+        "Correcto, y es exactamente como se enseña en octavo. Toma minuto y medio bien hecho, y tiene tres sitios donde un signo mal puesto arruina todo."
+      ],
+      "pasos": [
+        "El razonamiento del atajo es este: imagínese que TODOS fueran conejos. Habría 90 × 4 = 360 patas. Pero solo hay 200. Sobran 160 patas imaginarias, y cada pato que se cambia por un conejo quita 2 patas. Entonces hay 160 ÷ 2 = 80 patos.",
+        "La misma cuenta, ya masticada para hacerla de memoria: cabezas × 2, menos la mitad de las patas. Aquí, 90 × 2 = 180, y la mitad de 200 es 100. Entonces 180 − 100 = 80 patos.",
+        "Los conejos salen por resta, sin cuenta nueva: 90 − 80 = 10 conejos.",
+        "Comprobación, que cuesta cinco segundos y sirve: 80 patos × 2 patas = 160, más 10 conejos × 4 patas = 40. Total 200 patas. Cuadra.",
+        "Es el mismo ejercicio con monedas de 500 y de 1.000, con motos y carros, o con mesas de tres y de cuatro patas: cambia el disfraz, no la cuenta."
+      ],
+      "respuesta": "C) 80",
+      "errorComun": "Responder cuántos conejos hay cuando preguntaron por los patos. El truco entrega los dos números casi a la vez y con el reloj encima es fácil marcar el que no era. Vale la pena subrayar en el enunciado QUÉ animal están preguntando antes de empezar a calcular."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Repartos: proporcional y con diferencias",
+      "enunciado": "Se reparten $450.000 entre tres personas de 6, 12 y 18 años, en proporción a su edad. ¿Cuánto recibe la de 12 años?\n\nA) 125.000   B) 130.000   C) 150.000   D) 110.000",
+      "caminoLargo": [
+        "Se plantea con una incógnita por persona: 6k, 12k y 18k, donde k es lo que le toca a cada quien por cada año de edad.",
+        "Se escribe la ecuación del total: 6k + 12k + 18k = 450.000.",
+        "Se suma y se despeja: 36k = 450.000, entonces k = 12.500.",
+        "Se reemplaza en la que preguntan: 12k = 12 × 12.500 = 150.000.",
+        "Es el mismo resultado. La diferencia es que aquí hubo que plantear una ecuación con letra, y mucha gente se traba justo en ese paso."
+      ],
+      "pasos": [
+        "Reparto proporcional es siempre la misma receta de tres pasos y se puede aprender de memoria: SUMO las partes, DIVIDO el total entre esa suma, MULTIPLICO por la parte que me preguntan.",
+        "SUMO: 6 + 12 + 18 = 36. Esos 36 son las «porciones» en que se va a partir la plata.",
+        "DIVIDO: 450.000 ÷ 36 = 12.500. Ese número es lo que vale UNA porción, o sea lo que recibe cada persona por cada año de edad. Es el número más útil del ejercicio y conviene anotarlo aparte.",
+        "MULTIPLICO por lo que preguntan, que son 12 años: 12 × 12.500 = 150.000.",
+        "Si alcanza el tiempo, la comprobación es inmediata porque el valor de la porción ya está calculado: 6 × 12.500 = 75.000 y 18 × 12.500 = 225.000. Y 75.000 + 150.000 + 225.000 = 450.000. Cuadra exacto."
+      ],
+      "respuesta": "C) $150.000",
+      "errorComun": "Dividir el total entre 3, como si el reparto fuera en partes iguales, y responder 150.000 por pura coincidencia en este caso. Coincide aquí porque 12 es justo el promedio de las tres edades; en el próximo ejercicio no coincidirá y el método malo dará una respuesta mala. Acertar por casualidad es peor que fallar, porque deja confiando en un método que no sirve."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Fracciones encadenadas: la palabra «de»",
+      "enunciado": "Calcule la quinta parte de las tres cuartas partes de los dos novenos de los tres medios de 10.000.\n\nA) 999,99   B) 1.000   C) 500   D) 333,33",
+      "caminoLargo": [
+        "El camino natural es ir resolviendo de adentro hacia afuera, un pedazo a la vez.",
+        "Los tres medios de 10.000: 10.000 × 3 ÷ 2 = 15.000.",
+        "Los dos novenos de 15.000: 15.000 × 2 ÷ 9 = 3.333,33… y aquí ya apareció un decimal que no termina.",
+        "Las tres cuartas partes de 3.333,33: 2.500 (o 2.499,99 si se arrastró el redondeo).",
+        "La quinta parte de eso: 500 (o 499,99). La respuesta buena sale, pero con el susto de los decimales por el camino, y ese susto es justo lo que las opciones 999,99 y 333,33 están esperando."
+      ],
+      "pasos": [
+        "Enunciados así asustan por lo largos, y están diseñados para eso. La clave es una sola: en estos problemas la palabra «de» quiere decir MULTIPLICAR. Nada más.",
+        "Entonces todo el enunciado se escribe en un solo renglón, en el mismo orden en que está escrito: 1/5 × 3/4 × 2/9 × 3/2 × 10.000.",
+        "Ahora lo que hace que esto se pueda hacer en la cabeza: NO se multiplica nada todavía. Primero se tacha arriba contra abajo. El 3 de arriba con el 9 de abajo deja 3. El 2 de arriba con el 2 de abajo se van. El 3 que quedó abajo con el 3 de arriba se van. El 4 de arriba con el 4 de abajo se van.",
+        "Después de tachar solo quedan el 5 y el 4 abajo, y el 10.000: o sea 10.000 ÷ 20 = 500.",
+        "La regla que hay que llevarse: mientras más fracciones encadenadas, más se cancela y más sencillo queda. Un enunciado largo de este tipo es buena noticia, no mala."
+      ],
+      "respuesta": "C) 500",
+      "errorComun": "Ir resolviendo por pedazos y quedar arrastrando decimales que no terminan. Ahí es donde salen opciones como 999,99 y 333,33: están puestas para recoger a quien fue redondeando por el camino. Si se cancela primero, nunca aparece un decimal."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Edades",
+      "enunciado": "Juan tiene 44 años y sus tres hijos tienen 17, 12 y 9. ¿Dentro de cuántos años la suma de las edades de los tres hijos será igual a la de Juan?\n\nA) 2   B) 3   C) 4   D) 5",
+      "caminoLargo": [
+        "Se le pone letra a lo que se busca: x, los años que tienen que pasar.",
+        "Se escribe la edad de cada uno dentro de x años: Juan tendrá 44 + x. Los hijos tendrán 17 + x, 12 + x y 9 + x.",
+        "Se plantea la igualdad que pide el enunciado: (17 + x) + (12 + x) + (9 + x) = 44 + x.",
+        "Se ordena: 38 + 3x = 44 + x, entonces 2x = 6, entonces x = 3.",
+        "Sale bien, pero hay que armar la ecuación sin olvidar que la x se le suma a los cuatro, que es exactamente donde se equivoca la mayoría."
+      ],
+      "pasos": [
+        "Hoy los hijos suman 17 + 12 + 9 = 38 y Juan tiene 44. Los hijos van 6 años por debajo.",
+        "Aquí está lo que casi nadie ve: cada año que pasa, Juan cumple 1 año pero los hijos cumplen 3 entre los tres. La diferencia no se queda quieta, se cierra a razón de 2 años por año.",
+        "Como hay que cerrar 6 años de diferencia a 2 por año, la respuesta es 6 ÷ 2 = 3 años.",
+        "Se comprueba con la tabla: en 3 años Juan tendrá 47, y los hijos 20, 15 y 12, que suman 47. Iguales.",
+        "Y si el razonamiento no sale solo, queda el atajo de siempre: escribir a todos en una fila, sumarle a cada uno los mismos años y probar. Como las opciones son 2, 3, 4 y 5, probar las cuatro toma menos de un minuto."
+      ],
+      "respuesta": "B) 3 años",
+      "errorComun": "Sumarle los años solo al papá y dejar a los hijos quietos, o al revés. Pasa por escribir el ejercicio en desorden. Una tabla de dos filas —arriba los nombres, abajo las edades— y sumarle a TODA la fila el mismo número evita el error por completo, y además deja el ejercicio listo para probar otra opción sin volver a empezar."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Números romanos",
+      "enunciado": "¿Cuál de estos números romanos está bien escrito?\n\nA) IL   B) XLIX   C) VXL   D) IXL",
+      "pasos": [
+        "Antes de traducir nada conviene saber las dos reglas que hacen mala una opción, porque en estas preguntas casi todas están mal a propósito.",
+        "Regla uno: solo tres letras se pueden poner delante para restar, y son I, X y C. La V, la L y la D NUNCA restan. Con eso se cae la C) VXL de una, porque tiene una V restando.",
+        "Regla dos: la letra que resta solo puede ir delante de las DOS que le siguen en tamaño. La I solo puede ir antes de V y de X. Nunca antes de L ni de C. Con eso se caen la A) IL y la D) IXL, que ponen una I delante de una L.",
+        "Queda solo la B. Se traduce para confirmar: XL son 40 (X delante de L resta) y IX son 9 (I delante de X resta). Total 49.",
+        "Lo que hay que llevarse no es la traducción sino las dos reglas de descarte: en estas preguntas casi nunca hay que traducir, hay que ver cuál está bien escrita, y eso se decide mirando qué letra está restando."
+      ],
+      "respuesta": "B) XLIX",
+      "errorComun": "Dar por buena IL pensando «50 menos 1 es 49, se entiende perfectamente». Se entiende, pero está mal escrito, y la prueba está midiendo exactamente eso. En números romanos no se evalúa si uno adivina el valor, sino si conoce las reglas de formación."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Porcentajes y proporciones rápidas",
+      "enunciado": "Después de un impuesto del 20 % pagué $1.020 por un artículo. ¿Cuál era el precio antes del impuesto?\n\nA) $800   B) $825   C) $850   D) $816",
+      "caminoLargo": [
+        "El camino de siempre es ponerle letra al precio original: x.",
+        "Se escribe qué pasó con él: al precio se le sumó su 20 %, o sea x + 0,20x = 1.020.",
+        "Se junta: 1,20x = 1.020.",
+        "Se despeja: x = 1.020 ÷ 1,20 = 850.",
+        "Es correcto, y de hecho termina en la misma división. El problema no es la cuenta: es que hay que plantear la ecuación sin equivocarse, y ahí se cae la mayoría."
+      ],
+      "pasos": [
+        "La pregunta clave, que se responde antes de calcular nada: ¿los 1.020 son el 100 % o son más del 100 %? Son más, porque ya traen el impuesto encima. Entonces 1.020 es el 120 %.",
+        "Y esa es toda la regla: cuando el número que te dan YA trae el porcentaje incluido, se divide. Cuando el porcentaje está por aplicarse, se multiplica.",
+        "1.020 ÷ 1,20 = 850.",
+        "Comprobación de cinco segundos, que aquí vale doble porque las opciones están muy juntas: el 20 % de 850 es 170, y 850 + 170 = 1.020. Cuadra.",
+        "La opción trampa es la D. Sale de restarle el 20 % a los 1.020 (1.020 − 204 = 816), que es lo que hace casi todo el mundo. Está mal porque ese 20 % estaría calculado sobre el precio con impuesto, no sobre el original, que es más pequeño."
+      ],
+      "respuesta": "C) $850",
+      "errorComun": "Restarle el porcentaje al precio que ya lo trae. Es el error más caro de toda la sección de porcentajes porque aparece disfrazado de mil formas —con IVA, con descuento, con recargo, con propina— y siempre hay una opción esperándolo. La regla que lo evita es una sola frase: si el porcentaje ya está adentro, se DIVIDE; si todavía hay que aplicarlo, se MULTIPLICA."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Dos que trabajan juntos",
+      "enunciado": "Una llave llena un tanque en 3 horas y otra lo llena en 12 horas. Si se abren las dos al mismo tiempo, ¿cuánto tardan en llenarlo?\n\nA) 7,5 horas   B) 2,5 horas   C) 2,4 horas   D) 15 horas",
+      "caminoLargo": [
+        "El camino del colegio es razonar por lo que hace cada una en una hora. La primera llena 1/3 del tanque por hora; la segunda, 1/12.",
+        "Juntas llenan 1/3 + 1/12 por hora. Se busca denominador común, que es 12: 4/12 + 1/12 = 5/12 del tanque por hora.",
+        "Si en una hora llenan 5/12, el tanque completo lo llenan en 12/5 de hora, que es dar vuelta a la fracción.",
+        "12 ÷ 5 = 2,4 horas.",
+        "Es el razonamiento correcto y conviene entenderlo, porque es el que explica por qué funciona el atajo. Pero pasa por sumar fracciones con denominador común, y con el reloj encima eso es un minuto largo."
+      ],
+      "pasos": [
+        "El atajo es una sola línea: se multiplican los dos tiempos y se divide entre la suma de los dos.",
+        "(3 × 12) ÷ (3 + 12) = 36 ÷ 15 = 2,4 horas.",
+        "Antes de marcar, el filtro que salva la pregunta: el resultado tiene que ser MENOR que el tiempo del más rápido de los dos. Entre los dos tardan menos que cualquiera por su cuenta, siempre.",
+        "Con eso se caen tres opciones sin hacer ninguna cuenta: 7,5 y 15 son mayores que 3, así que son imposibles. Y entre 2,5 y 2,4 decide la división.",
+        "Es la misma fórmula para dos obreros, dos máquinas, dos impresoras o dos grifos: cambia el disfraz, no la cuenta."
+      ],
+      "respuesta": "C) 2,4 horas",
+      "errorComun": "Promediar los dos tiempos y responder 7,5. Es la respuesta que primero se le ocurre a cualquiera y por eso siempre está entre las opciones. El filtro de «tiene que ser menor que el más rápido» la descarta sola, y no cuesta ni un segundo: si dos personas ayudan, el trabajo no puede tardar más que si lo hiciera la rápida sola."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Problemas clásicos: patos y conejos, náufragos y el que no paga",
+      "enunciado": "En una granja hay patos y conejos. En total se cuentan 42 cabezas y 88 patas. ¿Cuántos patos hay?\n\nA) 25   B) 20   C) 40   D) 30",
+      "caminoLargo": [
+        "Con dos ecuaciones: p + c = 42 por las cabezas, y 2p + 4c = 88 por las patas.",
+        "Se despeja c = 42 − p y se reemplaza: 2p + 4(42 − p) = 88.",
+        "2p + 168 − 4p = 88, entonces −2p = −80, entonces p = 40.",
+        "Correcto. Toma minuto y medio y hay que cuidar tres signos."
+      ],
+      "pasos": [
+        "Este es el mismo ejercicio de patos y conejos, pero vale la pena verlo con la herramienta general, porque sirve para cualquier par de números y para cualquier disfraz.",
+        "Se dibuja un rombo. En la punta izquierda las cabezas, 42. En la derecha las patas, 88. Arriba el número de patas del animal grande, 4. Abajo el del pequeño, 2.",
+        "La cuenta se lee del dibujo: arriba, cabezas por el número de arriba menos las patas. Abajo, la resta de los dos números de las esquinas.",
+        "(42 × 4 − 88) ÷ (4 − 2) = (168 − 88) ÷ 2 = 80 ÷ 2 = 40 patos.",
+        "Los conejos son el resto: 42 − 40 = 2. Se comprueba: 40 × 2 + 2 × 4 = 80 + 8 = 88 patas. Cuadra.",
+        "El rombo sirve igual con monedas de 500 y 1.000, con mesas de tres y cuatro patas, o con boletas de niño y de adulto. Solo cambian los dos números de arriba y abajo."
+      ],
+      "respuesta": "C) 40",
+      "errorComun": "Poner los números del rombo al revés —las patas donde van las cabezas— y sacar un número absurdo, como más animales que cabezas. La defensa es mirar el resultado un segundo antes de marcar: los patos nunca pueden ser más que las cabezas, y las patas siempre tienen que ser un número par."
+    },
+    {
+      "materia": "exa.psico-numerico",
+      "tema": "Fracciones encadenadas: la palabra «de»",
+      "enunciado": "En un proceso de selección se presentó un grupo de aspirantes. En la primera prueba se quedó 1/5 de los presentados; de los que pasaron, se quedó 1/4; y de los que llegaron a la tercera, se quedó 2/7. ¿Qué parte de los presentados llegó a la cuarta prueba?\n\nA) 1/5   B) 1/7   C) 3/5   D) 3/7",
+      "caminoLargo": [
+        "El camino natural es ponerle un número al grupo. Digamos que se presentaron 140, que es cómodo porque se divide entre 5, entre 4 y entre 7.",
+        "Se cae 1/5, o sea 28. Quedan 112.",
+        "Se cae 1/4 de 112, o sea 28. Quedan 84.",
+        "Se cae 2/7 de 84, o sea 24. Quedan 60.",
+        "Y 60 de 140 es 3/7. Sale bien, pero hay que elegir un número que se divida por todo, y si uno se equivoca al escogerlo terminan saliendo decimales por todas partes."
+      ],
+      "pasos": [
+        "El atajo es no mirar a los que se caen, sino a los que sobreviven. Si se cae 1/5, sobrevive 4/5. Si se cae 1/4, sobrevive 3/4. Si se cae 2/7, sobrevive 5/7.",
+        "Como cada etapa se aplica sobre los que quedaron de la anterior —esa es la palabra «de» otra vez—, los sobrevivientes se multiplican: 4/5 × 3/4 × 5/7.",
+        "Y como siempre en las fracciones encadenadas, primero se tacha: el 4 de arriba con el 4 de abajo, y el 5 de arriba con el 5 de abajo.",
+        "Queda 3/7. Sin escoger ningún número y sin una sola división.",
+        "Esta forma es la misma para embudos de ventas, para tasas de supervivencia y para cualquier cadena de filtros: lo que pasa entero es el producto de lo que sobrevive en cada paso."
+      ],
+      "respuesta": "D) 3/7",
+      "errorComun": "Sumar las fracciones que se caen —1/5 + 1/4 + 2/7— y restarle eso a 1. Da mal, y da mal por una razón que vale la pena entender: cada fracción está calculada sobre un grupo distinto, cada vez más pequeño. El 1/4 de la segunda prueba no es un cuarto de los presentados, es un cuarto de los que quedaban. Fracciones de grupos distintos no se suman."
+    },
+    {
+      "materia": "exa.psico-abstracto",
+      "tema": "Qué cambia entre una figura y la siguiente",
+      "enunciado": "Serie de figuras. Figura 1: un triángulo que apunta hacia arriba, con 1 punto adentro. Figura 2: un triángulo que apunta a la derecha, con 2 puntos adentro. Figura 3: un triángulo que apunta hacia abajo, con 3 puntos adentro. Figura 4: un triángulo que apunta a la izquierda, con 4 puntos adentro. ¿Cómo es la figura 5?",
+      "pasos": [
+        "El método no es adivinar la figura completa: es hacer una lista de los atributos que pueden cambiar y seguir cada uno por separado, como columnas. Aquí hay dos: hacia dónde apunta el triángulo y cuántos puntos tiene adentro.",
+        "Columna orientación: arriba, derecha, abajo, izquierda. Cada paso es un giro de 90 grados en el sentido de las manecillas del reloj. Se comprueba que el patrón se cumple en los tres saltos, no solo en el primero.",
+        "Columna cantidad de puntos: 1, 2, 3, 4. Suma 1 en cada paso. También se cumple en los tres saltos.",
+        "Se proyecta cada columna un paso más, por aparte. Orientación: después de izquierda, otro giro de 90 grados en el mismo sentido devuelve el triángulo a apuntar hacia arriba, cerrando el ciclo de cuatro. Puntos: 4 + 1 = 5.",
+        "Se vuelven a juntar las dos columnas en una sola figura."
+      ],
+      "respuesta": "Un triángulo que apunta hacia arriba, con 5 puntos adentro.",
+      "errorComun": "Buscar una sola regla que explique todo y bloquearse cuando no aparece. En razonamiento abstracto casi siempre hay dos o tres atributos cambiando a la vez —posición, giro, cantidad, tamaño, relleno, color— y cada uno lleva su propio ritmo, a veces con ciclos de distinta longitud. Otro error caro es no notar que la orientación cicla de a cuatro: quien no cierra el ciclo se inventa una quinta orientación que no existe."
+    },
+    {
+      "materia": "exa.psico-abstracto",
+      "tema": "Lógica: silogismos y deducción",
+      "enunciado": "Todos los aprendices que se graduaron del SENA hicieron la etapa productiva. Camila hizo la etapa productiva. ¿Se puede concluir que Camila se graduó del SENA?",
+      "pasos": [
+        "Se traduce la primera premisa a conjuntos, sin agregarle nada: el grupo de los graduados está contenido dentro del grupo de los que hicieron la etapa productiva. Todo graduado está adentro del grupo grande.",
+        "Se comprueba que la contención va en un solo sentido. La premisa no dice que los dos grupos sean el mismo: el grupo de los que hicieron la etapa productiva puede tener gente que la hizo y no se graduó por otras razones —perdió una competencia, se retiró, no entregó papeles.",
+        "Se ubica a Camila. Lo único que dice la segunda premisa es que está en el grupo grande. Dentro del grupo grande hay dos zonas: la de los graduados y la de los que no. Camila puede estar en cualquiera de las dos.",
+        "Como hay al menos un escenario compatible con las premisas donde Camila no se graduó, la conclusión no se sigue. No es que sea falsa: es que no se puede deducir.",
+        "Esta trampa tiene nombre: afirmación del consecuente. La premisa dice «si se graduó, entonces hizo la etapa» y se pretende recorrerla al revés."
+      ],
+      "respuesta": "No. Las premisas no permiten concluirlo: Camila pudo hacer la etapa productiva sin haberse graduado.",
+      "errorComun": "Leer «todos los A son B» como si además dijera «todos los B son A». Es el error más frecuente de toda la sección de lógica, y se evita con una regla mecánica: dibujar el círculo pequeño dentro del grande y preguntarse si queda espacio libre en el grande. Si queda —y con «todos» siempre queda, salvo que digan «solo» o «únicamente»—, entonces del dato de que alguien está en el grande no se deduce nada."
+    },
+    {
+      "materia": "exa.psico-abstracto",
+      "tema": "Razonamiento diagramático: los símbolos son órdenes",
+      "enunciado": "En esta prueba cada símbolo es una orden que se aplica a la fila de figuras que entra:\n\n  ⊿  = gira toda la fila 90° a la izquierda\n  ∿  = mueve cada figura un lugar a la izquierda (la primera pasa al final)\n  ⊛  = intercambia la segunda figura con la tercera\n\nEntra la fila  [cuadrado] [triángulo] [flecha]  y pasa por  ∿  y luego por  ⊛.\n¿Qué fila sale?\n\nA) [triángulo] [flecha] [cuadrado]\nB) [triángulo] [cuadrado] [flecha]\nC) [flecha] [triángulo] [cuadrado]\nD) [cuadrado] [flecha] [triángulo]",
+      "pasos": [
+        "Lo primero que hay que entender de este formato —y lo que lo hace fácil una vez se entiende— es que los símbolos no son figuras que haya que comparar: son órdenes, como los botones de una máquina. La tabla de arriba es el manual. La pregunta es qué sale por el otro lado.",
+        "La única regla de oro: se aplican en ORDEN, uno por uno, y se escribe el resultado intermedio. Nunca se hacen los dos de una vez en la cabeza; ahí es donde se pierde el punto.",
+        "Entrada: cuadrado, triángulo, flecha.",
+        "Primer símbolo, ∿: cada figura corre un lugar a la izquierda y la primera da la vuelta al final. Queda: triángulo, flecha, cuadrado. Se escribe.",
+        "Segundo símbolo, ⊛: se intercambian la segunda y la tercera de ESA fila, no de la original. Segunda es flecha, tercera es cuadrado. Queda: triángulo, cuadrado, flecha.",
+        "Se compara con las opciones: es la B. Y se comprueba al revés, que en este formato es rapidísimo: si a B se le deshace el ⊛ queda triángulo, flecha, cuadrado, y deshaciendo el ∿ queda cuadrado, triángulo, flecha, que es lo que entró. Cuadra."
+      ],
+      "respuesta": "B) [triángulo] [cuadrado] [flecha]",
+      "errorComun": "Aplicar el segundo símbolo sobre la fila original en lugar de sobre el resultado del primero. Es el error que definen estas pruebas y por eso la opción A está ahí: A es exactamente lo que sale de aplicar ∿ y quedarse. El antídoto no es concentrarse más, es escribir la fila intermedia: dos segundos de lápiz que valen el punto. Cuando el enunciado trae tres o cuatro símbolos seguidos, sin escribir es imposible."
+    },
+    {
+      "materia": "exa.psico-abstracto",
+      "tema": "Secuencias de figuras",
+      "enunciado": "¿Qué figura sigue?\n\nUna circunferencia a la que le falta un pedazo, como una C. En la figura 1 la abertura mira hacia arriba; en la 2, hacia la derecha; en la 3, hacia abajo; en la 4, hacia la izquierda; en la 5, otra vez hacia arriba. ¿Cómo es la figura 6?\n\nA) Abertura hacia abajo   B) Abertura hacia la derecha   C) Abertura hacia arriba   D) Abertura hacia la izquierda",
+      "pasos": [
+        "La pregunta correcta nunca es «¿qué figura sigue?» sino «¿QUÉ CAMBIA de una a la siguiente?». Aquí la circunferencia es la misma siempre: el único atributo que se mueve es hacia dónde mira la abertura.",
+        "Se sigue ese único atributo: arriba, derecha, abajo, izquierda, arriba. Cada paso es un cuarto de vuelta en el sentido de las manecillas del reloj.",
+        "Se comprueba que el patrón se cumple en TODOS los saltos, no solo en el primero: de arriba a derecha, de derecha a abajo, de abajo a izquierda, de izquierda a arriba. Los cuatro son el mismo giro.",
+        "Después de la 5 (arriba) viene otro cuarto de vuelta: derecha. Es la B.",
+        "Aquí hay un detalle que estas pruebas explotan: como el ciclo es de cuatro y la figura 5 repite a la figura 1, la 6 tiene que repetir a la 2. Contar el ciclo es más rápido y más seguro que imaginarse el giro, sobre todo cuando la figura es complicada."
+      ],
+      "respuesta": "B) Abertura hacia la derecha",
+      "errorComun": "Confundir un giro con un reflejo. Una figura girada 180° y su imagen en espejo se ven igual cuando la figura es simétrica, y las opciones incluyen las dos. La forma de salir de la duda es fijarse en un detalle asimétrico —una punta, una marca, un grosor distinto— y seguirlo. Si no hay ninguno, el giro es el más probable: son mucho más frecuentes que los reflejos."
+    },
+    {
+      "materia": "exa.psico-abstracto",
+      "tema": "Matrices tipo test de inteligencia",
+      "enunciado": "Matriz de 3×3. En cada casilla hay un cuadrado con puntos adentro.\n\nFila 1: 1 punto, 2 puntos, 3 puntos\nFila 2: 2 puntos, 4 puntos, 6 puntos\nFila 3: 3 puntos, 6 puntos, ___\n\nAdemás, los cuadrados de la primera columna son blancos, los de la segunda grises y los de la tercera negros.\n\n¿Qué va en la casilla que falta?\n\nA) Un cuadrado negro con 9 puntos\nB) Un cuadrado gris con 9 puntos\nC) Un cuadrado negro con 12 puntos\nD) Un cuadrado blanco con 9 puntos",
+      "pasos": [
+        "En una matriz de 3×3 hay casi siempre DOS reglas: una que corre por las filas y otra por las columnas. Buscar una sola es lo que hace fallar. Y hay un atributo aparte —aquí el color— que suele seguir su propia regla.",
+        "Regla por filas: 1, 2, 3 (suma 1); 2, 4, 6 (suma 2); 3, 6, ___ (debería sumar 3). Con eso la casilla llevaría 9 puntos.",
+        "Regla por columnas, para confirmar: columna 1 es 1, 2, 3; columna 2 es 2, 4, 6; columna 3 es 3, 6, ___. La tercera columna también va de 3 en 3, así que después del 6 viene 9. Las dos reglas coinciden: 9 puntos.",
+        "Ahora el atributo aparte. El color no depende de los puntos: depende de la columna. Primera columna blanco, segunda gris, tercera negro. La casilla que falta está en la tercera columna, así que es negra.",
+        "Se juntan las dos respuestas: cuadrado negro con 9 puntos. Es la A.",
+        "De hecho la matriz completa es la tabla de multiplicar: fila × columna. Pero no hace falta darse cuenta de eso para resolverla, y buscar «la idea genial» es justamente lo que hace perder el tiempo. Con seguir cada atributo por separado alcanza siempre."
+      ],
+      "respuesta": "A) Un cuadrado negro con 9 puntos",
+      "errorComun": "Acertar el número y equivocarse en el color, o al revés. Las opciones están armadas para eso: B tiene el número bien y el color mal, C tiene el color bien y el número mal. Por eso conviene resolver cada atributo aparte, escribir las dos respuestas —«9» y «negro»— y solo después buscar la opción que tenga las dos. Buscar directamente la figura completa entre las opciones es lo que produce el error."
+    },
+    {
+      "materia": "exa.psico-abstracto",
+      "tema": "Razonamiento espacial: armar y desarmar cubos",
+      "enunciado": "Un cubo desplegado tiene seis caras: una con un círculo, una con una X, una con una raya, y tres en blanco. Al desplegarlo, la cara del círculo y la de la X quedan pegadas por un lado, y la de la raya queda pegada al círculo por el lado contrario.\n\n¿Puede un cubo armado con esas caras mostrar, al mismo tiempo y desde un mismo punto de vista, el círculo, la X y la raya?\n\nA) Sí   B) No, porque la X y la raya quedan opuestas   C) No, porque el círculo queda en la base   D) Faltan datos",
+      "pasos": [
+        "Las preguntas de cubos no se resuelven imaginándose el cubo: se resuelven con dos reglas que se pueden aplicar mirando el dibujo plano, sin girar nada en la cabeza.",
+        "Regla 1, la que resuelve la mayoría: dos caras que en el despliegue están PEGADAS por un lado quedan siempre contiguas en el cubo —comparten una arista— y por lo tanto se pueden ver a la vez.",
+        "Regla 2: dos caras separadas por exactamente una cara en línea recta quedan OPUESTAS en el cubo, y dos caras opuestas no se pueden ver nunca al mismo tiempo. Desde un vértice se ven como máximo tres caras, y esas tres son siempre contiguas entre sí.",
+        "Se aplican al enunciado. El círculo está pegado a la X: son contiguas. El círculo está pegado a la raya por el lado contrario: también contiguas. Pero entonces la X y la raya están separadas por el círculo, en línea recta: por la regla 2, quedan opuestas.",
+        "Como la X y la raya son caras opuestas, no hay ningún punto de vista desde el cual se vean las dos. La respuesta es B.",
+        "El truco práctico para la prueba: en cuanto se ve el despliegue, se marcan de una los tres pares de caras opuestas (son siempre tres pares). Con esos pares escritos al lado, cualquier pregunta sobre ese cubo se responde sin girar nada."
+      ],
+      "respuesta": "B) No, porque la X y la raya quedan opuestas",
+      "errorComun": "Intentar armar el cubo mentalmente y girarlo. Funciona para el que tiene mucha facilidad espacial y falla para todos los demás, y además es lentísimo: dos minutos por pregunta en una prueba que da uno. Las dos reglas del despliegue se aplican en diez segundos y no dependen de la imaginación. El otro descuido es olvidar que desde un vértice se ven tres caras como máximo, y responder que sí a preguntas que piden ver cuatro."
+    },
+    {
+      "materia": "exa.psico-abstracto",
+      "tema": "Razonamiento abstracto: qué mide y cómo se entrena",
+      "enunciado": "En una serie de figuras usted ve que en cada paso aparece un punto más, la figura gira 90° y el relleno alterna entre blanco y negro. Hay cinco opciones y ninguna cumple las tres cosas al mismo tiempo: una tiene los puntos bien pero el giro mal, otra el giro bien pero el relleno mal, y así. ¿Qué está pasando y qué se hace?",
+      "pasos": [
+        "Lo primero es no dudar de lo que uno ya comprobó. Si los tres patrones se verificaron en todos los saltos de la serie, los tres son correctos; el problema está en la lectura de las opciones, no en la serie.",
+        "Lo que casi siempre ocurre es que uno de los tres atributos se siguió mal por un salto. Se vuelve a la serie y se revisa el más traicionero de los tres, que es el giro: un giro de 90° repetido cuatro veces vuelve al punto de partida, y si la figura tiene algo de simetría, el paso 3 puede verse idéntico al paso 1 sin serlo. Se busca un detalle asimétrico y se sigue ese detalle, no la figura entera.",
+        "Si los tres siguen confirmados, entonces la lectura de las opciones está fallando, y eso tiene una causa conocida: se está comparando la opción completa de un vistazo. Hay que hacerlo al revés: se escribe al lado qué DEBE tener la figura siguiente —«4 puntos, girada a la derecha, blanca»— y después se recorren las opciones tachando la que falle en el primer atributo, sin mirar los otros.",
+        "Con la lista escrita normalmente queda una sola. Si quedaran dos, la respuesta está entre esas dos y se decide por el atributo en que se diferencian, que es un detalle único y fácil de comprobar.",
+        "El orden en que se revisan los atributos, siempre el mismo: cantidad, posición, giro, reflejo, tamaño, relleno, y suma o resta de figuras. Se para en el primero que explique todo lo que cambia."
+      ],
+      "respuesta": "No hay que volver a analizar la serie: hay que escribir las tres condiciones que debe cumplir la figura siguiente y luego descartar opciones atributo por atributo, empezando por uno solo. La sensación de que «ninguna sirve» casi siempre viene de comparar las opciones enteras de un vistazo, no de que la serie tenga dos reglas en conflicto.",
+      "errorComun": "Empezar de cero buscando otra regla más ingeniosa. En estas pruebas los patrones son pocos y conocidos; la dificultad se construye superponiendo tres o cuatro sencillos, no escondiendo uno complicado. Quien sale a buscar la idea brillante pierde el tiempo dos veces: ahí y en las preguntas que ya no alcanza a leer."
+    },
+    {
+      "materia": "exa.psico-abstracto",
+      "tema": "Contar figuras: cuadrados y triángulos",
+      "enunciado": "En una cuadrícula de 4 × 4 casillas, ¿cuántos cuadrados se pueden contar en total, de cualquier tamaño?\n\nA) 16   B) 30   C) 36   D) 40",
+      "caminoLargo": [
+        "El camino de siempre es marcarlos con lápiz sobre el dibujo: primero las 16 casillas sueltas.",
+        "Después los de 2 × 2, corriéndose una casilla a la derecha y una abajo cada vez, y tachando los que ya se contaron.",
+        "Después los de 3 × 3, y por último el grande de 4 × 4.",
+        "Funciona si la cuadrícula es pequeña y si a uno no le tiembla el pulso. Toma más de un minuto y, sobre todo, no hay forma de comprobarlo: para verificar habría que volver a contar todo."
+      ],
+      "pasos": [
+        "La trampa está en la primera respuesta que se le viene a uno: 16, las casillas. Pero la pregunta dice «de cualquier tamaño», y también hay cuadrados de 2×2, de 3×3 y uno de 4×4.",
+        "Se cuentan por tamaño, de mayor a menor, que es más fácil de no equivocarse: de 4×4 hay 1 solo, de 3×3 hay 4, de 2×2 hay 9 y de 1×1 hay 16.",
+        "Se suman: 1 + 4 + 9 + 16 = 30.",
+        "Y ahí aparece el atajo para no volver a contar nunca: esos números son los cuadrados de 1, 2, 3 y 4. En una cuadrícula de lado n el total es 1² + 2² + 3² + … + n².",
+        "Con esa suma aprendida la pregunta se responde en cinco segundos sin mirar el dibujo: para 5×5 serían 30 + 25 = 55, y para 3×3, 14."
+      ],
+      "respuesta": "B) 30",
+      "errorComun": "Responder 16 porque se contaron solo las casillas. Es la opción que más se marca y por eso siempre está ahí. La señal de alarma es la frase «de cualquier tamaño» o «en total» en el enunciado: cuando aparece, la respuesta nunca es el número de casillas."
+    },
+    {
+      "materia": "exa.psico-abstracto",
+      "tema": "Ordenación: quién está por encima de quién",
+      "enunciado": "Pedro mide igual que Bea y es más alto que Juan. Pablo es más bajo que Bea. María y Dolores son más altas que Pedro. ¿Cuántas personas son más bajas que Dolores?\n\nA) 1   B) 2   C) 3   D) 4",
+      "caminoLargo": [
+        "El camino natural es tratar de armar la fila entera en la cabeza, de la más alta a la más baja, releyendo el enunciado cada vez que entra un nombre nuevo.",
+        "Con cinco o seis personas todavía se puede. El problema es que el enunciado no da todas las comparaciones —de María y Dolores no se sabe cuál es más alta— y la cabeza intenta inventarse el dato que falta para poder cerrar la fila.",
+        "Ahí es donde se pierde la pregunta: no por no saber ordenar, sino por ordenar de más."
+      ],
+      "pasos": [
+        "Estos ejercicios no se resuelven leyendo: se resuelven dibujando. Cada persona es un círculo y una flecha apunta del más bajo al más alto. Cuando dos son iguales se unen con una raya sin punta.",
+        "Frase por frase: «Pedro mide igual que Bea» → raya entre los dos. «Pedro es más alto que Juan» → flecha de Juan a Pedro. «Pablo es más bajo que Bea» → flecha de Pablo a Bea. «María y Dolores son más altas que Pedro» → flecha de Pedro a cada una.",
+        "Con el dibujo delante ya no se razona: se cuenta. Por debajo de Dolores está Pedro, y por debajo de Pedro están Juan y Pablo. Y Bea, que mide igual que Pedro, también queda por debajo.",
+        "Son cuatro: Pedro, Bea, Juan y Pablo.",
+        "El dibujo deja ver además algo que la cabeza sola no ve: María y Dolores NO se pueden comparar entre ellas, porque el enunciado no lo dice. Muchos ejercicios de esta familia preguntan justamente por un par que no se puede ordenar, y la respuesta correcta es «no se puede saber»."
+      ],
+      "respuesta": "D) 4",
+      "errorComun": "Dejar por fuera a Bea. Como el enunciado dice que mide IGUAL que Pedro y no «más» ni «menos», es fácil tratarla como si no contara. Por eso la raya sin punta importa: en el dibujo Bea queda pegada a Pedro y se arrastra con él hacia donde vaya."
+    },
+    {
+      "materia": "exa.psico-abstracto",
+      "tema": "Relaciones familiares",
+      "enunciado": "«El padre de la hermana del hijo de mi padre» es…\n\nA) Mi abuelo   B) Yo   C) Mi hijo   D) Mi padre",
+      "caminoLargo": [
+        "El camino natural es leer la frase de izquierda a derecha, como se lee todo: «el padre de…», y ahí ya hay que dejar la idea en suspenso porque todavía no se sabe de quién.",
+        "Al llegar al final la cabeza tiene cuatro parentescos abiertos al mismo tiempo y hay que devolverse a armarlos.",
+        "Se puede, pero es justo el tipo de esfuerzo que se cae con el reloj encima o con una frase de cinco eslabones en vez de tres."
+      ],
+      "pasos": [
+        "Estas frases están escritas para marear. La única forma de no perderse es leerlas AL REVÉS, de la última palabra hacia la primera, dibujando un arbolito mientras se lee.",
+        "Se empieza por el final: «el hijo de mi padre». El hijo de mi padre soy yo. Se dibuja un círculo y se marca YO.",
+        "«La hermana del hijo de mi padre» → la hermana de quien acabo de marcar, o sea mi hermana. Se dibuja al lado, en el mismo renglón, porque los hermanos van en el mismo nivel.",
+        "«El padre de mi hermana» → se sube un nivel. El papá de mi hermana es mi papá. Respuesta D.",
+        "La regla que sirve para toda la familia: «padre de» y «madre de» suben un nivel, «hijo de» baja uno, y «hermano de» o «hermana de» se queda en el mismo. Contando niveles sobre el dibujo no se falla nunca."
+      ],
+      "respuesta": "D) Mi padre",
+      "errorComun": "Leer de izquierda a derecha y empezar a construir desde «el padre». Así se arma el árbol al revés y se termina respondiendo cualquier cosa. La frase se construye de adentro hacia afuera, así que se lee de la última palabra hacia atrás. Y el dibujo no es opcional: en cuanto hay más de tres parentescos encadenados, la cabeza sola no alcanza."
+    },
+    {
+      "materia": "exa.psico-abstracto",
+      "tema": "Perímetros y tamaños a ojo",
+      "enunciado": "Si a un terreno rectangular se le reduce a la mitad el largo y también el ancho, ¿qué pasa con su área?\n\nA) Se reduce a la cuarta parte   B) Se reduce a la mitad   C) Se reduce a un octavo   D) No cambia",
+      "caminoLargo": [
+        "El camino formal es dejarlo en letras: el área de antes es largo por ancho, o sea L × A.",
+        "El área de después es la mitad de cada uno: (L/2) × (A/2).",
+        "Se multiplica: (L × A) / 4. O sea la cuarta parte del área de antes.",
+        "Es correcto y es el argumento que vale para cualquier rectángulo. El problema es que en una prueba de tiempo mucha gente ve letras y se bloquea."
+      ],
+      "pasos": [
+        "Esta pregunta se responde sin fórmulas si uno se inventa un terreno cómodo. Que mida 10 por 6: el área es 60 m².",
+        "Ahora se parten los dos lados a la mitad: 5 por 3. El área nueva es 15 m².",
+        "Se comparan: 15 es la cuarta parte de 60. Respuesta A, y sin una sola letra.",
+        "La razón, para no tener que inventarse números la próxima vez: si se parte a la mitad el largo, el área se va a la mitad; y si además se parte el ancho, se va otra vez a la mitad. Mitad de la mitad es la cuarta parte.",
+        "La regla que sirve para toda esta familia: lo que se le hace a UN lado le pasa igual al área; lo que se le hace a LOS DOS le pasa al área dos veces. Si los dos lados se duplican, el área se multiplica por 4, no por 2."
+      ],
+      "respuesta": "A) Se reduce a la cuarta parte",
+      "errorComun": "Responder «a la mitad» porque el enunciado dice «a la mitad» dos veces y la palabra se queda pegada. Inventarse números concretos cuesta diez segundos y vuelve imposible ese error: con 10 × 6 = 60 y 5 × 3 = 15 delante, nadie responde 30."
+    },
+    {
+      "materia": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "enunciado": "Cinco engranajes están en fila, cada uno tocando al siguiente: A, B, C, D y E. El engranaje A gira en el sentido de las manecillas del reloj.\n\n¿En qué sentido gira el E? ¿Y cuántos engranajes giran en el mismo sentido que A?\n\nA) E a la derecha; giran igual que A tres engranajes.\nB) E a la izquierda; giran igual que A dos engranajes.\nC) E a la derecha; giran igual que A todos.",
+      "pasos": [
+        "La única regla que hay que saber: dos ruedas dentadas que se TOCAN giran en sentidos contrarios. Una empuja a la otra, como dos manos que se enfrentan.",
+        "Con eso, en una fila los sentidos se alternan y basta contar. A a la derecha, B a la izquierda, C a la derecha, D a la izquierda, E a la derecha.",
+        "El atajo para no ir uno por uno cuando son diez o quince: las posiciones IMPARES giran como el primero y las PARES al revés. E es la quinta, impar, así que gira como A.",
+        "La segunda parte se responde con lo mismo: giran como A las posiciones impares, o sea A, C y E. Son tres.",
+        "Queda la A. Y conviene guardar la variante que casi siempre acompaña a esta pregunta: si los engranajes están en ANILLO cerrado en vez de en fila, un número impar de ruedas traba el mecanismo y no gira ninguna."
+      ],
+      "respuesta": "A. El engranaje E gira a la derecha, igual que A, y en total giran en ese sentido tres: A, C y E.",
+      "errorComun": "Contar con los dedos y perderse en el sexto. Por eso vale más la regla de impares y pares, que contesta igual con cinco que con quince. El otro error es aplicarle a una correa la regla de los dientes: dos ruedas unidas por una correa derecha giran en el MISMO sentido, no al contrario, y si la correa va cruzada en ocho, otra vez al contrario. En la figura hay que mirar siempre si se tocan o si hay correa."
+    },
+    {
+      "materia": "exa.psico-abstracto",
+      "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
+      "enunciado": "Un obrero tiene que subir un bulto de 120 kg. Dispone de un aparejo en el que la carga queda colgada de cuatro tramos de cuerda que la sostienen.\n\n¿Cuánta fuerza tiene que hacer, y qué pasaría si usara una sola polea fija?\n\nA) 30 kg con el aparejo; con la polea fija también 30 kg.\nB) 30 kg con el aparejo; con la polea fija tendría que hacer los 120 kg.\nC) 60 kg con el aparejo; con la polea fija, 120 kg.",
+      "pasos": [
+        "Lo primero es separar los dos tipos de polea, porque la prueba juega con la confusión entre ellos. La polea FIJA está amarrada a un punto y no se mueve: no ahorra ni un gramo de fuerza, solo cambia la dirección para que uno pueda tirar hacia abajo, que es más cómodo y más seguro.",
+        "La polea MÓVIL es la que sube y baja junto con la carga. Esa sí parte la fuerza por dos, porque hay dos tramos de cuerda sosteniendo el peso.",
+        "De ahí sale la regla general, que es la única que hay que memorizar: se cuentan los tramos de cuerda que sostienen de verdad la carga y se divide el peso entre ese número.",
+        "Aquí son cuatro tramos: 120 ÷ 4 = 30 kg.",
+        "Y con una sola polea fija habría que hacer los 120 kg completos. Queda la B."
+      ],
+      "respuesta": "B. Con el aparejo de cuatro tramos hace 30 kg de fuerza; con una sola polea fija tendría que hacer los 120 kg, porque esa no ahorra fuerza, solo cambia la dirección.",
+      "errorComun": "Contar TODAS las cuerdas que se ven en el dibujo, incluida la punta de la que uno hala. Solo cuentan las que sostienen la carga. Y el error de fondo, el que hace fallar la mitad de estas preguntas: creer que cualquier polea ayuda. La fija no ayuda con el peso; ayuda con la postura. Por eso está en la opción A, que suena bien y es falsa."
+    },
+    {
+      "materia": "exa.psico-abstracto",
+      "tema": "Memoria: la lámina que te muestran dos minutos",
+      "enunciado": "Le muestran durante dos minutos la foto de una esquina de barrio y después se la quitan. En la foto hay una tienda con un aviso que dice «Papelería El Lápiz — abierto 8:00 a 19:00», dos motos parqueadas, un señor con sombrero en la puerta, un perro echado bajo un árbol y, colgando del poste, un paraguas abierto aunque el día está despejado.\n\n¿Cómo debió haber usado esos dos minutos?",
+      "pasos": [
+        "El error de partida es mirar «con atención». Mirar fijo no guarda nada: hay que codificar con método, y el método son cuatro pasadas de unos treinta segundos cada una, en este orden.",
+        "Primera pasada, RECUENTO: cuente cosas y dígalas por dentro. «Dos motos, un señor, un perro, un árbol, un poste». Las preguntas de «¿cuántos…?» son las más frecuentes de todas, y esta pasada las cubre casi todas.",
+        "Segunda, POSICIONES: parta la imagen en cuatro cuadrantes y ubique. «La tienda a la izquierda, las motos al frente, el perro abajo a la derecha bajo el árbol, el poste al fondo». Con esto responde «¿dónde estaba…?» y «¿qué había al lado de…?».",
+        "Tercera, TEXTOS Y NÚMEROS: lea TODO lo escrito. «Papelería El Lápiz, de 8:00 a 19:00». Esta es la pasada que más puntos vale, porque un nombre o una hora no se pueden deducir: o los leyó o no los leyó. Todo lo demás se puede reconstruir a medias; esto no.",
+        "Cuarta, ANOMALÍAS: lo que está fuera de lugar. El paraguas abierto en un día despejado. Lo raro casi siempre tiene pregunta, precisamente porque el que mira sin método no lo registra.",
+        "Y mientras hace las cuatro, vaya diciendo lo que ve por dentro. Nombrarlo deja una segunda huella, verbal además de visual, y una frase se recuerda mucho mejor que una imagen suelta."
+      ],
+      "respuesta": "Cuatro pasadas de unos treinta segundos: contar (dos motos, un señor, un perro), ubicar por cuadrantes (tienda a la izquierda, perro bajo el árbol), leer todo lo escrito («Papelería El Lápiz», «8:00 a 19:00») y fijarse en lo anómalo (el paraguas abierto con el día despejado). Diciéndolo por dentro mientras se mira.",
+      "errorComun": "Gastarse los dos minutos en la parte bonita de la imagen —la escena, los colores, la gente— y no leer el aviso. Después preguntan a qué hora abre la papelería y no hay de dónde sacarlo. La otra falla es no contar: uno cree que se acuerda de «unas motos», y la pregunta dice si eran dos o tres. Contar y decir el número es lo que convierte un recuerdo vago en un dato."
+    },
+    {
+      "materia": "exa.psico-personalidad",
+      "tema": "Entrevista por competencias: método STAR",
+      "enunciado": "En una entrevista le preguntan: «Cuénteme de una vez que tuvo un conflicto con un compañero de trabajo». Usted responde: «Sí, una vez un compañero era bastante conflictivo, pero yo siempre trato de llevarme bien con todo el mundo». ¿Por qué esa respuesta no puntúa y cómo se arma con el método STAR?",
+      "pasos": [
+        "Se mira qué pidió el entrevistador. Pidió una vez: un episodio concreto, con fecha, lugar y personas. La respuesta entregó una descripción de carácter («yo siempre trato de…»), que es justamente lo que la entrevista por competencias no acepta, porque parte del supuesto de que lo que uno hizo antes predice lo que hará después.",
+        "Se nota además que la única acción mencionada es la del otro («era conflictivo»). Quien responde no aparece haciendo nada. El entrevistador califica conductas propias; si no hay ninguna, no hay nada que calificar.",
+        "Se arma el episodio con las cuatro piezas de STAR. Situación: dónde, cuándo y con quién, en dos frases máximo. Tarea: qué le correspondía a usted resolver, no al equipo.",
+        "Acción: qué hizo usted, paso por paso y en primera persona del singular. Esta es la parte larga, y la que el entrevistador está esperando de verdad.",
+        "Resultado: en qué terminó, con un dato comprobable si existe, y qué quedó después —un acuerdo, un cambio de procedimiento, algo que se sostenga si preguntan más."
+      ],
+      "respuesta": "No puntúa porque no cuenta un episodio ni una acción propia: describe al otro y se autodefine. Armada con STAR: «En la bodega donde trabajaba en Itagüí, un compañero del turno de la tarde me dejaba sin organizar el inventario y yo llegaba a las 6 a.m. a resolverlo (S). A mí me respondían por el despacho antes de las 9, así que era mi problema (T). Le pedí hablar fuera del turno, le mostré con las planillas los tres días que salimos tarde y le propuse que cada uno dejara el cierre listo para el otro; lo escribimos en una hoja pegada en la estantería (A). En las siguientes cuatro semanas no volvimos a despachar tarde y el supervisor adoptó la hoja para los otros turnos (R)».",
+      "errorComun": "Gastarse la respuesta en la Situación. La gente cuenta cinco minutos de antecedentes, el entrevistador la interrumpe y la Acción y el Resultado nunca llegan, que son las dos partes que se califican. La otra fuga es hablar en «nosotros»: «nosotros decidimos», «nos organizamos». El entrevistador no puede evaluar al equipo, solo a usted; si la acción no está en primera persona del singular, no cuenta."
+    },
+    {
+      "materia": "exa.psico-personalidad",
+      "tema": "Por qué mentir sale mal: las escalas de sinceridad",
+      "enunciado": "En un test de personalidad aparecen, separadas por unas cuarenta preguntas, estas dos afirmaciones para marcar verdadero o falso: «Nunca he llegado tarde a una cita» y «Todas las personas que conozco me caen bien». Usted marca verdadero en las dos para dar buena imagen. ¿Qué acaba de pasar?",
+      "pasos": [
+        "Se pregunta qué rasgo miden esas dos frases. Ninguno: son enunciados que casi nadie puede sostener con honestidad, porque describen una perfección que no existe. Los ítems así no están puestos para medir puntualidad ni sociabilidad.",
+        "Están puestos para otra cosa: son la escala de sinceridad, también llamada de deseabilidad social. Van repartidos por todo el test y funcionan como un detector: cuenta cuántas veces el evaluado escoge quedar impecable en lugar de describirse.",
+        "Se mira qué produce acumular respuestas así. No baja un rasgo en particular: levanta el puntaje de la escala de sinceridad, y cuando ese puntaje se pasa del umbral, el psicólogo marca el perfil como no confiable. Lo que queda en el informe no es «poco sociable», es «el evaluado intentó dar una imagen favorable», que pesa mucho más en contra.",
+        "Se agrega el segundo mecanismo: los test repiten la misma idea redactada de otra manera y a mucha distancia, justamente para ver si las dos respuestas coinciden. Quien responde con lo que cree que la empresa quiere oír no se acuerda de qué contestó cuarenta preguntas atrás, y se contradice.",
+        "De ahí sale la única estrategia que funciona: responder lo que uno efectivamente hace, rápido y sin darle vueltas —las primeras respuestas son las más consistentes entre sí—, y aceptar los ítems que reconocen defectos normales, que son los que hacen ver el perfil como creíble."
+      ],
+      "respuesta": "Sumó puntos en la escala de sinceridad, no en ningún rasgo bueno. Con suficientes respuestas así el perfil se reporta como no confiable, y eso descarta más rápido que cualquier puntaje bajo. Lo que corresponde es responder con lo que uno realmente hace, sin buscar la respuesta que suene mejor.",
+      "errorComun": "Creer que en un test de personalidad hay respuestas correctas, como en un examen de conocimientos. No las hay: hay un perfil que se compara con el del cargo, y un cargo puede requerir a alguien metódico donde otro requiere a alguien que improvise. Contestar todo en el extremo «virtuoso» no acerca a ningún perfil real, solo enciende la escala de sinceridad. Y hay un costo que nadie calcula: si uno finge un perfil y queda, entra a un cargo hecho para otra persona."
+    },
+    {
+      "materia": "exa.psico-personalidad",
+      "tema": "Juicio situacional: el formato de los concursos públicos",
+      "enunciado": "CASO. Usted es auxiliar administrativo en una secretaría municipal. Una ciudadana llega a las 4:50 p. m., faltando diez minutos para el cierre, a radicar un documento cuyo plazo vence hoy. El sistema de radicación lleva veinte minutos caído y no hay forma de saber cuándo vuelve. Su jefe inmediato salió a una reunión y no contesta el celular.\n\nENUNCIADO. ¿Qué debe hacer usted?\n\nA) Explicarle que el sistema está caído y pedirle que vuelva mañana a primera hora, apenas se restablezca.\nB) Recibir el documento, expedirle una constancia de recibido con la fecha y la hora de hoy, dejar registro escrito de la falla del sistema y radicarlo en cuanto el sistema vuelva.\nC) Recibir el documento y guardarlo para radicarlo mañana, cuando el sistema funcione.",
+      "pasos": [
+        "Primero el enunciado, después el caso. La pregunta es «qué debe hacer usted»: no qué le gustaría, ni qué haría su jefe. Con eso en la cabeza, el caso se lee buscando el deber y no la salida más cómoda.",
+        "Se marcan los hechos que obligan. Son dos y están puestos a propósito: el plazo vence HOY y la falla es del Estado, no de la ciudadana. Lo demás —la hora, el jefe que no contesta— es ruido para ver si uno se deja arrastrar.",
+        "Se tacha la que le traslada el costo al ciudadano. La A le hace perder el plazo por una falla que no es suya. Suena razonable y es lo que uno ha visto hacer mil veces: por eso la ponen de primera.",
+        "Se tacha la que resuelve a medias: la C. Es cierta en lo que hace —recibe el documento— pero deja el problema abierto: sin constancia con la hora de hoy, mañana no hay cómo probar que llegó a tiempo. Ese es el distractor típico del juicio situacional, el que hace una parte y deja la otra.",
+        "Queda la B, y se comprueba con el criterio que decide estos empates: es la única que deja registro de las dos cosas, el recibido con fecha y hora y la falla del sistema. En lo público, lo que no queda escrito no pasó."
+      ],
+      "respuesta": "B. Es la única que protege el derecho de la ciudadana (el plazo se cumple con el recibido de hoy), deja constancia de una falla que no era suya y completa el trámite cuando el sistema vuelve. Las otras dos, o le trasladan el costo, o dejan el caso a medias.",
+      "errorComun": "Buscar «la respuesta buena persona». Mucha gente marca la C porque siente que recibir el documento ya es hacerle el favor a la señora. El juicio situacional no premia la buena intención: premia la actuación completa. Y el otro error, más caro, es marcar la A porque «así es como se hace de verdad en la oficina»: la prueba mide lo que corresponde hacer, no la costumbre del lugar donde uno trabajó."
+    },
+    {
+      "materia": "exa.psico-personalidad",
+      "tema": "Juicio situacional: el formato de los concursos públicos",
+      "enunciado": "CASO. Usted trabaja en el área de contratación de una entidad. Un proveedor con el que la entidad tiene un contrato en ejecución lo llama para agradecerle su gestión y le ofrece un almuerzo «para conocerse mejor». Es un restaurante corriente, el valor es bajo y el proveedor insiste en que no tiene nada que ver con el contrato.\n\nENUNCIADO. ¿Cuál es la actuación que corresponde?\n\nA) Aceptar el almuerzo, ya que el valor es bajo y no hay ninguna decisión pendiente sobre ese contrato en este momento.\nB) No aceptar la invitación, explicarle al proveedor que su rol se lo impide e informar la situación a su jefe inmediato, dejándolo por escrito.\nC) No aceptar la invitación y no darle mayor importancia, porque se trata de una cortesía sin consecuencias.",
+      "pasos": [
+        "El enunciado pregunta por «la actuación que corresponde». Ese giro aparece mucho y siempre apunta a lo mismo: al deber, no al criterio personal ni a lo que sería aceptable entre amigos.",
+        "Se identifica la competencia que están midiendo. Un proveedor con contrato en ejecución y un beneficio personal: es transparencia y conflicto de interés. Reconocerla orienta la respuesta antes de comparar las opciones.",
+        "Se tacha la A. El argumento del monto bajo es exactamente el razonamiento que la norma no admite: lo que se protege no es el dinero, es la imparcialidad y la apariencia de imparcialidad. Está ahí porque suena razonable.",
+        "Quedan B y C, y las dos rechazan el almuerzo. Ahí se decide la pregunta: la C resuelve la mitad —no acepta— pero deja el hecho sin registro, como si no hubiera pasado nada.",
+        "Gana la B por la regla de siempre: informar y dejar por escrito. No es desconfianza hacia el proveedor; es que si mañana alguien revisa ese contrato, la constancia protege a la entidad y lo protege a usted."
+      ],
+      "respuesta": "B. Rechazar la invitación y además informarla por escrito al jefe inmediato. Rechazarla en silencio (C) atiende la mitad del caso; aceptarla por ser de poco valor (A) es justo el razonamiento que la norma no acepta.",
+      "errorComun": "Marcar la C convencido de que informar es exagerado, o desleal con el proveedor. En estas pruebas, entre dos opciones que hacen lo correcto, siempre gana la que además deja rastro. Vale la pena aprenderse esa jerarquía porque se repite en decenas de preguntas: primero no hacer lo indebido, después dejarlo registrado."
+    },
+    {
+      "materia": "exa.psico-personalidad",
+      "tema": "Juicio situacional: el formato de los concursos públicos",
+      "enunciado": "CASO. Su equipo tiene que entregar un informe el viernes. Es martes y usted descubre que un compañero cometió un error de cálculo que atraviesa todo el documento: hay que rehacer buena parte. Ese compañero está encargado justamente de esa sección y hoy está incapacitado.\n\nENUNCIADO. Analice la situación e indique qué debe hacer.\n\nA) Informar al líder del equipo cuál es el error, qué partes del informe afecta y cuánto tiempo tomaría corregirlo, y ofrecerse a asumir esa sección mientras el compañero regresa.\nB) Corregir usted mismo el error sin decirle a nadie, para no dejar mal al compañero, y entregar el informe el viernes como estaba previsto.\nC) Dejar constancia del error por escrito y esperar a que el compañero se reincorpore, ya que esa sección es responsabilidad suya.",
+      "pasos": [
+        "El verbo del enunciado es «analice», y eso descarta de entrada cualquier opción que solo señale de quién es la culpa o qué dice el reglamento. Pide entender el problema y actuar sobre él.",
+        "Se separa qué está en juego: la entrega del viernes (resultado), un error que atraviesa el documento (calidad) y un compañero ausente que no puede responder (equipo). La respuesta correcta tiene que atender las tres, no una.",
+        "Se tacha la B. Corregir en silencio parece generoso, pero esconde información que el líder necesita para decidir si el viernes sigue siendo viable, y deja al equipo sin saber que el informe cambió. Ocultar nunca gana en estas pruebas, ni siquiera cuando la intención es proteger a alguien.",
+        "Se tacha la C. Deja constancia —que es correcto— y ahí se queda: el informe no avanza, el viernes llega igual y el error sigue adentro. Es el distractor de la solución parcial, vestido de formalidad.",
+        "Queda la A y se comprueba que cierra el caso completo: informa a quien decide, cuantifica el impacto y el tiempo (eso es analizar, no solo avisar) y propone quién hace el trabajo mientras tanto. Además no juzga al compañero ausente, que no puede defenderse."
+      ],
+      "respuesta": "A. Informar al líder con el detalle del error, su alcance y el tiempo de corrección, y ofrecerse a cubrir la sección. Es la única que atiende a la vez el resultado, la calidad y la ausencia del compañero.",
+      "errorComun": "Creer que «trabajo en equipo» significa tapar al compañero. En la evaluación por competencias, trabajo en equipo es que el equipo llegue al resultado con la información completa, no encubrir. La otra caída es la C: quien la marca confunde dejar constancia con actuar. Dejar constancia es lo que se hace ADEMÁS de resolver, nunca en lugar de resolver."
+    },
+    {
+      "materia": "exa.psico-personalidad",
+      "tema": "Pruebas de atención y concentración",
+      "enunciado": "En una prueba de atención le entregan una hoja con filas de figuritas casi iguales —cuadritos con una rayita saliendo de algún lado— y le piden tachar todas las que sean idénticas a tres modelos que están arriba. La hoja trae unas 1.600 figuras y dan diez minutos.\n\nUsted arranca rapidísimo, a los tres minutos empieza a dudar si tachó bien las de la primera fila, se devuelve a revisarla, y al final alcanza a llegar a la mitad de la hoja.\n\n¿Qué hizo mal y cómo se hace?",
+      "pasos": [
+        "Primero hay que entender qué están midiendo, porque cambia todo: no es inteligencia ni vista. Es rapidez sostenida y resistencia a la monotonía. Por eso la hoja es larga y aburrida a propósito, y por eso la gente falla al final y no al principio.",
+        "El error grande fue devolverse. Comprobar lo ya hecho no suma un solo punto —esas figuras ya están tachadas o no— y en cambio consume el tiempo de las filas que faltan. Además la duda no se acaba nunca: el que se devuelve una vez se devuelve tres.",
+        "El segundo error fue arrancar rapidísimo. En casi todas estas pruebas los errores RESTAN de los aciertos, así que correr y equivocarse puntúa menos que ir parejo. Lo que se busca es un ritmo constante que se pueda sostener diez minutos, no un pique de dos.",
+        "Cómo se hace: un solo recorrido, de izquierda a derecha y de arriba abajo, sin devolverse nunca, y sin saltarse ninguna casilla —ni las que «obviamente» no son, porque saltarse una descuadra el conteo de la fila—.",
+        "Y el truco que más rinde: no comparar la figura entera con el modelo. Quedarse con UNA diferencia —la rayita está arriba a la derecha— y revisar solo esa esquina en cada figurita. La comparación se vuelve casi automática.",
+        "Para practicar, hojas largas. Cinco minutos no entrenan nada: lo que hay que entrenar es la cabeza cansada, que es la que va a presentar el bloque real."
+      ],
+      "respuesta": "Se devolvió a comprobar y arrancó demasiado rápido, que son los dos errores que definen este bloque. Lo correcto es un solo recorrido sin devolverse, a ritmo parejo, mirando una sola diferencia en cada figura y sin saltarse ninguna casilla.",
+      "errorComun": "Creer que vale más tachar bien poquitas que avanzar. No: si los errores restan, tampoco vale correr. El punto exacto es el ritmo más alto que uno puede sostener sin equivocarse, y ese punto solo aparece practicando con hojas largas. Y hay un descuido tonto que arruina filas enteras: saltarse las casillas que a primera vista no son. Se mira todo, en el mismo orden, siempre."
+    },
+    {
+      "materia": "exa.psico-personalidad",
+      "tema": "Acciones y Actitudes: el bloque grande del concurso de patrulleros",
+      "enunciado": "En el bloque de Acciones y Actitudes del concurso de patrulleros le aparecen estas dos preguntas:\n\n1) «Medio entre dos vecinos que están discutiendo para que lleguen a un acuerdo».\n   Nunca · Casi nunca · Casi siempre · Siempre\n\n2) «La gente que piensa muy distinto a mí también tiene derecho a expresarse en público».\n   Muy en desacuerdo · Algo en desacuerdo · Algo de acuerdo · Muy de acuerdo\n\nUsted piensa marcar «Siempre» y «Muy de acuerdo» en las dos, y de paso en las otras cincuenta y ocho, para dar la mejor imagen posible. ¿Qué está pasando por alto?",
+      "pasos": [
+        "Lo primero es notar que las dos preguntas NO están midiendo lo mismo ni con la misma escala, aunque a simple vista lo parezca. La primera es de ACCIONES y pregunta con qué frecuencia usted hace algo. La segunda es de ACTITUDES y pregunta qué tan de acuerdo está con una idea. Responder las dos igual, en automático, es el primer error.",
+        "En la de Acciones la pregunta es cuántas veces, de verdad, usted se ha metido a mediar entre dos vecinos que discuten. Si en su vida lo ha hecho dos veces, «Siempre» no es una buena respuesta: es una respuesta falsa sobre un hecho. Y la misma idea va a volver más adelante escrita de otra manera, que es justo como se detecta al que responde lo que cree que quieren oír.",
+        "En la de Actitudes sí se está valorando una idea, y ahí «Muy de acuerdo» puede ser perfectamente sincero. Esa afirmación mide valoración de la libertad y de la diversidad, que están entre las cosas que la prueba evalúa de forma explícita.",
+        "El problema de fondo es la estrategia de marcar el extremo en las sesenta. Las cuatro opciones existen porque miden matices; sesenta respuestas idénticas en el extremo virtuoso no describen a ninguna persona real y eso se nota en el perfil.",
+        "Y hay un asunto de ritmo que cuesta puntos sin que nadie lo note: estas sesenta preguntas van al final de una prueba de 150, ya cansado. Quien no sabe que existen llega de afán y las despacha en bloque, que es exactamente lo que produce un perfil incoherente."
+      ],
+      "respuesta": "Que son dos escalas distintas: la primera pregunta con qué frecuencia lo hace (hecho) y la segunda qué tan de acuerdo está (valoración). En la de Acciones corresponde la frecuencia real —«Casi nunca» o «Casi siempre» según su vida—; en la de Actitudes, su valoración honesta. Y marcar el extremo en las sesenta no da mejor imagen: da un perfil que no corresponde a nadie.",
+      "errorComun": "Tratar este bloque como si fuera de conocimientos, buscando «la respuesta correcta». No la hay: hay un perfil que se compara con el del cargo, y la guía oficial dice expresamente que el diseño busca que el evaluado responda con franqueza. Lo único que de verdad se puede preparar es saber que el bloque existe, entender las dos escalas, y haber pensado antes con calma la propia postura frente a los asuntos que mide —la violencia, la diversidad, lo público, la ley— para no improvisarla con el reloj encima."
+    }
+  ]
+}

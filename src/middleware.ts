@@ -7,6 +7,7 @@ function needsCarrera(pathname: string): boolean {
   const p = pathname.replace(/\/$/, "") || "/";
   if (isFreeAppPath(p)) return false;
   if (p === "/outplacement") return false;
+  if (p === "/outplacement/psicotecnicas") return false;
   if (p.startsWith("/outplacement/experto")) return false;
   if (p.startsWith("/outplacement/marketplace")) return false;
   if (p.startsWith("/outplacement/90-dias") || p.startsWith("/outplacement/certificado")) {

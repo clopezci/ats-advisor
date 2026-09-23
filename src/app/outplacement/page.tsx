@@ -151,6 +151,9 @@ export default function OutplacementPage() {
 
       {showMenu && (
         <div className="flex flex-col gap-3">
+          <Link href="/outplacement/psicotecnicas" className="btn-secondary">
+            Psicotécnicas (3 pruebas gratis)
+          </Link>
           <Link href="/outplacement/tablero" className="btn-secondary">
             Tablero de cursos
           </Link>

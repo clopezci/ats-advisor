@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/ats",
     "/outplacement",
+    "/outplacement/psicotecnicas",
     "/outplacement/out09",
     "/admin/analytics",
     "/admin/analytics/pro",

@@ -49,6 +49,7 @@ export const WORKBOOK_PHASES: WorkbookPhase[] = [
     tools: [
       { label: "Simulaciones por caso", href: "/outplacement/cuadernillo/simulaciones" },
       { label: "Historial de feedback", href: "/outplacement/cuadernillo/feedback" },
+      { label: "Psicotécnicas (3 pruebas gratis)", href: "/outplacement/psicotecnicas" },
     ],
   },
   {

@@ -13,6 +13,7 @@ import { CAREER_PATH_LABEL } from "@/lib/outplacement/labels";
 /** Rutas abiertas sin plan (hub, marketplace de expertos). */
 function isOpenPath(path: string) {
   if (path === "/outplacement") return true;
+  if (path === "/outplacement/psicotecnicas") return true;
   if (path.startsWith("/outplacement/experto")) return true;
   if (path.startsWith("/outplacement/marketplace")) return true;
   return false;

@@ -22,7 +22,7 @@ import {
 type Mode = "prueba" | "fichas" | "banco";
 
 const INTRO =
-  "Trucos de 60 segundos para pruebas de selección: numérico, abstracto y personalidad. Practica 3 gratis. El banco completo va con Carrera.";
+  "Resolución de pocos segundos para pruebas de selección: numérico, abstracto y personalidad. Cada quien va a su ritmo. Practica 3 gratis. El banco completo va con Carrera.";
 
 export function PsicoClient() {
   const [plan, setPlan] = useState<PlanId>("free");
@@ -31,7 +31,6 @@ export function PsicoClient() {
   const [cursor, setCursor] = useState(0);
   const [answer, setAnswer] = useState("");
   const [revealed, setRevealed] = useState(false);
-  const [seconds, setSeconds] = useState(60);
   const [materia, setMateria] = useState(PSICO_MATERIAS[0]?.id || "");
   const [fichaI, setFichaI] = useState(0);
   const [bancoI, setBancoI] = useState(0);
@@ -71,15 +70,6 @@ export function PsicoClient() {
       cancel = true;
     };
   }, [unlocked]);
-
-  useEffect(() => {
-    if (mode !== "prueba" || revealed) return;
-    setSeconds(60);
-    const id = window.setInterval(() => {
-      setSeconds((s) => (s > 0 ? s - 1 : 0));
-    }, 1000);
-    return () => window.clearInterval(id);
-  }, [mode, cursor, revealed]);
 
   const currentTrial = trial[Math.min(cursor, Math.max(0, trial.length - 1))];
 
@@ -125,7 +115,7 @@ export function PsicoClient() {
         </p>
         <div className="flex flex-wrap gap-2">
           <button type="button" className="btn-secondary" onClick={() => setMode("prueba")}>
-            Prueba (60 s)
+            Prueba gratis
           </button>
           <button type="button" className="btn-secondary" onClick={() => setMode("fichas")}>
             Fichas
@@ -156,7 +146,6 @@ export function PsicoClient() {
         <ExerciseCard
           nLabel={`Prueba ${cursor + 1} de ${trial.length}`}
           item={currentTrial.item}
-          seconds={seconds}
           answer={answer}
           revealed={revealed}
           correct={revealed && answersMatch(answer, currentTrial.item.respuesta)}
@@ -236,7 +225,6 @@ export function PsicoClient() {
           <ExerciseCard
             nLabel={`${bancoI + 1} / ${banco.length} · ${bancoItem.item.tema}`}
             item={bancoItem.item}
-            seconds={null}
             answer={answer}
             revealed={revealed}
             correct={revealed && answersMatch(answer, bancoItem.item.respuesta)}
@@ -270,7 +258,7 @@ export function PsicoClient() {
           currentPlan={plan}
           nextHref="/outplacement/psicotecnicas"
           title="Usaste tus 3 pruebas gratis"
-          reason="Sigue con fichas de 60 segundos y el banco de ejercicios en el plan Carrera. No inventamos preguntas de cuadernillos ajenos: es método + práctica propia."
+          reason="Sigue con las fichas de resolución rápida y el banco de ejercicios en el plan Carrera. No inventamos preguntas de cuadernillos ajenos: es método + práctica propia."
         />
       )}
 
@@ -284,7 +272,6 @@ export function PsicoClient() {
 function ExerciseCard(props: {
   nLabel: string;
   item: PsicoEjercicio;
-  seconds: number | null;
   answer: string;
   revealed: boolean;
   correct: boolean;
@@ -304,11 +291,7 @@ function ExerciseCard(props: {
           </p>
           <h2 className="font-semibold text-sm mt-1">{item.tema}</h2>
         </div>
-        {props.seconds != null && (
-          <p className="text-sm font-semibold" style={{ color: props.seconds < 15 ? "#b45309" : "var(--brand)" }}>
-            {props.seconds}s
-          </p>
-        )}
+        <p className="text-xs muted text-right">Pocos segundos. A tu ritmo.</p>
       </div>
       <p className="text-sm whitespace-pre-wrap leading-relaxed">{item.enunciado}</p>
       {props.locked ? (

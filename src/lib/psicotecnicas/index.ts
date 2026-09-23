@@ -1,10 +1,9 @@
-import catalog from "@/lib/psicotecnicas/catalog.json";
+import trial from "@/lib/psicotecnicas/trial.json";
 
 export type PsicoMateria = {
   id: string;
   nombre: string;
   corto: string;
-  prompt: string;
   temario: string[];
 };
 
@@ -26,17 +25,20 @@ export type PsicoEjercicio = {
   caminoLargo?: string[];
 };
 
-const data = catalog as {
+type TrialFile = {
+  counts: { fichas: number; ejercicios: number };
   materias: PsicoMateria[];
-  fichas: PsicoFicha[];
-  ejercicios: PsicoEjercicio[];
+  trialExercises: { index: number; item: PsicoEjercicio }[];
+  previewFichas: PsicoFicha[];
 };
 
-export const PSICO_MATERIAS = data.materias;
-export const PSICO_FICHAS = data.fichas;
-export const PSICO_EJERCICIOS = data.ejercicios;
+const data = trial as TrialFile;
 
-/** Cuántas pruebas puede resolver alguien sin plan Carrera. */
+/** Solo el cupo gratis. El banco completo sale de /api/psicotecnicas/bank. */
+export const PSICO_MATERIAS = data.materias;
+export const PSICO_PREVIEW_FICHAS = data.previewFichas;
+export const PSICO_TRIAL = data.trialExercises;
+export const PSICO_BANK_COUNTS = data.counts;
 export const PSICO_FREE_TRIAL = 3;
 
 const STORAGE = "ats_psico_trial_v1";
@@ -45,14 +47,8 @@ export function materiaNombre(id: string): string {
   return PSICO_MATERIAS.find((m) => m.id === id)?.corto || id;
 }
 
-/** Una prueba de cada materia: numérico, abstracto y personalidad. */
-export function trialExercises(): { index: number; item: PsicoEjercicio }[] {
-  const picked: { index: number; item: PsicoEjercicio }[] = [];
-  for (const m of PSICO_MATERIAS) {
-    const index = PSICO_EJERCICIOS.findIndex((e) => e.materia === m.id);
-    if (index >= 0) picked.push({ index, item: PSICO_EJERCICIOS[index] });
-  }
-  return picked.slice(0, PSICO_FREE_TRIAL);
+export function trialExercises() {
+  return PSICO_TRIAL.slice(0, PSICO_FREE_TRIAL);
 }
 
 export function loadTrialDone(): number[] {

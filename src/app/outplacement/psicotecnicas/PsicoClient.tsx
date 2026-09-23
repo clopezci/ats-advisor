@@ -9,13 +9,14 @@ import {
   answersMatch,
   loadTrialDone,
   materiaNombre,
-  PSICO_EJERCICIOS,
-  PSICO_FICHAS,
+  PSICO_BANK_COUNTS,
   PSICO_FREE_TRIAL,
   PSICO_MATERIAS,
+  PSICO_PREVIEW_FICHAS,
   saveTrialDone,
   trialExercises,
   type PsicoEjercicio,
+  type PsicoFicha,
 } from "@/lib/psicotecnicas";
 
 type Mode = "prueba" | "fichas" | "banco";
@@ -34,6 +35,9 @@ export function PsicoClient() {
   const [materia, setMateria] = useState(PSICO_MATERIAS[0]?.id || "");
   const [fichaI, setFichaI] = useState(0);
   const [bancoI, setBancoI] = useState(0);
+  const [bankFichas, setBankFichas] = useState<PsicoFicha[] | null>(null);
+  const [bankEjercicios, setBankEjercicios] = useState<PsicoEjercicio[] | null>(null);
+  const [bankMsg, setBankMsg] = useState("");
 
   const unlocked = canAccessOutplacement(plan);
   const trial = useMemo(() => trialExercises(), []);
@@ -45,6 +49,28 @@ export function PsicoClient() {
     setPlan(readEntitlement().plan);
     setDone(loadTrialDone());
   }, []);
+
+  useEffect(() => {
+    if (!unlocked) return;
+    let cancel = false;
+    fetch("/api/psicotecnicas/bank")
+      .then(async (res) => {
+        const data = await res.json().catch(() => ({}));
+        if (cancel) return;
+        if (!res.ok) {
+          setBankMsg(data.error || "No se pudo abrir el banco.");
+          return;
+        }
+        setBankFichas(data.fichas || []);
+        setBankEjercicios(data.ejercicios || []);
+      })
+      .catch(() => {
+        if (!cancel) setBankMsg("No se pudo abrir el banco.");
+      });
+    return () => {
+      cancel = true;
+    };
+  }, [unlocked]);
 
   useEffect(() => {
     if (mode !== "prueba" || revealed) return;
@@ -73,10 +99,11 @@ export function PsicoClient() {
     }
   }
 
-  const fichas = PSICO_FICHAS.filter((f) => f.subjectId === materia);
-  const banco = PSICO_EJERCICIOS.map((item, index) => ({ item, index })).filter(
-    (x) => x.item.materia === materia
+  const fichas = (unlocked && bankFichas ? bankFichas : PSICO_PREVIEW_FICHAS).filter(
+    (f) => f.subjectId === materia
   );
+  const ejercicios = unlocked && bankEjercicios ? bankEjercicios : [];
+  const banco = ejercicios.map((item, index) => ({ item, index })).filter((x) => x.item.materia === materia);
   const ficha = fichas[Math.min(fichaI, Math.max(0, fichas.length - 1))];
   const bancoItem = banco[Math.min(bancoI, Math.max(0, banco.length - 1))];
 
@@ -93,7 +120,7 @@ export function PsicoClient() {
         <p className="text-sm muted leading-relaxed">{INTRO}</p>
         <p className="text-xs muted">
           {unlocked
-            ? `Plan con acceso completo · ${PSICO_FICHAS.length} fichas · ${PSICO_EJERCICIOS.length} ejercicios.`
+            ? `Plan con acceso completo · ${bankFichas?.length || PSICO_BANK_COUNTS.fichas} fichas · ${bankEjercicios?.length || PSICO_BANK_COUNTS.ejercicios} ejercicios.`
             : `Pruebas gratis: ${trialUsed}/${PSICO_FREE_TRIAL}. Te quedan ${trialLeft}.`}
         </p>
         <div className="flex flex-wrap gap-2">
@@ -201,8 +228,11 @@ export function PsicoClient() {
         </section>
       )}
 
-      {mode === "banco" && bancoItem && (
-        unlocked ? (
+      {mode === "banco" && unlocked && !bankEjercicios && (
+        <p className="text-sm muted">{bankMsg || "Cargando banco…"}</p>
+      )}
+
+      {mode === "banco" && bancoItem && unlocked && bankEjercicios && (
           <ExerciseCard
             nLabel={`${bancoI + 1} / ${banco.length} · ${bancoItem.item.tema}`}
             item={bancoItem.item}
@@ -224,14 +254,15 @@ export function PsicoClient() {
               setRevealed(false);
             }}
           />
-        ) : (
+      )}
+
+      {mode === "banco" && !unlocked && (
           <PaywallCard
             currentPlan={plan}
             nextHref="/outplacement/psicotecnicas"
             title="El banco completo es de Carrera"
-            reason={`Ya puedes probar ${PSICO_FREE_TRIAL} ejercicios (uno de cada tipo). El banco (${PSICO_EJERCICIOS.length}) y las ${PSICO_FICHAS.length} fichas se desbloquean con el plan.`}
+            reason={`Ya puedes probar ${PSICO_FREE_TRIAL} ejercicios (uno de cada tipo). El banco (${PSICO_BANK_COUNTS.ejercicios}) y las ${PSICO_BANK_COUNTS.fichas} fichas se desbloquean con el plan.`}
           />
-        )
       )}
 
       {trialLocked && mode === "prueba" && (

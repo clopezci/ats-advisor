@@ -6,6 +6,13 @@ export function detectRoleFamily(jobTitle: string, jobText: string): RoleReviewF
   if (/\b(sql|python|etl|bi|tableau|power\s*bi|analytics|data\s*engineer|analista de datos)\b/.test(t)) {
     return "data";
   }
+  // Gerencia de plataforma / infraestructura / operaciones TI: práctica de operación, no de código.
+  if (
+    /\b(gerente|director|l[ií]der).{0,50}(plataforma|infraestructura|operaciones)\b/.test(t) ||
+    /\b(operaciones ti|infraestructura ti|misi[oó]n cr[ií]tica)\b/.test(t)
+  ) {
+    if (!/\b(desarrollador|fullstack|software engineer|frontend|backend)\b/.test(t)) return "ops";
+  }
   if (/\b(react|node|java|\.net|devops|kubernetes|aws|backend|frontend|fullstack|desarrollador|software)\b/.test(t)) {
     return "tech";
   }

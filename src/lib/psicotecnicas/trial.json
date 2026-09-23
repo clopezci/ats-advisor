@@ -1,0 +1,116 @@
+{
+  "counts": {
+    "fichas": 131,
+    "ejercicios": 42
+  },
+  "materias": [
+    {
+      "id": "exa.psico-numerico",
+      "nombre": "Psicotécnicas · Numérico y verbal",
+      "corto": "Psico numérico",
+      "temario": [
+        "Qué son y para qué las usan las empresas",
+        "Series numéricas: los 8 patrones que se repiten",
+        "Series alfanuméricas",
+        "Porcentajes y proporciones rápidas"
+      ]
+    },
+    {
+      "id": "exa.psico-abstracto",
+      "nombre": "Psicotécnicas · Abstracto y lógico",
+      "corto": "Psico abstracto",
+      "temario": [
+        "Qué mide el razonamiento abstracto",
+        "Qué cambia entre una figura y la siguiente",
+        "Giros y rotaciones",
+        "Reflejos y simetrías"
+      ]
+    },
+    {
+      "id": "exa.psico-personalidad",
+      "nombre": "Psicotécnicas · Personalidad y entrevista",
+      "corto": "Psico y entrevista",
+      "temario": [
+        "Qué miden los test de personalidad",
+        "Juicio situacional: el formato de los concursos públicos",
+        "Competencias comportamentales: el cuestionario de acuerdo y desacuerdo",
+        "Acciones y Actitudes: el bloque grande del concurso de patrulleros"
+      ]
+    }
+  ],
+  "trialExercises": [
+    {
+      "index": 0,
+      "item": {
+        "materia": "exa.psico-numerico",
+        "tema": "Series numéricas",
+        "enunciado": "¿Qué número sigue? 3, 6, 12, 24, 48, ___",
+        "pasos": [
+          "Primera pregunta de siempre: ¿la serie crece poco o crece rápido? Aquí crece rápido, así que sospechamos multiplicación y no suma.",
+          "Comprobamos la diferencia entre términos: 3, 6, 12, 24. No es constante, así que no es sumar lo mismo cada vez.",
+          "Comprobamos la razón: 6÷3 = 2, 12÷6 = 2, 24÷12 = 2, 48÷24 = 2. Siempre 2.",
+          "La regla es «multiplicar por 2». Entonces el que sigue es 48 × 2."
+        ],
+        "respuesta": "96",
+        "errorComun": "Fijarse solo en las diferencias (3, 6, 12, 24) y responder 48 + 48 = 96 por el camino equivocado. Aquí da lo mismo por casualidad, pero en otras series ese razonamiento falla. El orden correcto es: primero mira si es suma, si no cuadra prueba multiplicación."
+      }
+    },
+    {
+      "index": 21,
+      "item": {
+        "materia": "exa.psico-abstracto",
+        "tema": "Qué cambia entre una figura y la siguiente",
+        "enunciado": "Serie de figuras. Figura 1: un triángulo que apunta hacia arriba, con 1 punto adentro. Figura 2: un triángulo que apunta a la derecha, con 2 puntos adentro. Figura 3: un triángulo que apunta hacia abajo, con 3 puntos adentro. Figura 4: un triángulo que apunta a la izquierda, con 4 puntos adentro. ¿Cómo es la figura 5?",
+        "pasos": [
+          "El método no es adivinar la figura completa: es hacer una lista de los atributos que pueden cambiar y seguir cada uno por separado, como columnas. Aquí hay dos: hacia dónde apunta el triángulo y cuántos puntos tiene adentro.",
+          "Columna orientación: arriba, derecha, abajo, izquierda. Cada paso es un giro de 90 grados en el sentido de las manecillas del reloj. Se comprueba que el patrón se cumple en los tres saltos, no solo en el primero.",
+          "Columna cantidad de puntos: 1, 2, 3, 4. Suma 1 en cada paso. También se cumple en los tres saltos.",
+          "Se proyecta cada columna un paso más, por aparte. Orientación: después de izquierda, otro giro de 90 grados en el mismo sentido devuelve el triángulo a apuntar hacia arriba, cerrando el ciclo de cuatro. Puntos: 4 + 1 = 5.",
+          "Se vuelven a juntar las dos columnas en una sola figura."
+        ],
+        "respuesta": "Un triángulo que apunta hacia arriba, con 5 puntos adentro.",
+        "errorComun": "Buscar una sola regla que explique todo y bloquearse cuando no aparece. En razonamiento abstracto casi siempre hay dos o tres atributos cambiando a la vez —posición, giro, cantidad, tamaño, relleno, color— y cada uno lleva su propio ritmo, a veces con ciclos de distinta longitud. Otro error caro es no notar que la orientación cicla de a cuatro: quien no cierra el ciclo se inventa una quinta orientación que no existe."
+      }
+    },
+    {
+      "index": 35,
+      "item": {
+        "materia": "exa.psico-personalidad",
+        "tema": "Entrevista por competencias: método STAR",
+        "enunciado": "En una entrevista le preguntan: «Cuénteme de una vez que tuvo un conflicto con un compañero de trabajo». Usted responde: «Sí, una vez un compañero era bastante conflictivo, pero yo siempre trato de llevarme bien con todo el mundo». ¿Por qué esa respuesta no puntúa y cómo se arma con el método STAR?",
+        "pasos": [
+          "Se mira qué pidió el entrevistador. Pidió una vez: un episodio concreto, con fecha, lugar y personas. La respuesta entregó una descripción de carácter («yo siempre trato de…»), que es justamente lo que la entrevista por competencias no acepta, porque parte del supuesto de que lo que uno hizo antes predice lo que hará después.",
+          "Se nota además que la única acción mencionada es la del otro («era conflictivo»). Quien responde no aparece haciendo nada. El entrevistador califica conductas propias; si no hay ninguna, no hay nada que calificar.",
+          "Se arma el episodio con las cuatro piezas de STAR. Situación: dónde, cuándo y con quién, en dos frases máximo. Tarea: qué le correspondía a usted resolver, no al equipo.",
+          "Acción: qué hizo usted, paso por paso y en primera persona del singular. Esta es la parte larga, y la que el entrevistador está esperando de verdad.",
+          "Resultado: en qué terminó, con un dato comprobable si existe, y qué quedó después —un acuerdo, un cambio de procedimiento, algo que se sostenga si preguntan más."
+        ],
+        "respuesta": "No puntúa porque no cuenta un episodio ni una acción propia: describe al otro y se autodefine. Armada con STAR: «En la bodega donde trabajaba en Itagüí, un compañero del turno de la tarde me dejaba sin organizar el inventario y yo llegaba a las 6 a.m. a resolverlo (S). A mí me respondían por el despacho antes de las 9, así que era mi problema (T). Le pedí hablar fuera del turno, le mostré con las planillas los tres días que salimos tarde y le propuse que cada uno dejara el cierre listo para el otro; lo escribimos en una hoja pegada en la estantería (A). En las siguientes cuatro semanas no volvimos a despachar tarde y el supervisor adoptó la hoja para los otros turnos (R)».",
+        "errorComun": "Gastarse la respuesta en la Situación. La gente cuenta cinco minutos de antecedentes, el entrevistador la interrumpe y la Acción y el Resultado nunca llegan, que son las dos partes que se califican. La otra fuga es hablar en «nosotros»: «nosotros decidimos», «nos organizamos». El entrevistador no puede evaluar al equipo, solo a usted; si la acción no está en primera persona del singular, no cuenta."
+      }
+    }
+  ],
+  "previewFichas": [
+    {
+      "subjectId": "exa.psico-numerico",
+      "tema": "Cálculo mental y atajos",
+      "titulo": "¿Se divide por 3?",
+      "regla": "Suma los dígitos. Si esa suma se divide por 3, el número también. Si la suma todavía es grande, vuelve a sumarla.",
+      "ejemplo": "3.417 → 3+4+1+7 = 15 → 15 sí se divide por 3 → 3.417 también."
+    },
+    {
+      "subjectId": "exa.psico-abstracto",
+      "tema": "Qué cambia entre una figura y la siguiente",
+      "titulo": "No preguntes qué sigue, pregunta qué cambia",
+      "regla": "Haz una lista de lo que puede moverse —cantidad, posición, giro, reflejo, tamaño, relleno— y sigue cada uno por separado, como columnas.",
+      "ejemplo": "Triángulo que gira 90° y suma un punto: son dos columnas, no una figura."
+    },
+    {
+      "subjectId": "exa.psico-personalidad",
+      "tema": "Pruebas de atención y concentración",
+      "titulo": "No te devuelvas",
+      "regla": "Un solo recorrido, de izquierda a derecha y de arriba abajo. Devolverse a comprobar es lo que más puntos cuesta: el reloj no perdona y la duda no se acaba nunca.",
+      "ejemplo": "1 pasada completa rinde más que 2 medias pasadas."
+    }
+  ]
+}

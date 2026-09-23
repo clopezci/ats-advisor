@@ -4,7 +4,7 @@ import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
 import { reportError } from "@/lib/observability";
 import { hydrateSettingsFromCloud } from "@/lib/settingsPersist";
 import { clampText } from "@/lib/validation";
-import { buildFallbackRoleReviewPlan, buildRoleReviewPrompt } from "@/lib/roleReview/prompt";
+import { buildFallbackRoleReviewPlan, buildRoleReviewPrompt, isUsableRolePlan } from "@/lib/roleReview/prompt";
 import type { RoleReviewFamily, RoleReviewLearnTopic, RoleReviewMode } from "@/lib/roleReview/types";
 import { detectRoleFamily } from "@/lib/roleReview/templates";
 import { parseUserKeysFromRequest } from "@/lib/ai/userKeysServer";
@@ -153,7 +153,8 @@ export async function POST(req: Request) {
       usedPaid = ai.usedPaid;
       qualityScore = ai.qualityScore;
       const cleaned = ai.text.replace(/^```json\s*|\s*```$/g, "").trim();
-      parsed = JSON.parse(cleaned);
+      const candidate = JSON.parse(cleaned);
+      parsed = isUsableRolePlan(candidate) ? candidate : null;
     } catch {
       parsed = null;
     }

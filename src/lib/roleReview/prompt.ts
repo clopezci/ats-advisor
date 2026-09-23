@@ -7,6 +7,29 @@ import type {
 } from "@/lib/roleReview/types";
 import { detectRoleFamily, seedTicketsForFamily, seedWeek1Checklist } from "@/lib/roleReview/templates";
 
+/** Ancla el reto a un requisito, no al párrafo de “estamos buscando”. */
+export function jdAnchorFromJob(jobText: string): string {
+  const t = (jobText || "").replace(/\s+/g, " ").trim();
+  const must = t.match(
+    /(?:qu[eé]\s+experiencia\s+debes\s+tener|requisitos?(?:\s+obligatorios)?|imprescindible)[:\s?.]*([\s\S]{30,220})/i
+  );
+  const slice = (must?.[1] || t).replace(/^[\s🔑⭐💼💰🏥📄🏢📩🚀]+/, "").trim();
+  const clean = slice.replace(/estamos buscando|nuestro cliente|qu[eé] te ofrecemos|salario/gi, "").trim();
+  return (clean || t).slice(0, 140);
+}
+
+export function isUsableRolePlan(plan: { days?: unknown[]; challenges?: unknown[] } | null): boolean {
+  if (!plan || !Array.isArray(plan.days) || plan.days.length < 1) return false;
+  if (!Array.isArray(plan.challenges) || plan.challenges.length < 1) return false;
+  const blob = JSON.stringify(plan);
+  if (/ATS_LOCAL_|eres un tutor de oficio|devuelve solo json|system prompt/i.test(blob)) return false;
+  return plan.days.every((d) => {
+    if (!d || typeof d !== "object") return false;
+    const row = d as { title?: string; explain?: string };
+    return (row.title || "").trim().length > 3 && (row.explain || "").trim().length > 20;
+  });
+}
+
 export function buildRoleReviewPrompt(opts: {
   mode: RoleReviewMode;
   minutesPerDay: number;
@@ -143,7 +166,7 @@ export function buildFallbackRoleReviewPlan(opts: {
     : ["responsabilidades del rol", "herramientas del aviso", "comunicación con el equipo"];
   const family = opts.roleFamily || detectRoleFamily(opts.jobTitle, opts.jobText);
   const maxDays = Math.min(7, Math.max(3, opts.maxDays || 5));
-  const tickets = seedTicketsForFamily(family, opts.jobTitle, opts.jobText);
+  const tickets = seedTicketsForFamily(family, opts.jobTitle, jdAnchorFromJob(opts.jobText));
   const week1Checklist = seedWeek1Checklist(opts.jobTitle);
 
   const days = seed.slice(0, maxDays).map((term, i) => {
@@ -195,7 +218,7 @@ export function buildFallbackRoleReviewPlan(opts: {
     day: d.day,
     title: `Reto del día: ${d.learnTopics[0]}`,
     brief: `Como si tu jefe te pidiera avanzar hoy en “${d.learnTopics[0]}” sin reunión eterna.`,
-    jdAnchor: (opts.jobText || "").slice(0, 120).replace(/\s+/g, " ").trim() || "Requisito del aviso",
+    jdAnchor: jdAnchorFromJob(opts.jobText),
     steps: [
       "Lee 10 minutos de referencia seria (docs oficiales o guía práctica)",
       "Haz un entregable mínimo (nota, checklist o ejemplo)",
@@ -211,7 +234,7 @@ export function buildFallbackRoleReviewPlan(opts: {
     day: d.day,
     question: `Cuéntame una situación (real tuya) relacionada con “${d.learnTopics[0]}” o, si aún no la tienes, cómo la practicarías en pequeño.`,
     hint: "S-T-A-R: Situación, Tarea, Acción, Resultado. No inventes números ni cargos.",
-    jdAnchor: (opts.jobText || "").slice(0, 100).replace(/\s+/g, " ").trim() || "Del aviso",
+    jdAnchor: jdAnchorFromJob(opts.jobText),
   }));
 
   return {

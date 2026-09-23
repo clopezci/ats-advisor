@@ -1,14 +1,10 @@
 import { NextResponse } from "next/server";
-import { completeWithCascade } from "@/lib/ai/router";
 import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
 import { reportError } from "@/lib/observability";
-import { hydrateSettingsFromCloud } from "@/lib/settingsPersist";
 import { clampText } from "@/lib/validation";
-import { buildFallbackRoleReviewPlan, buildRoleReviewPrompt, isUsableRolePlan } from "@/lib/roleReview/prompt";
+import { buildFallbackRoleReviewPlan } from "@/lib/roleReview/prompt";
 import type { RoleReviewFamily, RoleReviewLearnTopic, RoleReviewMode } from "@/lib/roleReview/types";
 import { detectRoleFamily } from "@/lib/roleReview/templates";
-import { parseUserKeysFromRequest } from "@/lib/ai/userKeysServer";
-import { requirePaidCloud } from "@/lib/entitlements/requirePaidApi";
 
 export const runtime = "nodejs";
 
@@ -75,17 +71,11 @@ export async function POST(req: Request) {
   }
 
   try {
-    const settings = await hydrateSettingsFromCloud();
     const body = await req.json().catch(() => ({}));
     const mode = asMode(body.mode);
-    const minutesPerDay = Math.min(60, Math.max(15, Number(body.minutesPerDay) || 30));
     const jobTitle = clampText(body.jobTitle || "", 120).trim();
-    const company = clampText(body.company || "", 120).trim();
     const jobText = clampText(body.jobText || "", 8000).trim();
     const learnTopics = parseLearnTopics(body.learnTopics);
-    const knownStrengths = Array.isArray(body.knownStrengths)
-      ? body.knownStrengths.map((s: unknown) => clampText(String(s), 60)).filter(Boolean).slice(0, 20)
-      : [];
     const maxDays = Math.min(7, Math.max(3, Number(body.maxDays) || 7));
     const roleFamily = asFamily(body.roleFamily, jobTitle, jobText);
 
@@ -96,70 +86,8 @@ export async function POST(req: Request) {
       );
     }
 
-    const optInCount = learnTopics.filter((t) => t.optIn).length;
-    if (mode === "refuerzo" && optInCount === 0 && knownStrengths.length === 0) {
-      // ok: still can map responsibilities from JD
-    }
-
-    const prompt = buildRoleReviewPrompt({
-      mode,
-      minutesPerDay,
-      jobTitle,
-      company,
-      jobText,
-      learnTopics,
-      knownStrengths,
-      roleFamily,
-      maxDays,
-    });
-
-    const threshold = settings.ai_limits.quality_threshold ?? 0.72;
-    let parsed: {
-      title?: string;
-      objective?: string;
-      roleFamily?: string;
-      days?: unknown[];
-      challenges?: unknown[];
-      tickets?: unknown[];
-      starBank?: unknown[];
-      week1Checklist?: unknown[];
-    } | null = null;
-    let provider = "local";
-    let usedPaid = false;
-    let qualityScore = 0.5;
-
-    const userKeys = parseUserKeysFromRequest(req);
-    const paid = await requirePaidCloud({ email: body.email, allowLocalDev: false });
-    const allowSharedKeys = paid.ok;
-    const maxPaidEscalations = paid.ok ? settings.ai_limits.max_paid_escalations : 0;
-
-    try {
-      const ai = await completeWithCascade({
-        task: "role_review",
-        messages: [
-          {
-            role: "system",
-            content:
-              "Generas planes de repaso del rol en JSON. Español LATAM corto. Solo JSON válido, sin markdown.",
-          },
-          { role: "user", content: prompt },
-        ],
-        qualityThreshold: threshold,
-        maxPaidEscalations,
-        keys: userKeys,
-        allowSharedKeys,
-      });
-      provider = ai.provider;
-      usedPaid = ai.usedPaid;
-      qualityScore = ai.qualityScore;
-      const cleaned = ai.text.replace(/^```json\s*|\s*```$/g, "").trim();
-      const candidate = JSON.parse(cleaned);
-      parsed = isUsableRolePlan(candidate) ? candidate : null;
-    } catch {
-      parsed = null;
-    }
-
-    const fallback = buildFallbackRoleReviewPlan({
+    // El plan lo arma el código. La IA no decide si el repaso es válido.
+    const plan = buildFallbackRoleReviewPlan({
       mode,
       jobTitle,
       learnTopics,
@@ -168,42 +96,26 @@ export async function POST(req: Request) {
       maxDays,
     });
 
-    const days = Array.isArray(parsed?.days) && parsed!.days!.length ? parsed!.days : fallback.days;
-    const challenges =
-      Array.isArray(parsed?.challenges) && parsed!.challenges!.length
-        ? parsed!.challenges
-        : fallback.challenges;
-    const tickets =
-      Array.isArray(parsed?.tickets) && parsed!.tickets!.length ? parsed!.tickets : fallback.tickets;
-    const starBank =
-      Array.isArray(parsed?.starBank) && parsed!.starBank!.length
-        ? parsed!.starBank
-        : fallback.starBank;
-    const week1Checklist =
-      Array.isArray(parsed?.week1Checklist) && parsed!.week1Checklist!.length
-        ? parsed!.week1Checklist
-        : fallback.week1Checklist;
-
-    if (!days.length || !challenges.length) {
+    if (!plan.days.length || !plan.challenges.length) {
       return NextResponse.json({ error: "No se pudo armar el plan. Reintenta." }, { status: 502 });
     }
 
     return NextResponse.json({
       ok: true,
-      provider,
-      usedPaid,
-      qualityScore,
+      provider: "local",
+      usedPaid: false,
+      qualityScore: 1,
       plan: {
-        title: String(parsed?.title || fallback.title),
-        objective: String(parsed?.objective || fallback.objective),
+        title: plan.title,
+        objective: plan.objective,
         mode,
-        roleFamily: parsed?.roleFamily || fallback.roleFamily || roleFamily,
+        roleFamily: plan.roleFamily || roleFamily,
         learnTopics,
-        days,
-        challenges,
-        tickets,
-        starBank,
-        week1Checklist,
+        days: plan.days,
+        challenges: plan.challenges,
+        tickets: plan.tickets,
+        starBank: plan.starBank,
+        week1Checklist: plan.week1Checklist,
       },
     });
   } catch (error) {

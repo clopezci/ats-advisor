@@ -13,11 +13,12 @@
     "test:ats-value": "npx --yes tsx scripts/e2e-ats-value.ts",
     "test:ats-real": "npx --yes tsx scripts/e2e-ats-real.ts",
     "test:modules-value": "npx --yes tsx scripts/e2e-modules-value.ts",
+    "test:topic-scope": "npx --yes tsx scripts/e2e-topic-scope.ts",
     "test:modules": "npx --yes tsx scripts/test-modules.ts",
     "test:semantic": "npx --yes tsx scripts/test-semantic.ts",
     "test:entitlements": "npx --yes tsx scripts/test-entitlements.ts",
     "test:smoke": "npx --yes tsx scripts/smoke-e2e.ts",
-    "test": "npm run test:ats && npm run test:ats-smoke && npm run test:ats-value && npm run test:ats-real && npm run test:modules && npm run test:semantic && npm run test:entitlements && npm run test:smoke"
+    "test": "npm run test:ats && npm run test:ats-smoke && npm run test:ats-value && npm run test:ats-real && npm run test:modules && npm run test:modules-value && npm run test:topic-scope && npm run test:semantic && npm run test:entitlements && npm run test:smoke"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.111.0",

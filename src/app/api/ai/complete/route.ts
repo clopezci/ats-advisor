@@ -8,6 +8,7 @@ import { clampText } from "@/lib/validation";
 import { requirePaidCloud } from "@/lib/entitlements/requirePaidApi";
 import { hasAnyUserKey, parseUserKeysFromRequest } from "@/lib/ai/userKeysServer";
 import { isLeakedAiFallback } from "@/lib/ats/localAiFallbacks";
+import { assessTopicScope } from "@/lib/ai/topicScope";
 import { readSettings } from "@/lib/settings";
 
 export const runtime = "nodejs";
@@ -53,6 +54,24 @@ export async function POST(req: Request) {
     }
     if (prompt.length > 12000) {
       return NextResponse.json({ error: "Prompt demasiado largo (máx. 12000 caracteres)." }, { status: 400 });
+    }
+
+    const coachModuleEarly = clampText(body.coachModule || "", 80);
+    const scope = assessTopicScope({
+      task,
+      coachModule: coachModuleEarly,
+      prompt,
+    });
+    if (!scope.ok) {
+      return NextResponse.json({
+        ok: true,
+        text: scope.reply,
+        provider: "local",
+        model: "topic-scope",
+        usedPaid: false,
+        qualityScore: 1,
+        offTopic: true,
+      });
     }
 
     const userKeys = parseUserKeysFromRequest(req);

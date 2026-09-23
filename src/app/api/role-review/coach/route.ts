@@ -6,6 +6,7 @@ import { hydrateSettingsFromCloud } from "@/lib/settingsPersist";
 import { clampText } from "@/lib/validation";
 import { parseUserKeysFromRequest } from "@/lib/ai/userKeysServer";
 import { requirePaidCloud } from "@/lib/entitlements/requirePaidApi";
+import { OFF_TOPIC_REPLY, isOnTopicQuestion } from "@/lib/ai/topicScope";
 
 export const runtime = "nodejs";
 
@@ -36,6 +37,17 @@ export async function POST(req: Request) {
         { error: "Necesito el cargo o el aviso para simular el 1:1." },
         { status: 400 }
       );
+    }
+
+    if (userReply && !isOnTopicQuestion(userReply, "repaso del rol")) {
+      return NextResponse.json({
+        ok: true,
+        manager: OFF_TOPIC_REPLY,
+        nudge: "Vuelve al cargo, al aviso o a la práctica de hoy.",
+        done: false,
+        provider: "local",
+        offTopic: true,
+      });
     }
 
     const system = [

@@ -9,6 +9,7 @@ import { hydrateSettingsFromCloud } from "@/lib/settingsPersist";
 import { clampText } from "@/lib/validation";
 import { requirePaidCloud } from "@/lib/entitlements/requirePaidApi";
 import { isPaidCloudPlan } from "@/lib/payments/entitlementsCloud";
+import { OFF_TOPIC_REPLY, isClearlyOffTopic } from "@/lib/ai/topicScope";
 
 export const runtime = "nodejs";
 
@@ -40,6 +41,9 @@ export async function POST(req: Request) {
         { error: `Acorta la descripción (máx. ${maxChars} caracteres).` },
         { status: 400 }
       );
+    }
+    if (isClearlyOffTopic(description)) {
+      return NextResponse.json({ error: OFF_TOPIC_REPLY }, { status: 400 });
     }
     if (BLOCKED.test(description)) {
       await notifyOwnerTelegram(`Curso a medida rechazado (pedido no permitido): ${description.slice(0, 120)}`);

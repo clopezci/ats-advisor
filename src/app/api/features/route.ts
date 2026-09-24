@@ -19,6 +19,7 @@ export async function GET() {
       carrera: s.pricing.carrera,
       plus: s.pricing.plus,
       out09_extra: s.pricing.out09_extra,
+      psico_practica: s.pricing.psico_practica,
       whatsapp_addon: resolveWhatsappAddonCop(s),
       currency: s.pricing.currency,
     },

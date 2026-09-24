@@ -5,12 +5,12 @@
 import { createServiceSupabase } from "@/lib/supabase/client";
 import { notifyOwnerTelegram } from "@/lib/notify/channels";
 
-export type PaidPlan = "carrera" | "plus" | "out09_extra";
+export type PaidPlan = "carrera" | "plus" | "out09_extra" | "psico_practica";
 
 export function mapPlanHint(hint: string | null | undefined): PaidPlan | null {
   if (!hint) return null;
   const h = hint.toLowerCase();
-  if (h === "carrera" || h === "plus" || h === "out09_extra") return h;
+  if (h === "carrera" || h === "plus" || h === "out09_extra" || h === "psico_practica") return h;
   return null;
 }
 
@@ -152,7 +152,9 @@ export async function activatePlanFromPayment(opts: {
     return { ok: false as const, reason: "no_profile", email, plan };
   }
 
-  if (plan === "out09_extra") {
+  if (plan === "psico_practica") {
+    // No pisa el plan Carrera. El acceso vive 31 días en el navegador tras el pago confirmado.
+  } else if (plan === "out09_extra") {
     const used = Math.max(0, Number(profile.out09_used_this_month) || 0);
     await sb
       .from("profiles")

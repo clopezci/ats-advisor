@@ -24,6 +24,8 @@ export type AppSettings = {
     carrera: number;
     plus: number;
     out09_extra: number;
+    /** Add-on mensual: simulacro y aprendizaje psicotécnico con IA de pago. */
+    psico_practica: number;
     currency: string;
     /** Addon WhatsApp mensual (precio final al usuario). Si 0, se calcula por fórmula. */
     whatsapp_addon: number;
@@ -93,6 +95,7 @@ export function defaultSettings(): AppSettings {
       carrera: 79000,
       plus: 99000,
       out09_extra: 22000,
+      psico_practica: 39000,
       whatsapp_addon: 0, // 0 = calcular: meta_mid × 1.5
       currency: "COP",
     },

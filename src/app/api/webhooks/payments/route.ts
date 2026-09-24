@@ -14,7 +14,7 @@ type Normalized = {
 };
 
 function planFromReference(reference: string) {
-  const planMatch = reference.match(/^ATS-(carrera|plus|out09_extra)-/i);
+  const planMatch = reference.match(/^ATS-(carrera|plus|out09_extra|psico_practica)-/i);
   return planMatch?.[1]?.toLowerCase() || null;
 }
 

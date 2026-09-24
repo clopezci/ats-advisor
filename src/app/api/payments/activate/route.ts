@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     const body = await req.json().catch(() => ({}));
     const email = clampText(body.email || "", 120).trim().toLowerCase();
     const reference = clampText(body.reference || "", 120).trim();
-    const planMatch = reference.match(/^ATS-(carrera|plus|out09_extra)-/i);
+    const planMatch = reference.match(/^ATS-(carrera|plus|out09_extra|psico_practica)-/i);
     const plan = mapPlanHint(String(body.plan || planMatch?.[1] || ""));
 
     if (!isValidEmail(email)) {

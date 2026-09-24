@@ -170,7 +170,7 @@ export default function AdminPage() {
 
       <section className="bento-card space-y-3">
         <h2 className="font-semibold">Precios COP</h2>
-        {(["carrera", "plus", "out09_extra", "whatsapp_addon"] as const).map((k) => (
+        {(["carrera", "plus", "out09_extra", "psico_practica", "whatsapp_addon"] as const).map((k) => (
           <label key={k} className="block text-sm">
             {k} {k === "whatsapp_addon" ? "(0 = fórmula costo Meta)" : ""}
             <input

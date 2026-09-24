@@ -14,6 +14,7 @@ import {
 } from "@/lib/channels/pricing";
 import { CAREER_MODULE_PITCH, CAREER_PATH_LABEL } from "@/lib/outplacement/labels";
 import { isValidEmail, safeAppPath } from "@/lib/validation";
+import { grantPsicoPractica, PSICO_PRACTICA_PRICE_COP } from "@/lib/psicotecnicas/practicaAccess";
 
 const waPrice = whatsappFinalPriceCop();
 
@@ -54,7 +55,13 @@ export default function PreciosPage() {
   const [currentPlan, setCurrentPlan] = useState<PlanId>("free");
   const [dummyPhase, setDummyPhase] = useState<"idle" | "processing" | "done">("idle");
   const [channel, setChannel] = useState<LearningChannel>("telegram");
-  const [prices, setPrices] = useState({ carrera: 79000, plus: 99000, out09_extra: 22000, whatsapp_addon: waPrice });
+  const [prices, setPrices] = useState({
+    carrera: 79000,
+    plus: 99000,
+    out09_extra: 22000,
+    psico_practica: PSICO_PRACTICA_PRICE_COP,
+    whatsapp_addon: waPrice,
+  });
   const [returnNext, setReturnNext] = useState("/guia?recorrido=1");
   const [demoAllowed, setDemoAllowed] = useState(false);
 
@@ -78,6 +85,7 @@ export default function PreciosPage() {
             carrera: d.pricing.carrera,
             plus: d.pricing.plus,
             out09_extra: d.pricing.out09_extra,
+            psico_practica: d.pricing.psico_practica || PSICO_PRACTICA_PRICE_COP,
             whatsapp_addon: d.pricing.whatsapp_addon || waPrice,
           });
         }
@@ -97,6 +105,12 @@ export default function PreciosPage() {
               setPlan(planHint, "demo_checkout");
               setCurrentPlan(planHint);
             }
+            if (planHint === "psico_practica") {
+              grantPsicoPractica();
+              setMsg("Práctica psicotécnica activa 31 días en este navegador.");
+              window.location.href = ret;
+              return;
+            }
           }
 
           setMsg(
@@ -110,6 +124,12 @@ export default function PreciosPage() {
               body: JSON.stringify({ email: em, reference: last.reference, plan: last.plan }),
             });
             const data = await act.json().catch(() => ({}));
+            if (act.ok && data.cloud?.plan === "psico_practica" && data.cloud?.ok) {
+              grantPsicoPractica();
+              setMsg("Práctica psicotécnica activa por 31 días.");
+              window.location.href = ret;
+              return;
+            }
             if (act.ok && data.profile?.plan && ["carrera", "plus", "tester"].includes(data.profile.plan)) {
               setPlan(data.profile.plan as PlanId, "webhook");
               setCurrentPlan(data.profile.plan as PlanId);
@@ -186,7 +206,7 @@ export default function PreciosPage() {
     returnAfterPay();
   }
 
-  async function checkout(plan: "carrera" | "plus" | "out09_extra") {
+  async function checkout(plan: "carrera" | "plus" | "out09_extra" | "psico_practica") {
     setLoading(plan);
     setMsg("");
     if (!isValidEmail(email)) {
@@ -246,6 +266,7 @@ export default function PreciosPage() {
               "Pago aprobado en widget. Esperamos el webhook para activar cloud; mientras, reclama en /cuenta si no se refleja."
             );
             if (isLocalHost()) {
+              if (plan === "psico_practica") grantPsicoPractica();
               const map: Record<string, PlanId> = {
                 carrera: "carrera",
                 plus: "plus",
@@ -386,6 +407,40 @@ export default function PreciosPage() {
           onClick={() => checkout("carrera")}
         >
           {loading === "carrera" ? "Preparando…" : "Pagar Carrera"}
+        </button>
+      </section>
+
+      <section className="bento-card space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="font-semibold">Práctica psicotécnica</h2>
+          <span className="pill-brand">{formatCop(prices.psico_practica)}/mes</span>
+        </div>
+        <p className="text-xs muted">Add-on. No va incluido en Carrera.</p>
+        <ul className="space-y-1 text-sm muted">
+          <li>• Cuestionario de personalidad y simulacro con foto o texto</li>
+          <li>• Aprendizaje: 3 pistas y la respuesta solo si la pides</li>
+          <li>• Hasta 180 preguntas al mes con IA de pago (foto incluida)</li>
+          <li>• Las fichas de método siguen gratis</li>
+        </ul>
+        {demoAllowed && (
+          <button
+            type="button"
+            className="btn-secondary"
+            onClick={() => {
+              grantPsicoPractica();
+              setMsg("Práctica psicotécnica activa 31 días en este navegador (demo).");
+            }}
+          >
+            Activar práctica (demo local)
+          </button>
+        )}
+        <button
+          type="button"
+          className="btn-primary"
+          disabled={loading === "psico_practica"}
+          onClick={() => checkout("psico_practica")}
+        >
+          {loading === "psico_practica" ? "Preparando…" : "Pagar práctica"}
         </button>
       </section>
 

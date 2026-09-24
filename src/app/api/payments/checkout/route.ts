@@ -31,7 +31,7 @@ export async function POST(req: Request) {
       ? applyPromotion(baseAmount, coupon, settings.promotions)
       : { amount: baseAmount, applied: null, discount: 0 };
     const waAddon =
-      channel === "whatsapp" && plan !== "out09_extra" && settings.features.whatsapp
+      channel === "whatsapp" && plan !== "out09_extra" && plan !== "psico_practica" && settings.features.whatsapp
         ? resolveWhatsappAddonCop(settings)
         : 0;
     const amount = priced.amount + waAddon;

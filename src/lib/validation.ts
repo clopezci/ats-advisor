@@ -48,6 +48,7 @@ export function sanitizeSettingsPatch(body: unknown): AppSettings {
       carrera: num(pricingIn.carrera, base.pricing.carrera, 0, 5_000_000),
       plus: num(pricingIn.plus, base.pricing.plus, 0, 5_000_000),
       out09_extra: num(pricingIn.out09_extra, base.pricing.out09_extra, 0, 5_000_000),
+      psico_practica: num(pricingIn.psico_practica, base.pricing.psico_practica, 0, 5_000_000),
       whatsapp_addon: num(pricingIn.whatsapp_addon, base.pricing.whatsapp_addon, 0, 500_000),
       currency: str(pricingIn.currency, base.pricing.currency, 8) || "COP",
     },
@@ -142,7 +143,7 @@ export function sanitizeSettingsPatch(body: unknown): AppSettings {
   };
 }
 
-export const PLANS_CHECKOUT = ["carrera", "plus", "out09_extra"] as const;
+export const PLANS_CHECKOUT = ["carrera", "plus", "out09_extra", "psico_practica"] as const;
 export type CheckoutPlan = (typeof PLANS_CHECKOUT)[number];
 
 export function parseCheckoutPlan(v: unknown): CheckoutPlan | null {

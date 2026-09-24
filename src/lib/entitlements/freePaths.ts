@@ -35,7 +35,7 @@ export function isFreeAppPath(pathname: string): boolean {
   if (p.startsWith("/empresa")) return true;
   if (p.startsWith("/admin")) return true;
   if (p === "/outplacement") return true;
-  if (p === "/outplacement/psicotecnicas") return true;
+  if (p === "/outplacement/psicotecnicas" || p.startsWith("/outplacement/psicotecnicas/")) return true;
   if (p.startsWith("/outplacement/experto")) return true;
   if (p.startsWith("/outplacement/marketplace")) return true;
 

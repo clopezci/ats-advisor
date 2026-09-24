@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import catalog from "@/lib/psicotecnicas/catalog.json";
 import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
+import { hasPsicoPracticaCookie } from "@/lib/psicotecnicas/practicaAccess";
 
 export const runtime = "nodejs";
 
@@ -23,7 +24,8 @@ export async function GET(req: Request) {
   if (!limited.ok) return rateLimitedResponse(limited.retryAfterSec);
 
   const plan = planFromCookie(req);
-  if (!PAID.has(plan)) {
+  const cookie = req.headers.get("cookie") || "";
+  if (!PAID.has(plan) && !hasPsicoPracticaCookie(cookie)) {
     return NextResponse.json(
       {
         error: "El banco completo es del plan Carrera.",

@@ -37,6 +37,7 @@ export function PsicoClient() {
   const [bankFichas, setBankFichas] = useState<PsicoFicha[] | null>(null);
   const [bankEjercicios, setBankEjercicios] = useState<PsicoEjercicio[] | null>(null);
   const [bankMsg, setBankMsg] = useState("");
+  const [publicFichas, setPublicFichas] = useState<PsicoFicha[] | null>(null);
 
   const unlocked = canAccessOutplacement(plan);
   const trial = useMemo(() => trialExercises(), []);
@@ -47,6 +48,12 @@ export function PsicoClient() {
   useEffect(() => {
     setPlan(readEntitlement().plan);
     setDone(loadTrialDone());
+    fetch("/api/psicotecnicas/fichas")
+      .then(async (res) => {
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && Array.isArray(data.fichas)) setPublicFichas(data.fichas);
+      })
+      .catch(() => undefined);
   }, []);
 
   useEffect(() => {
@@ -89,7 +96,7 @@ export function PsicoClient() {
     }
   }
 
-  const fichas = (unlocked && bankFichas ? bankFichas : PSICO_PREVIEW_FICHAS).filter(
+  const fichas = (publicFichas || (unlocked && bankFichas ? bankFichas : PSICO_PREVIEW_FICHAS)).filter(
     (f) => f.subjectId === materia
   );
   const ejercicios = unlocked && bankEjercicios ? bankEjercicios : [];
@@ -123,6 +130,9 @@ export function PsicoClient() {
           <button type="button" className="btn-secondary" onClick={() => setMode("banco")}>
             Banco
           </button>
+          <Link href="/outplacement/psicotecnicas/practica" className="btn-primary">
+            Practicar con tu perfil
+          </Link>
         </div>
       </section>
 
@@ -187,7 +197,7 @@ export function PsicoClient() {
         </div>
       )}
 
-      {mode === "fichas" && ficha && (unlocked || fichaI < 1) && (
+      {mode === "fichas" && ficha && (
         <section className="bento-card space-y-2">
           <p className="text-xs muted">{ficha.tema}</p>
           <h2 className="text-lg font-semibold">{ficha.titulo}</h2>
@@ -205,15 +215,13 @@ export function PsicoClient() {
             <button
               type="button"
               className="btn-secondary"
-              disabled={fichaI >= fichas.length - 1 || (!unlocked && fichaI >= 0)}
+              disabled={fichaI >= fichas.length - 1}
               onClick={() => setFichaI((n) => Math.min(fichas.length - 1, n + 1))}
             >
-              {unlocked ? `Siguiente (${fichaI + 1}/${fichas.length})` : "Siguiente (Carrera)"}
+              {`Siguiente (${fichaI + 1}/${fichas.length})`}
             </button>
           </div>
-          {!unlocked && (
-            <p className="text-xs muted">En gratis ves 1 ficha por materia. El resto abre con Carrera.</p>
-          )}
+          <p className="text-xs muted">Las fichas se leen gratis. Practicar ítems nuevos, con foto o con tu perfil, es de pago.</p>
         </section>
       )}
 

@@ -43,7 +43,7 @@ export async function POST(req: Request) {
       }
       direct = await activatePlanFromPayment({
         reference,
-        planHint: planHint || mapPlanHint(reference.match(/^ATS-(carrera|plus|out09_extra)-/i)?.[1] || ""),
+        planHint: planHint || mapPlanHint(reference.match(/^ATS-(carrera|plus|out09_extra|psico_practica)-/i)?.[1] || ""),
         email,
         provider: "claim",
         status: "APPROVED",

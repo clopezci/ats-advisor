@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
+import { answersMatch } from "@/lib/psicotecnicas";
 import { BLOQUES_PERFIL, PARES_CALIBRACION } from "@/lib/psicotecnicas/cuestionario";
 import {
   buildPersonalidadMd,
@@ -20,9 +21,19 @@ import {
   PSICO_PRACTICA_PRICE_COP,
   hasPsicoPracticaLocal,
 } from "@/lib/psicotecnicas/practicaAccess";
+import { TIPOS_CASO } from "@/lib/psicotecnicas/practicaScope";
 import { formatCop } from "@/lib/channels/pricing";
 
-type Tab = "perfil" | "simulacro" | "aprendizaje" | "resumen";
+type Tab = "perfil" | "simulacro" | "aprendizaje" | "aleatorias" | "resumen";
+
+const TIPO_LABEL: Record<(typeof TIPOS_CASO)[number], string> = {
+  mixto: "Mixto",
+  numerico: "Numérico",
+  abstracto: "Abstracto",
+  verbal: "Verbal",
+  personalidad: "Personalidad",
+  situacional: "Situacional",
+};
 
 export function PracticaClient() {
   const [tab, setTab] = useState<Tab>("perfil");
@@ -33,6 +44,10 @@ export function PracticaClient() {
   const [image, setImage] = useState<{ mime: string; data: string; name: string } | null>(null);
   const [out, setOut] = useState("");
   const [pistas, setPistas] = useState<string[]>([]);
+  const [pistasCaso, setPistasCaso] = useState<string[]>([]);
+  const [caso, setCaso] = useState("");
+  const [intento, setIntento] = useState("");
+  const [tipoCaso, setTipoCaso] = useState<(typeof TIPOS_CASO)[number]>("mixto");
   const [tipo, setTipo] = useState("");
   const [loading, setLoading] = useState(false);
   const [hist, setHist] = useState<SimulacroGuardado[]>([]);
@@ -75,13 +90,17 @@ export function PracticaClient() {
     setError("");
   }
 
-  async function ask(modo: "simulacro" | "pista" | "revelar") {
+  async function ask(
+    modo: "simulacro" | "pista" | "revelar" | "generar",
+    opts?: { texto?: string; hints?: number; aleatorio?: boolean }
+  ) {
     if (!paid) return;
     if (!listo) {
       setError("Responde al menos 15 preguntas del perfil. Si no aplica, escribe «no aplica».");
       setTab("perfil");
       return;
     }
+    const texto = opts?.texto ?? pregunta;
     setLoading(true);
     setError("");
     try {
@@ -91,10 +110,16 @@ export function PracticaClient() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           modo,
-          pregunta,
+          pregunta: texto,
+          tipo: tipoCaso,
           perfil,
-          image: image ? { mime: image.mime, data: image.data } : undefined,
-          hintCount: pistas.length,
+          image:
+            modo === "generar" || opts?.aleatorio
+              ? undefined
+              : image
+                ? { mime: image.mime, data: image.data }
+                : undefined,
+          hintCount: opts?.hints ?? pistas.length,
           previas,
         }),
       });
@@ -104,28 +129,36 @@ export function PracticaClient() {
         setOut(data.text);
         return;
       }
+      if (modo === "generar") {
+        setCaso(String(data.enunciado || ""));
+        setTipo(String(data.tipo || ""));
+        setIntento("");
+        setPistasCaso([]);
+        setOut("");
+        return;
+      }
       if (modo === "pista") {
-        setPistas((prev) => [...prev, data.pista]);
+        if (opts?.aleatorio) setPistasCaso((prev) => [...prev, data.pista]);
+        else setPistas((prev) => [...prev, data.pista]);
         setTipo(data.tipo || tipo);
         setOut(data.pista);
         return;
       }
       const line = `${data.respuesta}\n${data.porque || ""}`.trim();
-      setOut(line);
+      const acierto = opts?.aleatorio && intento.trim() ? answersMatch(intento, String(data.respuesta || "")) : false;
+      setOut(opts?.aleatorio ? `${acierto ? "Cuadra." : intento.trim() ? "No cuadra." : "Respuesta."}\n${line}` : line);
       setTipo(data.tipo || "");
       const row: SimulacroGuardado = {
         at: new Date().toISOString(),
-        modo: modo === "revelar" ? "aprendizaje" : "simulacro",
-        pregunta: pregunta.slice(0, 240) || image?.name || "foto",
+        modo: opts?.aleatorio ? "aleatorio" : modo === "revelar" ? "aprendizaje" : "simulacro",
+        pregunta: (opts?.texto || pregunta).slice(0, 240) || image?.name || "foto",
         respuesta: String(data.respuesta || ""),
         porque: String(data.porque || ""),
         tipo: String(data.tipo || "otro"),
-        fallo: modo === "revelar",
+        fallo: opts?.aleatorio ? Boolean(intento.trim()) && !acierto : modo === "revelar",
       };
       setHist(saveSimulacro(row));
-      if (modo === "revelar") {
-        setPistas([]);
-      }
+      if (modo === "revelar") setPistas([]);
     } catch (e) {
       setError(e instanceof Error ? e.message : "No se pudo practicar");
     } finally {
@@ -151,9 +184,9 @@ export function PracticaClient() {
         <p className="text-xs muted">Psicotécnicas · práctica</p>
         <h1 className="text-2xl font-semibold">Practicar con tu perfil</h1>
         <p className="text-sm muted leading-relaxed">
-          Las fichas se leen gratis. Aquí armas tu personalidad una vez y practicas cualquier ítem
-          (personalidad, situacional, numérico o abstracto) con coherencia. {formatCop(PSICO_PRACTICA_PRICE_COP)}
-          /mes, hasta {PSICO_PRACTICA_MONTHLY_CAP} preguntas, con IA de pago.
+          Las fichas se leen gratis. Hay tres prácticas de pago: simulacro en vivo, las mismas preguntas
+          con pistas, o casos que la IA inventa desde cero. {formatCop(PSICO_PRACTICA_PRICE_COP)}/mes, hasta{" "}
+          {PSICO_PRACTICA_MONTHLY_CAP} preguntas.
         </p>
         <p className="text-xs muted">
           Sirve para ensayar desde quien usted es. Un perfil inventado se contradice y las escalas de validez lo notan.
@@ -162,8 +195,9 @@ export function PracticaClient() {
           {(
             [
               ["perfil", "Perfil"],
-              ["simulacro", "Simulacro"],
-              ["aprendizaje", "Aprendizaje"],
+              ["simulacro", "Simulacro en vivo"],
+              ["aprendizaje", "Con pistas"],
+              ["aleatorias", "Aleatorias"],
               ["resumen", "Resumen"],
             ] as const
           ).map(([id, label]) => (
@@ -260,13 +294,12 @@ export function PracticaClient() {
         </section>
       )}
 
-      {(tab === "simulacro" || tab === "aprendizaje") && !paid && (
+      {(tab === "simulacro" || tab === "aprendizaje" || tab === "aleatorias") && !paid && (
         <section className="bento-card space-y-2">
           <h2 className="font-semibold">La práctica se cobra aparte</h2>
           <p className="text-sm muted">
-            Simulacro y aprendizaje usan IA de pago en cada pregunta. {formatCop(PSICO_PRACTICA_PRICE_COP)} al
-            mes, con tope de {PSICO_PRACTICA_MONTHLY_CAP} ítems. Las fichas siguen gratis. Carrera no incluye
-            este cupo: la foto de cada ítem tiene costo propio.
+            Simulacro en vivo, pistas y casos aleatorios usan IA de pago. {formatCop(PSICO_PRACTICA_PRICE_COP)}{" "}
+            al mes, con tope de {PSICO_PRACTICA_MONTHLY_CAP} ítems. Las fichas siguen gratis.
           </p>
           <Link href={precios} className="btn-primary">
             Activar práctica
@@ -285,7 +318,7 @@ export function PracticaClient() {
           error={error}
           actionLabel="Responder"
           onAction={() => ask("simulacro")}
-          hint="Pega el ítem o una foto. Sale la respuesta y una línea. Sin saludo."
+          hint="En vivo: pega la pregunta del proceso o una foto. Sale la respuesta y una línea."
         />
       )}
 
@@ -300,7 +333,7 @@ export function PracticaClient() {
           error={error}
           actionLabel={pistas.length >= 3 ? "Ver respuesta" : `Pista ${pistas.length + 1} de 3`}
           onAction={() => ask(pistas.length >= 3 ? "revelar" : "pista")}
-          hint="Tres pistas sin la respuesta. La respuesta se abre solo si la pides después."
+          hint="Las mismas preguntas del simulacro, pero primero van tres pistas. La respuesta sale solo si la pides después."
           extra={
             pistas.length > 0 ? (
               <ol className="list-decimal pl-4 text-sm space-y-1">
@@ -313,12 +346,72 @@ export function PracticaClient() {
         />
       )}
 
+      {tab === "aleatorias" && paid && (
+        <section className="bento-card space-y-3">
+          <p className="text-sm muted">
+            La IA inventa el ítem. Tú lo resuelves. No es una pregunta de un cuadernillo real.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {TIPOS_CASO.map((id) => (
+              <button
+                key={id}
+                type="button"
+                className="btn-secondary"
+                onClick={() => setTipoCaso(id)}
+                style={tipoCaso === id ? { borderColor: "var(--brand)" } : undefined}
+              >
+                {TIPO_LABEL[id]}
+              </button>
+            ))}
+          </div>
+          <button type="button" className="btn-primary" disabled={loading} onClick={() => ask("generar")}>
+            {loading ? "Armando…" : caso ? "Sacar otra" : "Sacar pregunta"}
+          </button>
+          {caso && (
+            <>
+              <p className="text-sm whitespace-pre-wrap">{caso}</p>
+              <label className="block text-sm">
+                Tu respuesta
+                <input className="field mt-1" value={intento} onChange={(e) => setIntento(e.target.value)} />
+              </label>
+              {pistasCaso.length > 0 && (
+                <ol className="list-decimal pl-4 text-sm space-y-1">
+                  {pistasCaso.map((p) => (
+                    <li key={p.slice(0, 24)}>{p}</li>
+                  ))}
+                </ol>
+              )}
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  className="btn-secondary"
+                  disabled={loading || pistasCaso.length >= 3}
+                  onClick={() => ask("pista", { texto: caso, hints: pistasCaso.length, aleatorio: true })}
+                >
+                  {pistasCaso.length >= 3 ? "Ya van 3 pistas" : `Pista ${pistasCaso.length + 1} de 3`}
+                </button>
+                <button
+                  type="button"
+                  className="btn-primary"
+                  disabled={loading}
+                  onClick={() => ask("simulacro", { texto: caso, aleatorio: true })}
+                >
+                  Revisar
+                </button>
+              </div>
+            </>
+          )}
+          {error && <p className="text-sm text-red-700">{error}</p>}
+          {out && <p className="text-sm whitespace-pre-wrap">{out}</p>}
+        </section>
+      )}
+
       {tab === "resumen" && (
         <section className="bento-card space-y-3">
           <h2 className="font-semibold">Qué se le atravesó</h2>
           {fallos.length === 0 ? (
             <p className="text-sm muted">
-              Aún no hay fallos. En aprendizaje, abrir la respuesta después de 3 pistas cuenta como fallo de ese tipo.
+              Aún no hay fallos. Cuenta cuando pides la respuesta tras las pistas, o cuando un caso aleatorio no cuadra.
             </p>
           ) : (
             <ul className="text-sm space-y-1">

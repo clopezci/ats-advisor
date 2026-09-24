@@ -28,6 +28,16 @@ export function parsePracticeAnswer(text: string): { respuesta: string; porque: 
   };
 }
 
+export const TIPOS_CASO = ["mixto", "numerico", "abstracto", "verbal", "personalidad", "situacional"] as const;
+
+export function parseCaso(text: string): { enunciado: string; tipo: string } | null {
+  const enunciado = text.match(/ENUNCIADO:\s*([\s\S]+?)(?:\nTIPO:|$)/i)?.[1]?.trim() || "";
+  const tipo = (text.match(/TIPO:\s*([a-záéíóúñ ]+)/i)?.[1] || "otro").trim().toLowerCase();
+  const limpio = enunciado.replace(/\n?RESPUESTA:[\s\S]*/i, "").replace(/\n?POR QU[EÉ]:[\s\S]*/i, "").trim();
+  if (limpio.length < 20) return null;
+  return { enunciado: limpio.slice(0, 2500), tipo: tipo.slice(0, 40) || "otro" };
+}
+
 export function parseHint(text: string): { pista: string; tipo: string } | null {
   const pista = text.match(/PISTA:\s*([\s\S]+?)(?:\nTIPO:|$)/i)?.[1]?.trim() || "";
   const tipo = (text.match(/TIPO:\s*([a-záéíóúñ ]+)/i)?.[1] || "otro").trim().toLowerCase();

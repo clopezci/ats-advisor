@@ -6,6 +6,7 @@ import { BLOQUES_PERFIL, PARES_CALIBRACION } from "../src/lib/psicotecnicas/cues
 import { buildPersonalidadMd, perfilListo } from "../src/lib/psicotecnicas/perfil";
 import {
   assessPracticeQuestion,
+  parseCaso,
   parseHint,
   parsePracticeAnswer,
 } from "../src/lib/psicotecnicas/practicaScope";
@@ -51,6 +52,14 @@ const parsed = parsePracticeAnswer("RESPUESTA: B\nPOR QUÉ: Coincide con constru
 assert("parse", parsed?.respuesta === "B" && parsed.porque.includes("equipo") && parsed.tipo === "situacional");
 assert("pista", parseHint("PISTA: Mira si la serie se duplica.\nTIPO: numerico")?.pista.includes("duplica") === true);
 assert("pista-sin-respuesta", parseHint("PISTA: RESPUESTA: B\nTIPO: otro") === null);
+const caso = parseCaso(
+  "ENUNCIADO: ¿Qué número sigue?\n3, 6, 12, 24\nA) 30\nB) 48\nTIPO: numerico"
+);
+assert("caso", caso?.tipo === "numerico" && caso.enunciado.includes("48") && !/RESPUESTA/i.test(caso.enunciado));
+assert(
+  "caso-sin-respuesta",
+  parseCaso("ENUNCIADO: corto\nRESPUESTA: B\nTIPO: otro") === null
+);
 
 if (fails.length) {
   console.error("\nFAIL", fails.length);

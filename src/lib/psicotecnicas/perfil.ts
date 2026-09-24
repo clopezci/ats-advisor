@@ -7,7 +7,7 @@ const HIST_KEY = "ats_psico_simulacros_v1";
 
 export type SimulacroGuardado = {
   at: string;
-  modo: "simulacro" | "aprendizaje";
+  modo: "simulacro" | "aprendizaje" | "aleatorio";
   pregunta: string;
   respuesta: string;
   porque: string;
@@ -140,7 +140,7 @@ export function saveSimulacro(row: SimulacroGuardado) {
 export function resumenFallos(rows: SimulacroGuardado[]): { tipo: string; n: number }[] {
   const map = new Map<string, number>();
   for (const row of rows) {
-    if (!row.fallo || row.modo !== "aprendizaje") continue;
+    if (!row.fallo || (row.modo !== "aprendizaje" && row.modo !== "aleatorio")) continue;
     const tipo = (row.tipo || "otro").trim().toLowerCase() || "otro";
     map.set(tipo, (map.get(tipo) || 0) + 1);
   }

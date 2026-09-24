@@ -417,8 +417,9 @@ export default function PreciosPage() {
         </div>
         <p className="text-xs muted">Add-on. No va incluido en Carrera.</p>
         <ul className="space-y-1 text-sm muted">
-          <li>• Cuestionario de personalidad y simulacro con foto o texto</li>
-          <li>• Aprendizaje: 3 pistas y la respuesta solo si la pides</li>
+          <li>• Simulacro en vivo: pegas la pregunta o la foto y sale la respuesta</li>
+          <li>• Las mismas preguntas, con 3 pistas antes de la respuesta</li>
+          <li>• Casos aleatorios: la IA inventa el ítem y tú lo resuelves</li>
           <li>• Hasta 180 preguntas al mes con IA de pago (foto incluida)</li>
           <li>• Las fichas de método siguen gratis</li>
         </ul>

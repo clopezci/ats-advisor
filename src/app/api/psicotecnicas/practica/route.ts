@@ -7,7 +7,13 @@ import {
   PSICO_PRACTICA_MONTHLY_CAP,
   hasPsicoPracticaCookie,
 } from "@/lib/psicotecnicas/practicaAccess";
-import { assessPracticeQuestion, parseHint, parsePracticeAnswer } from "@/lib/psicotecnicas/practicaScope";
+import {
+  TIPOS_CASO,
+  assessPracticeQuestion,
+  parseCaso,
+  parseHint,
+  parsePracticeAnswer,
+} from "@/lib/psicotecnicas/practicaScope";
 
 export const runtime = "nodejs";
 
@@ -66,7 +72,8 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json().catch(() => ({}));
-    const modo = body.modo === "pista" || body.modo === "revelar" ? body.modo : "simulacro";
+    const modo =
+      body.modo === "pista" || body.modo === "revelar" || body.modo === "generar" ? body.modo : "simulacro";
     const pregunta = clampText(body.pregunta || "", 4000).trim();
     const perfil = clampText(body.perfil || "", 12000).trim();
     const image = allowedImage(body.image);
@@ -88,9 +95,15 @@ export async function POST(req: Request) {
       );
     }
 
-    const scope = assessPracticeQuestion(pregunta, Boolean(image));
-    if (!scope.ok) {
-      return NextResponse.json({ ok: true, offTopic: true, text: scope.reply });
+    const tipoPedido = (TIPOS_CASO as readonly string[]).includes(String(body.tipo || ""))
+      ? String(body.tipo)
+      : "mixto";
+
+    if (modo !== "generar") {
+      const scope = assessPracticeQuestion(pregunta, Boolean(image));
+      if (!scope.ok) {
+        return NextResponse.json({ ok: true, offTopic: true, text: scope.reply });
+      }
     }
 
     if (modo === "revelar" && hintCount < 3) {
@@ -110,17 +123,40 @@ export async function POST(req: Request) {
       .filter(Boolean)
       .join("\n\n");
 
+    const evitar = previas.map((p: { pregunta: string }) => p.pregunta).filter(Boolean).join(" | ");
     const prompt =
-      modo === "pista"
-        ? `${base}\n\nDevuelve solo:\nPISTA: una pista útil sin decir la opción ni el número final. Pista ${hintCount + 1} de 3.\nTIPO: numerico | abstracto | verbal | personalidad | situacional | otro`
-        : `${base}\n\nDevuelve solo:\nRESPUESTA: la opción o el resultado, nada más\nPOR QUÉ: una sola línea\nTIPO: numerico | abstracto | verbal | personalidad | situacional | otro`;
+      modo === "generar"
+        ? [
+            "PERFIL DECLARADO:",
+            perfil,
+            `Inventa UN ítem original de práctica psicotécnica. Tipo pedido: ${tipoPedido}.`,
+            "Si el tipo es mixto, elige uno entre numerico, abstracto, verbal, personalidad o situacional.",
+            "No copies cuadernillos ni marcas comerciales. Enunciado propio, en español.",
+            "Numérico, abstracto o verbal: incluye opciones A–E y una sola respuesta correcta, pero no la escribas.",
+            "Personalidad o situacional: dilema con opciones A–D alineable al perfil, sin decir cuál corresponde.",
+            evitar ? `No repitas estos enunciados: ${evitar}` : "",
+            "Devuelve solo:\nENUNCIADO: el ítem completo\nTIPO: numerico | abstracto | verbal | personalidad | situacional",
+          ]
+            .filter(Boolean)
+            .join("\n\n")
+        : modo === "pista"
+          ? `${base}\n\nDevuelve solo:\nPISTA: una pista útil sin decir la opción ni el número final. Pista ${hintCount + 1} de 3.\nTIPO: numerico | abstracto | verbal | personalidad | situacional | otro`
+          : `${base}\n\nDevuelve solo:\nRESPUESTA: la opción o el resultado, nada más\nPOR QUÉ: una sola línea\nTIPO: numerico | abstracto | verbal | personalidad | situacional | otro`;
 
-    const raw = await completePractice(prompt, image);
+    const raw = await completePractice(prompt, modo === "generar" ? undefined : image);
     if (!raw) {
       return NextResponse.json(
         { error: "La IA de pago no respondió. Reintenta en un momento." },
         { status: 503 }
       );
+    }
+
+    if (modo === "generar") {
+      const caso = parseCaso(raw);
+      if (!caso) {
+        return NextResponse.json({ error: "No salió un caso usable. Saca otro." }, { status: 502 });
+      }
+      return NextResponse.json({ ok: true, modo, enunciado: caso.enunciado, tipo: caso.tipo });
     }
 
     if (modo === "pista") {

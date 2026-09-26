@@ -217,9 +217,9 @@ export default function CuentaPage() {
       </section>
 
       <section className="bento-card space-y-3">
-        <h2 className="font-semibold text-sm">Mi camino principal</h2>
-        <p className="text-xs muted">
-          Define qué botón &quot;Hoy&quot; y &quot;Continuar&quot; te llevan primero: ATS gratis o cuadernillo Carrera.
+        <h2 className="font-semibold text-sm">Por dónde sigues</h2>
+        <p className="text-sm muted leading-relaxed">
+          Elige si sigues el cuadernillo o analizas tu CV. Puedes cambiarlo después.
         </p>
         <div className="flex flex-col gap-2">
           <button
@@ -233,10 +233,10 @@ export default function CuentaPage() {
             onClick={() => {
               writeFocusPath("carrera");
               setFocusPath("carrera");
-              setMsg("Camino Carrera activo. Inicio y Hoy te llevan al cuadernillo.");
+              setMsg("Listo. Tu prioridad es el cuadernillo de carrera.");
             }}
           >
-            Carrera (cuadernillo)
+            Cuadernillo de carrera
           </button>
           <button
             type="button"
@@ -249,10 +249,10 @@ export default function CuentaPage() {
             onClick={() => {
               writeFocusPath("ats");
               setFocusPath("ats");
-              setMsg("Camino ATS activo. Inicio y Hoy te llevan al analizador.");
+              setMsg("Listo. Tu prioridad es analizar tu CV.");
             }}
           >
-            ATS gratis
+            Analizar mi CV
           </button>
         </div>
       </section>

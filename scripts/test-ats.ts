@@ -1,5 +1,5 @@
 import { analyzeAts } from "../src/lib/ats/engine";
-import { reflowExtractedCv, rewriteAsAchievement } from "../src/lib/ats/cvPatch";
+import { exampleAdjustment, reflowExtractedCv } from "../src/lib/ats/cvPatch";
 import { detectAtsProfile } from "../src/lib/ats/detectAts";
 import { localTfidfScore } from "../src/lib/ats/embeddings";
 import { compareAtsResults } from "../src/lib/ats/compare";
@@ -111,14 +111,24 @@ assert(reflowed.includes("y múltiples sedes"), "el párrafo partido debe unirse
 assert(reflowed.includes("ana@mail.com"), "el correo sigue en su línea");
 assert(!reflowed.includes("LÓPEZ Transformación"), "el nombre no se pega al título");
 
-const rewritten = rewriteAsAchievement(
+const rewritten = exampleAdjustment(
   "Responsable de liderar la transformación organizacional y tecnológica",
-  "ingeniería de software"
+  0
 );
 assert(/Lideré la transformación organizacional/.test(rewritten), "debe reescribir la frase existente");
-assert(rewritten.includes("ingeniería de software"), "debe incluir el término en la frase");
-assert(rewritten.includes("[18%]"), "la cifra de ejemplo va entre corchetes");
-assert(!/\[qué|\[cifra|\[proceso/.test(rewritten), "no debe dejar huecos vacíos");
+assert(rewritten.includes("[18%]"), "un ejemplo puede traer una cifra");
+assert(!rewritten.toLowerCase().includes("incluyendo"), "no debe pegar palabras sueltas");
+const header = exampleAdjustment(
+  "LOTIC SOLUCIONES — WWW.LOTICSOL.COM FUNDADOR — AGO 2025 – ACTUAL",
+  0
+);
+assert(header === "", "el encabezado no se convierte en viñeta");
+const cut = exampleAdjustment(
+  "Fundé y estructuré la startup (emprendimiento familiar), definiendo",
+  1
+);
+assert(cut.includes("Fundé y estructuré la startup"), "conserva la frase real");
+assert(!/definiendo/.test(cut), "no deja una palabra cortada");
 
 console.log("ats engine tests ok", {
   strong: result.score,

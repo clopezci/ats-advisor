@@ -250,50 +250,64 @@ function isRoleHeader(s: string) {
   return s.length < 100 && /\b(19|20)\d{2}\b/.test(s) && !/[.]$/.test(s.trim());
 }
 
-/**
- * Reescribe una frase que ya está en la hoja, en tono de logro.
- * Lo único entre corchetes es una cifra de ejemplo.
- */
-export function rewriteAsAchievement(original: string, extraTerm?: string): string {
-  let body = original
+function isHeaderLine(s: string) {
+  const t = s.trim();
+  if (!t) return true;
+  if (isSectionLine(t) || isContactLine(t) || isRoleHeader(t)) return true;
+  if (/www\.|https?:|@[a-z0-9.-]+\.[a-z]{2,}/i.test(t)) return true;
+  if (/\b(ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)\b.+\d{4}|\d{4}\s*[–—-]\s*(actual|presente|\d{4})/i.test(t)) return true;
+  if (/[|·]/.test(t) && t.length < 140 && !/[.]$/.test(t)) return true;
+  if (/^[A-ZÁÉÍÓÚÑ0-9][A-ZÁÉÍÓÚÑ0-9\s|/·—–.-]{12,}$/.test(t)) return true;
+  return false;
+}
+
+/** Corta en la última coma si la frase quedó a medias (p. ej. «definiendo»). */
+function tidyClause(raw: string): string {
+  let t = raw
     .replace(/^[-•●▪◦*]\s+/, "")
     .replace(/\s+/g, " ")
     .replace(/[…]+$/, "")
     .replace(/\.{3}$/, "")
     .trim();
-  if (body.length > 240) body = body.slice(0, 240).replace(/\s+\S*$/, "");
-
-  if (isRoleHeader(body)) return body;
-
-  const openings: [RegExp, string][] = [
-    [/^responsable de liderar /i, "Lideré "],
-    [/^responsable de dirigir /i, "Dirigí "],
-    [/^responsable de /i, "Lideré "],
-    [/^encargad[oa] de /i, "Lideré "],
-    [/^a cargo de /i, "Lideré "],
-    [/^participación en /i, "Participé en "],
-    [/^experiencia en /i, "Apliqué "],
-    [/^conocimientos? en /i, "Apliqué "],
-  ];
-  for (const [re, rep] of openings) {
-    if (re.test(body)) {
-      body = body.replace(re, rep);
-      break;
+  if (t.length > 200) t = t.slice(0, 200).replace(/\s+\S*$/, "");
+  if (!/[.!?]$/.test(t) && /,/.test(t)) {
+    const parts = t.split(",");
+    const last = (parts[parts.length - 1] || "").trim();
+    if (
+      /^(definiendo|incluyendo|liderando|gestionando|asegurando|optimizando|desarrollando|implementando)\b/i.test(last) ||
+      last.split(/\s+/).length < 4
+    ) {
+      parts.pop();
+      t = parts.join(",").trim();
     }
   }
-  const commas = (body.match(/,/g) || []).length;
-  if (commas >= 2 && !body.includes(".") && !ACHIEVEMENT_OPEN.test(body) && body.length < 180) {
-    body = `Apliqué en el rol: ${body}`;
-  }
-  body = body.replace(/[.,;:\s]+$/, "");
+  return t.replace(/[.,;:\s]+$/, "");
+}
+
+/**
+ * Ejemplo suelto, para mirar. No se escribe en la hoja.
+ * No repite el mismo cierre en todas las frases.
+ */
+export function exampleAdjustment(original: string, variant: number, extraTerm?: string): string {
+  let body = tidyClause(original);
+  if (!body || isHeaderLine(body)) return "";
+
+  body = body
+    .replace(/^responsable de liderar /i, "Lideré ")
+    .replace(/^responsable de /i, "Lideré ")
+    .replace(/^encargad[oa] de /i, "Lideré ");
 
   const term = (extraTerm || "").replace(/\s+/g, " ").trim();
-  if (term && term.length <= 48 && !body.toLowerCase().includes(term.toLowerCase())) {
-    body += `, incluyendo ${term}`;
+  if (variant === 0 && term && term.length <= 40 && !body.toLowerCase().includes(term.toLowerCase())) {
+    return `${body}. Si es verdad en tu trabajo, en esta viñeta nombra «${term}».`;
   }
-  if (!hasImpactMetric(body)) body += ", con un resultado de [18%]";
-  if (!/[.!?]$/.test(body)) body += ".";
-  return body;
+  if (variant === 1 && !hasImpactMetric(body)) {
+    return `${body} y el alcance fue de [12] personas.`;
+  }
+  if (!hasImpactMetric(body)) {
+    return `${body}, con un ahorro de [18%] en ese proceso.`;
+  }
+  return `${body}.`;
 }
 
 export const EXAMPLE_MARK = "[[EJEMPLO]]";
@@ -353,8 +367,7 @@ export function isFakeCvRewrite(text: string, originalCv: string): boolean {
 }
 
 /**
- * Parche local sin IA: inserta skills/keywords faltantes en bloque Habilidades
- * (solo términos que el plan marcó). No reescribe experiencia ni inventa logros.
+ * No toca la hoja. Devuelve hasta 3 ejemplos sueltos para mirar.
  */
 export function applyLocalSurgicalPatch(
   cvText: string,
@@ -363,7 +376,7 @@ export function applyLocalSurgicalPatch(
   const applied: string[] = [];
   const omitted: string[] = [];
   const suggestions: PatchSuggestion[] = [];
-  let cv = reflowExtractedCv(cvText);
+  const cv = cvText;
 
   const skillLabels = plan.items
     .filter((i) => i.kind === "hard_skill" || i.kind === "keyword" || i.kind === "must_have")
@@ -374,63 +387,51 @@ export function applyLocalSurgicalPatch(
     .toLowerCase()
     .normalize("NFD")
     .replace(/\p{M}/gu, "");
-  const termsForSentences: string[] = [];
+  const missingTerms: string[] = [];
   for (const label of skillLabels) {
-    if (cv.toLowerCase().includes(label.toLowerCase()) || textHasTerm(cvNorm, label)) {
-      omitted.push(`${label} (ya aparece en el CV; se usa dentro de una frase reescrita si hace falta)`);
-      termsForSentences.push(label);
-      continue;
-    }
-    if (label.split(/\s+/).length > 6) {
-      omitted.push(`${label} (frase larga: entra en un párrafo reescrito solo si es verdad)`);
-    } else {
-      omitted.push(`${label} (manual: déjalo en la frase solo si es verdad en tu experiencia)`);
-    }
-    termsForSentences.push(label);
+    if (cv.toLowerCase().includes(label.toLowerCase()) || textHasTerm(cvNorm, label)) continue;
+    omitted.push(`${label} (manual: úsalo en un ejemplo solo si es verdad)`);
+    missingTerms.push(label);
   }
 
   const lines = cv
     .split("\n")
-    .map((l) => l.trim())
-    .filter((l) => l.length > 55 && !isSectionLine(l) && !isContactLine(l) && !isRoleHeader(l));
+    .map((l) => l.replace(/^[-•●▪◦*]\s+/, "").trim())
+    .filter((l) => l.length > 40 && !isHeaderLine(l));
 
   const sources: string[] = [];
-  for (const item of plan.items) {
-    if (item.kind !== "bullet") continue;
-    const needle = item.label.replace(/[…]+$/, "").trim().slice(0, 28).toLowerCase();
-    const found = needle ? lines.find((l) => l.toLowerCase().includes(needle.slice(0, 18))) : "";
-    const original = (found || item.label).replace(/[…]+$/, "").trim();
-    if (original.length > 24 && !isRoleHeader(original) && !sources.includes(original)) sources.push(original);
+  for (const line of lines) {
+    if (sources.length >= 2) break;
+    if (!ACHIEVEMENT_OPEN.test(line) && !/^(responsable|encargad|fund[eé]|defin[ií]|particip)/i.test(line)) continue;
+    if (sources.some((s) => s.slice(0, 24).toLowerCase() === line.slice(0, 24).toLowerCase())) continue;
+    sources.push(line);
   }
   for (const line of lines) {
-    if (sources.length >= 4) break;
-    if (hasImpactMetric(line) || sources.includes(line)) continue;
+    if (sources.length >= 2) break;
+    if (isHeaderLine(line) || sources.includes(line)) continue;
     sources.push(line);
   }
 
-  sources.slice(0, 4).forEach((original, idx) => {
-    const term = termsForSentences[idx];
-    const paste = rewriteAsAchievement(original, term);
+  sources.slice(0, 2).forEach((original, idx) => {
+    const paste = exampleAdjustment(original, idx);
+    if (!paste) return;
     suggestions.push({
-      id: `rw_${idx}`,
-      where: "Reemplaza ese párrafo de tu hoja por esta frase.",
-      before: original.length > 180 ? `${original.slice(0, 180)}…` : original,
+      id: `ex_${idx}`,
+      where: "Ejemplo",
       paste,
-      example: /\[\d/.test(paste),
+      example: true,
     });
-    const needle = original.slice(0, 36);
-    const at = cv.toLowerCase().indexOf(needle.toLowerCase());
-    if (at >= 0) {
-      const start = cv.lastIndexOf("\n", at) + 1;
-      const endBreak = cv.indexOf("\n", at);
-      const end = endBreak < 0 ? cv.length : endBreak;
-      const prefix = cv.slice(start, end).match(/^(\s*[-•●▪◦*]\s+)/)?.[1] || "";
-      cv = cv.slice(0, start) + prefix + paste + cv.slice(end);
-      applied.push("Reescrita una frase que ya estaba en la hoja, con [18%] de ejemplo");
-    } else {
-      omitted.push(`${original.slice(0, 60)} (la frase lista quedó en las sugerencias)`);
-    }
   });
+
+  const term = missingTerms.find((t) => !suggestions.some((s) => s.paste.toLowerCase().includes(t.toLowerCase())));
+  if (term && suggestions.length < 3) {
+    suggestions.push({
+      id: "ex_term",
+      where: "Ejemplo",
+      paste: `Viñeta de ejemplo, solo si es cierto: lideré un proyecto en el que usé ${term}.`,
+      example: true,
+    });
+  }
 
   const changelog = [
     "=== CAMBIOS ===",
@@ -440,7 +441,7 @@ export function applyLocalSurgicalPatch(
       ? "- Hecho: ninguno automático (revisa la lista y edita a mano)."
       : "",
     "",
-    "Nota: las frases salen de tu hoja. Solo el número o el % entre corchetes es un ejemplo: cámbialo por tu dato real o borra esa parte.",
+    "Nota: la hoja no se modificó. Los ejemplos quedan aparte.",
   ]
     .filter(Boolean)
     .join("\n");

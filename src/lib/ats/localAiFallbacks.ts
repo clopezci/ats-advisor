@@ -1,15 +1,11 @@
 import type { AtsAnalyzeResult } from "@/lib/ats/engine";
 import { filterSkillTerms } from "@/lib/ats/phraseFilter";
 import { buildLocalCoverLetter } from "@/lib/ats/coverLetter";
-import { rewriteAsAchievement } from "@/lib/ats/cvPatch";
+import { exampleAdjustment } from "@/lib/ats/cvPatch";
 
-/** Borrador anclado al texto original. Solo la cifra de ejemplo va entre corchetes. */
-function draftBulletExample(original: string, skillHint: string): string {
-  const skill = (skillHint || "").trim();
-  const already =
-    skill &&
-    new RegExp(`\\b${skill.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i").test(original);
-  return rewriteAsAchievement(original, already ? undefined : skill);
+/** Borrador anclado al texto original. No se pega solo en la hoja. */
+function draftBulletExample(original: string, _skillHint: string): string {
+  return exampleAdjustment(original, 0) || original.replace(/\s+/g, " ").trim();
 }
 
 /** Tips de postulación accionables (sin filtrar system prompts). */
@@ -97,9 +93,6 @@ export function buildLocalBulletRewrites(opts: {
     lines.push("");
   }
 
-  lines.push(
-    "Solo cambia el [18%] por tu cifra real. Si no tienes el dato, borra esa parte. El resto debe ser algo que sí hiciste."
-  );
   return lines.join("\n");
 }
 

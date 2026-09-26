@@ -1058,7 +1058,7 @@ export default function AtsPage() {
 
           {resultPhase === 2 && (
             <button type="button" className="btn-primary" onClick={() => setResultPhase(3)}>
-              Siguiente: preparar la hoja con sugerencias
+              Siguiente: ver ejemplos de ajuste
             </button>
           )}
 
@@ -1067,7 +1067,7 @@ export default function AtsPage() {
             <h2 className="text-sm font-semibold">Ajustar hoja de vida</h2>
             <p className="text-xs muted">{DISCLAIMER_CV_REWRITE}</p>
             <p className="text-sm leading-relaxed">
-              Reescribe párrafos que ya están en tu hoja, listos para pegar. Lo único que cambias es el número o el % entre corchetes: es un ejemplo. Si no tienes esa cifra, borra esa parte. El resto tiene que ser algo que sí hiciste.
+              No cambia tu hoja. Muestra dos o tres ejemplos de cómo podría quedar una viñeta. Úsalos solo si el dato es real.
             </p>
             {patchPlan && patchPlan.items.length > 0 ? (
               <div className="space-y-2">
@@ -1094,7 +1094,7 @@ export default function AtsPage() {
             >
               {rewriteLoading && rewriteMode === "surgical"
                 ? "Aplicando cambios…"
-                : "Redactar mis párrafos"}
+                : "Ver ejemplos"}
             </button>
             <button
               type="button"
@@ -1108,91 +1108,70 @@ export default function AtsPage() {
             </button>
             {rewriteText && (
               <>
-                <p className="text-sm leading-relaxed">
-                  {rewriteSource === "local"
-                    ? "Cada recuadro trae el párrafo que ya tenías y, debajo, la frase lista. En morado solo está el [18%] de ejemplo."
-                    : "Revisa la redacción. Si ves un número entre corchetes, cámbialo por tu dato real."}
-                </p>
-                {rewriteSuggestions.length > 0 && (
+                {rewriteSource === "local" ? (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-semibold">Párrafos listos para pegar</h3>
-                    <p className="text-xs muted">
-                      Salen de tu hoja. Cambia solo el número o el % entre corchetes. Si no tienes esa cifra, borra “con un resultado de [18%]”. Si una palabra de la oferta no es real en tu trabajo, bórrala. No dejes nada que no hayas hecho.
-                    </p>
-                    {rewriteSuggestions.map((s) => (
-                      <div key={s.id} className="rounded-lg p-3 text-sm space-y-2" style={{ background: "var(--surface-2, #f6f4fb)" }}>
-                        {s.before ? (
-                          <p className="text-xs muted">Así está ahora: {s.before}</p>
-                        ) : null}
+                    <h3 className="text-sm font-semibold">Ejemplos</h3>
+                    <p className="text-xs muted">Son ejemplos. No se escriben en tu hoja.</p>
+                    {rewriteSuggestions.map((s, i) => (
+                      <div key={s.id} className="rounded-lg p-3 text-sm" style={{ background: "var(--surface-2, #f6f4fb)" }}>
+                        <p className="text-xs muted mb-1">Ejemplo {i + 1}</p>
                         <p className="leading-relaxed">{renderMetricMarks(s.paste)}</p>
                       </div>
                     ))}
-                    <button
-                      type="button"
-                      className="btn-secondary"
-                      onClick={async () => {
-                        const text = [
-                          "Cambia solo el número o el % entre corchetes por tu dato real. Si no tienes esa cifra, borra esa parte. El resto debe ser algo que sí hiciste.",
-                          "",
-                          ...rewriteSuggestions.map((s) => s.paste),
-                        ].join("\n\n");
-                        await navigator.clipboard.writeText(text);
-                        alert("Párrafos copiados. En Word solo cambias el número entre corchetes.");
-                      }}
+                    {rewriteSuggestions.length > 0 ? (
+                      <button
+                        type="button"
+                        className="btn-secondary"
+                        onClick={async () => {
+                          await navigator.clipboard.writeText(rewriteSuggestions.map((s) => s.paste).join("\n\n"));
+                          alert("Ejemplos copiados.");
+                        }}
+                      >
+                        Copiar ejemplos
+                      </button>
+                    ) : (
+                      <p className="text-sm muted">No hay una viñeta clara para usar de ejemplo.</p>
+                    )}
+                  </div>
+                ) : (
+                  <>
+                    <p className="text-sm leading-relaxed">Revisa la redacción antes de usarla.</p>
+                    <div
+                      className="text-sm leading-relaxed max-h-96 overflow-auto rounded-lg p-3 space-y-2"
+                      style={{ background: "var(--surface-2, #f6f4fb)" }}
                     >
-                      Copiar párrafos listos
-                    </button>
-                  </div>
+                      {rewriteText.split("\n").map((line, i) => {
+                        const shown = line.replace(EXAMPLE_MARK, "").trim();
+                        if (!shown) return <div key={i} className="h-2" />;
+                        return <p key={i}>{shown}</p>;
+                      })}
+                    </div>
+                    <div className="flex flex-col gap-3 md:flex-row md:flex-wrap">
+                      <button
+                        type="button"
+                        className="btn-secondary"
+                        onClick={async () => {
+                          await navigator.clipboard.writeText(cvTextForClipboard(rewriteText));
+                          alert("Texto copiado.");
+                        }}
+                      >
+                        Copiar texto
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-secondary"
+                        disabled={isFakeCvRewrite(rewriteText, cvText)}
+                        onClick={async () => {
+                          if (isFakeCvRewrite(rewriteText, cvText)) return;
+                          const blob = await buildCvDocx(extractPlainCv(rewriteText) || rewriteText);
+                          downloadBlob("CV-ATSAdvisor.docx", blob);
+                        }}
+                      >
+                        Descargar Word
+                      </button>
+                    </div>
+                  </>
                 )}
-                <div className="space-y-2">
-                  <h3 className="text-sm font-semibold">Tu hoja con esos párrafos ya puestos</h3>
-                  <p className="text-xs muted">
-                    Los renglones que el PDF partía quedan unidos. Donde había un párrafo largo, quedó la frase de logro. El [18%] sigue siendo un ejemplo.
-                  </p>
-                  <div
-                    className="text-sm leading-relaxed max-h-96 overflow-auto rounded-lg p-3 space-y-2"
-                    style={{ background: "var(--surface-2, #f6f4fb)" }}
-                  >
-                    {rewriteText.split("\n").map((line, i) => {
-                      const shown = line.replace(EXAMPLE_MARK, "").trim();
-                      if (!shown) return <div key={i} className="h-2" />;
-                      return <p key={i}>{renderMetricMarks(shown)}</p>;
-                    })}
-                  </div>
-                </div>
-                <div className="flex flex-col gap-3 md:flex-row md:flex-wrap">
-                  <button
-                    type="button"
-                    className="btn-secondary"
-                    onClick={async () => {
-                      await navigator.clipboard.writeText(cvTextForClipboard(rewriteText));
-                      alert("Hoja copiada. En Word solo cambias el número o el % entre corchetes.");
-                    }}
-                  >
-                    Copiar la hoja
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-secondary"
-                    disabled={isFakeCvRewrite(rewriteText, cvText)}
-                    onClick={async () => {
-                      if (isFakeCvRewrite(rewriteText, cvText)) {
-                        alert("Eso no es un CV. Vuelve a preparar la hoja.");
-                        return;
-                      }
-                      const blob = await buildCvDocx(extractPlainCv(rewriteText) || rewriteText);
-                      downloadBlob("CV-ATSAdvisor.docx", blob);
-                    }}
-                  >
-                    Descargar Word
-                  </button>
-                  <button type="button" className="btn-primary" disabled={rescoring} onClick={rescoreAfterRewrite}>
-                    {rescoring ? "Midiendo…" : "Medir de nuevo el puntaje"}
-                  </button>
-                </div>
-                <p className="text-xs muted">
-                  Medir de nuevo no usa el número de ejemplo. El puntaje refleja la frase cuando ya cambiaste el [18%] por tu dato, o cuando borraste esa parte.
-                </p>
               </>
             )}
           </section>

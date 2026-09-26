@@ -46,7 +46,8 @@ import {
   isLeakedAiFallback,
 } from "@/lib/ats/localAiFallbacks";
 import { filterSkillTerms } from "@/lib/ats/phraseFilter";
-import { withUserAiHeaders, hasUserAiKeys } from "@/lib/ai/userKeysClient";
+import { withUserAiHeaders, hasUserAiKeys, USER_AI_KEYS_EVENT } from "@/lib/ai/userKeysClient";
+import { createBrowserSupabase } from "@/lib/supabase/client";
 
 const PROFILES: { id: AtsProfile; label: string; hint: string }[] = [
   { id: "generic", label: "No lo sé", hint: "Sirve para la mayoría de avisos" },
@@ -90,6 +91,8 @@ export default function AtsPage() {
   const [coverLetter, setCoverLetter] = useState("");
   const [coverLoading, setCoverLoading] = useState(false);
   const [freeAtsLimit, setFreeAtsLimit] = useState(5);
+  const [ownAi, setOwnAi] = useState(false);
+  const [sessionEmail, setSessionEmail] = useState<string | null>(null);
   const [resultPhase, setResultPhase] = useState(1);
 
   useEffect(() => {
@@ -109,6 +112,39 @@ export default function AtsPage() {
       })
       .catch(() => undefined);
   }, []);
+
+  useEffect(() => {
+    const syncKey = () => setOwnAi(hasUserAiKeys());
+    syncKey();
+    window.addEventListener("focus", syncKey);
+    window.addEventListener("storage", syncKey);
+    window.addEventListener(USER_AI_KEYS_EVENT, syncKey);
+    document.addEventListener("visibilitychange", syncKey);
+    return () => {
+      window.removeEventListener("focus", syncKey);
+      window.removeEventListener("storage", syncKey);
+      window.removeEventListener(USER_AI_KEYS_EVENT, syncKey);
+      document.removeEventListener("visibilitychange", syncKey);
+    };
+  }, []);
+
+  useEffect(() => {
+    const sb = createBrowserSupabase();
+    if (!sb) return;
+    sb.auth.getSession().then(({ data }) => {
+      setSessionEmail(data.session?.user?.email || null);
+    });
+    const { data: sub } = sb.auth.onAuthStateChange((_e, session) => {
+      setSessionEmail(session?.user?.email || null);
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    if (ownAi || sessionEmail) {
+      setError((prev) => (prev.startsWith("Hoy ya usaste") ? "" : prev));
+    }
+  }, [ownAi, sessionEmail]);
 
   useEffect(() => {
     if (!jobUrl.trim() && jobText.trim().length < 40) {
@@ -366,6 +402,22 @@ export default function AtsPage() {
     setSavedCompare("");
   }, [rewriteSource, rewriteText]);
 
+  async function continueUnlocked(): Promise<{ ownKey: boolean; signedIn: boolean }> {
+    const ownKey = hasUserAiKeys();
+    setOwnAi(ownKey);
+    let signedIn = Boolean(sessionEmail);
+    if (!signedIn) {
+      const sb = createBrowserSupabase();
+      if (sb) {
+        const { data } = await sb.auth.getSession();
+        const email = data.session?.user?.email || null;
+        setSessionEmail(email);
+        signedIn = Boolean(email);
+      }
+    }
+    return { ownKey, signedIn };
+  }
+
   async function saveAndCompare() {
     if (!result) return;
     const text = editedCv.trim();
@@ -374,12 +426,10 @@ export default function AtsPage() {
       return;
     }
     const paid = canAccessOutplacement(readEntitlement().plan);
-    const dailyLimit = paid ? 100 : freeAtsLimit;
-    const gate = canRunAts(dailyLimit);
-    if (!gate.ok) {
-      setError(
-        `Límite de hoy alcanzado (${gate.used}/${dailyLimit}).`
-      );
+    const access = await continueUnlocked();
+    const blocked = atsDayBlocked(paid, freeAtsLimit, access.ownKey, access.signedIn);
+    if (blocked) {
+      setError(blocked);
       return;
     }
     setRescoring(true);
@@ -560,14 +610,10 @@ export default function AtsPage() {
   async function analyze() {
     const entitlement = readEntitlement();
     const paid = canAccessOutplacement(entitlement.plan);
-    const dailyLimit = paid ? 100 : freeAtsLimit;
-    const gate = canRunAts(dailyLimit);
-    if (!gate.ok) {
-      setError(
-        paid
-          ? `Límite alto alcanzado (${gate.used}/${dailyLimit}). Reintenta mañana.`
-          : `Límite de hoy alcanzado (${gate.used}/${dailyLimit}).`
-      );
+    const access = await continueUnlocked();
+    const blocked = atsDayBlocked(paid, freeAtsLimit, access.ownKey, access.signedIn);
+    if (blocked) {
+      setError(blocked);
       return;
     }
     setLoading(true);
@@ -642,7 +688,7 @@ export default function AtsPage() {
           <SpeakButton text={intro} />
         </div>
         <p className="muted text-sm">{intro}</p>
-        {!hasUserAiKeys() && (
+        {!ownAi && !hasUserAiKeys() && (
           <p className="text-xs leading-relaxed rounded-lg border border-[var(--border)] px-3 py-2">
             <Link href="/cuenta/mi-ia" className="underline" style={{ color: "var(--brand)" }}>
               Configura tu clave de Groq o Gemini
@@ -749,7 +795,7 @@ export default function AtsPage() {
                 <>
                   <button
                     type="button"
-                    className="btn-secondary w-full text-left"
+                    className="btn-secondary w-full flex-col items-start text-left"
                     style={
                       atsProfile === generic.id
                         ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
@@ -763,7 +809,7 @@ export default function AtsPage() {
                   {atsProfile !== generic.id ? (
                     <button
                       type="button"
-                      className="btn-secondary w-full text-left"
+                      className="btn-secondary w-full flex-col items-start text-left"
                       style={{ borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }}
                       onClick={() => setAtsProfile(selected.id)}
                     >
@@ -780,7 +826,7 @@ export default function AtsPage() {
                         <button
                           key={p.id}
                           type="button"
-                          className="btn-secondary text-left"
+                          className="btn-secondary flex-col items-start text-left"
                           style={
                             atsProfile === p.id
                               ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
@@ -1609,8 +1655,17 @@ function ResultBlock({ title, items }: { title: string; items: string[] }) {
   );
 }
 
+function atsDayBlocked(paid: boolean, freeLimit: number, ownKey: boolean, signedIn: boolean): string | null {
+  if (ownKey || signedIn) return null;
+  const dailyLimit = paid ? 100 : freeLimit;
+  const gate = canRunAts(dailyLimit);
+  if (gate.ok) return null;
+  if (paid) return "Límite alto alcanzado. Reintenta mañana.";
+  return "Hoy ya usaste los análisis gratis.";
+}
+
 function AtsNotice({ text }: { text: string }) {
-  const quota = /Límite de hoy alcanzado/i.test(text);
+  const quota = text.startsWith("Hoy ya usaste");
   if (!quota) {
     return (
       <p className="text-sm" style={{ color: "var(--danger)" }}>
@@ -1619,21 +1674,11 @@ function AtsNotice({ text }: { text: string }) {
     );
   }
   return (
-    <div className="rounded-xl border border-amber-300/70 bg-amber-50 px-4 py-3 text-sm text-amber-950 space-y-2">
-      <p>{text}</p>
-      <p>
-        <Link className="underline" href="/cuenta">
-          Ver Mi cuenta
-        </Link>
-        {" · "}
-        <Link className="underline" href="/cuenta/mi-ia">
-          Agregar mi propia IA
-        </Link>
-        {" · "}
-        <Link className="underline" href="/precios">
-          Ver precios
-        </Link>
-      </p>
+    <div className="bento-card space-y-3">
+      <p className="text-sm leading-relaxed">{text} Entra con tu correo para seguir.</p>
+      <Link href="/auth" className="btn-primary">
+        Entrar con mi correo
+      </Link>
     </div>
   );
 }

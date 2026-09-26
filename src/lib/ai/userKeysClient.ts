@@ -78,6 +78,12 @@ export const USER_AI_KEY_GUIDES: UserAiKeyGuide[] = [
 ];
 
 const STORAGE_KEY = "ats_user_ai_keys";
+export const USER_AI_KEYS_EVENT = "ats-user-ai-keys";
+
+function notifyUserAiKeys() {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(new Event(USER_AI_KEYS_EVENT));
+}
 
 export function loadUserAiKeys(): UserAiKeys {
   try {
@@ -102,6 +108,7 @@ export function saveUserAiKeys(keys: UserAiKeys) {
     );
     if (Object.keys(clean).length) localStorage.setItem(STORAGE_KEY, JSON.stringify(clean));
     else localStorage.removeItem(STORAGE_KEY);
+    notifyUserAiKeys();
   } catch {
     /* storage bloqueado */
   }

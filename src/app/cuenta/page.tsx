@@ -187,7 +187,7 @@ export default function CuentaPage() {
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between">
           <h1 className="text-2xl font-semibold">Mi cuenta</h1>
-          <SpeakButton text="Aquí ves si entraste y tu plan. Sin cuenta puedes analizar un CV. El correo sirve para activar y recuperar un plan de pago." />
+          <SpeakButton text="Sin cuenta puedes comparar un CV con una vacante y ver el resultado aquí. Entra con tu correo si quieres guardar ese resultado y consultarlo después." />
         </div>
         {sessionEmail ? (
           <p className="text-sm">
@@ -202,12 +202,12 @@ export default function CuentaPage() {
       </section>
 
       <section className="bento-card space-y-3">
-        <h2 className="font-semibold text-sm">Para qué entrar con correo</h2>
+        <h2 className="font-semibold text-sm">Sin cuenta, o con correo</h2>
         <p className="text-sm leading-relaxed">
-          Puedes analizar un CV sin cuenta. Tu hoja, las versiones y el seguimiento quedan en este dispositivo.
+          Puedes comparar un CV con una vacante sin cuenta. Ves el resultado en ese recorrido.
         </p>
         <p className="text-sm muted leading-relaxed">
-          El correo sirve para activar un plan de pago y volver a verlo cuando entres de nuevo con ese mismo correo.
+          Entra con tu correo si quieres guardar ese resultado y consultarlo después. Si pagaste un plan, usa el mismo correo.
         </p>
         {sessionReady && !sessionEmail ? (
           <Link href="/auth" className="btn-primary">

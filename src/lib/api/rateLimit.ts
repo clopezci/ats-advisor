@@ -8,9 +8,15 @@ function store() {
 }
 
 function clientKey(req: Request) {
-  const fwd = req.headers.get("x-forwarded-for") || "";
-  const ip = fwd.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "local";
-  return ip;
+  const vercel = req.headers.get("x-vercel-forwarded-for")?.split(",")[0]?.trim();
+  if (vercel) return vercel;
+  const real = req.headers.get("x-real-ip")?.trim();
+  if (real) return real;
+  const parts = (req.headers.get("x-forwarded-for") || "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  return parts[parts.length - 1] || "local";
 }
 
 /**

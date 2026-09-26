@@ -141,10 +141,10 @@ export default function AtsPage() {
   }, []);
 
   useEffect(() => {
-    if (ownAi || sessionEmail) {
+    if (ownAi) {
       setError((prev) => (prev.startsWith("Hoy ya usaste") ? "" : prev));
     }
-  }, [ownAi, sessionEmail]);
+  }, [ownAi]);
 
   useEffect(() => {
     if (!jobUrl.trim() && jobText.trim().length < 40) {
@@ -427,7 +427,7 @@ export default function AtsPage() {
     }
     const paid = canAccessOutplacement(readEntitlement().plan);
     const access = await continueUnlocked();
-    const blocked = atsDayBlocked(paid, freeAtsLimit, access.ownKey, access.signedIn);
+    const blocked = atsDayBlocked(paid, freeAtsLimit, access.ownKey);
     if (blocked) {
       setError(blocked);
       return;
@@ -487,17 +487,19 @@ export default function AtsPage() {
       } catch {
         /* ignore */
       }
-      pushAtsHistory(
-        buildHistoryPayload({
-          score: after.score,
-          semanticScore: after.semanticScore,
-          interviewProbability: after.interviewProbability,
-          profile: atsProfile,
-          jobText,
-          mustMissing: after.mustHave?.missing,
-          embeddingProvider: after.embeddingProvider,
-        })
-      );
+      if (access.signedIn) {
+        pushAtsHistory(
+          buildHistoryPayload({
+            score: after.score,
+            semanticScore: after.semanticScore,
+            interviewProbability: after.interviewProbability,
+            profile: atsProfile,
+            jobText,
+            mustMissing: after.mustHave?.missing,
+            embeddingProvider: after.embeddingProvider,
+          })
+        );
+      }
       const sign = delta.delta > 0 ? "+" : "";
       setSavedCompare(
         `«${label}» quedó en tu expediente, ligada a esta vacante. Puntaje ${delta.before}% → ${delta.after}% (${sign}${delta.delta}).`
@@ -545,17 +547,20 @@ export default function AtsPage() {
       setScoreDelta(compareAtsResults(before, after));
       setResult(after);
       setDiffLines(lineDiff(originalCv || before.parsePreview?.summary || "", textToScore));
-      pushAtsHistory(
-        buildHistoryPayload({
-          score: after.score,
-          semanticScore: after.semanticScore,
-          interviewProbability: after.interviewProbability,
-          profile: atsProfile,
-          jobText,
-          mustMissing: after.mustHave?.missing,
-          embeddingProvider: after.embeddingProvider,
-        })
-      );
+      const access = await continueUnlocked();
+      if (access.signedIn) {
+        pushAtsHistory(
+          buildHistoryPayload({
+            score: after.score,
+            semanticScore: after.semanticScore,
+            interviewProbability: after.interviewProbability,
+            profile: atsProfile,
+            jobText,
+            mustMissing: after.mustHave?.missing,
+            embeddingProvider: after.embeddingProvider,
+          })
+        );
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : "No se pudo re-analizar");
     } finally {
@@ -611,7 +616,7 @@ export default function AtsPage() {
     const entitlement = readEntitlement();
     const paid = canAccessOutplacement(entitlement.plan);
     const access = await continueUnlocked();
-    const blocked = atsDayBlocked(paid, freeAtsLimit, access.ownKey, access.signedIn);
+    const blocked = atsDayBlocked(paid, freeAtsLimit, access.ownKey);
     if (blocked) {
       setError(blocked);
       return;
@@ -648,17 +653,19 @@ export default function AtsPage() {
       setScoreDelta(null);
       setDiffLines([]);
       try {
-        pushAtsHistory(
-          buildHistoryPayload({
-            score: data.result.score,
-            semanticScore: data.result.semanticScore,
-            interviewProbability: data.result.interviewProbability,
-            profile: data.atsProfileUsed || atsProfile,
-            jobText,
-            mustMissing: data.result.mustHave?.missing,
-            embeddingProvider: data.result.embeddingProvider,
-          })
-        );
+        if (access.signedIn) {
+          pushAtsHistory(
+            buildHistoryPayload({
+              score: data.result.score,
+              semanticScore: data.result.semanticScore,
+              interviewProbability: data.result.interviewProbability,
+              profile: data.atsProfileUsed || atsProfile,
+              jobText,
+              mustMissing: data.result.mustHave?.missing,
+              embeddingProvider: data.result.embeddingProvider,
+            })
+          );
+        }
         saveAtsWorkspace({
           cvText,
           jobText,
@@ -699,6 +706,21 @@ export default function AtsPage() {
           <div className="progress-fill" style={{ width: `${(step / 4) * 100}%` }} />
         </div>
       </section>
+
+      {step === 1 && !sessionEmail ? (
+        <section className="bento-card space-y-2">
+          <h2 className="text-sm font-semibold">Sin cuenta, o con correo</h2>
+          <p className="text-sm leading-relaxed">
+            Puedes comparar tu CV con una vacante ahora. Ves el resultado en este recorrido, sin crear cuenta.
+          </p>
+          <p className="text-sm muted leading-relaxed">
+            Entra con tu correo solo si quieres guardar ese resultado y consultarlo después.
+          </p>
+          <Link href="/auth" className="text-sm underline" style={{ color: "var(--brand)" }}>
+            Entrar con mi correo
+          </Link>
+        </section>
+      ) : null}
 
       {step === 1 && (
         <>
@@ -1655,17 +1677,17 @@ function ResultBlock({ title, items }: { title: string; items: string[] }) {
   );
 }
 
-function atsDayBlocked(paid: boolean, freeLimit: number, ownKey: boolean, signedIn: boolean): string | null {
-  if (ownKey || signedIn) return null;
+function atsDayBlocked(paid: boolean, freeLimit: number, ownKey: boolean): string | null {
+  if (ownKey) return null;
   const dailyLimit = paid ? 100 : freeLimit;
   const gate = canRunAts(dailyLimit);
   if (gate.ok) return null;
   if (paid) return "Límite alto alcanzado. Reintenta mañana.";
-  return "Hoy ya usaste los análisis gratis.";
+  return "Hoy ya usaste los análisis gratis en este dispositivo. Mañana puedes comparar otra vacante.";
 }
 
 function AtsNotice({ text }: { text: string }) {
-  const quota = text.startsWith("Hoy ya usaste");
+  const quota = text.startsWith("Hoy ya usaste") || text.startsWith("Límite alto");
   if (!quota) {
     return (
       <p className="text-sm" style={{ color: "var(--danger)" }}>
@@ -1674,11 +1696,8 @@ function AtsNotice({ text }: { text: string }) {
     );
   }
   return (
-    <div className="bento-card space-y-3">
-      <p className="text-sm leading-relaxed">{text} Entra con tu correo para seguir.</p>
-      <Link href="/auth" className="btn-primary">
-        Entrar con mi correo
-      </Link>
+    <div className="bento-card space-y-2">
+      <p className="text-sm leading-relaxed">{text}</p>
     </div>
   );
 }

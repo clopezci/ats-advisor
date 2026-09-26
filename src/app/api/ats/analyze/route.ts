@@ -26,7 +26,7 @@ export async function POST(req: Request) {
   if (!daily.ok) {
     return NextResponse.json(
       {
-        error: `Llegaste al tope diario de análisis gratis (${dayLimit}). Vuelve mañana o activa plan Carrera.`,
+        error: "Hoy ya usaste los análisis gratis desde esta conexión. Mañana puedes comparar otra vacante.",
         code: "DAILY_ATS_LIMIT",
       },
       { status: 429, headers: { "Retry-After": String(daily.retryAfterSec) } }

@@ -39,8 +39,8 @@ export const PAGE_GUIDES: PageGuideCopy[] = [
   },
   {
     path: "/ats",
-    what: "Compara tu hoja de vida con UNA oferta y te dice qué tan bien la leería el filtro automático (ATS), qué falta y cómo ajustar el texto.",
-    how: "Paso 1: sube o pega el CV. Paso 2: pega el aviso. Paso 3: analiza. Luego sigue los botones Siguiente (no saltes a otras pantallas a mitad de camino).",
+    what: "Compara tu hoja de vida con UNA oferta. Sin cuenta ves el resultado en este recorrido. Con tu correo lo guardas para consultarlo después.",
+    how: "Paso 1: sube o pega el CV. Paso 2: pega el aviso. Paso 3: analiza. Luego sigue Siguiente.",
   },
   {
     path: "/guia",
@@ -259,8 +259,8 @@ export const PAGE_GUIDES: PageGuideCopy[] = [
   },
   {
     path: "/cuenta",
-    what: "Ves con qué correo entraste y tu plan. Sin cuenta puedes analizar un CV: la hoja queda en este dispositivo.",
-    how: "Entra con tu correo si pagaste o quieres recuperar el plan después. Si ya pagaste, usa ese mismo correo en Reclamar.",
+    what: "Sin cuenta puedes comparar un CV con una vacante y ver el resultado. Con tu correo guardas ese resultado para consultarlo después.",
+    how: "Entra con tu correo si quieres guardar y volver a verlo. Si ya pagaste, usa ese mismo correo en Reclamar.",
   },
   {
     path: "/feedback",

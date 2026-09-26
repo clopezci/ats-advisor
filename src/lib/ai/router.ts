@@ -1,5 +1,11 @@
 import type { UserLlmKeys } from "@/lib/ai/userKeysServer";
-import { listGeminiModels, listGroqModels, listOpenAiModels, rankChatModels } from "@/lib/ai/liveModels";
+import {
+  listGeminiModels,
+  listGroqModels,
+  listOpenAiModels,
+  listOpenRouterModels,
+  rankChatModels,
+} from "@/lib/ai/liveModels";
 
 export type AiTask =
   | "ats_suggest"
@@ -29,30 +35,17 @@ export type AiResult = {
 };
 
 /**
- * Preferencia opcional. Si ese id ya no está en la cuenta, se usa otro modelo de texto
- * que la clave sí pueda llamar (la lista la da el proveedor).
+ * Solo una preferencia. Si ese id no está en la lista viva de la cuenta, no se llama.
  */
 const MODELS = {
-  /** Free · calidad (Groq). Vacío = el que haya, priorizando uno grande. */
   groqFree: process.env.GROQ_MODEL || "",
-  /** Free · rápido si el de calidad falla. */
   groqFast: process.env.GROQ_MODEL_FAST || "",
-  /**
-   * Free · calidad alta en Groq (Moonshot Kimi = “Luna”/Moonshot).
-   * Buen puente antes de pagar.
-   */
-  groqKimi: process.env.GROQ_MODEL_KIMI || "moonshotai/kimi-k2-instruct",
-  /** Free · Gemini. */
-  geminiFree: process.env.GEMINI_MODEL_FREE || "gemini-2.0-flash",
-  /** Paid escalate · Gemini más capaz. */
-  geminiPaid: process.env.GEMINI_MODEL_PAID || "gemini-2.5-flash",
-  /** Paid · OpenAI precio/calidad. */
-  openai: process.env.OPENAI_MODEL || "gpt-4o-mini",
-  /**
-   * Paid · mejor precio/calidad vía OpenRouter (recomendado: DeepSeek).
-   * Alternativas: deepseek/deepseek-chat, google/gemini-2.5-flash, anthropic/claude-3.5-haiku
-   */
-  openrouter: process.env.OPENROUTER_MODEL || "deepseek/deepseek-chat",
+  groqKimi: process.env.GROQ_MODEL_KIMI || "",
+  geminiFree: process.env.GEMINI_MODEL_FREE || "",
+  geminiPaid: process.env.GEMINI_MODEL_PAID || "",
+  openai: process.env.OPENAI_MODEL || "",
+  openrouter: process.env.OPENROUTER_MODEL || "",
+  openrouterFree: process.env.OPENROUTER_FREE_MODEL || "",
 };
 
 function localFallback(task: AiTask, prompt: string): string {
@@ -243,32 +236,36 @@ async function callGemini(
     (allowShared ? process.env.GEMINI_API_KEY : undefined);
   if (!key) return null;
   const listed = await listGeminiModels(key);
-  const modelId = listed.ok ? rankChatModels(listed.ids, model, "fast")[0] || model : model;
-  try {
-    const contents = messages
-      .filter((m) => m.role !== "system")
-      .map((m) => ({
-        role: m.role === "assistant" ? "model" : "user",
-        parts: [{ text: m.content }],
-      }));
-    const system = messages.find((m) => m.role === "system")?.content;
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${key}`;
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        systemInstruction: system ? { parts: [{ text: system }] } : undefined,
-        contents,
-      }),
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!text || typeof text !== "string") return null;
-    return { text, model: modelId };
-  } catch {
-    return null;
+  if (!listed.ok) return null;
+  const candidates = rankChatModels(listed.ids, model, "quality").slice(0, 3);
+  const contents = messages
+    .filter((m) => m.role !== "system")
+    .map((m) => ({
+      role: m.role === "assistant" ? "model" : "user",
+      parts: [{ text: m.content }],
+    }));
+  const system = messages.find((m) => m.role === "system")?.content;
+  for (const modelId of candidates) {
+    try {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${key}`;
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          systemInstruction: system ? { parts: [{ text: system }] } : undefined,
+          contents,
+        }),
+      });
+      if (!res.ok) continue;
+      const data = await res.json();
+      const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!text || typeof text !== "string") continue;
+      return { text, model: modelId };
+    } catch {
+      continue;
+    }
   }
+  return null;
 }
 
 async function callOpenAI(messages: AiMessage[], bag: KeyBag = {}): Promise<ChatOk | null> {
@@ -276,37 +273,49 @@ async function callOpenAI(messages: AiMessage[], bag: KeyBag = {}): Promise<Chat
   const key = resolveKey(bag.keys?.openai, "OPENAI_API_KEY", allowShared);
   if (!key) return null;
   const listed = await listOpenAiModels(key);
-  const model = listed.ok
-    ? rankChatModels(listed.ids, MODELS.openai, "fast").find((id) => /^gpt-/i.test(id)) || MODELS.openai
-    : MODELS.openai;
-  return openAiCompatibleChat({
-    url: "https://api.openai.com/v1/chat/completions",
-    apiKey: key,
-    model,
-    messages,
-    temperature: 0.3,
-  });
+  if (!listed.ok) return null;
+  const candidates = rankChatModels(listed.ids, MODELS.openai, "fast").slice(0, 3);
+  for (const model of candidates) {
+    const hit = await openAiCompatibleChat({
+      url: "https://api.openai.com/v1/chat/completions",
+      apiKey: key,
+      model,
+      messages,
+      temperature: 0.3,
+    });
+    if (hit) return hit;
+  }
+  return null;
 }
 
 async function callOpenRouter(messages: AiMessage[], bag: KeyBag = {}): Promise<ChatOk | null> {
   const allowShared = bag.allowSharedKeys !== false;
   const key = resolveKey(bag.keys?.openrouter, "OPENROUTER_API_KEY", allowShared);
   if (!key) return null;
-  const model =
-    bag.keys?.openrouter && !allowShared
-      ? process.env.OPENROUTER_FREE_MODEL || "openrouter/auto"
-      : MODELS.openrouter;
-  return openAiCompatibleChat({
-    url: "https://openrouter.ai/api/v1/chat/completions",
-    apiKey: key,
-    model,
-    messages,
-    temperature: 0.3,
-    extraHeaders: {
-      "HTTP-Referer": process.env.NEXT_PUBLIC_APP_URL || "https://atsadvisor.app",
-      "X-Title": "ATSAdvisor",
-    },
-  });
+  const freeTier = Boolean(bag.keys?.openrouter) && !allowShared;
+  const listed = await listOpenRouterModels(key);
+  if (!listed.ok) return null;
+  const candidates = rankChatModels(
+    listed.ids,
+    freeTier ? MODELS.openrouterFree : MODELS.openrouter,
+    freeTier ? "fast" : "quality",
+    { preferFree: freeTier }
+  ).slice(0, 3);
+  for (const model of candidates) {
+    const hit = await openAiCompatibleChat({
+      url: "https://openrouter.ai/api/v1/chat/completions",
+      apiKey: key,
+      model,
+      messages,
+      temperature: 0.3,
+      extraHeaders: {
+        "HTTP-Referer": process.env.NEXT_PUBLIC_APP_URL || "https://atsadvisor.app",
+        "X-Title": "ATSAdvisor",
+      },
+    });
+    if (hit) return hit;
+  }
+  return null;
 }
 
 export function scoreQuality(text: string, task: AiTask): number {

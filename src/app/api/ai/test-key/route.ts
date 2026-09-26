@@ -6,7 +6,13 @@ import {
   type UserLlmKeys,
 } from "@/lib/ai/userKeysServer";
 import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
-import { listGeminiModels, listGroqModels, listOpenAiModels, rankChatModels } from "@/lib/ai/liveModels";
+import {
+  listGeminiModels,
+  listGroqModels,
+  listOpenAiModels,
+  listOpenRouterModels,
+  rankChatModels,
+} from "@/lib/ai/liveModels";
 
 export const runtime = "nodejs";
 
@@ -83,30 +89,52 @@ export async function POST(req: Request) {
           { status: 400 }
         );
       }
-      const model =
-        rankChatModels(listed.ids, process.env.GEMINI_MODEL_FREE, "fast")[0] || "";
-      if (!model) {
+      const models = rankChatModels(listed.ids, process.env.GEMINI_MODEL_FREE, "fast").slice(0, 3);
+      if (!models.length) {
         return NextResponse.json(
           { error: "La clave entró, pero esa cuenta de Gemini no tiene un modelo de texto disponible." },
           { status: 400 }
         );
       }
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`;
-      const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: "OK" }] }] }),
-      });
-      if (res.ok) return NextResponse.json({ ok: true, label: "Gemini" });
-      const detail = await readDetail(res, key);
-      return NextResponse.json({ error: `Gemini: ${detail}` }, { status: 400 });
+      let last = "no respondió.";
+      for (const model of models) {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`;
+        const res = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: "OK" }] }] }),
+        });
+        if (res.ok) return NextResponse.json({ ok: true, label: "Gemini" });
+        last = await readDetail(res, key);
+      }
+      return NextResponse.json({ error: `Gemini: ${last}` }, { status: 400 });
     }
 
     if (provider === "openrouter") {
+      const listed = await listOpenRouterModels(key);
+      if (!listed.ok) {
+        return NextResponse.json(
+          {
+            error: listed.auth
+              ? "OpenRouter no aceptó la clave."
+              : `OpenRouter: ${listed.detail}`,
+          },
+          { status: 400 }
+        );
+      }
+      const models = rankChatModels(listed.ids, process.env.OPENROUTER_MODEL, "fast", {
+        preferFree: true,
+      }).slice(0, 4);
+      if (!models.length) {
+        return NextResponse.json(
+          { error: "La clave entró, pero esa cuenta de OpenRouter no tiene un modelo de texto disponible." },
+          { status: 400 }
+        );
+      }
       const tried = await tryModels(
         "https://openrouter.ai/api/v1/chat/completions",
         key,
-        ["openrouter/auto"],
+        models,
         messages,
         {
           "HTTP-Referer": process.env.NEXT_PUBLIC_APP_URL || "https://atsadvisor.app",
@@ -120,20 +148,20 @@ export async function POST(req: Request) {
 
     if (provider === "openai") {
       const listed = await listOpenAiModels(key);
-      const models = listed.ok
-        ? rankChatModels(listed.ids, process.env.OPENAI_MODEL || "gpt-4o-mini", "fast")
-            .filter((id) => /^gpt-/i.test(id))
-            .slice(0, 3)
-        : unique([process.env.OPENAI_MODEL, "gpt-4o-mini"]);
-      if (listed.ok && !models.length) {
+      if (!listed.ok) {
         return NextResponse.json(
-          { error: "La clave entró, pero esa cuenta de OpenAI no tiene un modelo de texto disponible." },
+          {
+            error: listed.auth
+              ? "OpenAI no aceptó la clave. Tiene que ser una API key, no la de ChatGPT Plus."
+              : `OpenAI: ${listed.detail}`,
+          },
           { status: 400 }
         );
       }
-      if (!listed.ok && listed.auth) {
+      const models = rankChatModels(listed.ids, process.env.OPENAI_MODEL, "fast").slice(0, 3);
+      if (!models.length) {
         return NextResponse.json(
-          { error: "OpenAI no aceptó la clave. Tiene que ser una API key, no la de ChatGPT Plus." },
+          { error: "La clave entró, pero esa cuenta de OpenAI no tiene un modelo de texto disponible." },
           { status: 400 }
         );
       }
@@ -152,10 +180,6 @@ export async function POST(req: Request) {
   } catch {
     return NextResponse.json({ error: "No se pudo probar la clave. Revisa tu conexión." }, { status: 500 });
   }
-}
-
-function unique(values: Array<string | undefined>): string[] {
-  return [...new Set(values.map((v) => (v || "").trim()).filter(Boolean))];
 }
 
 async function tryModels(

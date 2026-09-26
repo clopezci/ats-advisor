@@ -3,6 +3,8 @@
  * No usa el cupo gratis de Groq: este add-on se cobra para cubrir el costo y dejar margen.
  */
 
+import { listGeminiModels, listOpenAiModels, rankChatModels } from "@/lib/ai/liveModels";
+
 type ImageIn = { mime: string; data: string };
 
 const SYSTEM = [
@@ -25,7 +27,9 @@ function openaiKey(): string | undefined {
 async function gemini(prompt: string, image?: ImageIn): Promise<string | null> {
   const key = geminiKey();
   if (!key) return null;
-  const model = process.env.GEMINI_MODEL_PAID || "gemini-2.5-flash";
+  const listed = await listGeminiModels(key);
+  const model = listed.ok ? rankChatModels(listed.ids, process.env.GEMINI_MODEL_PAID, "quality")[0] : "";
+  if (!model) return null;
   const parts: Record<string, unknown>[] = [{ text: prompt }];
   if (image) parts.push({ inline_data: { mime_type: image.mime, data: image.data } });
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
@@ -44,9 +48,17 @@ async function gemini(prompt: string, image?: ImageIn): Promise<string | null> {
   return text.trim() || null;
 }
 
+async function openaiModel(key: string): Promise<string> {
+  const listed = await listOpenAiModels(key);
+  if (!listed.ok) return "";
+  return rankChatModels(listed.ids, process.env.OPENAI_MODEL, "fast")[0] || "";
+}
+
 async function openai(prompt: string, image?: ImageIn): Promise<string | null> {
   const key = openaiKey();
   if (!key) return null;
+  const model = await openaiModel(key);
+  if (!model) return null;
   const content: Record<string, unknown>[] = [{ type: "text", text: prompt }];
   if (image) {
     content.push({
@@ -58,7 +70,7 @@ async function openai(prompt: string, image?: ImageIn): Promise<string | null> {
     method: "POST",
     headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
     body: JSON.stringify({
-      model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+      model,
       temperature: 0.2,
       max_tokens: 400,
       messages: [

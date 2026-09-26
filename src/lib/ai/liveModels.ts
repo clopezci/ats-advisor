@@ -3,7 +3,7 @@
  * Los ids fijos se retiran; si el preferido ya no está en la lista, se usa otro de texto.
  */
 
-const NOT_CHAT = /whisper|tts|embed|orpheus|playai|transcrib|audio|moderation|dall-e|realtime|image|prompt-guard|guard/i;
+const NOT_CHAT = /whisper|tts|embed|orpheus|playai|transcrib|audio|moderation|dall-e|realtime|image|prompt-guard|guard|^ft:/i;
 const TTL_MS = 10 * 60 * 1000;
 
 type Listed = { ok: true; ids: string[] } | { ok: false; auth: boolean; detail: string };
@@ -27,7 +27,8 @@ function recalled(provider: string, apiKey: string): string[] | null {
 export function rankChatModels(
   ids: string[],
   hint: string | undefined,
-  kind: "fast" | "quality"
+  kind: "fast" | "quality",
+  opts?: { preferFree?: boolean }
 ): string[] {
   const chat = [
     ...new Set(
@@ -36,9 +37,11 @@ export function rankChatModels(
         .filter((id) => id && !NOT_CHAT.test(id))
     ),
   ];
+  const free = chat.filter((id) => id.endsWith(":free"));
+  const pool = opts?.preferFree && free.length ? free : chat;
   const prefer = (hint || "").trim();
-  const hinted = prefer && chat.includes(prefer) ? [prefer] : [];
-  const rest = chat.filter((id) => id !== prefer);
+  const hinted = prefer && pool.includes(prefer) ? [prefer] : [];
+  const rest = pool.filter((id) => id !== prefer);
   rest.sort((a, b) => scoreModel(b, kind) - scoreModel(a, kind));
   return [...hinted, ...rest];
 }
@@ -131,6 +134,28 @@ export async function listOpenAiModels(apiKey: string): Promise<Listed> {
       ? data.data.map((m: { id?: string }) => String(m?.id || "")).filter(Boolean)
       : [];
     remember("openai", apiKey, ids);
+    return { ok: true, ids };
+  } catch {
+    return { ok: false, auth: false, detail: "sin respuesta al pedir los modelos" };
+  }
+}
+
+export async function listOpenRouterModels(apiKey: string): Promise<Listed> {
+  const cached = recalled("openrouter", apiKey);
+  if (cached) return { ok: true, ids: cached };
+  try {
+    const res = await fetch("https://openrouter.ai/api/v1/models", {
+      headers: { Authorization: `Bearer ${apiKey}` },
+    });
+    if (res.status === 401 || res.status === 403) {
+      return { ok: false, auth: true, detail: "no aceptó la clave" };
+    }
+    if (!res.ok) return { ok: false, auth: false, detail: await readError(res, apiKey) };
+    const data = await res.json();
+    const ids = Array.isArray(data?.data)
+      ? data.data.map((m: { id?: string }) => String(m?.id || "")).filter(Boolean)
+      : [];
+    remember("openrouter", apiKey, ids);
     return { ok: true, ids };
   } catch {
     return { ok: false, auth: false, detail: "sin respuesta al pedir los modelos" };

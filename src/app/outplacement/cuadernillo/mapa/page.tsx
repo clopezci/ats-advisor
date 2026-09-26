@@ -154,14 +154,14 @@ export default function MapaWizardPage() {
         />
       </section>
 
-      <CoachAsk coachModule="mapa de carrera" />
-
       <button type="button" className="btn-primary" onClick={markDone}>
         Marcar mapa como completo
       </button>
       {msg ? <p className="text-sm muted">{msg}</p> : null}
 
       <WorkbookModuleFooter />
+
+      <CoachAsk coachModule="mapa de carrera" />
     </div>
   );
 }

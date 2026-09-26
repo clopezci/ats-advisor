@@ -114,11 +114,6 @@ export default function SimulacionesPage() {
         {msg ? <p className="text-sm muted">{msg}</p> : null}
       </section>
 
-      <CoachAsk
-        coachModule="entrevistas"
-        placeholder="Ej.: ¿cómo mejoro mi pitch de 60s sin sonar robótico?"
-      />
-
       <Link href="/outplacement/cuadernillo/feedback" className="btn-secondary">
         Historial de feedback
       </Link>
@@ -127,6 +122,11 @@ export default function SimulacionesPage() {
       </Link>
 
       <WorkbookModuleFooter />
+
+      <CoachAsk
+        coachModule="entrevistas"
+        placeholder="Ej.: ¿cómo mejoro mi pitch de 60s sin sonar robótico?"
+      />
     </div>
   );
 }

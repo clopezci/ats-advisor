@@ -139,11 +139,6 @@ export default function ConectoresPage() {
         </Link>
       </section>
 
-      <CoachAsk
-        coachModule="networking"
-        placeholder="Ej.: ¿cómo le pido una intro a un conector sin sonar interesad@?"
-      />
-
       <Link href="/outplacement/cuadernillo/plantillas" className="btn-secondary">
         Banco de plantillas por audiencia
       </Link>
@@ -152,6 +147,11 @@ export default function ConectoresPage() {
       </Link>
 
       <WorkbookModuleFooter />
+
+      <CoachAsk
+        coachModule="networking"
+        placeholder="Ej.: ¿cómo le pido una intro a un conector sin sonar interesad@?"
+      />
     </div>
   );
 }

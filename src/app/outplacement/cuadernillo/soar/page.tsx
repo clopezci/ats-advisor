@@ -184,17 +184,17 @@ export default function SoarWizardPage() {
         </button>
       </section>
 
-      <CoachAsk
-        coachModule="marca personal y SOAR"
-        placeholder="Ej.: ¿cómo cuantifico un logro sin tener el % exacto?"
-      />
-
       <button type="button" className="btn-primary" onClick={markDone}>
         Marcar marca/SOAR como completo
       </button>
       {msg ? <p className="text-sm muted">{msg}</p> : null}
 
       <WorkbookModuleFooter />
+
+      <CoachAsk
+        coachModule="marca personal y SOAR"
+        placeholder="Ej.: ¿cómo cuantifico un logro sin tener el % exacto?"
+      />
     </div>
   );
 }

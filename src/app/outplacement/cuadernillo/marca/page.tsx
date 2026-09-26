@@ -85,11 +85,6 @@ export default function MarcaDigitalPage() {
         {msg ? <p className="text-sm muted">{msg}</p> : null}
       </section>
 
-      <CoachAsk
-        coachModule="marca personal y SOAR"
-        placeholder="Ej.: ¿cómo elijo keywords sin mentir en el perfil?"
-      />
-
       <Link href="/outplacement/cuadernillo/soar" className="btn-secondary">
         Banco SOAR
       </Link>
@@ -98,6 +93,11 @@ export default function MarcaDigitalPage() {
       </Link>
 
       <WorkbookModuleFooter />
+
+      <CoachAsk
+        coachModule="marca personal y SOAR"
+        placeholder="Ej.: ¿cómo elijo keywords sin mentir en el perfil?"
+      />
     </div>
   );
 }

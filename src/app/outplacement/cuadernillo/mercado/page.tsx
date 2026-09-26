@@ -215,11 +215,6 @@ export default function MercadoWizardPage() {
         ))}
       </section>
 
-      <CoachAsk
-        coachModule="mercado y canales de búsqueda"
-        placeholder="Ej.: ¿cómo escribo a alguien de una empresa objetivo sin parecer desesperado?"
-      />
-
       <button type="button" className="btn-primary" onClick={markDone}>
         Marcar mercado como completo
       </button>
@@ -227,6 +222,11 @@ export default function MercadoWizardPage() {
 
 
       <WorkbookModuleFooter />
+
+      <CoachAsk
+        coachModule="mercado y canales de búsqueda"
+        placeholder="Ej.: ¿cómo escribo a alguien de una empresa objetivo sin parecer desesperado?"
+      />
     </div>
   );
 }

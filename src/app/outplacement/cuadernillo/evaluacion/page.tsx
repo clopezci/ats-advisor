@@ -147,11 +147,6 @@ export default function EvaluacionPage() {
         dictationLabel="Dictar"
       />
 
-      <CoachAsk
-        coachModule="entrevistas"
-        placeholder="Ej.: ¿qué suele medir un hiring manager vs un reclutador de filtro?"
-      />
-
       <button type="button" className="btn-primary" onClick={markDone}>
         Marcar evaluación como completo
       </button>
@@ -165,6 +160,11 @@ export default function EvaluacionPage() {
       </Link>
 
       <WorkbookModuleFooter />
+
+      <CoachAsk
+        coachModule="entrevistas"
+        placeholder="Ej.: ¿qué suele medir un hiring manager vs un reclutador de filtro?"
+      />
     </div>
   );
 }

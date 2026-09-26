@@ -80,11 +80,6 @@ export default function EmprendimientoPage() {
         </section>
       ))}
 
-      <CoachAsk
-        coachModule="mapa de carrera"
-        placeholder="Ej.: ¿puedo combinar freelance 2 días con búsqueda activa?"
-      />
-
       <button type="button" className="btn-primary" onClick={markDone}>
         Marcar emprendimiento como completo
       </button>
@@ -98,6 +93,11 @@ export default function EmprendimientoPage() {
       </Link>
 
       <WorkbookModuleFooter />
+
+      <CoachAsk
+        coachModule="mapa de carrera"
+        placeholder="Ej.: ¿puedo combinar freelance 2 días con búsqueda activa?"
+      />
     </div>
   );
 }

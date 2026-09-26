@@ -124,11 +124,6 @@ export default function FinanzasWizardPage() {
         />
       </section>
 
-      <CoachAsk
-        coachModule="compensación y oferta"
-        placeholder="Ej.: ¿cómo defino un piso si mi pista es de 6 semanas?"
-      />
-
       <button type="button" className="btn-primary" onClick={markDone}>
         Marcar finanzas como completo
       </button>
@@ -139,6 +134,11 @@ export default function FinanzasWizardPage() {
       </Link>
 
       <WorkbookModuleFooter />
+
+      <CoachAsk
+        coachModule="compensación y oferta"
+        placeholder="Ej.: ¿cómo defino un piso si mi pista es de 6 semanas?"
+      />
     </div>
   );
 }

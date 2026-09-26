@@ -204,11 +204,6 @@ export default function DirectorioPage() {
         />
       </section>
 
-      <CoachAsk
-        coachModule="mercado y canales de búsqueda"
-        placeholder="Ej.: ¿cómo escribo a un hunter sin pedir 'cualquier vacante'?"
-      />
-
       <button type="button" className="btn-primary" onClick={markDone}>
         Marcar directorio como completo
       </button>
@@ -219,6 +214,11 @@ export default function DirectorioPage() {
       </Link>
 
       <WorkbookModuleFooter />
+
+      <CoachAsk
+        coachModule="mercado y canales de búsqueda"
+        placeholder="Ej.: ¿cómo escribo a un hunter sin pedir 'cualquier vacante'?"
+      />
     </div>
   );
 }

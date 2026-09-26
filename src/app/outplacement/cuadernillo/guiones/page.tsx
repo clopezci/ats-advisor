@@ -129,11 +129,6 @@ export default function GuionesWizardPage() {
         />
       </section>
 
-      <CoachAsk
-        coachModule="guiones de comunicación"
-        placeholder="Ej.: ¿cómo suavizo la razón de salida si hubo diferencias culturales?"
-      />
-
       <button type="button" className="btn-primary" onClick={markDone}>
         Marcar guiones como completos
       </button>
@@ -153,6 +148,11 @@ export default function GuionesWizardPage() {
       </Link>
 
       <WorkbookModuleFooter />
+
+      <CoachAsk
+        coachModule="guiones de comunicación"
+        placeholder="Ej.: ¿cómo suavizo la razón de salida si hubo diferencias culturales?"
+      />
     </div>
   );
 }

@@ -178,11 +178,6 @@ export default function PruebasPage() {
         ) : null}
       </section>
 
-      <CoachAsk
-        coachModule="mapa de carrera"
-        placeholder="Ej.: ¿cómo convierto mi top competencia en una viñeta de CV?"
-      />
-
       <button type="button" className="btn-primary" onClick={markDone}>
         Marcar competencias como completo
       </button>
@@ -196,6 +191,11 @@ export default function PruebasPage() {
       </Link>
 
       <WorkbookModuleFooter />
+
+      <CoachAsk
+        coachModule="mapa de carrera"
+        placeholder="Ej.: ¿cómo convierto mi top competencia en una viñeta de CV?"
+      />
     </div>
   );
 }

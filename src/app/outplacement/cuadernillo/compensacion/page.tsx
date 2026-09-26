@@ -108,11 +108,6 @@ export default function CompensacionPage() {
         />
       </section>
 
-      <CoachAsk
-        coachModule="compensación y oferta"
-        placeholder="Ej.: ¿cómo pido la banda sin sonar agresivo?"
-      />
-
       <button type="button" className="btn-primary" onClick={markDone}>
         Marcar compensación como completo
       </button>
@@ -126,6 +121,11 @@ export default function CompensacionPage() {
       </Link>
 
       <WorkbookModuleFooter />
+
+      <CoachAsk
+        coachModule="compensación y oferta"
+        placeholder="Ej.: ¿cómo pido la banda sin sonar agresivo?"
+      />
     </div>
   );
 }

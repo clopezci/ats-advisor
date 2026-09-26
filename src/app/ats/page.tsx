@@ -542,7 +542,6 @@ export default function AtsPage() {
               hint="Tu hoja de vida (PDF o Word). La vacante va en el siguiente paso."
             />
           </div>
-          <AtsStepCoach step={1} cvText={cvText} />
           {error && step === 1 && (
             <p className="text-sm" style={{ color: "var(--danger)" }}>
               {error}
@@ -556,6 +555,7 @@ export default function AtsPage() {
               Volver
             </Link>
           </div>
+          <AtsStepCoach step={1} cvText={cvText} />
         </>
       )}
 
@@ -602,7 +602,6 @@ export default function AtsPage() {
             />
             {detectMsg && <p className="text-xs muted">{detectMsg}</p>}
           </div>
-          <AtsStepCoach step={2} cvText={cvText} jobText={jobText} />
           <div className="flex flex-col gap-3">
             <button type="button" className="btn-primary" disabled={jobText.trim().length < 40} onClick={() => setStep(3)}>
               Continuar
@@ -611,6 +610,7 @@ export default function AtsPage() {
               Atrás
             </button>
           </div>
+          <AtsStepCoach step={2} cvText={cvText} jobText={jobText} />
         </>
       )}
 
@@ -679,7 +679,6 @@ export default function AtsPage() {
               );
             })()}
           </div>
-          <AtsStepCoach step={3} cvText={cvText} jobText={jobText} atsProfile={atsProfile} />
           {error && (
             <p className="text-sm" style={{ color: "var(--danger)" }}>
               {error}
@@ -693,6 +692,7 @@ export default function AtsPage() {
               Atrás
             </button>
           </div>
+          <AtsStepCoach step={3} cvText={cvText} jobText={jobText} atsProfile={atsProfile} />
         </>
       )}
 
@@ -795,16 +795,6 @@ export default function AtsPage() {
           {result.exclusiveGaps.length > 0 && (
             <ResultBlock title="Requisitos excluyentes a resolver primero" items={result.exclusiveGaps} />
           )}
-
-          <AtsStepCoach
-            step={4}
-            resultPhase={resultPhase}
-            atsProfile={atsProfile}
-            result={result}
-            summary={scoreSummary}
-            cvText={cvText}
-            jobText={jobText}
-          />
 
           {resultPhase >= 2 && result.recruiterSkim && (
             <section className="bento-card space-y-2">
@@ -1414,6 +1404,15 @@ export default function AtsPage() {
             <AdSlot slot="ats-results" />
           </div>
           )}
+          <AtsStepCoach
+            step={4}
+            resultPhase={resultPhase}
+            atsProfile={atsProfile}
+            result={result}
+            summary={scoreSummary}
+            cvText={cvText}
+            jobText={jobText}
+          />
         </>
       )}
     </div>

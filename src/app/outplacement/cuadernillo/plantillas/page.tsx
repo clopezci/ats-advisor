@@ -162,11 +162,6 @@ export default function PlantillasNetworkingPage() {
         </section>
       ) : null}
 
-      <CoachAsk
-        coachModule="networking"
-        placeholder="Ej.: ¿cómo suavizo este mensaje a un gerente que no me conoce?"
-      />
-
       <Link href="/outplacement/cuadernillo/red" className="btn-secondary">
         Anotar envío en contactos
       </Link>
@@ -178,6 +173,11 @@ export default function PlantillasNetworkingPage() {
       </Link>
 
       <WorkbookModuleFooter />
+
+      <CoachAsk
+        coachModule="networking"
+        placeholder="Ej.: ¿cómo suavizo este mensaje a un gerente que no me conoce?"
+      />
     </div>
   );
 }

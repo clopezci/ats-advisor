@@ -190,8 +190,6 @@ export default function RedCrmPage() {
         </section>
       ))}
 
-      <CoachAsk coachModule="networking" placeholder="Ej.: ¿cómo hago follow-up sin insistir?" />
-
       <button type="button" className="btn-primary" onClick={markDone}>
         Marcar red como completa
       </button>
@@ -208,6 +206,8 @@ export default function RedCrmPage() {
       </Link>
 
       <WorkbookModuleFooter />
+
+      <CoachAsk coachModule="networking" placeholder="Ej.: ¿cómo hago follow-up sin insistir?" />
     </div>
   );
 }

@@ -21,7 +21,7 @@ type Props = {
 };
 
 /**
- * Coach por paso del ATS. Solo usa IA con contexto estructurado del análisis cuando existe.
+ * Coach por paso del ATS. El cuadro solo se abre si la persona pulsa el botón.
  */
 export function AtsStepCoach({
   step,
@@ -33,6 +33,7 @@ export function AtsStepCoach({
   jobText = "",
   disabled,
 }: Props) {
+  const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const [a, setA] = useState("");
   const [loading, setLoading] = useState(false);
@@ -89,33 +90,42 @@ export function AtsStepCoach({
   if (step === 4 && !result) return null;
 
   return (
-    <section className="bento-card space-y-3">
-      <div className="flex items-start justify-between gap-2">
-        <div>
-          <h3 className="font-semibold text-sm">Pregunta sobre este paso</h3>
-          <p className="text-xs muted">
-            Responde con lo que salió en tu análisis. No inventa experiencia que no tengas.
-          </p>
-        </div>
-        {a ? <SpeakButton text={a} /> : null}
-      </div>
-      <VoiceTextarea
-        label="Tu duda"
-        value={q}
-        onChange={setQ}
-        className="field min-h-20"
-        placeholder={placeholder}
-        dictationLabel="Dictar pregunta"
-      />
+    <section className="space-y-3">
       <button
         type="button"
-        className="btn-secondary"
-        disabled={loading || !canAsk}
-        onClick={ask}
+        className="btn-secondary w-full text-left"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
       >
-        {loading ? "Consultando…" : "Preguntar al asistente"}
+        {open ? "Cerrar pregunta sobre este paso" : "Pregunta sobre este paso"}
       </button>
-      {a ? <p className="text-sm leading-relaxed whitespace-pre-wrap">{a}</p> : null}
+      {open ? (
+        <div className="bento-card space-y-3">
+          <div className="flex items-start justify-between gap-2">
+            <p className="text-xs muted">
+              Responde con lo que salió en tu análisis. No inventa experiencia que no tengas.
+            </p>
+            {a ? <SpeakButton text={a} /> : null}
+          </div>
+          <VoiceTextarea
+            label="Tu duda"
+            value={q}
+            onChange={setQ}
+            className="field min-h-20"
+            placeholder={placeholder}
+            dictationLabel="Dictar pregunta"
+          />
+          <button
+            type="button"
+            className="btn-secondary"
+            disabled={loading || !canAsk}
+            onClick={ask}
+          >
+            {loading ? "Consultando…" : "Preguntar al asistente"}
+          </button>
+          {a ? <p className="text-sm leading-relaxed whitespace-pre-wrap">{a}</p> : null}
+        </div>
+      ) : null}
     </section>
   );
 }

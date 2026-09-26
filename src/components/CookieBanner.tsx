@@ -45,7 +45,7 @@ export function CookieBanner() {
 
   return (
     <div
-      className="fixed inset-x-0 bottom-0 z-[80] mx-auto max-w-lg p-4"
+      className="fixed inset-x-0 bottom-0 z-[80] mx-auto max-w-lg p-4 md:max-w-3xl lg:max-w-5xl"
       style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}
     >
       <div className="bento-card space-y-3 shadow-lg" style={{ background: "var(--surface, #fff)" }}>

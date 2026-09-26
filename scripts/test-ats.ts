@@ -1,4 +1,5 @@
 import { analyzeAts } from "../src/lib/ats/engine";
+import { reflowExtractedCv } from "../src/lib/ats/cvPatch";
 import { detectAtsProfile } from "../src/lib/ats/detectAts";
 import { localTfidfScore } from "../src/lib/ats/embeddings";
 import { compareAtsResults } from "../src/lib/ats/compare";
@@ -102,6 +103,13 @@ assert(byDomain.company?.name === "Bancolombia", "company name");
 assert(localTfidfScore(cv, job) > 0, "tfidf");
 assert(analyzeBullets(cv).total > 0, "bullets");
 assert(whatsappFinalPriceCop() === 28800, `wa price ${whatsappFinalPriceCop()}`);
+
+const reflowed = reflowExtractedCv(
+  "CARLOS EMILIO LÓPEZ\nTransformación Digital | IA\nana@mail.com\nMás de 20 años liderando áreas de transformación digital, operaciones y TI en sectores de alta transaccionalidad y\nmúltiples sedes tecnológicas."
+);
+assert(reflowed.includes("y múltiples sedes"), "el párrafo partido debe unirse");
+assert(reflowed.includes("ana@mail.com"), "el correo sigue en su línea");
+assert(!reflowed.includes("LÓPEZ Transformación"), "el nombre no se pega al título");
 
 console.log("ats engine tests ok", {
   strong: result.score,

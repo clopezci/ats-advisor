@@ -21,6 +21,8 @@ function paragraph(opts: {
   bold?: boolean;
   size?: number; // half-points (24 = 12pt)
   bullet?: boolean;
+  color?: string;
+  italic?: boolean;
 }): string {
   const sz = opts.size ?? 22;
   const t = escapeXml(opts.text || " ");
@@ -28,6 +30,8 @@ function paragraph(opts: {
     <w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
     <w:sz w:val="${sz}"/><w:szCs w:val="${sz}"/>
     ${opts.bold ? "<w:b/>" : ""}
+    ${opts.italic ? "<w:i/>" : ""}
+    ${opts.color ? `<w:color w:val="${opts.color}"/>` : ""}
   </w:rPr>`;
   const pPr = `<w:pPr>
     ${opts.style ? `<w:pStyle w:val="${opts.style}"/>` : ""}
@@ -45,6 +49,18 @@ function toStyledBody(plainText: string): string {
   const lines = plainText.replace(/\r\n/g, "\n").split("\n");
   const parts: string[] = [];
   let firstContent = true;
+  const hasExample = lines.some((l) => /\[\[EJEMPLO\]\]/.test(l));
+  if (hasExample) {
+    parts.push(
+      paragraph({
+        text: "AVISO: lo que está en morado es un ejemplo. Cámbialo o bórralo si no es verdad. Borra este aviso antes de postular.",
+        bold: true,
+        italic: true,
+        color: "6D28D9",
+        size: 20,
+      })
+    );
+  }
 
   for (const raw of lines) {
     const line = raw.trimEnd();
@@ -68,6 +84,19 @@ function toStyledBody(plainText: string): string {
           style: "Heading2",
           bold: true,
           size: 24,
+        })
+      );
+      continue;
+    }
+
+    const example = trimmed.match(/^\[\[EJEMPLO\]\]\s*(.*)$/);
+    if (example) {
+      parts.push(
+        paragraph({
+          text: `EJEMPLO (cámbialo o bórralo): ${example[1] || ""}`,
+          color: "6D28D9",
+          italic: true,
+          size: 21,
         })
       );
       continue;

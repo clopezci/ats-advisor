@@ -28,9 +28,13 @@ import {
   applyLocalSurgicalPatch,
   buildCvPatchPlan,
   buildSurgicalCvPrompt,
+  cvTextForClipboard,
+  cvTextForRescore,
+  EXAMPLE_MARK,
   isFakeCvRewrite,
   kindLabel,
   splitSurgicalCvResponse,
+  type PatchSuggestion,
 } from "@/lib/ats/cvPatch";
 import { isFakeCoverLetter } from "@/lib/ats/coverLetter";
 import {
@@ -70,6 +74,7 @@ export default function AtsPage() {
   const [rewriteChangelog, setRewriteChangelog] = useState("");
   const [rewriteMode, setRewriteMode] = useState<"surgical" | "full" | null>(null);
   const [rewriteSource, setRewriteSource] = useState<"ai" | "local" | null>(null);
+  const [rewriteSuggestions, setRewriteSuggestions] = useState<PatchSuggestion[]>([]);
   const [rewriteLoading, setRewriteLoading] = useState(false);
   const [applyTips, setApplyTips] = useState("");
   const [applyLoading, setApplyLoading] = useState(false);
@@ -169,6 +174,7 @@ export default function AtsPage() {
     setRewriteChangelog("");
     setRewriteMode(mode);
     setRewriteSource(null);
+    setRewriteSuggestions([]);
     setDiffLines([]);
     try {
       const plan = buildCvPatchPlan(result);
@@ -211,6 +217,7 @@ export default function AtsPage() {
               "\n\nNo hay IA online para reescritura completa. Se aplicó el parche local (skills). Las viñetas siguen siendo manuales."
           );
           setRewriteSource("local");
+          setRewriteSuggestions(local.suggestions);
           setRewriteMode("surgical");
           setDiffLines(lineDiff(cvText, local.cv).filter((d) => d.type !== "same"));
           return;
@@ -218,6 +225,7 @@ export default function AtsPage() {
         const plain = extractPlainCv(raw) || raw;
         setRewriteText(plain);
         setRewriteSource("ai");
+        setRewriteSuggestions([]);
         setDiffLines(lineDiff(cvText, plain).filter((d) => d.type !== "same"));
         return;
       }
@@ -247,6 +255,7 @@ export default function AtsPage() {
         setRewriteText(local.cv);
         setRewriteChangelog(local.changelog);
         setRewriteSource("local");
+        setRewriteSuggestions(local.suggestions);
         setDiffLines(lineDiff(cvText, local.cv).filter((d) => d.type !== "same"));
         return;
       }
@@ -257,11 +266,13 @@ export default function AtsPage() {
         setRewriteText(local.cv);
         setRewriteChangelog(local.changelog);
         setRewriteSource("local");
+        setRewriteSuggestions(local.suggestions);
         setDiffLines(lineDiff(cvText, local.cv).filter((d) => d.type !== "same"));
         return;
       }
       setRewriteText(plain);
       setRewriteChangelog(split.changelog);
+      setRewriteSuggestions([]);
       setRewriteSource("ai");
       setDiffLines(lineDiff(cvText, plain).filter((d) => d.type !== "same"));
     } catch (e) {
@@ -275,6 +286,7 @@ export default function AtsPage() {
             `\n\n(IA falló: ${e instanceof Error ? e.message : "error"}. Usamos parche local.)`
         );
         setRewriteSource("local");
+        setRewriteSuggestions(local.suggestions);
         setRewriteMode("surgical");
         setDiffLines(lineDiff(cvText, local.cv).filter((d) => d.type !== "same"));
       } catch {
@@ -330,22 +342,10 @@ export default function AtsPage() {
     }
   }
 
-  function applyRewriteToEditor() {
-    if (!rewriteText.trim()) return;
-    if (!originalCv) setOriginalCv(cvText);
-    const next = extractPlainCv(rewriteText) || rewriteText.trim();
-    setCvText(next);
-    setDiffLines(lineDiff(originalCv || cvText, next));
-    try {
-      localStorage.setItem("ats_cv_draft", next);
-    } catch {
-      /* ignore */
-    }
-  }
-
   async function rescoreAfterRewrite() {
     if (!result) return;
-    const textToScore = cvText.trim().length > 40 ? cvText : rewriteText;
+    const prepared = rewriteText.trim().length > 40 ? cvTextForRescore(rewriteText) : cvText;
+    const textToScore = prepared.trim().length > 40 ? prepared : cvText;
     if (textToScore.trim().length < 40) return;
     setRescoring(true);
     try {
@@ -1058,7 +1058,7 @@ export default function AtsPage() {
 
           {resultPhase === 2 && (
             <button type="button" className="btn-primary" onClick={() => setResultPhase(3)}>
-              Siguiente: aplicar solo los cambios al CV
+              Siguiente: preparar la hoja con sugerencias
             </button>
           )}
 
@@ -1067,9 +1067,7 @@ export default function AtsPage() {
             <h2 className="text-sm font-semibold">Ajustar hoja de vida</h2>
             <p className="text-xs muted">{DISCLAIMER_CV_REWRITE}</p>
             <p className="text-sm leading-relaxed">
-              Recomendado: aplica <strong>solo estos ajustes</strong> (no reescribas todo el CV).
-              Sin IA online, el botón hace un <strong>parche local</strong>: añade skills a tu CV
-              real; las viñetas las completas tú.
+              Este paso no inventa tu experiencia. Prepara tu hoja con los párrafos unidos (el PDF los corta a la mitad) y, al final, textos para copiar. Lo que va en morado es un ejemplo: cámbialo o bórralo si no es verdad.
             </p>
             {patchPlan && patchPlan.items.length > 0 ? (
               <div className="space-y-2">
@@ -1096,7 +1094,7 @@ export default function AtsPage() {
             >
               {rewriteLoading && rewriteMode === "surgical"
                 ? "Aplicando cambios…"
-                : "Aplicar solo estos cambios"}
+                : "Preparar hoja con sugerencias"}
             </button>
             <button
               type="button"
@@ -1110,83 +1108,99 @@ export default function AtsPage() {
             </button>
             {rewriteText && (
               <>
-                {rewriteSource === "local" ? (
-                  <p className="text-xs font-medium" style={{ color: "var(--brand)" }}>
-                    Parche local (sin IA): se conservó tu CV y se añadieron skills visibles. Revisa el
-                    diff (−/+). Esto SÍ es tu hoja de vida, no un tip.
-                  </p>
-                ) : rewriteMode === "surgical" ? (
-                  <p className="text-xs font-medium" style={{ color: "var(--brand)" }}>
-                    Se mantuvo tu estructura. Revisa el diff antes de usarlo.
-                  </p>
-                ) : (
-                  <p className="text-xs muted">Reescritura completa: revísala con más cuidado.</p>
-                )}
-                {rewriteChangelog ? (
-                  <div className="rounded-lg p-3 text-xs muted whitespace-pre-wrap" style={{ background: "var(--surface-2, #f6f4fb)" }}>
-                    <p className="font-medium text-sm mb-1" style={{ color: "var(--text)" }}>
-                      Qué se aplicó / omitió
+                <p className="text-sm leading-relaxed">
+                  {rewriteSource === "local"
+                    ? "Abajo hay dos cosas distintas. Primero, los textos para copiar en tu Word. Después, tu hoja completa, con los párrafos ya unidos. Lo morado es un ejemplo: no es un cambio ya aplicado."
+                    : "Esta es una reescritura. Revísala antes de usarla. No reemplaza la revisión de lo que sí hiciste."}
+                </p>
+                {rewriteSuggestions.length > 0 && (
+                  <div className="space-y-2">
+                    <h3 className="text-sm font-semibold">Textos para copiar en tu hoja</h3>
+                    <p className="text-xs muted">
+                      Cada recuadro dice dónde pegarlo. Si está en morado, es un ejemplo: cámbialo o bórralo si no es verdad en tu experiencia.
                     </p>
-                    {rewriteChangelog}
-                  </div>
-                ) : null}
-                <SpeakButton text={rewriteText.slice(0, 400)} />
-                {diffLines.length > 0 && (
-                  <div className="max-h-64 overflow-auto text-xs space-y-1 rounded-lg p-3" style={{ background: "var(--surface-2, #f6f4fb)" }}>
-                    <p className="font-medium text-sm">Diff (solo cambios)</p>
-                    <p className="muted mb-1">− quitado · + agregado · si solo ves +, se añadió texto sin borrar</p>
-                    {diffLines.slice(0, 50).map((d, i) => (
-                      <p
-                        key={`${d.type}-${i}`}
+                    {rewriteSuggestions.map((s) => (
+                      <div
+                        key={s.id}
+                        className="rounded-lg p-3 text-sm space-y-1"
                         style={{
-                          color:
-                            d.type === "add" ? "var(--brand)" : d.type === "del" ? "var(--danger, #b42318)" : undefined,
-                          opacity: d.type === "same" ? 0.45 : 1,
+                          background: s.example ? "rgba(109, 40, 217, 0.08)" : "var(--surface-2, #f6f4fb)",
+                          color: s.example ? "#6D28D9" : "var(--text)",
                         }}
                       >
-                        {d.type === "add" ? "+ " : d.type === "del" ? "− " : "  "}
-                        {d.text.slice(0, 180)}
-                      </p>
+                        <p className="text-xs" style={{ color: "var(--text)" }}>{s.where}</p>
+                        <p className="whitespace-pre-wrap">{s.example ? `EJEMPLO: ${s.paste}` : s.paste}</p>
+                      </div>
                     ))}
+                    <button
+                      type="button"
+                      className="btn-secondary"
+                      onClick={async () => {
+                        const text = rewriteSuggestions
+                          .map((s) => `${s.where}\n${s.example ? "EJEMPLO (cámbialo o bórralo si no es verdad): " : ""}${s.paste}`)
+                          .join("\n\n");
+                        await navigator.clipboard.writeText(text);
+                        alert("Sugerencias copiadas. Pégalas en tu Word y revisa lo morado.");
+                      }}
+                    >
+                      Copiar solo las sugerencias
+                    </button>
                   </div>
                 )}
-                <pre className="text-sm muted whitespace-pre-wrap max-h-72 overflow-auto rounded-lg p-3" style={{ background: "var(--surface-2, #f6f4fb)" }}>
-                  {rewriteText}
-                </pre>
-                <button type="button" className="btn-secondary" onClick={applyRewriteToEditor}>
-                  Cargar texto al editor (revisar antes de usar)
-                </button>
-                <button type="button" className="btn-primary" disabled={rescoring} onClick={rescoreAfterRewrite}>
-                  {rescoring ? "Re-analizando…" : "Re-analizar score (antes → después)"}
-                </button>
-                <button
-                  type="button"
-                  className="btn-secondary"
-                  onClick={async () => {
-                    await navigator.clipboard.writeText(rewriteText);
-                    alert("Copiado. Revísalo antes de postular.");
-                  }}
-                >
-                  Copiar ajuste
-                </button>
-                <button
-                  type="button"
-                  className="btn-secondary"
-                  disabled={isFakeCvRewrite(rewriteText, cvText)}
-                  onClick={async () => {
-                    if (isFakeCvRewrite(rewriteText, cvText)) {
-                      alert("Eso no es un CV. Vuelve a aplicar el parche.");
-                      return;
-                    }
-                    const blob = await buildCvDocx(extractPlainCv(rewriteText) || rewriteText);
-                    downloadBlob(
-                      rewriteMode === "surgical" ? `CV-parche-ATSAdvisor.docx` : `CV-ajustado-ATSAdvisor.docx`,
-                      blob
-                    );
-                  }}
-                >
-                  Descargar DOCX {rewriteMode === "surgical" ? "(parche / CV real)" : "(ajuste completo)"}
-                </button>
+                <div className="space-y-2">
+                  <h3 className="text-sm font-semibold">Tu hoja lista para Word</h3>
+                  <p className="text-xs muted">
+                    Es tu texto, no un segundo CV distinto. Los párrafos que el PDF partía a la mitad quedan en una sola línea. Al final van los ejemplos en morado.
+                  </p>
+                  <div
+                    className="text-sm leading-relaxed max-h-96 overflow-auto rounded-lg p-3 space-y-2"
+                    style={{ background: "var(--surface-2, #f6f4fb)" }}
+                  >
+                    {rewriteText.split("\n").map((line, i) => {
+                      const example = line.includes(EXAMPLE_MARK);
+                      const shown = line.replace(EXAMPLE_MARK, "").trim();
+                      if (!shown) return <div key={i} className="h-2" />;
+                      return (
+                        <p key={i} style={example ? { color: "#6D28D9", fontStyle: "italic" } : undefined}>
+                          {example ? `EJEMPLO (cámbialo o bórralo): ${shown}` : shown}
+                        </p>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="flex flex-col gap-3 md:flex-row md:flex-wrap">
+                  <button
+                    type="button"
+                    className="btn-secondary"
+                    onClick={async () => {
+                      await navigator.clipboard.writeText(cvTextForClipboard(rewriteText));
+                      alert("Hoja copiada. En Word, lo que dice EJEMPLO hay que cambiarlo o borrarlo.");
+                    }}
+                  >
+                    Copiar la hoja
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-secondary"
+                    disabled={isFakeCvRewrite(rewriteText, cvText)}
+                    onClick={async () => {
+                      if (isFakeCvRewrite(rewriteText, cvText)) {
+                        alert("Eso no es un CV. Vuelve a preparar la hoja.");
+                        return;
+                      }
+                      const blob = await buildCvDocx(extractPlainCv(rewriteText) || rewriteText);
+                      downloadBlob("CV-ATSAdvisor.docx", blob);
+                    }}
+                  >
+                    Descargar Word
+                  </button>
+                  <button type="button" className="btn-primary" disabled={rescoring} onClick={rescoreAfterRewrite}>
+                    {rescoring ? "Midiendo…" : "Medir de nuevo el puntaje"}
+                  </button>
+                </div>
+                <p className="text-xs muted">
+                  Medir de nuevo no cuenta los ejemplos en morado. El puntaje cambia cuando quitas la marca de ejemplo y dejas la frase como tuya.
+                </p>
               </>
             )}
           </section>

@@ -159,6 +159,99 @@ function stripAiDecorations(cv: string) {
     .trim();
 }
 
+const SECTION_LINE =
+  /^(experiencia|experience|educaci[oó]n|estudios|formaci[oó]n|habilidades|skills|competencias|resumen|perfil(\s+ejecutivo|\s+profesional)?|objetivo|idiomas|certificaciones|contacto|proyectos)\b/i;
+
+function isSectionLine(s: string) {
+  const t = s.trim();
+  return t.length > 0 && t.length < 42 && SECTION_LINE.test(t);
+}
+
+function isBulletLine(s: string) {
+  return /^[-•●▪◦*]\s+/.test(s.trim()) || /^\d+[.)]\s+/.test(s.trim());
+}
+
+function isContactLine(s: string) {
+  return /@|linkedin|https?:|\+\d{2}/i.test(s) && s.trim().length < 140;
+}
+
+/**
+ * El texto sacado de un PDF corta el renglón a la mitad del párrafo.
+ * Une esas líneas y deja títulos, viñetas y contacto en su propio renglón.
+ */
+export function reflowExtractedCv(raw: string): string {
+  const lines = (raw || "").replace(/\r\n/g, "\n").split("\n");
+  const out: string[] = [];
+
+  const joinInto = (prev: string, cur: string) => `${prev} ${cur}`.replace(/[ \t]{2,}/g, " ").trim();
+
+  for (const line of lines) {
+    const cur = line.trim();
+    if (!out.length) {
+      out.push(cur);
+      continue;
+    }
+    const prev = out[out.length - 1] || "";
+    if (!prev || !cur) {
+      out.push(cur);
+      continue;
+    }
+    if (isSectionLine(cur) || isContactLine(cur) || isSectionLine(prev) || isContactLine(prev)) {
+      out.push(cur);
+      continue;
+    }
+    if (isBulletLine(cur)) {
+      out.push(cur);
+      continue;
+    }
+    if (isBulletLine(prev)) {
+      const body = prev.replace(/^[-•●▪◦*]\s+/, "").replace(/^\d+[.)]\s+/, "");
+      if (/[,;:]$/.test(body) || /^[a-záéíóúñ(]/.test(cur) || body.length > 55) {
+        out[out.length - 1] = joinInto(prev, cur);
+        continue;
+      }
+      out.push(cur);
+      continue;
+    }
+    if (prev.length < 55 && !/[,;:]$/.test(prev)) {
+      out.push(cur);
+      continue;
+    }
+    if (/[,;:]$/.test(prev) || /^[a-záéíóúñ(]/.test(cur) || prev.length > 68) {
+      out[out.length - 1] = joinInto(prev, cur);
+      continue;
+    }
+    out.push(cur);
+  }
+
+  return out.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+}
+
+export type PatchSuggestion = {
+  id: string;
+  where: string;
+  paste: string;
+  example: boolean;
+};
+
+export const EXAMPLE_MARK = "[[EJEMPLO]]";
+
+/** Quita ejemplos para medir el puntaje solo con texto que ya es del candidato. */
+export function cvTextForRescore(text: string): string {
+  return text
+    .split("\n")
+    .filter((l) => !l.includes(EXAMPLE_MARK))
+    .filter((l) => !/^Ajustes sugeridos para esta vacante/i.test(l.trim()))
+    .filter((l) => !/^Las líneas con \[\[EJEMPLO\]\]/i.test(l.trim()))
+    .join("\n")
+    .trim();
+}
+
+/** Texto plano para pegar en Word: el ejemplo se lee, no queda como marca interna. */
+export function cvTextForClipboard(text: string): string {
+  return text.replace(/\[\[EJEMPLO\]\]\s*/g, "EJEMPLO (cámbialo o bórralo si no es verdad): ");
+}
+
 export function kindLabel(kind: CvPatchItem["kind"]): string {
   switch (kind) {
     case "must_have":
@@ -198,10 +291,11 @@ export function isFakeCvRewrite(text: string, originalCv: string): boolean {
 export function applyLocalSurgicalPatch(
   cvText: string,
   plan: CvPatchPlan
-): { cv: string; changelog: string; applied: string[]; omitted: string[] } {
+): { cv: string; changelog: string; applied: string[]; omitted: string[]; suggestions: PatchSuggestion[] } {
   const applied: string[] = [];
   const omitted: string[] = [];
-  let cv = cvText.replace(/\r\n/g, "\n");
+  const suggestions: PatchSuggestion[] = [];
+  let cv = reflowExtractedCv(cvText);
 
   const skillLabels = plan.items
     .filter((i) => i.kind === "hard_skill" || i.kind === "keyword" || i.kind === "must_have")
@@ -228,11 +322,31 @@ export function applyLocalSurgicalPatch(
       continue;
     }
     omitted.push(`${label} (manual: agrégalo solo si es verdad en tu experiencia)`);
+    suggestions.push({
+      id: `ej_${suggestions.length}`,
+      where: "Pégalo en Habilidades, solo si es verdad en tu experiencia.",
+      paste: label,
+      example: true,
+    });
   }
 
   for (const item of plan.items) {
-    if (item.kind === "bullet" || item.kind === "format") {
+    if (item.kind === "bullet") {
       omitted.push(`${item.label.slice(0, 60)} (hazlo tú a mano)`);
+      suggestions.push({
+        id: `bu_${suggestions.length}`,
+        where: `Reemplaza esta viñeta: “${item.label}”`,
+        paste: "Lideré [qué hiciste] y el resultado fue [cifra: %, plata o personas].",
+        example: true,
+      });
+    } else if (item.kind === "format") {
+      omitted.push(`${item.label.slice(0, 60)} (hazlo tú a mano)`);
+      suggestions.push({
+        id: `fm_${suggestions.length}`,
+        where: "Formato de la hoja",
+        paste: item.label,
+        example: false,
+      });
     }
   }
 
@@ -263,6 +377,26 @@ export function applyLocalSurgicalPatch(
       }
       applied.push(...toInsert.map((s) => `Bloque Habilidades nuevo: ${s}`));
     }
+    for (const s of toInsert) {
+      suggestions.push({
+        id: `ok_${suggestions.length}`,
+        where: "Ya está en tu experiencia. Solo faltaba la palabra de la oferta, en Habilidades.",
+        paste: s,
+        example: false,
+      });
+    }
+  }
+
+  const examples = suggestions.filter((s) => s.example && s.paste.trim());
+  if (examples.length) {
+    const block = [
+      "",
+      "Ajustes sugeridos para esta vacante",
+      "Las líneas con [[EJEMPLO]] van en color en el Word. Cámbialas o bórralas si no son verdad. Borra este título antes de postular.",
+      ...examples.map((s) => `${EXAMPLE_MARK} ${s.paste}`),
+      "",
+    ].join("\n");
+    cv = cv.trimEnd() + "\n" + block;
   }
 
   const changelog = [
@@ -273,11 +407,11 @@ export function applyLocalSurgicalPatch(
       ? "- Hecho: ninguno automático (revisa la lista y edita a mano)."
       : "",
     "",
-    "Nota: este parche es LOCAL (sin IA). No reescribe tus logros; solo hace visibles términos que ya puedes defender.",
+    "Nota: no se reescribe tu historia. Lo que no se pudo comprobar queda como ejemplo al final de la hoja, en color en el Word. Cámbialo o bórralo si no es verdad.",
   ]
     .filter(Boolean)
     .join("\n");
 
-  return { cv: cv.trim() + "\n", changelog, applied, omitted };
+  return { cv: cv.trim() + "\n", changelog, applied, omitted, suggestions };
 }
 

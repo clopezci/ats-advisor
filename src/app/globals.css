@@ -105,6 +105,22 @@ a {
   transform: translateY(-1px);
 }
 
+@media (min-width: 768px) {
+  .btn-primary,
+  .btn-secondary {
+    width: auto;
+    min-width: min(100%, 16rem);
+    max-width: 100%;
+  }
+
+  .grid > .btn-primary,
+  .grid > .btn-secondary,
+  .btn-primary.w-full,
+  .btn-secondary.w-full {
+    width: 100%;
+  }
+}
+
 .bento-card {
   background: var(--surface);
   border: 1px solid var(--border);

@@ -6,7 +6,7 @@ import { PageGuide } from "@/components/PageGuide";
 
 export function AppShell({ children }: { children: ReactNode }) {
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-lg flex-col px-4 pb-8 pt-5">
+    <div className="mx-auto flex min-h-dvh w-full max-w-lg flex-col px-4 pb-8 pt-5 md:max-w-3xl md:px-6 lg:max-w-5xl xl:max-w-6xl">
       <a
         href="#contenido-principal"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-3 focus:py-2 focus:shadow-md"

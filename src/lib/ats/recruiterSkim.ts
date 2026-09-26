@@ -75,7 +75,7 @@ export function recruiterSkim(cvText: string, jobText = ""): RecruiterSkim {
       "En lo primero que se lee no hay un logro con cifra. El celular y los años de experiencia no cuentan como logro."
     );
     fixNow.push(
-      "Sube 1 o 2 logros con cifra a las primeras viñetas: un porcentaje, plata ahorrada o cuántas personas."
+      "En preparar la hoja verás ese párrafo reescrito. Solo cambias el [18%] de ejemplo por tu cifra real."
     );
   }
 

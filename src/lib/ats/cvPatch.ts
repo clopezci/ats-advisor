@@ -119,9 +119,12 @@ export function buildSurgicalCvPrompt(opts: {
     "- Español claro, tono profesional humano (LATAM). Frases cortas.",
     "- Sin emojis, sin markdown, sin guiones tipográficos raros.",
     "- Evita clichés vacíos de LinkedIn o brochure corporativo.",
-    "- No inventes cargos, fechas, logros, métricas ni herramientas.",
-    "- Si un punto de la lista no se sostiene con el CV, no lo agregues; anótalo como omitido al final.",
-    "- Conserva el orden de secciones y el estilo del CV original.",
+    "- No inventes cargos, fechas, empresas ni herramientas que no estén en el CV.",
+    "- Reescribe los párrafos que ya existen, en tono de logro (verbo + lo que ya dice el CV).",
+    "- La única cifra inventada permitida es un ejemplo entre corchetes, así: [18%] o [12]. No uses otros corchetes.",
+    "- Si el párrafo ya trae un número real, consérvalo y no lo pongas entre corchetes.",
+    "- Si un término de la oferta no está en el CV, puedes meterlo en una frase existente solo si encaja con lo que ya hizo. Si no encaja, no lo agregues.",
+    "- Conserva el orden de secciones.",
     "- Viñetas con guion simple (-).",
     "",
     "Responde así:",
@@ -230,9 +233,68 @@ export function reflowExtractedCv(raw: string): string {
 export type PatchSuggestion = {
   id: string;
   where: string;
+  /** Frase tal como está hoy en la hoja. */
+  before?: string;
   paste: string;
   example: boolean;
 };
+
+const ACHIEVEMENT_OPEN =
+  /^(lider[eé]|dirig[ií]|implement[eé]|diseñ[eé]|coordin[eé]|gestion[eé]|impuls[eé]|desarroll[eé]|particip[eé]|defin[ií]|reduj[eé]|aument[eé]|apliqu[eé]|consolid[eé]|estructur[eé])(?=\s|$)/i;
+
+function hasImpactMetric(s: string) {
+  return /\d+\s*%|\$\s*\d|\bCOP\s*\d|\d+\s*MM\b|\d+\s*(personas|usuarios|clientes|millones)|\[\d/i.test(s);
+}
+
+function isRoleHeader(s: string) {
+  return s.length < 100 && /\b(19|20)\d{2}\b/.test(s) && !/[.]$/.test(s.trim());
+}
+
+/**
+ * Reescribe una frase que ya está en la hoja, en tono de logro.
+ * Lo único entre corchetes es una cifra de ejemplo.
+ */
+export function rewriteAsAchievement(original: string, extraTerm?: string): string {
+  let body = original
+    .replace(/^[-•●▪◦*]\s+/, "")
+    .replace(/\s+/g, " ")
+    .replace(/[…]+$/, "")
+    .replace(/\.{3}$/, "")
+    .trim();
+  if (body.length > 240) body = body.slice(0, 240).replace(/\s+\S*$/, "");
+
+  if (isRoleHeader(body)) return body;
+
+  const openings: [RegExp, string][] = [
+    [/^responsable de liderar /i, "Lideré "],
+    [/^responsable de dirigir /i, "Dirigí "],
+    [/^responsable de /i, "Lideré "],
+    [/^encargad[oa] de /i, "Lideré "],
+    [/^a cargo de /i, "Lideré "],
+    [/^participación en /i, "Participé en "],
+    [/^experiencia en /i, "Apliqué "],
+    [/^conocimientos? en /i, "Apliqué "],
+  ];
+  for (const [re, rep] of openings) {
+    if (re.test(body)) {
+      body = body.replace(re, rep);
+      break;
+    }
+  }
+  const commas = (body.match(/,/g) || []).length;
+  if (commas >= 2 && !body.includes(".") && !ACHIEVEMENT_OPEN.test(body) && body.length < 180) {
+    body = `Apliqué en el rol: ${body}`;
+  }
+  body = body.replace(/[.,;:\s]+$/, "");
+
+  const term = (extraTerm || "").replace(/\s+/g, " ").trim();
+  if (term && term.length <= 48 && !body.toLowerCase().includes(term.toLowerCase())) {
+    body += `, incluyendo ${term}`;
+  }
+  if (!hasImpactMetric(body)) body += ", con un resultado de [18%]";
+  if (!/[.!?]$/.test(body)) body += ".";
+  return body;
+}
 
 export const EXAMPLE_MARK = "[[EJEMPLO]]";
 
@@ -244,12 +306,18 @@ export function cvTextForRescore(text: string): string {
     .filter((l) => !/^Ajustes sugeridos para esta vacante/i.test(l.trim()))
     .filter((l) => !/^Las líneas con \[\[EJEMPLO\]\]/i.test(l.trim()))
     .join("\n")
+    .replace(/\[[^\]]+\]/g, "")
     .trim();
 }
 
-/** Texto plano para pegar en Word: el ejemplo se lee, no queda como marca interna. */
+/** Texto plano para pegar en Word, con el aviso de la cifra de ejemplo. */
 export function cvTextForClipboard(text: string): string {
-  return text.replace(/\[\[EJEMPLO\]\]\s*/g, "EJEMPLO (cámbialo o bórralo si no es verdad): ");
+  const body = text.replace(/\[\[EJEMPLO\]\]\s*/g, "");
+  if (!/\[\d/.test(body)) return body;
+  return (
+    "Cambia solo el número o el % entre corchetes por tu dato real. Si no tienes esa cifra, borra esa parte. El resto debe ser algo que sí hiciste.\n\n" +
+    body
+  );
 }
 
 export function kindLabel(kind: CvPatchItem["kind"]): string {
@@ -302,102 +370,67 @@ export function applyLocalSurgicalPatch(
     .map((i) => i.label.trim())
     .filter((l) => l.length >= 2 && l.length <= 40 && !isJunkPhrase(l));
 
-  const toInsert: string[] = [];
   const cvNorm = cv
     .toLowerCase()
     .normalize("NFD")
     .replace(/\p{M}/gu, "");
+  const termsForSentences: string[] = [];
   for (const label of skillLabels) {
-    if (cv.toLowerCase().includes(label.toLowerCase())) {
-      omitted.push(`${label} (ya aparece en el CV)`);
+    if (cv.toLowerCase().includes(label.toLowerCase()) || textHasTerm(cvNorm, label)) {
+      omitted.push(`${label} (ya aparece en el CV; se usa dentro de una frase reescrita si hace falta)`);
+      termsForSentences.push(label);
       continue;
     }
-    if (label.split(/\s+/).length > 4) {
-      omitted.push(`${label} (revisión manual: frase larga)`);
-      continue;
-    }
-    // Solo hace visible el término del aviso si el CV YA tiene evidencia (sinónimo/relacionado).
-    if (textHasTerm(cvNorm, label)) {
-      toInsert.push(label);
-      continue;
-    }
-    omitted.push(`${label} (manual: agrégalo solo si es verdad en tu experiencia)`);
-    suggestions.push({
-      id: `ej_${suggestions.length}`,
-      where: "Pégalo en Habilidades, solo si es verdad en tu experiencia.",
-      paste: label,
-      example: true,
-    });
-  }
-
-  for (const item of plan.items) {
-    if (item.kind === "bullet") {
-      omitted.push(`${item.label.slice(0, 60)} (hazlo tú a mano)`);
-      suggestions.push({
-        id: `bu_${suggestions.length}`,
-        where: `Reemplaza esta viñeta: “${item.label}”`,
-        paste: "Lideré [qué hiciste] y el resultado fue [cifra: %, plata o personas].",
-        example: true,
-      });
-    } else if (item.kind === "format") {
-      omitted.push(`${item.label.slice(0, 60)} (hazlo tú a mano)`);
-      suggestions.push({
-        id: `fm_${suggestions.length}`,
-        where: "Formato de la hoja",
-        paste: item.label,
-        example: false,
-      });
-    }
-  }
-
-  if (toInsert.length) {
-    const skillsBlock = `\nHabilidades (alineadas a la vacante)\n${toInsert.map((s) => `- ${s}`).join("\n")}\n`;
-    const skillsHeader =
-      /(?:^|\n)(habilidades|skills|competencias|tecnolog[ií]as)([^\n]*)\n/i.exec(cv);
-    if (skillsHeader && skillsHeader.index != null) {
-      const insertAt = skillsHeader.index + skillsHeader[0].length;
-      const existingLine = cv.slice(insertAt).split("\n")[0] || "";
-      // Prefiere agregar al final del bloque skills (hasta próxima sección)
-      const rest = cv.slice(insertAt);
-      const nextSec = rest.search(
-        /\n(?:experiencia|educaci[oó]n|estudios|idiomas|certific|proyectos|perfil)\b/i
-      );
-      const blockEnd = nextSec >= 0 ? insertAt + nextSec : cv.length;
-      const addition = toInsert.map((s) => `- ${s}`).join("\n") + "\n";
-      cv = cv.slice(0, blockEnd) + (cv[blockEnd - 1] === "\n" ? "" : "\n") + addition + cv.slice(blockEnd);
-      applied.push(...toInsert.map((s) => `Añadido en Habilidades: ${s}`));
-      void existingLine;
+    if (label.split(/\s+/).length > 6) {
+      omitted.push(`${label} (frase larga: entra en un párrafo reescrito solo si es verdad)`);
     } else {
-      // Insertar antes de Educación o al final
-      const edu = cv.search(/\n(?:educaci[oó]n|estudios|formaci[oó]n)\b/i);
-      if (edu > 0) {
-        cv = cv.slice(0, edu) + skillsBlock + cv.slice(edu);
-      } else {
-        cv = cv.trimEnd() + "\n" + skillsBlock;
-      }
-      applied.push(...toInsert.map((s) => `Bloque Habilidades nuevo: ${s}`));
+      omitted.push(`${label} (manual: déjalo en la frase solo si es verdad en tu experiencia)`);
     }
-    for (const s of toInsert) {
-      suggestions.push({
-        id: `ok_${suggestions.length}`,
-        where: "Ya está en tu experiencia. Solo faltaba la palabra de la oferta, en Habilidades.",
-        paste: s,
-        example: false,
-      });
-    }
+    termsForSentences.push(label);
   }
 
-  const examples = suggestions.filter((s) => s.example && s.paste.trim());
-  if (examples.length) {
-    const block = [
-      "",
-      "Ajustes sugeridos para esta vacante",
-      "Las líneas con [[EJEMPLO]] van en color en el Word. Cámbialas o bórralas si no son verdad. Borra este título antes de postular.",
-      ...examples.map((s) => `${EXAMPLE_MARK} ${s.paste}`),
-      "",
-    ].join("\n");
-    cv = cv.trimEnd() + "\n" + block;
+  const lines = cv
+    .split("\n")
+    .map((l) => l.trim())
+    .filter((l) => l.length > 55 && !isSectionLine(l) && !isContactLine(l) && !isRoleHeader(l));
+
+  const sources: string[] = [];
+  for (const item of plan.items) {
+    if (item.kind !== "bullet") continue;
+    const needle = item.label.replace(/[…]+$/, "").trim().slice(0, 28).toLowerCase();
+    const found = needle ? lines.find((l) => l.toLowerCase().includes(needle.slice(0, 18))) : "";
+    const original = (found || item.label).replace(/[…]+$/, "").trim();
+    if (original.length > 24 && !isRoleHeader(original) && !sources.includes(original)) sources.push(original);
   }
+  for (const line of lines) {
+    if (sources.length >= 4) break;
+    if (hasImpactMetric(line) || sources.includes(line)) continue;
+    sources.push(line);
+  }
+
+  sources.slice(0, 4).forEach((original, idx) => {
+    const term = termsForSentences[idx];
+    const paste = rewriteAsAchievement(original, term);
+    suggestions.push({
+      id: `rw_${idx}`,
+      where: "Reemplaza ese párrafo de tu hoja por esta frase.",
+      before: original.length > 180 ? `${original.slice(0, 180)}…` : original,
+      paste,
+      example: /\[\d/.test(paste),
+    });
+    const needle = original.slice(0, 36);
+    const at = cv.toLowerCase().indexOf(needle.toLowerCase());
+    if (at >= 0) {
+      const start = cv.lastIndexOf("\n", at) + 1;
+      const endBreak = cv.indexOf("\n", at);
+      const end = endBreak < 0 ? cv.length : endBreak;
+      const prefix = cv.slice(start, end).match(/^(\s*[-•●▪◦*]\s+)/)?.[1] || "";
+      cv = cv.slice(0, start) + prefix + paste + cv.slice(end);
+      applied.push("Reescrita una frase que ya estaba en la hoja, con [18%] de ejemplo");
+    } else {
+      omitted.push(`${original.slice(0, 60)} (la frase lista quedó en las sugerencias)`);
+    }
+  });
 
   const changelog = [
     "=== CAMBIOS ===",
@@ -407,7 +440,7 @@ export function applyLocalSurgicalPatch(
       ? "- Hecho: ninguno automático (revisa la lista y edita a mano)."
       : "",
     "",
-    "Nota: no se reescribe tu historia. Lo que no se pudo comprobar queda como ejemplo al final de la hoja, en color en el Word. Cámbialo o bórralo si no es verdad.",
+    "Nota: las frases salen de tu hoja. Solo el número o el % entre corchetes es un ejemplo: cámbialo por tu dato real o borra esa parte.",
   ]
     .filter(Boolean)
     .join("\n");

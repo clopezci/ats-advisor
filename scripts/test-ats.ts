@@ -1,5 +1,5 @@
 import { analyzeAts } from "../src/lib/ats/engine";
-import { reflowExtractedCv } from "../src/lib/ats/cvPatch";
+import { reflowExtractedCv, rewriteAsAchievement } from "../src/lib/ats/cvPatch";
 import { detectAtsProfile } from "../src/lib/ats/detectAts";
 import { localTfidfScore } from "../src/lib/ats/embeddings";
 import { compareAtsResults } from "../src/lib/ats/compare";
@@ -110,6 +110,15 @@ const reflowed = reflowExtractedCv(
 assert(reflowed.includes("y múltiples sedes"), "el párrafo partido debe unirse");
 assert(reflowed.includes("ana@mail.com"), "el correo sigue en su línea");
 assert(!reflowed.includes("LÓPEZ Transformación"), "el nombre no se pega al título");
+
+const rewritten = rewriteAsAchievement(
+  "Responsable de liderar la transformación organizacional y tecnológica",
+  "ingeniería de software"
+);
+assert(/Lideré la transformación organizacional/.test(rewritten), "debe reescribir la frase existente");
+assert(rewritten.includes("ingeniería de software"), "debe incluir el término en la frase");
+assert(rewritten.includes("[18%]"), "la cifra de ejemplo va entre corchetes");
+assert(!/\[qué|\[cifra|\[proceso/.test(rewritten), "no debe dejar huecos vacíos");
 
 console.log("ats engine tests ok", {
   strong: result.score,

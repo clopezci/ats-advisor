@@ -45,15 +45,43 @@ function paragraph(opts: {
   return `<w:p>${pPr}<w:r>${rPr}<w:t xml:space="preserve">${t}</w:t></w:r></w:p>`;
 }
 
+/** Pinta en morado solo el número o el % entre corchetes. */
+function paragraphWithMetrics(text: string, opts: { size?: number; bullet?: boolean }): string {
+  const sz = opts.size ?? 22;
+  const bits = text.split(/(\[\d[\d.,]*\s*%?\])/g).filter((b) => b !== "");
+  if (bits.length <= 1 && !/^\[\d/.test(text)) {
+    return paragraph({ text, size: sz, bullet: opts.bullet });
+  }
+  const pPr = `<w:pPr>
+    ${
+      opts.bullet
+        ? `<w:numPr><w:ilvl w:val="0"/><w:numId w:val="1"/></w:numPr>`
+        : ""
+    }
+    <w:spacing w:after="80" w:line="276" w:lineRule="auto"/>
+  </w:pPr>`;
+  const runs = bits
+    .map((bit) => {
+      const marked = /^\[\d/.test(bit);
+      return `<w:r><w:rPr>
+        <w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+        <w:sz w:val="${sz}"/><w:szCs w:val="${sz}"/>
+        ${marked ? '<w:b/><w:color w:val="6D28D9"/>' : ""}
+      </w:rPr><w:t xml:space="preserve">${escapeXml(bit)}</w:t></w:r>`;
+    })
+    .join("");
+  return `<w:p>${pPr}${runs}</w:p>`;
+}
+
 function toStyledBody(plainText: string): string {
   const lines = plainText.replace(/\r\n/g, "\n").split("\n");
   const parts: string[] = [];
   let firstContent = true;
-  const hasExample = lines.some((l) => /\[\[EJEMPLO\]\]/.test(l));
+  const hasExample = lines.some((l) => /\[\[EJEMPLO\]\]|\[\d/.test(l));
   if (hasExample) {
     parts.push(
       paragraph({
-        text: "AVISO: lo que está en morado es un ejemplo. Cámbialo o bórralo si no es verdad. Borra este aviso antes de postular.",
+        text: "AVISO: solo cambia el número o el % entre corchetes por tu dato real. Si no tienes esa cifra, borra esa parte. El resto debe ser algo que sí hiciste. Borra este aviso antes de postular.",
         bold: true,
         italic: true,
         color: "6D28D9",
@@ -89,26 +117,19 @@ function toStyledBody(plainText: string): string {
       continue;
     }
 
-    const example = trimmed.match(/^\[\[EJEMPLO\]\]\s*(.*)$/);
-    if (example) {
-      parts.push(
-        paragraph({
-          text: `EJEMPLO (cámbialo o bórralo): ${example[1] || ""}`,
-          color: "6D28D9",
-          italic: true,
-          size: 21,
-        })
-      );
+    const legacyExample = trimmed.match(/^\[\[EJEMPLO\]\]\s*(.*)$/);
+    if (legacyExample) {
+      parts.push(paragraphWithMetrics(legacyExample[1] || "", { size: 21 }));
       continue;
     }
 
     if (isBullet(trimmed)) {
       const text = trimmed.replace(/^[-•●▪◦*]\s+/, "").replace(/^\d+[.)]\s+/, "");
-      parts.push(paragraph({ text, bullet: true, size: 21 }));
+      parts.push(paragraphWithMetrics(text, { bullet: true, size: 21 }));
       continue;
     }
 
-    parts.push(paragraph({ text: trimmed, size: 21 }));
+    parts.push(paragraphWithMetrics(trimmed, { size: 21 }));
   }
 
   return parts.join("");

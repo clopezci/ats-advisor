@@ -1067,7 +1067,7 @@ export default function AtsPage() {
             <h2 className="text-sm font-semibold">Ajustar hoja de vida</h2>
             <p className="text-xs muted">{DISCLAIMER_CV_REWRITE}</p>
             <p className="text-sm leading-relaxed">
-              Este paso no inventa tu experiencia. Prepara tu hoja con los párrafos unidos (el PDF los corta a la mitad) y, al final, textos para copiar. Lo que va en morado es un ejemplo: cámbialo o bórralo si no es verdad.
+              Reescribe párrafos que ya están en tu hoja, listos para pegar. Lo único que cambias es el número o el % entre corchetes: es un ejemplo. Si no tienes esa cifra, borra esa parte. El resto tiene que ser algo que sí hiciste.
             </p>
             {patchPlan && patchPlan.items.length > 0 ? (
               <div className="space-y-2">
@@ -1094,7 +1094,7 @@ export default function AtsPage() {
             >
               {rewriteLoading && rewriteMode === "surgical"
                 ? "Aplicando cambios…"
-                : "Preparar hoja con sugerencias"}
+                : "Redactar mis párrafos"}
             </button>
             <button
               type="button"
@@ -1110,61 +1110,53 @@ export default function AtsPage() {
               <>
                 <p className="text-sm leading-relaxed">
                   {rewriteSource === "local"
-                    ? "Abajo hay dos cosas distintas. Primero, los textos para copiar en tu Word. Después, tu hoja completa, con los párrafos ya unidos. Lo morado es un ejemplo: no es un cambio ya aplicado."
-                    : "Esta es una reescritura. Revísala antes de usarla. No reemplaza la revisión de lo que sí hiciste."}
+                    ? "Cada recuadro trae el párrafo que ya tenías y, debajo, la frase lista. En morado solo está el [18%] de ejemplo."
+                    : "Revisa la redacción. Si ves un número entre corchetes, cámbialo por tu dato real."}
                 </p>
                 {rewriteSuggestions.length > 0 && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-semibold">Textos para copiar en tu hoja</h3>
+                    <h3 className="text-sm font-semibold">Párrafos listos para pegar</h3>
                     <p className="text-xs muted">
-                      Cada recuadro dice dónde pegarlo. Si está en morado, es un ejemplo: cámbialo o bórralo si no es verdad en tu experiencia.
+                      Salen de tu hoja. Cambia solo el número o el % entre corchetes. Si no tienes esa cifra, borra “con un resultado de [18%]”. Si una palabra de la oferta no es real en tu trabajo, bórrala. No dejes nada que no hayas hecho.
                     </p>
                     {rewriteSuggestions.map((s) => (
-                      <div
-                        key={s.id}
-                        className="rounded-lg p-3 text-sm space-y-1"
-                        style={{
-                          background: s.example ? "rgba(109, 40, 217, 0.08)" : "var(--surface-2, #f6f4fb)",
-                          color: s.example ? "#6D28D9" : "var(--text)",
-                        }}
-                      >
-                        <p className="text-xs" style={{ color: "var(--text)" }}>{s.where}</p>
-                        <p className="whitespace-pre-wrap">{s.example ? `EJEMPLO: ${s.paste}` : s.paste}</p>
+                      <div key={s.id} className="rounded-lg p-3 text-sm space-y-2" style={{ background: "var(--surface-2, #f6f4fb)" }}>
+                        {s.before ? (
+                          <p className="text-xs muted">Así está ahora: {s.before}</p>
+                        ) : null}
+                        <p className="leading-relaxed">{renderMetricMarks(s.paste)}</p>
                       </div>
                     ))}
                     <button
                       type="button"
                       className="btn-secondary"
                       onClick={async () => {
-                        const text = rewriteSuggestions
-                          .map((s) => `${s.where}\n${s.example ? "EJEMPLO (cámbialo o bórralo si no es verdad): " : ""}${s.paste}`)
-                          .join("\n\n");
+                        const text = [
+                          "Cambia solo el número o el % entre corchetes por tu dato real. Si no tienes esa cifra, borra esa parte. El resto debe ser algo que sí hiciste.",
+                          "",
+                          ...rewriteSuggestions.map((s) => s.paste),
+                        ].join("\n\n");
                         await navigator.clipboard.writeText(text);
-                        alert("Sugerencias copiadas. Pégalas en tu Word y revisa lo morado.");
+                        alert("Párrafos copiados. En Word solo cambias el número entre corchetes.");
                       }}
                     >
-                      Copiar solo las sugerencias
+                      Copiar párrafos listos
                     </button>
                   </div>
                 )}
                 <div className="space-y-2">
-                  <h3 className="text-sm font-semibold">Tu hoja lista para Word</h3>
+                  <h3 className="text-sm font-semibold">Tu hoja con esos párrafos ya puestos</h3>
                   <p className="text-xs muted">
-                    Es tu texto, no un segundo CV distinto. Los párrafos que el PDF partía a la mitad quedan en una sola línea. Al final van los ejemplos en morado.
+                    Los renglones que el PDF partía quedan unidos. Donde había un párrafo largo, quedó la frase de logro. El [18%] sigue siendo un ejemplo.
                   </p>
                   <div
                     className="text-sm leading-relaxed max-h-96 overflow-auto rounded-lg p-3 space-y-2"
                     style={{ background: "var(--surface-2, #f6f4fb)" }}
                   >
                     {rewriteText.split("\n").map((line, i) => {
-                      const example = line.includes(EXAMPLE_MARK);
                       const shown = line.replace(EXAMPLE_MARK, "").trim();
                       if (!shown) return <div key={i} className="h-2" />;
-                      return (
-                        <p key={i} style={example ? { color: "#6D28D9", fontStyle: "italic" } : undefined}>
-                          {example ? `EJEMPLO (cámbialo o bórralo): ${shown}` : shown}
-                        </p>
-                      );
+                      return <p key={i}>{renderMetricMarks(shown)}</p>;
                     })}
                   </div>
                 </div>
@@ -1174,7 +1166,7 @@ export default function AtsPage() {
                     className="btn-secondary"
                     onClick={async () => {
                       await navigator.clipboard.writeText(cvTextForClipboard(rewriteText));
-                      alert("Hoja copiada. En Word, lo que dice EJEMPLO hay que cambiarlo o borrarlo.");
+                      alert("Hoja copiada. En Word solo cambias el número o el % entre corchetes.");
                     }}
                   >
                     Copiar la hoja
@@ -1199,7 +1191,7 @@ export default function AtsPage() {
                   </button>
                 </div>
                 <p className="text-xs muted">
-                  Medir de nuevo no cuenta los ejemplos en morado. El puntaje cambia cuando quitas la marca de ejemplo y dejas la frase como tuya.
+                  Medir de nuevo no usa el número de ejemplo. El puntaje refleja la frase cuando ya cambiaste el [18%] por tu dato, o cuando borraste esa parte.
                 </p>
               </>
             )}
@@ -1426,6 +1418,19 @@ export default function AtsPage() {
         </>
       )}
     </div>
+  );
+}
+
+function renderMetricMarks(text: string) {
+  const bits = text.split(/(\[\d[\d.,]*\s*%?\])/g);
+  return bits.map((bit, i) =>
+    /^\[\d/.test(bit) ? (
+      <span key={i} style={{ color: "#6D28D9", fontWeight: 700 }}>
+        {bit}
+      </span>
+    ) : (
+      <span key={i}>{bit}</span>
+    )
   );
 }
 

@@ -1,15 +1,15 @@
 import type { AtsAnalyzeResult } from "@/lib/ats/engine";
 import { filterSkillTerms } from "@/lib/ats/phraseFilter";
 import { buildLocalCoverLetter } from "@/lib/ats/coverLetter";
+import { rewriteAsAchievement } from "@/lib/ats/cvPatch";
 
-/** Borrador de viñeta anclado al texto original (sin inventar métricas nuevas). */
+/** Borrador anclado al texto original. Solo la cifra de ejemplo va entre corchetes. */
 function draftBulletExample(original: string, skillHint: string): string {
-  const base = original.replace(/^[-•●*]\s*/, "").replace(/\s+/g, " ").trim().replace(/\.$/, "");
   const skill = (skillHint || "").trim();
-  if (!skill || new RegExp(`\\b${skill.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i").test(base)) {
-    return `${base} (añade un número concreto si lo tienes: %, COP, personas o tiempo).`;
-  }
-  return `${base}, integrando ${skill} cuando haya evidencia real en tu rol.`;
+  const already =
+    skill &&
+    new RegExp(`\\b${skill.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i").test(original);
+  return rewriteAsAchievement(original, already ? undefined : skill);
 }
 
 /** Tips de postulación accionables (sin filtrar system prompts). */
@@ -98,7 +98,7 @@ export function buildLocalBulletRewrites(opts: {
   }
 
   lines.push(
-    "Plantilla: «Lideré [acción] con [skill real], logrando [métrica].» — borra lo que no puedas demostrar."
+    "Solo cambia el [18%] por tu cifra real. Si no tienes el dato, borra esa parte. El resto debe ser algo que sí hiciste."
   );
   return lines.join("\n");
 }

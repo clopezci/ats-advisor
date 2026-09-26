@@ -30,7 +30,6 @@ export default function CuentaPage() {
   const [sessionEmail, setSessionEmail] = useState<string | null>(null);
   const [sessionReady, setSessionReady] = useState(false);
   const [allowLocalPlans, setAllowLocalPlans] = useState(false);
-  const [localUnlock, setLocalUnlock] = useState(false);
   const [focusPath, setFocusPath] = useState<FocusPath | null>(null);
   const waPrice = whatsappFinalPriceCop();
 
@@ -46,7 +45,6 @@ export default function CuentaPage() {
       setFocusPath(readFocusPath());
       const host = window.location.hostname;
       const unlock = localStorage.getItem("ats_admin_unlock") === "1";
-      setLocalUnlock(unlock);
       setAllowLocalPlans(host === "localhost" || host === "127.0.0.1" || unlock);
     } catch {
       /* ignore */
@@ -191,29 +189,13 @@ export default function CuentaPage() {
           <h1 className="text-2xl font-semibold">Mi cuenta</h1>
           <SpeakButton text="Administra tu perfil, plan, canal de aprendizaje, Habeas Data y baja." />
         </div>
-        <p className="text-sm">
-          {!sessionReady ? (
-            "Revisando si entraste…"
-          ) : sessionEmail ? (
-            <>
-              Entraste con <strong>{sessionEmail}</strong>.
-            </>
-          ) : (
-            <>No has entrado. Puedes analizar un CV igual: no hace falta una cuenta para eso.</>
-          )}
-        </p>
+        {sessionEmail ? (
+          <p className="text-sm">
+            Sesión: <strong>{sessionEmail}</strong>
+          </p>
+        ) : null}
         <p className="text-sm">
           Plan: <span className="font-medium" style={{ color: "var(--brand)" }}>{planLabel(plan)}</span>
-        </p>
-        <p className="text-sm">
-          {localUnlock
-            ? "En este navegador hay un desbloqueo de pruebas. Eso no es el panel de administrador y no sube el cupo de la app."
-            : "No estás como administrador. Mi cuenta no abre el panel admin: esa es otra puerta y no cambia quién eres aquí."}
-        </p>
-        <p className="text-xs muted leading-relaxed">
-          El CV, las versiones, el seguimiento y la clave de IA se guardan en este navegador.
-          Si cambias de celular o borras los datos del sitio, no viajan solos. Entrar con el enlace
-          del correo sirve para atar un plan de pago a ese correo.
         </p>
         {sessionReady && !sessionEmail ? (
           <Link href="/auth" className="btn-primary">
@@ -340,8 +322,7 @@ export default function CuentaPage() {
       <div className="bento-card space-y-3">
         <h2 className="font-semibold">Mi IA (clave propia)</h2>
         <p className="text-xs muted leading-relaxed">
-          En plan gratis puedes pegar tu clave de Groq o Gemini (2 min). Se guarda solo en este
-          dispositivo — igual que en Aquí Entiendes — y no gasta el cupo compartido de la app.
+          Puedes pegar tu clave de Groq o Gemini. Queda guardada en este dispositivo.
         </p>
         <Link href="/cuenta/mi-ia" className="btn-primary">
           Configurar Mi IA

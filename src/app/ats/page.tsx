@@ -378,7 +378,7 @@ export default function AtsPage() {
     const gate = canRunAts(dailyLimit);
     if (!gate.ok) {
       setError(
-        `Se acabó el cupo de hoy en este navegador (${gate.used}/${dailyLimit}). No depende de ser administrador.`
+        `Límite de hoy alcanzado (${gate.used}/${dailyLimit}).`
       );
       return;
     }
@@ -566,7 +566,7 @@ export default function AtsPage() {
       setError(
         paid
           ? `Límite alto alcanzado (${gate.used}/${dailyLimit}). Reintenta mañana.`
-          : `Se acabó el cupo de hoy en este navegador (${gate.used}/${dailyLimit}). No depende de ser administrador. Mañana vuelve a contar, o usa tu propia clave de IA.`
+          : `Límite de hoy alcanzado (${gate.used}/${dailyLimit}).`
       );
       return;
     }
@@ -644,11 +644,9 @@ export default function AtsPage() {
         <p className="muted text-sm">{intro}</p>
         {!hasUserAiKeys() && (
           <p className="text-xs leading-relaxed rounded-lg border border-[var(--border)] px-3 py-2">
-            IA online en plan gratis:{" "}
             <Link href="/cuenta/mi-ia" className="underline" style={{ color: "var(--brand)" }}>
-              configura tu clave Groq/Gemini (Mi IA)
+              Configura tu clave de Groq o Gemini
             </Link>
-            . Sin clave usamos plantillas locales útiles (no gastamos el cupo compartido).
           </p>
         )}
         <div className="progress-track">
@@ -1228,7 +1226,6 @@ export default function AtsPage() {
                 {rewriteSource === "local" ? (
                   <div className="space-y-2">
                     <h3 className="text-sm font-semibold">Ejemplos</h3>
-                    <p className="text-xs muted">Son ejemplos. No se escriben en tu hoja.</p>
                     {rewriteSuggestions.map((s, i) => (
                       <div key={s.id} className="rounded-lg p-3 text-sm" style={{ background: "var(--surface-2, #f6f4fb)" }}>
                         <p className="text-xs muted mb-1">Ejemplo {i + 1}</p>
@@ -1251,9 +1248,6 @@ export default function AtsPage() {
                     )}
                     <div className="space-y-3 pt-2">
                       <h3 className="text-sm font-semibold">Tu hoja</h3>
-                      <p className="text-xs muted">
-                        Aquí está el CV que cargaste. Cambia tus propios párrafos. Los ejemplos de arriba no se pegan solos.
-                      </p>
                       <VoiceTextarea
                         label="Texto del CV"
                         value={editedCv}
@@ -1611,7 +1605,7 @@ function ResultBlock({ title, items }: { title: string; items: string[] }) {
 }
 
 function AtsNotice({ text }: { text: string }) {
-  const quota = /cupo de hoy/i.test(text);
+  const quota = /Límite de hoy alcanzado/i.test(text);
   if (!quota) {
     return (
       <p className="text-sm" style={{ color: "var(--danger)" }}>
@@ -1622,9 +1616,6 @@ function AtsNotice({ text }: { text: string }) {
   return (
     <div className="rounded-xl border border-amber-300/70 bg-amber-50 px-4 py-3 text-sm text-amber-950 space-y-2">
       <p>{text}</p>
-      <p>
-        Arriba dice si entraste o sigues sin entrar. El CV que ya cargaste sigue en este navegador.
-      </p>
       <p>
         <Link className="underline" href="/cuenta">
           Ver Mi cuenta

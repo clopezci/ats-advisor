@@ -77,7 +77,7 @@ export function AtsStepCoach({
       const text = String(data.text || "");
       setA(
         data.hintMiIa
-          ? `${text}\n\n→ Para IA online gratis: configura tu clave en /cuenta/mi-ia`
+          ? `${text}\n\n→ Para IA online, configura tu clave en Mi IA.`
           : text
       );
     } catch (e) {

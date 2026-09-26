@@ -31,7 +31,7 @@ export function MiIaSetup({ onDone }: { onDone?: () => void }) {
     setError("");
     setOkMsg("");
     if (value.length < 16) {
-      setError("Pega la clave completa. El botón no guarda si el campo está vacío o la key está cortada.");
+      setError("Pega la clave completa.");
       return;
     }
     setTesting(true);
@@ -57,7 +57,7 @@ export function MiIaSetup({ onDone }: { onDone?: () => void }) {
       saveUserAiKeys(next);
       setDraft("");
       setOpen(null);
-      setOkMsg(`Listo: ${data.label || id} responde. La clave quedó en este navegador.`);
+      setOkMsg(`Listo: ${data.label || id} quedó guardada.`);
       onDone?.();
     } catch (e) {
       const aborted = e instanceof DOMException && e.name === "AbortError";
@@ -89,9 +89,7 @@ export function MiIaSetup({ onDone }: { onDone?: () => void }) {
       <div>
         <h1 className="text-2xl font-semibold">Mi IA</h1>
         <p className="mt-1 text-sm muted leading-relaxed">
-          En el plan gratis puedes usar <strong>tu propia clave</strong> (Groq o Gemini, en 2 minutos).
-          Se guarda solo en este dispositivo: no la enviamos a nuestra base de datos. Así la app
-          no gasta el cupo compartido cuando hay cientos de personas usándola.
+          Puedes usar tu clave de Groq o Gemini. Queda guardada en este dispositivo.
         </p>
       </div>
 
@@ -108,8 +106,7 @@ export function MiIaSetup({ onDone }: { onDone?: () => void }) {
 
       {!hasUserAiKeys() && (
         <p className="rounded-xl border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-950 dark:bg-amber-950/30 dark:text-amber-100">
-          Sin tu clave, carta / tips / ajuste con IA usan modo local (plantillas útiles, sin modelo
-          online). Con Groq gratis recuperas calidad de IA sin pagar plan Carrera.
+          Sin clave, la carta y los tips salen con plantillas.
         </p>
       )}
 
@@ -228,11 +225,6 @@ function GuideCard(props: {
             value={draft}
             onChange={(e) => onDraft(e.target.value)}
           />
-          <p className="text-[11px] muted">
-            {draft.trim()
-              ? `Lista para probar: ${draft.replace(/\s+/g, "").length} caracteres.`
-              : "Pega la clave y toca el botón. Si falla, el motivo sale aquí mismo."}
-          </p>
           {notice ? <p className="text-sm text-red-700">{notice}</p> : null}
           <button type="button" className="btn-primary" disabled={testing} onClick={onSave}>
             {testing ? "Probando…" : "Probar y guardar"}

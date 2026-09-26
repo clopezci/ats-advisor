@@ -11,7 +11,7 @@ export function buildAtsReport(result: AtsAnalyzeResult, meta?: { profile?: stri
     `Solape semántico: ${result.semanticScore}% (${result.embeddingProvider || "local"})`,
     `Autenticidad / anti-IA: ${result.authenticityScore ?? "—"}%`,
     "",
-    "Ojo del reclutador (8s):",
+    "Qué mira un reclutador en 8 segundos:",
     `- Veredicto: ${result.recruiterSkim?.verdict || "—"}`,
     ...(result.recruiterSkim?.fixNow || []).map((e) => `- Arregla: ${e}`),
     ...(result.authenticityAlerts || []).map((e) => `- Alerta autenticidad: ${e}`),

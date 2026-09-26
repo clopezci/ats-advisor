@@ -85,8 +85,8 @@ export const CAPABILITIES: Capability[] = [
   },
   {
     id: "ats-recruiter-skim",
-    title: "Ojo del reclutador (8s)",
-    summary: "Qué ve un reclutador en la primera mirada: banderas y arregla-ya.",
+    title: "Qué mira un reclutador en 8 segundos",
+    summary: "Nombre, cargo y un logro con cifra: lo único que alcanza a ver antes de pasar al siguiente.",
     audience: ["candidato"],
     status: "disponible",
     href: "/ats",

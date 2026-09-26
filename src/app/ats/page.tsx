@@ -798,28 +798,14 @@ export default function AtsPage() {
 
           {resultPhase >= 2 && result.recruiterSkim && (
             <section className="bento-card space-y-2">
-              <h2 className="text-sm font-semibold">Ojo del reclutador · {result.recruiterSkim.seconds}s</h2>
+              <h2 className="text-sm font-semibold">Qué mira un reclutador en 8 segundos</h2>
+              <p className="text-xs muted">
+                Al abrir el PDF no lee la hoja entera. En ese momento solo alcanza a ver tu nombre, el cargo y si hay un logro con cifra. Si eso no convence, pasa al siguiente candidato.
+              </p>
               <p className="text-sm font-medium">{result.recruiterSkim.verdict}</p>
-              {result.recruiterSkim.firstGlance.length > 0 && (
-                <ul className="text-sm muted space-y-1">
-                  {result.recruiterSkim.firstGlance.map((x) => (
-                    <li key={x}>• {x}</li>
-                  ))}
-                </ul>
-              )}
-              {result.recruiterSkim.redFlags.length > 0 && (
-                <div>
-                  <p className="text-xs font-medium">Banderas rojas</p>
-                  <ul className="text-sm muted space-y-1">
-                    {result.recruiterSkim.redFlags.map((x) => (
-                      <li key={x}>• {x}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
               {result.recruiterSkim.greenFlags.length > 0 && (
                 <div>
-                  <p className="text-xs font-medium">Señales verdes</p>
+                  <p className="text-xs font-medium">Lo que sí se ve</p>
                   <ul className="text-sm muted space-y-1">
                     {result.recruiterSkim.greenFlags.map((x) => (
                       <li key={x}>• {x}</li>
@@ -827,9 +813,19 @@ export default function AtsPage() {
                   </ul>
                 </div>
               )}
+              {result.recruiterSkim.redFlags.length > 0 && (
+                <div>
+                  <p className="text-xs font-medium">Lo que frena</p>
+                  <ul className="text-sm muted space-y-1">
+                    {result.recruiterSkim.redFlags.map((x) => (
+                      <li key={x}>• {x}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               {result.recruiterSkim.fixNow.length > 0 && (
                 <div>
-                  <p className="text-xs font-medium">Arregla ya</p>
+                  <p className="text-xs font-medium">Qué cambiar ahora</p>
                   <ul className="text-sm muted space-y-1">
                     {result.recruiterSkim.fixNow.map((x) => (
                       <li key={x}>• {x}</li>

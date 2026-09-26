@@ -533,7 +533,7 @@ export function analyzeAts(input: AtsAnalyzeInput): AtsAnalyzeResult {
   });
   const parsePreview = parseCvPreview(input.cvText);
   const authenticity = analyzeAuthenticity(input.cvText);
-  const skim = recruiterSkim(input.cvText, mustMatched[0] || kwMatched[0]);
+  const skim = recruiterSkim(input.cvText, jobText);
 
   const explanation = [
     `Cobertura ponderada (must-have + keywords): ${Math.round(coverage * 100)}%.`,

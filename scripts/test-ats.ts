@@ -51,6 +51,28 @@ assert(Array.isArray(result.placementGuide), "sin placementGuide");
 assert(result.parsePreview?.email, "sin parse email");
 assert(typeof result.authenticityScore === "number", "sin authenticityScore");
 assert(result.recruiterSkim?.verdict, "sin recruiterSkim");
+assert(
+  !result.recruiterSkim.redFlags.some((f) => /automatizaci[oó]n/i.test(f)),
+  "el cargo no debe ser una palabra clave suelta"
+);
+assert(
+  result.recruiterSkim.verdict.includes("8 segundos"),
+  "el veredicto debe explicar los 8 segundos"
+);
+
+const piped = analyzeAts({
+  cvText: "Ana Gómez\nTransformación Digital | IA | Cloud\nana@mail.com · +57 300 111 2233\n",
+  jobText: "Gerente de Transformación Digital\nLiderar la estrategia de transformación digital.",
+  atsProfile: "generic",
+});
+assert(
+  !piped.recruiterSkim.redFlags.some((f) => /columna/i.test(f)),
+  "las barras del título no son columnas"
+);
+assert(
+  piped.recruiterSkim.redFlags.some((f) => /Gerente de Transformación Digital/.test(f)),
+  "debe pedir el cargo completo si falta Gerente"
+);
 
 const weak = analyzeAts({
   cvText: "Hola soy candidato",

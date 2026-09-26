@@ -87,7 +87,7 @@ export function loadUserAiKeys(): UserAiKeys {
     const out: UserAiKeys = {};
     for (const id of ["groq", "gemini", "openrouter", "openai"] as UserAiProvider[]) {
       const v = obj[id];
-      if (typeof v === "string" && v.trim().length >= 20) out[id] = v.trim();
+      if (typeof v === "string" && v.trim().length >= 16) out[id] = v.trim();
     }
     return out;
   } catch {
@@ -98,7 +98,7 @@ export function loadUserAiKeys(): UserAiKeys {
 export function saveUserAiKeys(keys: UserAiKeys) {
   try {
     const clean = Object.fromEntries(
-      Object.entries(keys).filter(([, v]) => typeof v === "string" && v.trim().length >= 20)
+      Object.entries(keys).filter(([, v]) => typeof v === "string" && v.trim().length >= 16)
     );
     if (Object.keys(clean).length) localStorage.setItem(STORAGE_KEY, JSON.stringify(clean));
     else localStorage.removeItem(STORAGE_KEY);

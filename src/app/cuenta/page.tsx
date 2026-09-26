@@ -28,7 +28,9 @@ export default function CuentaPage() {
   const [msg, setMsg] = useState("");
   const [plan, setPlanState] = useState<PlanId>("free");
   const [sessionEmail, setSessionEmail] = useState<string | null>(null);
+  const [sessionReady, setSessionReady] = useState(false);
   const [allowLocalPlans, setAllowLocalPlans] = useState(false);
+  const [localUnlock, setLocalUnlock] = useState(false);
   const [focusPath, setFocusPath] = useState<FocusPath | null>(null);
   const waPrice = whatsappFinalPriceCop();
 
@@ -43,16 +45,17 @@ export default function CuentaPage() {
       setPlanState(readEntitlement().plan);
       setFocusPath(readFocusPath());
       const host = window.location.hostname;
-      setAllowLocalPlans(
-        host === "localhost" ||
-          host === "127.0.0.1" ||
-          localStorage.getItem("ats_admin_unlock") === "1"
-      );
+      const unlock = localStorage.getItem("ats_admin_unlock") === "1";
+      setLocalUnlock(unlock);
+      setAllowLocalPlans(host === "localhost" || host === "127.0.0.1" || unlock);
     } catch {
       /* ignore */
     }
     const sb = createBrowserSupabase();
-    if (!sb) return;
+    if (!sb) {
+      setSessionReady(true);
+      return;
+    }
     sb.auth.getSession().then(({ data }) => {
       const e = data.session?.user?.email;
       if (e) {
@@ -60,7 +63,8 @@ export default function CuentaPage() {
         setEmail((prev) => prev || e);
         syncCloudPlan(e);
       }
-    });
+      setSessionReady(true);
+    }).catch(() => setSessionReady(true));
   }, []);
 
   async function syncCloudPlan(em: string) {
@@ -187,10 +191,35 @@ export default function CuentaPage() {
           <h1 className="text-2xl font-semibold">Mi cuenta</h1>
           <SpeakButton text="Administra tu perfil, plan, canal de aprendizaje, Habeas Data y baja." />
         </div>
-        <p className="text-sm muted">
-          Plan: <span className="font-medium" style={{ color: "var(--brand)" }}>{planLabel(plan)}</span>
-          {sessionEmail ? ` · sesión ${sessionEmail}` : " · sin sesión Supabase"}
+        <p className="text-sm">
+          {!sessionReady ? (
+            "Revisando si entraste…"
+          ) : sessionEmail ? (
+            <>
+              Entraste con <strong>{sessionEmail}</strong>.
+            </>
+          ) : (
+            <>No has entrado. Puedes analizar un CV igual: no hace falta una cuenta para eso.</>
+          )}
         </p>
+        <p className="text-sm">
+          Plan: <span className="font-medium" style={{ color: "var(--brand)" }}>{planLabel(plan)}</span>
+        </p>
+        <p className="text-sm">
+          {localUnlock
+            ? "En este navegador hay un desbloqueo de pruebas. Eso no es el panel de administrador y no sube el cupo de la app."
+            : "No estás como administrador. Mi cuenta no abre el panel admin: esa es otra puerta y no cambia quién eres aquí."}
+        </p>
+        <p className="text-xs muted leading-relaxed">
+          El CV, las versiones, el seguimiento y la clave de IA se guardan en este navegador.
+          Si cambias de celular o borras los datos del sitio, no viajan solos. Entrar con el enlace
+          del correo sirve para atar un plan de pago a ese correo.
+        </p>
+        {sessionReady && !sessionEmail ? (
+          <Link href="/auth" className="btn-primary">
+            Entrar con mi correo
+          </Link>
+        ) : null}
       </section>
 
       <section className="bento-card space-y-3">

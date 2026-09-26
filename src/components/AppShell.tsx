@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CookiePrefsButton } from "@/components/CookieBanner";
 import { MainNav } from "@/components/MainNav";
 import { PageGuide } from "@/components/PageGuide";
+import { SessionChip } from "@/components/SessionChip";
 
 export function AppShell({ children }: { children: ReactNode }) {
   return (
@@ -24,6 +25,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               <div className="text-xs muted">by LOTIC</div>
             </div>
           </Link>
+          <SessionChip />
         </div>
         <MainNav />
       </header>

@@ -10,18 +10,33 @@ export type UserLlmKeys = {
   openai?: string;
 };
 
-const KEY_RE = /^[A-Za-z0-9_\-.]{20,200}$/;
+const KEY_RE = /^[A-Za-z0-9_\-.=+/]{16,512}$/;
 const ALLOWED = ["groq", "gemini", "openrouter", "openai"] as const;
+
+/** Quita espacios, comillas y un "Bearer " pegado al copiar. */
+export function normalizeUserApiKey(raw: string): string {
+  return raw
+    .trim()
+    .replace(/^bearer\s+/i, "")
+    .replace(/^["']+|["']+$/g, "")
+    .replace(/\s+/g, "");
+}
+
+export function isPlausibleUserApiKey(raw: string): boolean {
+  return KEY_RE.test(normalizeUserApiKey(raw));
+}
 
 export function parseUserKeysFromRequest(req: Request): UserLlmKeys {
   const raw = req.headers.get("x-user-keys");
-  if (!raw || raw.length > 4000) return {};
+  if (!raw || raw.length > 8000) return {};
   try {
     const obj = JSON.parse(raw) as Record<string, unknown>;
     const out: UserLlmKeys = {};
     for (const id of ALLOWED) {
       const v = obj[id];
-      if (typeof v === "string" && KEY_RE.test(v.trim())) out[id] = v.trim();
+      if (typeof v !== "string") continue;
+      const key = normalizeUserApiKey(v);
+      if (KEY_RE.test(key)) out[id] = key;
     }
     return out;
   } catch {

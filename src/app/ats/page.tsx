@@ -377,7 +377,9 @@ export default function AtsPage() {
     const dailyLimit = paid ? 100 : freeAtsLimit;
     const gate = canRunAts(dailyLimit);
     if (!gate.ok) {
-      setError(`Límite diario alcanzado (${gate.used}/${dailyLimit}).`);
+      setError(
+        `Se acabó el cupo de hoy en este navegador (${gate.used}/${dailyLimit}). No depende de ser administrador.`
+      );
       return;
     }
     setRescoring(true);
@@ -564,7 +566,7 @@ export default function AtsPage() {
       setError(
         paid
           ? `Límite alto alcanzado (${gate.used}/${dailyLimit}). Reintenta mañana.`
-          : `Límite diario free alcanzado (${gate.used}/${dailyLimit}). Vuelve mañana o ve a Precios.`
+          : `Se acabó el cupo de hoy en este navegador (${gate.used}/${dailyLimit}). No depende de ser administrador. Mañana vuelve a contar, o usa tu propia clave de IA.`
       );
       return;
     }
@@ -665,11 +667,7 @@ export default function AtsPage() {
               hint="Tu hoja de vida (PDF o Word). La vacante va en el siguiente paso."
             />
           </div>
-          {error && step === 1 && (
-            <p className="text-sm" style={{ color: "var(--danger)" }}>
-              {error}
-            </p>
-          )}
+          {error && step === 1 && <AtsNotice text={error} />}
           <div className="flex flex-col gap-3">
             <button type="button" className="btn-primary" disabled={cvText.trim().length < 40} onClick={() => setStep(2)}>
               Continuar
@@ -802,11 +800,7 @@ export default function AtsPage() {
               );
             })()}
           </div>
-          {error && (
-            <p className="text-sm" style={{ color: "var(--danger)" }}>
-              {error}
-            </p>
-          )}
+          {error && <AtsNotice text={error} />}
           <div className="flex flex-col gap-3">
             <button type="button" className="btn-primary" disabled={loading} onClick={analyze}>
               {loading ? "Analizando…" : "Analizar ahora"}
@@ -1613,6 +1607,38 @@ function ResultBlock({ title, items }: { title: string; items: string[] }) {
         ))}
       </ul>
     </section>
+  );
+}
+
+function AtsNotice({ text }: { text: string }) {
+  const quota = /cupo de hoy/i.test(text);
+  if (!quota) {
+    return (
+      <p className="text-sm" style={{ color: "var(--danger)" }}>
+        {text}
+      </p>
+    );
+  }
+  return (
+    <div className="rounded-xl border border-amber-300/70 bg-amber-50 px-4 py-3 text-sm text-amber-950 space-y-2">
+      <p>{text}</p>
+      <p>
+        Arriba dice si entraste o sigues sin entrar. El CV que ya cargaste sigue en este navegador.
+      </p>
+      <p>
+        <Link className="underline" href="/cuenta">
+          Ver Mi cuenta
+        </Link>
+        {" · "}
+        <Link className="underline" href="/cuenta/mi-ia">
+          Agregar mi propia IA
+        </Link>
+        {" · "}
+        <Link className="underline" href="/precios">
+          Ver precios
+        </Link>
+      </p>
+    </div>
   );
 }
 

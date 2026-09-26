@@ -26,16 +26,23 @@ export function MiIaSetup({ onDone }: { onDone?: () => void }) {
   const [okMsg, setOkMsg] = useState("");
 
   async function testAndSave(id: UserAiProvider) {
-    const value = draft.trim();
-    if (!value || testing) return;
-    setTesting(true);
+    const value = draft.trim().replace(/^bearer\s+/i, "").replace(/\s+/g, "");
+    if (testing) return;
     setError("");
     setOkMsg("");
+    if (value.length < 16) {
+      setError("Pega la clave completa. El botón no guarda si el campo está vacío o la key está cortada.");
+      return;
+    }
+    setTesting(true);
+    const ctrl = new AbortController();
+    const timer = window.setTimeout(() => ctrl.abort(), 25000);
     try {
       const res = await fetch("/api/ai/test-key", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "x-user-keys": JSON.stringify({ [id]: value }) },
-        body: JSON.stringify({ provider: id }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ provider: id, apiKey: value }),
+        signal: ctrl.signal,
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) {
@@ -50,11 +57,17 @@ export function MiIaSetup({ onDone }: { onDone?: () => void }) {
       saveUserAiKeys(next);
       setDraft("");
       setOpen(null);
-      setOkMsg(`Listo: ${data.label || id} responde con tu clave.`);
+      setOkMsg(`Listo: ${data.label || id} responde. La clave quedó en este navegador.`);
       onDone?.();
-    } catch {
-      setError("No se pudo probar la clave. Revisa tu conexión.");
+    } catch (e) {
+      const aborted = e instanceof DOMException && e.name === "AbortError";
+      setError(
+        aborted
+          ? "La prueba tardó demasiado. Revisa la conexión y vuelve a tocar Probar y guardar."
+          : "No se pudo probar la clave. Revisa tu conexión."
+      );
     } finally {
+      window.clearTimeout(timer);
       setTesting(false);
     }
   }
@@ -81,6 +94,17 @@ export function MiIaSetup({ onDone }: { onDone?: () => void }) {
           no gasta el cupo compartido cuando hay cientos de personas usándola.
         </p>
       </div>
+
+      {error && (
+        <p className="rounded-xl border border-red-300/70 bg-red-50 px-4 py-3 text-sm text-red-800 dark:bg-red-950/30 dark:text-red-100">
+          {error}
+        </p>
+      )}
+      {okMsg && (
+        <p className="rounded-xl border border-emerald-300/70 bg-emerald-50 px-4 py-3 text-sm text-emerald-900 dark:bg-emerald-950/30 dark:text-emerald-100">
+          {okMsg}
+        </p>
+      )}
 
       {!hasUserAiKeys() && (
         <p className="rounded-xl border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-950 dark:bg-amber-950/30 dark:text-amber-100">
@@ -117,6 +141,7 @@ export function MiIaSetup({ onDone }: { onDone?: () => void }) {
             open={open === g.id}
             draft={open === g.id ? draft : ""}
             testing={testing && open === g.id}
+            notice={open === g.id ? error : ""}
             onToggle={() => {
               setOpen(open === g.id ? null : g.id);
               setDraft("");
@@ -137,6 +162,7 @@ export function MiIaSetup({ onDone }: { onDone?: () => void }) {
             open={open === g.id}
             draft={open === g.id ? draft : ""}
             testing={testing && open === g.id}
+            notice={open === g.id ? error : ""}
             onToggle={() => {
               setOpen(open === g.id ? null : g.id);
               setDraft("");
@@ -147,9 +173,6 @@ export function MiIaSetup({ onDone }: { onDone?: () => void }) {
           />
         ))}
       </div>
-
-      {error && <p className="text-sm text-red-600">{error}</p>}
-      {okMsg && <p className="text-sm text-emerald-700">{okMsg}</p>}
 
       <p className="text-xs muted leading-relaxed">
         Tip: ChatGPT Plus / Claude Pro / Cursor no entregan una API abierta. Si quieres esos
@@ -168,11 +191,12 @@ function GuideCard(props: {
   open: boolean;
   draft: string;
   testing: boolean;
+  notice: string;
   onToggle: () => void;
   onDraft: (v: string) => void;
   onSave: () => void;
 }) {
-  const { guide: g, open, draft, testing, onToggle, onDraft, onSave } = props;
+  const { guide: g, open, draft, testing, notice, onToggle, onDraft, onSave } = props;
   return (
     <div className="bento-card space-y-2">
       <button type="button" className="flex w-full items-start justify-between gap-2 text-left" onClick={onToggle}>
@@ -204,7 +228,13 @@ function GuideCard(props: {
             value={draft}
             onChange={(e) => onDraft(e.target.value)}
           />
-          <button type="button" className="btn-primary" disabled={testing || draft.trim().length < 20} onClick={onSave}>
+          <p className="text-[11px] muted">
+            {draft.trim()
+              ? `Lista para probar: ${draft.replace(/\s+/g, "").length} caracteres.`
+              : "Pega la clave y toca el botón. Si falla, el motivo sale aquí mismo."}
+          </p>
+          {notice ? <p className="text-sm text-red-700">{notice}</p> : null}
+          <button type="button" className="btn-primary" disabled={testing} onClick={onSave}>
             {testing ? "Probando…" : "Probar y guardar"}
           </button>
         </div>

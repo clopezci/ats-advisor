@@ -1,4 +1,5 @@
 import type { UserLlmKeys } from "@/lib/ai/userKeysServer";
+import { listGeminiModels, listGroqModels, listOpenAiModels, rankChatModels } from "@/lib/ai/liveModels";
 
 export type AiTask =
   | "ats_suggest"
@@ -27,12 +28,15 @@ export type AiResult = {
   model?: string;
 };
 
-/** Modelos por defecto (env puede sobreescribir). */
+/**
+ * Preferencia opcional. Si ese id ya no está en la cuenta, se usa otro modelo de texto
+ * que la clave sí pueda llamar (la lista la da el proveedor).
+ */
 const MODELS = {
-  /** Free · calidad (Groq). */
-  groqFree: process.env.GROQ_MODEL || "llama-3.3-70b-versatile",
+  /** Free · calidad (Groq). Vacío = el que haya, priorizando uno grande. */
+  groqFree: process.env.GROQ_MODEL || "",
   /** Free · rápido si el de calidad falla. */
-  groqFast: process.env.GROQ_MODEL_FAST || "llama-3.1-8b-instant",
+  groqFast: process.env.GROQ_MODEL_FAST || "",
   /**
    * Free · calidad alta en Groq (Moonshot Kimi = “Luna”/Moonshot).
    * Buen puente antes de pagar.
@@ -203,18 +207,29 @@ function resolveKey(
 
 async function callGroq(
   messages: AiMessage[],
-  model: string,
-  bag: KeyBag = {}
+  hint: string,
+  bag: KeyBag = {},
+  kind: "fast" | "quality" = "quality"
 ): Promise<ChatOk | null> {
   const allowShared = bag.allowSharedKeys !== false;
   const key = resolveKey(bag.keys?.groq, "GROQ_API_KEY", allowShared);
   if (!key) return null;
-  return openAiCompatibleChat({
-    url: "https://api.groq.com/openai/v1/chat/completions",
-    apiKey: key,
-    model,
-    messages,
-  });
+  const listed = await listGroqModels(key);
+  const candidates = listed.ok
+    ? rankChatModels(listed.ids, hint, kind).slice(0, 3)
+    : hint
+      ? [hint]
+      : [];
+  for (const model of candidates) {
+    const hit = await openAiCompatibleChat({
+      url: "https://api.groq.com/openai/v1/chat/completions",
+      apiKey: key,
+      model,
+      messages,
+    });
+    if (hit) return hit;
+  }
+  return null;
 }
 
 async function callGemini(
@@ -227,6 +242,8 @@ async function callGemini(
     resolveKey(bag.keys?.gemini, "GOOGLE_AI_API_KEY", allowShared) ||
     (allowShared ? process.env.GEMINI_API_KEY : undefined);
   if (!key) return null;
+  const listed = await listGeminiModels(key);
+  const modelId = listed.ok ? rankChatModels(listed.ids, model, "fast")[0] || model : model;
   try {
     const contents = messages
       .filter((m) => m.role !== "system")
@@ -235,7 +252,7 @@ async function callGemini(
         parts: [{ text: m.content }],
       }));
     const system = messages.find((m) => m.role === "system")?.content;
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${key}`;
     const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -248,7 +265,7 @@ async function callGemini(
     const data = await res.json();
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
     if (!text || typeof text !== "string") return null;
-    return { text, model };
+    return { text, model: modelId };
   } catch {
     return null;
   }
@@ -258,10 +275,14 @@ async function callOpenAI(messages: AiMessage[], bag: KeyBag = {}): Promise<Chat
   const allowShared = bag.allowSharedKeys !== false;
   const key = resolveKey(bag.keys?.openai, "OPENAI_API_KEY", allowShared);
   if (!key) return null;
+  const listed = await listOpenAiModels(key);
+  const model = listed.ok
+    ? rankChatModels(listed.ids, MODELS.openai, "fast").find((id) => /^gpt-/i.test(id)) || MODELS.openai
+    : MODELS.openai;
   return openAiCompatibleChat({
     url: "https://api.openai.com/v1/chat/completions",
     apiKey: key,
-    model: MODELS.openai,
+    model,
     messages,
     temperature: 0.3,
   });
@@ -369,8 +390,8 @@ export async function completeWithCascade(opts: {
   // —— Free tier (BYOK primero; shared solo si allowSharedKeys) ——
   if (prefs.prefer_groq) {
     const g =
-      (await callGroq(opts.messages, MODELS.groqFree, bag)) ||
-      (await callGroq(opts.messages, MODELS.groqFast, bag));
+      (await callGroq(opts.messages, MODELS.groqFree, bag, "quality")) ||
+      (await callGroq(opts.messages, MODELS.groqFast, bag, "fast"));
     if (g) {
       text = g.text;
       provider = "groq";

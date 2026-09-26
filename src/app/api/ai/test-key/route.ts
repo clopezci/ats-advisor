@@ -6,6 +6,7 @@ import {
   type UserLlmKeys,
 } from "@/lib/ai/userKeysServer";
 import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
+import { listGeminiModels, listGroqModels, listOpenAiModels, rankChatModels } from "@/lib/ai/liveModels";
 
 export const runtime = "nodejs";
 
@@ -41,12 +42,24 @@ export async function POST(req: Request) {
     const messages = [{ role: "user" as const, content: "Responde solo: OK" }];
 
     if (provider === "groq") {
-      const models = unique([
-        process.env.GROQ_MODEL_FAST,
-        "llama-3.1-8b-instant",
-        process.env.GROQ_MODEL,
-        "llama-3.3-70b-versatile",
-      ]);
+      const listed = await listGroqModels(key);
+      if (!listed.ok) {
+        return NextResponse.json(
+          {
+            error: listed.auth
+              ? "Groq no aceptó la clave. Créala de nuevo y pégala completa."
+              : `Groq: ${listed.detail}`,
+          },
+          { status: 400 }
+        );
+      }
+      const models = rankChatModels(listed.ids, process.env.GROQ_MODEL, "fast").slice(0, 4);
+      if (!models.length) {
+        return NextResponse.json(
+          { error: "La clave entró, pero esa cuenta de Groq no tiene un modelo de texto disponible." },
+          { status: 400 }
+        );
+      }
       const tried = await tryModels(
         "https://api.groq.com/openai/v1/chat/completions",
         key,
@@ -59,7 +72,25 @@ export async function POST(req: Request) {
     }
 
     if (provider === "gemini") {
-      const model = process.env.GEMINI_MODEL_FREE || "gemini-2.0-flash";
+      const listed = await listGeminiModels(key);
+      if (!listed.ok) {
+        return NextResponse.json(
+          {
+            error: listed.auth
+              ? "Gemini no aceptó la clave. Créala de nuevo en Google AI Studio y pégala completa."
+              : `Gemini: ${listed.detail}`,
+          },
+          { status: 400 }
+        );
+      }
+      const model =
+        rankChatModels(listed.ids, process.env.GEMINI_MODEL_FREE, "fast")[0] || "";
+      if (!model) {
+        return NextResponse.json(
+          { error: "La clave entró, pero esa cuenta de Gemini no tiene un modelo de texto disponible." },
+          { status: 400 }
+        );
+      }
       const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`;
       const res = await fetch(url, {
         method: "POST",
@@ -88,10 +119,28 @@ export async function POST(req: Request) {
     }
 
     if (provider === "openai") {
+      const listed = await listOpenAiModels(key);
+      const models = listed.ok
+        ? rankChatModels(listed.ids, process.env.OPENAI_MODEL || "gpt-4o-mini", "fast")
+            .filter((id) => /^gpt-/i.test(id))
+            .slice(0, 3)
+        : unique([process.env.OPENAI_MODEL, "gpt-4o-mini"]);
+      if (listed.ok && !models.length) {
+        return NextResponse.json(
+          { error: "La clave entró, pero esa cuenta de OpenAI no tiene un modelo de texto disponible." },
+          { status: 400 }
+        );
+      }
+      if (!listed.ok && listed.auth) {
+        return NextResponse.json(
+          { error: "OpenAI no aceptó la clave. Tiene que ser una API key, no la de ChatGPT Plus." },
+          { status: 400 }
+        );
+      }
       const tried = await tryModels(
         "https://api.openai.com/v1/chat/completions",
         key,
-        unique([process.env.OPENAI_MODEL, "gpt-4o-mini"]),
+        models,
         messages
       );
       return tried.ok
@@ -145,7 +194,8 @@ async function pingOpenAiCompat(
     });
     if (res.ok) return { ok: true };
     const detail = await readDetail(res, apiKey);
-    const auth = res.status === 401 || res.status === 403 || /api key|unauthorized/i.test(detail);
+    const modelGone = /does not exist|decommissioned|model .* not found|no longer supported/i.test(detail);
+    const auth = !modelGone && (res.status === 401 || /invalid api key|unauthorized/i.test(detail));
     return { ok: false, auth, detail };
   } catch {
     return { ok: false, auth: false, detail: "sin respuesta del proveedor." };

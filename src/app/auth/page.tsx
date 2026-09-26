@@ -40,7 +40,7 @@ export default function AuthPage() {
     setMsg("");
     const sb = createBrowserSupabase();
     if (!sb) {
-      setMsg("Supabase no está configurado aún. Sigue MANUAL-ACCIONES.md sección 2.");
+      setMsg("El inicio de sesión no está disponible en este momento.");
       setLoading(false);
       return;
     }
@@ -64,7 +64,10 @@ export default function AuthPage() {
   return (
     <div className="flex flex-1 flex-col gap-5">
       <h1 className="text-2xl font-semibold">Entrar</h1>
-      <p className="text-sm muted">Magic link por correo (Supabase). Sin contraseña.</p>
+      <p className="text-sm muted leading-relaxed">
+        Te enviamos un enlace a tu correo, sin contraseña. Con esa sesión activas un plan de pago
+        y lo recuperas cuando vuelvas a entrar con el mismo correo.
+      </p>
       {sessionEmail ? (
         <section className="bento-card space-y-3">
           <p className="text-sm">

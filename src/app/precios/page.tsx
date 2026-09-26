@@ -114,7 +114,7 @@ export default function PreciosPage() {
           }
 
           setMsg(
-            "Pago recibido. Esperamos confirmación del webhook. Si diste correo, reclama en /cuenta o espera unos segundos."
+            "Pago recibido. Si el plan no se activa en unos segundos, reclámalo en Mi cuenta con el mismo correo."
           );
 
           if (isValidEmail(em) && last?.reference) {
@@ -231,9 +231,7 @@ export default function PreciosPage() {
       if (data.mode === "demo") {
         setMsg(
           data.message +
-            (isLocalHost()
-              ? " En localhost puedes usar el botón demo."
-              : " Configura Wompi o Mercado Pago en el servidor.")
+            (isLocalHost() ? "" : " El pago no está disponible en este momento.")
         );
         localStorage.setItem("ats_last_checkout", JSON.stringify(data));
         return;
@@ -263,7 +261,7 @@ export default function PreciosPage() {
         checkoutWidget.open((result) => {
           if (result?.status === "APPROVED") {
             setMsg(
-              "Pago aprobado en widget. Esperamos el webhook para activar cloud; mientras, reclama en /cuenta si no se refleja."
+              "Pago aprobado. Si el plan no se activa en unos segundos, reclámalo en Mi cuenta."
             );
             if (isLocalHost()) {
               if (plan === "psico_practica") grantPsicoPractica();
@@ -276,7 +274,7 @@ export default function PreciosPage() {
               setCurrentPlan(map[plan] || "carrera");
             }
           } else {
-            setMsg(`Checkout cerrado (${result?.status || "sin estado"}). Si pagaste, espera el webhook.`);
+            setMsg("Si el pago quedó aprobado y el plan no aparece, reclámalo en Mi cuenta.");
           }
         });
         return;

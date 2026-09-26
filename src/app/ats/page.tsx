@@ -1226,6 +1226,9 @@ export default function AtsPage() {
                 {rewriteSource === "local" ? (
                   <div className="space-y-2">
                     <h3 className="text-sm font-semibold">Ejemplos</h3>
+                    <p className="text-xs muted">
+                      Ideas para tus logros. Cópialas o reescríbelas en tu hoja, abajo.
+                    </p>
                     {rewriteSuggestions.map((s, i) => (
                       <div key={s.id} className="rounded-lg p-3 text-sm" style={{ background: "var(--surface-2, #f6f4fb)" }}>
                         <p className="text-xs muted mb-1">Ejemplo {i + 1}</p>
@@ -1244,10 +1247,13 @@ export default function AtsPage() {
                         Copiar ejemplos
                       </button>
                     ) : (
-                      <p className="text-sm muted">No hay una viñeta clara para usar de ejemplo.</p>
+                      <p className="text-sm muted">No hay ejemplos para esta hoja.</p>
                     )}
                     <div className="space-y-3 pt-2">
                       <h3 className="text-sm font-semibold">Tu hoja</h3>
+                      <p className="text-xs muted">
+                        Edita tu texto, ponle nombre y guárdalo para compararlo con esta vacante.
+                      </p>
                       <VoiceTextarea
                         label="Texto del CV"
                         value={editedCv}
@@ -1349,8 +1355,7 @@ export default function AtsPage() {
           <section className="bento-card space-y-3">
             <h2 className="text-sm font-semibold">Carta / mensaje de postulación</h2>
             <p className="text-xs muted">
-              Si hay IA online, redacta con el análisis. Si no, usa una carta plantilla con hechos de
-              tu CV (revísala antes de enviar).
+              Redacta el mensaje de esta vacante a partir de tu análisis. Revísalo antes de enviarlo.
             </p>
             <button type="button" className="btn-primary" disabled={coverLoading} onClick={generateCoverLetter}>
               {coverLoading ? "Redactando…" : "Generar carta de postulación"}

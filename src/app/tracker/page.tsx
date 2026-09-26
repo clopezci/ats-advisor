@@ -48,7 +48,7 @@ export default function TrackerPage() {
           <h1 className="text-xl font-semibold">Tracker de postulaciones</h1>
           <SpeakButton text="Organiza tus vacantes por estado: interés, aplicado, entrevista, oferta o rechazo." />
         </div>
-        <p className="text-sm muted">Kanban simple. Datos en este dispositivo hasta activar Supabase.</p>
+        <p className="text-sm muted">Interés, aplicado, entrevista, oferta o rechazo.</p>
       </section>
 
       <section className="bento-card space-y-3">

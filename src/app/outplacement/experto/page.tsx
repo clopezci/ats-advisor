@@ -127,7 +127,7 @@ function ExpertoInner() {
 
       {enabled && allies.length === 0 && (
         <section className="bento-card space-y-2 text-sm muted">
-          <p>Aún no hay aliados activos. El owner debe cargarlos en /admin → Aliados expertos.</p>
+          <p>Aún no hay aliados disponibles.</p>
         </section>
       )}
 

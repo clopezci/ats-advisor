@@ -65,7 +65,7 @@ export default function AlumniPage() {
           </a>
         ) : (
           <p className="text-sm muted">
-            El owner aún no configuró el enlace de Telegram en /admin → Alumni.
+            El grupo de Telegram aún no está disponible.
           </p>
         )}
         {hasDiscord ? (

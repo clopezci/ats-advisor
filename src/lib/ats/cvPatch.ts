@@ -428,7 +428,7 @@ export function applyLocalSurgicalPatch(
     suggestions.push({
       id: "ex_term",
       where: "Ejemplo",
-      paste: `Viñeta de ejemplo, solo si es cierto: lideré un proyecto en el que usé ${term}.`,
+      paste: `Lideré un proyecto en el que usé ${term}.`,
       example: true,
     });
   }

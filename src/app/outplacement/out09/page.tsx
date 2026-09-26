@@ -249,7 +249,7 @@ export default function Out09Page() {
             </div>
           ))}
           <p className="text-xs muted text-center">
-            Curso guardado en este dispositivo. Con Supabase quedará en tu cuenta.
+            Curso guardado.
           </p>
           <Link href="/outplacement/out09/player" className="btn-primary">
             Abrir reproductor de cápsulas

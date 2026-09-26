@@ -95,7 +95,7 @@ export default function CoachPage() {
           <h1 className="text-xl font-semibold">Coach outplacement</h1>
           <SpeakButton text="Coach multi-turno con modos filtro, STAR, negociación y networking." />
         </div>
-        <p className="text-sm muted">Historial en este dispositivo + RAG de knowledge_base.</p>
+        <p className="text-sm muted">Filtro, STAR, negociación y networking.</p>
       </section>
 
       <div className="flex flex-wrap gap-2">

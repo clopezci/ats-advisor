@@ -259,8 +259,8 @@ export const PAGE_GUIDES: PageGuideCopy[] = [
   },
   {
     path: "/cuenta",
-    what: "Tu sesión, plan y reclamar un pago si pagaste con correo.",
-    how: "Si pagaste, usa el mismo correo en “Reclamar”. Si no tienes cuenta, igual puedes usar el ATS gratis.",
+    what: "Ves con qué correo entraste y tu plan. Sin cuenta puedes analizar un CV: la hoja queda en este dispositivo.",
+    how: "Entra con tu correo si pagaste o quieres recuperar el plan después. Si ya pagaste, usa ese mismo correo en Reclamar.",
   },
   {
     path: "/feedback",

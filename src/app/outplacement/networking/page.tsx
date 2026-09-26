@@ -43,7 +43,7 @@ function NetworkingTool() {
           <h1 className="text-xl font-semibold">Networking CRM</h1>
           <SpeakButton text="Networking: registra contactos, próximos pasos y plantillas de mensaje." />
         </div>
-        <p className="text-sm muted">Hoja de networking en este dispositivo. Sin scrapear LinkedIn.</p>
+        <p className="text-sm muted">Contactos, siguiente paso y mensaje.</p>
       </section>
 
       <section className="bento-card space-y-3">

@@ -160,7 +160,7 @@ export default function CuentaPage() {
 
   function save() {
     localStorage.setItem("ats_profile", JSON.stringify({ name, email, channel }));
-    setMsg("Preferencias guardadas en este dispositivo.");
+    setMsg("Preferencias guardadas.");
     if (email.includes("@")) {
       fetch(`/api/testers/check?email=${encodeURIComponent(email)}`)
         .then((r) => r.json())
@@ -187,15 +187,27 @@ export default function CuentaPage() {
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between">
           <h1 className="text-2xl font-semibold">Mi cuenta</h1>
-          <SpeakButton text="Administra tu perfil, plan, canal de aprendizaje, Habeas Data y baja." />
+          <SpeakButton text="Aquí ves si entraste y tu plan. Sin cuenta puedes analizar un CV. El correo sirve para activar y recuperar un plan de pago." />
         </div>
         {sessionEmail ? (
           <p className="text-sm">
-            Sesión: <strong>{sessionEmail}</strong>
+            Entraste con <strong>{sessionEmail}</strong>.
           </p>
-        ) : null}
+        ) : (
+          <p className="text-sm">Aún no has entrado.</p>
+        )}
         <p className="text-sm">
           Plan: <span className="font-medium" style={{ color: "var(--brand)" }}>{planLabel(plan)}</span>
+        </p>
+      </section>
+
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold text-sm">Para qué entrar con correo</h2>
+        <p className="text-sm leading-relaxed">
+          Puedes analizar un CV sin cuenta. Tu hoja, las versiones y el seguimiento quedan en este dispositivo.
+        </p>
+        <p className="text-sm muted leading-relaxed">
+          El correo sirve para activar un plan de pago y volver a verlo cuando entres de nuevo con ese mismo correo.
         </p>
         {sessionReady && !sessionEmail ? (
           <Link href="/auth" className="btn-primary">
@@ -274,23 +286,17 @@ export default function CuentaPage() {
           </button>
         )}
         <Link href="/auth" className="btn-secondary">
-          Entrar con magic link
+          Entrar con enlace al correo
         </Link>
       </div>
 
       <div className="bento-card space-y-3">
         <h2 className="font-semibold">Plan actual</h2>
         <p className="text-sm muted">
-          {planLabel(plan)}. En producción el plan se confirma vía pago/webhook. El cambio local solo
-          está disponible en localhost (o con unlock admin).
-        </p>
-        <p className="text-xs muted leading-relaxed">
-          Probar de cero: 1) Eliminar datos locales → bienvenida. 2) Elige Carrera. 3) Aquí activa
-          Tester/Carrera. 4) Inicio → Continuar.
+          {planLabel(plan)}. Si pagaste, usa el mismo correo del pago para activar el plan aquí.
         </p>
         {allowLocalPlans && (
           <div className="flex flex-col gap-2">
-            <p className="text-xs muted">Modo local / QA — no usar en producción pública.</p>
             {(["free", "carrera", "plus", "tester", "paused_90"] as PlanId[]).map((p) => (
               <button
                 key={p}
@@ -299,7 +305,7 @@ export default function CuentaPage() {
                 onClick={() => {
                   setPlan(p, "local");
                   setPlanState(p);
-                  setMsg(`Plan local: ${planLabel(p)}`);
+                  setMsg(planLabel(p));
                 }}
               >
                 {planLabel(p)}
@@ -322,7 +328,7 @@ export default function CuentaPage() {
       <div className="bento-card space-y-3">
         <h2 className="font-semibold">Mi IA (clave propia)</h2>
         <p className="text-xs muted leading-relaxed">
-          Puedes pegar tu clave de Groq o Gemini. Queda guardada en este dispositivo.
+          Pega tu clave de Groq o Gemini. Se guarda en este dispositivo y se usa en carta, tips y ajustes.
         </p>
         <Link href="/cuenta/mi-ia" className="btn-primary">
           Configurar Mi IA

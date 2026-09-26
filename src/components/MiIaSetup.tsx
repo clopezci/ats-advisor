@@ -89,7 +89,8 @@ export function MiIaSetup({ onDone }: { onDone?: () => void }) {
       <div>
         <h1 className="text-2xl font-semibold">Mi IA</h1>
         <p className="mt-1 text-sm muted leading-relaxed">
-          Puedes usar tu clave de Groq o Gemini. Queda guardada en este dispositivo.
+          Pega tu clave de Groq o Gemini. Se guarda solo en este dispositivo y mejora carta, tips y ajustes.
+          Sin clave, esos textos salen de plantillas.
         </p>
       </div>
 
@@ -104,15 +105,9 @@ export function MiIaSetup({ onDone }: { onDone?: () => void }) {
         </p>
       )}
 
-      {!hasUserAiKeys() && (
-        <p className="rounded-xl border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-950 dark:bg-amber-950/30 dark:text-amber-100">
-          Sin clave, la carta y los tips salen con plantillas.
-        </p>
-      )}
-
       {configured.length > 0 && (
         <div className="bento-card space-y-2">
-          <h2 className="text-sm font-semibold">Claves en este dispositivo</h2>
+          <h2 className="text-sm font-semibold">Claves guardadas</h2>
           {configured.map((id) => {
             const g = USER_AI_KEY_GUIDES.find((x) => x.id === id);
             return (

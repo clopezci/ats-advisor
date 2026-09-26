@@ -20,6 +20,8 @@ import { openPrintableReport } from "@/lib/ats/report";
 import { bumpStreak } from "@/lib/engagement/streak";
 import { canAccessOutplacement, readEntitlement } from "@/lib/entitlements";
 import { upsertJob } from "@/lib/tracker/jobs";
+import { saveCvVersion } from "@/lib/cv/versions";
+import { VoiceTextarea } from "@/components/VoiceField";
 import { syncAtsScan } from "@/lib/supabase/sync";
 import { AtsStepCoach } from "@/components/ats/AtsStepCoach";
 import { buildScoreSummary } from "@/lib/ats/scoreSummary";
@@ -82,6 +84,9 @@ export default function AtsPage() {
   const [scoreDelta, setScoreDelta] = useState<ScoreDelta | null>(null);
   const [rescoring, setRescoring] = useState(false);
   const [diffLines, setDiffLines] = useState<{ type: "same" | "add" | "del"; text: string }[]>([]);
+  const [editedCv, setEditedCv] = useState("");
+  const [cvVersionName, setCvVersionName] = useState("");
+  const [savedCompare, setSavedCompare] = useState("");
   const [coverLetter, setCoverLetter] = useState("");
   const [coverLoading, setCoverLoading] = useState(false);
   const [freeAtsLimit, setFreeAtsLimit] = useState(5);
@@ -340,6 +345,124 @@ export default function AtsPage() {
     } finally {
       setApplyLoading(false);
     }
+  }
+
+  function suggestCvName() {
+    const role = jobText
+      .split("\n")
+      .map((l) => l.trim())
+      .find((l) => l.length > 8 && l.length < 72 && !/[.!?]$/.test(l));
+    const who = companyName.trim();
+    if (role && who) return `CV · ${role} · ${who}`;
+    if (role) return `CV · ${role}`;
+    if (who) return `CV · ${who}`;
+    return "CV de esta vacante";
+  }
+
+  useEffect(() => {
+    if (rewriteSource !== "local" || !rewriteText) return;
+    setEditedCv(cvText);
+    setCvVersionName(suggestCvName());
+    setSavedCompare("");
+  }, [rewriteSource, rewriteText]);
+
+  async function saveAndCompare() {
+    if (!result) return;
+    const text = editedCv.trim();
+    if (text.length < 40) {
+      setError("Escribe la hoja antes de comparar. Hace falta un poco más de texto.");
+      return;
+    }
+    const paid = canAccessOutplacement(readEntitlement().plan);
+    const dailyLimit = paid ? 100 : freeAtsLimit;
+    const gate = canRunAts(dailyLimit);
+    if (!gate.ok) {
+      setError(`Límite diario alcanzado (${gate.used}/${dailyLimit}).`);
+      return;
+    }
+    setRescoring(true);
+    setSavedCompare("");
+    setError("");
+    try {
+      const before = result;
+      const res = await fetch("/api/ats/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          cvText: text,
+          jobText,
+          jobUrl,
+          companyDomain,
+          companyName,
+          atsProfile,
+          autoDetect: false,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Error al comparar");
+      recordAtsRun();
+      const after = data.result as AtsAnalyzeResult;
+      const delta = compareAtsResults(before, after);
+      setScoreDelta(delta);
+      setResult(after);
+      setCvText(text);
+      const label = cvVersionName.trim() || suggestCvName();
+      const role = label.replace(/^CV · /, "").split(" · ")[0] || "Vacante";
+      const job = upsertJob({
+        title: role,
+        company: companyName.trim() || "Por completar",
+        url: jobUrl.trim() || undefined,
+        status: "interes",
+        score: after.score,
+        jobText: jobText.trim() || undefined,
+        notes: `CV «${label}». Puntaje ${delta.before}% → ${delta.after}%.`,
+      });
+      saveCvVersion(label, text, {
+        company: companyName.trim() || undefined,
+        jobTitle: role,
+        score: after.score,
+        jobId: job.id,
+      });
+      saveAtsWorkspace({
+        cvText: text,
+        jobText,
+        jobUrl,
+        atsProfile,
+        result: after,
+      });
+      try {
+        localStorage.setItem("ats_cv_draft", text);
+      } catch {
+        /* ignore */
+      }
+      pushAtsHistory(
+        buildHistoryPayload({
+          score: after.score,
+          semanticScore: after.semanticScore,
+          interviewProbability: after.interviewProbability,
+          profile: atsProfile,
+          jobText,
+          mustMissing: after.mustHave?.missing,
+          embeddingProvider: after.embeddingProvider,
+        })
+      );
+      const sign = delta.delta > 0 ? "+" : "";
+      setSavedCompare(
+        `«${label}» quedó en tu expediente, ligada a esta vacante. Puntaje ${delta.before}% → ${delta.after}% (${sign}${delta.delta}).`
+      );
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "No se pudo guardar y comparar");
+    } finally {
+      setRescoring(false);
+    }
+  }
+
+  async function downloadEditedCv() {
+    const text = editedCv.trim();
+    if (text.length < 40) return;
+    const blob = await buildCvDocx(text);
+    const safe = (cvVersionName.trim() || "CV").replace(/[^\w\sáéíóúñÁÉÍÓÚÑ.-]+/g, "").trim().slice(0, 60) || "CV";
+    downloadBlob(`${safe}.docx`, blob);
   }
 
   async function rescoreAfterRewrite() {
@@ -1132,6 +1255,56 @@ export default function AtsPage() {
                     ) : (
                       <p className="text-sm muted">No hay una viñeta clara para usar de ejemplo.</p>
                     )}
+                    <div className="space-y-3 pt-2">
+                      <h3 className="text-sm font-semibold">Tu hoja</h3>
+                      <p className="text-xs muted">
+                        Aquí está el CV que cargaste. Cambia tus propios párrafos. Los ejemplos de arriba no se pegan solos.
+                      </p>
+                      <VoiceTextarea
+                        label="Texto del CV"
+                        value={editedCv}
+                        onChange={setEditedCv}
+                        className="field min-h-64"
+                      />
+                      <label className="block text-sm font-medium">Nombre de esta versión</label>
+                      <input
+                        className="field"
+                        value={cvVersionName}
+                        onChange={(e) => setCvVersionName(e.target.value)}
+                        placeholder="CV · Gerente de transformación · Empresa"
+                      />
+                      <div className="flex flex-col gap-3 md:flex-row md:flex-wrap">
+                        <button type="button" className="btn-primary" disabled={rescoring} onClick={() => void saveAndCompare()}>
+                          {rescoring ? "Comparando…" : "Guardar y comparar"}
+                        </button>
+                        <button
+                          type="button"
+                          className="btn-secondary"
+                          disabled={editedCv.trim().length < 40}
+                          onClick={() => void downloadEditedCv()}
+                        >
+                          Descargar Word
+                        </button>
+                      </div>
+                      {savedCompare ? (
+                        <div className="rounded-lg p-3 text-sm space-y-2" style={{ background: "var(--surface-2, #f6f4fb)" }}>
+                          <p>{savedCompare}</p>
+                          {scoreDelta ? (
+                            <p>
+                              {scoreDelta.before}% → {scoreDelta.after}%
+                              {scoreDelta.mustGained.length > 0
+                                ? `. Ahora aparecen: ${scoreDelta.mustGained.slice(0, 4).join(", ")}.`
+                                : ""}
+                            </p>
+                          ) : null}
+                          <p className="text-xs">
+                            <Link className="underline" href="/cuenta/cvs">Ver en Mis CVs</Link>
+                            {" · "}
+                            <Link className="underline" href="/tracker">Ver en el seguimiento</Link>
+                          </p>
+                        </div>
+                      ) : null}
+                    </div>
                   </div>
                 ) : (
                   <>

@@ -73,7 +73,11 @@ export default function CvsPage() {
       {items.map((c) => (
         <div key={c.id} className="bento-card space-y-2">
           <h2 className="font-semibold">{c.name}</h2>
-          <p className="text-xs muted">{new Date(c.updatedAt).toLocaleString("es-CO")}</p>
+          <p className="text-xs muted">
+            {new Date(c.updatedAt).toLocaleString("es-CO")}
+            {c.company ? ` · ${c.company}` : ""}
+            {typeof c.score === "number" ? ` · ${c.score}%` : ""}
+          </p>
           <p className="text-sm muted line-clamp-3">{c.text.slice(0, 220)}…</p>
           <button
             type="button"

@@ -5,6 +5,10 @@ export type CvVersion = {
   name: string;
   text: string;
   updatedAt: number;
+  company?: string;
+  jobTitle?: string;
+  score?: number;
+  jobId?: string;
 };
 
 export function listCvVersions(): CvVersion[] {
@@ -15,13 +19,18 @@ export function listCvVersions(): CvVersion[] {
   }
 }
 
-export function saveCvVersion(name: string, text: string) {
+export function saveCvVersion(
+  name: string,
+  text: string,
+  meta?: Pick<CvVersion, "company" | "jobTitle" | "score" | "jobId">
+) {
   const all = listCvVersions();
   const item: CvVersion = {
     id: `cv_${Date.now()}`,
     name,
     text,
     updatedAt: Date.now(),
+    ...meta,
   };
   all.unshift(item);
   localStorage.setItem(KEY, JSON.stringify(all.slice(0, 20)));

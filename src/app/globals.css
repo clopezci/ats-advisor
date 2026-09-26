@@ -232,6 +232,13 @@ a {
   font-weight: 600;
   color: rgba(244, 247, 244, 0.55);
 }
+.ad-unit__product {
+  margin: 0 0 0.45rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #f0d78c;
+}
 .ad-unit__headline {
   margin: 0;
   font-size: 1.12rem;

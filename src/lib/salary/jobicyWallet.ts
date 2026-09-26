@@ -181,7 +181,9 @@ export async function recordJobicyLookup(opts: {
   /** Costo real reportado por Jobicy (`request_cost`). */
   costUsd?: number;
 }): Promise<JobicyWalletView> {
-  let { state, cloud } = await loadFromCloud();
+  const loaded = await loadFromCloud();
+  let state = loaded.state;
+  const cloud = loaded.cloud;
   let cost = 0;
   let billable = false;
   if (typeof opts.costUsd === "number" && Number.isFinite(opts.costUsd)) {
@@ -226,7 +228,9 @@ export async function acknowledgeJobicyFund(
   opts?: { notify?: boolean }
 ): Promise<JobicyWalletView> {
   const amount = Math.max(0.01, Math.round(amountUsd * 100) / 100);
-  let { state, cloud } = await loadFromCloud();
+  const loaded = await loadFromCloud();
+  let state = loaded.state;
+  const cloud = loaded.cloud;
   state = {
     ...state,
     fundedTotalUsd: Math.round((state.fundedTotalUsd + amount) * 1000) / 1000,
@@ -252,7 +256,9 @@ export async function updateJobicyWalletMeta(patch: {
   /** Reinicia contadores y deja funded = initialFundedUsd (default 10). */
   resetWithFundedUsd?: number;
 }): Promise<JobicyWalletView> {
-  let { state, cloud } = await loadFromCloud();
+  const loaded = await loadFromCloud();
+  let state = loaded.state;
+  const cloud = loaded.cloud;
   if (typeof patch.costPerLookupUsd === "number" && patch.costPerLookupUsd > 0) {
     state = { ...state, costPerLookupUsd: patch.costPerLookupUsd };
   }

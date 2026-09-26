@@ -144,6 +144,7 @@ export function buildRoleReviewPrompt(opts: {
 export function buildFallbackRoleReviewPlan(opts: {
   mode: RoleReviewMode;
   jobTitle: string;
+  company?: string;
   learnTopics: RoleReviewLearnTopic[];
   jobText: string;
   roleFamily?: RoleReviewFamily;

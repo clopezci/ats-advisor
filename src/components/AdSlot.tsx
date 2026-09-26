@@ -54,6 +54,7 @@ function HouseAd({ slot }: { slot: string }) {
         <span className="ad-unit__tag">Publicidad</span>
         <span className="ad-unit__brand">ArriendoSeguro</span>
       </div>
+      <p className="ad-unit__product">Contratos de arrendamiento de propiedades</p>
       <p className="ad-unit__headline">{creative.headline}</p>
       <p className="ad-unit__body">{creative.body}</p>
       <a

@@ -64,9 +64,11 @@ export default function AuthPage() {
   return (
     <div className="flex flex-1 flex-col gap-5">
       <h1 className="text-2xl font-semibold">Entrar</h1>
+      <p className="text-sm leading-relaxed">
+        El enlace guarda tu recorrido para consultarlo después, con este mismo correo. Analizar un CV no pide cuenta.
+      </p>
       <p className="text-sm muted leading-relaxed">
-        Te enviamos un enlace a tu correo, sin contraseña. Con esa sesión activas un plan de pago
-        y lo recuperas cuando vuelvas a entrar con el mismo correo.
+        Si ya pagaste, entra con ese correo para reclamar el plan.
       </p>
       {sessionEmail ? (
         <section className="bento-card space-y-3">
@@ -100,9 +102,11 @@ export default function AuthPage() {
         </>
       )}
       {msg && <p className="text-sm">{msg}</p>}
-      <Link href="/cuenta" className="btn-secondary">
-        Ir a mi cuenta
-      </Link>
+      {!sessionEmail ? (
+        <Link href="/cuenta" className="text-sm underline" style={{ color: "var(--brand)" }}>
+          Ya entré antes: ir a mi cuenta
+        </Link>
+      ) : null}
     </div>
   );
 }

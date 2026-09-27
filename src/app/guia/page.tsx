@@ -396,81 +396,90 @@ export default function GuiaPage() {
         <summary className="font-semibold text-sm cursor-pointer">
           Personalizar recorrido (avanzado)
         </summary>
-        <p className="text-xs muted leading-relaxed">
-          Solo si quieres mezclar piezas a mano. Si no, ignora esta sección.
+        <p className="text-sm muted leading-relaxed">
+          El camino normal es el botón de arriba. Abre una pieza solo si quieres armarlo a mano.
         </p>
 
-        <VoiceTextarea
-          label="Dilo con tus palabras (opcional)"
-          value={need}
-          onChange={setNeed}
-          className="field min-h-24"
-          placeholder="Ej.: me echaron, necesito CV y practicar entrevistas…"
-          dictationLabel="Dictar prioridad"
-        />
-        <button
-          type="button"
-          className="btn-secondary"
-          onClick={applyVoice}
-          disabled={need.trim().length < 6}
-        >
-          Marcar según esto
-        </button>
+        <details className="space-y-3">
+          <summary className="text-sm font-medium cursor-pointer">Decirlo con tus palabras</summary>
+          <VoiceTextarea
+            label="Qué necesitas ahora"
+            value={need}
+            onChange={setNeed}
+            className="field min-h-24"
+            placeholder="Ej.: me echaron, necesito CV y practicar entrevistas…"
+            dictationLabel="Dictar prioridad"
+          />
+          <button
+            type="button"
+            className="btn-primary"
+            onClick={applyVoice}
+            disabled={need.trim().length < 6}
+          >
+            Marcar según esto
+          </button>
+        </details>
 
-        <div className="flex flex-wrap gap-2">
+        <details className="space-y-3">
+          <summary className="text-sm font-medium cursor-pointer">Atajos</summary>
           <button type="button" className="btn-secondary" onClick={selectFree}>
             Solo lo gratis
           </button>
           <button type="button" className="btn-secondary" onClick={selectCarreraPack}>
             Gratis + Carrera
           </button>
-          <button type="button" className="btn-secondary" onClick={() => setSelected({})}>
+          <button type="button" className="text-sm underline" onClick={() => setSelected({})}>
             Limpiar
           </button>
-        </div>
+        </details>
 
-        <section className="space-y-2">
-          <h2 className="text-sm font-semibold">Gratis ({freeCount}/3)</h2>
-          {freeGoals.map((g) => (
-            <GoalRow
-              key={g.id}
-              g={g}
-              checked={Boolean(selected[g.id])}
-              onToggle={() => toggle(g.id)}
-            />
-          ))}
-        </section>
-
-        <section className="space-y-2">
-          <h2 className="text-sm font-semibold">Plan Carrera ({carreraCount})</h2>
-          <div className="bento-card space-y-1 text-xs muted">
+        <details className="space-y-2">
+          <summary className="text-sm font-medium cursor-pointer">Ruta de 8 módulos</summary>
+          <div className="space-y-1 text-sm muted">
             {CAREER_MODULE_PITCH.map((m) => (
               <p key={m.code}>
                 <strong style={{ color: "var(--text)" }}>{m.short}</strong> — {m.value}
               </p>
             ))}
           </div>
-          {carreraGoals.map((g) => (
-            <GoalRow
-              key={g.id}
-              g={g}
-              checked={Boolean(selected[g.id])}
-              onToggle={() => toggle(g.id)}
-            />
-          ))}
-        </section>
+        </details>
 
-        <section className="space-y-2">
-          <h2 className="text-sm font-semibold">Extras</h2>
-          {extraGoals.map((g) => (
-            <GoalRow
-              key={g.id}
-              g={g}
-              checked={Boolean(selected[g.id])}
-              onToggle={() => toggle(g.id)}
-            />
-          ))}
-        </section>
+        <details className="space-y-3">
+          <summary className="text-sm font-medium cursor-pointer">Elegir pieza por pieza</summary>
+          <section className="space-y-2">
+            <h2 className="text-sm font-semibold">Gratis ({freeCount}/3)</h2>
+            {freeGoals.map((g) => (
+              <GoalRow
+                key={g.id}
+                g={g}
+                checked={Boolean(selected[g.id])}
+                onToggle={() => toggle(g.id)}
+              />
+            ))}
+          </section>
+          <section className="space-y-2">
+            <h2 className="text-sm font-semibold">Plan Carrera ({carreraCount})</h2>
+            {carreraGoals.map((g) => (
+              <GoalRow
+                key={g.id}
+                g={g}
+                checked={Boolean(selected[g.id])}
+                onToggle={() => toggle(g.id)}
+              />
+            ))}
+          </section>
+          <section className="space-y-2">
+            <h2 className="text-sm font-semibold">Extras</h2>
+            {extraGoals.map((g) => (
+              <GoalRow
+                key={g.id}
+                g={g}
+                checked={Boolean(selected[g.id])}
+                onToggle={() => toggle(g.id)}
+              />
+            ))}
+          </section>
+        </details>
 
         <button type="button" className="btn-primary" disabled={!chosen.length} onClick={startWalk}>
           Empezar recorrido personalizado ({chosen.length})

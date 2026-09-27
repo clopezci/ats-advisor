@@ -45,7 +45,7 @@ export const PAGE_GUIDES: PageGuideCopy[] = [
   {
     path: "/guia",
     what: "Arma un recorrido personal. Gratis: analizador de CV, encaje rápido, tracker, checklist y bandas salariales. El valor profundo está en Carrera: la ruta de 8 módulos más LinkedIn, carta, entrevistas y negociación.",
-    how: "Marca lo que necesitas. Empiezas por lo gratis; al llegar a Carrera guardas correo, pagas y vuelves al mismo paso. La tarjeta “Ruta de 8 módulos” es el corazón del plan.",
+    how: "El camino normal es el botón de arriba: cuadernillo o ATS gratis. Personalizar está cerrado; ábrelo solo si quieres mezclar piezas.",
   },
   {
     path: "/tracker",

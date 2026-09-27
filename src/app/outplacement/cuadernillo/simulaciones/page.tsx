@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
@@ -17,6 +18,13 @@ export default function SimulacionesPage() {
   const [scores, setScores] = useState<Record<string, number>>({});
   const [notes, setNotes] = useState("");
   const [msg, setMsg] = useState("");
+
+  useJsonDraft("ats_simulaciones_draft", { caseId, answer, scores, notes }, (saved) => {
+    if (saved.caseId) setCaseId(saved.caseId);
+    if (saved.answer) setAnswer(saved.answer);
+    if (saved.scores && typeof saved.scores === "object") setScores(saved.scores);
+    if (saved.notes) setNotes(saved.notes);
+  });
 
   const c = useMemo(
     () => SIMULATION_CASES.find((x) => x.id === caseId) || SIMULATION_CASES[0],

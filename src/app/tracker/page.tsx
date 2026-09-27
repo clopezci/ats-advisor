@@ -17,6 +17,7 @@ import {
 } from "@/lib/tracker/jobs";
 import { getRoleReviewPlan, planProgressPct } from "@/lib/roleReview/storage";
 import { FlowContinueBar } from "@/components/FlowContinueBar";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 
 const STATUSES = Object.keys(STATUS_LABEL) as JobStatus[];
 
@@ -35,6 +36,13 @@ export default function TrackerPage() {
   useEffect(() => {
     refresh();
   }, []);
+
+  useJsonDraft("ats_tracker_form", { title, company, url, notes }, (saved) => {
+    if (saved.title) setTitle(saved.title);
+    if (saved.company) setCompany(saved.company);
+    if (saved.url) setUrl(saved.url);
+    if (saved.notes) setNotes(saved.notes);
+  });
 
   const visible = useMemo(
     () => (filter === "todos" ? jobs : jobs.filter((j) => j.status === filter)),

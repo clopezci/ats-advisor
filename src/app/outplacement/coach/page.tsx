@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
@@ -41,6 +42,11 @@ export default function CoachPage() {
       /* ignore */
     }
   }, []);
+
+  useJsonDraft("ats_coach_prompt", { mode, prompt }, (saved) => {
+    if (saved.mode && MODES.some((m) => m.id === saved.mode)) setMode(saved.mode);
+    if (saved.prompt) setPrompt(saved.prompt);
+  });
 
   function persist(next: Msg[]) {
     setThread(next);

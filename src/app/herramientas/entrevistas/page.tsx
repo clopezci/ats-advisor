@@ -4,6 +4,7 @@
 import { CourseWithTool } from "@/components/CourseWithTool";
 import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useMemo, useState } from "react";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
@@ -39,6 +40,17 @@ function EntrevistasBankTool() {
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useJsonDraft(
+    "ats_entrevistas_draft",
+    { track, idx, answer, feedback },
+    (saved) => {
+      if (saved.track && saved.track in BANK) setTrack(saved.track);
+      if (typeof saved.idx === "number") setIdx(saved.idx);
+      if (saved.answer) setAnswer(saved.answer);
+      if (saved.feedback) setFeedback(saved.feedback);
+    }
+  );
 
   const questions = useMemo(() => BANK[track], [track]);
   const question = questions[idx % questions.length];

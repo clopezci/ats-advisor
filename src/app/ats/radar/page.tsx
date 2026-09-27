@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { CvPasteField } from "@/components/CvPasteField";
@@ -48,6 +49,15 @@ export default function RadarPage() {
       /* ignore */
     }
   }, []);
+
+  useJsonDraft("ats_radar_draft", { bulk, cv, mustRaw, excludeRaw, minSalary, maxYears }, (saved) => {
+    if (saved.bulk) setBulk(saved.bulk);
+    if (saved.cv) setCv(saved.cv);
+    if (saved.mustRaw) setMustRaw(saved.mustRaw);
+    if (saved.excludeRaw) setExcludeRaw(saved.excludeRaw);
+    if (saved.minSalary) setMinSalary(saved.minSalary);
+    if (saved.maxYears) setMaxYears(saved.maxYears);
+  });
 
   function saveCriteria(next: RadarCriteria) {
     setCriteria(next);

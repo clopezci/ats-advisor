@@ -24,13 +24,17 @@ export function useJsonDraft<T>(key: string, value: T, onLoad: (saved: T) => voi
   useEffect(() => {
     if (!ready) return;
     const serial = JSON.stringify(value);
-    const id = window.setTimeout(() => {
+    const write = () => {
       try {
         localStorage.setItem(key, serial);
       } catch {
         /* ignore */
       }
-    }, 250);
-    return () => window.clearTimeout(id);
+    };
+    const id = window.setTimeout(write, 250);
+    return () => {
+      window.clearTimeout(id);
+      write();
+    };
   }, [key, ready, value]);
 }

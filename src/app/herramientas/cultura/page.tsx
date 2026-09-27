@@ -4,6 +4,7 @@
 import { CourseWithTool } from "@/components/CourseWithTool";
 import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useState } from "react";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
@@ -13,6 +14,12 @@ function CulturaTool() {
   const [jd, setJd] = useState("");
   const [out, setOut] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useJsonDraft("ats_cultura_draft", { company, jd, out }, (saved) => {
+    if (saved.company) setCompany(saved.company);
+    if (saved.jd) setJd(saved.jd);
+    if (saved.out) setOut(saved.out);
+  });
 
   async function run() {
     setLoading(true);

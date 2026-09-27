@@ -4,6 +4,7 @@
 import { CourseWithTool } from "@/components/CourseWithTool";
 import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useMemo, useState } from "react";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
@@ -14,6 +15,13 @@ function PlantillaTool() {
   const [role, setRole] = useState("");
   const [skills, setSkills] = useState("");
   const [achievement, setAchievement] = useState("");
+
+  useJsonDraft("ats_plantilla_draft", { name, role, skills, achievement }, (saved) => {
+    if (saved.name) setName(saved.name);
+    if (saved.role) setRole(saved.role);
+    if (saved.skills) setSkills(saved.skills);
+    if (saved.achievement) setAchievement(saved.achievement);
+  });
 
   const doc = useMemo(() => {
     return [

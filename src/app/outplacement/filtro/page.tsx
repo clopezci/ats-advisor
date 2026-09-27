@@ -4,6 +4,7 @@
 import { CourseWithTool } from "@/components/CourseWithTool";
 import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useEffect, useState } from "react";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
@@ -30,6 +31,19 @@ function FiltroTool() {
       /* ignore */
     }
   }, []);
+
+  useJsonDraft(
+    "ats_filtro_draft",
+    { job, questions, answers, idx, score, feedback },
+    (saved) => {
+      if (saved.job) setJob(saved.job);
+      if (saved.questions?.length) setQuestions(saved.questions);
+      if (saved.answers?.length) setAnswers(saved.answers);
+      if (typeof saved.idx === "number") setIdx(saved.idx);
+      if (typeof saved.score === "number") setScore(saved.score);
+      if (saved.feedback) setFeedback(saved.feedback);
+    }
+  );
 
   function buildLocal() {
     if (job.trim().length < 40) {

@@ -4,6 +4,7 @@
 import { CourseWithTool } from "@/components/CourseWithTool";
 import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useState } from "react";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
@@ -17,6 +18,19 @@ function PortfolioTool() {
   const [result, setResult] = useState("");
   const [skills, setSkills] = useState("");
   const [draft, setDraft] = useState<ReturnType<typeof buildPortfolioDraft> | null>(null);
+
+  useJsonDraft(
+    "ats_portfolio_draft",
+    { role, situation, task, action, result, skills },
+    (saved) => {
+      if (saved.role) setRole(saved.role);
+      if (saved.situation) setSituation(saved.situation);
+      if (saved.task) setTask(saved.task);
+      if (saved.action) setAction(saved.action);
+      if (saved.result) setResult(saved.result);
+      if (saved.skills) setSkills(saved.skills);
+    }
+  );
 
   function generate() {
     setDraft(buildPortfolioDraft({ role, situation, task, action, result, skills }));

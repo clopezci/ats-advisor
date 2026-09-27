@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, Suspense } from "react";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { SpeakButton } from "@/components/SpeakButton";
@@ -73,6 +74,14 @@ function ExpertoInner() {
       .catch(() => setEnabled(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [qSpecialty, packId]);
+
+  useJsonDraft("ats_experto_draft", { name, email, phone, message, specialty }, (saved) => {
+    if (saved.name) setName(saved.name);
+    if (saved.email) setEmail(saved.email);
+    if (saved.phone) setPhone(saved.phone);
+    if (saved.message) setMessage(saved.message);
+    if (saved.specialty) setSpecialty(saved.specialty);
+  });
 
   const selected = allies.find((a) => a.id === allyId);
 

@@ -4,6 +4,7 @@
 import { CourseWithTool } from "@/components/CourseWithTool";
 import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useEffect, useState } from "react";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceInput } from "@/components/VoiceField";
@@ -35,6 +36,19 @@ function NetworkingTool() {
   useEffect(() => {
     refresh();
   }, []);
+
+  useJsonDraft(
+    "ats_networking_form",
+    { name, company, role, nextStep, draft, category },
+    (saved) => {
+      if (saved.name) setName(saved.name);
+      if (saved.company) setCompany(saved.company);
+      if (saved.role) setRole(saved.role);
+      if (saved.nextStep) setNextStep(saved.nextStep);
+      if (saved.draft) setDraft(saved.draft);
+      if (saved.category) setCategory(saved.category);
+    }
+  );
 
   return (
     <div className="flex flex-1 flex-col gap-5">

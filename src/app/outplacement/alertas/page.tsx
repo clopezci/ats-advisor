@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
@@ -22,6 +23,13 @@ export default function AlertasPage() {
   useEffect(() => {
     setList(readAlerts());
   }, []);
+
+  useJsonDraft("ats_alertas_form", { query, city, remoteOk, notes }, (saved) => {
+    if (saved.query) setQuery(saved.query);
+    if (saved.city) setCity(saved.city);
+    if (typeof saved.remoteOk === "boolean") setRemoteOk(saved.remoteOk);
+    if (saved.notes) setNotes(saved.notes);
+  });
 
   function save() {
     if (query.trim().length < 3) return;

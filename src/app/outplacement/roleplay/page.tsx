@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
@@ -49,6 +50,18 @@ export default function RoleplayPage() {
       /* ignore */
     }
   }, []);
+
+  useJsonDraft(
+    "ats_roleplay_draft",
+    { sceneId, step, answer, rounds, jobHint },
+    (saved) => {
+      if (saved.sceneId === "filtro" || saved.sceneId === "competencias") setSceneId(saved.sceneId);
+      if (typeof saved.step === "number") setStep(saved.step);
+      if (saved.answer) setAnswer(saved.answer);
+      if (saved.rounds?.length) setRounds(saved.rounds);
+      if (saved.jobHint) setJobHint(saved.jobHint);
+    }
+  );
 
   function resetScene(id: (typeof SCENES)[number]["id"]) {
     setSceneId(id);

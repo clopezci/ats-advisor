@@ -4,6 +4,7 @@
 import { CourseWithTool } from "@/components/CourseWithTool";
 import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useEffect, useState } from "react";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
@@ -31,6 +32,19 @@ function CareerBriefTool() {
       /* ignore */
     }
   }, []);
+
+  useJsonDraft(
+    "ats_career_brief_draft",
+    { name, targetRole, city, strengths, gaps, next30 },
+    (saved) => {
+      if (saved.name) setName(saved.name);
+      if (saved.targetRole) setTargetRole(saved.targetRole);
+      if (saved.city) setCity(saved.city);
+      if (saved.strengths) setStrengths(saved.strengths);
+      if (saved.gaps) setGaps(saved.gaps);
+      if (saved.next30) setNext30(saved.next30);
+    }
+  );
 
   function generate() {
     const riasec = loadRiasecResult();

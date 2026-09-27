@@ -4,6 +4,7 @@
 import { CourseWithTool } from "@/components/CourseWithTool";
 import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useEffect, useState } from "react";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceInput } from "@/components/VoiceField";
@@ -38,6 +39,19 @@ function LinkedInTool() {
       /* ignore */
     }
   }, []);
+
+  useJsonDraft(
+    "ats_linkedin_draft",
+    { role, value, niche, missing, jobContext, out },
+    (saved) => {
+      if (saved.role) setRole(saved.role);
+      if (saved.value) setValue(saved.value);
+      if (saved.niche) setNiche(saved.niche);
+      if (saved.missing) setMissing(saved.missing);
+      if (saved.jobContext) setJobContext(saved.jobContext);
+      if (saved.out) setOut(saved.out);
+    }
+  );
 
   async function generate() {
     setLoading(true);

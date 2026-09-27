@@ -4,6 +4,7 @@
 import { CourseWithTool } from "@/components/CourseWithTool";
 import { toolCourseById } from "@/lib/courses/toolCourses";
 import { useEffect, useState } from "react";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
@@ -27,6 +28,12 @@ function SegundaCarreraTool() {
   useEffect(() => {
     setPlan(readEntitlement().plan);
   }, []);
+
+  useJsonDraft("ats_segunda_draft", { trackId, context, outline }, (saved) => {
+    if (saved.trackId) setTrackId(saved.trackId);
+    if (saved.context) setContext(saved.context);
+    if (saved.outline) setOutline(saved.outline);
+  });
 
   async function generateAi() {
     if (!trackId || context.trim().length < 20) return;

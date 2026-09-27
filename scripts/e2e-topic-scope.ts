@@ -119,7 +119,7 @@ assert(
 
 const coachRoute = readFileSync("src/app/api/role-review/coach/route.ts", "utf8");
 const completeRoute = readFileSync("src/app/api/ai/complete/route.ts", "utf8");
-assert("wire:coach", coachRoute.includes("isOnTopicQuestion") && coachRoute.includes("OFF_TOPIC_REPLY"));
+assert("wire:coach", coachRoute.includes("isClearlyOffTopic") && coachRoute.includes("OFF_TOPIC_REPLY"));
 assert("wire:complete", completeRoute.includes("assessTopicScope"));
 
 if (fails.length) {

@@ -103,12 +103,12 @@ export default function RepasoClient() {
     const terms = new Map<string, GapRow>();
     for (const t of fromAts?.missing || []) {
       const term = String(t).trim();
-      if (term) terms.set(term.toLowerCase(), { term, source: "ats_missing", wantLearn: false });
+      if (term) terms.set(term.toLowerCase(), { term, source: "ats_missing", wantLearn: true });
     }
     for (const t of fromAts?.hardMissing || []) {
       const term = String(t).trim();
       if (term && !terms.has(term.toLowerCase())) {
-        terms.set(term.toLowerCase(), { term, source: "ats_hard", wantLearn: false });
+        terms.set(term.toLowerCase(), { term, source: "ats_hard", wantLearn: true });
       }
     }
     for (const t of job?.learnTopics || []) {
@@ -227,9 +227,9 @@ export default function RepasoClient() {
           </div>
           <SpeakButton text="Arma un plan para practicar lo que pide la vacante, con retos del trabajo diario, sin inventar experiencia." />
         </div>
-        <p className="text-sm muted leading-relaxed">
-          Para no enfriar el oficio mientras buscas empleo: estudias lo del aviso y haces retos como
-          los de un día real de trabajo. Si algo no lo sabes, márcalo y entra al plan.
+        <p className="text-sm muted">
+          Cada exigencia de la vacante es una lección: qué es, para qué, qué resuelve y cómo se vive en el día.
+          Después vienen el reto, el ticket, STAR, la primera semana y el 1:1 con el jefe.
         </p>
         {quotaLabel ? <p className="text-xs muted">{quotaLabel}</p> : null}
         {metricsLabel ? <p className="text-xs muted">{metricsLabel}</p> : null}
@@ -322,8 +322,8 @@ export default function RepasoClient() {
                   <p className="font-medium">{g.term}</p>
                   <p className="text-xs muted">
                     {g.wantLearn
-                      ? "Entrará al plan: teoría corta + reto del trabajo diario."
-                      : "¿Quieres comenzar a aprenderlo?"}
+                      ? "Entra al curso de este tema y al reto del día."
+                      : "Quedará fuera del curso. Márcalo si la vacante lo exige."}
                   </p>
                 </div>
               </li>

@@ -56,7 +56,7 @@ export default function TrackerPage() {
           <h1 className="text-xl font-semibold">Tracker de postulaciones</h1>
           <SpeakButton text="Organiza tus vacantes por estado: interés, aplicado, entrevista, oferta o rechazo." />
         </div>
-        <p className="text-sm muted">Interés, aplicado, entrevista, oferta o rechazo.</p>
+        <p className="text-sm muted">Interés, aplicado, entrevista, oferta o rechazo. Sin correo, esta lista solo vive en este navegador.</p>
       </section>
 
       <section className="bento-card space-y-3">

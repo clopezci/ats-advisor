@@ -4,6 +4,7 @@ import { CookiePrefsButton } from "@/components/CookieBanner";
 import { MainNav } from "@/components/MainNav";
 import { PageGuide } from "@/components/PageGuide";
 import { SessionChip } from "@/components/SessionChip";
+import { DeviceOnlyNote } from "@/components/DeviceOnlyNote";
 
 export function AppShell({ children }: { children: ReactNode }) {
   return (
@@ -28,6 +29,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <SessionChip />
         </div>
         <MainNav />
+        <DeviceOnlyNote />
       </header>
       <main id="contenido-principal" className="flex flex-1 flex-col">
         <PageGuide />

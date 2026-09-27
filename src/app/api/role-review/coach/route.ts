@@ -6,7 +6,7 @@ import { hydrateSettingsFromCloud } from "@/lib/settingsPersist";
 import { clampText } from "@/lib/validation";
 import { parseUserKeysFromRequest } from "@/lib/ai/userKeysServer";
 import { requirePaidCloud } from "@/lib/entitlements/requirePaidApi";
-import { OFF_TOPIC_REPLY, isOnTopicQuestion } from "@/lib/ai/topicScope";
+import { OFF_TOPIC_REPLY, isClearlyOffTopic } from "@/lib/ai/topicScope";
 
 export const runtime = "nodejs";
 
@@ -39,7 +39,7 @@ export async function POST(req: Request) {
       );
     }
 
-    if (userReply && !isOnTopicQuestion(userReply, "repaso del rol")) {
+    if (userReply && isClearlyOffTopic(userReply)) {
       return NextResponse.json({
         ok: true,
         manager: OFF_TOPIC_REPLY,
@@ -55,6 +55,7 @@ export async function POST(req: Request) {
       "Hablas en español LATAM, frases cortas, tono profesional y directo.",
       "Preguntas por responsabilidades del aviso. Evalúas claridad, no inventas el CV del candidato.",
       "Si el candidato dice que aún está aprendiendo algo, no lo castigues: pide plan concreto.",
+      "Si el candidato acaba de responder, el nudge empieza con 'Sirve.' o 'A mejorar.' y dice por qué en una frase (hecho concreto y, si falta, un número).",
       "Responde SOLO JSON: {\"manager\":\"...\",\"nudge\":\"tip corto\",\"done\":false}",
       "done=true solo si ya hubo 4+ turnos útiles y puedes cerrar el 1:1.",
     ].join(" ");
@@ -103,9 +104,13 @@ export async function POST(req: Request) {
       done = Boolean(parsed.done);
     } catch {
       if (userReply) {
-        manager =
-          "Gracias. Ahora aterrízalo: ¿qué harías el lunes en las primeras 2 horas, y a quién le pedirías contexto?";
-        nudge = "Si aún lo estás aprendiendo, dilo y propone un mini-ejercicio.";
+        const concrete = /\d/.test(userReply) || /\b(hice|lider|defin|implement|coordin|entreg|reduj|aument|organic|propuse|arm[eé]|prioridad)\b/i.test(userReply);
+        manager = concrete
+          ? "Eso se puede trabajar. El lunes, ¿cuál sería el primer entregable de dos horas y a quién se lo mostrarías?"
+          : "Todavía está general. Dime una acción de esta semana y un alcance: personas, tiempo o antes/después.";
+        nudge = concrete
+          ? "Sirve. Hay una acción. El siguiente paso es el entregable de dos horas."
+          : "A mejorar. Falta un hecho: qué harías y un número o un alcance.";
       }
     }
 

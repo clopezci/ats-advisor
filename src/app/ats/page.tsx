@@ -7,7 +7,6 @@ import { CvPasteField, JobPasteField } from "@/components/CvPasteField";
 import { SpeakButton } from "@/components/SpeakButton";
 import { AdSlot } from "@/components/AdSlot";
 import type { AtsAnalyzeResult, AtsProfile } from "@/lib/ats/engine";
-import { DISCLAIMER_CV_REWRITE } from "@/lib/ats/coaching";
 import { detectAtsProfile } from "@/lib/ats/detectAts";
 import { buildCvDocx, downloadBlob } from "@/lib/ats/docxExport";
 import { extractPlainCv } from "@/lib/ats/plainCv";
@@ -34,7 +33,6 @@ import {
   cvTextForRescore,
   EXAMPLE_MARK,
   isFakeCvRewrite,
-  kindLabel,
   splitSurgicalCvResponse,
   type PatchSuggestion,
 } from "@/lib/ats/cvPatch";
@@ -1322,54 +1320,23 @@ export default function AtsPage() {
           )}
 
           {resultPhase === 2 && (
-            <button type="button" className="btn-primary" onClick={() => setResultPhase(3)}>
-              Siguiente: ver ejemplos de ajuste
+            <button type="button" className="btn-primary" onClick={() => setResultPhase(4)}>
+              Siguiente: consejos y reescritura
             </button>
           )}
 
-          {resultPhase >= 3 && (
+          {resultPhase === 3 && (
           <section className="bento-card space-y-3">
-            <h2 className="text-sm font-semibold">Ajustar hoja de vida</h2>
-            <p className="text-xs muted">{DISCLAIMER_CV_REWRITE}</p>
+            <h2 className="text-sm font-semibold">Ejemplos de la hoja</h2>
             <p className="text-sm leading-relaxed">
-              No cambia tu hoja. Muestra dos o tres ejemplos de cómo podría quedar una viñeta. Úsalos solo si el dato es real.
+              Los ejemplos completos, con número, están en el siguiente paso: consejos y reescritura. Aquí no cortamos frases a medias.
             </p>
-            {patchPlan && patchPlan.items.length > 0 ? (
-              <div className="space-y-2">
-                <p className="text-xs muted">{patchPlan.summary}</p>
-                <ul className="text-sm muted space-y-1.5 max-h-48 overflow-auto">
-                  {patchPlan.items.map((item) => (
-                    <li key={item.id}>
-                      <span className="font-medium" style={{ color: "var(--text)" }}>
-                        {kindLabel(item.kind)}:
-                      </span>{" "}
-                      {item.label}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : (
-              <p className="text-xs muted">Casi no hay huecos; el ajuste será mínimo.</p>
-            )}
             <button
               type="button"
               className="btn-primary"
-              disabled={rewriteLoading}
-              onClick={() => adjustCv("surgical")}
+              onClick={() => setResultPhase(4)}
             >
-              {rewriteLoading && rewriteMode === "surgical"
-                ? "Aplicando cambios…"
-                : "Ver ejemplos"}
-            </button>
-            <button
-              type="button"
-              className="btn-secondary"
-              disabled={rewriteLoading}
-              onClick={() => adjustCv("full")}
-            >
-              {rewriteLoading && rewriteMode === "full"
-                ? "Reescribiendo…"
-                : "Reescritura completa (opcional)"}
+              Siguiente: consejos y reescritura
             </button>
             {rewriteText && (
               <>
@@ -1564,6 +1531,18 @@ export default function AtsPage() {
 
           {resultPhase >= 5 && (
           <div className="flex flex-col gap-3">
+            {!sessionEmail ? (
+              <p className="text-sm leading-relaxed">
+                Sin correo, anotar la vacante no la guarda para consultarla después. Solo vive en este navegador y se puede perder.{" "}
+                <Link href="/auth" className="underline" style={{ color: "var(--brand)" }}>
+                  Entrar con mi correo
+                </Link>
+              </p>
+            ) : (
+              <p className="text-sm leading-relaxed">
+                Queda en tu cuenta, con el correo con el que entraste. Lo ves en Seguimiento.
+              </p>
+            )}
             <button
               type="button"
               className="btn-primary"
@@ -1600,7 +1579,7 @@ export default function AtsPage() {
                 }
               }}
             >
-              Guardar interés en el tracker
+              {sessionEmail ? "Guardar interés en tu cuenta" : "Anotar interés (solo en este navegador)"}
             </button>
             <button
               type="button"
@@ -1640,7 +1619,7 @@ export default function AtsPage() {
                 }
               }}
             >
-              Ya postulé (guarda con fecha)
+              {sessionEmail ? "Ya postulé (queda en tu cuenta)" : "Ya postulé (solo en este navegador)"}
             </button>
             <button
               type="button"

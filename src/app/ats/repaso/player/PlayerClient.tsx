@@ -17,8 +17,9 @@ import {
 } from "@/lib/roleReview/storage";
 import { ROLE_REVIEW_FAMILY_LABEL, type RoleReviewPlan } from "@/lib/roleReview/types";
 import { roleReviewAccountabilityTip } from "@/lib/roleReview/accountability";
+import { dayInRole, lessonFor } from "@/lib/roleReview/lesson";
 
-type Tab = "dia" | "ticket" | "star" | "semana1";
+type Tab = "dia" | "reto" | "ticket" | "star" | "semana1" | "oficio";
 
 export default function PlayerClient() {
   const params = useSearchParams();
@@ -194,10 +195,12 @@ export default function PlayerClient() {
       <div className="flex gap-2 overflow-x-auto pb-1">
         {(
           [
-            ["dia", "Estudio"],
+            ["dia", "Curso"],
+            ["reto", "Reto"],
             ["ticket", "Ticket"],
             ["star", "STAR"],
             ["semana1", "Semana 1"],
+            ["oficio", "Un día"],
           ] as const
         ).map(([k, label]) => (
           <button
@@ -214,37 +217,40 @@ export default function PlayerClient() {
       {tab === "dia" && current ? (
         <section className="bento-card space-y-3">
           <h2 className="font-semibold">{current.title}</h2>
-          {current.learnTopics?.length ? (
-            <p className="text-xs muted">Aprendes: {current.learnTopics.join(" · ")}</p>
-          ) : null}
-          <div className="space-y-2 text-sm leading-relaxed">
-            <p>
-              <span className="font-medium">Qué / para qué: </span>
-              {current.explain}
-            </p>
-            <p>
-              <span className="font-medium">En una empresa: </span>
-              {current.realWorld}
-            </p>
-            <ul className="muted space-y-1">
-              {(current.practices || []).map((p) => (
-                <li key={p}>• {p}</li>
-              ))}
-            </ul>
-            <p>
-              <span className="font-medium">Pregunta de entrevista: </span>
-              {current.interviewQ}
-            </p>
-            <p className="text-xs muted">Listo cuando: {(current.doneWhen || []).join(" · ")}</p>
+          <div className="space-y-3 text-sm leading-relaxed">
+            {(current.learnTopics?.length ? current.learnTopics : [current.title]).map((term) => (
+              <article key={term} className="space-y-2 rounded-lg p-3" style={{ border: "1px solid var(--border)" }}>
+                <h3 className="font-semibold">{term}</h3>
+                {lessonFor(term, plan.title, current.learnTopics?.[0] === term ? current.explain : undefined).map((block) => (
+                  <p key={block.heading}>
+                    <span className="font-medium">{block.heading}. </span>
+                    {block.body}
+                  </p>
+                ))}
+              </article>
+            ))}
           </div>
 
+          <p className="text-sm">
+            <span className="font-medium">Pregunta de entrevista. </span>
+            {current.interviewQ}
+          </p>
+          <button
+            type="button"
+            className="btn-secondary"
+            onClick={() => setTab("reto")}
+          >
+            Siguiente: el reto de este tema
+          </button>
+        </section>
+      ) : null}
+
+      {tab === "reto" ? (
+        <section className="bento-card space-y-3">
           {challenge ? (
-            <div
-              className="space-y-2 rounded-lg p-3"
-              style={{ border: "1px solid var(--brand)" }}
-            >
+            <div className="space-y-2">
               <p className="text-xs muted">Reto del trabajo diario · ~{challenge.timeMin} min</p>
-              <h3 className="font-semibold text-sm">{challenge.title}</h3>
+              <h2 className="font-semibold">{challenge.title}</h2>
               <p className="text-sm leading-relaxed">{challenge.brief}</p>
               <p className="text-xs muted">Del aviso: “{challenge.jdAnchor}”</p>
               <ol className="text-sm muted space-y-1 list-decimal pl-4">
@@ -268,8 +274,9 @@ export default function PlayerClient() {
                 {chDone ? "Reto completado" : "Completé el reto"}
               </button>
             </div>
-          ) : null}
-
+          ) : (
+            <p className="text-sm muted">Este día no tiene reto. Sigue con el curso o el ticket.</p>
+          )}
           <button
             type="button"
             className="btn-secondary"
@@ -286,6 +293,10 @@ export default function PlayerClient() {
 
       {tab === "ticket" ? (
         <section className="bento-card space-y-3">
+          <h2 className="font-semibold">Ticket de práctica</h2>
+          <p className="text-sm leading-relaxed">
+            Un ticket es una tarea como la que deja un equipo en su tablero: qué hay que hacer, qué tan urgente es y cuándo está terminada. No es un examen ni un trámite. Ciérralo cuando el entregable exista.
+          </p>
           {ticket ? (
             <>
               <div className="flex items-center gap-2 text-xs muted">
@@ -390,6 +401,18 @@ export default function PlayerClient() {
               ))}
             </div>
           ) : null}
+        </section>
+      ) : null}
+
+      {tab === "oficio" && current ? (
+        <section className="bento-card space-y-3">
+          <h2 className="font-semibold">Un día en este trabajo</h2>
+          <p className="text-sm leading-relaxed">
+            {dayInRole(plan.title, current.learnTopics?.[0] || current.title)}
+          </p>
+          <p className="text-sm leading-relaxed">
+            El primer mes no es dominar todo el aviso. Es escuchar el vocabulario real, hacer un caso acompañado y después repetirlo tú con feedback.
+          </p>
         </section>
       ) : null}
 

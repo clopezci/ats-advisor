@@ -118,8 +118,8 @@ export default function CoachClient() {
           />
         </div>
         <p className="text-sm muted">
-          El “jefe” pregunta por el aviso. No inventa tu CV. Si aún aprendes algo, dilo y propone
-          práctica.
+          Este 1:1 es gratis en este equipo. No hace falta cuenta para practicarlo. Sin correo, el diálogo no queda para consultarlo después.
+          Al enviar, ves si la respuesta sirve o hay que mejorarla.
         </p>
       </section>
 
@@ -143,7 +143,14 @@ export default function CoachClient() {
         )}
       </section>
 
-      {nudge ? <p className="text-xs muted">Pista: {nudge}</p> : null}
+      {nudge ? (
+        <section className="bento-card space-y-1">
+          <h2 className="text-sm font-semibold">
+            {nudge.startsWith("Sirve") ? "Tu respuesta sirve" : nudge.startsWith("A mejorar") ? "Tu respuesta hay que mejorarla" : "Sobre tu respuesta"}
+          </h2>
+          <p className="text-sm leading-relaxed">{nudge}</p>
+        </section>
+      ) : null}
       {done ? (
         <p className="text-sm" style={{ color: "var(--brand)" }}>
           1:1 cerrado. Vuelve al player o re-analiza el CV.

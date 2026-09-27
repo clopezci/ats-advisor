@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 import { SpeakButton } from "@/components/SpeakButton";
 import { PaywallCard } from "@/components/PaywallCard";
 import { canAccessOutplacement, readEntitlement, type PlanId } from "@/lib/entitlements";
@@ -38,6 +39,12 @@ export function PsicoClient() {
   const [bankEjercicios, setBankEjercicios] = useState<PsicoEjercicio[] | null>(null);
   const [bankMsg, setBankMsg] = useState("");
   const [publicFichas, setPublicFichas] = useState<PsicoFicha[] | null>(null);
+
+  useJsonDraft("ats_psico_draft", { answer, cursor, revealed }, (saved) => {
+    if (typeof saved.answer === "string" && saved.answer) setAnswer(saved.answer);
+    if (typeof saved.cursor === "number" && saved.cursor >= 0) setCursor(saved.cursor);
+    if (saved.revealed === true) setRevealed(true);
+  });
 
   const unlocked = canAccessOutplacement(plan);
   const trial = useMemo(() => trialExercises(), []);

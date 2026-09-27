@@ -949,7 +949,8 @@ export default function AdminPage() {
         <p>API health: {health}</p>
         <p>
           Errores → log + envelope Sentry (si SENTRY_DSN) + Telegram al owner con throttle 15 min. Cron diario:{" "}
-          <code>/api/cron/audit</code>.
+          <code>/api/cron/audit</code>. Lunes y jueves, <code>/api/cron/keepalive</code> consulta Supabase para que el
+          proyecto gratis no se pause.
         </p>
         <button type="button" className="btn-secondary" disabled={testingAlert} onClick={runHealthAlert}>
           {testingAlert ? "Enviando…" : "Enviar reporte de salud a Telegram ahora"}

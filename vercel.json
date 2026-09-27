@@ -15,6 +15,10 @@
     {
       "path": "/api/cron/salary-refresh",
       "schedule": "0 12 1 * *"
+    },
+    {
+      "path": "/api/cron/keepalive",
+      "schedule": "0 16 * * 1,4"
     }
   ]
 }

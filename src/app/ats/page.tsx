@@ -1463,12 +1463,34 @@ export default function AtsPage() {
 
           {resultPhase === 3 && (
             <button type="button" className="btn-primary" onClick={() => setResultPhase(4)}>
-              Siguiente: carta de postulación
+              Siguiente: consejos de postulación
             </button>
           )}
 
           {resultPhase >= 4 && (
           <>
+          <section className="bento-card space-y-3">
+            <h2 className="text-sm font-semibold">Cómo lograr una buena postulación</h2>
+            <p className="text-xs muted">
+              Plan accionable según esta vacante y cómo filtran los ATS (parse → match → ranking → humano).
+            </p>
+            <button type="button" className="btn-primary" disabled={applyLoading} onClick={askApplicationAdvice}>
+              {applyLoading ? "Preparando plan…" : "Consejos de buena postulación"}
+            </button>
+            {applyTips && <p className="text-sm muted whitespace-pre-wrap">{applyTips}</p>}
+          </section>
+
+          <section className="bento-card space-y-3">
+            <div className="flex items-center justify-between gap-2">
+              <h2 className="text-sm font-semibold">Reescrituras puntuales (5 viñetas)</h2>
+              <SpeakButton text={aiTip || "Pide sugerencias de reescritura basadas en el análisis."} />
+            </div>
+            <button type="button" className="btn-secondary" disabled={aiLoading} onClick={askAiRewrite}>
+              {aiLoading ? "Generando…" : "Pedir reescrituras con IA"}
+            </button>
+            {aiTip && <p className="text-sm muted whitespace-pre-wrap">{aiTip}</p>}
+          </section>
+
           <section className="bento-card space-y-3">
             <h2 className="text-sm font-semibold">Carta / mensaje de postulación</h2>
             <p className="text-xs muted">
@@ -1497,28 +1519,6 @@ export default function AtsPage() {
                 </button>
               </>
             )}
-          </section>
-
-          <section className="bento-card space-y-3">
-            <h2 className="text-sm font-semibold">Cómo lograr una buena postulación</h2>
-            <p className="text-xs muted">
-              Plan accionable según esta vacante y cómo filtran los ATS (parse → match → ranking → humano).
-            </p>
-            <button type="button" className="btn-primary" disabled={applyLoading} onClick={askApplicationAdvice}>
-              {applyLoading ? "Preparando plan…" : "Consejos de buena postulación"}
-            </button>
-            {applyTips && <p className="text-sm muted whitespace-pre-wrap">{applyTips}</p>}
-          </section>
-
-          <section className="bento-card space-y-3">
-            <div className="flex items-center justify-between gap-2">
-              <h2 className="text-sm font-semibold">Reescrituras puntuales (5 viñetas)</h2>
-              <SpeakButton text={aiTip || "Pide sugerencias de reescritura basadas en el análisis."} />
-            </div>
-            <button type="button" className="btn-secondary" disabled={aiLoading} onClick={askAiRewrite}>
-              {aiLoading ? "Generando…" : "Pedir reescrituras con IA"}
-            </button>
-            {aiTip && <p className="text-sm muted whitespace-pre-wrap">{aiTip}</p>}
           </section>
 
           {resultPhase === 4 && (

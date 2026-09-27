@@ -7,6 +7,7 @@ import { CvPasteField, JobPasteField } from "@/components/CvPasteField";
 import { JOBS_MULTI_EXAMPLE } from "@/lib/copy/fieldExamples";
 import { rankJobsAgainstCv, type MultiJobResult } from "@/lib/ats/multiMatch";
 import type { AtsProfile } from "@/lib/ats/engine";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 
 type JobDraft = { id: string; title: string; text: string };
 
@@ -27,6 +28,11 @@ export default function MultiMatchPage() {
       /* ignore */
     }
   }, []);
+
+  useJsonDraft("ats_multi_draft", { cv, bulk }, (saved) => {
+    if (saved.cv) setCv(saved.cv);
+    if (saved.bulk) setBulk(saved.bulk);
+  });
 
   function parseBulk() {
     const chunks = bulk

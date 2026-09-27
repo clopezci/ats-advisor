@@ -7,6 +7,7 @@ import { CvPasteField, JobPasteField } from "@/components/CvPasteField";
 import { SCREENING_Q_EXAMPLE } from "@/lib/copy/fieldExamples";
 import { HintTextarea } from "@/components/HintTextarea";
 import { extractScreeningQuestions, buildScreeningPrompt } from "@/lib/ats/screening";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 
 export default function ScreeningPage() {
   const [cv, setCv] = useState("");
@@ -34,6 +35,12 @@ export default function ScreeningPage() {
       .filter(Boolean);
     setQuestions([...base, ...extra].slice(0, 12));
   }, [job, extraQ]);
+
+  useJsonDraft("ats_screening_draft", { cv, job, extraQ }, (saved) => {
+    if (saved.cv) setCv(saved.cv);
+    if (saved.job) setJob(saved.job);
+    if (saved.extraQ) setExtraQ(saved.extraQ);
+  });
 
   async function generate() {
     setLoading(true);

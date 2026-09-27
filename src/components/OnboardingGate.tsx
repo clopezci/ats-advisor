@@ -47,24 +47,35 @@ export function OnboardingGate({ children }: { children: ReactNode }) {
 
       <Link
         href="/outplacement"
-        className="btn-primary"
-        style={{ minHeight: "4.75rem", fontSize: "1.1rem", lineHeight: 1.35 }}
+        className="btn-primary w-full"
+        style={{
+          minHeight: "4.75rem",
+          fontSize: "1.1rem",
+          lineHeight: 1.35,
+          flexDirection: "column",
+          gap: "0.2rem",
+          textAlign: "center",
+        }}
         onClick={() => choose("carrera")}
       >
-        Retomar mi carrera
-        <span className="block text-xs font-normal opacity-90">
-          Un paso a la vez, con Continuar
-        </span>
+        <span>Retomar mi carrera</span>
+        <span className="text-xs font-normal opacity-90">Un paso a la vez, con Continuar</span>
       </Link>
 
       <Link
         href="/ats"
-        className="btn-secondary"
-        style={{ minHeight: "4.25rem", lineHeight: 1.35 }}
+        className="btn-secondary w-full"
+        style={{
+          minHeight: "4.25rem",
+          lineHeight: 1.35,
+          flexDirection: "column",
+          gap: "0.2rem",
+          textAlign: "center",
+        }}
         onClick={() => choose("ats")}
       >
-        Probar el analizador de CV (gratis)
-        <span className="block text-xs font-normal muted">Tu CV contra una vacante · en 2 minutos</span>
+        <span>Probar el analizador de CV (gratis)</span>
+        <span className="text-xs font-normal muted">Tu CV contra una vacante · en 2 minutos</span>
       </Link>
 
       <p className="text-center text-xs muted">

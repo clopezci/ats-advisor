@@ -9,6 +9,7 @@ import { VoiceTextarea } from "@/components/VoiceField";
 import { SpeakButton } from "@/components/SpeakButton";
 import { scoreStarAnswer, STAR_BANK } from "@/lib/interview/star";
 import { storedProfileEmail } from "@/lib/client/storedEmail";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 
 function EntrevistaTool() {
   const [qIndex, setQIndex] = useState(0);
@@ -25,6 +26,11 @@ function EntrevistaTool() {
       /* ignore */
     }
   }, []);
+
+  useJsonDraft("ats_entrevista_draft", { answer, jobHint }, (saved) => {
+    if (saved.answer) setAnswer(saved.answer);
+    if (saved.jobHint) setJobHint(saved.jobHint);
+  });
 
   const item = STAR_BANK[qIndex % STAR_BANK.length];
   const local = useMemo(() => (answer.trim().length >= 40 ? scoreStarAnswer(answer) : null), [answer]);

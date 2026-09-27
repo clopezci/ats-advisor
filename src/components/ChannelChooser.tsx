@@ -53,7 +53,7 @@ export function ChannelChooser({
             }
             onClick={() => onChange(q.channel)}
           >
-            <span className="flex items-center justify-between gap-2">
+            <span className="flex w-full items-center justify-between gap-2">
               <span className="font-medium">{q.label}</span>
               <span className="text-xs pill-brand">{q.shortBadge}</span>
             </span>

@@ -18,9 +18,9 @@ export function PageGuide() {
     const focus = readFocusPath();
     const quiet =
       pathname === "/" ||
+      pathname.startsWith("/ats") ||
       pathname.startsWith("/outplacement/cuadernillo") ||
-      (focus === "carrera" && pathname.startsWith("/outplacement")) ||
-      (focus === "ats" && pathname.startsWith("/ats"));
+      (focus === "carrera" && pathname.startsWith("/outplacement"));
     setShow(!quiet && Boolean(guide));
   }, [pathname, guide]);
 

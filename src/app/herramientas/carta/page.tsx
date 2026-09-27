@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { CvPasteField, JobPasteField } from "@/components/CvPasteField";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 
 function CartaTool() {
   const [cv, setCv] = useState("");
@@ -34,6 +35,12 @@ function CartaTool() {
       /* ignore */
     }
   }, []);
+
+  useJsonDraft("ats_carta_draft", { cv, job, contextNote }, (saved) => {
+    if (saved.cv) setCv(saved.cv);
+    if (saved.job) setJob(saved.job);
+    if (saved.contextNote) setContextNote(saved.contextNote);
+  });
 
   async function generate() {
     setLoading(true);

@@ -73,12 +73,19 @@ function HomeInner() {
 
       <Link
         href="/ats"
-        className="btn-primary"
-        style={{ minHeight: "4.75rem", fontSize: "1.15rem", lineHeight: 1.35 }}
+        className="btn-primary w-full"
+        style={{
+          minHeight: "4.75rem",
+          fontSize: "1.15rem",
+          lineHeight: 1.35,
+          flexDirection: "column",
+          gap: "0.2rem",
+          textAlign: "center",
+        }}
         onClick={() => writeFocusPath("ats")}
       >
-        ATS gratis
-        <span className="block text-xs font-normal opacity-90">
+        <span>ATS gratis</span>
+        <span className="text-xs font-normal opacity-90">
           Compara tu CV con una vacante · puntaje y qué mejorar
         </span>
       </Link>
@@ -86,12 +93,19 @@ function HomeInner() {
       {careerTarget ? (
         <Link
           href={careerTarget.href}
-          className="btn-secondary"
-          style={{ minHeight: "4.75rem", fontSize: "1.15rem", lineHeight: 1.35 }}
+          className="btn-secondary w-full"
+          style={{
+            minHeight: "4.75rem",
+            fontSize: "1.15rem",
+            lineHeight: 1.35,
+            flexDirection: "column",
+            gap: "0.2rem",
+            textAlign: "center",
+          }}
           onClick={() => writeFocusPath("carrera")}
         >
-          {careerTarget.label}
-          <span className="block text-xs font-normal opacity-90">{careerTarget.hint}</span>
+          <span>{careerTarget.label}</span>
+          <span className="text-xs font-normal opacity-90">{careerTarget.hint}</span>
         </Link>
       ) : (
         <Link

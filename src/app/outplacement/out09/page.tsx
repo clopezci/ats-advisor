@@ -12,6 +12,7 @@ import {
   type PlanId,
 } from "@/lib/entitlements";
 import { PaywallCard } from "@/components/PaywallCard";
+import { useJsonDraft } from "@/lib/client/useJsonDraft";
 
 type Skill = "soft" | "hard" | null;
 
@@ -38,6 +39,18 @@ export default function Out09Page() {
     const g = canGenerateOut09(e);
     if (!g.ok) setGateMsg(g.reason || "");
   }, []);
+
+  useJsonDraft(
+    "ats_out09_draft",
+    { step, skill: skill || "", description, qIndex, answers },
+    (saved) => {
+      if (saved.step >= 1 && saved.step <= 5) setStep(saved.step);
+      if (saved.skill === "soft" || saved.skill === "hard") setSkill(saved.skill);
+      if (saved.description) setDescription(saved.description);
+      if (typeof saved.qIndex === "number") setQIndex(saved.qIndex);
+      if (saved.answers && typeof saved.answers === "object") setAnswers(saved.answers);
+    }
+  );
 
   const placeholder =
     skill === "hard"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { DictationButton } from "@/components/DictationButton";
 import { CvPasteField, JobPasteField } from "@/components/CvPasteField";
@@ -14,7 +14,7 @@ import { extractPlainCv } from "@/lib/ats/plainCv";
 import { HelpTip } from "@/components/HelpTip";
 import { glossaryForTitle } from "@/lib/ats/glossary";
 import { compareAtsResults, lineDiff, type ScoreDelta } from "@/lib/ats/compare";
-import { buildHistoryPayload, pushAtsHistory, saveAtsWorkspace } from "@/lib/ats/history";
+import { buildHistoryPayload, pushAtsHistory, readAtsWizardDraft, saveAtsWorkspace, writeAtsWizardDraft } from "@/lib/ats/history";
 import { canRunAts, recordAtsRun } from "@/lib/limits/atsFree";
 import { openPrintableReport } from "@/lib/ats/report";
 import { bumpStreak } from "@/lib/engagement/streak";
@@ -94,17 +94,95 @@ export default function AtsPage() {
   const [ownAi, setOwnAi] = useState(false);
   const [sessionEmail, setSessionEmail] = useState<string | null>(null);
   const [resultPhase, setResultPhase] = useState(1);
+  const [draftReady, setDraftReady] = useState(false);
+  const stepRef = useRef(step);
+  stepRef.current = step;
+
+  function currentDraft(overrides?: Partial<{ step: 1 | 2 | 3 | 4; result: AtsAnalyzeResult | null; resultPhase: number }>) {
+    return {
+      step: overrides?.step ?? stepRef.current,
+      cvText,
+      jobText,
+      jobUrl,
+      companyDomain,
+      companyName,
+      atsProfile,
+      result: overrides && "result" in overrides ? overrides.result : result,
+      resultPhase: overrides?.resultPhase ?? resultPhase,
+    };
+  }
+
+  function rememberDraft(overrides?: Partial<{ step: 1 | 2 | 3 | 4; result: AtsAnalyzeResult | null; resultPhase: number }>) {
+    writeAtsWizardDraft(currentDraft(overrides));
+  }
+
+  function goForward(
+    next: 1 | 2 | 3 | 4,
+    overrides?: Partial<{ result: AtsAnalyzeResult | null; resultPhase: number }>
+  ) {
+    setStep(next);
+    rememberDraft({ step: next, ...overrides });
+    window.history.pushState({ atsWizard: true, atsStep: next }, "");
+  }
+
+  function goBack(next: 1 | 2 | 3 | 4) {
+    setStep(next);
+    rememberDraft({ step: next });
+    window.history.replaceState({ atsWizard: true, atsStep: next }, "");
+  }
 
   useEffect(() => {
     try {
-      const draft = localStorage.getItem("ats_cv_draft");
-      if (draft) {
-        setCvText(draft);
-        localStorage.removeItem("ats_cv_draft");
+      const draft = readAtsWizardDraft();
+      const legacy = localStorage.getItem("ats_cv_draft");
+      if (draft && (draft.cvText.trim() || draft.jobText.trim())) {
+        setCvText(draft.cvText);
+        setJobText(draft.jobText);
+        setJobUrl(draft.jobUrl);
+        setCompanyDomain(draft.companyDomain);
+        setCompanyName(draft.companyName);
+        setAtsProfile((draft.atsProfile as AtsProfile) || "generic");
+        setResult((draft.result as AtsAnalyzeResult | null) ?? null);
+        setResultPhase(draft.result && draft.step === 4 ? draft.resultPhase || 1 : 1);
+        setStep(draft.result ? draft.step : draft.step === 4 ? 3 : draft.step);
+      } else if (legacy) {
+        setCvText(legacy);
       }
     } catch {
       /* ignore */
     }
+    setDraftReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (!draftReady) return;
+    const id = window.setTimeout(() => rememberDraft(), 200);
+    const flush = () => rememberDraft();
+    window.addEventListener("pagehide", flush);
+    return () => {
+      window.clearTimeout(id);
+      window.removeEventListener("pagehide", flush);
+    };
+    // rememberDraft reads latest state via closure of this render
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [draftReady, step, cvText, jobText, jobUrl, companyDomain, companyName, atsProfile, result, resultPhase]);
+
+  useEffect(() => {
+    if (!draftReady) return;
+    const st = window.history.state as { atsWizard?: boolean } | null;
+    if (!st?.atsWizard) {
+      window.history.replaceState({ atsWizard: true, atsStep: stepRef.current }, "");
+    }
+    const onPop = () => {
+      const next = window.history.state as { atsWizard?: boolean; atsStep?: number } | null;
+      const s = next?.atsStep;
+      if (s === 1 || s === 2 || s === 3 || s === 4) setStep(s);
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, [draftReady]);
+
+  useEffect(() => {
     fetch("/api/features")
       .then((r) => r.json())
       .then((d) => {
@@ -152,11 +230,7 @@ export default function AtsPage() {
       return;
     }
     const d = detectAtsProfile({ jobText, jobUrl, companyDomain, companyName });
-    setDetectMsg(
-      d.company
-        ? `${d.reason} · Empresa: ${d.company.name}`
-        : `${d.reason} (${d.confidence})`
-    );
+    setDetectMsg(d.company ? `${d.reason} · Empresa: ${d.company.name}` : d.reason);
     if (d.confidence === "high" || d.confidence === "medium") {
       setAtsProfile(d.profile);
     }
@@ -623,6 +697,7 @@ export default function AtsPage() {
     }
     setLoading(true);
     setError("");
+    rememberDraft();
     setRewriteText("");
     setApplyTips("");
     setAiTip("");
@@ -648,7 +723,7 @@ export default function AtsPage() {
       if (data.detection?.reason) setDetectMsg(data.detection.reason);
       setResult(data.result);
       setResultPhase(1);
-      setStep(4);
+      goForward(4, { result: data.result, resultPhase: 1 });
       setOriginalCv(cvText);
       setScoreDelta(null);
       setDiffLines([]);
@@ -682,6 +757,10 @@ export default function AtsPage() {
     } finally {
       setLoading(false);
     }
+  }
+
+  if (!draftReady) {
+    return <p className="text-sm muted">Cargando tu hoja…</p>;
   }
 
   return (
@@ -735,7 +814,7 @@ export default function AtsPage() {
           </div>
           {error && step === 1 && <AtsNotice text={error} />}
           <div className="flex flex-col gap-3">
-            <button type="button" className="btn-primary" disabled={cvText.trim().length < 40} onClick={() => setStep(2)}>
+            <button type="button" className="btn-primary" disabled={cvText.trim().length < 40} onClick={() => goForward(2)}>
               Continuar
             </button>
             <Link href="/" className="btn-secondary">
@@ -790,10 +869,10 @@ export default function AtsPage() {
             {detectMsg && <p className="text-xs muted">{detectMsg}</p>}
           </div>
           <div className="flex flex-col gap-3">
-            <button type="button" className="btn-primary" disabled={jobText.trim().length < 40} onClick={() => setStep(3)}>
+            <button type="button" className="btn-primary" disabled={jobText.trim().length < 40} onClick={() => goForward(3)}>
               Continuar
             </button>
-            <button type="button" className="btn-secondary" onClick={() => setStep(1)}>
+            <button type="button" className="btn-secondary" onClick={() => goBack(1)}>
               Atrás
             </button>
           </div>
@@ -871,7 +950,7 @@ export default function AtsPage() {
             <button type="button" className="btn-primary" disabled={loading} onClick={analyze}>
               {loading ? "Analizando…" : "Analizar ahora"}
             </button>
-            <button type="button" className="btn-secondary" onClick={() => setStep(2)}>
+            <button type="button" className="btn-secondary" onClick={() => goBack(2)}>
               Atrás
             </button>
           </div>
@@ -881,6 +960,9 @@ export default function AtsPage() {
 
       {step === 4 && result && (
         <>
+          <button type="button" className="btn-secondary" onClick={() => goBack(3)}>
+            Atrás
+          </button>
           <section className="bento-card space-y-3">
             <div className="flex items-center justify-between gap-2">
               <div>
@@ -1609,9 +1691,9 @@ export default function AtsPage() {
               type="button"
               className="btn-secondary"
               onClick={() => {
-                setStep(1);
                 setResult(null);
                 setResultPhase(1);
+                goBack(1);
               }}
             >
               Nuevo análisis

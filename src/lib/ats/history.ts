@@ -110,3 +110,62 @@ export function saveAtsWorkspace(data: {
     /* ignore */
   }
 }
+
+const DRAFT_KEY = "ats_wizard_draft";
+
+export type AtsWizardDraft = {
+  step: 1 | 2 | 3 | 4;
+  cvText: string;
+  jobText: string;
+  jobUrl: string;
+  companyDomain: string;
+  companyName: string;
+  atsProfile: string;
+  result: unknown | null;
+  resultPhase: number;
+};
+
+export function readAtsWizardDraft(): AtsWizardDraft | null {
+  try {
+    const raw = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null");
+    if (!raw || typeof raw !== "object") return null;
+    const step = Number(raw.step);
+    if (step !== 1 && step !== 2 && step !== 3 && step !== 4) return null;
+    return {
+      step,
+      cvText: typeof raw.cvText === "string" ? raw.cvText : "",
+      jobText: typeof raw.jobText === "string" ? raw.jobText : "",
+      jobUrl: typeof raw.jobUrl === "string" ? raw.jobUrl : "",
+      companyDomain: typeof raw.companyDomain === "string" ? raw.companyDomain : "",
+      companyName: typeof raw.companyName === "string" ? raw.companyName : "",
+      atsProfile: typeof raw.atsProfile === "string" ? raw.atsProfile : "generic",
+      result: raw.result ?? null,
+      resultPhase: Number(raw.resultPhase) || 1,
+    };
+  } catch {
+    return null;
+  }
+}
+
+export function writeAtsWizardDraft(draft: AtsWizardDraft) {
+  try {
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+    if (draft.cvText.trim() || draft.jobText.trim()) {
+      const prev = JSON.parse(localStorage.getItem("ats_workspace") || "null") || {};
+      localStorage.setItem(
+        "ats_workspace",
+        JSON.stringify({
+          ...prev,
+          cvText: draft.cvText || prev.cvText || "",
+          jobText: draft.jobText || prev.jobText || "",
+          jobUrl: draft.jobUrl || prev.jobUrl || "",
+          atsProfile: draft.atsProfile || prev.atsProfile || "generic",
+          result: draft.result ?? prev.result,
+          savedAt: Date.now(),
+        })
+      );
+    }
+  } catch {
+    /* ignore */
+  }
+}

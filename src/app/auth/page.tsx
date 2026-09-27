@@ -5,6 +5,25 @@ import Link from "next/link";
 import { createBrowserSupabase } from "@/lib/supabase/client";
 import { claimReferral } from "@/lib/growth/referral";
 
+function authNotice(raw: string): string {
+  const text = raw.toLowerCase();
+  if (
+    text.includes("failed to fetch") ||
+    text.includes("network") ||
+    text.includes("load failed") ||
+    text.includes("fetch")
+  ) {
+    return "No pudimos enviar el enlace. El acceso por correo no está respondiendo. Inténtalo otra vez en un momento.";
+  }
+  if (text.includes("rate") || text.includes("too many") || text.includes("once every")) {
+    return "Pediste varios enlaces seguidos. Espera un minuto y vuelve a intentar.";
+  }
+  if (text.includes("email") && (text.includes("invalid") || text.includes("unable"))) {
+    return "Ese correo no se ve bien. Revísalo, por ejemplo nombre@hotmail.com, y vuelve a enviarlo.";
+  }
+  return "No pudimos enviar el enlace. Revisa el correo e inténtalo otra vez.";
+}
+
 export default function AuthPage() {
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
@@ -40,17 +59,22 @@ export default function AuthPage() {
     setMsg("");
     const sb = createBrowserSupabase();
     if (!sb) {
-      setMsg("El inicio de sesión no está disponible en este momento.");
+      setMsg("El acceso por correo no está conectado en este momento. Puedes seguir usando la app en este navegador.");
       setLoading(false);
       return;
     }
-    const { error } = await sb.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: `${window.location.origin}/cuenta`,
-      },
-    });
-    setMsg(error ? error.message : "Te enviamos un enlace mágico. Revisa tu correo.");
+    try {
+      const { error } = await sb.auth.signInWithOtp({
+        email: email.trim(),
+        options: {
+          emailRedirectTo: `${window.location.origin}/cuenta`,
+        },
+      });
+      setMsg(error ? authNotice(error.message) : "Te enviamos un enlace. Ábrelo desde ese correo para guardar tu recorrido.");
+    } catch (err) {
+      const raw = err instanceof Error ? err.message : "";
+      setMsg(authNotice(raw));
+    }
     setLoading(false);
   }
 

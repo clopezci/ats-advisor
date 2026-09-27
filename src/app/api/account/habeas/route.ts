@@ -4,14 +4,14 @@ import { sendResendEmail, notifyOwnerTelegram } from "@/lib/notify/channels";
 import { rateLimit, rateLimitedResponse } from "@/lib/api/rateLimit";
 import { escapeHtml, clampText, isValidEmail } from "@/lib/validation";
 import { reportError } from "@/lib/observability";
-import { createServiceSupabase, hasSupabase } from "@/lib/supabase/client";
+import { createServiceSupabase, hasSupabase, supabaseProjectUrl } from "@/lib/supabase/client";
 
 async function userEmailFromBearer(req: Request): Promise<string | null> {
   const auth = req.headers.get("authorization") || "";
   const token = auth.startsWith("Bearer ") ? auth.slice(7).trim() : "";
   if (!token || !hasSupabase()) return null;
   const sb = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    supabaseProjectUrl(),
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     { global: { headers: { Authorization: `Bearer ${token}` } }, auth: { persistSession: false } }
   );

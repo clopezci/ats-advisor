@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireCronAuth } from "@/lib/admin/auth";
 import { reportError } from "@/lib/observability";
+import { supabaseProjectUrl } from "@/lib/supabase/client";
 
 export const runtime = "nodejs";
 
@@ -14,7 +15,7 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });
   }
 
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, "");
+  const url = supabaseProjectUrl();
   const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   const service = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !anon) {

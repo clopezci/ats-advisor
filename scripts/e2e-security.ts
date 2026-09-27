@@ -15,6 +15,13 @@ function assert(name: string, cond: boolean, detail: string) {
   else fails.push({ name, detail });
 }
 
+/** NODE_ENV es de solo lectura en los tipos de Next; el build de Vercel revisa este script. */
+function setNodeEnv(value: string | undefined) {
+  const env = process.env as Record<string, string | undefined>;
+  if (value === undefined) delete env.NODE_ENV;
+  else env.NODE_ENV = value;
+}
+
 function req(url: string, init?: RequestInit & { headers?: Record<string, string> }) {
   return new Request(url, init);
 }
@@ -39,11 +46,11 @@ async function main() {
   const prevNode = process.env.NODE_ENV;
   const prevVercel = process.env.VERCEL_ENV;
   const prevAdmin = process.env.ADMIN_SECRET;
-  process.env.NODE_ENV = "production";
+  setNodeEnv("production");
   process.env.VERCEL_ENV = "production";
   delete process.env.ADMIN_SECRET;
   assert("admin cerrado si falta el secreto en producción", isAdminSecret("dev-admin") === false && isAdminSecret(null) === false, "dev-admin no abre producción");
-  process.env.NODE_ENV = prevNode;
+  setNodeEnv(prevNode);
   if (prevVercel === undefined) delete process.env.VERCEL_ENV;
   else process.env.VERCEL_ENV = prevVercel;
   if (prevAdmin === undefined) delete process.env.ADMIN_SECRET;
@@ -91,7 +98,7 @@ async function main() {
   );
   assert("settings de admin rechaza secreto ajeno", admin.status === 401, `status ${admin.status}`);
 
-  process.env.NODE_ENV = "production";
+  setNodeEnv("production");
   process.env.VERCEL_ENV = "production";
   const prevWompi = process.env.WOMPI_EVENTS_SECRET;
   const prevSkip = process.env.WOMPI_CHECKSUM_MODE;
@@ -118,7 +125,7 @@ async function main() {
   else process.env.WOMPI_EVENTS_SECRET = prevWompi;
   if (prevSkip === undefined) delete process.env.WOMPI_CHECKSUM_MODE;
   else process.env.WOMPI_CHECKSUM_MODE = prevSkip;
-  process.env.NODE_ENV = prevNode;
+  setNodeEnv(prevNode);
   if (prevVercel === undefined) delete process.env.VERCEL_ENV;
   else process.env.VERCEL_ENV = prevVercel;
 

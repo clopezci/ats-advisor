@@ -293,35 +293,42 @@ export default function CuentaPage() {
       <div className="bento-card space-y-3">
         <h2 className="font-semibold">Plan actual</h2>
         <p className="text-sm muted">
-          {planLabel(plan)}. Si pagaste, usa el mismo correo del pago para activar el plan aquí.
+          {planLabel(plan)}. Si pagaste, reclama el plan con el mismo correo del pago.
         </p>
+        <Link href="/precios" className="btn-primary">
+          Ver precios
+        </Link>
+        <button type="button" className="btn-secondary" onClick={claimPayments}>
+          Reclamar pago
+        </button>
         {allowLocalPlans && (
-          <div className="flex flex-col gap-2">
-            {(["free", "carrera", "plus", "tester", "paused_90"] as PlanId[]).map((p) => (
-              <button
-                key={p}
-                type="button"
-                className="btn-secondary"
-                onClick={() => {
-                  setPlan(p, "local");
-                  setPlanState(p);
-                  setMsg(planLabel(p));
-                }}
-              >
-                {planLabel(p)}
-              </button>
-            ))}
-          </div>
-        )}
-        {!allowLocalPlans && (
-          <>
-            <Link href="/precios" className="btn-primary">
-              Ver precios / activar plan
-            </Link>
-            <button type="button" className="btn-secondary" onClick={claimPayments}>
-              Reclamar pago (mismo correo del checkout)
-            </button>
-          </>
+          <details className="rounded-xl border p-3" style={{ borderColor: "var(--border)" }}>
+            <summary className="cursor-pointer text-sm font-medium">Probar un plan en este equipo</summary>
+            <div className="mt-3 flex flex-col gap-2">
+              {(
+                [
+                  ["free", "Gratis"],
+                  ["carrera", "Carrera"],
+                  ["plus", "Carrera (plan anterior)"],
+                  ["tester", "Tester"],
+                  ["paused_90", "Pausa 90 días"],
+                ] as const
+              ).map(([p, label]) => (
+                <button
+                  key={p}
+                  type="button"
+                  className="btn-secondary"
+                  onClick={() => {
+                    setPlan(p, "local");
+                    setPlanState(p);
+                    setMsg(label);
+                  }}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </details>
         )}
       </div>
 

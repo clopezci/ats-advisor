@@ -325,43 +325,41 @@ export default function PreciosPage() {
         <input
           className="field"
           type="email"
-          placeholder="Correo (recomendado: activa el plan en cloud tras el pago)"
+          placeholder="Tu correo, el mismo con el que vas a reclamar el plan"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <p className="text-xs muted">
-          Sin correo el pago se confirma, pero el plan cloud queda pendiente hasta que reclames en
-          /cuenta con el mismo email.
-        </p>
-        <input
-          className="field"
-          placeholder="Cupón (opcional)"
-          value={coupon}
-          onChange={(e) => setCoupon(e.target.value)}
-        />
-        <p className="text-sm font-medium">Pasarela</p>
-        <div className="flex flex-col gap-2">
-          {(
-            [
-              ["auto", "Automática (Wompi o MP)"],
-              ["wompi", "Wompi"],
-              ["mercadopago", "Mercado Pago"],
-            ] as const
-          ).map(([id, label]) => (
-            <button
-              key={id}
-              type="button"
-              className="btn-secondary"
-              style={
-                provider === id ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" } : undefined
-              }
-              onClick={() => setProvider(id)}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
+        <details className="rounded-xl border p-3" style={{ borderColor: "var(--border)" }}>
+          <summary className="cursor-pointer text-sm font-medium">Cupón o pasarela</summary>
+          <div className="mt-3 space-y-2">
+            <input
+              className="field"
+              placeholder="Cupón (opcional)"
+              value={coupon}
+              onChange={(e) => setCoupon(e.target.value)}
+            />
+            {(
+              [
+                ["auto", "Automática"],
+                ["wompi", "Wompi"],
+                ["mercadopago", "Mercado Pago"],
+              ] as const
+            ).map(([id, label]) => (
+              <button
+                key={id}
+                type="button"
+                className="btn-secondary"
+                style={
+                  provider === id ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" } : undefined
+                }
+                onClick={() => setProvider(id)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </details>
       </section>
 
       <section className="bento-card space-y-3">
@@ -384,20 +382,6 @@ export default function PreciosPage() {
           <li>• Coach IA, filtro telefónico, red de contactos, negociación de oferta</li>
           <li>• Cápsulas y recordatorio de tarea por Telegram (gratis) o WhatsApp (add-on más alto)</li>
         </ul>
-        {demoAllowed && (
-          <button
-            type="button"
-            className="btn-secondary"
-            disabled={dummyPhase === "processing" || loading === "dummy-carrera"}
-            onClick={() => dummyPay("carrera")}
-          >
-            {loading === "dummy-carrera"
-              ? "Procesando pago…"
-              : dummyPhase === "done" && canAccessOutplacement(currentPlan)
-                ? "✓ Carrera activo — volver al recorrido"
-                : "Pagar Carrera (demo local)"}
-          </button>
-        )}
         <button
           type="button"
           className="btn-primary"
@@ -406,6 +390,23 @@ export default function PreciosPage() {
         >
           {loading === "carrera" ? "Preparando…" : "Pagar Carrera"}
         </button>
+        {demoAllowed && (
+          <details className="rounded-xl border p-3" style={{ borderColor: "var(--border)" }}>
+            <summary className="cursor-pointer text-sm">Probar sin cobro</summary>
+            <button
+              type="button"
+              className="btn-secondary mt-3"
+              disabled={dummyPhase === "processing" || loading === "dummy-carrera"}
+              onClick={() => dummyPay("carrera")}
+            >
+              {loading === "dummy-carrera"
+                ? "Procesando pago…"
+                : dummyPhase === "done" && canAccessOutplacement(currentPlan)
+                  ? "Carrera activo — volver al recorrido"
+                  : "Activar Carrera en este equipo"}
+            </button>
+          </details>
+        )}
       </section>
 
       <section className="bento-card space-y-3">

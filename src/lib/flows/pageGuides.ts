@@ -260,7 +260,7 @@ export const PAGE_GUIDES: PageGuideCopy[] = [
   {
     path: "/cuenta",
     what: "Sin cuenta puedes comparar un CV con una vacante y ver el resultado. Con tu correo guardas ese resultado para consultarlo después.",
-    how: "Entra con tu correo si quieres guardar y volver a verlo. Si ya pagaste, usa ese mismo correo en Reclamar.",
+    how: "Entra con tu correo si quieres guardar y volver a verlo. Si ya pagaste, en Plan actual toca Reclamar pago con ese mismo correo.",
   },
   {
     path: "/feedback",

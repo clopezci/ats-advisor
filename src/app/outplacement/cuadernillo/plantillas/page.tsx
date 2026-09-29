@@ -6,6 +6,7 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceInput } from "@/components/VoiceField";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
 import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
+import { WB_EX } from "@/lib/workbook/fieldExamples";
 import {
   NETWORK_TEMPLATES,
   fillNetworkTemplate,
@@ -85,20 +86,21 @@ export default function PlantillasNetworkingPage() {
         <div className="grid gap-3 sm:grid-cols-2">
           {(
             [
-              ["Nombre", "Nombre del contacto"],
-              ["Tu nombre", "Tu nombre"],
-              ["rol", "Rol que buscas"],
-              ["resultado", "Logro / resultado"],
-              ["Empresa", "Empresa"],
-              ["favor concreto", "Favor concreto"],
+              ["Nombre", "Nombre del contacto", WB_EX.plantillas.Nombre],
+              ["Tu nombre", "Tu nombre", WB_EX.plantillas["Tu nombre"]],
+              ["rol", "Rol que buscas", WB_EX.plantillas.rol],
+              ["resultado", "Logro / resultado", WB_EX.plantillas.resultado],
+              ["Empresa", "Empresa", WB_EX.plantillas.Empresa],
+              ["favor concreto", "Favor concreto", WB_EX.plantillas["favor concreto"]],
             ] as const
-          ).map(([key, label]) => (
+          ).map(([key, label, example]) => (
             <VoiceInput
               key={key}
               label={label}
               value={vars[key] || ""}
               onChange={(v) => setVars((prev) => ({ ...prev, [key]: v }))}
               className="field"
+              example={example}
               dictationLabel="Dictar"
             />
           ))}

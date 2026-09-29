@@ -6,6 +6,7 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
 import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
+import { WB_EX } from "@/lib/workbook/fieldExamples";
 import {
   readWorkbook,
   writeWorkbook,
@@ -87,7 +88,7 @@ export default function GuionesWizardPage() {
           value={s.pitch}
           onChange={(v) => patch({ pitch: v })}
           className="field min-h-28"
-          placeholder="Hola, soy… Trabajo en… Logré… Ahora busco… ¿Tendrías 15 min para…?"
+          example={WB_EX.guiones.pitch}
           dictationLabel="Dictar pitch"
         />
       </section>
@@ -105,6 +106,7 @@ export default function GuionesWizardPage() {
           value={s.exitReason}
           onChange={(v) => patch({ exitReason: v })}
           className="field min-h-24"
+          example={WB_EX.guiones.exitReason}
           dictationLabel="Dictar razón de salida"
         />
       </section>
@@ -124,7 +126,7 @@ export default function GuionesWizardPage() {
           value={s.matrixNotes}
           onChange={(v) => patch({ matrixNotes: v })}
           className="field min-h-36"
-          placeholder="Reclutadores: …&#10;Excolegas: favor = intro a 1 persona&#10;Empresa objetivo (frío): conversación de mercado…"
+          example={WB_EX.guiones.audienceMatrix}
           dictationLabel="Dictar matriz"
         />
       </section>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
+import { WB_EX } from "@/lib/workbook/fieldExamples";
 import { readWorkbook, writeWorkbook, type WorkbookState } from "@/lib/workbook/types";
 import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 
@@ -12,16 +13,16 @@ const INTRO =
   "Negocia paquete total, no solo el sueldo base. Define piso, meta y techo antes de la llamada. Educativo: no es asesoría legal.";
 
 const FIELDS = [
-  ["base", "Salario base (actual o target)"],
-  ["variable", "Variable / bono"],
-  ["benefits", "Beneficios valorados (salud, póliza, etc.)"],
-  ["flexibility", "Flexibilidad (remoto, horarios)"],
-  ["growth", "Crecimiento (aprendizaje, scope)"],
-  ["floor", "Piso (no bajo de…)"],
-  ["target", "Meta"],
-  ["stretch", "Techo / stretch"],
-  ["dealbreakers", "Dealbreakers"],
-  ["negotiables", "Negociables"],
+  ["base", "Salario base (actual o target)", WB_EX.compensacion.base],
+  ["variable", "Variable / bono", WB_EX.compensacion.variable],
+  ["benefits", "Beneficios valorados (salud, póliza, etc.)", WB_EX.compensacion.benefits],
+  ["flexibility", "Flexibilidad (remoto, horarios)", WB_EX.compensacion.flexibility],
+  ["growth", "Crecimiento (aprendizaje, scope)", WB_EX.compensacion.growth],
+  ["floor", "Piso (no bajo de…)", WB_EX.compensacion.floor],
+  ["target", "Meta", WB_EX.compensacion.target],
+  ["stretch", "Techo / stretch", WB_EX.compensacion.stretch],
+  ["dealbreakers", "Dealbreakers", WB_EX.compensacion.dealbreakers],
+  ["negotiables", "Negociables", WB_EX.compensacion.negotiables],
 ] as const;
 
 export default function CompensacionPage() {
@@ -70,13 +71,14 @@ export default function CompensacionPage() {
         ) : null}
       </section>
 
-      {FIELDS.map(([key, label]) => (
+      {FIELDS.map(([key, label, example]) => (
         <section key={key} className="bento-card space-y-2">
           <VoiceTextarea
             label={label}
             value={c[key]}
             onChange={(v) => patch({ [key]: v })}
             className="field min-h-16"
+            example={example}
             dictationLabel="Dictar"
           />
         </section>
@@ -103,7 +105,7 @@ export default function CompensacionPage() {
           value={c.objectionScripts || ""}
           onChange={(v) => patch({ objectionScripts: v })}
           className="field min-h-24"
-          placeholder="Si dicen X, yo digo…"
+          example={WB_EX.compensacion.scriptIfLow}
           dictationLabel="Dictar"
         />
       </section>

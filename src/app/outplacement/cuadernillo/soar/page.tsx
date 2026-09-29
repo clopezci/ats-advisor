@@ -6,6 +6,7 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
 import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
+import { WB_EX } from "@/lib/workbook/fieldExamples";
 import {
   composeSoarOneLiner,
   emptySoarEntry,
@@ -100,7 +101,7 @@ export default function SoarWizardPage() {
             value={e.situation}
             onChange={(v) => setEntry(i, { situation: v })}
             className="field min-h-16"
-            placeholder="Contexto breve (equipo, proyecto, momento)"
+            example={WB_EX.soar.situation}
             dictationLabel="Dictar situación"
           />
           <VoiceTextarea
@@ -108,7 +109,7 @@ export default function SoarWizardPage() {
             value={e.obstacle}
             onChange={(v) => setEntry(i, { obstacle: v })}
             className="field min-h-16"
-            placeholder="Qué complicaba el resultado"
+            example={WB_EX.soar.obstacle}
             dictationLabel="Dictar obstáculo"
           />
           <VoiceTextarea
@@ -116,7 +117,7 @@ export default function SoarWizardPage() {
             value={e.action}
             onChange={(v) => setEntry(i, { action: v })}
             className="field min-h-16"
-            placeholder="Verbos: lideré, diseñé, negocié…"
+            example={WB_EX.soar.action}
             dictationLabel="Dictar acción"
           />
           <VoiceTextarea
@@ -124,7 +125,7 @@ export default function SoarWizardPage() {
             value={e.result}
             onChange={(v) => setEntry(i, { result: v })}
             className="field min-h-16"
-            placeholder="Número, plazo o antes/después"
+            example={WB_EX.soar.result}
             dictationLabel="Dictar resultado"
           />
           <VoiceTextarea
@@ -132,7 +133,7 @@ export default function SoarWizardPage() {
             value={e.oneLiner}
             onChange={(v) => setEntry(i, { oneLiner: v })}
             className="field min-h-20"
-            placeholder="Logré … mediante … en … superando …"
+            example={WB_EX.soar.oneLiner}
             dictationLabel="Dictar frase"
           />
           <VoiceTextarea
@@ -140,7 +141,7 @@ export default function SoarWizardPage() {
             value={e.techSkills || ""}
             onChange={(v) => setEntry(i, { techSkills: v })}
             className="field min-h-12"
-            placeholder="SQL, Excel, SAP, Python…"
+            example={WB_EX.soar.hardSkills}
             dictationLabel="Dictar"
           />
           <VoiceTextarea
@@ -148,7 +149,7 @@ export default function SoarWizardPage() {
             value={e.softSkills || ""}
             onChange={(v) => setEntry(i, { softSkills: v })}
             className="field min-h-12"
-            placeholder="Influencia, priorización, coaching…"
+            example={WB_EX.soar.softSkills}
             dictationLabel="Dictar"
           />
           <button

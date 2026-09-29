@@ -6,6 +6,7 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
 import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
+import { WB_EX } from "@/lib/workbook/fieldExamples";
 import {
   emptyMarketCompany,
   readWorkbook,
@@ -107,6 +108,7 @@ export default function MercadoWizardPage() {
             save({ ...wb, market: { ...wb.market, timeMixNote: v, updatedAt: Date.now() } })
           }
           className="field"
+          example={WB_EX.mercado.weeklyMix}
           dictationLabel="Dictar mix"
         />
       </section>
@@ -125,6 +127,7 @@ export default function MercadoWizardPage() {
               value={c.name}
               onChange={(v) => setCompany(i, { name: v })}
               className="field"
+              example={WB_EX.mercado.companyName}
               dictationLabel="Dictar empresa"
             />
             <VoiceInput
@@ -132,6 +135,7 @@ export default function MercadoWizardPage() {
               value={c.careersUrl}
               onChange={(v) => setCompany(i, { careersUrl: v })}
               className="field"
+              example={WB_EX.mercado.careersUrl}
               dictationLabel="Dictar URL"
             />
             <VoiceInput
@@ -139,7 +143,7 @@ export default function MercadoWizardPage() {
               value={c.lastCheck}
               onChange={(v) => setCompany(i, { lastCheck: v })}
               className="field"
-              placeholder="AAAA-MM-DD"
+              example={WB_EX.mercado.lastCheck}
               dictationLabel="Dictar fecha"
             />
             <VoiceTextarea
@@ -147,24 +151,26 @@ export default function MercadoWizardPage() {
               value={c.evp || ""}
               onChange={(v) => setCompany(i, { evp: v })}
               className="field min-h-16"
+              example={WB_EX.mercado.evp}
               dictationLabel="Dictar EVP"
             />
             <div className="grid gap-2 sm:grid-cols-2">
               {(
                 [
-                  ["evpCulture", "Cultura"],
-                  ["evpImpact", "Impacto"],
-                  ["evpLearning", "Aprendizaje"],
-                  ["evpComp", "Compensación"],
-                  ["evpScope", "Scope / rol"],
+                  ["evpCulture", "Cultura", WB_EX.mercado.evpCulture],
+                  ["evpImpact", "Impacto", WB_EX.mercado.evpImpact],
+                  ["evpLearning", "Aprendizaje", WB_EX.mercado.evpLearning],
+                  ["evpComp", "Compensación", WB_EX.mercado.evpComp],
+                  ["evpScope", "Scope / rol", WB_EX.mercado.evpScope],
                 ] as const
-              ).map(([key, label]) => (
+              ).map(([key, label, ex]) => (
                 <VoiceInput
                   key={key}
                   label={label}
                   value={c[key] || ""}
                   onChange={(v) => setCompany(i, { [key]: v })}
                   className="field"
+                  example={ex}
                   dictationLabel={label}
                 />
               ))}
@@ -174,6 +180,7 @@ export default function MercadoWizardPage() {
               value={c.notes}
               onChange={(v) => setCompany(i, { notes: v })}
               className="field min-h-16"
+              example={WB_EX.mercado.companyNotes}
               dictationLabel="Dictar notas"
             />
           </div>
@@ -195,7 +202,7 @@ export default function MercadoWizardPage() {
             save({ ...wb, market: { ...wb.market, evpTopSummary: v, updatedAt: Date.now() } })
           }
           className="field min-h-24"
-          placeholder="1) Empresa — por …&#10;2) …"
+          example={WB_EX.mercado.targetCompanies}
           dictationLabel="Dictar top 5"
         />
       </section>

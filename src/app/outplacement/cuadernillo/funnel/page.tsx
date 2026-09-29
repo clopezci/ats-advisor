@@ -11,6 +11,7 @@ import {
   type FunnelWeek,
   type WorkbookState,
 } from "@/lib/workbook/types";
+import { WB_EX } from "@/lib/workbook/fieldExamples";
 import { listJobs } from "@/lib/tracker/jobs";
 import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 
@@ -100,6 +101,7 @@ export default function FunnelPage() {
             value={w.weekLabel}
             onChange={(v) => setWeek(i, { weekLabel: v })}
             className="field"
+            example={WB_EX.funnel.weekLabel}
             dictationLabel="Dictar"
           />
           <div className="grid gap-3 sm:grid-cols-2">
@@ -130,7 +132,7 @@ export default function FunnelPage() {
             value={w.notes}
             onChange={(v) => setWeek(i, { notes: v })}
             className="field min-h-16"
-            placeholder="Ej.: subí red al 50% porque portales no responden"
+            example={WB_EX.funnel.reflection}
             dictationLabel="Dictar"
           />
         </section>

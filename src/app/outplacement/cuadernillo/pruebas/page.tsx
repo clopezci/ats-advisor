@@ -10,6 +10,7 @@ import {
   competencyLabel,
   topCompetencies,
 } from "@/lib/workbook/competencies";
+import { WB_EX } from "@/lib/workbook/fieldExamples";
 import { STYLE_QUESTIONS, summarizeStyle } from "@/lib/workbook/styleQuiz";
 import { readWorkbook, writeWorkbook, type WorkbookState } from "@/lib/workbook/types";
 import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
@@ -100,7 +101,7 @@ export default function PruebasPage() {
               value={r.evidence}
               onChange={(v) => setRating(c.id, { evidence: v })}
               className="field min-h-16"
-              placeholder="Logro o ejemplo concreto"
+              example={WB_EX.pruebas.evidence}
               dictationLabel="Dictar"
             />
           </section>
@@ -131,6 +132,7 @@ export default function PruebasPage() {
             })
           }
           className="field min-h-16"
+          example={WB_EX.pruebas.gap30}
           dictationLabel="Dictar"
         />
       </section>

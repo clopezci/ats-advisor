@@ -5,6 +5,7 @@ import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
+import { WB_EX } from "@/lib/workbook/fieldExamples";
 import { readWorkbook, writeWorkbook, type WorkbookState } from "@/lib/workbook/types";
 import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 
@@ -101,7 +102,7 @@ export default function ConectoresPage() {
           value={mapNote}
           onChange={(v) => persistNotes(v, weekActions)}
           className="field min-h-32"
-          placeholder="1) Ana — Conector — intro a ops&#10;2) Luis — Aliado — …"
+          example={WB_EX.conectores.map15}
           dictationLabel="Dictar mapa"
         />
       </section>
@@ -113,7 +114,7 @@ export default function ConectoresPage() {
           value={weekActions}
           onChange={(v) => persistNotes(mapNote, v)}
           className="field min-h-24"
-          placeholder="1) Mensaje a [conector] pidiendo…&#10;2) …"
+          example={WB_EX.conectores.favors}
           dictationLabel="Dictar"
         />
         <button type="button" className="btn-primary" onClick={markRelated}>

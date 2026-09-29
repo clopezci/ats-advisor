@@ -15,6 +15,7 @@ import {
   type ContactStatus,
   type NetworkContact,
 } from "@/lib/networking/contacts";
+import { WB_EX } from "@/lib/workbook/fieldExamples";
 import { readWorkbook, writeWorkbook } from "@/lib/workbook/types";
 import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 
@@ -73,6 +74,7 @@ export default function RedCrmPage() {
           value={form.name}
           onChange={(v) => setForm((f) => ({ ...f, name: v }))}
           className="field"
+          example={WB_EX.red.name}
           dictationLabel="Dictar"
         />
         <VoiceInput
@@ -80,6 +82,7 @@ export default function RedCrmPage() {
           value={form.company}
           onChange={(v) => setForm((f) => ({ ...f, company: v }))}
           className="field"
+          example={WB_EX.red.company}
           dictationLabel="Dictar"
         />
         <VoiceInput
@@ -87,6 +90,7 @@ export default function RedCrmPage() {
           value={form.role}
           onChange={(v) => setForm((f) => ({ ...f, role: v }))}
           className="field"
+          example={WB_EX.red.role}
           dictationLabel="Dictar"
         />
         <label className="block text-sm font-medium">
@@ -110,7 +114,7 @@ export default function RedCrmPage() {
           value={form.channel}
           onChange={(v) => setForm((f) => ({ ...f, channel: v }))}
           className="field"
-          placeholder="LinkedIn, mail, WhatsApp…"
+          example={WB_EX.red.channel}
           dictationLabel="Dictar"
         />
         <VoiceTextarea
@@ -118,6 +122,7 @@ export default function RedCrmPage() {
           value={form.favorAsked}
           onChange={(v) => setForm((f) => ({ ...f, favorAsked: v }))}
           className="field min-h-16"
+          example={WB_EX.red.ask}
           dictationLabel="Dictar"
         />
         <button

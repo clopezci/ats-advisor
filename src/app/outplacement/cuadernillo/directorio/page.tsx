@@ -13,6 +13,7 @@ import {
   type WorkbookState,
 } from "@/lib/workbook/types";
 import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
+import { WB_EX } from "@/lib/workbook/fieldExamples";
 import {
   HUNTER_LEGAL_NOTICE,
   SUGGESTED_HUNTERS,
@@ -70,6 +71,7 @@ export default function DirectorioPage() {
             save({ ...wb, directory: { ...d, industry: v, updatedAt: Date.now() } })
           }
           className="field"
+          example={WB_EX.directorio.industry}
           dictationLabel="Dictar industria"
         />
         <VoiceInput
@@ -77,7 +79,7 @@ export default function DirectorioPage() {
           value={d.city}
           onChange={(v) => save({ ...wb, directory: { ...d, city: v, updatedAt: Date.now() } })}
           className="field"
-          placeholder="Bogotá híbrido / remoto LATAM…"
+          example={WB_EX.directorio.city}
           dictationLabel="Dictar ciudad"
         />
       </section>
@@ -133,6 +135,7 @@ export default function DirectorioPage() {
             value={e.name}
             onChange={(v) => setEntry(i, { name: v })}
             className="field"
+            example={WB_EX.directorio.name}
             dictationLabel="Dictar"
           />
           <VoiceInput
@@ -140,6 +143,7 @@ export default function DirectorioPage() {
             value={e.org}
             onChange={(v) => setEntry(i, { org: v })}
             className="field"
+            example={WB_EX.directorio.org}
             dictationLabel="Dictar"
           />
           <VoiceInput
@@ -147,6 +151,7 @@ export default function DirectorioPage() {
             value={e.roles}
             onChange={(v) => setEntry(i, { roles: v })}
             className="field"
+            example={WB_EX.directorio.roles}
             dictationLabel="Dictar"
           />
           <VoiceInput
@@ -154,6 +159,7 @@ export default function DirectorioPage() {
             value={e.channel}
             onChange={(v) => setEntry(i, { channel: v })}
             className="field"
+            example={WB_EX.directorio.channel}
             dictationLabel="Dictar"
           />
           <VoiceInput
@@ -161,7 +167,7 @@ export default function DirectorioPage() {
             value={e.lastTouch}
             onChange={(v) => setEntry(i, { lastTouch: v })}
             className="field"
-            placeholder="AAAA-MM-DD"
+            example={WB_EX.directorio.lastTouch}
             dictationLabel="Dictar"
           />
           <VoiceTextarea
@@ -169,6 +175,7 @@ export default function DirectorioPage() {
             value={e.notes}
             onChange={(v) => setEntry(i, { notes: v })}
             className="field min-h-16"
+            example={WB_EX.directorio.notes}
             dictationLabel="Dictar"
           />
         </section>
@@ -200,6 +207,7 @@ export default function DirectorioPage() {
             save({ ...wb, directory: { ...d, portalNotes: v, updatedAt: Date.now() } })
           }
           className="field min-h-20"
+          example={WB_EX.directorio.weeklyGoal}
           dictationLabel="Dictar"
         />
       </section>

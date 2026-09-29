@@ -6,6 +6,7 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
 import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
+import { WB_EX } from "@/lib/workbook/fieldExamples";
 import {
   readWorkbook,
   writeWorkbook,
@@ -71,7 +72,7 @@ export default function MapaWizardPage() {
           value={m.strengths}
           onChange={(v) => patch({ strengths: v })}
           className="field min-h-28"
-          placeholder="1) …&#10;2) …&#10;3) …"
+          example={WB_EX.mapa.strengths}
           dictationLabel="Dictar fortalezas"
         />
       </section>
@@ -83,7 +84,7 @@ export default function MapaWizardPage() {
           value={m.motivators}
           onChange={(v) => patch({ motivators: v })}
           className="field min-h-20"
-          placeholder="Logro, retos, avance, altruismo…"
+          example={WB_EX.mapa.motivators}
           dictationLabel="Dictar motivadores"
         />
         <VoiceTextarea
@@ -91,7 +92,7 @@ export default function MapaWizardPage() {
           value={m.values}
           onChange={(v) => patch({ values: v })}
           className="field min-h-20"
-          placeholder="Integridad, familia, aprendizaje…"
+          example={WB_EX.mapa.values}
           dictationLabel="Dictar valores"
         />
       </section>
@@ -103,6 +104,7 @@ export default function MapaWizardPage() {
           value={m.purpose}
           onChange={(v) => patch({ purpose: v })}
           className="field min-h-24"
+          example={WB_EX.mapa.purpose}
           dictationLabel="Dictar propósito"
         />
         <VoiceTextarea
@@ -110,6 +112,7 @@ export default function MapaWizardPage() {
           value={m.vision}
           onChange={(v) => patch({ vision: v })}
           className="field min-h-20"
+          example={WB_EX.mapa.vision}
           dictationLabel="Dictar visión"
         />
         <VoiceTextarea
@@ -117,7 +120,7 @@ export default function MapaWizardPage() {
           value={m.objective}
           onChange={(v) => patch({ objective: v })}
           className="field min-h-16"
-          placeholder="Ej.: Dirección de operaciones en empresas de tecnología o servicios"
+          example={WB_EX.mapa.objective}
           dictationLabel="Dictar objetivo"
         />
       </section>
@@ -129,6 +132,7 @@ export default function MapaWizardPage() {
           value={m.pillarsEducation}
           onChange={(v) => patch({ pillarsEducation: v })}
           className="field min-h-16"
+          example={WB_EX.mapa.pillarsEducation}
           dictationLabel="Dictar formación"
         />
         <VoiceTextarea
@@ -136,6 +140,7 @@ export default function MapaWizardPage() {
           value={m.pillarsExperience}
           onChange={(v) => patch({ pillarsExperience: v })}
           className="field min-h-20"
+          example={WB_EX.mapa.pillarsExperience}
           dictationLabel="Dictar experiencia"
         />
         <VoiceTextarea
@@ -143,6 +148,7 @@ export default function MapaWizardPage() {
           value={m.pillarsSkills}
           onChange={(v) => patch({ pillarsSkills: v })}
           className="field min-h-16"
+          example={WB_EX.mapa.pillarsSkills}
           dictationLabel="Dictar competencias"
         />
         <VoiceTextarea
@@ -150,6 +156,7 @@ export default function MapaWizardPage() {
           value={m.pillarsFit}
           onChange={(v) => patch({ pillarsFit: v })}
           className="field min-h-16"
+          example={WB_EX.mapa.pillarsFit}
           dictationLabel="Dictar encaje"
         />
       </section>

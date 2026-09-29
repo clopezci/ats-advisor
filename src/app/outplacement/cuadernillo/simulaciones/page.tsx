@@ -6,6 +6,7 @@ import Link from "next/link";
 import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
+import { WB_EX } from "@/lib/workbook/fieldExamples";
 import { SIMULATION_CASES, saveFeedbackScore } from "@/lib/workbook/simulations";
 import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
 
@@ -86,6 +87,7 @@ export default function SimulacionesPage() {
           value={answer}
           onChange={setAnswer}
           className="field min-h-28"
+          example={WB_EX.simulaciones.answer}
           dictationLabel="Dictar respuesta"
         />
       </section>
@@ -114,6 +116,7 @@ export default function SimulacionesPage() {
           value={notes}
           onChange={setNotes}
           className="field min-h-16"
+          example={`${WB_EX.simulaciones.whatWentWell}\n${WB_EX.simulaciones.whatToImprove}`}
           dictationLabel="Dictar"
         />
         <button type="button" className="btn-primary" onClick={save}>

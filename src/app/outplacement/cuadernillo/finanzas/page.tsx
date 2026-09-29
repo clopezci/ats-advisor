@@ -6,6 +6,7 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceInput, VoiceTextarea } from "@/components/VoiceField";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
 import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
+import { WB_EX } from "@/lib/workbook/fieldExamples";
 import {
   FINANCE_LIQUIDATION_CHECKS,
   readWorkbook,
@@ -73,7 +74,7 @@ export default function FinanzasWizardPage() {
           value={f.monthlyFixed}
           onChange={(v) => patch({ monthlyFixed: v })}
           className="field"
-          placeholder="Ej.: 3.500.000 COP"
+          example={WB_EX.finanzas.burn}
           dictationLabel="Dictar gastos"
         />
         <VoiceInput
@@ -81,7 +82,7 @@ export default function FinanzasWizardPage() {
           value={f.runwayMonths}
           onChange={(v) => patch({ runwayMonths: v })}
           className="field"
-          placeholder="Ej.: 2.5"
+          example={WB_EX.finanzas.runway}
           dictationLabel="Dictar meses"
         />
       </section>
@@ -93,6 +94,7 @@ export default function FinanzasWizardPage() {
           value={f.weeklyNotes}
           onChange={(v) => patch({ weeklyNotes: v })}
           className="field min-h-24"
+          example={WB_EX.finanzas.pillarsNotes}
           dictationLabel="Dictar flujo"
         />
       </section>
@@ -119,7 +121,7 @@ export default function FinanzasWizardPage() {
           value={f.offerFloorNote}
           onChange={(v) => patch({ offerFloorNote: v })}
           className="field min-h-20"
-          placeholder="No acepto menos de … porque …"
+          example={WB_EX.finanzas.offerFloor}
           dictationLabel="Dictar piso"
         />
       </section>

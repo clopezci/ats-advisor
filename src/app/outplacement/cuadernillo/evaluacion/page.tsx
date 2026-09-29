@@ -6,6 +6,7 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { VoiceTextarea } from "@/components/VoiceField";
 import { CoachAsk } from "@/components/workbook/CoachAsk";
 import { WorkbookModuleFooter } from "@/components/workbook/WorkbookModuleFooter";
+import { WB_EX } from "@/lib/workbook/fieldExamples";
 import {
   EVAL_CHECKS,
   readWorkbook,
@@ -129,6 +130,7 @@ export default function EvaluacionPage() {
         value={e.notesByStage}
         onChange={(v) => patch({ notesByStage: v })}
         className="field min-h-24"
+        example={WB_EX.evaluacion.stages}
         dictationLabel="Dictar"
       />
       <VoiceTextarea
@@ -136,7 +138,7 @@ export default function EvaluacionPage() {
         value={e.threeStories}
         onChange={(v) => patch({ threeStories: v })}
         className="field min-h-24"
-        placeholder="1) … 2) … 3) fracaso + aprendizaje"
+        example={WB_EX.evaluacion.evidence}
         dictationLabel="Dictar"
       />
       <VoiceTextarea
@@ -144,6 +146,7 @@ export default function EvaluacionPage() {
         value={e.questionsReady}
         onChange={(v) => patch({ questionsReady: v })}
         className="field min-h-20"
+        example={WB_EX.evaluacion.questionsToAsk}
         dictationLabel="Dictar"
       />
 

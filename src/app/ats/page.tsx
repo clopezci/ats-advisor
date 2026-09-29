@@ -785,16 +785,18 @@ export default function AtsPage() {
       </section>
 
       {step === 1 && !sessionEmail ? (
-        <section className="bento-card space-y-2">
-          <h2 className="text-sm font-semibold">Sin cuenta, o con correo</h2>
+        <section className="bento-card space-y-3">
+          <h2 className="text-sm font-semibold">Guarda el recorrido con tu correo</h2>
           <p className="text-sm leading-relaxed">
-            Puedes comparar tu CV con una vacante ahora. Ves el resultado en este recorrido, sin crear cuenta.
+            Puedes analizar sin cuenta. Con correo el resultado queda para consultarlo después y no se pierde al cerrar.
           </p>
-          <p className="text-sm muted leading-relaxed">
-            Entra con tu correo solo si quieres guardar ese resultado y consultarlo después.
-          </p>
-          <Link href="/auth" className="text-sm underline" style={{ color: "var(--brand)" }}>
-            Entrar con mi correo
+          <Link
+            href="/auth?next=%2Fats"
+            className="btn-primary"
+            style={{ minHeight: "4.75rem", lineHeight: 1.35, flexDirection: "column", gap: "0.2rem", textAlign: "center" }}
+          >
+            <span>Entrar con mi correo</span>
+            <span className="text-xs font-normal opacity-90">Recomendado para no perder el avance</span>
           </Link>
         </section>
       ) : null}
@@ -1488,7 +1490,15 @@ export default function AtsPage() {
             <button type="button" className="btn-secondary" disabled={aiLoading} onClick={askAiRewrite}>
               {aiLoading ? "Generando…" : "Pedir reescrituras con IA"}
             </button>
-            {aiTip && <p className="text-sm muted whitespace-pre-wrap">{aiTip}</p>}
+            {aiTip && (
+              <>
+                <p className="text-sm muted whitespace-pre-wrap">{aiTip}</p>
+                <p className="text-xs leading-relaxed rounded-lg border px-3 py-2" style={{ borderColor: "var(--border)" }}>
+                  Estos son ejemplos ilustrativos para que ajustes con tu propia experiencia y logros. No copies nada que
+                  no sea verdad en tu trayectoria.
+                </p>
+              </>
+            )}
           </section>
 
           <section className="bento-card space-y-3">
@@ -1532,95 +1542,184 @@ export default function AtsPage() {
           {resultPhase >= 5 && (
           <div className="flex flex-col gap-3">
             {!sessionEmail ? (
-              <p className="text-sm leading-relaxed">
-                Sin correo, anotar la vacante no la guarda para consultarla después. Solo vive en este navegador y se puede perder.{" "}
-                <Link href="/auth" className="underline" style={{ color: "var(--brand)" }}>
-                  Entrar con mi correo
+              <>
+                <p className="text-sm leading-relaxed">
+                  Con tu correo queda el resultado para consultarlo después y no pierdes el paso. Sin correo solo vive en
+                  este navegador.
+                </p>
+                <Link
+                  href="/auth?next=%2Fats"
+                  className="btn-primary"
+                  style={{ minHeight: "4.75rem", lineHeight: 1.35, flexDirection: "column", gap: "0.2rem", textAlign: "center" }}
+                >
+                  <span>Entrar con mi correo</span>
+                  <span className="text-xs font-normal opacity-90">Guarda el recorrido y vuelves aquí</span>
                 </Link>
-              </p>
+                <p className="text-xs muted leading-relaxed">Si prefieres no registrarte ahora:</p>
+                <button
+                  type="button"
+                  className="btn-secondary"
+                  onClick={() => {
+                    try {
+                      const last = JSON.parse(localStorage.getItem("ats_last_result") || "null");
+                      const score = last?.result?.score ?? result.score;
+                      const saved = upsertJob({
+                        title: companyName.trim() || "Vacante desde ATS",
+                        company: companyName.trim() || "Por completar",
+                        url: jobUrl.trim() || undefined,
+                        status: "interes",
+                        score,
+                        jobText: jobText.trim() || undefined,
+                        notes: `Score ATS ${score}%. Edita cargo/empresa en el tracker.`,
+                      });
+                      try {
+                        localStorage.setItem(
+                          "ats_last_result",
+                          JSON.stringify({
+                            ...(last || {}),
+                            result,
+                            jobText,
+                            companyName,
+                            jobId: saved.id,
+                          })
+                        );
+                      } catch {
+                        /* ignore */
+                      }
+                      window.location.href = "/tracker?from=ats";
+                    } catch {
+                      window.location.href = "/tracker";
+                    }
+                  }}
+                >
+                  Anotar interés (solo en este navegador)
+                </button>
+                <button
+                  type="button"
+                  className="btn-secondary"
+                  onClick={() => {
+                    try {
+                      const last = JSON.parse(localStorage.getItem("ats_last_result") || "null");
+                      const score = last?.result?.score ?? result.score;
+                      const appliedAt = Date.now();
+                      const saved = upsertJob({
+                        title: companyName.trim() || "Vacante desde ATS",
+                        company: companyName.trim() || "Por completar",
+                        url: jobUrl.trim() || undefined,
+                        status: "aplicado",
+                        appliedAt,
+                        score,
+                        jobText: jobText.trim() || undefined,
+                        notes: `Postulé ${new Date(appliedAt).toLocaleDateString("es-CO")}. Score ATS ${score}%.`,
+                      });
+                      try {
+                        localStorage.setItem(
+                          "ats_last_result",
+                          JSON.stringify({
+                            ...(last || {}),
+                            result,
+                            jobText,
+                            companyName,
+                            jobId: saved.id,
+                          })
+                        );
+                      } catch {
+                        /* ignore */
+                      }
+                      window.location.href = `/tracker?from=ats&applied=${saved.id}`;
+                    } catch {
+                      window.location.href = "/tracker";
+                    }
+                  }}
+                >
+                  Ya postulé (solo en este navegador)
+                </button>
+              </>
             ) : (
-              <p className="text-sm leading-relaxed">
-                Queda en tu cuenta, con el correo con el que entraste. Lo ves en Seguimiento.
-              </p>
+              <>
+                <p className="text-sm leading-relaxed">
+                  Queda en tu cuenta, con el correo con el que entraste. Lo ves en Seguimiento.
+                </p>
+                <button
+                  type="button"
+                  className="btn-primary"
+                  onClick={() => {
+                    try {
+                      const last = JSON.parse(localStorage.getItem("ats_last_result") || "null");
+                      const score = last?.result?.score ?? result.score;
+                      const saved = upsertJob({
+                        title: companyName.trim() || "Vacante desde ATS",
+                        company: companyName.trim() || "Por completar",
+                        url: jobUrl.trim() || undefined,
+                        status: "interes",
+                        score,
+                        jobText: jobText.trim() || undefined,
+                        notes: `Score ATS ${score}%. Edita cargo/empresa en el tracker.`,
+                      });
+                      try {
+                        localStorage.setItem(
+                          "ats_last_result",
+                          JSON.stringify({
+                            ...(last || {}),
+                            result,
+                            jobText,
+                            companyName,
+                            jobId: saved.id,
+                          })
+                        );
+                      } catch {
+                        /* ignore */
+                      }
+                      window.location.href = "/tracker?from=ats";
+                    } catch {
+                      window.location.href = "/tracker";
+                    }
+                  }}
+                >
+                  Guardar interés en tu cuenta
+                </button>
+                <button
+                  type="button"
+                  className="btn-primary"
+                  onClick={() => {
+                    try {
+                      const last = JSON.parse(localStorage.getItem("ats_last_result") || "null");
+                      const score = last?.result?.score ?? result.score;
+                      const appliedAt = Date.now();
+                      const saved = upsertJob({
+                        title: companyName.trim() || "Vacante desde ATS",
+                        company: companyName.trim() || "Por completar",
+                        url: jobUrl.trim() || undefined,
+                        status: "aplicado",
+                        appliedAt,
+                        score,
+                        jobText: jobText.trim() || undefined,
+                        notes: `Postulé ${new Date(appliedAt).toLocaleDateString("es-CO")}. Score ATS ${score}%.`,
+                      });
+                      try {
+                        localStorage.setItem(
+                          "ats_last_result",
+                          JSON.stringify({
+                            ...(last || {}),
+                            result,
+                            jobText,
+                            companyName,
+                            jobId: saved.id,
+                          })
+                        );
+                      } catch {
+                        /* ignore */
+                      }
+                      window.location.href = `/tracker?from=ats&applied=${saved.id}`;
+                    } catch {
+                      window.location.href = "/tracker";
+                    }
+                  }}
+                >
+                  Ya postulé (queda en tu cuenta)
+                </button>
+              </>
             )}
-            <button
-              type="button"
-              className="btn-primary"
-              onClick={() => {
-                try {
-                  const last = JSON.parse(localStorage.getItem("ats_last_result") || "null");
-                  const score = last?.result?.score ?? result.score;
-                  const saved = upsertJob({
-                    title: companyName.trim() || "Vacante desde ATS",
-                    company: companyName.trim() || "Por completar",
-                    url: jobUrl.trim() || undefined,
-                    status: "interes",
-                    score,
-                    jobText: jobText.trim() || undefined,
-                    notes: `Score ATS ${score}%. Edita cargo/empresa en el tracker.`,
-                  });
-                  try {
-                    localStorage.setItem(
-                      "ats_last_result",
-                      JSON.stringify({
-                        ...(last || {}),
-                        result,
-                        jobText,
-                        companyName,
-                        jobId: saved.id,
-                      })
-                    );
-                  } catch {
-                    /* ignore */
-                  }
-                  window.location.href = "/tracker?from=ats";
-                } catch {
-                  window.location.href = "/tracker";
-                }
-              }}
-            >
-              {sessionEmail ? "Guardar interés en tu cuenta" : "Anotar interés (solo en este navegador)"}
-            </button>
-            <button
-              type="button"
-              className="btn-primary"
-              onClick={() => {
-                try {
-                  const last = JSON.parse(localStorage.getItem("ats_last_result") || "null");
-                  const score = last?.result?.score ?? result.score;
-                  const appliedAt = Date.now();
-                  const saved = upsertJob({
-                    title: companyName.trim() || "Vacante desde ATS",
-                    company: companyName.trim() || "Por completar",
-                    url: jobUrl.trim() || undefined,
-                    status: "aplicado",
-                    appliedAt,
-                    score,
-                    jobText: jobText.trim() || undefined,
-                    notes: `Postulé ${new Date(appliedAt).toLocaleDateString("es-CO")}. Score ATS ${score}%.`,
-                  });
-                  try {
-                    localStorage.setItem(
-                      "ats_last_result",
-                      JSON.stringify({
-                        ...(last || {}),
-                        result,
-                        jobText,
-                        companyName,
-                        jobId: saved.id,
-                      })
-                    );
-                  } catch {
-                    /* ignore */
-                  }
-                  window.location.href = `/tracker?from=ats&applied=${saved.id}`;
-                } catch {
-                  window.location.href = "/tracker";
-                }
-              }}
-            >
-              {sessionEmail ? "Ya postulé (queda en tu cuenta)" : "Ya postulé (solo en este navegador)"}
-            </button>
             <button
               type="button"
               className="btn-secondary"

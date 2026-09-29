@@ -46,7 +46,7 @@ export function OnboardingGate({ children }: { children: ReactNode }) {
           <p className="text-sm muted leading-relaxed">{intro}</p>
         </section>
         <Link
-          href="/auth"
+          href="/auth?next=%2F"
           className="btn-primary w-full"
           style={{
             minHeight: "4.75rem",
@@ -58,7 +58,7 @@ export function OnboardingGate({ children }: { children: ReactNode }) {
           onClick={() => writeSaveChoice("correo")}
         >
           <span>Entrar con mi correo</span>
-          <span className="text-xs font-normal opacity-90">Queda guardado y lo consultas después</span>
+          <span className="text-xs font-normal opacity-90">Queda guardado para consultarlo después</span>
         </Link>
         <button
           type="button"

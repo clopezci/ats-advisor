@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { createBrowserSupabase } from "@/lib/supabase/client";
 import { claimReferral } from "@/lib/growth/referral";
+import { readAuthNextFromSearch } from "@/lib/client/authReturn";
+import { safeAppPath } from "@/lib/validation";
 
 function authNotice(raw: string): string {
   const text = raw.toLowerCase();
@@ -15,7 +17,7 @@ function authNotice(raw: string): string {
   ) {
     return "No pudimos enviar el enlace. El acceso por correo no está respondiendo. Inténtalo otra vez en un momento.";
   }
-  if (text.includes("rate") || text.includes("too many") || text.includes("once every")) {
+  if (text.includes("rate") || text.includes("too many") || text.includes("once every") || text.includes("over_email")) {
     return "Pediste varios enlaces seguidos. Espera un minuto y vuelve a intentar.";
   }
   if (text.includes("email") && (text.includes("invalid") || text.includes("unable"))) {
@@ -29,15 +31,28 @@ export default function AuthPage() {
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const [sessionEmail, setSessionEmail] = useState<string | null>(null);
+  const [returnTo, setReturnTo] = useState("/cuenta");
 
   useEffect(() => {
+    const next = readAuthNextFromSearch(window.location.search, "/cuenta");
+    setReturnTo(next);
+    try {
+      sessionStorage.setItem("ats_auth_return", next);
+    } catch {
+      /* ignore */
+    }
+
     const sb = createBrowserSupabase();
     if (!sb) return;
     sb.auth.getSession().then(({ data }) => {
-      setSessionEmail(data.session?.user?.email || null);
+      const mail = data.session?.user?.email || null;
+      setSessionEmail(mail);
+      if (mail) goBackAfterLogin(next);
     });
     const { data: sub } = sb.auth.onAuthStateChange((_e, session) => {
-      setSessionEmail(session?.user?.email || null);
+      const mail = session?.user?.email || null;
+      setSessionEmail(mail);
+      if (mail) goBackAfterLogin(next);
     });
     return () => sub.subscription.unsubscribe();
   }, []);
@@ -54,6 +69,14 @@ export default function AuthPage() {
     }
   }, []);
 
+  function goBackAfterLogin(next: string) {
+    // Solo retoma si venimos con ?next= (enlace del correo o “guardar el recorrido”).
+    if (!new URLSearchParams(window.location.search).has("next")) return;
+    const target = safeAppPath(next, "/cuenta");
+    if (target === "/auth" || window.location.pathname !== "/auth") return;
+    window.location.replace(target);
+  }
+
   async function sendLink() {
     setLoading(true);
     setMsg("");
@@ -63,14 +86,25 @@ export default function AuthPage() {
       setLoading(false);
       return;
     }
+    const next = safeAppPath(returnTo, "/cuenta");
+    try {
+      sessionStorage.setItem("ats_auth_return", next);
+    } catch {
+      /* ignore */
+    }
     try {
       const { error } = await sb.auth.signInWithOtp({
         email: email.trim(),
         options: {
-          emailRedirectTo: `${window.location.origin}/cuenta`,
+          // Vuelve a /auth con next; al abrir el enlace retomas el paso (p. ej. /ats).
+          emailRedirectTo: `${window.location.origin}/auth?next=${encodeURIComponent(next)}`,
         },
       });
-      setMsg(error ? authNotice(error.message) : "Te enviamos un enlace. Ábrelo desde ese correo para guardar tu recorrido.");
+      setMsg(
+        error
+          ? authNotice(error.message)
+          : "Te enviamos un enlace. Ábrelo desde ese correo y vuelves al paso donde estabas."
+      );
     } catch (err) {
       const raw = err instanceof Error ? err.message : "";
       setMsg(authNotice(raw));
@@ -94,12 +128,20 @@ export default function AuthPage() {
       <p className="text-sm muted leading-relaxed">
         Si ya pagaste, entra con ese correo para reclamar el plan.
       </p>
+      {returnTo !== "/cuenta" ? (
+        <p className="text-sm leading-relaxed">
+          Cuando abras el enlace, volvemos a donde ibas.
+        </p>
+      ) : null}
       {sessionEmail ? (
         <section className="bento-card space-y-3">
           <p className="text-sm">
             Sesión activa: <strong>{sessionEmail}</strong>
           </p>
-          <button type="button" className="btn-primary" onClick={signOut}>
+          <Link href={returnTo} className="btn-primary">
+            Seguir donde iba
+          </Link>
+          <button type="button" className="btn-secondary" onClick={signOut}>
             Cerrar sesión
           </button>
           <Link href="/cuenta" className="btn-secondary">
@@ -127,8 +169,8 @@ export default function AuthPage() {
       )}
       {msg && <p className="text-sm">{msg}</p>}
       {!sessionEmail ? (
-        <Link href="/cuenta" className="text-sm underline" style={{ color: "var(--brand)" }}>
-          Ya entré antes: ir a mi cuenta
+        <Link href={returnTo === "/cuenta" ? "/cuenta" : returnTo} className="text-sm underline" style={{ color: "var(--brand)" }}>
+          {returnTo === "/cuenta" ? "Ya entré antes: ir a mi cuenta" : "Cancelar y volver"}
         </Link>
       ) : null}
     </div>

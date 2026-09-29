@@ -1,13 +1,29 @@
 import { readSettings } from "@/lib/settings";
 
-/** True if email is in admin tester whitelist (settings or ADMIN_TESTER_EMAILS). */
+function splitEmails(raw: string | undefined): string[] {
+  return (raw || "")
+    .split(",")
+    .map((s) => s.trim().toLowerCase())
+    .filter((s) => s.includes("@"));
+}
+
+/** Dueño del producto (ADMIN_EMAIL / ADMIN_OWNER_EMAILS). No abre /admin solo: eso pide ADMIN_SECRET. */
+export function isOwnerEmail(email: string) {
+  const e = email.trim().toLowerCase();
+  if (!e.includes("@")) return false;
+  const owners = new Set([
+    ...splitEmails(process.env.ADMIN_EMAIL),
+    ...splitEmails(process.env.ADMIN_OWNER_EMAILS),
+  ]);
+  return owners.has(e);
+}
+
+/** True if email is in owner, tester whitelist (settings or ADMIN_TESTER_EMAILS). */
 export function isTesterEmail(email: string) {
   const e = email.trim().toLowerCase();
   if (!e.includes("@")) return false;
-  const fromEnv = (process.env.ADMIN_TESTER_EMAILS || "")
-    .split(",")
-    .map((s) => s.trim().toLowerCase())
-    .filter(Boolean);
-  const fromSettings = readSettings().tester_emails || [];
+  if (isOwnerEmail(e)) return true;
+  const fromEnv = splitEmails(process.env.ADMIN_TESTER_EMAILS);
+  const fromSettings = (readSettings().tester_emails || []).map((s) => String(s).trim().toLowerCase());
   return new Set([...fromEnv, ...fromSettings]).has(e);
 }

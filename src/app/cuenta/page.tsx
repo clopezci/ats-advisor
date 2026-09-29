@@ -13,6 +13,7 @@ import {
   type PlanId,
 } from "@/lib/entitlements";
 import { createBrowserSupabase } from "@/lib/supabase/client";
+import { applySessionPrivileges } from "@/lib/client/sessionPrivileges";
 import { ChannelChooser } from "@/components/ChannelChooser";
 import { whatsappFinalPriceCop, type LearningChannel } from "@/lib/channels/pricing";
 import {
@@ -54,12 +55,14 @@ export default function CuentaPage() {
       setSessionReady(true);
       return;
     }
-    sb.auth.getSession().then(({ data }) => {
+    sb.auth.getSession().then(async ({ data }) => {
       const e = data.session?.user?.email;
       if (e) {
         setSessionEmail(e);
         setEmail((prev) => prev || e);
-        syncCloudPlan(e);
+        const elevated = await applySessionPrivileges(e);
+        if (elevated) setPlanState(elevated);
+        else await syncCloudPlan(e);
       }
       setSessionReady(true);
     }).catch(() => setSessionReady(true));
@@ -179,7 +182,8 @@ export default function CuentaPage() {
     const sb = createBrowserSupabase();
     if (sb) await sb.auth.signOut();
     setSessionEmail(null);
-    setMsg("Sesión cerrada.");
+    setMsg("Sesión cerrada. Puedes entrar con otro correo.");
+    window.location.href = "/auth";
   }
 
   return (
@@ -190,9 +194,14 @@ export default function CuentaPage() {
           <SpeakButton text="Sin cuenta puedes comparar un CV con una vacante y ver el resultado aquí. Entra con tu correo si quieres guardar ese resultado y consultarlo después." />
         </div>
         {sessionEmail ? (
-          <p className="text-sm">
-            Entraste con <strong>{sessionEmail}</strong>.
-          </p>
+          <>
+            <p className="text-sm">
+              Entraste con <strong>{sessionEmail}</strong>.
+            </p>
+            <button type="button" className="btn-primary" onClick={() => void signOut()}>
+              Salir / cambiar de correo
+            </button>
+          </>
         ) : (
           <p className="text-sm">Aún no has entrado.</p>
         )}
@@ -281,12 +290,12 @@ export default function CuentaPage() {
           Guardar
         </button>
         {sessionEmail && (
-          <button type="button" className="btn-secondary" onClick={signOut}>
-            Cerrar sesión
+          <button type="button" className="btn-secondary" onClick={() => void signOut()}>
+            Salir / cambiar de correo
           </button>
         )}
         <Link href="/auth" className="btn-secondary">
-          Entrar con enlace al correo
+          {sessionEmail ? "Pedir enlace a otro correo" : "Entrar con enlace al correo"}
         </Link>
       </div>
 

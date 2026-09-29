@@ -69,21 +69,31 @@ export default function CoachClient() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setNudge(data.error || "Error al simular");
+        setNudge(data.error || "No pudimos evaluar tu respuesta. Intenta de nuevo.");
         return;
       }
       let next = plan;
       if (userReply?.trim()) {
         next = appendCoachMessage(plan.id, { role: "you", text: userReply.trim() }) || plan;
       }
-      next =
-        appendCoachMessage(next.id, { role: "manager", text: String(data.manager || "") }) || next;
+      const managerText = String(data.manager || "").trim();
+      if (managerText) {
+        next = appendCoachMessage(next.id, { role: "manager", text: managerText }) || next;
+      }
       setPlan({ ...next });
-      setNudge(String(data.nudge || ""));
+      const tip = String(data.nudge || "").trim();
+      if (userReply?.trim()) {
+        setNudge(
+          tip ||
+            "A mejorar. No recibimos el veredicto completo. Responde con una acción de esta semana y un alcance."
+        );
+      } else {
+        setNudge(tip);
+      }
       setDone(Boolean(data.done));
       setReply("");
     } catch {
-      setNudge("Error de red");
+      setNudge("No pudimos conectar. Revisa la red e intenta de nuevo.");
     } finally {
       setLoading(false);
     }
@@ -144,9 +154,24 @@ export default function CoachClient() {
       </section>
 
       {nudge ? (
-        <section className="bento-card space-y-1">
-          <h2 className="text-sm font-semibold">
-            {nudge.startsWith("Sirve") ? "Tu respuesta sirve" : nudge.startsWith("A mejorar") ? "Tu respuesta hay que mejorarla" : "Sobre tu respuesta"}
+        <section
+          className="bento-card space-y-2"
+          style={{
+            borderColor: nudge.startsWith("Sirve")
+              ? "var(--brand)"
+              : nudge.startsWith("A mejorar")
+                ? "#b45309"
+                : "var(--border)",
+            borderWidth: 2,
+          }}
+        >
+          <p className="text-xs muted">Veredicto de tu última respuesta</p>
+          <h2 className="text-base font-semibold">
+            {nudge.startsWith("Sirve")
+              ? "Tu respuesta sirve"
+              : nudge.startsWith("A mejorar")
+                ? "Tu respuesta hay que mejorarla"
+                : "Sobre tu respuesta"}
           </h2>
           <p className="text-sm leading-relaxed">{nudge}</p>
         </section>

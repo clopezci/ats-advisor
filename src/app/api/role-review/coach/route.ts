@@ -10,6 +10,40 @@ import { OFF_TOPIC_REPLY, isClearlyOffTopic } from "@/lib/ai/topicScope";
 
 export const runtime = "nodejs";
 
+/** Veredicto local: siempre Sirve. o A mejorar. para que la pantalla no quede muda. */
+function scoreReply(userReply: string): { ok: boolean; nudge: string; manager: string } {
+  const concrete =
+    /\d/.test(userReply) ||
+    /\b(hice|lider|defin|implement|coordin|entreg|reduj|aument|organic|propuse|arm[eé]|prioridad|plan|semana|d[ií]a|reun|stakeholder|kpi|okr|piloto|roadmap)\b/i.test(
+      userReply
+    );
+  if (concrete) {
+    return {
+      ok: true,
+      nudge: "Sirve. Hay una acción concreta. Falta cerrar con el entregable de las próximas 48 horas y a quién se lo muestras.",
+      manager:
+        "Bien, eso se puede trabajar. El lunes, ¿cuál sería el primer entregable de dos horas y a quién se lo mostrarías?",
+    };
+  }
+  return {
+    ok: false,
+    nudge: "A mejorar. Falta un hecho: qué harías esta semana, con qué alcance (personas, tiempo o antes/después) y cómo sabrías que funcionó.",
+    manager:
+      "Todavía está general. Dime una acción de esta semana y un alcance: personas, tiempo o antes/después. Sin eso no puedo ayudarte a priorizar.",
+  };
+}
+
+function normalizeNudge(raw: string, fallback: string): string {
+  const t = (raw || "").trim();
+  if (/^sirve\b/i.test(t) || /^a mejorar\b/i.test(t)) return t;
+  if (!t) return fallback;
+  // La IA a veces tipéa sin veredicto: lo etiquetamos.
+  if (/falta|mejor|vago|general|adjetivo|concreto|específic/i.test(t)) {
+    return `A mejorar. ${t}`;
+  }
+  return `Sirve. ${t}`;
+}
+
 export async function POST(req: Request) {
   const limited = rateLimit(req, "role-review-coach", { limit: 20, windowMs: 60_000 });
   if (!limited.ok) return rateLimitedResponse(limited.retryAfterSec);
@@ -77,9 +111,15 @@ export async function POST(req: Request) {
 
     let manager =
       "Empecemos el 1:1. Cuéntame, en 1 minuto, cuál es la responsabilidad del aviso que más impacto tendría esta semana y cómo la atacarías.";
-    let nudge = "Sé concreto: entregable, no adjetivos.";
+    let nudge = "Cuando respondas, verás aquí si sirve o hay que mejorarla.";
     let done = false;
     let provider = "local";
+
+    const scored = userReply ? scoreReply(userReply) : null;
+    if (scored) {
+      manager = scored.manager;
+      nudge = scored.nudge;
+    }
 
     const userKeys = parseUserKeysFromRequest(req);
     const paid = await requirePaidCloud({ email: body.email, allowLocalDev: false });
@@ -100,18 +140,14 @@ export async function POST(req: Request) {
       const cleaned = ai.text.replace(/^```json\s*|\s*```$/g, "").trim();
       const parsed = JSON.parse(cleaned) as { manager?: string; nudge?: string; done?: boolean };
       if (parsed.manager?.trim()) manager = parsed.manager.trim();
-      if (parsed.nudge?.trim()) nudge = parsed.nudge.trim();
+      if (userReply) {
+        nudge = normalizeNudge(parsed.nudge || "", scored?.nudge || "A mejorar. Sé más concreto.");
+      } else if (parsed.nudge?.trim()) {
+        nudge = parsed.nudge.trim();
+      }
       done = Boolean(parsed.done);
     } catch {
-      if (userReply) {
-        const concrete = /\d/.test(userReply) || /\b(hice|lider|defin|implement|coordin|entreg|reduj|aument|organic|propuse|arm[eé]|prioridad)\b/i.test(userReply);
-        manager = concrete
-          ? "Eso se puede trabajar. El lunes, ¿cuál sería el primer entregable de dos horas y a quién se lo mostrarías?"
-          : "Todavía está general. Dime una acción de esta semana y un alcance: personas, tiempo o antes/después.";
-        nudge = concrete
-          ? "Sirve. Hay una acción. El siguiente paso es el entregable de dos horas."
-          : "A mejorar. Falta un hecho: qué harías y un número o un alcance.";
-      }
+      // Ya quedó el veredicto local si había respuesta.
     }
 
     return NextResponse.json({ ok: true, manager, nudge, done, provider });

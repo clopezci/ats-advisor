@@ -111,6 +111,7 @@ export async function POST(req: Request) {
         mode,
         roleFamily: plan.roleFamily || roleFamily,
         learnTopics,
+        jobText,
         days: plan.days,
         challenges: plan.challenges,
         tickets: plan.tickets,

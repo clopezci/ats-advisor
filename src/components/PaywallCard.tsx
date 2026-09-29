@@ -7,11 +7,14 @@ import { planLabel, type PlanId } from "@/lib/entitlements";
 export function PaywallCard({
   title = "Esto va con el plan Carrera",
   reason,
+  bullets,
   currentPlan = "free",
   nextHref,
 }: {
   title?: string;
   reason: string;
+  /** Lista corta de lo que desbloquea al inscribirse. */
+  bullets?: string[];
   currentPlan?: PlanId;
   /** Ruta a retomar tras pagar (se codifica en /precios?next=). */
   nextHref?: string;
@@ -29,8 +32,15 @@ export function PaywallCard({
         <SpeakButton text={`${title}. ${reason}. Puedes ver precios del plan Carrera.`} />
       </div>
       <p className="text-sm muted">{reason}</p>
+      {bullets && bullets.length > 0 ? (
+        <ul className="text-sm space-y-1.5 leading-relaxed list-disc pl-5">
+          {bullets.map((b) => (
+            <li key={b}>{b}</li>
+          ))}
+        </ul>
+      ) : null}
       <Link href={preciosHref} className="btn-primary">
-        Ver precios y activar Carrera
+        Ver precios e inscribirme
       </Link>
       <Link href="/ats" className="btn-secondary">
         Seguir con el analizador gratis

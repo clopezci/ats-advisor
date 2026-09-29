@@ -70,8 +70,8 @@ export const FREE_TOOL_BLURBS = [
   },
   {
     href: "/ats/repaso",
-    title: "Repaso del rol",
-    desc: "Plan + retos del trabajo diario anclados a una vacante. Aprende lo que marcaste con honestidad.",
+    title: "Repaso del rol (gancho)",
+    desc: "Gratis: 1 plan/mes y el día 1 del curso del cargo. Carrera abre retos, tickets, STAR, semana 1 y 1:1.",
   },
   {
     href: "/herramientas/salario",

@@ -135,7 +135,7 @@ export const CAPABILITIES: Capability[] = [
     id: "ats-repaso",
     title: "Repaso del rol",
     summary:
-      "Plan anclado a la vacante: honestidad, tickets, retos, STAR, semana 1, 1:1 manager, cupos por plan y métricas locales.",
+      "Gratis: 1 plan/mes y día 1 del curso del cargo. Carrera: retos, tickets, STAR, semana 1 y 1:1 con veredicto.",
     audience: ["candidato"],
     status: "disponible",
     href: "/ats/repaso",

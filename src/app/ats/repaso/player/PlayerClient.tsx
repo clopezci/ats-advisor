@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { SpeakButton } from "@/components/SpeakButton";
 import { DictationButton } from "@/components/DictationButton";
+import { PaywallCard } from "@/components/PaywallCard";
 import {
   getRoleReviewPlan,
   markChallengeDone,
@@ -17,9 +18,18 @@ import {
 } from "@/lib/roleReview/storage";
 import { ROLE_REVIEW_FAMILY_LABEL, type RoleReviewPlan } from "@/lib/roleReview/types";
 import { roleReviewAccountabilityTip } from "@/lib/roleReview/accountability";
-import { dayInRole, lessonFor } from "@/lib/roleReview/lesson";
+import { buildRoleCourse, dayInRole, isDigitalTransformation } from "@/lib/roleReview/lesson";
+import { canAccessOutplacement, readEntitlement, type PlanId } from "@/lib/entitlements";
 
 type Tab = "dia" | "reto" | "ticket" | "star" | "semana1" | "oficio";
+
+const CAREER_BULLETS = [
+  "Curso completo de todos los días del plan",
+  "Retos del trabajo diario con entregable",
+  "Tickets estilo Jira anclados al aviso",
+  "Banco STAR y checklist de la primera semana",
+  "Simulacro 1:1 con veredicto Sirve / A mejorar",
+];
 
 export default function PlayerClient() {
   const params = useSearchParams();
@@ -28,8 +38,10 @@ export default function PlayerClient() {
   const [day, setDay] = useState(1);
   const [tab, setTab] = useState<Tab>("dia");
   const [remindMsg, setRemindMsg] = useState("");
+  const [planId, setPlanId] = useState<PlanId>("free");
 
   useEffect(() => {
+    setPlanId(readEntitlement().plan);
     const p = id ? getRoleReviewPlan(id) : null;
     setPlan(p);
     if (p?.days?.length) {
@@ -62,6 +74,11 @@ export default function PlayerClient() {
     void run();
   }, [plan?.id, plan?.remindersOn]);
 
+  const paid = canAccessOutplacement(planId);
+  /** Gratis: solo día 1 en pestaña Curso (gancho). */
+  const freePreview = !paid && day === 1 && tab === "dia";
+  const locked = !paid && !freePreview;
+
   const current = useMemo(
     () => plan?.days?.find((d) => d.day === day) || null,
     [plan, day]
@@ -85,6 +102,18 @@ export default function PlayerClient() {
     return plan.starBank.find((s) => s.day === day) || null;
   }, [plan, current, day]);
 
+  const courseBlocks = useMemo(() => {
+    if (!plan || !current) return [];
+    const roleTitle = plan.title.replace(/^Repaso:\s*/i, "");
+    const focus = current.learnTopics?.[0] || current.title;
+    return buildRoleCourse({
+      jobTitle: roleTitle,
+      jobText: plan.jobText || "",
+      family: plan.roleFamily,
+      term: focus,
+    });
+  }, [plan, current]);
+
   if (!plan) {
     return (
       <div className="flex flex-1 flex-col gap-4">
@@ -100,7 +129,13 @@ export default function PlayerClient() {
   const chDone = challenge ? plan.completedChallenges.includes(challenge.id) : false;
   const tkDone = ticket ? plan.completedTickets.includes(ticket.id) : false;
   const pct = planProgressPct(plan);
-  const familyLabel = plan.roleFamily ? ROLE_REVIEW_FAMILY_LABEL[plan.roleFamily] : null;
+  const roleTitle = plan.title.replace(/^Repaso:\s*/i, "");
+  const familyLabel = isDigitalTransformation(roleTitle, plan.jobText || "")
+    ? "Transformación digital"
+    : plan.roleFamily
+      ? ROLE_REVIEW_FAMILY_LABEL[plan.roleFamily]
+      : null;
+  const resume = `/ats/repaso/player?id=${encodeURIComponent(plan.id)}`;
 
   return (
     <div className="flex flex-1 flex-col gap-5">
@@ -110,12 +145,18 @@ export default function PlayerClient() {
             <p className="text-xs muted">
               Día {day} de {plan.days.length} · {pct}% · {plan.completedDays.length} listos
               {familyLabel ? ` · ${familyLabel}` : ""}
+              {!paid ? " · vista gratis" : ""}
             </p>
             <h1 className="text-xl font-semibold">{plan.title}</h1>
           </div>
           <SpeakButton text={current?.explain || plan.objective} />
         </div>
         <p className="text-sm muted">{plan.objective}</p>
+        {!paid ? (
+          <p className="text-xs leading-relaxed">
+            En gratis ves el mapa del rol (día 1). Retos, tickets, STAR, semana 1 y el 1:1 van con Carrera.
+          </p>
+        ) : null}
         <div className="progress-track">
           <div className="progress-fill" style={{ width: `${pct}%` }} />
         </div>
@@ -179,7 +220,10 @@ export default function PlayerClient() {
             key={d.day}
             type="button"
             className="pill-brand whitespace-nowrap"
-            onClick={() => setDay(d.day)}
+            onClick={() => {
+              setDay(d.day);
+              if (!paid && d.day > 1) setTab("dia");
+            }}
             style={
               plan.completedDays.includes(d.day)
                 ? { opacity: 0.85, outline: "1px solid var(--brand)" }
@@ -187,6 +231,7 @@ export default function PlayerClient() {
             }
           >
             Día {d.day}
+            {!paid && d.day > 1 ? " · Carrera" : ""}
             {plan.completedDays.includes(d.day) ? " ✓" : ""}
           </button>
         ))}
@@ -210,23 +255,53 @@ export default function PlayerClient() {
             onClick={() => setTab(k)}
           >
             {label}
+            {!paid && !(k === "dia" && day === 1) ? " · Carrera" : ""}
           </button>
         ))}
       </div>
 
-      {tab === "dia" && current ? (
+      {locked ? (
+        <div className="space-y-3">
+          <PaywallCard
+            currentPlan={planId}
+            nextHref={resume}
+            title="Sigue el repaso con Carrera"
+            reason="Gratis te dejamos el mapa del rol (día 1). Lo demás consume práctica guiada y, en el 1:1, IA."
+            bullets={CAREER_BULLETS}
+          />
+          <button
+            type="button"
+            className="btn-secondary"
+            onClick={() => {
+              setDay(1);
+              setTab("dia");
+            }}
+          >
+            Volver al mapa del día 1
+          </button>
+        </div>
+      ) : null}
+
+      {!locked && tab === "dia" && current ? (
         <section className="bento-card space-y-3">
-          <h2 className="font-semibold">{current.title}</h2>
+          <h2 className="font-semibold">Curso del rol · {current.learnTopics?.[0] || current.title}</h2>
+          <p className="text-xs muted">
+            Mapa del cargo según el aviso (áreas, herramientas, KPIs, controles). No es un texto genérico relleno.
+          </p>
           <div className="space-y-3 text-sm leading-relaxed">
-            {(current.learnTopics?.length ? current.learnTopics : [current.title]).map((term) => (
-              <article key={term} className="space-y-2 rounded-lg p-3" style={{ border: "1px solid var(--border)" }}>
-                <h3 className="font-semibold">{term}</h3>
-                {lessonFor(term, plan.title, current.learnTopics?.[0] === term ? current.explain : undefined).map((block) => (
-                  <p key={block.heading}>
-                    <span className="font-medium">{block.heading}. </span>
-                    {block.body}
-                  </p>
-                ))}
+            {courseBlocks.map((block) => (
+              <article key={block.heading} className="space-y-1 rounded-lg p-3" style={{ border: "1px solid var(--border)" }}>
+                <h3 className="font-semibold">{block.heading}</h3>
+                {block.points?.length ? (
+                  <ol className="list-decimal space-y-1 pl-5">
+                    {block.points.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ol>
+                ) : (
+                  <p>{block.body}</p>
+                )}
+                {block.note ? <p className="text-xs muted">{block.note}</p> : null}
               </article>
             ))}
           </div>
@@ -235,17 +310,27 @@ export default function PlayerClient() {
             <span className="font-medium">Pregunta de entrevista. </span>
             {current.interviewQ}
           </p>
-          <button
-            type="button"
-            className="btn-secondary"
-            onClick={() => setTab("reto")}
-          >
-            Siguiente: el reto de este tema
-          </button>
+          {paid ? (
+            <button type="button" className="btn-secondary" onClick={() => setTab("reto")}>
+              Siguiente: el reto de este tema
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="btn-secondary"
+              disabled={dayDone}
+              onClick={() => {
+                const next = markDayDone(plan.id, day);
+                if (next) setPlan({ ...next });
+              }}
+            >
+              {dayDone ? "Día 1 marcado" : "Marcar el mapa del día 1 como visto"}
+            </button>
+          )}
         </section>
       ) : null}
 
-      {tab === "reto" ? (
+      {!locked && tab === "reto" ? (
         <section className="bento-card space-y-3">
           {challenge ? (
             <div className="space-y-2">
@@ -291,7 +376,7 @@ export default function PlayerClient() {
         </section>
       ) : null}
 
-      {tab === "ticket" ? (
+      {!locked && tab === "ticket" ? (
         <section className="bento-card space-y-3">
           <h2 className="font-semibold">Ticket de práctica</h2>
           <p className="text-sm leading-relaxed">
@@ -351,7 +436,7 @@ export default function PlayerClient() {
         </section>
       ) : null}
 
-      {tab === "star" ? (
+      {!locked && tab === "star" ? (
         <section className="bento-card space-y-3">
           {star ? (
             <>
@@ -404,11 +489,15 @@ export default function PlayerClient() {
         </section>
       ) : null}
 
-      {tab === "oficio" && current ? (
+      {!locked && tab === "oficio" && current ? (
         <section className="bento-card space-y-3">
           <h2 className="font-semibold">Un día en este trabajo</h2>
           <p className="text-sm leading-relaxed">
-            {dayInRole(plan.title, current.learnTopics?.[0] || current.title)}
+            {dayInRole(
+              plan.title.replace(/^Repaso:\s*/i, ""),
+              current.learnTopics?.[0] || current.title,
+              plan.jobText || ""
+            )}
           </p>
           <p className="text-sm leading-relaxed">
             El primer mes no es dominar todo el aviso. Es escuchar el vocabulario real, hacer un caso acompañado y después repetirlo tú con feedback.
@@ -416,7 +505,7 @@ export default function PlayerClient() {
         </section>
       ) : null}
 
-      {tab === "semana1" ? (
+      {!locked && tab === "semana1" ? (
         <section className="bento-card space-y-3">
           <h2 className="font-semibold">Checklist · primera semana</h2>
           <p className="text-xs muted">
@@ -458,12 +547,22 @@ export default function PlayerClient() {
       ) : null}
 
       <div className="flex flex-col gap-2">
-        <Link
-          href={`/ats/repaso/player/coach?id=${encodeURIComponent(plan.id)}`}
-          className="btn-primary"
-        >
-          Simulacro 1:1 con el jefe
-        </Link>
+        {paid ? (
+          <Link
+            href={`/ats/repaso/player/coach?id=${encodeURIComponent(plan.id)}`}
+            className="btn-primary"
+          >
+            Simulacro 1:1 con el jefe
+          </Link>
+        ) : locked ? null : (
+          <PaywallCard
+            currentPlan={planId}
+            nextHref={resume}
+            title="Para practicar con retos y el 1:1"
+            reason="Ya viste el mapa. Carrera abre la práctica del oficio y el veredicto Sirve / A mejorar."
+            bullets={CAREER_BULLETS}
+          />
+        )}
         <Link href="/ats" className="btn-secondary">
           Re-analizar CV vs esta vacante
         </Link>

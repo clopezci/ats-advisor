@@ -72,6 +72,8 @@ export type RoleReviewDay = {
 export type RoleReviewPlan = {
   id: string;
   jobId?: string;
+  /** Aviso pegado: el curso lo usa para no inventar un rol genérico. */
+  jobText?: string;
   title: string;
   objective: string;
   mode: RoleReviewMode;

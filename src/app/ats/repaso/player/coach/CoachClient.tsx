@@ -10,6 +10,8 @@ import { bumpRoleReviewMetric } from "@/lib/roleReview/metrics";
 import { getJob } from "@/lib/tracker/jobs";
 import type { RoleReviewPlan } from "@/lib/roleReview/types";
 import { withUserAiHeaders } from "@/lib/ai/userKeysClient";
+import { canAccessOutplacement, readEntitlement, type PlanId } from "@/lib/entitlements";
+import { PaywallCard } from "@/components/PaywallCard";
 
 export default function CoachClient() {
   const params = useSearchParams();
@@ -22,8 +24,10 @@ export default function CoachClient() {
   const [jobText, setJobText] = useState("");
   const [jobTitle, setJobTitle] = useState("");
   const [company, setCompany] = useState("");
+  const [planId, setPlanId] = useState<PlanId>("free");
 
   useEffect(() => {
+    setPlanId(readEntitlement().plan);
     const p = id ? getRoleReviewPlan(id) : null;
     setPlan(p);
     if (!p) return;
@@ -110,6 +114,30 @@ export default function CoachClient() {
     );
   }
 
+  if (!canAccessOutplacement(planId)) {
+    return (
+      <div className="flex flex-1 flex-col gap-5">
+        <PaywallCard
+          currentPlan={planId}
+          nextHref={`/ats/repaso/player/coach?id=${encodeURIComponent(plan.id)}`}
+          title="El 1:1 va con Carrera"
+          reason="Aquí el manager te dice si la respuesta sirve o hay que mejorarla. Es práctica con IA."
+          bullets={[
+            "Veredicto Sirve / A mejorar en cada respuesta",
+            "Preguntas ancladas al aviso",
+            "Curso completo, retos, tickets y STAR",
+          ]}
+        />
+        <Link
+          href={`/ats/repaso/player?id=${encodeURIComponent(plan.id)}`}
+          className="btn-secondary"
+        >
+          Volver al mapa del rol (gratis)
+        </Link>
+      </div>
+    );
+  }
+
   const transcript = plan.coachTranscript || [];
 
   return (
@@ -128,8 +156,7 @@ export default function CoachClient() {
           />
         </div>
         <p className="text-sm muted">
-          Este 1:1 es gratis en este equipo. No hace falta cuenta para practicarlo. Sin correo, el diálogo no queda para consultarlo después.
-          Al enviar, ves si la respuesta sirve o hay que mejorarla.
+          Con Carrera practicas el 1:1. Al enviar, ves si la respuesta sirve o hay que mejorarla.
         </p>
       </section>
 

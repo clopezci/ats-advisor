@@ -3,6 +3,9 @@ import type { RoleReviewFamily, RoleReviewTicket, RoleReviewWeek1Item } from "./
 /** Detecta familia de rol a partir del aviso/cargo (heurística corta). */
 export function detectRoleFamily(jobTitle: string, jobText: string): RoleReviewFamily {
   const t = `${jobTitle} ${jobText}`.toLowerCase();
+  if (/transformaci[oó]n\s+digital|digital\s+transformation|chief digital|\bcdo\b/.test(t)) {
+    return "ops";
+  }
   if (/\b(sql|python|etl|bi|tableau|power\s*bi|analytics|data\s*engineer|analista de datos)\b/.test(t)) {
     return "data";
   }
@@ -26,6 +29,42 @@ export function detectRoleFamily(jobTitle: string, jobText: string): RoleReviewF
     return "comercial";
   }
   return "general";
+}
+
+/** Tickets de transformación digital (no los de turno/incidente de operaciones). */
+export function seedDigitalTransformTickets(jobTitle: string, jdSlice: string): RoleReviewTicket[] {
+  const anchor = jdSlice.slice(0, 100) || "Iniciativa del aviso";
+  const role = jobTitle || "este rol de transformación";
+  const items: Omit<RoleReviewTicket, "id" | "day">[] = [
+    {
+      title: "Prioriza el portafolio de iniciativas",
+      priority: "P1",
+      type: "task",
+      description: `Como ${role}, ordena 5 iniciativas del aviso por impacto, esfuerzo y dependencia. Elige un piloto.`,
+      acceptance: ["Criterio impacto × esfuerzo", "1 piloto nombrado", "1 dependencia bloqueante"],
+      jdAnchor: anchor,
+      timeMin: 25,
+    },
+    {
+      title: "Update al sponsor",
+      priority: "P2",
+      type: "update",
+      description: "Update de 8 líneas: avance, bloqueo, decisión que pides y métrica de adopción (uso, no solo go-live).",
+      acceptance: ["Decisión pedida", "Métrica de adopción", "Sin eslogan vacío"],
+      jdAnchor: anchor,
+      timeMin: 15,
+    },
+    {
+      title: "Piloto de adopción",
+      priority: "P0",
+      type: "spike",
+      description: "Diseña un piloto de 2 semanas: audiencia, qué cambia para ellas y cómo mides uso real.",
+      acceptance: ["Audiencia acotada", "Antes / después", "Señal de adopción"],
+      jdAnchor: anchor,
+      timeMin: 30,
+    },
+  ];
+  return items.map((t, i) => ({ ...t, id: `tk${i + 1}`, day: i + 1 }));
 }
 
 /** Tickets semilla por familia (cuando la IA no trae tickets). */

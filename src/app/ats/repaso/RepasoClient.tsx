@@ -175,6 +175,7 @@ export default function RepasoClient() {
       const plan: RoleReviewPlan = {
         id: `rr_${now}_${Math.random().toString(36).slice(2, 6)}`,
         jobId: jobId || undefined,
+        jobText: jobText.trim() || data.plan.jobText || undefined,
         title: data.plan.title,
         objective: data.plan.objective,
         mode: data.plan.mode || mode,
@@ -222,14 +223,14 @@ export default function RepasoClient() {
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between gap-2">
           <div>
-            <p className="text-xs muted">Gratis · anclado a tu vacante</p>
+            <p className="text-xs muted">Gratis · día 1 del curso · 1 plan/mes</p>
             <h1 className="text-xl font-semibold">Repaso del rol</h1>
           </div>
-          <SpeakButton text="Arma un plan para practicar lo que pide la vacante, con retos del trabajo diario, sin inventar experiencia." />
+          <SpeakButton text="Arma un plan para practicar lo que pide la vacante. Gratis ves el mapa del rol. Carrera abre retos, tickets, STAR, semana 1 y el 1:1." />
         </div>
         <p className="text-sm muted">
-          Cada exigencia de la vacante es una lección: qué es, para qué, qué resuelve y cómo se vive en el día.
-          Después vienen el reto, el ticket, STAR, la primera semana y el 1:1 con el jefe.
+          El curso enseña áreas del cargo, herramientas, con quién trabajas, registros, controles, KPIs y cómo hacerlo.
+          Retos, tickets, STAR, semana 1 y el 1:1 van con Carrera.
         </p>
         {quotaLabel ? <p className="text-xs muted">{quotaLabel}</p> : null}
         {metricsLabel ? <p className="text-xs muted">{metricsLabel}</p> : null}

@@ -104,8 +104,8 @@ export const PAGE_GUIDES: PageGuideCopy[] = [
   },
   {
     path: "/ats/repaso",
-    what: "Plan corto anclado a UNA vacante: estudias lo que falta (si marcas “quiero aprenderlo”), haces tickets como en el trabajo y practicas STAR.",
-    how: "Desde el ATS o el tracker abre Repasar rol. Marca gaps con honestidad, elige modo y genera. En el player alterna Estudio / Ticket / STAR / Semana 1.",
+    what: "Gratis: mapa del rol (día 1). Carrera: retos, tickets, STAR, semana 1 y 1:1 con veredicto, anclado a UNA vacante.",
+    how: "Genera el plan desde el ATS o el tracker. En gratis estudias el curso del día 1. Para practicar el oficio, activa Carrera.",
   },
   {
     path: "/herramientas",

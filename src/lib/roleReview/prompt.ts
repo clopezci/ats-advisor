@@ -5,7 +5,13 @@ import type {
   RoleReviewPlan,
   RoleReviewStarPrompt,
 } from "@/lib/roleReview/types";
-import { detectRoleFamily, seedTicketsForFamily, seedWeek1Checklist } from "@/lib/roleReview/templates";
+import {
+  detectRoleFamily,
+  seedDigitalTransformTickets,
+  seedTicketsForFamily,
+  seedWeek1Checklist,
+} from "@/lib/roleReview/templates";
+import { extractTopicsFromJob, isDigitalTransformation } from "@/lib/roleReview/lesson";
 
 /** Ancla el reto a un requisito, no al párrafo de “estamos buscando”. */
 export function jdAnchorFromJob(jobText: string): string {
@@ -161,13 +167,14 @@ export function buildFallbackRoleReviewPlan(opts: {
   | "starAnswers"
   | "jobId"
 > {
-  const topics = opts.learnTopics.filter((t) => t.optIn).map((t) => t.term);
-  const seed = topics.length
-    ? topics
-    : ["responsabilidades del rol", "herramientas del aviso", "comunicación con el equipo"];
+  const opted = opts.learnTopics.filter((t) => t.optIn).map((t) => t.term);
+  const seed = opted.length ? opted : extractTopicsFromJob(opts.jobTitle, opts.jobText);
   const family = opts.roleFamily || detectRoleFamily(opts.jobTitle, opts.jobText);
   const maxDays = Math.min(7, Math.max(3, opts.maxDays || 5));
-  const tickets = seedTicketsForFamily(family, opts.jobTitle, jdAnchorFromJob(opts.jobText));
+  const anchor = jdAnchorFromJob(opts.jobText);
+  const tickets = isDigitalTransformation(opts.jobTitle, opts.jobText)
+    ? seedDigitalTransformTickets(opts.jobTitle, anchor)
+    : seedTicketsForFamily(family, opts.jobTitle, anchor);
   const week1Checklist = seedWeek1Checklist(opts.jobTitle);
 
   const days = seed.slice(0, maxDays).map((term, i) => {
@@ -247,6 +254,7 @@ export function buildFallbackRoleReviewPlan(opts: {
     mode: opts.mode,
     learnTopics: opts.learnTopics,
     roleFamily: family,
+    jobText: opts.jobText,
     days,
     challenges,
     tickets: tickets.slice(0, Math.max(days.length, 3)),

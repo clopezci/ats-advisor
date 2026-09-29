@@ -5,6 +5,7 @@
 import { readFileSync } from "fs";
 import { buildFallbackRoleReviewPlan, isUsableRolePlan, jdAnchorFromJob } from "../src/lib/roleReview/prompt";
 import { detectRoleFamily } from "../src/lib/roleReview/templates";
+import { buildRoleCourse, extractTopicsFromJob, isDigitalTransformation } from "../src/lib/roleReview/lesson";
 import {
   answersMatch,
   PSICO_BANK_COUNTS,
@@ -73,7 +74,67 @@ for (const mode of ["refuerzo", "total", "entrevista", "dia1"] as const) {
     assert("dia1:objective", /primera semana/i.test(plan.objective), plan.objective);
   }
   console.log(`  ${mode} día1: ${plan.days[0]?.title} · ticket: ${plan.tickets[0]?.title}`);
+  if (mode === "refuerzo") {
+    assert("refuerzo:guarda-aviso", plan.jobText === JOB, "el curso necesita el aviso en el plan");
+    assert(
+      "refuerzo:ticket-ops",
+      /excepciones|handoff|root cause/i.test(plan.tickets.map((t) => t.title).join(" ")),
+      plan.tickets[0]?.title || ""
+    );
+  }
 }
+
+const platformCourse = buildRoleCourse({
+  jobTitle: "Gerente de plataforma digital e infraestructura TI",
+  jobText: JOB,
+  family: "ops",
+  term: "ITIL",
+});
+const courseBlob = platformCourse.map((b) => `${b.heading} ${b.body}`).join("\n");
+assert("curso:hoy", platformCourse[0]?.heading === "Hoy: ITIL", platformCourse[0]?.heading || "");
+assert("curso:areas", platformCourse.some((b) => b.heading.startsWith("Áreas") && (b.points?.length || 0) >= 3), "sin áreas");
+assert("curso:kpis", platformCourse.some((b) => /KPI/i.test(b.heading)), "sin KPIs");
+assert("curso:ops-no-transform", /disponibilidad|ITIL|incidentes/i.test(courseBlob), courseBlob.slice(0, 180));
+assert(
+  "curso:plataforma-digital-no-es-cdo",
+  !isDigitalTransformation("Gerente de plataforma digital e infraestructura TI", JOB),
+  "un gerente de plataforma no es transformación digital"
+);
+
+const topics = extractTopicsFromJob("Gerente de plataforma digital e infraestructura TI", JOB);
+assert("temas:itil-finops", topics.some((t) => /ITIL|FinOps|Cloud|OKR/i.test(t)), topics.join(", "));
+const adminTopics = extractTopicsFromJob(
+  "Asistente de dirección",
+  "Apoyo a la dirección. Manejo de datos de contacto, archivo y agenda. Reporta al gerente administrativo."
+);
+assert(
+  "temas:datos-de-contacto-no-es-analytics",
+  !adminTopics.some((t) => /Datos y analítica|Stakeholders/i.test(t)),
+  adminTopics.join(", ")
+);
+
+const TRANSFORM = `Gerente de Transformación Digital.
+Lidera la hoja de ruta, el portafolio de iniciativas, la gestión del cambio y la adopción.
+Sponsor ejecutivo, comité, OKR y gobierno de riesgos.`;
+assert("transform:detect", isDigitalTransformation("Gerente de Transformación Digital", TRANSFORM), "no detectó");
+const transformPlan = buildFallbackRoleReviewPlan({
+  mode: "total",
+  jobTitle: "Gerente de Transformación Digital",
+  jobText: TRANSFORM,
+  learnTopics: [],
+  maxDays: 3,
+});
+const transformTickets = transformPlan.tickets.map((t) => t.title).join(" ");
+assert("transform:tickets", /portafolio|sponsor|adopci[oó]n/i.test(transformTickets), transformTickets);
+assert("transform:no-handoff", !/handoff de turno/i.test(transformTickets), transformTickets);
+const transformCourse = buildRoleCourse({
+  jobTitle: "Gerente de Transformación Digital",
+  jobText: TRANSFORM,
+  term: "Gestión del cambio",
+})
+  .map((b) => b.body)
+  .join(" ");
+assert("transform:curso", /adopci[oó]n|portafolio|patrocinador/i.test(transformCourse), transformCourse.slice(0, 160));
 
 assert("psico:trial-3", trialExercises().length === 3, String(trialExercises().length));
 const materias = new Set(trialExercises().map((t) => t.item.materia));

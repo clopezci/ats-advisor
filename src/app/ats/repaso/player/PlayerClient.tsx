@@ -554,12 +554,12 @@ export default function PlayerClient() {
           >
             Simulacro 1:1 con el jefe
           </Link>
-        ) : (
+        ) : locked ? null : (
           <PaywallCard
             currentPlan={planId}
-            nextHref={`/ats/repaso/player/coach?id=${encodeURIComponent(plan.id)}`}
-            title="El 1:1 y la práctica van con Carrera"
-            reason="Gratis ves el mapa del rol (día 1). Carrera abre retos, tickets, STAR, semana 1 y el 1:1 con veredicto."
+            nextHref={resume}
+            title="Para practicar con retos y el 1:1"
+            reason="Ya viste el mapa. Carrera abre la práctica del oficio y el veredicto Sirve / A mejorar."
             bullets={CAREER_BULLETS}
           />
         )}

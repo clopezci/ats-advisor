@@ -52,7 +52,7 @@ export function OutplacementLayoutGate({ children }: { children: ReactNode }) {
           currentPlan={plan}
           nextHref={path}
           title="Esto es parte del plan Carrera"
-          reason={`Esta herramienta de acompañamiento está en el plan Carrera (${CAREER_PATH_LABEL} + práctica, red, oferta…). Gratis: analizador ATS, encaje, tracker, checklist CV y bandas salariales.`}
+          reason={`Esta herramienta de acompañamiento está en el plan Carrera (${CAREER_PATH_LABEL}, cuadernillo, repaso del rol, red, oferta…). Gratis: ATS, estudiar psicotécnicas, encaje, tracker, checklist y bandas salariales.`}
         />
       </div>
     );

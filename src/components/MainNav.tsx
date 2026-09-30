@@ -5,11 +5,10 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { resolveContinueTarget } from "@/lib/engagement/focusPath";
 
-/** Nav lean: Inicio, Hoy (Continuar), Cuenta + Más siempre visible. */
+/** Nav lean: Inicio · Continuar · Psicotécnicas · Cuenta */
 export function MainNav() {
   const pathname = usePathname() || "/";
   const [hoyHref, setHoyHref] = useState("/");
-  const [more, setMore] = useState(false);
 
   useEffect(() => {
     try {
@@ -19,32 +18,24 @@ export function MainNav() {
     }
   }, [pathname]);
 
-  const primary = [
+  const items = [
     { href: "/", label: "Inicio", active: pathname === "/" },
     {
       href: hoyHref,
-      label: "Hoy",
-      active:
-        pathname.startsWith("/outplacement/cuadernillo") ||
-        pathname.startsWith("/ats") ||
-        pathname.startsWith("/outplacement/ruta"),
+      label: "Continuar",
+      active: false,
+    },
+    {
+      href: "/outplacement/psicotecnicas",
+      label: "Psicotécnicas",
+      active: pathname.startsWith("/outplacement/psicotecnicas"),
     },
     { href: "/cuenta", label: "Cuenta", active: pathname.startsWith("/cuenta") },
   ];
 
-  const extras = [
-    { href: "/ats", label: "ATS gratis" },
-    { href: "/tracker", label: "Tracker" },
-    { href: "/herramientas", label: "Herramientas" },
-    { href: "/guia", label: "Mi plan" },
-    { href: "/outplacement", label: "Carrera" },
-    { href: "/capacidades", label: "Mapa" },
-    { href: "/precios", label: "Precios" },
-  ];
-
   return (
     <nav className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm" aria-label="Principal">
-      {primary.map((item) => (
+      {items.map((item) => (
         <Link
           key={item.label}
           href={item.href}
@@ -55,21 +46,6 @@ export function MainNav() {
           {item.label}
         </Link>
       ))}
-      <button
-        type="button"
-        className="muted hover:opacity-80"
-        onClick={() => setMore((v) => !v)}
-        aria-expanded={more}
-      >
-        Más {more ? "▴" : "▾"}
-      </button>
-      {more
-        ? extras.map((item) => (
-            <Link key={item.href} href={item.href} className="muted hover:opacity-80">
-              {item.label}
-            </Link>
-          ))
-        : null}
     </nav>
   );
 }

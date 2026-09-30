@@ -20,7 +20,9 @@ export function PageGuide() {
       pathname === "/" ||
       pathname.startsWith("/ats") ||
       pathname.startsWith("/outplacement/cuadernillo") ||
-      (focus === "carrera" && pathname.startsWith("/outplacement"));
+      pathname.startsWith("/outplacement/psicotecnicas") ||
+      (focus === "carrera" && pathname.startsWith("/outplacement")) ||
+      (focus === "gratis" && (pathname.startsWith("/tracker") || pathname.startsWith("/herramientas/checklist")));
     setShow(!quiet && Boolean(guide));
   }, [pathname, guide]);
 

@@ -19,17 +19,12 @@ import {
 import { ROLE_REVIEW_FAMILY_LABEL, type RoleReviewPlan } from "@/lib/roleReview/types";
 import { roleReviewAccountabilityTip } from "@/lib/roleReview/accountability";
 import { buildRoleCourse, dayInRole, isDigitalTransformation } from "@/lib/roleReview/lesson";
+import { CAREER_PAYWALL_BULLETS } from "@/lib/outplacement/labels";
 import { canAccessOutplacement, readEntitlement, type PlanId } from "@/lib/entitlements";
 
 type Tab = "dia" | "reto" | "ticket" | "star" | "semana1" | "oficio";
 
-const CAREER_BULLETS = [
-  "Curso completo de todos los días del plan",
-  "Retos del trabajo diario con entregable",
-  "Tickets estilo Jira anclados al aviso",
-  "Banco STAR y checklist de la primera semana",
-  "Simulacro 1:1 con veredicto Sirve / A mejorar",
-];
+const CAREER_BULLETS = CAREER_PAYWALL_BULLETS;
 
 export default function PlayerClient() {
   const params = useSearchParams();

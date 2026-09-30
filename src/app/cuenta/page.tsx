@@ -228,9 +228,25 @@ export default function CuentaPage() {
       <section className="bento-card space-y-3">
         <h2 className="font-semibold text-sm">Por dónde sigues</h2>
         <p className="text-sm muted leading-relaxed">
-          Elige si sigues el cuadernillo o analizas tu CV. Puedes cambiarlo después.
+          Elige ruta gratis o Plan Carrera. Puedes cambiarlo cuando quieras desde Inicio o la barra de ruta.
         </p>
         <div className="flex flex-col gap-2">
+          <button
+            type="button"
+            className="btn-secondary"
+            style={
+              focusPath === "gratis"
+                ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
+                : undefined
+            }
+            onClick={() => {
+              writeFocusPath("gratis");
+              setFocusPath("gratis");
+              setMsg("Listo. Tu prioridad es la ruta gratis (ATS, psicotécnicas, tracker).");
+            }}
+          >
+            Ruta gratis
+          </button>
           <button
             type="button"
             className="btn-secondary"
@@ -242,26 +258,10 @@ export default function CuentaPage() {
             onClick={() => {
               writeFocusPath("carrera");
               setFocusPath("carrera");
-              setMsg("Listo. Tu prioridad es el cuadernillo de carrera.");
+              setMsg("Listo. Tu prioridad es el Plan Carrera (cuadernillo).");
             }}
           >
-            Cuadernillo de carrera
-          </button>
-          <button
-            type="button"
-            className="btn-secondary"
-            style={
-              focusPath === "ats"
-                ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
-                : undefined
-            }
-            onClick={() => {
-              writeFocusPath("ats");
-              setFocusPath("ats");
-              setMsg("Listo. Tu prioridad es analizar tu CV.");
-            }}
-          >
-            Analizar mi CV
+            Plan Carrera
           </button>
         </div>
       </section>

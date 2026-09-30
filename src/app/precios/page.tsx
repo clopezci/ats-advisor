@@ -137,7 +137,6 @@ export default function PreciosPage() {
     const params = new URLSearchParams(window.location.search);
     const next = params.get("next");
     if (next) setReturnNext(safeAppPath(next, "/guia?recorrido=1"));
-    void refreshPrivilege(em);
     fetch("/api/features")
       .then((r) => r.json())
       .then((d) => {
@@ -487,9 +486,15 @@ export default function PreciosPage() {
         </ul>
         <p className="text-sm font-medium">También con Carrera</p>
         <ul className="space-y-1 text-sm muted">
+          <li>• Cuadernillo guiado (mapa, SOAR, guiones, mercado, red, finanzas, oferta)</li>
+          <li>• Repaso del rol completo (curso del aviso, retos, 1:1)</li>
           <li>• LinkedIn, carta, plantilla CV, multi-oferta, pack ZIP</li>
-          <li>• Coach IA, filtro telefónico, red de contactos, negociación de oferta</li>
-          <li>• Cápsulas y recordatorio de tarea por Telegram (gratis) o WhatsApp (add-on más alto)</li>
+          <li>• Coach IA, filtro telefónico, red de contactos, negociación</li>
+          <li>
+            • Psicotécnicas: estudiar fichas y pruebas (también en ruta gratis); práctica con método
+            IA es add-on
+          </li>
+          <li>• Cápsulas por Telegram (incluido) o WhatsApp (add-on)</li>
         </ul>
         <button
           type="button"

@@ -9,8 +9,7 @@ import { writeFocusPath, type FocusPath } from "@/lib/engagement/focusPath";
 import { readSaveChoice, writeSaveChoice, type SaveChoice } from "@/lib/client/saveChoice";
 
 /**
- * Primera pantalla: UNA decisión (Carrera vs ATS).
- * Después: solo Continuar en Inicio / Hoy.
+ * Primera vez: guardar o no · luego UNA decisión: Ruta gratis vs Plan Carrera.
  */
 export function OnboardingGate({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
@@ -84,7 +83,7 @@ export function OnboardingGate({ children }: { children: ReactNode }) {
   if (!showPath) return <>{children}</>;
 
   const intro =
-    "Elige por dónde empezar. Después solo sigues con Continuar — sin perderte en menús.";
+    "Solo hay dos caminos. Elige uno: te guiamos paso a paso. Siempre puedes cambiar arriba en la barra de ruta.";
 
   return (
     <div className="flex flex-1 flex-col gap-5">
@@ -92,7 +91,7 @@ export function OnboardingGate({ children }: { children: ReactNode }) {
         <div className="flex items-start justify-between gap-2">
           <div>
             <p className="text-xs muted">Bienvenida · 1 decisión</p>
-            <h1 className="text-2xl font-semibold">¿Por dónde empiezas?</h1>
+            <h1 className="text-2xl font-semibold">¿Qué camino tomas?</h1>
           </div>
           <SpeakButton text={intro} />
         </div>
@@ -100,41 +99,42 @@ export function OnboardingGate({ children }: { children: ReactNode }) {
       </section>
 
       <Link
-        href="/outplacement"
+        href="/ats"
         className="btn-primary w-full"
         style={{
-          minHeight: "4.75rem",
+          minHeight: "5rem",
           fontSize: "1.1rem",
           lineHeight: 1.35,
           flexDirection: "column",
-          gap: "0.2rem",
+          gap: "0.25rem",
+          textAlign: "center",
+        }}
+        onClick={() => choose("gratis")}
+      >
+        <span>Ruta gratis</span>
+        <span className="text-xs font-normal opacity-90">
+          ATS · psicotécnicas para estudiar · tracker · checklist
+        </span>
+      </Link>
+
+      <Link
+        href="/precios?plan=carrera&next=%2Foutplacement%2Fcuadernillo"
+        className="btn-secondary w-full"
+        style={{
+          minHeight: "5rem",
+          fontSize: "1.1rem",
+          lineHeight: 1.35,
+          flexDirection: "column",
+          gap: "0.25rem",
           textAlign: "center",
         }}
         onClick={() => choose("carrera")}
       >
-        <span>Retomar mi carrera</span>
-        <span className="text-xs font-normal opacity-90">Un paso a la vez, con Continuar</span>
+        <span>Plan Carrera</span>
+        <span className="text-xs font-normal muted">
+          Cuadernillo guiado · mapa, red, entrevistas, oferta
+        </span>
       </Link>
-
-      <Link
-        href="/ats"
-        className="btn-secondary w-full"
-        style={{
-          minHeight: "4.25rem",
-          lineHeight: 1.35,
-          flexDirection: "column",
-          gap: "0.2rem",
-          textAlign: "center",
-        }}
-        onClick={() => choose("ats")}
-      >
-        <span>Probar el analizador de CV (gratis)</span>
-        <span className="text-xs font-normal muted">Tu CV contra una vacante · en 2 minutos</span>
-      </Link>
-
-      <p className="text-center text-xs muted">
-        Puedes cambiar de camino en Cuenta. Si Carrera está bloqueado, activa el plan o Tester desde ahí.
-      </p>
     </div>
   );
 }

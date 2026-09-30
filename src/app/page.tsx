@@ -10,8 +10,12 @@ import { useEffect, useState } from "react";
 import { canAccessOutplacement, readEntitlement } from "@/lib/entitlements";
 import { readStreak } from "@/lib/engagement/streak";
 import {
+  FREE_STEPS,
+  pathLabel,
   readFocusPath,
-  resolveCareerContinueTarget,
+  readFreeStepIndex,
+  resolveContinueTarget,
+  restartCurrentPath,
   writeFocusPath,
   type ContinueTarget,
   type FocusPath,
@@ -21,28 +25,37 @@ function HomeInner() {
   const [streak, setStreak] = useState(0);
   const [paid, setPaid] = useState(false);
   const [path, setPath] = useState<FocusPath | null>(null);
-  const [careerTarget, setCareerTarget] = useState<ContinueTarget | null>(null);
-  const [showSwitch, setShowSwitch] = useState(false);
+  const [target, setTarget] = useState<ContinueTarget | null>(null);
+  const [picker, setPicker] = useState(false);
 
   useEffect(() => {
     setStreak(readStreak().count);
     setPaid(canAccessOutplacement(readEntitlement().plan));
-    setPath(readFocusPath());
-    setCareerTarget(resolveCareerContinueTarget());
+    const p = readFocusPath();
+    setPath(p);
+    setTarget(resolveContinueTarget());
+    if (!p) setPicker(true);
   }, []);
 
-  function switchPath(next: FocusPath) {
+  function pick(next: FocusPath) {
     writeFocusPath(next);
     setPath(next);
-    setCareerTarget(resolveCareerContinueTarget());
-    setShowSwitch(false);
+    setPicker(false);
+    setTarget(resolveContinueTarget());
+  }
+
+  function restart() {
+    restartCurrentPath();
+    setTarget(resolveContinueTarget());
   }
 
   const INTRO =
-    "Siempre verás dos opciones: el analizador de CV gratis y seguir tu acompañamiento. Elige una y avanza.";
+    "Dos caminos: ruta gratis (ATS, psicotécnicas, tracker) o Plan Carrera (cuadernillo guiado). Continúa donde ibas o cambia cuando quieras.";
+
+  const freeIdx = readFreeStepIndex();
 
   return (
-    <div className="flex flex-1 flex-col gap-6">
+    <div className="flex flex-1 flex-col gap-5">
       <InstallPrompt />
       {streak > 0 && (
         <p className="text-center text-sm">
@@ -52,91 +65,127 @@ function HomeInner() {
         </p>
       )}
 
-      {paid ? <DailyCourseReminder /> : null}
+      {paid && path === "carrera" ? <DailyCourseReminder /> : null}
 
-      <section className="bento-card space-y-4">
+      <section className="bento-card space-y-3">
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="pill-brand">LOTIC · un paso a la vez</p>
-            <h1 className="mt-3 text-2xl font-semibold leading-tight">Tu siguiente paso</h1>
+            <h1 className="mt-3 text-2xl font-semibold leading-tight">
+              {path ? pathLabel(path) : "Tu camino"}
+            </h1>
           </div>
           <SpeakButton text={INTRO} />
         </div>
         <p className="muted text-sm leading-relaxed">{INTRO}</p>
-        {path === "carrera" && !paid ? (
-          <p className="text-xs muted leading-relaxed">
-            Para probar: en <Link href="/cuenta" style={{ color: "var(--brand)" }}>Cuenta</Link>{" "}
-            activa Tester o Carrera y recorre el cuadernillo completo.
-          </p>
-        ) : null}
       </section>
 
-      <Link
-        href="/ats"
-        className="btn-primary w-full"
-        style={{
-          minHeight: "4.75rem",
-          fontSize: "1.15rem",
-          lineHeight: 1.35,
-          flexDirection: "column",
-          gap: "0.2rem",
-          textAlign: "center",
-        }}
-        onClick={() => writeFocusPath("ats")}
-      >
-        <span>ATS gratis</span>
-        <span className="text-xs font-normal opacity-90">
-          Compara tu CV con una vacante · puntaje y qué mejorar
-        </span>
-      </Link>
-
-      {careerTarget ? (
-        <Link
-          href={careerTarget.href}
-          className="btn-secondary w-full"
-          style={{
-            minHeight: "4.75rem",
-            fontSize: "1.15rem",
-            lineHeight: 1.35,
-            flexDirection: "column",
-            gap: "0.2rem",
-            textAlign: "center",
-          }}
-          onClick={() => writeFocusPath("carrera")}
-        >
-          <span>{careerTarget.label}</span>
-          <span className="text-xs font-normal opacity-90">{careerTarget.hint}</span>
-        </Link>
+      {picker || !path ? (
+        <section className="space-y-3">
+          <p className="text-sm font-medium">Elige tu camino</p>
+          <button
+            type="button"
+            className="btn-primary w-full"
+            style={{
+              minHeight: "5rem",
+              flexDirection: "column",
+              gap: "0.25rem",
+              textAlign: "center",
+              lineHeight: 1.35,
+            }}
+            onClick={() => pick("gratis")}
+          >
+            <span>Ruta gratis</span>
+            <span className="text-xs font-normal opacity-90">
+              ATS · estudiar psicotécnicas · tracker · checklist
+            </span>
+          </button>
+          <button
+            type="button"
+            className="btn-secondary w-full"
+            style={{
+              minHeight: "5rem",
+              flexDirection: "column",
+              gap: "0.25rem",
+              textAlign: "center",
+              lineHeight: 1.35,
+            }}
+            onClick={() => pick("carrera")}
+          >
+            <span>Plan Carrera</span>
+            <span className="text-xs font-normal muted">
+              Cuadernillo guiado · si no tienes plan, te llevamos a activarlo
+            </span>
+          </button>
+        </section>
       ) : (
-        <Link
-          href="/outplacement/cuadernillo"
-          className="btn-secondary"
-          onClick={() => writeFocusPath("carrera")}
-        >
-          Continuar: mi acompañamiento
-        </Link>
-      )}
+        <section className="space-y-3">
+          {target ? (
+            <Link
+              href={target.href}
+              className="btn-primary w-full"
+              style={{
+                minHeight: "5rem",
+                fontSize: "1.1rem",
+                lineHeight: 1.35,
+                flexDirection: "column",
+                gap: "0.25rem",
+                textAlign: "center",
+              }}
+            >
+              <span>{target.label}</span>
+              <span className="text-xs font-normal opacity-90">{target.hint}</span>
+            </Link>
+          ) : null}
 
-      <button
-        type="button"
-        className="text-center text-sm muted"
-        onClick={() => setShowSwitch((v) => !v)}
-      >
-        {showSwitch ? "Ocultar" : "Cambiar de camino"}
-      </button>
-      {showSwitch ? (
-        <div className="flex flex-col gap-2">
-          <button type="button" className="btn-secondary" onClick={() => switchPath("carrera")}>
-            Camino Carrera (cuadernillo)
+          <button type="button" className="btn-secondary w-full" onClick={restart}>
+            Empezar esta ruta desde el principio
           </button>
-          <button type="button" className="btn-secondary" onClick={() => switchPath("ats")}>
-            Camino ATS gratis
+
+          <button
+            type="button"
+            className="text-center text-sm underline muted w-full"
+            onClick={() => setPicker(true)}
+          >
+            Cambiar de camino
           </button>
-          <Link href="/tracker" className="btn-secondary">
-            Solo anotar una postulación
-          </Link>
-        </div>
-      ) : null}
+
+          {path === "gratis" ? (
+            <section className="bento-card space-y-2">
+              <h2 className="font-semibold text-sm">Pasos de la ruta gratis</h2>
+              <ol className="space-y-2">
+                {FREE_STEPS.map((s, i) => (
+                  <li key={s.id}>
+                    <Link
+                      href={s.href}
+                      className="flex flex-col gap-0.5 rounded-lg border px-3 py-2 text-sm"
+                      style={{
+                        borderColor: i === freeIdx ? "var(--brand)" : "var(--border)",
+                        boxShadow: i === freeIdx ? "var(--shadow-brand)" : undefined,
+                      }}
+                    >
+                      <span className="font-medium">
+                        {i + 1}. {s.title}
+                        {i < freeIdx ? " ✓" : i === freeIdx ? " ← ahora" : ""}
+                      </span>
+                      <span className="text-xs muted">{s.desc}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+              <p className="text-xs muted leading-relaxed">
+                Estudiar psicotécnicas es gratis. Lo de pago es practicar con el método IA personalizado.
+              </p>
+            </section>
+          ) : null}
+
+          {path === "carrera" && !paid ? (
+            <p className="text-sm muted leading-relaxed">
+              Sin plan activo te llevamos a precios. Si eres dueño/tester, activa sin pago ahí mismo.
+            </p>
+          ) : null}
+        </section>
+      )}
 
       <AdSlot slot="home-free" />
     </div>

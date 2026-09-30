@@ -87,3 +87,47 @@ export function outModuleTitle(code: string): string {
 export function outModuleShort(code: string): string {
   return SHORT[code] || outModuleTitle(code);
 }
+
+/**
+ * Qué incluye el plan Carrera (copy comercial / paywalls).
+ * Estudiar psicotécnicas (fichas + banco) es gratis; la práctica con IA es add-on.
+ */
+export const CAREER_PLAN_INCLUDES = [
+  {
+    title: "Cuadernillo guiado",
+    desc: "Mapa de carrera, SOAR, guiones, mercado, red, conectores, finanzas, compensación, evaluación y seguimiento semanal — con ejemplos de redacción.",
+  },
+  {
+    title: CAREER_PATH_LABEL,
+    desc: "Acompañamiento semana a semana: estabilización, autoevaluación, mercado, marca, networking, entrevistas y oferta.",
+  },
+  {
+    title: "Repaso del rol completo",
+    desc: "Curso del cargo según el aviso, retos, tickets, STAR, primera semana y simulacro 1:1 con veredicto.",
+  },
+  {
+    title: "LinkedIn, carta y plantilla CV",
+    desc: "Textos listos para postular, multi-oferta y pack de envío.",
+  },
+  {
+    title: "Entrevistas y negociación",
+    desc: "Filtro telefónico, práctica STAR, scripts de oferta y bandas.",
+  },
+  {
+    title: "Coach IA y red de contactos",
+    desc: "Preguntas al coach, CRM de networking y plantillas por audiencia.",
+  },
+  {
+    title: "Psicotécnicas (estudiar)",
+    desc: "Fichas de método y banco de pruebas — también en la ruta gratis. La práctica con método IA (perfil/foto) es un add-on aparte.",
+  },
+  {
+    title: "Cápsulas por canal",
+    desc: "Recordatorios por Telegram (incluido) o WhatsApp (add-on).",
+  },
+] as const;
+
+/** Bullets cortos para PaywallCard / upsells. */
+export const CAREER_PAYWALL_BULLETS = CAREER_PLAN_INCLUDES.map(
+  (x) => `${x.title}: ${x.desc}`
+);

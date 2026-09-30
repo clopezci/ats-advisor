@@ -4,14 +4,11 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useJsonDraft } from "@/lib/client/useJsonDraft";
 import { SpeakButton } from "@/components/SpeakButton";
-import { PaywallCard } from "@/components/PaywallCard";
-import { canAccessOutplacement, readEntitlement, type PlanId } from "@/lib/entitlements";
 import {
   answersMatch,
   loadTrialDone,
   materiaNombre,
   PSICO_BANK_COUNTS,
-  PSICO_FREE_TRIAL,
   PSICO_MATERIAS,
   PSICO_PREVIEW_FICHAS,
   saveTrialDone,
@@ -19,17 +16,16 @@ import {
   type PsicoEjercicio,
   type PsicoFicha,
 } from "@/lib/psicotecnicas";
+import { writeFocusPath } from "@/lib/engagement/focusPath";
 
-type Mode = "prueba" | "fichas" | "banco";
+type Mode = "fichas" | "pruebas";
 
 const INTRO =
-  "Resolución de pocos segundos para pruebas de selección: numérico, abstracto y personalidad. Cada quien va a su ritmo. Practica 3 gratis. El banco completo va con Carrera.";
+  "Estudia gratis: fichas de método y banco de pruebas. Lo que cuesta es practicar con el método IA (perfil, foto y pistas personalizadas).";
 
 export function PsicoClient() {
-  const [plan, setPlan] = useState<PlanId>("free");
-  const [mode, setMode] = useState<Mode>("prueba");
+  const [mode, setMode] = useState<Mode>("fichas");
   const [done, setDone] = useState<number[]>([]);
-  const [cursor, setCursor] = useState(0);
   const [answer, setAnswer] = useState("");
   const [revealed, setRevealed] = useState(false);
   const [materia, setMateria] = useState(PSICO_MATERIAS[0]?.id || "");
@@ -40,20 +36,17 @@ export function PsicoClient() {
   const [bankMsg, setBankMsg] = useState("");
   const [publicFichas, setPublicFichas] = useState<PsicoFicha[] | null>(null);
 
-  useJsonDraft("ats_psico_draft", { answer, cursor, revealed }, (saved) => {
+  useJsonDraft("ats_psico_draft", { answer, revealed, materia, mode }, (saved) => {
     if (typeof saved.answer === "string" && saved.answer) setAnswer(saved.answer);
-    if (typeof saved.cursor === "number" && saved.cursor >= 0) setCursor(saved.cursor);
     if (saved.revealed === true) setRevealed(true);
+    if (typeof saved.materia === "string" && saved.materia) setMateria(saved.materia);
+    if (saved.mode === "fichas" || saved.mode === "pruebas") setMode(saved.mode);
   });
 
-  const unlocked = canAccessOutplacement(plan);
   const trial = useMemo(() => trialExercises(), []);
-  const trialUsed = trial.filter((t) => done.includes(t.index)).length;
-  const trialLeft = Math.max(0, PSICO_FREE_TRIAL - trialUsed);
-  const trialLocked = !unlocked && trialUsed >= PSICO_FREE_TRIAL;
 
   useEffect(() => {
-    setPlan(readEntitlement().plan);
+    writeFocusPath("gratis");
     setDone(loadTrialDone());
     fetch("/api/psicotecnicas/fichas")
       .then(async (res) => {
@@ -61,15 +54,9 @@ export function PsicoClient() {
         if (res.ok && Array.isArray(data.fichas)) setPublicFichas(data.fichas);
       })
       .catch(() => undefined);
-  }, []);
-
-  useEffect(() => {
-    if (!unlocked) return;
-    let cancel = false;
     fetch("/api/psicotecnicas/bank")
       .then(async (res) => {
         const data = await res.json().catch(() => ({}));
-        if (cancel) return;
         if (!res.ok) {
           setBankMsg(data.error || "No se pudo abrir el banco.");
           return;
@@ -77,71 +64,70 @@ export function PsicoClient() {
         setBankFichas(data.fichas || []);
         setBankEjercicios(data.ejercicios || []);
       })
-      .catch(() => {
-        if (!cancel) setBankMsg("No se pudo abrir el banco.");
-      });
-    return () => {
-      cancel = true;
-    };
-  }, [unlocked]);
+      .catch(() => setBankMsg("No se pudo abrir el banco."));
+  }, []);
 
-  const currentTrial = trial[Math.min(cursor, Math.max(0, trial.length - 1))];
-
-  function openTrial(i: number) {
-    setCursor(i);
-    setAnswer("");
-    setRevealed(false);
-    setMode("prueba");
-  }
-
-  function submitTrial() {
-    if (!currentTrial || revealed) return;
-    if (trialLocked && !done.includes(currentTrial.index)) return;
-    setRevealed(true);
-    if (!done.includes(currentTrial.index)) {
-      setDone(saveTrialDone([...done, currentTrial.index]));
-    }
-  }
-
-  const fichas = (publicFichas || (unlocked && bankFichas ? bankFichas : PSICO_PREVIEW_FICHAS)).filter(
+  const fichas = (bankFichas || publicFichas || PSICO_PREVIEW_FICHAS).filter(
     (f) => f.subjectId === materia
   );
-  const ejercicios = unlocked && bankEjercicios ? bankEjercicios : [];
-  const banco = ejercicios.map((item, index) => ({ item, index })).filter((x) => x.item.materia === materia);
+  const ejercicios = bankEjercicios || trial.map((t) => t.item);
+  const banco = ejercicios
+    .map((item, index) => ({ item, index }))
+    .filter((x) => x.item.materia === materia);
   const ficha = fichas[Math.min(fichaI, Math.max(0, fichas.length - 1))];
   const bancoItem = banco[Math.min(bancoI, Math.max(0, banco.length - 1))];
+
+  function markDone(index: number) {
+    if (!done.includes(index)) setDone(saveTrialDone([...done, index]));
+  }
 
   return (
     <div className="flex flex-1 flex-col gap-5">
       <section className="bento-card space-y-3">
         <div className="flex items-start justify-between gap-2">
           <div>
-            <p className="text-xs muted">Carrera · psicotécnicas</p>
-            <h1 className="text-2xl font-semibold">Pruebas psicotécnicas</h1>
+            <p className="text-xs muted">Ruta gratis · psicotécnicas</p>
+            <h1 className="text-2xl font-semibold">Estudiar y practicar</h1>
           </div>
           <SpeakButton text={INTRO} />
         </div>
         <p className="text-sm muted leading-relaxed">{INTRO}</p>
         <p className="text-xs muted">
-          {unlocked
-            ? `Plan con acceso completo · ${bankFichas?.length || PSICO_BANK_COUNTS.fichas} fichas · ${bankEjercicios?.length || PSICO_BANK_COUNTS.ejercicios} ejercicios.`
-            : `Pruebas gratis: ${trialUsed}/${PSICO_FREE_TRIAL}. Te quedan ${trialLeft}.`}
+          {bankFichas
+            ? `${bankFichas.length} fichas · ${bankEjercicios?.length || PSICO_BANK_COUNTS.ejercicios} pruebas · todo gratis para estudiar`
+            : bankMsg || "Cargando material…"}
         </p>
-        <div className="flex flex-wrap gap-2">
-          <button type="button" className="btn-secondary" onClick={() => setMode("prueba")}>
-            Prueba gratis
-          </button>
-          <button type="button" className="btn-secondary" onClick={() => setMode("fichas")}>
-            Fichas
-          </button>
-          <button type="button" className="btn-secondary" onClick={() => setMode("banco")}>
-            Banco
-          </button>
-          <Link href="/outplacement/psicotecnicas/practica" className="btn-primary">
-            Practicar con tu perfil
-          </Link>
-        </div>
       </section>
+
+      <div className="grid gap-2 sm:grid-cols-2">
+        <button
+          type="button"
+          className={mode === "fichas" ? "btn-primary" : "btn-secondary"}
+          onClick={() => setMode("fichas")}
+        >
+          1. Leer fichas (método)
+        </button>
+        <button
+          type="button"
+          className={mode === "pruebas" ? "btn-primary" : "btn-secondary"}
+          onClick={() => {
+            setMode("pruebas");
+            setAnswer("");
+            setRevealed(false);
+          }}
+        >
+          2. Hacer pruebas
+        </button>
+      </div>
+
+      <Link
+        href="/outplacement/psicotecnicas/practica"
+        className="btn-secondary w-full text-center"
+        style={{ flexDirection: "column", gap: "0.15rem", minHeight: "3.5rem", lineHeight: 1.3 }}
+      >
+        <span>Practicar con método IA (de pago)</span>
+        <span className="text-xs font-normal muted">Perfil · foto · pistas personalizadas</span>
+      </Link>
 
       <section className="bento-card space-y-2 text-sm leading-relaxed">
         <h2 className="font-semibold text-sm">El método (7 reglas)</h2>
@@ -154,55 +140,31 @@ export function PsicoClient() {
           <li>Si se puede dibujar, dibújalo y cuenta.</li>
           <li>Comprueba hacia atrás en cinco segundos.</li>
         </ol>
-        <p className="text-xs muted">
-          No copiamos cuadernillos reales. Enunciados propios, mismo formato de selección.
-        </p>
       </section>
 
-      {mode === "prueba" && currentTrial && (
-        <ExerciseCard
-          nLabel={`Prueba ${cursor + 1} de ${trial.length}`}
-          item={currentTrial.item}
-          answer={answer}
-          revealed={revealed}
-          correct={revealed && answersMatch(answer, currentTrial.item.respuesta)}
-          onAnswer={setAnswer}
-          onSubmit={submitTrial}
-          locked={trialLocked && !done.includes(currentTrial.index)}
-        />
-      )}
-
-      {mode === "prueba" && (
-        <div className="flex flex-wrap gap-2">
-          {trial.map((t, i) => (
-            <button key={t.index} type="button" className="btn-secondary" onClick={() => openTrial(i)}>
-              {i + 1}. {materiaNombre(t.item.materia)}
-              {done.includes(t.index) ? " ✓" : ""}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {(mode === "fichas" || mode === "banco") && (
-        <div className="flex flex-wrap gap-2">
-          {PSICO_MATERIAS.map((m) => (
-            <button
-              key={m.id}
-              type="button"
-              className="btn-secondary"
-              onClick={() => {
-                setMateria(m.id);
-                setFichaI(0);
-                setBancoI(0);
-                setRevealed(false);
-                setAnswer("");
-              }}
-            >
-              {m.corto}
-            </button>
-          ))}
-        </div>
-      )}
+      <div className="flex flex-wrap gap-2">
+        {PSICO_MATERIAS.map((m) => (
+          <button
+            key={m.id}
+            type="button"
+            className="btn-secondary"
+            onClick={() => {
+              setMateria(m.id);
+              setFichaI(0);
+              setBancoI(0);
+              setRevealed(false);
+              setAnswer("");
+            }}
+            style={
+              materia === m.id
+                ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
+                : undefined
+            }
+          >
+            {m.corto}
+          </button>
+        ))}
+      </div>
 
       {mode === "fichas" && ficha && (
         <section className="bento-card space-y-2">
@@ -228,57 +190,50 @@ export function PsicoClient() {
               {`Siguiente (${fichaI + 1}/${fichas.length})`}
             </button>
           </div>
-          <p className="text-xs muted">Las fichas se leen gratis. Practicar ítems nuevos, con foto o con tu perfil, es de pago.</p>
+          <button type="button" className="btn-primary" onClick={() => setMode("pruebas")}>
+            Pasar a hacer pruebas de {PSICO_MATERIAS.find((m) => m.id === materia)?.corto || "esta materia"}
+          </button>
         </section>
       )}
 
-      {mode === "banco" && unlocked && !bankEjercicios && (
-        <p className="text-sm muted">{bankMsg || "Cargando banco…"}</p>
+      {mode === "fichas" && !ficha && (
+        <p className="text-sm muted">No hay fichas para esta materia todavía.</p>
       )}
 
-      {mode === "banco" && bancoItem && unlocked && bankEjercicios && (
-          <ExerciseCard
-            nLabel={`${bancoI + 1} / ${banco.length} · ${bancoItem.item.tema}`}
-            item={bancoItem.item}
-            answer={answer}
-            revealed={revealed}
-            correct={revealed && answersMatch(answer, bancoItem.item.respuesta)}
-            onAnswer={setAnswer}
-            onSubmit={() => setRevealed(true)}
-            locked={false}
-            onNext={() => {
-              setBancoI((n) => Math.min(banco.length - 1, n + 1));
-              setAnswer("");
-              setRevealed(false);
-            }}
-            onPrev={() => {
-              setBancoI((n) => Math.max(0, n - 1));
-              setAnswer("");
-              setRevealed(false);
-            }}
-          />
+      {mode === "pruebas" && !bancoItem && (
+        <p className="text-sm muted">{bankMsg || "Cargando pruebas…"}</p>
       )}
 
-      {mode === "banco" && !unlocked && (
-          <PaywallCard
-            currentPlan={plan}
-            nextHref="/outplacement/psicotecnicas"
-            title="El banco completo es de Carrera"
-            reason={`Ya puedes probar ${PSICO_FREE_TRIAL} ejercicios (uno de cada tipo). El banco (${PSICO_BANK_COUNTS.ejercicios}) y las ${PSICO_BANK_COUNTS.fichas} fichas se desbloquean con el plan.`}
-          />
-      )}
-
-      {trialLocked && mode === "prueba" && (
-        <PaywallCard
-          currentPlan={plan}
-          nextHref="/outplacement/psicotecnicas"
-          title="Usaste tus 3 pruebas gratis"
-          reason="Sigue con las fichas de resolución rápida y el banco de ejercicios en el plan Carrera. No inventamos preguntas de cuadernillos ajenos: es método + práctica propia."
+      {mode === "pruebas" && bancoItem && (
+        <ExerciseCard
+          nLabel={`${bancoI + 1} / ${banco.length} · ${bancoItem.item.tema}`}
+          item={bancoItem.item}
+          answer={answer}
+          revealed={revealed}
+          correct={revealed && answersMatch(answer, bancoItem.item.respuesta)}
+          onAnswer={setAnswer}
+          onSubmit={() => {
+            setRevealed(true);
+            markDone(bancoItem.index);
+          }}
+          onNext={() => {
+            setBancoI((n) => Math.min(banco.length - 1, n + 1));
+            setAnswer("");
+            setRevealed(false);
+          }}
+          onPrev={() => {
+            setBancoI((n) => Math.max(0, n - 1));
+            setAnswer("");
+            setRevealed(false);
+          }}
         />
       )}
 
-      <Link href="/outplacement" className="btn-secondary">
-        Volver a Carrera
+      <Link href="/" className="btn-secondary">
+        Volver al inicio / Continuar ruta
+      </Link>
+      <Link href="/ats" className="btn-secondary">
+        Siguiente tipico: analizar mi CV
       </Link>
     </div>
   );
@@ -290,7 +245,6 @@ function ExerciseCard(props: {
   answer: string;
   revealed: boolean;
   correct: boolean;
-  locked: boolean;
   onAnswer: (v: string) => void;
   onSubmit: () => void;
   onNext?: () => void;
@@ -306,29 +260,23 @@ function ExerciseCard(props: {
           </p>
           <h2 className="font-semibold text-sm mt-1">{item.tema}</h2>
         </div>
-        <p className="text-xs muted text-right">Pocos segundos. A tu ritmo.</p>
+        <p className="text-xs muted text-right">A tu ritmo</p>
       </div>
       <p className="text-sm whitespace-pre-wrap leading-relaxed">{item.enunciado}</p>
-      {props.locked ? (
-        <p className="text-sm">Esta prueba ya no está en el cupo gratis.</p>
-      ) : (
-        <>
-          <label className="block text-sm">
-            Tu respuesta
-            <input
-              className="field mt-1"
-              value={props.answer}
-              onChange={(e) => props.onAnswer(e.target.value)}
-              placeholder="Número, letra o texto corto"
-              disabled={props.revealed}
-            />
-          </label>
-          {!props.revealed && (
-            <button type="button" className="btn-primary" onClick={props.onSubmit} disabled={!props.answer.trim()}>
-              Ver si cuadra
-            </button>
-          )}
-        </>
+      <label className="block text-sm">
+        Tu respuesta
+        <input
+          className="field mt-1"
+          value={props.answer}
+          onChange={(e) => props.onAnswer(e.target.value)}
+          placeholder="Número, letra o texto corto"
+          disabled={props.revealed}
+        />
+      </label>
+      {!props.revealed && (
+        <button type="button" className="btn-primary" onClick={props.onSubmit} disabled={!props.answer.trim()}>
+          Ver si cuadra
+        </button>
       )}
       {props.revealed && (
         <div className="space-y-2 text-sm">
@@ -358,7 +306,7 @@ function ExerciseCard(props: {
           )}
           {props.onNext && (
             <button type="button" className="btn-secondary" onClick={props.onNext}>
-              Siguiente
+              Siguiente prueba
             </button>
           )}
         </div>

@@ -49,9 +49,9 @@ export const FREE_TOOL_BLURBS = [
     desc: "Compara tu CV con una vacante y mira el puntaje y qué ajustar.",
   },
   {
-    href: "/herramientas/calculadora",
-    title: "Encaje rápido",
-    desc: "Qué tan bien encaja tu CV en un minuto (sin el análisis completo).",
+    href: "/outplacement/psicotecnicas",
+    title: "Psicotécnicas (estudiar)",
+    desc: "Fichas y banco de pruebas gratis. Lo de pago es practicar con IA.",
   },
   {
     href: "/tracker",
@@ -64,13 +64,18 @@ export const FREE_TOOL_BLURBS = [
     desc: "Revisa formato y secciones antes de enviar o analizar.",
   },
   {
+    href: "/herramientas/calculadora",
+    title: "Encaje rápido",
+    desc: "Qué tan bien encaja tu CV en un minuto (sin el análisis completo).",
+  },
+  {
     href: "/ats/radar",
     title: "Radar de vacantes",
     desc: "Tus filtros + avisos en lote: postula, revisa o descarta sin recorrer LinkedIn a ciegas.",
   },
   {
     href: "/ats/repaso",
-    title: "Repaso del rol (gancho)",
+    title: "Repaso del rol",
     desc: "Gratis: 1 plan/mes y el día 1 del curso del cargo. Carrera abre retos, tickets, STAR, semana 1 y 1:1.",
   },
   {

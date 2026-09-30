@@ -109,7 +109,7 @@ export default function OutplacementPage() {
       {!unlocked && plan !== "paused_90" && (
         <PaywallCard
           currentPlan={plan}
-          reason="Todo el acompañamiento está en el plan Carrera. Gratis tienes el analizador de CV, el encaje rápido, el tracker, el checklist y las bandas salariales."
+          reason="Todo el acompañamiento está en el plan Carrera: cuadernillo, ruta de 8 módulos, repaso del rol, LinkedIn/carta, entrevistas. Gratis: ATS, estudiar psicotécnicas, encaje, tracker, checklist y bandas."
         />
       )}
 

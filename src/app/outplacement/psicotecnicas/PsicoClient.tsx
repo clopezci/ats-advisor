@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useJsonDraft } from "@/lib/client/useJsonDraft";
 import { SpeakButton } from "@/components/SpeakButton";
+import { PsicoMuteFab } from "@/components/PsicoMuteFab";
 import {
   answersMatch,
   loadTrialDone,
@@ -16,12 +17,19 @@ import {
   type PsicoEjercicio,
   type PsicoFicha,
 } from "@/lib/psicotecnicas";
+import {
+  ejercicioSpeakScript,
+  fichaSpeakScript,
+  isPsicoSpeakMuted,
+  speakText,
+  stopSpeaking,
+} from "@/lib/psicotecnicas/speak";
 import { writeFocusPath } from "@/lib/engagement/focusPath";
 
 type Mode = "fichas" | "pruebas";
 
 const INTRO =
-  "Estudia gratis: fichas de método y banco de pruebas. Lo que cuesta es practicar con el método IA (perfil, foto y pistas personalizadas).";
+  "Estudia gratis: fichas de método y banco de pruebas. Activa el wizard hablado para escuchar cada ficha o prueba. Lo de pago es practicar con el método IA.";
 
 export function PsicoClient() {
   const [mode, setMode] = useState<Mode>("fichas");
@@ -35,19 +43,28 @@ export function PsicoClient() {
   const [bankEjercicios, setBankEjercicios] = useState<PsicoEjercicio[] | null>(null);
   const [bankMsg, setBankMsg] = useState("");
   const [publicFichas, setPublicFichas] = useState<PsicoFicha[] | null>(null);
+  /** Wizard hablado: lee en voz alta el contenido de aprendizaje al cambiar de ítem. */
+  const [spokenWizard, setSpokenWizard] = useState(false);
+  const [muted, setMuted] = useState(false);
 
-  useJsonDraft("ats_psico_draft", { answer, revealed, materia, mode }, (saved) => {
-    if (typeof saved.answer === "string" && saved.answer) setAnswer(saved.answer);
-    if (saved.revealed === true) setRevealed(true);
-    if (typeof saved.materia === "string" && saved.materia) setMateria(saved.materia);
-    if (saved.mode === "fichas" || saved.mode === "pruebas") setMode(saved.mode);
-  });
+  useJsonDraft(
+    "ats_psico_draft",
+    { answer, revealed, materia, mode, spokenWizard },
+    (saved) => {
+      if (typeof saved.answer === "string" && saved.answer) setAnswer(saved.answer);
+      if (saved.revealed === true) setRevealed(true);
+      if (typeof saved.materia === "string" && saved.materia) setMateria(saved.materia);
+      if (saved.mode === "fichas" || saved.mode === "pruebas") setMode(saved.mode);
+      if (saved.spokenWizard === true) setSpokenWizard(true);
+    }
+  );
 
   const trial = useMemo(() => trialExercises(), []);
 
   useEffect(() => {
     writeFocusPath("gratis");
     setDone(loadTrialDone());
+    setMuted(isPsicoSpeakMuted());
     fetch("/api/psicotecnicas/fichas")
       .then(async (res) => {
         const data = await res.json().catch(() => ({}));
@@ -65,6 +82,7 @@ export function PsicoClient() {
         setBankEjercicios(data.ejercicios || []);
       })
       .catch(() => setBankMsg("No se pudo abrir el banco."));
+    return () => stopSpeaking();
   }, []);
 
   const fichas = (bankFichas || publicFichas || PSICO_PREVIEW_FICHAS).filter(
@@ -77,12 +95,53 @@ export function PsicoClient() {
   const ficha = fichas[Math.min(fichaI, Math.max(0, fichas.length - 1))];
   const bancoItem = banco[Math.min(bancoI, Math.max(0, banco.length - 1))];
 
+  // Lee automáticamente ficha o prueba cuando el wizard hablado está activo
+  useEffect(() => {
+    if (!spokenWizard || muted) return;
+    if (mode === "fichas" && ficha) {
+      speakText(fichaSpeakScript(ficha));
+      return;
+    }
+    if (mode === "pruebas" && bancoItem) {
+      speakText(
+        ejercicioSpeakScript({
+          tema: bancoItem.item.tema,
+          enunciado: bancoItem.item.enunciado,
+          includeAnswer: false,
+        })
+      );
+    }
+  }, [spokenWizard, muted, mode, materia, fichaI, bancoI, ficha, bancoItem]);
+
+  // Si se revela la respuesta en pruebas + wizard, leer solución
+  useEffect(() => {
+    if (!spokenWizard || muted || mode !== "pruebas" || !revealed || !bancoItem) return;
+    speakText(
+      ejercicioSpeakScript({
+        tema: bancoItem.item.tema,
+        enunciado: "Verificación.",
+        respuesta: bancoItem.item.respuesta,
+        pasos: bancoItem.item.pasos,
+        errorComun: bancoItem.item.errorComun,
+        includeAnswer: true,
+      })
+    );
+  }, [revealed, spokenWizard, muted, mode, bancoItem]);
+
   function markDone(index: number) {
     if (!done.includes(index)) setDone(saveTrialDone([...done, index]));
   }
 
+  function toggleWizard(on: boolean) {
+    setSpokenWizard(on);
+    if (!on) stopSpeaking();
+    else if (!isPsicoSpeakMuted()) {
+      // el efecto se encarga de hablar el ítem actual
+    }
+  }
+
   return (
-    <div className="flex flex-1 flex-col gap-5">
+    <div className="flex flex-1 flex-col gap-5 pb-20">
       <section className="bento-card space-y-3">
         <div className="flex items-start justify-between gap-2">
           <div>
@@ -97,6 +156,21 @@ export function PsicoClient() {
             ? `${bankFichas.length} fichas · ${bankEjercicios?.length || PSICO_BANK_COUNTS.ejercicios} pruebas · todo gratis para estudiar`
             : bankMsg || "Cargando material…"}
         </p>
+      </section>
+
+      <section className="bento-card space-y-3">
+        <h2 className="font-semibold text-sm">Wizard hablado (aprendizaje)</h2>
+        <p className="text-xs muted leading-relaxed">
+          Escucha cada ficha o enunciado de prueba al avanzar. Usa el botón flotante para silenciar
+          cuando quieras.
+        </p>
+        <button
+          type="button"
+          className={spokenWizard ? "btn-primary" : "btn-secondary"}
+          onClick={() => toggleWizard(!spokenWizard)}
+        >
+          {spokenWizard ? "Wizard hablado activo · tocar para apagar" : "Activar wizard hablado"}
+        </button>
       </section>
 
       <div className="grid gap-2 sm:grid-cols-2">
@@ -168,8 +242,13 @@ export function PsicoClient() {
 
       {mode === "fichas" && ficha && (
         <section className="bento-card space-y-2">
-          <p className="text-xs muted">{ficha.tema}</p>
-          <h2 className="text-lg font-semibold">{ficha.titulo}</h2>
+          <div className="flex items-start justify-between gap-2">
+            <div>
+              <p className="text-xs muted">{ficha.tema}</p>
+              <h2 className="text-lg font-semibold">{ficha.titulo}</h2>
+            </div>
+            <SpeakButton text={fichaSpeakScript(ficha)} label="Escuchar ficha" />
+          </div>
           <p className="text-sm">{ficha.regla}</p>
           <p className="text-sm muted">{ficha.ejemplo}</p>
           <div className="flex gap-2">
@@ -191,7 +270,8 @@ export function PsicoClient() {
             </button>
           </div>
           <button type="button" className="btn-primary" onClick={() => setMode("pruebas")}>
-            Pasar a hacer pruebas de {PSICO_MATERIAS.find((m) => m.id === materia)?.corto || "esta materia"}
+            Pasar a hacer pruebas de{" "}
+            {PSICO_MATERIAS.find((m) => m.id === materia)?.corto || "esta materia"}
           </button>
         </section>
       )}
@@ -233,8 +313,15 @@ export function PsicoClient() {
         Volver al inicio / Continuar ruta
       </Link>
       <Link href="/ats" className="btn-secondary">
-        Siguiente tipico: analizar mi CV
+        Siguiente típico: analizar mi CV
       </Link>
+
+      <PsicoMuteFab
+        visible={spokenWizard}
+        onMuteChange={(m) => {
+          setMuted(m);
+        }}
+      />
     </div>
   );
 }
@@ -251,6 +338,20 @@ function ExerciseCard(props: {
   onPrev?: () => void;
 }) {
   const { item } = props;
+  const listenPrompt = ejercicioSpeakScript({
+    tema: item.tema,
+    enunciado: item.enunciado,
+    includeAnswer: false,
+  });
+  const listenAnswer = ejercicioSpeakScript({
+    tema: item.tema,
+    enunciado: "Verificación.",
+    respuesta: item.respuesta,
+    pasos: item.pasos,
+    errorComun: item.errorComun,
+    includeAnswer: true,
+  });
+
   return (
     <section className="bento-card space-y-3">
       <div className="flex items-start justify-between gap-2">
@@ -260,7 +361,10 @@ function ExerciseCard(props: {
           </p>
           <h2 className="font-semibold text-sm mt-1">{item.tema}</h2>
         </div>
-        <p className="text-xs muted text-right">A tu ritmo</p>
+        <SpeakButton
+          text={props.revealed ? listenAnswer : listenPrompt}
+          label={props.revealed ? "Escuchar solución" : "Escuchar enunciado"}
+        />
       </div>
       <p className="text-sm whitespace-pre-wrap leading-relaxed">{item.enunciado}</p>
       <label className="block text-sm">
@@ -274,7 +378,12 @@ function ExerciseCard(props: {
         />
       </label>
       {!props.revealed && (
-        <button type="button" className="btn-primary" onClick={props.onSubmit} disabled={!props.answer.trim()}>
+        <button
+          type="button"
+          className="btn-primary"
+          onClick={props.onSubmit}
+          disabled={!props.answer.trim()}
+        >
           Ver si cuadra
         </button>
       )}

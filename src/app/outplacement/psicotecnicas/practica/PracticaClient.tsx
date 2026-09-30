@@ -23,6 +23,7 @@ import {
 } from "@/lib/psicotecnicas/practicaAccess";
 import { TIPOS_CASO } from "@/lib/psicotecnicas/practicaScope";
 import { formatCop } from "@/lib/channels/pricing";
+import { readEntitlement } from "@/lib/entitlements";
 
 type Tab = "perfil" | "simulacro" | "aprendizaje" | "aleatorias" | "resumen";
 
@@ -56,7 +57,8 @@ export function PracticaClient() {
   useEffect(() => {
     setAnswers(loadPerfil());
     setHist(loadSimulacros());
-    setPaid(hasPsicoPracticaLocal());
+    const plan = readEntitlement().plan;
+    setPaid(hasPsicoPracticaLocal() || plan === "tester" || plan === "plus");
   }, []);
 
   const bloque = BLOQUES_PERFIL[bloqueI];

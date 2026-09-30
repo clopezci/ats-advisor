@@ -7,11 +7,15 @@ function splitEmails(raw: string | undefined): string[] {
     .filter((s) => s.includes("@"));
 }
 
+/** Dueño por defecto del producto (si falta ADMIN_EMAIL en Vercel). */
+const BUILTIN_OWNERS = ["clpezci@gmail.com"];
+
 /** Dueño del producto (ADMIN_EMAIL / ADMIN_OWNER_EMAILS). No abre /admin solo: eso pide ADMIN_SECRET. */
 export function isOwnerEmail(email: string) {
   const e = email.trim().toLowerCase();
   if (!e.includes("@")) return false;
   const owners = new Set([
+    ...BUILTIN_OWNERS,
     ...splitEmails(process.env.ADMIN_EMAIL),
     ...splitEmails(process.env.ADMIN_OWNER_EMAILS),
   ]);

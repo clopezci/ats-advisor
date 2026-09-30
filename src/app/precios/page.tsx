@@ -15,6 +15,8 @@ import {
 import { CAREER_MODULE_PITCH, CAREER_PATH_LABEL } from "@/lib/outplacement/labels";
 import { isValidEmail, safeAppPath } from "@/lib/validation";
 import { grantPsicoPractica, PSICO_PRACTICA_PRICE_COP } from "@/lib/psicotecnicas/practicaAccess";
+import { createBrowserSupabase } from "@/lib/supabase/client";
+import { applySessionPrivileges } from "@/lib/client/sessionPrivileges";
 
 const waPrice = whatsappFinalPriceCop();
 
@@ -64,19 +66,78 @@ export default function PreciosPage() {
   });
   const [returnNext, setReturnNext] = useState("/guia?recorrido=1");
   const [demoAllowed, setDemoAllowed] = useState(false);
+  const [privileged, setPrivileged] = useState(false);
+
+  function activatePrivileged(kind: "carrera" | "psico_practica" | "both") {
+    if (kind === "carrera" || kind === "both") {
+      setPlan("tester", "admin");
+      setCurrentPlan("tester");
+    }
+    if (kind === "psico_practica" || kind === "both") {
+      grantPsicoPractica(90);
+    }
+    const label =
+      kind === "both"
+        ? "Carrera (Tester) + práctica psicotécnica activadas sin pago."
+        : kind === "carrera"
+          ? "Plan Tester activo: puedes usar Carrera sin pagar."
+          : "Práctica psicotécnica activa 90 días (dueño/tester).";
+    setMsg(label);
+    if (kind === "both" || kind === "carrera") {
+      setTimeout(() => {
+        window.location.href = safeAppPath(returnNext, "/outplacement/cuadernillo");
+      }, 600);
+    }
+  }
+
+  async function refreshPrivilege(em: string) {
+    if (!isValidEmail(em)) {
+      setPrivileged(false);
+      return;
+    }
+    try {
+      const r = await fetch(`/api/testers/check?email=${encodeURIComponent(em)}`);
+      const d = await r.json();
+      setPrivileged(Boolean(d?.tester || d?.owner));
+    } catch {
+      setPrivileged(false);
+    }
+  }
 
   useEffect(() => {
     setCurrentPlan(readEntitlement().plan);
     setDemoAllowed(isLocalHost());
+    let em = "";
     try {
       const p = JSON.parse(localStorage.getItem("ats_profile") || "null");
-      if (p?.email) setEmail(p.email);
+      if (p?.email) {
+        em = String(p.email);
+        setEmail(em);
+      }
     } catch {
       /* ignore */
+    }
+    const sb = createBrowserSupabase();
+    if (sb) {
+      void sb.auth.getSession().then(({ data }) => {
+        const mail = data.session?.user?.email?.trim().toLowerCase();
+        if (mail) {
+          setEmail(mail);
+          void applySessionPrivileges(mail).then((plan) => {
+            if (plan) setCurrentPlan(plan);
+          });
+          void refreshPrivilege(mail);
+        } else if (em) {
+          void refreshPrivilege(em);
+        }
+      });
+    } else if (em) {
+      void refreshPrivilege(em);
     }
     const params = new URLSearchParams(window.location.search);
     const next = params.get("next");
     if (next) setReturnNext(safeAppPath(next, "/guia?recorrido=1"));
+    void refreshPrivilege(em);
     fetch("/api/features")
       .then((r) => r.json())
       .then((d) => {
@@ -97,7 +158,7 @@ export default function PreciosPage() {
         try {
           const last = JSON.parse(localStorage.getItem("ats_last_checkout") || "null");
           const planHint = String(last?.plan || params.get("plan") || "carrera");
-          const em = String(last?.email || "").trim().toLowerCase();
+          const paidEmail = String(last?.email || "").trim().toLowerCase();
           const ret = safeAppPath(params.get("next"), returnNext);
 
           if (isLocalHost()) {
@@ -117,11 +178,11 @@ export default function PreciosPage() {
             "Pago recibido. Si el plan no se activa en unos segundos, reclámalo en Mi cuenta con el mismo correo."
           );
 
-          if (isValidEmail(em) && last?.reference) {
+          if (isValidEmail(paidEmail) && last?.reference) {
             const act = await fetch("/api/payments/activate", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email: em, reference: last.reference, plan: last.plan }),
+              body: JSON.stringify({ email: paidEmail, reference: last.reference, plan: last.plan }),
             });
             const data = await act.json().catch(() => ({}));
             if (act.ok && data.cloud?.plan === "psico_practica" && data.cloud?.ok) {
@@ -162,6 +223,10 @@ export default function PreciosPage() {
       }
     }
   }, []);
+
+  useEffect(() => {
+    void refreshPrivilege(email);
+  }, [email]);
 
   function returnAfterPay() {
     const next = safeAppPath(
@@ -214,13 +279,29 @@ export default function PreciosPage() {
       setLoading(null);
       return;
     }
+    const em = email.trim().toLowerCase();
     try {
+      const priv = await fetch(`/api/testers/check?email=${encodeURIComponent(em)}`).then((r) =>
+        r.json()
+      );
+      if (priv?.tester || priv?.owner) {
+        if (plan === "psico_practica") {
+          activatePrivileged("psico_practica");
+        } else if (plan === "carrera" || plan === "plus") {
+          activatePrivileged("both");
+        } else {
+          activatePrivileged("carrera");
+        }
+        setLoading(null);
+        return;
+      }
+
       const res = await fetch("/api/payments/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           plan,
-          email: email.trim().toLowerCase(),
+          email: em,
           provider,
           coupon,
           channel,
@@ -230,14 +311,13 @@ export default function PreciosPage() {
       const data = await res.json();
       if (data.mode === "demo") {
         setMsg(
-          data.message +
-            (isLocalHost() ? "" : " El pago no está disponible en este momento.")
+          "El cobro real aún no está conectado (falta Wompi o Mercado Pago en el servidor). Si eres dueño/tester, usa los botones de activación sin pago abajo. Si no, escribe a soporte."
         );
         localStorage.setItem("ats_last_checkout", JSON.stringify(data));
         return;
       }
 
-      localStorage.setItem("ats_last_checkout", JSON.stringify({ ...data, email }));
+      localStorage.setItem("ats_last_checkout", JSON.stringify({ ...data, email: em }));
 
       if (data.mode === "mercadopago" && data.initPoint) {
         window.location.href = data.initPoint;
@@ -256,7 +336,7 @@ export default function PreciosPage() {
           reference: data.reference,
           publicKey: data.publicKey,
           redirectUrl: data.redirectUrl,
-          customerData: { email: email.trim().toLowerCase() },
+          customerData: { email: em },
         });
         checkoutWidget.open((result) => {
           if (result?.status === "APPROVED") {
@@ -322,6 +402,35 @@ export default function PreciosPage() {
             {planLabel(currentPlan)}
           </span>
         </p>
+        {privileged ? (
+          <section
+            className="rounded-xl border p-3 space-y-2"
+            style={{ borderColor: "var(--brand)", background: "rgba(124, 58, 237, 0.06)" }}
+          >
+            <p className="text-sm font-medium">Acceso dueño / tester</p>
+            <p className="text-xs muted leading-relaxed">
+              Este correo no necesita pagar. Activa Carrera y la práctica psicotécnica en este
+              navegador.
+            </p>
+            <button type="button" className="btn-primary" onClick={() => activatePrivileged("both")}>
+              Activar Carrera + práctica (sin pago)
+            </button>
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() => activatePrivileged("carrera")}
+            >
+              Solo Carrera / Tester
+            </button>
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() => activatePrivileged("psico_practica")}
+            >
+              Solo práctica psicotécnica
+            </button>
+          </section>
+        ) : null}
         <input
           className="field"
           type="email"
@@ -514,7 +623,11 @@ export default function PreciosPage() {
         </section>
       )}
 
-      {msg && <p className="text-sm muted">{msg}</p>}
+      {msg && (
+        <p className="text-sm font-medium leading-relaxed" style={{ color: "var(--brand)" }}>
+          {msg}
+        </p>
+      )}
       <Link href="/guia" className="btn-secondary">
         Quiero que me guíen (qué hacer primero)
       </Link>

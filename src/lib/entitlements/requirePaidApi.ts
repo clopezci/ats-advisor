@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { clampText, isValidEmail } from "@/lib/validation";
 import { getCloudPlanByEmail, isPaidCloudPlan } from "@/lib/payments/entitlementsCloud";
+import { isOwnerEmail, isTesterEmail } from "@/lib/admin/testers";
 
 export type PaidGateResult =
   | { ok: true; email: string | null; plan: string | null }
@@ -9,6 +10,7 @@ export type PaidGateResult =
 /**
  * Gate server-side para APIs de Carrera.
  * En producción exige correo con plan cloud pago (salvo allowLocalDev).
+ * Dueño / tester whitelist pasan sin pago.
  */
 export async function requirePaidCloud(opts: {
   email?: unknown;
@@ -18,6 +20,10 @@ export async function requirePaidCloud(opts: {
   const isProd = process.env.VERCEL_ENV === "production" || process.env.NODE_ENV === "production";
   const email = clampText(opts.email || "", 120).trim().toLowerCase();
   const valid = isValidEmail(email);
+
+  if (valid && (isOwnerEmail(email) || isTesterEmail(email))) {
+    return { ok: true, email, plan: "tester" };
+  }
 
   if (valid) {
     const cloud = await getCloudPlanByEmail(email);

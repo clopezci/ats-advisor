@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { DictationButton } from "@/components/DictationButton";
 
 type Common = {
@@ -21,11 +22,26 @@ function ExampleGhost({ example, empty }: { example?: string; empty: boolean }) 
     <div
       aria-hidden
       className="pointer-events-none absolute inset-0 z-[1] overflow-auto text-sm leading-relaxed whitespace-pre-wrap"
-      style={{ color: "var(--muted)", opacity: 0.48, padding: "0.85rem 1rem" }}
+      style={{
+        /* Texto legible tipo marca de agua (no usar opacity encima de --muted) */
+        color: "rgba(31, 22, 48, 0.52)",
+        padding: "0.85rem 1rem",
+      }}
     >
       {example}
     </div>
   );
+}
+
+/** Campo vacío: fondo transparente para que se vea el ejemplo detrás. */
+function emptyExampleStyle(empty: boolean, hasExample: boolean): CSSProperties | undefined {
+  if (!empty || !hasExample) return undefined;
+  return {
+    background: "transparent",
+    caretColor: "var(--text)",
+    position: "relative",
+    zIndex: 2,
+  };
 }
 
 /** Campo de una línea con micrófono al lado. */
@@ -42,24 +58,30 @@ export function VoiceInput({
   required,
 }: Common & { type?: "text" | "url" | "search" | "tel" }) {
   const empty = !value.trim();
+  const hasExample = Boolean(example);
   return (
     <div className="space-y-1">
       {label && <label className="block text-sm font-medium">{label}</label>}
       {hint && <p className="text-xs muted leading-relaxed">{hint}</p>}
-      {example ? (
-        <p className="text-[0.7rem] muted leading-relaxed">Ejemplo en transparencia — escribe tu caso encima.</p>
+      {hasExample ? (
+        <p className="text-[0.7rem] muted leading-relaxed">
+          Ejemplo guía — escribe tu caso; el texto de ejemplo desaparece al escribir.
+        </p>
       ) : null}
       <div className="flex gap-2 items-center">
-        <div className="relative flex-1 min-w-0">
+        <div
+          className="relative flex-1 min-w-0 rounded-[var(--radius)]"
+          style={hasExample && empty ? { background: "#fff" } : undefined}
+        >
           <ExampleGhost example={example} empty={empty} />
           <input
-            className={`${className} w-full relative z-[2] ${empty && example ? "bg-transparent" : ""}`}
+            className={`${className} w-full`}
             type={type}
             value={value}
             required={required}
             onChange={(e) => onChange(e.target.value)}
-            placeholder={example ? undefined : placeholder}
-            style={empty && example ? { caretColor: "var(--text)" } : undefined}
+            placeholder={hasExample ? undefined : placeholder}
+            style={emptyExampleStyle(empty, hasExample)}
           />
         </div>
         <DictationButton
@@ -85,24 +107,30 @@ export function VoiceTextarea({
   minLength,
 }: Common & { minLength?: number }) {
   const empty = !value.trim();
+  const hasExample = Boolean(example);
   return (
     <div className="space-y-1">
       {label && <label className="block text-sm font-medium">{label}</label>}
       {hint && <p className="text-xs muted leading-relaxed">{hint}</p>}
-      {example ? (
-        <p className="text-[0.7rem] muted leading-relaxed">Ejemplo en transparencia — escribe tu caso encima.</p>
+      {hasExample ? (
+        <p className="text-[0.7rem] muted leading-relaxed">
+          Ejemplo guía — escribe tu caso; el texto de ejemplo desaparece al escribir.
+        </p>
       ) : null}
       <div className="flex gap-2 items-start">
-        <div className="relative flex-1 min-w-0">
+        <div
+          className="relative flex-1 min-w-0 rounded-[var(--radius)]"
+          style={hasExample && empty ? { background: "#fff" } : undefined}
+        >
           <ExampleGhost example={example} empty={empty} />
           <textarea
-            className={`${className} w-full relative z-[2] ${empty && example ? "bg-transparent" : ""}`}
+            className={`${className} w-full`}
             value={value}
             required={required}
             minLength={minLength}
             onChange={(e) => onChange(e.target.value)}
-            placeholder={example ? undefined : placeholder}
-            style={empty && example ? { caretColor: "var(--text)" } : undefined}
+            placeholder={hasExample ? undefined : placeholder}
+            style={emptyExampleStyle(empty, hasExample)}
           />
         </div>
         <DictationButton

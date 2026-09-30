@@ -6,6 +6,7 @@ import { InstallPrompt } from "@/components/InstallPrompt";
 import { OnboardingGate } from "@/components/OnboardingGate";
 import { AdSlot } from "@/components/AdSlot";
 import { DailyCourseReminder } from "@/components/DailyCourseReminder";
+import { QuickAccessGrid } from "@/components/QuickAccessGrid";
 import { useEffect, useState } from "react";
 import { canAccessOutplacement, readEntitlement } from "@/lib/entitlements";
 import { readStreak } from "@/lib/engagement/streak";
@@ -26,7 +27,7 @@ function HomeInner() {
   const [paid, setPaid] = useState(false);
   const [path, setPath] = useState<FocusPath | null>(null);
   const [target, setTarget] = useState<ContinueTarget | null>(null);
-  const [picker, setPicker] = useState(false);
+  const [freeIdx, setFreeIdx] = useState(0);
 
   useEffect(() => {
     setStreak(readStreak().count);
@@ -34,25 +35,24 @@ function HomeInner() {
     const p = readFocusPath();
     setPath(p);
     setTarget(resolveContinueTarget());
-    if (!p) setPicker(true);
+    setFreeIdx(readFreeStepIndex());
   }, []);
 
   function pick(next: FocusPath) {
     writeFocusPath(next);
     setPath(next);
-    setPicker(false);
     setTarget(resolveContinueTarget());
+    setFreeIdx(readFreeStepIndex());
   }
 
   function restart() {
     restartCurrentPath();
     setTarget(resolveContinueTarget());
+    setFreeIdx(readFreeStepIndex());
   }
 
   const INTRO =
-    "Dos caminos: ruta gratis (ATS, psicotécnicas, tracker) o Plan Carrera (cuadernillo guiado). Continúa donde ibas o cambia cuando quieras.";
-
-  const freeIdx = readFreeStepIndex();
+    "Elige ruta gratis o Plan Carrera. Abajo siempre tienes accesos: ATS, psicotécnicas, tracker y cuadernillo.";
 
   return (
     <div className="flex flex-1 flex-col gap-5">
@@ -72,7 +72,7 @@ function HomeInner() {
           <div>
             <p className="pill-brand">LOTIC · un paso a la vez</p>
             <h1 className="mt-3 text-2xl font-semibold leading-tight">
-              {path ? pathLabel(path) : "Tu camino"}
+              {path ? pathLabel(path) : "¿Por dónde sigues?"}
             </h1>
           </div>
           <SpeakButton text={INTRO} />
@@ -80,112 +80,98 @@ function HomeInner() {
         <p className="muted text-sm leading-relaxed">{INTRO}</p>
       </section>
 
-      {picker || !path ? (
-        <section className="space-y-3">
-          <p className="text-sm font-medium">Elige tu camino</p>
-          <button
-            type="button"
-            className="btn-primary w-full"
-            style={{
-              minHeight: "5rem",
-              flexDirection: "column",
-              gap: "0.25rem",
-              textAlign: "center",
-              lineHeight: 1.35,
-            }}
-            onClick={() => pick("gratis")}
-          >
-            <span>Ruta gratis</span>
-            <span className="text-xs font-normal opacity-90">
-              ATS · estudiar psicotécnicas · tracker · checklist
-            </span>
-          </button>
-          <button
-            type="button"
-            className="btn-secondary w-full"
-            style={{
-              minHeight: "5rem",
-              flexDirection: "column",
-              gap: "0.25rem",
-              textAlign: "center",
-              lineHeight: 1.35,
-            }}
-            onClick={() => pick("carrera")}
-          >
-            <span>Plan Carrera</span>
-            <span className="text-xs font-normal muted">
-              Cuadernillo guiado · si no tienes plan, te llevamos a activarlo
-            </span>
-          </button>
+      {/* Dos caminos siempre visibles */}
+      <div className="grid gap-2 sm:grid-cols-2">
+        <button
+          type="button"
+          className={path === "gratis" ? "btn-primary" : "btn-secondary"}
+          style={{
+            minHeight: "4.5rem",
+            flexDirection: "column",
+            gap: "0.2rem",
+            textAlign: "center",
+            lineHeight: 1.3,
+          }}
+          onClick={() => pick("gratis")}
+        >
+          <span>Ruta gratis</span>
+          <span className="text-xs font-normal opacity-90">ATS · psicotécnicas · tracker</span>
+        </button>
+        <button
+          type="button"
+          className={path === "carrera" ? "btn-primary" : "btn-secondary"}
+          style={{
+            minHeight: "4.5rem",
+            flexDirection: "column",
+            gap: "0.2rem",
+            textAlign: "center",
+            lineHeight: 1.3,
+          }}
+          onClick={() => pick("carrera")}
+        >
+          <span>Plan Carrera</span>
+          <span className="text-xs font-normal opacity-90">Cuadernillo guiado</span>
+        </button>
+      </div>
+
+      {path && target ? (
+        <Link
+          href={target.href}
+          className="btn-primary w-full"
+          style={{
+            minHeight: "4.75rem",
+            fontSize: "1.1rem",
+            lineHeight: 1.35,
+            flexDirection: "column",
+            gap: "0.25rem",
+            textAlign: "center",
+          }}
+        >
+          <span>{target.label}</span>
+          <span className="text-xs font-normal opacity-90">{target.hint}</span>
+        </Link>
+      ) : null}
+
+      {path ? (
+        <button type="button" className="btn-secondary w-full" onClick={restart}>
+          Empezar esta ruta desde el principio
+        </button>
+      ) : null}
+
+      {/* Accesos permanentes — psicotécnicas siempre aquí */}
+      <QuickAccessGrid />
+
+      {path === "gratis" ? (
+        <section className="bento-card space-y-2">
+          <h2 className="font-semibold text-sm">Orden sugerido (ruta gratis)</h2>
+          <ol className="space-y-2">
+            {FREE_STEPS.map((s, i) => (
+              <li key={s.id}>
+                <Link
+                  href={s.href}
+                  className="flex flex-col gap-0.5 rounded-lg border px-3 py-2 text-sm"
+                  style={{
+                    borderColor: i === freeIdx ? "var(--brand)" : "var(--border)",
+                    boxShadow: i === freeIdx ? "var(--shadow-brand)" : undefined,
+                  }}
+                >
+                  <span className="font-medium">
+                    {i + 1}. {s.title}
+                    {i < freeIdx ? " ✓" : i === freeIdx ? " ← ahora" : ""}
+                  </span>
+                  <span className="text-xs muted">{s.desc}</span>
+                </Link>
+              </li>
+            ))}
+          </ol>
         </section>
-      ) : (
-        <section className="space-y-3">
-          {target ? (
-            <Link
-              href={target.href}
-              className="btn-primary w-full"
-              style={{
-                minHeight: "5rem",
-                fontSize: "1.1rem",
-                lineHeight: 1.35,
-                flexDirection: "column",
-                gap: "0.25rem",
-                textAlign: "center",
-              }}
-            >
-              <span>{target.label}</span>
-              <span className="text-xs font-normal opacity-90">{target.hint}</span>
-            </Link>
-          ) : null}
+      ) : null}
 
-          <button type="button" className="btn-secondary w-full" onClick={restart}>
-            Empezar esta ruta desde el principio
-          </button>
-
-          <button
-            type="button"
-            className="text-center text-sm underline muted w-full"
-            onClick={() => setPicker(true)}
-          >
-            Cambiar de camino
-          </button>
-
-          {path === "gratis" ? (
-            <section className="bento-card space-y-2">
-              <h2 className="font-semibold text-sm">Pasos de la ruta gratis</h2>
-              <ol className="space-y-2">
-                {FREE_STEPS.map((s, i) => (
-                  <li key={s.id}>
-                    <Link
-                      href={s.href}
-                      className="flex flex-col gap-0.5 rounded-lg border px-3 py-2 text-sm"
-                      style={{
-                        borderColor: i === freeIdx ? "var(--brand)" : "var(--border)",
-                        boxShadow: i === freeIdx ? "var(--shadow-brand)" : undefined,
-                      }}
-                    >
-                      <span className="font-medium">
-                        {i + 1}. {s.title}
-                        {i < freeIdx ? " ✓" : i === freeIdx ? " ← ahora" : ""}
-                      </span>
-                      <span className="text-xs muted">{s.desc}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ol>
-              <p className="text-xs muted leading-relaxed">
-                Estudiar psicotécnicas es gratis. Lo de pago es practicar con el método IA personalizado.
-              </p>
-            </section>
-          ) : null}
-
-          {path === "carrera" && !paid ? (
-            <p className="text-sm muted leading-relaxed">
-              Sin plan activo te llevamos a precios. Si eres dueño/tester, activa sin pago ahí mismo.
-            </p>
-          ) : null}
-        </section>
-      )}
+      {path === "carrera" && !paid ? (
+        <p className="text-sm muted leading-relaxed">
+          Sin plan: activa en Precios (dueño/tester sin pago). Mientras tanto usa la ruta gratis arriba.
+        </p>
+      ) : null}
 
       <AdSlot slot="home-free" />
     </div>

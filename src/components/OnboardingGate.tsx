@@ -99,7 +99,7 @@ export function OnboardingGate({ children }: { children: ReactNode }) {
       </section>
 
       <Link
-        href="/ats"
+        href="/outplacement/psicotecnicas"
         className="btn-primary w-full"
         style={{
           minHeight: "5rem",
@@ -113,7 +113,7 @@ export function OnboardingGate({ children }: { children: ReactNode }) {
       >
         <span>Ruta gratis</span>
         <span className="text-xs font-normal opacity-90">
-          ATS · psicotécnicas para estudiar · tracker · checklist
+          Empieza por psicotécnicas · luego ATS y tracker
         </span>
       </Link>
 

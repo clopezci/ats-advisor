@@ -8,6 +8,7 @@ function needsCarrera(pathname: string): boolean {
   if (isFreeAppPath(p)) return false;
   if (p === "/outplacement") return false;
   if (p === "/outplacement/psicotecnicas" || p.startsWith("/outplacement/psicotecnicas/")) return false;
+  if (p === "/psicotecnicas") return false;
   if (p.startsWith("/outplacement/experto")) return false;
   if (p.startsWith("/outplacement/marketplace")) return false;
   if (p.startsWith("/outplacement/90-dias") || p.startsWith("/outplacement/certificado")) {

@@ -36,6 +36,7 @@ export function isFreeAppPath(pathname: string): boolean {
   if (p.startsWith("/admin")) return true;
   if (p === "/outplacement") return true;
   if (p === "/outplacement/psicotecnicas" || p.startsWith("/outplacement/psicotecnicas/")) return true;
+  if (p === "/psicotecnicas") return true;
   if (p.startsWith("/outplacement/experto")) return true;
   if (p.startsWith("/outplacement/marketplace")) return true;
 
@@ -44,14 +45,14 @@ export function isFreeAppPath(pathname: string): boolean {
 
 export const FREE_TOOL_BLURBS = [
   {
+    href: "/outplacement/psicotecnicas",
+    title: "Psicotécnicas (estudiar)",
+    desc: "Fichas y banco de pruebas gratis. La práctica con IA es de pago.",
+  },
+  {
     href: "/ats",
     title: "Analizador ATS",
     desc: "Compara tu CV con una vacante y mira el puntaje y qué ajustar.",
-  },
-  {
-    href: "/outplacement/psicotecnicas",
-    title: "Psicotécnicas (estudiar)",
-    desc: "Fichas y banco de pruebas gratis. Lo de pago es practicar con IA.",
   },
   {
     href: "/tracker",

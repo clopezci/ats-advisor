@@ -26,9 +26,14 @@ export function MainNav() {
       active: false,
     },
     {
+      href: "/ats",
+      label: "ATS",
+      active: pathname === "/ats" || pathname.startsWith("/ats/"),
+    },
+    {
       href: "/outplacement/psicotecnicas",
       label: "Psicotécnicas",
-      active: pathname.startsWith("/outplacement/psicotecnicas"),
+      active: pathname.startsWith("/outplacement/psicotecnicas") || pathname === "/psicotecnicas",
     },
     { href: "/cuenta", label: "Cuenta", active: pathname.startsWith("/cuenta") },
   ];

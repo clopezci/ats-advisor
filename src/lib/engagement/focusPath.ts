@@ -16,16 +16,16 @@ const RESTART_FLAG = "ats_path_restart_v1";
 /** Pasos guiados de la ruta gratis (estudiar / postular hoy). */
 export const FREE_STEPS = [
   {
+    id: "psico",
+    href: "/outplacement/psicotecnicas",
+    title: "Estudiar psicotécnicas",
+    desc: "Fichas y banco de pruebas. Gratis. La práctica con IA se paga aparte.",
+  },
+  {
     id: "ats",
     href: "/ats",
     title: "Analizar mi CV",
     desc: "Compara tu CV con una vacante y mira qué ajustar.",
-  },
-  {
-    id: "psico",
-    href: "/outplacement/psicotecnicas",
-    title: "Estudiar psicotécnicas",
-    desc: "Fichas y pruebas para practicar el método. Gratis.",
   },
   {
     id: "tracker",

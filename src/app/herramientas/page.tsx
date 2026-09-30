@@ -9,6 +9,7 @@ import {
 } from "@/lib/outplacement/labels";
 import { FlowContinueBar } from "@/components/FlowContinueBar";
 import { CareerUpsell } from "@/components/CareerUpsell";
+import { QuickAccessGrid } from "@/components/QuickAccessGrid";
 
 export const metadata = { title: "Herramientas" };
 
@@ -27,6 +28,8 @@ export default function HerramientasPage() {
       </section>
 
       <FlowContinueBar label="Seguir" />
+
+      <QuickAccessGrid />
 
       <section className="space-y-2">
         <h2 className="text-sm font-semibold">Ruta gratis</h2>

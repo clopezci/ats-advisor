@@ -6,6 +6,7 @@ import { SpeakButton } from "@/components/SpeakButton";
 import { PaywallCard } from "@/components/PaywallCard";
 import { ChannelChooser } from "@/components/ChannelChooser";
 import { DailyCourseReminder } from "@/components/DailyCourseReminder";
+import { QuickAccessGrid } from "@/components/QuickAccessGrid";
 import {
   canAccessOutplacement,
   pauseFor90Days,
@@ -66,12 +67,12 @@ export default function OutplacementPage() {
             <h1 className="mt-1 text-2xl font-semibold">Tu acompañamiento</h1>
           </div>
           <SpeakButton
-            text={`Un solo Continuar. El corazón es el cuadernillo de la ${CAREER_PATH_LABEL}. El resto está bajo Más opciones.`}
+            text={`Continúa el cuadernillo de la ${CAREER_PATH_LABEL}. Abajo tienes accesos rápidos, incluida psicotécnicas gratis.`}
           />
         </div>
         <p className="muted text-sm leading-relaxed">
-          No te disperses en el menú. Toca <strong>Continuar</strong>, termina lo de hoy y vuelve
-          mañana. El resto de herramientas está dentro de cada fase.
+          Un toque en <strong>Continuar</strong> y listo. Abajo puedes saltar a ATS, psicotécnicas u
+          otras herramientas sin perderte.
         </p>
         {unlocked ? (
           <>
@@ -92,19 +93,34 @@ export default function OutplacementPage() {
           </>
         ) : (
           <>
-            <Link href="/precios?plan=carrera&next=%2Foutplacement%2Fcuadernillo" className="btn-primary">
+            <Link
+              href="/precios?plan=carrera&next=%2Foutplacement%2Fcuadernillo"
+              className="btn-primary"
+            >
               Desbloquear Carrera
             </Link>
             <p className="text-xs muted leading-relaxed">
-              Para probar ya: en{" "}
-              <Link href="/cuenta" style={{ color: "var(--brand)" }}>
-                Cuenta
-              </Link>{" "}
-              activa <strong>Tester</strong> o <strong>Carrera</strong>, vuelve aquí y toca Continuar.
+              Dueño/tester: actívalo sin pago en Precios. Mientras tanto usa la ruta gratis.
             </p>
           </>
         )}
       </section>
+
+      {/* Psicotécnicas visibles — no enterradas */}
+      <section className="bento-card space-y-2">
+        <h2 className="font-semibold text-sm">Psicotécnicas (gratis para estudiar)</h2>
+        <p className="text-xs muted leading-relaxed">
+          Fichas de método y banco de pruebas. La práctica con perfil e IA es un add-on aparte.
+        </p>
+        <Link href="/outplacement/psicotecnicas" className="btn-primary">
+          Estudiar y hacer pruebas
+        </Link>
+        <Link href="/outplacement/psicotecnicas/practica" className="btn-secondary">
+          Práctica con método IA (pago)
+        </Link>
+      </section>
+
+      <QuickAccessGrid />
 
       {!unlocked && plan !== "paused_90" && (
         <PaywallCard
@@ -151,9 +167,6 @@ export default function OutplacementPage() {
 
       {showMenu && (
         <div className="flex flex-col gap-3">
-          <Link href="/outplacement/psicotecnicas" className="btn-secondary">
-            Psicotécnicas (3 pruebas gratis)
-          </Link>
           <Link href="/outplacement/tablero" className="btn-secondary">
             Tablero de cursos
           </Link>

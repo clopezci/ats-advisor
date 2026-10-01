@@ -257,8 +257,8 @@
       "subjectId": "exa.psico-numerico",
       "tema": "Cálculo mental y atajos",
       "titulo": "El cuadrado de un número terminado en 5",
-      "regla": "Toma la cifra de adelante, multiplícala por la siguiente y pégale 25 al final.",
-      "ejemplo": "75² → 7 × 8 = 56 → pégale 25 → 5.625."
+      "regla": "Toma lo que va delante del 5, multiplícalo por el siguiente (ese número + 1) y escribe 25 al final. No uses punto de miles en el resultado: es pegar cifras, no un decimal.",
+      "ejemplo": "75² → delante queda 7 → 7 × 8 = 56 → escribe 25 al final → 5625."
     },
     {
       "subjectId": "exa.psico-numerico",

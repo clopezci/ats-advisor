@@ -291,9 +291,9 @@
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Problemas de razonamiento con datos",
-      "titulo": "El problema del tanque y las dos llaves",
-      "regla": "Piensa cuánto llena cada llave en 1 hora, suma esos aportes y pregunta: ¿cuántas horas hacen falta para llenar 1 tanque completo?",
-      "ejemplo": "Una llave llena el tanque en 3 h y otra en 6 h. ¿Cuánto tardan juntas?\n1) En 1 hora la de 3 h llena 1/3 del tanque.\n2) En 1 hora la de 6 h llena 1/6 del tanque.\n3) Juntas en 1 hora: 1/3 + 1/6. Como 1/3 = 2/6, queda 2/6 + 1/6 = 3/6 = 1/2 del tanque por hora.\n4) Si en 1 hora llenan la mitad, para llenar el tanque entero necesitan 2 horas.\nComprobación: en 2 h la primera aporta 2×(1/3)=2/3 y la segunda 2×(1/6)=1/3; 2/3+1/3=1 tanque."
+      "titulo": "Dos personas hacen el mismo trabajo",
+      "regla": "Primero usa el atajo: (días de A × días de B) ÷ (días de A + días de B). Si quieres comprobarlo: piensa qué parte hace cada uno en 1 día, súmalas y pregunta cuántos días faltan para completar 1 trabajo.",
+      "ejemplo": "Enunciado: Ana termina un informe en 8 días. Bruno lo termina en 8 días también. ¿Cuánto tardan juntos?\n1) Atajo: (8 × 8) ÷ (8 + 8) = 64 ÷ 16 = 4 días.\n2) Comprobación fácil: en 1 día cada uno hace 1/8; juntos 2/8 = 1/4 del informe. Si en 1 día hacen un cuarto, en 4 días terminan.\n(Si los tiempos son distintos, el mismo atajo sirve: multiplica y divide entre la suma.)"
     },
     {
       "subjectId": "exa.psico-numerico",
@@ -844,9 +844,9 @@
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Series numéricas: los 8 patrones que se repiten",
-      "titulo": "Si la diferencia no basta, mira los saltos en bloques",
-      "regla": "Anota primero cuánto suma de un número al siguiente. Si ves el mismo salto dos veces seguidas y luego otro salto dos veces, suele venir un bloque nuevo (a menudo ×3 el salto anterior).",
-      "ejemplo": "Enunciado: completa la serie 4, 5, 6, 9, 12, ?\n1) Saltos entre números: +1, +1, +3, +3.\n2) Primero un bloque de dos veces +1; luego un bloque de dos veces +3.\n3) El siguiente bloque suele ser dos veces +9 (porque 3×3=9). Aquí solo piden el siguiente número: 12 + 9 = 21."
+      "titulo": "Anota los saltos: ellos también son una serie",
+      "regla": "Debajo de la serie escribe cuánto sumas (o restas) de un número al siguiente. Si esos saltos van +1, +2, +3… o +2, +4, +6…, ya tienes la regla. El siguiente número es el último más el siguiente salto.",
+      "ejemplo": "Enunciado: completa la serie 2, 3, 5, 8, 12, ?\n1) Escribe los saltos debajo: 2→3 es +1; 3→5 es +2; 5→8 es +3; 8→12 es +4.\n2) Los saltos son 1, 2, 3, 4… el siguiente salto es +5.\n3) 12 + 5 = 17.\nRespuesta: 17."
     },
     {
       "subjectId": "exa.psico-abstracto",
@@ -900,9 +900,9 @@
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Dos que trabajan juntos",
-      "titulo": "Multiplica los tiempos, divide entre la suma",
-      "regla": "Tiempo juntos = (t1 × t2) ÷ (t1 + t2). No promedies: el promedio siempre sale más alto que la verdad. Juntos siempre tardan menos que el más rápido solo.",
-      "ejemplo": "Enunciado: una llave llena el tanque en 4 h y otra en 12 h. ¿Cuánto tardan juntas?\n1) Por fracciones: en 1 h hacen 1/4 + 1/12 = 3/12 + 1/12 = 4/12 = 1/3 del tanque.\n2) Horas para 1 tanque: 1 ÷ (1/3) = 3 h.\n3) Con la fórmula: (4×12)÷(4+12) = 48÷16 = 3 h. Mismo resultado."
+      "titulo": "Atajo: multiplica tiempos y divide entre la suma",
+      "regla": "Si A tarda a días solo y B tarda b días solo, juntos tardan (a × b) ÷ (a + b). Nunca promedies: juntos siempre terminan antes que el más rápido.",
+      "ejemplo": "Enunciado: Carmen pinta una casa en 6 días. Diego la pinta en 3 días. ¿Cuántos días tardan juntos?\n1) Atajo: (6 × 3) ÷ (6 + 3) = 18 ÷ 9 = 2 días.\n2) Por qué funciona (sin fórmulas raras): en 1 día Carmen hace 1 de 6 partes y Diego hace 2 de 6 partes (porque 1/3 = 2/6). Juntos hacen 3 de 6 = la mitad de la casa.\n3) Si en 1 día hacen la mitad, en 2 días terminan la casa.\nFiltro: 2 es menor que 3 (el más rápido solo). Si te diera más de 3, está mal."
     },
     {
       "subjectId": "exa.psico-numerico",
@@ -1396,23 +1396,21 @@
     {
       "materia": "exa.psico-numerico",
       "tema": "Dos que trabajan juntos",
-      "enunciado": "Una llave llena un tanque en 3 horas y otra lo llena en 12 horas. Si se abren las dos al mismo tiempo, ¿cuánto tardan en llenarlo?\n\nA) 7,5 horas   B) 2,5 horas   C) 2,4 horas   D) 15 horas",
+      "enunciado": "Laura termina un trabajo en 5 días y Mateo en 20 días. Si trabajan juntos desde el inicio, ¿cuántos días tardan?\n\nA) 12,5   B) 10   C) 4   D) 25",
       "caminoLargo": [
-        "El camino del colegio es razonar por lo que hace cada una en una hora. La primera llena 1/3 del tanque por hora; la segunda, 1/12.",
-        "Juntas llenan 1/3 + 1/12 por hora. Se busca denominador común, que es 12: 4/12 + 1/12 = 5/12 del tanque por hora.",
-        "Si en una hora llenan 5/12, el tanque completo lo llenan en 12/5 de hora, que es dar vuelta a la fracción.",
-        "12 ÷ 5 = 2,4 horas.",
-        "Es el razonamiento correcto y conviene entenderlo, porque es el que explica por qué funciona el atajo. Pero pasa por sumar fracciones con denominador común, y con el reloj encima eso es un minuto largo."
+        "En 1 día Laura hace 1/5 del trabajo y Mateo 1/20.",
+        "Juntos: 1/5 + 1/20. Con denominador 20: 4/20 + 1/20 = 5/20 = 1/4 del trabajo por día.",
+        "Si en 1 día hacen 1/4, el trabajo completo tarda 4 días.",
+        "Es correcto, pero pasa por sumar fracciones."
       ],
       "pasos": [
-        "El atajo es una sola línea: se multiplican los dos tiempos y se divide entre la suma de los dos.",
-        "(3 × 12) ÷ (3 + 12) = 36 ÷ 15 = 2,4 horas.",
-        "Antes de marcar, el filtro que salva la pregunta: el resultado tiene que ser MENOR que el tiempo del más rápido de los dos. Entre los dos tardan menos que cualquiera por su cuenta, siempre.",
-        "Con eso se caen tres opciones sin hacer ninguna cuenta: 7,5 y 15 son mayores que 3, así que son imposibles. Y entre 2,5 y 2,4 decide la división.",
-        "Es la misma fórmula para dos obreros, dos máquinas, dos impresoras o dos grifos: cambia el disfraz, no la cuenta."
+        "Atajo en una línea: (5 × 20) ÷ (5 + 20) = 100 ÷ 25 = 4 días.",
+        "Filtro rápido: el resultado tiene que ser MENOR que 5 (el más rápido solo). 12,5, 10 y 25 se caen solos.",
+        "Queda 4, que encaja con el atajo.",
+        "Misma cuenta para dos pintores, dos máquinas o dos llaves: cambia el disfraz, no la fórmula."
       ],
-      "respuesta": "C) 2,4 horas",
-      "errorComun": "Promediar los dos tiempos y responder 7,5. Es la respuesta que primero se le ocurre a cualquiera y por eso siempre está entre las opciones. El filtro de «tiene que ser menor que el más rápido» la descarta sola, y no cuesta ni un segundo: si dos personas ayudan, el trabajo no puede tardar más que si lo hiciera la rápida sola."
+      "respuesta": "C) 4",
+      "errorComun": "Promediar 5 y 20 y marcar 12,5. El promedio siempre es mayor que la verdad cuando trabajan juntos. Si el resultado no es menor que el más rápido, está mal."
     },
     {
       "materia": "exa.psico-numerico",

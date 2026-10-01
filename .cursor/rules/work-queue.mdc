@@ -1,0 +1,17 @@
+---
+description: Cola de trabajo — no saltar mensajes; sumar y terminar
+alwaysApply: true
+---
+
+# Cola de trabajo (nunca saltar)
+
+Cuando el usuario envíe un mensaje nuevo **mientras hay trabajo en curso**:
+
+1. **No abandones** la tarea actual para “cambiar de tema”.
+2. **Súmalo a la cola** (todos / lista ordenada) con estado `pending`.
+3. **Termina** el ítem en curso (código + commit/push si aplica) antes de pasar al siguiente.
+4. Si el mensaje es una **corrección** del ítem actual, incorpórala ahí; no lo trates como tema aparte.
+5. Si el mensaje es una **regla de proceso** (como esta), aplícala de inmediato y vuelve a la cola sin descartar pendientes.
+6. Al cerrar un turno, no dejes ítems a medias: o están `completed`, o quedan explícitos en la cola con el siguiente paso claro.
+
+Orden por defecto: FIFO (el más viejo primero), salvo que el usuario diga “antes X” o “urgente”.

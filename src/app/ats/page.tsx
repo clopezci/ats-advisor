@@ -1751,8 +1751,8 @@ export default function AtsPage() {
                   localStorage.setItem(
                     "ats_last_result",
                     JSON.stringify({
-                            ...(last || {}),
-                            result: slimAtsResult(result),
+                      ...(last || {}),
+                      result: slimAtsResult(result),
                       jobText,
                       companyName,
                     })

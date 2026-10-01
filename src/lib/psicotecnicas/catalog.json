@@ -713,140 +713,140 @@
       "tema": "Velocidades: cruzarse y alcanzarse",
       "titulo": "¿Se cruzan o se alcanzan?",
       "regla": "Lee primero la dirección. Uno hacia el otro (se cruzan/encuentran): SUMA velocidades. Uno detrás del otro (alcanza): RESTA velocidades. Luego tiempo = distancia ÷ esa velocidad relativa.",
-      "ejemplo": "Distancia 1.920 km. Van uno hacia el otro a 280 y 200 km/h.\n1) Es encuentro → 280 + 200 = 480 km/h.\n2) Tiempo = 1.920 ÷ 480 = 4 horas."
+      "ejemplo": "Distancia 1.800 km. Van uno hacia el otro a 250 y 200 km/h.\n1) Es encuentro → 250 + 200 = 450 km/h.\n2) Tiempo = 1.800 ÷ 450 = 4 horas."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Velocidades: cruzarse y alcanzarse",
       "titulo": "La ventaja del que salió primero",
       "regla": "En un alcance casi nunca te dan la distancia abierta: hay que fabricarla. El de adelante ya recorrió (su velocidad × horas de ventaja). Esa es la distancia que el segundo debe recuperar. Luego divides entre (v2 − v1).",
-      "ejemplo": "El primero va a 100 km/h y salió 3 h antes. El segundo va a 105 km/h.\n1) Ventaja en km: 100 × 3 = 300 km.\n2) Velocidad de acercamiento: 105 − 100 = 5 km/h.\n3) Tiempo para alcanzar: 300 ÷ 5 = 60 horas."
+      "ejemplo": "El primero va a 80 km/h y salió 2 h antes. El segundo va a 90 km/h.\n1) Ventaja en km: 80 × 2 = 160 km.\n2) Velocidad de acercamiento: 90 − 80 = 10 km/h.\n3) Tiempo para alcanzar: 160 ÷ 10 = 16 horas."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Repartos: proporcional y con diferencias",
-      "titulo": "Tres números seguidos que suman",
-      "regla": "Divide entre 3 y te da el del medio. Uno menos y uno más son los otros dos.",
-      "ejemplo": "Suman 4.533.\n1) El del medio: 4.533 ÷ 3 = 1.511.\n2) Los tres: 1.510, 1.511 y 1.512.\nComprobación: 1.510+1.511+1.512 = 4.533."
+      "titulo": "Hallar tres números consecutivos cuya suma conoces",
+      "regla": "Si te dan la suma de tres números seguidos (n−1, n y n+1), divide esa suma entre 3: te da el del medio. El anterior es uno menos y el siguiente es uno más.",
+      "ejemplo": "Enunciado: busca tres números consecutivos que sumen 2.400.\n1) El del medio: 2.400 ÷ 3 = 800.\n2) Los tres: 799, 800 y 801.\nComprobación: 799+800+801 = 2.400."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Repartos: proporcional y con diferencias",
-      "titulo": "Repartir con «uno más» y «uno menos»",
-      "regla": "Es el mismo truco de arriba con otra ropa: divide entre el número de partes para tener la del medio, y súmale y réstale la diferencia que te dan.",
-      "ejemplo": "135 en 3 partes con ±5.\n1) Medio: 135 ÷ 3 = 45.\n2) Partes: 45−5 = 40, 45, y 45+5 = 50."
+      "titulo": "Repartir en tres partes con diferencia fija",
+      "regla": "Divide el total entre 3: eso es la parte del medio. Resta la diferencia a la menor y súmasela a la mayor. Al final, las tres deben sumar el total.",
+      "ejemplo": "Enunciado: reparte 360 en 3 partes de modo que la mayor tenga 12 más que la del medio y la menor 12 menos. ¿Cuáles son las tres partes?\n1) Parte del medio: 360 ÷ 3 = 120.\n2) Menor: 120 − 12 = 108. Mayor: 120 + 12 = 132.\n3) Comprobación: 108 + 120 + 132 = 360. Listo."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Repartos: proporcional y con diferencias",
       "titulo": "Reparto proporcional, en tres pasos",
-      "regla": "Suma las partes, divide el total entre esa suma y multiplica por la parte que preguntan. Nunca hace falta plantear ecuaciones.",
-      "ejemplo": "450.000 entre 6, 12 y 18 → 450.000/36 = 12.500 → 12 × 12.500 = 150.000"
+      "regla": "Suma las partes del reparto. Divide el total entre esa suma (valor de una «unidad»). Multiplica por la parte que te preguntan. No hace falta plantear ecuaciones.",
+      "ejemplo": "Enunciado: reparte 420.000 en partes proporcionales a 3, 5 y 7. ¿Cuánto le toca a la parte de 7?\n1) Suma de partes: 3 + 5 + 7 = 15.\n2) Valor de una unidad: 420.000 ÷ 15 = 28.000.\n3) A la de 7: 7 × 28.000 = 196.000."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Problemas clásicos: patos y conejos, náufragos y el que no paga",
-      "titulo": "Patos y conejos",
-      "regla": "Multiplica las cabezas por 2 y réstale la mitad de las patas: eso da cuántos animales son de dos patas. Los demás son de cuatro.",
-      "ejemplo": "90 cabezas y 200 patas → 180 − 100 = 80 patos"
+      "titulo": "Patos y conejos: cabezas y patas",
+      "regla": "Patos = 2 patas, conejos = 4. Atajo: (cabezas × 2) − (patas ÷ 2) = cantidad de patos. El resto de las cabezas son conejos. Siempre comprueba con las patas.",
+      "ejemplo": "Enunciado: en una granja hay patos y conejos. Se cuentan 60 cabezas y 168 patas. ¿Cuántos patos hay?\n1) Cabezas × 2: 60 × 2 = 120.\n2) Mitad de las patas: 168 ÷ 2 = 84.\n3) Patos: 120 − 84 = 36. Conejos: 60 − 36 = 24.\nComprobación: 36×2 + 24×4 = 72 + 96 = 168 patas."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Problemas clásicos: patos y conejos, náufragos y el que no paga",
-      "titulo": "Los que no pagan",
-      "regla": "Lo que se ahorran los que no pagan, dividido entre lo que cada uno puso de más, da cuántos pagaron. Súmale los que entraron gratis.",
-      "ejemplo": "4 gratis × 1.200 = 4.800; ponen 240 de más → 4.800/240 = 20 → van 24"
+      "titulo": "La cuenta cuando algunos no pagan",
+      "regla": "Calcula el faltante (gratis × precio). Ese hueco lo cubren los que sí pagan poniendo un extra cada uno. Faltante ÷ extra = cuántos pagaron. Suma los gratis y tienes el total del grupo.",
+      "ejemplo": "Enunciado: la entrada costaba 1.500 por persona. 6 personas no pagaron y las demás cubrieron el hueco poniendo 300 de más cada una. ¿Cuántas personas iban en total?\n1) Lo que faltó: 6 × 1.500 = 9.000.\n2) Cada uno que pagó puso 300 de más → pagaron: 9.000 ÷ 300 = 30.\n3) Total del grupo: 30 + 6 = 36."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Problemas clásicos: patos y conejos, náufragos y el que no paga",
-      "titulo": "Náufragos y raciones",
-      "regla": "Más bocas, menos días: es regla de tres INVERSA. Multiplica los de antes por los días y divide entre los de ahora.",
-      "ejemplo": "20 personas para 10 días; ahora son 25 → 20 × 10 / 25 = 8 días"
+      "titulo": "Náufragos y raciones: regla inversa",
+      "regla": "Más personas → las raciones alcanzan para menos días (regla de tres inversa). Multiplica personas iniciales × días iniciales y divide entre el nuevo número de personas.",
+      "ejemplo": "Enunciado: 18 náufragos tienen comida para 15 días. Llegan 9 más (quedan 27). ¿Para cuántos días alcanza ahora?\n1) Es inversa: más bocas → menos días.\n2) 18 × 15 = 270.\n3) 270 ÷ 27 = 10 días."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Regla de tres directa e inversa",
       "titulo": "Dibuja las dos flechas",
-      "regla": "Escribe las dos columnas y pon una flecha en cada una. Si apuntan al mismo lado, multiplicas en cruz. Si apuntan al revés, multiplicas en línea.",
-      "ejemplo": "120 km/h en 6 h, ahora en 5 h → inversa → 120 × 6 / 5 = 144"
+      "regla": "Escribe las dos columnas (lo que cambia y lo que preguntan) y pon una flecha en cada una. Si apuntan al mismo lado: multiplica en cruz. Si apuntan al revés: multiplica en línea (regla inversa).",
+      "ejemplo": "Enunciado: un auto a 75 km/h tarda 10 h en un viaje. ¿A qué velocidad debe ir para tardar 6 h?\n1) Más velocidad → menos tiempo → regla inversa.\n2) 75 × 10 ÷ 6 = 750 ÷ 6 = 125 km/h."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Fracciones encadenadas: la palabra «de»",
       "titulo": "«De» quiere decir por",
-      "regla": "Escribe todas las fracciones seguidas multiplicando y tacha arriba contra abajo ANTES de hacer una sola cuenta. Casi nunca queda algo grande.",
-      "ejemplo": "1/5 de 3/4 de 2/9 de 3/2 de 10.000 → queda 10.000/(5×4) = 500"
+      "regla": "Cada «de» es una multiplicación. Escribe todas las fracciones en cadena y tacha numeradores contra denominadores ANTES de multiplicar. Así casi nunca queda un número grande.",
+      "ejemplo": "Enunciado: ¿cuánto es 1/4 de 2/3 de 3/5 de 5/6 de 12.000?\n1) Cadena: 1/4 × 2/3 × 3/5 × 5/6 × 12.000.\n2) Tacha: el 3 con el 3; el 5 con el 5; el 2 con parte del 4.\n3) Queda 12.000 ÷ (4 × 6) × 1… mejor: tras tachar queda 1/(2×6) × 12.000 = 12.000 ÷ 12 = 1.000.\nRespuesta: 1.000."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Fracciones encadenadas: la palabra «de»",
       "titulo": "Cuánto le sumo al numerador",
-      "regla": "Iguala primero los denominadores y resta los numeradores. Lo que falte es la respuesta.",
-      "ejemplo": "1/10 para que dé 3/5 → 3/5 = 6/10 → 6 − 1 = +5"
+      "regla": "Iguala primero los denominadores. Resta el numerador que ya tienes del que quieres llegar: esa diferencia es lo que hay que sumar al numerador.",
+      "ejemplo": "Enunciado: a 2/12 ¿cuánto le sumo al numerador para obtener 5/6?\n1) 5/6 con denominador 12: 5/6 = 10/12.\n2) Diferencia de numeradores: 10 − 2 = 8.\nRespuesta: hay que sumar 8 al numerador."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Porcentajes y proporciones rápidas",
       "titulo": "El porcentaje es un decimal",
-      "regla": "Corre la coma dos lugares y multiplica. El 23 % es ×0,23 y el 58 % es ×0,58. No hace falta regla de tres.",
-      "ejemplo": "23 % de 1.500 → 0,23 × 1.500 = 345"
+      "regla": "Corre la coma dos lugares a la izquierda y multiplica. El 18 % es ×0,18 y el 45 % es ×0,45. No hace falta armar una regla de tres.",
+      "ejemplo": "Enunciado: ¿cuánto es el 18 % de 2.500?\n1) 18 % = 0,18.\n2) 0,18 × 2.500 = 450."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Porcentajes y proporciones rápidas",
       "titulo": "¿Entre cuánto divido para el porcentaje?",
-      "regla": "Voltea la fracción del porcentaje. Para sacar el x % divides entre 100/x, y eso suele ser un número redondo.",
-      "ejemplo": "5 % de 520 → divide entre 100/5 = 20 → 520/20 = 26"
+      "regla": "Para sacar el x % de un número, divide entre (100 ÷ x). Ese cociente suele ser redondo y evita trabajar con comas.",
+      "ejemplo": "Enunciado: ¿cuánto es el 4 % de 750?\n1) 100 ÷ 4 = 25 → divides entre 25.\n2) 750 ÷ 25 = 30."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Combinatoria de columnas: claves, palabras y parejas",
       "titulo": "Cuántas claves tiene un candado",
-      "regla": "Dibuja una columna por rueda, escribe cuántas opciones tiene cada una y multiplícalas. Igual para palabras con letras que se pueden repetir.",
-      "ejemplo": "3 ruedas de 4 números → 4 × 4 × 4 = 64"
+      "regla": "Dibuja una columna por rueda. Escribe cuántas opciones tiene cada una y multiplícalas. El mismo truco sirve para palabras con letras que se pueden repetir.",
+      "ejemplo": "Enunciado: un candado tiene 4 ruedas y cada rueda puede marcar 5 números. ¿Cuántas claves distintas hay?\n1) Opciones por rueda: 5, 5, 5 y 5.\n2) Total: 5 × 5 × 5 × 5 = 625."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Combinatoria de columnas: claves, palabras y parejas",
       "titulo": "Cuántas parejas salen",
-      "regla": "Cada uno con cada uno, sin repetir, es n por (n−1) dividido entre 2. Sirve para partidos, apretones de manos y brindis.",
-      "ejemplo": "10 equipos → 10 × 9 / 2 = 45 partidos"
+      "regla": "Cada uno con cada uno, sin repetir ni importar el orden, es n × (n − 1) ÷ 2. Sirve para partidos, apretones de manos y brindis.",
+      "ejemplo": "Enunciado: en un torneo hay 12 equipos y cada uno juega una vez contra cada otro. ¿Cuántos partidos hay?\n1) 12 × 11 = 132.\n2) Como A vs B es el mismo partido que B vs A: 132 ÷ 2 = 66."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Edades",
       "titulo": "La tabla y el mismo salto",
-      "regla": "Escribe a todos en una fila y súmale a cada uno los mismos años. Después prueba: lo que buscas es el año en que se igualan.",
-      "ejemplo": "44 y 17, 12, 9 → +3 años → 47 y 20+15+12 = 47"
+      "regla": "Escribe las edades actuales. Prueba sumar los mismos años a todos hasta que la edad del mayor iguale la suma de las demás. El atajo falla si no le sumas a TODOS.",
+      "ejemplo": "Enunciado: hoy tienen 50, 20, 14 y 10 años. ¿Dentro de cuántos años la edad del mayor será igual a la suma de las otras tres?\n1) Condición: mayor + x = suma de las otras + 3x → mayor − suma_otras = 2x.\n2) 50 − (20+14+10) = 50 − 44 = 6 → 2x = 6 → x = 3.\n3) Comprobación: mayor 53; otras 23+17+13 = 53."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Probabilidad básica",
       "titulo": "Casos que sirven entre casos que hay",
-      "regla": "Cuenta los que te sirven, divídelos entre todos los posibles y multiplica por 100: las opciones casi siempre vienen en porcentaje.",
-      "ejemplo": "2 de 36 → 0,0555 × 100 = 5,55 %"
+      "regla": "Cuenta los resultados favorables, divídelos entre todos los posibles y multiplica por 100 si piden porcentaje. Favorables ÷ posibles = probabilidad.",
+      "ejemplo": "Enunciado: al lanzar dos dados distintos, ¿cuál es la probabilidad de sacar suma 3? (solo 1+2 y 2+1).\n1) Casos favorables: 2.\n2) Casos posibles: 6 × 6 = 36.\n3) 2/36 = 1/18 ≈ 0,0556 → 5,56 %."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Números romanos",
       "titulo": "Solo tres letras se restan",
-      "regla": "Solo la I, la X y la C se ponen delante para restar, y solo delante de las dos que siguen. Cualquier otra resta que veas es una opción mala.",
-      "ejemplo": "IX = 9 sí. «IL» no existe: 49 se escribe XLIX."
+      "regla": "Solo I, X y C se ponen delante para restar, y solo delante de las dos que les siguen (I ante V/X; X ante L/C; C ante D/M). Cualquier otra «resta» que veas en las opciones es trampa.",
+      "ejemplo": "Enunciado: ¿cuál es la escritura correcta de 44 en números romanos?\n1) 40 = XL (X delante de L: 50 − 10).\n2) 4 = IV.\n3) Juntos: XLIV.\nTrampa típica: «VL» o «IIIIX» no existen."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Series numéricas: los 8 patrones que se repiten",
       "titulo": "Arcos arriba y arcos abajo",
-      "regla": "A veces hay dos series intercaladas (posiciones impares y pares). Anota diferencias arriba en un renglón y abajo en otro.",
-      "ejemplo": "Serie: 0, 2, 6, 12, 14, 18, 24, 26, 30, ?\n1) Una serie: 0, 6, 14, 24… (saltos +6, +8, +10 → siguiente +12 → 36).\n2) La otra: 2, 12, 18, 26… (o el patrón que encaje en los pares).\n3) El término que sigue depende de cuál renglón toque; aquí el siguiente de la primera es 36."
+      "regla": "A veces hay dos series intercaladas (posiciones impares y pares). Anota las diferencias de cada renglón por separado; el siguiente término es el que toque según la posición.",
+      "ejemplo": "Enunciado: completa la serie 2, 4, 8, 14, 16, 22, 28, 30, 36, ?\n1) Separa en dos renglones. Impares (posición 1,3,5…): 2, 8, 16, 28…\n2) Saltos de ese renglón: +6, +8, +12. El siguiente salto razonable es +16 → 28 + 16 = 44.\n3) Pares: 4, 14, 22, 30… (van por su cuenta). El «?» es la siguiente posición impar → 44."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Series numéricas: los 8 patrones que se repiten",
       "titulo": "Si la diferencia no basta, multiplica",
-      "regla": "Cuando los saltos no forman una serie clara, mira por cuánto se multiplica cada salto. Ese segundo renglón suele ser el patrón.",
-      "ejemplo": "Serie: 0, 1, 2, 5, 8, ?\n1) Saltos: +1, +1, +3, +3.\n2) Parecen bloques; el siguiente bloque suele ser +9, +9 (×3).\n3) 8+9=17."
+      "regla": "Cuando los saltos no forman una serie clara a simple vista, mira por cuánto se multiplica cada salto (o si vienen en bloques). Ese segundo renglón suele ser el patrón.",
+      "ejemplo": "Enunciado: completa la serie 1, 2, 3, 6, 9, ?\n1) Saltos: +1, +1, +3, +3.\n2) Van en bloques de dos iguales; el siguiente bloque suele ser ×3 otra vez: +9, +9.\n3) 9 + 9 = 18."
     },
     {
       "subjectId": "exa.psico-abstracto",
@@ -901,92 +901,92 @@
       "subjectId": "exa.psico-numerico",
       "tema": "Dos que trabajan juntos",
       "titulo": "Multiplica los tiempos, divide entre la suma",
-      "regla": "Misma idea del tanque, en fórmula corta: tiempo juntos = (t1 × t2) ÷ (t1 + t2). No promedies (el promedio siempre sale más alto que la verdad). Juntos siempre tardan menos que el más rápido.",
-      "ejemplo": "Una llave: 3 h. Otra: 12 h.\n1) Por fracciones: en 1 h hacen 1/3 + 1/12 = 4/12 + 1/12 = 5/12 del tanque.\n2) Horas para 1 tanque: 1 ÷ (5/12) = 12/5 = 2,4 h.\n3) Con la fórmula: (3×12)÷(3+12) = 36÷15 = 2,4 h. Mismo resultado."
+      "regla": "Tiempo juntos = (t1 × t2) ÷ (t1 + t2). No promedies: el promedio siempre sale más alto que la verdad. Juntos siempre tardan menos que el más rápido solo.",
+      "ejemplo": "Enunciado: una llave llena el tanque en 4 h y otra en 12 h. ¿Cuánto tardan juntas?\n1) Por fracciones: en 1 h hacen 1/4 + 1/12 = 3/12 + 1/12 = 4/12 = 1/3 del tanque.\n2) Horas para 1 tanque: 1 ÷ (1/3) = 3 h.\n3) Con la fórmula: (4×12)÷(4+12) = 48÷16 = 3 h. Mismo resultado."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Problemas clásicos: patos y conejos, náufragos y el que no paga",
       "titulo": "El rombo, que sirve para todas",
-      "regla": "Dibuja un rombo: cabezas a la izquierda, patas a la derecha, 4 arriba y 2 abajo. La cuenta es (cabezas × 4 − patas) dividido entre (4 − 2). Sirve con cualquier par de números.",
-      "ejemplo": "42 cabezas y 88 patas.\n1) Si todos fueran de 4 patas: 42 × 4 = 168 patas.\n2) Sobran patas ficticias: 168 − 88 = 80.\n3) Cada animal de 2 patas «ahorra» 2 patas frente al de 4: 80 ÷ 2 = 40 patos (y 42−40 = 2 conejos)."
+      "regla": "Dibuja un rombo: cabezas a la izquierda, patas a la derecha, 4 arriba y 2 abajo. Cuenta: (cabezas × 4 − patas) ÷ (4 − 2). Sirve con cualquier par (monedas, mesas, boletas).",
+      "ejemplo": "Enunciado: en una granja hay patos (2 patas) y conejos (4 patas). Se cuentan 45 cabezas y 122 patas. ¿Cuántos patos hay?\n1) Si todos fueran de 4 patas: 45 × 4 = 180 patas.\n2) Patas de más en esa cuenta ficticia: 180 − 122 = 58.\n3) Cada pato «ahorra» 2 patas frente a un conejo: 58 ÷ 2 = 29 patos.\nConejos: 45 − 29 = 16.\nComprobación: 29×2 + 16×4 = 58 + 64 = 122."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Porcentajes y proporciones rápidas",
       "titulo": "Te dan la parte y piden el total",
-      "regla": "Al revés que siempre: en vez de multiplicar, divide entre el porcentaje en decimal. Es la pregunta que más se falla de toda la sección.",
-      "ejemplo": "El 34 % son 170 → 170 ÷ 0,34 = 500"
+      "regla": "Al revés del porcentaje usual: en vez de multiplicar, divide la cantidad entre el porcentaje en decimal. Es la pregunta que más se falla de la sección.",
+      "ejemplo": "Enunciado: el 25 % de un número es 180. ¿Cuál es el número completo?\n1) 25 % = 0,25.\n2) Total = 180 ÷ 0,25 = 720."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Porcentajes y proporciones rápidas",
       "titulo": "El precio ya trae el impuesto",
-      "regla": "Si pagaste el 120 %, divide entre 1,20. Si te hicieron 40 % de descuento, pagaste el 60 %: divide entre 0,60. Nunca le quites el porcentaje al precio ya cobrado.",
-      "ejemplo": "Pagué 1.020 con el 20 % de impuesto → 1.020 ÷ 1,2 = 850"
+      "regla": "Si pagaste el 100 % más el impuesto, divides entre (1 + tasa). Si hubo descuento, pagaste un porcentaje menor: divides entre ese decimal. Nunca «quites» el % al precio ya cobrado restando.",
+      "ejemplo": "Enunciado: pagaste 1.380 e iba incluido el 15 % de impuesto. ¿Cuál era el precio sin impuesto?\n1) Pagaste el 115 % → divides entre 1,15.\n2) 1.380 ÷ 1,15 = 1.200."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Porcentajes y proporciones rápidas",
       "titulo": "Todo se arma desde el 10 %",
-      "regla": "Saca el 10 % corriendo la coma y de ahí construye: el 30 % es ese número por 3, el 5 % es la mitad, el 1 % es la décima parte. Casi nunca hace falta multiplicar por un decimal.",
-      "ejemplo": "30 % de 2.100 → 210 × 3 = 630. Y 5 % de 2.300 → 230 ÷ 2 = 115"
+      "regla": "Saca el 10 % corriendo la coma una posición y de ahí construye: el 30 % es ese número ×3, el 5 % es la mitad, el 1 % es la décima parte. Casi nunca hace falta multiplicar por un decimal largo.",
+      "ejemplo": "Enunciado: calcula el 30 % de 2.800 y el 5 % de 1.640.\n1) 10 % de 2.800 = 280 → 30 % = 280 × 3 = 840.\n2) 10 % de 1.640 = 164 → 5 % = 164 ÷ 2 = 82."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Fracciones encadenadas: la palabra «de»",
       "titulo": "Lo que te dan en número es lo que sobra",
-      "regla": "Suma las fracciones que sí te dicen y réstalas de 1: esa es la fracción que vale el número suelto. Con eso sacas el total con una regla de tres.",
-      "ejemplo": "Faltan 2/7 y quedan 40 casas → 40 × 7 ÷ 2 = 140 en total"
+      "regla": "Suma las fracciones que sí te dicen y réstalas de 1: esa es la fracción que representa el número suelto. Con una regla de tres sacas el total.",
+      "ejemplo": "Enunciado: de un edificio, 3/8 ya están vendidos y quedan 125 apartamentos. ¿Cuántos apartamentos hay en total?\n1) Lo que queda es 1 − 3/8 = 5/8.\n2) Esos 5/8 valen 125 → una octava parte: 125 ÷ 5 = 25.\n3) Total: 25 × 8 = 200."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Fracciones encadenadas: la palabra «de»",
       "titulo": "En un embudo, multiplica lo que sobrevive",
-      "regla": "Si en cada etapa cae una fracción, lo que pasa es 1 menos esa fracción. Encadena multiplicando los que sobreviven y nunca los que caen.",
-      "ejemplo": "Caen 1/5, luego 1/4, luego 2/7 → 4/5 × 3/4 × 5/7 = 3/7"
+      "regla": "Si en cada etapa cae una fracción, lo que pasa es 1 menos esa fracción. Encadena multiplicando solo a los que sobreviven; nunca multipliques las fracciones de los que se caen.",
+      "ejemplo": "Enunciado: en tres filtros caen 1/6, luego 1/5 y luego 1/4 de los que llegan. ¿Qué fracción del grupo inicial llega al final?\n1) Sobrevive: 5/6, luego 4/5, luego 3/4.\n2) 5/6 × 4/5 × 3/4.\n3) Tacha: queda 3/6 = 1/2."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Cálculo mental y atajos",
       "titulo": "Traduce el enunciado a un solo renglón",
-      "regla": "«El doble», «la mitad del cuadrado», «la diferencia de»: ve escribiendo cada trozo en su sitio a medida que lees, sin resolver nada. Cuando termines de leer, la cuenta ya está armada.",
-      "ejemplo": "«La mitad del cuadrado de 3» → 9/2, escrito antes de calcular"
+      "regla": "«El doble», «la mitad del cuadrado», «la diferencia de»: ve escribiendo cada trozo en su sitio a medida que lees, sin resolver nada. Cuando terminas de leer, la cuenta ya está armada.",
+      "ejemplo": "Enunciado: calcula la mitad del cuadrado de 8, menos 3.\n1) Mientras lees: (8²) / 2 − 3.\n2) 64 / 2 − 3 = 32 − 3 = 29."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Series numéricas: los 8 patrones que se repiten",
       "titulo": "Series que alternan dos operaciones",
-      "regla": "Cuando ni las diferencias ni los factores cuadran solos, prueba si se turnan: una suma, una multiplicación, una suma, una multiplicación.",
-      "ejemplo": "0-1-2-3-6-7-14-15 → +1, ×2, +1, ×2, +1, ×2"
+      "regla": "Cuando ni las diferencias ni los factores cuadran solos, prueba si se turnan dos operaciones: una suma, una multiplicación, una suma, una multiplicación…",
+      "ejemplo": "Enunciado: completa la serie 1, 2, 4, 5, 10, 11, 22, ?\n1) Saltos: +1, ×2, +1, ×2, +1, ×2…\n2) Después de 22 toca +1 → 23."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Series numéricas: los 8 patrones que se repiten",
       "titulo": "Cuando los factores llevan su propia serie",
-      "regla": "Si los saltos son multiplicaciones que cambian, escribe los multiplicadores en un renglón aparte: ellos casi siempre sí forman una serie sencilla.",
-      "ejemplo": "1-1-1-3-21 → los factores son ×1, ×1, ×3, ×7"
+      "regla": "Si los saltos son multiplicaciones que cambian, escribe los multiplicadores en un renglón aparte: ellos casi siempre sí forman una serie sencilla (primos, impares, +2, etc.).",
+      "ejemplo": "Enunciado: completa la serie 2, 2, 4, 12, 48, ?\n1) Factores: ×1, ×2, ×3, ×4…\n2) Siguiente factor: ×5.\n3) 48 × 5 = 240."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Potencias y raíces sin calculadora",
       "titulo": "Exponente negativo y exponente partido",
-      "regla": "El menos del exponente voltea la fracción, no cambia el signo del número. Y el de abajo del exponente partido es el índice de la raíz.",
-      "ejemplo": "2⁻³ᐟ⁵ → 1 dividido entre la raíz quinta de 2³"
+      "regla": "El signo menos del exponente voltea la base a fracción (1 / base^…), no cambia el signo del número. El denominador de un exponente fraccionario es el índice de la raíz; el numerador es la potencia.",
+      "ejemplo": "Enunciado: interpreta 8^(−2/3) sin calculadora.\n1) El − voltea: 1 / 8^(2/3).\n2) 8^(2/3) = (raíz cúbica de 8)² = 2² = 4.\n3) Resultado: 1/4."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Edades",
       "titulo": "«Hace tantos años» le baja a todos",
-      "regla": "Igual que sumar, pero restando: el mismo número se le quita a cada persona de la tabla. La trampa es restárselo solo a uno.",
-      "ejemplo": "Ella tiene 38 y hablan de hace 8 años → 30, y los hijos también bajan 8"
+      "regla": "Igual que sumar años, pero restando: el mismo número se le quita a cada persona de la tabla. La trampa es restárselo solo a uno.",
+      "ejemplo": "Enunciado: hoy la madre tiene 42 años y los hijos 16 y 10. Hace 6 años, ¿cuánto sumaban las edades de los tres?\n1) Hace 6 años: 42−6=36; 16−6=10; 10−6=4.\n2) Suma: 36 + 10 + 4 = 50."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Velocidades: cruzarse y alcanzarse",
       "titulo": "El rayo y el trueno",
-      "regla": "El sonido va a 340 metros por segundo. Divide los metros entre 340 y ya tienes los segundos; al revés, cada 3 segundos es como un kilómetro.",
-      "ejemplo": "1.700 metros ÷ 340 = 5 segundos"
+      "regla": "El sonido viaja a unos 340 m/s. Segundos = metros ÷ 340. Atajo aproximado: cada 3 segundos ≈ 1 km. No uses la velocidad de la luz: el relámpago se ve al instante.",
+      "ejemplo": "Enunciado: ves el rayo y oyes el trueno 4 segundos después. ¿A qué distancia aproximada cayó el rayo?\n1) Distancia = 4 × 340 = 1.360 metros.\n2) En km: 1,36 km (o con el atajo: un poco más de 1 km)."
     },
     {
       "subjectId": "exa.psico-abstracto",

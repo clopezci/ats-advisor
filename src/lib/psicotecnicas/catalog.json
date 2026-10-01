@@ -935,16 +935,16 @@
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Fracciones encadenadas: la palabra «de»",
-      "titulo": "Lo que te dan en número es lo que sobra",
-      "regla": "Suma las fracciones que sí te dicen y réstalas de 1: esa es la fracción que representa el número suelto. Con una regla de tres sacas el total.",
-      "ejemplo": "Enunciado: de un edificio, 3/8 ya están vendidos y quedan 125 apartamentos. ¿Cuántos apartamentos hay en total?\n1) Lo que queda es 1 − 3/8 = 5/8.\n2) Esos 5/8 valen 125 → una octava parte: 125 ÷ 5 = 25.\n3) Total: 25 × 8 = 200."
+      "titulo": "Te dan lo que sobra en número: halla el total",
+      "regla": "Si te dan una fracción ya usada (vendida, gastada…) y un número de lo que queda: 1) resta esa fracción de 1 para saber qué fracción es el sobrante; 2) ese numerador dice en cuántas partes iguales está el sobrante; 3) divide el número entre ese numerador (valor de UNA parte) y multiplica por el denominador (total de partes).",
+      "ejemplo": "Enunciado: de un edificio, 3/8 de los apartamentos ya están vendidos y quedan 125. ¿Cuántos hay en total?\n1) Vendidos = 3/8. Entonces lo que queda = 1 − 3/8 = 5/8.\n2) «5/8» significa: el edificio se parte en 8 pedazos iguales y quedan 5 de esos pedazos. Esos 5 pedazos son los 125 apartamentos.\n3) Por eso divides 125 entre 5 (el 5 es el numerador de 5/8 = cuántos pedazos sobran): 125 ÷ 5 = 25. Cada pedazo (1/8) vale 25 apartamentos.\n4) El edificio completo son 8 pedazos: 25 × 8 = 200."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Fracciones encadenadas: la palabra «de»",
       "titulo": "En un embudo, multiplica lo que sobrevive",
-      "regla": "Si en cada etapa cae una fracción, lo que pasa es 1 menos esa fracción. Encadena multiplicando solo a los que sobreviven; nunca multipliques las fracciones de los que se caen.",
-      "ejemplo": "Enunciado: en tres filtros caen 1/6, luego 1/5 y luego 1/4 de los que llegan. ¿Qué fracción del grupo inicial llega al final?\n1) Sobrevive: 5/6, luego 4/5, luego 3/4.\n2) 5/6 × 4/5 × 3/4.\n3) Tacha: queda 3/6 = 1/2."
+      "regla": "Si en cada etapa «se cae» una fracción, lo que sigue adelante es 1 menos esa fracción. Multiplica solo a los que sobreviven (nunca sumes ni multipliques las fracciones de los que se caen).",
+      "ejemplo": "Enunciado: en tres filtros se cae 1/6, luego 1/5 y luego 1/4 de los que llegan. ¿Qué fracción del grupo inicial llega al final?\n1) Si se cae 1/6, sobrevive 5/6. Si se cae 1/5, sobrevive 4/5. Si se cae 1/4, sobrevive 3/4.\n2) Encadena lo que sobrevive: 5/6 × 4/5 × 3/4.\n3) Tacha el 5 con el 5 y el 4 con el 4: queda 3/6 = 1/2.\nRespuesta: llega la mitad del grupo inicial."
     },
     {
       "subjectId": "exa.psico-numerico",

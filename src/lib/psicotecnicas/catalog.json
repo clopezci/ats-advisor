@@ -285,36 +285,36 @@
       "subjectId": "exa.psico-numerico",
       "tema": "Problemas de razonamiento con datos",
       "titulo": "Suma de 1 hasta cualquier número",
-      "regla": "Multiplica el último por el siguiente y parte por 2.",
-      "ejemplo": "1+2+…+100 → 100 × 101 ÷ 2 = 5.050."
+      "regla": "Fórmula: (último × siguiente) ÷ 2. Ejemplo mental: 1+2+3+4 = 10, y (4×5)÷2 = 10. Sirve para cualquier n.",
+      "ejemplo": "Suma 1+2+…+100.\n1) Último = 100; siguiente = 101.\n2) 100 × 101 = 10.100.\n3) 10.100 ÷ 2 = 5.050.\nRespuesta: 5.050."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Problemas de razonamiento con datos",
       "titulo": "El problema del tanque y las dos llaves",
-      "regla": "No sumes tiempos: suma lo que cada una hace en una hora. Una que lo llena en 3 horas hace 1/3 por hora.",
-      "ejemplo": "3 h y 6 h → 1/3 + 1/6 = 1/2 por hora → entre las dos, 2 horas."
+      "regla": "Error típico: sumar las horas (3+6=9) o promediarlas. Lo correcto: pensar cuánto llena cada llave en 1 hora, sumar esos aportes y preguntar: ¿cuántas horas hacen falta para llenar 1 tanque completo?",
+      "ejemplo": "Una llave llena el tanque en 3 h y otra en 6 h. ¿Cuánto tardan juntas?\n1) En 1 hora la de 3 h llena 1/3 del tanque.\n2) En 1 hora la de 6 h llena 1/6 del tanque.\n3) Juntas en 1 hora: 1/3 + 1/6. Como 1/3 = 2/6, queda 2/6 + 1/6 = 3/6 = 1/2 del tanque por hora.\n4) Si en 1 hora llenan la mitad, para llenar el tanque entero necesitan 2 horas.\nComprobación: en 2 h la primera aporta 2×(1/3)=2/3 y la segunda 2×(1/6)=1/3; 2/3+1/3=1 tanque."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Problemas de razonamiento con datos",
       "titulo": "Dos que salen al encuentro",
-      "regla": "Si van uno hacia el otro, suma las velocidades. Si uno persigue al otro, réstalas. Después, distancia dividida por ese número.",
-      "ejemplo": "300 km, uno a 60 y otro a 40 → 100 km/h juntos → se encuentran en 3 h."
+      "regla": "Primero decide el tipo: ¿van uno hacia el otro (se acercan) o uno persigue al otro (mismo sentido)? Al encuentro: suma velocidades. En persecución: resta velocidades. Luego: tiempo = distancia ÷ esa velocidad combinada.",
+      "ejemplo": "Están a 300 km. Uno va a 60 km/h y el otro a 40 km/h, uno hacia el otro.\n1) Es encuentro → sumas velocidades: 60 + 40 = 100 km/h (así de rápido se cierran la distancia).\n2) Tiempo = 300 ÷ 100 = 3 horas.\nSi fuera persecución (mismo sentido), usarías 60 − 40 = 20 km/h y 300 ÷ 20 = 15 h."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Problemas de razonamiento con datos",
       "titulo": "«Cada 4 días» y «cada 6 días»: cuándo coinciden",
-      "regla": "Es el mínimo común múltiplo, y no es multiplicarlos. Descompón los dos y toma cada factor con el mayor exponente.",
-      "ejemplo": "4 = 2×2 y 6 = 2×3 → 2×2×3 = 12 días, no 24."
+      "regla": "Buscas el mínimo común múltiplo (MCM), no el producto. El producto (4×6=24) también es común, pero no es el primero. Lista múltiplos o descompón en factores primos.",
+      "ejemplo": "A pasa cada 4 días y B cada 6. ¿Cuándo coinciden de nuevo?\n1) Múltiplos de 4: 4, 8, 12, 16, 20, 24…\n2) Múltiplos de 6: 6, 12, 18, 24…\n3) El primero en común es 12 → coinciden a los 12 días (no a los 24).\nCon factores: 4=2×2 y 6=2×3 → MCM = 2×2×3 = 12."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Problemas de razonamiento con datos",
       "titulo": "Cuánto necesito en la última nota",
-      "regla": "Multiplica la nota que quieres por el número de notas y réstale lo que ya tienes sumado.",
-      "ejemplo": "Quiero 4,0 en 5 notas y llevo 15,2 → 4×5 − 15,2 = 4,8."
+      "regla": "Meta total = nota deseada × cantidad de notas. Lo que falta = meta total − suma de lo que ya tienes. Ese resto es la nota que necesitas en el examen que falta.",
+      "ejemplo": "Quieres promedio 4,0 en 5 notas y ya sumas 15,2 en las 4 primeras.\n1) Meta total: 4,0 × 5 = 20.\n2) Ya llevas 15,2.\n3) Te falta: 20 − 15,2 = 4,8 en la quinta nota.\nComprobación: (15,2 + 4,8) ÷ 5 = 20 ÷ 5 = 4,0."
     },
     {
       "subjectId": "exa.psico-numerico",
@@ -712,29 +712,29 @@
       "subjectId": "exa.psico-numerico",
       "tema": "Velocidades: cruzarse y alcanzarse",
       "titulo": "¿Se cruzan o se alcanzan?",
-      "regla": "Van uno hacia el otro: SUMA las velocidades. Uno persigue al otro: RÉSTALAS. Después, distancia dividida entre ese número.",
-      "ejemplo": "1.920 km y juntos 480 km/h → 1.920/480 = 4 horas"
+      "regla": "Lee primero la dirección. Uno hacia el otro (se cruzan/encuentran): SUMA velocidades. Uno detrás del otro (alcanza): RESTA velocidades. Luego tiempo = distancia ÷ esa velocidad relativa.",
+      "ejemplo": "Distancia 1.920 km. Van uno hacia el otro a 280 y 200 km/h.\n1) Es encuentro → 280 + 200 = 480 km/h.\n2) Tiempo = 1.920 ÷ 480 = 4 horas."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Velocidades: cruzarse y alcanzarse",
       "titulo": "La ventaja del que salió primero",
-      "regla": "En un alcance la distancia no te la dan: es lo que el de adelante ya llevaba recorrido. Multiplica su velocidad por las horas de ventaja.",
-      "ejemplo": "100 km/h × 3 h = 300 km → 300/(105−100) = 60 horas"
+      "regla": "En un alcance casi nunca te dan la distancia abierta: hay que fabricarla. El de adelante ya recorrió (su velocidad × horas de ventaja). Esa es la distancia que el segundo debe recuperar. Luego divides entre (v2 − v1).",
+      "ejemplo": "El primero va a 100 km/h y salió 3 h antes. El segundo va a 105 km/h.\n1) Ventaja en km: 100 × 3 = 300 km.\n2) Velocidad de acercamiento: 105 − 100 = 5 km/h.\n3) Tiempo para alcanzar: 300 ÷ 5 = 60 horas."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Repartos: proporcional y con diferencias",
       "titulo": "Tres números seguidos que suman",
       "regla": "Divide entre 3 y te da el del medio. Uno menos y uno más son los otros dos.",
-      "ejemplo": "Suman 4.533 → 4.533/3 = 1.511 → 1.510, 1.511 y 1.512"
+      "ejemplo": "Suman 4.533.\n1) El del medio: 4.533 ÷ 3 = 1.511.\n2) Los tres: 1.510, 1.511 y 1.512.\nComprobación: 1.510+1.511+1.512 = 4.533."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Repartos: proporcional y con diferencias",
       "titulo": "Repartir con «uno más» y «uno menos»",
       "regla": "Es el mismo truco de arriba con otra ropa: divide entre el número de partes para tener la del medio, y súmale y réstale la diferencia que te dan.",
-      "ejemplo": "135 en 3 partes con ±5 → 45 → 40, 45 y 50"
+      "ejemplo": "135 en 3 partes con ±5.\n1) Medio: 135 ÷ 3 = 45.\n2) Partes: 45−5 = 40, 45, y 45+5 = 50."
     },
     {
       "subjectId": "exa.psico-numerico",
@@ -901,15 +901,15 @@
       "subjectId": "exa.psico-numerico",
       "tema": "Dos que trabajan juntos",
       "titulo": "Multiplica los tiempos, divide entre la suma",
-      "regla": "Dos llaves, dos obreros, dos máquinas: multiplica los dos tiempos y divide entre lo que suman. No promedies nunca, porque juntos siempre tardan menos que el más rápido de los dos.",
-      "ejemplo": "3 h y 12 h → (3 × 12) ÷ (3 + 12) = 36/15 = 2,4 horas"
+      "regla": "Misma idea del tanque, en fórmula corta: tiempo juntos = (t1 × t2) ÷ (t1 + t2). No promedies (el promedio siempre sale más alto que la verdad). Juntos siempre tardan menos que el más rápido.",
+      "ejemplo": "Una llave: 3 h. Otra: 12 h.\n1) Por fracciones: en 1 h hacen 1/3 + 1/12 = 4/12 + 1/12 = 5/12 del tanque.\n2) Horas para 1 tanque: 1 ÷ (5/12) = 12/5 = 2,4 h.\n3) Con la fórmula: (3×12)÷(3+12) = 36÷15 = 2,4 h. Mismo resultado."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Problemas clásicos: patos y conejos, náufragos y el que no paga",
       "titulo": "El rombo, que sirve para todas",
       "regla": "Dibuja un rombo: cabezas a la izquierda, patas a la derecha, 4 arriba y 2 abajo. La cuenta es (cabezas × 4 − patas) dividido entre (4 − 2). Sirve con cualquier par de números.",
-      "ejemplo": "42 cabezas y 88 patas → (42×4 − 88) ÷ (4−2) = 80/2 = 40 patos"
+      "ejemplo": "42 cabezas y 88 patas.\n1) Si todos fueran de 4 patas: 42 × 4 = 168 patas.\n2) Sobran patas ficticias: 168 − 88 = 80.\n3) Cada animal de 2 patas «ahorra» 2 patas frente al de 4: 80 ÷ 2 = 40 patos (y 42−40 = 2 conejos)."
     },
     {
       "subjectId": "exa.psico-numerico",

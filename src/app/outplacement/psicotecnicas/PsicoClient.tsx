@@ -249,8 +249,8 @@ export function PsicoClient() {
             </div>
             <SpeakButton text={fichaSpeakScript(ficha)} label="Escuchar ficha" />
           </div>
-          <p className="text-sm">{ficha.regla}</p>
-          <p className="text-sm muted">{ficha.ejemplo}</p>
+          <p className="text-sm whitespace-pre-wrap leading-relaxed">{ficha.regla}</p>
+          <p className="text-sm muted whitespace-pre-wrap leading-relaxed">{ficha.ejemplo}</p>
           <div className="flex gap-2">
             <button
               type="button"

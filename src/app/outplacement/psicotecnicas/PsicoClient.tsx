@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useJsonDraft } from "@/lib/client/useJsonDraft";
 import { SpeakButton } from "@/components/SpeakButton";
-import { PsicoMuteFab } from "@/components/PsicoMuteFab";
 import {
   answersMatch,
   loadTrialDone,
@@ -17,19 +16,13 @@ import {
   type PsicoEjercicio,
   type PsicoFicha,
 } from "@/lib/psicotecnicas";
-import {
-  ejercicioSpeakScript,
-  fichaSpeakScript,
-  isPsicoSpeakMuted,
-  speakText,
-  stopSpeaking,
-} from "@/lib/psicotecnicas/speak";
+import { ejercicioSpeakScript, fichaSpeakScript, stopSpeaking } from "@/lib/psicotecnicas/speak";
 import { writeFocusPath } from "@/lib/engagement/focusPath";
 
 type Mode = "fichas" | "pruebas";
 
 const INTRO =
-  "Estudia gratis: fichas de método y banco de pruebas. Activa el wizard hablado para escuchar cada ficha o prueba. Lo de pago es practicar con el método IA.";
+  "Estudia gratis: fichas de método y banco de pruebas. Usa el ícono de audio para escuchar una ficha cuando quieras. Lo de pago es practicar con el método IA.";
 
 export function PsicoClient() {
   const [mode, setMode] = useState<Mode>("fichas");
@@ -43,19 +36,15 @@ export function PsicoClient() {
   const [bankEjercicios, setBankEjercicios] = useState<PsicoEjercicio[] | null>(null);
   const [bankMsg, setBankMsg] = useState("");
   const [publicFichas, setPublicFichas] = useState<PsicoFicha[] | null>(null);
-  /** Wizard hablado: lee en voz alta el contenido de aprendizaje al cambiar de ítem. */
-  const [spokenWizard, setSpokenWizard] = useState(false);
-  const [muted, setMuted] = useState(false);
 
   useJsonDraft(
     "ats_psico_draft",
-    { answer, revealed, materia, mode, spokenWizard },
+    { answer, revealed, materia, mode },
     (saved) => {
       if (typeof saved.answer === "string" && saved.answer) setAnswer(saved.answer);
       if (saved.revealed === true) setRevealed(true);
       if (typeof saved.materia === "string" && saved.materia) setMateria(saved.materia);
       if (saved.mode === "fichas" || saved.mode === "pruebas") setMode(saved.mode);
-      // No auto-reactivar voz al recuperar borrador: evita que la pestaña hable sola y se trabe.
     }
   );
 
@@ -64,13 +53,7 @@ export function PsicoClient() {
   useEffect(() => {
     writeFocusPath("gratis");
     setDone(loadTrialDone());
-    setMuted(isPsicoSpeakMuted());
-    fetch("/api/psicotecnicas/fichas")
-      .then(async (res) => {
-        const data = await res.json().catch(() => ({}));
-        if (res.ok && Array.isArray(data.fichas)) setPublicFichas(data.fichas);
-      })
-      .catch(() => undefined);
+    // Un solo fetch (bank incluye fichas). Evita parsear el catálogo dos veces.
     fetch("/api/psicotecnicas/bank")
       .then(async (res) => {
         const data = await res.json().catch(() => ({}));
@@ -80,6 +63,7 @@ export function PsicoClient() {
         }
         setBankFichas(data.fichas || []);
         setBankEjercicios(data.ejercicios || []);
+        setPublicFichas(data.fichas || []);
       })
       .catch(() => setBankMsg("No se pudo abrir el banco."));
     return () => stopSpeaking();
@@ -102,61 +86,9 @@ export function PsicoClient() {
   );
   const ficha = fichas[Math.min(fichaI, Math.max(0, fichas.length - 1))];
   const bancoItem = banco[Math.min(bancoI, Math.max(0, banco.length - 1))];
-  const fichaKey = ficha ? `${ficha.titulo}|${ficha.regla.slice(0, 40)}` : "";
-  const bancoKey = bancoItem ? `${bancoItem.index}|${bancoItem.item.tema}` : "";
-
-  // Lee automáticamente ficha o prueba cuando el wizard hablado está activo
-  useEffect(() => {
-    if (!spokenWizard || muted) {
-      stopSpeaking();
-      return;
-    }
-    const id = window.setTimeout(() => {
-      if (mode === "fichas" && ficha) {
-        speakText(fichaSpeakScript(ficha));
-        return;
-      }
-      if (mode === "pruebas" && bancoItem) {
-        speakText(
-          ejercicioSpeakScript({
-            tema: bancoItem.item.tema,
-            enunciado: bancoItem.item.enunciado,
-            includeAnswer: false,
-          })
-        );
-      }
-    }, 350);
-    return () => window.clearTimeout(id);
-    // deps estables (no objetos que se recrean cada render)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [spokenWizard, muted, mode, materia, fichaI, bancoI, fichaKey, bancoKey]);
-
-  // Si se revela la respuesta en pruebas + wizard, leer solución
-  useEffect(() => {
-    if (!spokenWizard || muted || mode !== "pruebas" || !revealed || !bancoItem) return;
-    const id = window.setTimeout(() => {
-      speakText(
-        ejercicioSpeakScript({
-          tema: bancoItem.item.tema,
-          enunciado: "Verificación.",
-          respuesta: bancoItem.item.respuesta,
-          pasos: bancoItem.item.pasos,
-          errorComun: bancoItem.item.errorComun,
-          includeAnswer: true,
-        })
-      );
-    }, 400);
-    return () => window.clearTimeout(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [revealed, spokenWizard, muted, mode, bancoKey]);
 
   function markDone(index: number) {
     if (!done.includes(index)) setDone(saveTrialDone([...done, index]));
-  }
-
-  function toggleWizard(on: boolean) {
-    setSpokenWizard(on);
-    if (!on) stopSpeaking();
   }
 
   return (
@@ -175,21 +107,6 @@ export function PsicoClient() {
             ? `${bankFichas.length} fichas · ${bankEjercicios?.length || PSICO_BANK_COUNTS.ejercicios} pruebas · todo gratis para estudiar`
             : bankMsg || "Cargando material…"}
         </p>
-      </section>
-
-      <section className="bento-card space-y-3">
-        <h2 className="font-semibold text-sm">Wizard hablado (aprendizaje)</h2>
-        <p className="text-xs muted leading-relaxed">
-          Escucha cada ficha o enunciado de prueba al avanzar. Usa el botón flotante para silenciar
-          cuando quieras.
-        </p>
-        <button
-          type="button"
-          className={spokenWizard ? "btn-primary" : "btn-secondary"}
-          onClick={() => toggleWizard(!spokenWizard)}
-        >
-          {spokenWizard ? "Wizard hablado activo · tocar para apagar" : "Activar wizard hablado"}
-        </button>
       </section>
 
       <div className="grid gap-2 sm:grid-cols-2">
@@ -334,13 +251,6 @@ export function PsicoClient() {
       <Link href="/ats" className="btn-secondary">
         Siguiente típico: analizar mi CV
       </Link>
-
-      <PsicoMuteFab
-        visible={spokenWizard}
-        onMuteChange={(m) => {
-          setMuted(m);
-        }}
-      />
     </div>
   );
 }

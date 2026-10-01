@@ -2,17 +2,26 @@
 
 import { useEffect, useRef, useState } from "react";
 
-/** Guarda un borrador en este dispositivo y lo recupera al volver, incluso con atrás del navegador. */
+/** Guarda un borrador liviano. No reescribe si el contenido no cambió. */
 export function useJsonDraft<T>(key: string, value: T, onLoad: (saved: T) => void) {
   const [ready, setReady] = useState(false);
   const lastWritten = useRef("");
   const onLoadRef = useRef(onLoad);
   onLoadRef.current = onLoad;
+  // Serial estable: evita efecto en cada render por identidad de objeto.
+  const serial = (() => {
+    try {
+      return JSON.stringify(value);
+    } catch {
+      return "";
+    }
+  })();
 
   useEffect(() => {
     try {
       const raw = localStorage.getItem(key);
       if (raw) {
+        lastWritten.current = raw;
         const parsed = JSON.parse(raw) as T;
         if (parsed && typeof parsed === "object") onLoadRef.current(parsed);
       }
@@ -23,16 +32,9 @@ export function useJsonDraft<T>(key: string, value: T, onLoad: (saved: T) => voi
   }, [key]);
 
   useEffect(() => {
-    if (!ready) return;
-    let serial = "";
-    try {
-      serial = JSON.stringify(value);
-    } catch {
-      return;
-    }
+    if (!ready || !serial) return;
     if (serial === lastWritten.current) return;
-
-    const write = () => {
+    const id = window.setTimeout(() => {
       if (serial === lastWritten.current) return;
       try {
         localStorage.setItem(key, serial);
@@ -40,10 +42,7 @@ export function useJsonDraft<T>(key: string, value: T, onLoad: (saved: T) => voi
       } catch {
         /* ignore quota */
       }
-    };
-    const id = window.setTimeout(write, 400);
-    return () => {
-      window.clearTimeout(id);
-    };
-  }, [key, ready, value]);
+    }, 700);
+    return () => window.clearTimeout(id);
+  }, [key, ready, serial]);
 }

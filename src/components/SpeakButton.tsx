@@ -9,8 +9,10 @@ export function SpeakButton({ text, label = "Escuchar" }: SpeakButtonProps) {
   const speak = () => {
     if (typeof window === "undefined" || !window.speechSynthesis) return;
     try {
-      window.speechSynthesis.cancel();
-      const utter = new SpeechSynthesisUtterance(text.replace(/\s+/g, " ").trim().slice(0, 1200));
+      if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+        window.speechSynthesis.cancel();
+      }
+      const utter = new SpeechSynthesisUtterance(text.replace(/\s+/g, " ").trim().slice(0, 800));
       utter.lang = "es-CO";
       window.speechSynthesis.speak(utter);
     } catch {

@@ -1,12 +1,13 @@
 "use client";
 
 /**
- * Lectura en voz alta (es-CO) con mute persistente para el wizard de psicotécnicas.
- * Evita tormentas de cancel()/speak() que congelan Chrome.
+ * Lectura en voz alta (es-CO). Mute persistente.
+ * Sin auto-bucles: cancel()/speak() agresivos congelan Chrome.
  */
 
 const MUTE_KEY = "ats_psico_speak_muted_v1";
-const MAX_CHARS = 1200;
+const MAX_CHARS = 800;
+let speaking = false;
 let lastSpeakAt = 0;
 let lastSpeakHash = "";
 
@@ -30,12 +31,13 @@ export function setPsicoSpeakMuted(muted: boolean) {
 
 export function stopSpeaking() {
   if (typeof window === "undefined" || !window.speechSynthesis) return;
+  speaking = false;
+  lastSpeakHash = "";
   try {
     window.speechSynthesis.cancel();
   } catch {
     /* ignore */
   }
-  lastSpeakHash = "";
 }
 
 export function speakText(
@@ -48,26 +50,37 @@ export function speakText(
   if (!clean) return false;
 
   const now = Date.now();
-  // Misma frase o spam < 400ms: no cancelar/re-hablar (congela pestañas en Chrome).
-  if (!opts?.force && clean === lastSpeakHash && now - lastSpeakAt < 2500) return false;
-  if (!opts?.force && now - lastSpeakAt < 400) return false;
+  if (!opts?.force && (speaking || now - lastSpeakAt < 800)) return false;
+  if (!opts?.force && clean === lastSpeakHash && now - lastSpeakAt < 4000) return false;
 
   lastSpeakAt = now;
   lastSpeakHash = clean;
+  speaking = true;
 
   try {
-    window.speechSynthesis.cancel();
+    // Solo cancelar si realmente hay cola; cancel() en vacío también puede trabar.
+    if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+      window.speechSynthesis.cancel();
+    }
   } catch {
-    /* ignore */
+    speaking = false;
+    return false;
   }
 
   const utter = new SpeechSynthesisUtterance(clean);
   utter.lang = "es-CO";
   utter.rate = 0.95;
-  if (opts?.onEnd) utter.onend = () => opts.onEnd?.();
+  utter.onend = () => {
+    speaking = false;
+    opts?.onEnd?.();
+  };
+  utter.onerror = () => {
+    speaking = false;
+  };
   try {
     window.speechSynthesis.speak(utter);
   } catch {
+    speaking = false;
     return false;
   }
   return true;
@@ -79,7 +92,8 @@ export function fichaSpeakScript(f: {
   regla: string;
   ejemplo: string;
 }): string {
-  return `${f.titulo}. Tema: ${f.tema}. Regla: ${f.regla}. Ejemplo: ${f.ejemplo}`;
+  // Solo título + regla (el ejemplo largo satura speechSynthesis en Chrome).
+  return `${f.titulo}. ${f.regla}`;
 }
 
 export function ejercicioSpeakScript(e: {
@@ -90,13 +104,7 @@ export function ejercicioSpeakScript(e: {
   errorComun?: string;
   includeAnswer?: boolean;
 }): string {
-  let s = `Prueba. ${e.tema}. Enunciado: ${e.enunciado}`;
-  if (e.includeAnswer) {
-    if (e.respuesta) s += ` Respuesta: ${e.respuesta}.`;
-    if (e.pasos?.length) s += ` Pasos: ${e.pasos.slice(0, 4).join(". ")}.`;
-    if (e.errorComun) s += ` Error común: ${e.errorComun}.`;
-  } else {
-    s += " Piensa tu respuesta y luego verifica.";
-  }
+  let s = `${e.tema}. ${e.enunciado}`;
+  if (e.includeAnswer && e.respuesta) s += ` Respuesta: ${e.respuesta}.`;
   return s;
 }

@@ -125,12 +125,76 @@ export type AtsWizardDraft = {
   resultPhase: number;
 };
 
+export function writeAtsWizardDraft(draft: AtsWizardDraft) {
+  try {
+    // Borrador frecuente SIN result (el análisis es enorme y JSON.stringify congela Chrome).
+    const light = {
+      step: draft.step,
+      cvText: draft.cvText.slice(0, 80_000),
+      jobText: draft.jobText.slice(0, 40_000),
+      jobUrl: draft.jobUrl.slice(0, 500),
+      companyDomain: draft.companyDomain.slice(0, 200),
+      companyName: draft.companyName.slice(0, 200),
+      atsProfile: draft.atsProfile,
+      result: null as unknown | null,
+      resultPhase: draft.resultPhase,
+    };
+    const serial = JSON.stringify(light);
+    const existing = localStorage.getItem(DRAFT_KEY);
+    if (existing !== serial) {
+      localStorage.setItem(DRAFT_KEY, serial);
+    }
+
+    // Resultado: solo si cambió y en clave aparte (no en cada tecla).
+    if (draft.result != null) {
+      const resultKey = "ats_wizard_result_v1";
+      const resultSerial = JSON.stringify({
+        result: draft.result,
+        resultPhase: draft.resultPhase,
+        atsProfile: draft.atsProfile,
+      });
+      if (resultSerial.length < 350_000) {
+        const prevR = localStorage.getItem(resultKey);
+        if (prevR !== resultSerial) localStorage.setItem(resultKey, resultSerial);
+      }
+    }
+
+    if (draft.cvText.trim() || draft.jobText.trim()) {
+      const prev = JSON.parse(localStorage.getItem("ats_workspace") || "null") || {};
+      const ws = {
+        ...prev,
+        cvText: light.cvText || prev.cvText || "",
+        jobText: light.jobText || prev.jobText || "",
+        jobUrl: light.jobUrl || prev.jobUrl || "",
+        atsProfile: draft.atsProfile || prev.atsProfile || "generic",
+        // No re-embeber result gigante aquí en cada autosave.
+        savedAt: Date.now(),
+      };
+      const wsSerial = JSON.stringify(ws);
+      if (localStorage.getItem("ats_workspace") !== wsSerial) {
+        localStorage.setItem("ats_workspace", wsSerial);
+      }
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
 export function readAtsWizardDraft(): AtsWizardDraft | null {
   try {
     const raw = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null");
     if (!raw || typeof raw !== "object") return null;
     const step = Number(raw.step);
     if (step !== 1 && step !== 2 && step !== 3 && step !== 4) return null;
+    let result = raw.result ?? null;
+    if (!result) {
+      try {
+        const r = JSON.parse(localStorage.getItem("ats_wizard_result_v1") || "null");
+        if (r?.result) result = r.result;
+      } catch {
+        /* ignore */
+      }
+    }
     return {
       step,
       cvText: typeof raw.cvText === "string" ? raw.cvText : "",
@@ -139,36 +203,10 @@ export function readAtsWizardDraft(): AtsWizardDraft | null {
       companyDomain: typeof raw.companyDomain === "string" ? raw.companyDomain : "",
       companyName: typeof raw.companyName === "string" ? raw.companyName : "",
       atsProfile: typeof raw.atsProfile === "string" ? raw.atsProfile : "generic",
-      result: raw.result ?? null,
+      result,
       resultPhase: Number(raw.resultPhase) || 1,
     };
   } catch {
     return null;
-  }
-}
-
-export function writeAtsWizardDraft(draft: AtsWizardDraft) {
-  try {
-    const serial = JSON.stringify(draft);
-    const existing = localStorage.getItem(DRAFT_KEY);
-    if (existing === serial) return;
-    localStorage.setItem(DRAFT_KEY, serial);
-    if (draft.cvText.trim() || draft.jobText.trim()) {
-      const prev = JSON.parse(localStorage.getItem("ats_workspace") || "null") || {};
-      localStorage.setItem(
-        "ats_workspace",
-        JSON.stringify({
-          ...prev,
-          cvText: draft.cvText || prev.cvText || "",
-          jobText: draft.jobText || prev.jobText || "",
-          jobUrl: draft.jobUrl || prev.jobUrl || "",
-          atsProfile: draft.atsProfile || prev.atsProfile || "generic",
-          result: draft.result ?? prev.result,
-          savedAt: Date.now(),
-        })
-      );
-    }
-  } catch {
-    /* ignore */
   }
 }

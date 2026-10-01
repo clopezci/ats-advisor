@@ -154,16 +154,35 @@ export default function AtsPage() {
 
   useEffect(() => {
     if (!draftReady) return;
-    const id = window.setTimeout(() => rememberDraft(), 600);
+    // Autosave liviano: textos sí; el result se guarda solo cuando cambia (deps aparte).
+    const id = window.setTimeout(() => {
+      writeAtsWizardDraft({
+        step: stepRef.current,
+        cvText,
+        jobText,
+        jobUrl,
+        companyDomain,
+        companyName,
+        atsProfile,
+        result: null,
+        resultPhase,
+      });
+    }, 900);
     const flush = () => rememberDraft();
     window.addEventListener("pagehide", flush);
     return () => {
       window.clearTimeout(id);
       window.removeEventListener("pagehide", flush);
     };
-    // rememberDraft reads latest state via closure of this render
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [draftReady, step, cvText, jobText, jobUrl, companyDomain, companyName, atsProfile, result, resultPhase]);
+  }, [draftReady, step, cvText, jobText, jobUrl, companyDomain, companyName, atsProfile, resultPhase]);
+
+  useEffect(() => {
+    if (!draftReady || !result) return;
+    const id = window.setTimeout(() => rememberDraft(), 1200);
+    return () => window.clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [draftReady, result]);
 
   useEffect(() => {
     if (!draftReady) return;
@@ -231,9 +250,9 @@ export default function AtsPage() {
       const d = detectAtsProfile({ jobText, jobUrl, companyDomain, companyName });
       setDetectMsg(d.company ? `${d.reason} · Empresa: ${d.company.name}` : d.reason);
       if (d.confidence === "high" || d.confidence === "medium") {
-        setAtsProfile(d.profile);
+        setAtsProfile((prev) => (prev === d.profile ? prev : d.profile));
       }
-    }, 450);
+    }, 600);
     return () => window.clearTimeout(id);
   }, [jobUrl, jobText, companyDomain, companyName]);
 

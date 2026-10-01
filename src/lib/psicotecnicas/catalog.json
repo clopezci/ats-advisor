@@ -355,43 +355,43 @@
       "subjectId": "exa.psico-numerico",
       "tema": "Analogías verbales",
       "titulo": "Di la relación en una frase",
-      "regla": "Antes de mirar las opciones, arma una frase con el primer par y pruébala igual con cada opción. Si encajan tres, aprieta la frase.",
-      "ejemplo": "Termómetro : temperatura → «es el aparato que sirve para medir»."
+      "regla": "Una analogía es: A es a B como C es a D. Primero inventas una frase corta que una A con B. Luego pruebas esa misma frase con cada opción hasta que solo una encaje.",
+      "ejemplo": "Pregunta: Termómetro es a temperatura como _____ es a _____\nOpciones (ejemplo):\nA) regla : longitud\nB) libro : biblioteca\nC) médico : hospital\n\n1) Frase con el primer par: «El termómetro es el aparato que sirve para medir la temperatura».\n2) Prueba A: «La regla es el aparato que sirve para medir la longitud» → sí encaja.\n3) Prueba B: «El libro es el aparato que sirve para medir la biblioteca» → no.\n4) Prueba C: «El médico es el aparato que sirve para medir el hospital» → no.\nRespuesta: A) regla : longitud."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Sinónimos, antónimos y vocabulario",
       "titulo": "Escribe tu respuesta antes de leer las opciones",
-      "regla": "Define la palabra con tus palabras y escribe el sinónimo o el antónimo que tú pondrías. Recién ahí busca cuál se le parece.",
-      "ejemplo": "Efímero → «dura poco» → el contrario es «dura mucho» → duradero."
+      "regla": "Primero di con tus palabras qué significa la palabra del enunciado. Luego piensa tú el sinónimo (igual) o el antónimo (contrario). Solo después miras las opciones y buscas la que se parezca a lo que ya pensaste.",
+      "ejemplo": "Pregunta: antónimo de «efímero».\n1) Efímero = que dura poco.\n2) Lo contrario = que dura mucho.\n3) Entre las opciones, «duradero» es la que dice eso.\nRespuesta: duradero."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Sinónimos, antónimos y vocabulario",
       "titulo": "En los antónimos, la trampa es un sinónimo",
-      "regla": "Antes de mirar opciones, subraya si pide SINÓNIMO (igual) o ANTÓNIMO (contrario). En antónimos casi siempre meten una palabra parecida al enunciado para el que lee rápido.",
-      "ejemplo": "Pregunta: antónimo de «efímero» (que dura poco).\nOpciones (ejemplo): A) frágil  B) duradero  C) breve  D) débil\n1) Lo contrario de «dura poco» es «dura mucho».\n2) B) duradero encaja.\n3) C) breve significa casi lo mismo que efímero: no es el antónimo."
+      "regla": "Subraya si la pregunta pide SINÓNIMO (misma idea) o ANTÓNIMO (idea contraria). En antónimos suele haber una opción que significa casi lo mismo: no la marques.",
+      "ejemplo": "Pregunta: antónimo de «efímero» (dura poco).\nOpciones: A) frágil  B) duradero  C) breve  D) débil\n1) Buscas lo contrario: «dura mucho» → B) duradero.\n2) C) breve = casi lo mismo que efímero → no es antónimo.\n3) A y D hablan de otra cosa (rompe / poca fuerza)."
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Qué cambia entre una figura y la siguiente",
       "titulo": "No preguntes qué sigue, pregunta qué cambia",
-      "regla": "Haz una lista de lo que puede moverse —cantidad, posición, giro, reflejo, tamaño, relleno— y sigue cada uno por separado, como columnas.",
-      "ejemplo": "Triángulo que gira 90° y suma un punto: son dos columnas, no una figura."
+      "regla": "En series de figuras, anota por separado cada cosa que puede cambiar: cantidad, posición, giro, espejo, tamaño, relleno. Sigue cada cambio como si fuera una columna propia.",
+      "ejemplo": "Figuras: un triángulo que en cada paso gira 90° y además aparece un punto más.\n1) Columna giro: 0° → 90° → 180° → 270° → vuelve a 0°.\n2) Columna puntos: 1 → 2 → 3 → 4.\n3) La siguiente figura combina el siguiente giro y el siguiente número de puntos."
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Giros y rotaciones",
       "titulo": "El ciclo de cuatro",
-      "regla": "Un giro de 90° repetido cuatro veces vuelve al punto de partida. Contar el ciclo es más rápido y más seguro que imaginarse el giro.",
-      "ejemplo": "Si la figura 5 se ve igual que la 1, la 6 se verá igual que la 2."
+      "regla": "Un giro de 90° se repite cada 4 pasos y vuelve al dibujo inicial. Por eso la figura 5 se parece a la 1, la 6 a la 2, y así.",
+      "ejemplo": "Si la figura 1 es una flecha hacia arriba y gira 90° a la derecha en cada paso:\n1 = arriba, 2 = derecha, 3 = abajo, 4 = izquierda, 5 = arriba otra vez.\nEntonces la 6 = derecha (igual que la 2)."
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Reflejos y simetrías",
       "titulo": "Giro de 180° o espejo",
-      "regla": "Se ven igual cuando la figura es simétrica, y siempre ponen las dos opciones. Busca un detalle asimétrico y sigue ese detalle, no la figura.",
-      "ejemplo": "Una «R» girada 180° y una «R» en espejo no son la misma: mira hacia dónde queda la patica."
+      "regla": "Girar 180° y reflejar en espejo a veces se ven parecidos. Elige un detalle que no sea simétrico (una pata, una punta) y mira hacia dónde queda en cada opción.",
+      "ejemplo": "Figura: letra R.\n1) Espejo vertical: la panza queda al otro lado.\n2) Giro 180°: la R queda al revés, con la panza en otro sitio.\n3) No son la misma figura: sigue la panza, no la silueta entera."
     },
     {
       "subjectId": "exa.psico-abstracto",

@@ -816,9 +816,9 @@
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Edades",
-      "titulo": "La tabla y el mismo salto",
-      "regla": "Escribe las edades actuales. Prueba sumar los mismos años a todos hasta que la edad del mayor iguale la suma de las demás. El atajo falla si no le sumas a TODOS.",
-      "ejemplo": "Enunciado: hoy tienen 50, 20, 14 y 10 años. ¿Dentro de cuántos años la edad del mayor será igual a la suma de las otras tres?\n1) Condición: mayor + x = suma de las otras + 3x → mayor − suma_otras = 2x.\n2) 50 − (20+14+10) = 50 − 44 = 6 → 2x = 6 → x = 3.\n3) Comprobación: mayor 53; otras 23+17+13 = 53."
+      "titulo": "¿Cuándo la edad del papá iguala la de los tres hijos?",
+      "regla": "Hoy resta: edad del mayor menos la suma de los demás = diferencia que falta. Cada año esa diferencia baja en 2 (el mayor cumple 1 y los tres hijos cumplen 3 entre todos). Divide la diferencia entre 2 y ya tienes cuántos años faltan.",
+      "ejemplo": "Enunciado: Luis tiene 56 años y sus tres hijos tienen 18, 16 y 12. ¿Dentro de cuántos años la edad de Luis será igual a la suma de las edades de los tres hijos?\n1) Hoy los hijos suman 18+16+12 = 46. A Luis le sobran 56 − 46 = 10 años sobre esa suma.\n2) Cada año Luis suma 1, pero los tres hijos suman 3 entre todos. La diferencia se reduce en 2 por año.\n3) Años que faltan: 10 ÷ 2 = 5.\n4) Comprobación: dentro de 5 años Luis tendrá 61; los hijos 23+21+17 = 61."
     },
     {
       "subjectId": "exa.psico-numerico",
@@ -977,9 +977,9 @@
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Edades",
-      "titulo": "«Hace tantos años» le baja a todos",
-      "regla": "Igual que sumar años, pero restando: el mismo número se le quita a cada persona de la tabla. La trampa es restárselo solo a uno.",
-      "ejemplo": "Enunciado: hoy la madre tiene 42 años y los hijos 16 y 10. Hace 6 años, ¿cuánto sumaban las edades de los tres?\n1) Hace 6 años: 42−6=36; 16−6=10; 10−6=4.\n2) Suma: 36 + 10 + 4 = 50."
+      "titulo": "«Hace X años»: réstale esos años a cada uno",
+      "regla": "Si el enunciado dice «hace 6 años», bájale 6 a TODAS las personas (no solo a una). Después suma o compara lo que te pidan.",
+      "ejemplo": "Enunciado: hoy Marta tiene 45 años y sus hijos 19 y 11. Hace 7 años, ¿cuánto sumaban las tres edades?\n1) Hace 7 años: Marta 45−7=38; hijo 19−7=12; hija 11−7=4.\n2) Suma: 38 + 12 + 4 = 54."
     },
     {
       "subjectId": "exa.psico-numerico",
@@ -1340,23 +1340,23 @@
     {
       "materia": "exa.psico-numerico",
       "tema": "Edades",
-      "enunciado": "Juan tiene 44 años y sus tres hijos tienen 17, 12 y 9. ¿Dentro de cuántos años la suma de las edades de los tres hijos será igual a la de Juan?\n\nA) 2   B) 3   C) 4   D) 5",
+      "enunciado": "Rosa tiene 58 años y sus tres hijos tienen 20, 15 y 11. ¿Dentro de cuántos años la suma de las edades de los tres hijos será igual a la de Rosa?\n\nA) 4   B) 5   C) 6   D) 7",
       "caminoLargo": [
-        "Se le pone letra a lo que se busca: x, los años que tienen que pasar.",
-        "Se escribe la edad de cada uno dentro de x años: Juan tendrá 44 + x. Los hijos tendrán 17 + x, 12 + x y 9 + x.",
-        "Se plantea la igualdad que pide el enunciado: (17 + x) + (12 + x) + (9 + x) = 44 + x.",
-        "Se ordena: 38 + 3x = 44 + x, entonces 2x = 6, entonces x = 3.",
-        "Sale bien, pero hay que armar la ecuación sin olvidar que la x se le suma a los cuatro, que es exactamente donde se equivoca la mayoría."
+        "Se busca x, los años que tienen que pasar.",
+        "Dentro de x años: Rosa 58 + x; los hijos 20 + x, 15 + x y 11 + x.",
+        "Igualdad: (20 + x) + (15 + x) + (11 + x) = 58 + x.",
+        "46 + 3x = 58 + x → 2x = 12 → x = 6.",
+        "Sale bien, pero hay que recordar sumarle x a los cuatro."
       ],
       "pasos": [
-        "Hoy los hijos suman 17 + 12 + 9 = 38 y Juan tiene 44. Los hijos van 6 años por debajo.",
-        "Aquí está lo que casi nadie ve: cada año que pasa, Juan cumple 1 año pero los hijos cumplen 3 entre los tres. La diferencia no se queda quieta, se cierra a razón de 2 años por año.",
-        "Como hay que cerrar 6 años de diferencia a 2 por año, la respuesta es 6 ÷ 2 = 3 años.",
-        "Se comprueba con la tabla: en 3 años Juan tendrá 47, y los hijos 20, 15 y 12, que suman 47. Iguales.",
-        "Y si el razonamiento no sale solo, queda el atajo de siempre: escribir a todos en una fila, sumarle a cada uno los mismos años y probar. Como las opciones son 2, 3, 4 y 5, probar las cuatro toma menos de un minuto."
+        "Hoy los hijos suman 20 + 15 + 11 = 46 y Rosa tiene 58. Les faltan 12 años para igualarla.",
+        "Cada año Rosa cumple 1, pero los tres hijos cumplen 3 entre todos. La diferencia se cierra a 2 años por año.",
+        "12 ÷ 2 = 6 años.",
+        "Comprobación: en 6 años Rosa tendrá 64; los hijos 26, 21 y 17, que suman 64.",
+        "Si el atajo no sale, prueba las opciones sumándole el mismo número a todos: con A–D son cuatro pruebas rápidas."
       ],
-      "respuesta": "B) 3 años",
-      "errorComun": "Sumarle los años solo al papá y dejar a los hijos quietos, o al revés. Pasa por escribir el ejercicio en desorden. Una tabla de dos filas —arriba los nombres, abajo las edades— y sumarle a TODA la fila el mismo número evita el error por completo, y además deja el ejercicio listo para probar otra opción sin volver a empezar."
+      "respuesta": "C) 6 años",
+      "errorComun": "Sumarle los años solo a Rosa y dejar a los hijos quietos, o al revés. Una tabla con todos los nombres y sumarle a TODA la fila el mismo número evita el error."
     },
     {
       "materia": "exa.psico-numerico",

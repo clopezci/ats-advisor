@@ -54,10 +54,11 @@ export default function AuthPage() {
         goBackAfterLogin(next);
       }
     });
-    const { data: sub } = sb.auth.onAuthStateChange((_e, session) => {
+    const { data: sub } = sb.auth.onAuthStateChange((event, session) => {
       const mail = session?.user?.email || null;
       setSessionEmail(mail);
-      if (mail) {
+      // Solo en login real; TOKEN_REFRESHED/INITIAL_SESSION no deben redirigir en bucle.
+      if (mail && (event === "SIGNED_IN" || event === "PASSWORD_RECOVERY")) {
         void applySessionPrivileges(mail).then(() => goBackAfterLogin(next));
       }
     });

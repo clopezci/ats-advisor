@@ -5,6 +5,16 @@ import { useEffect, useState } from "react";
 import { createBrowserSupabase } from "@/lib/supabase/client";
 import { applySessionPrivileges } from "@/lib/client/sessionPrivileges";
 
+let privilegesInflight: Promise<unknown> | null = null;
+
+function applyPrivilegesOnce(mail: string) {
+  if (privilegesInflight) return privilegesInflight;
+  privilegesInflight = applySessionPrivileges(mail).finally(() => {
+    privilegesInflight = null;
+  });
+  return privilegesInflight;
+}
+
 /** Muestra el correo de sesión y permite salir para cambiar de usuario. */
 export function SessionChip() {
   const [email, setEmail] = useState<string | null | undefined>(undefined);
@@ -15,17 +25,24 @@ export function SessionChip() {
       setEmail(null);
       return;
     }
+    let alive = true;
     sb.auth.getSession().then(({ data }) => {
+      if (!alive) return;
       const mail = data.session?.user?.email || null;
       setEmail(mail);
-      if (mail) void applySessionPrivileges(mail);
+      if (mail) void applyPrivilegesOnce(mail);
     });
-    const { data: sub } = sb.auth.onAuthStateChange((_e, session) => {
+    const { data: sub } = sb.auth.onAuthStateChange((event, session) => {
+      if (!alive) return;
       const mail = session?.user?.email || null;
       setEmail(mail);
-      if (mail) void applySessionPrivileges(mail);
+      // INITIAL_SESSION ya cubierto por getSession; evita doble fetch.
+      if (mail && event !== "INITIAL_SESSION") void applyPrivilegesOnce(mail);
     });
-    return () => sub.subscription.unsubscribe();
+    return () => {
+      alive = false;
+      sub.subscription.unsubscribe();
+    };
   }, []);
 
   async function signOut() {

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { allCareerCourses, getCourseById } from "@/lib/courses/catalog";
 import { nextOpenLesson, readLearningCursor } from "@/lib/courses/progress";
 import { resolveContinueTarget, type ContinueTarget } from "@/lib/engagement/focusPath";
 
@@ -13,6 +12,7 @@ function lessonHref(courseHref: string, lessonId: string) {
 
 /**
  * Un solo Continuar (cuadernillo). El curso queda como enlace secundario.
+ * El catálogo de cursos es pesado: se importa en diferido para no congelar el home.
  */
 export function DailyCourseReminder() {
   const [target, setTarget] = useState<ContinueTarget | null>(null);
@@ -21,30 +21,38 @@ export function DailyCourseReminder() {
 
   useEffect(() => {
     setTarget(resolveContinueTarget());
-
-    let courseLabel = "";
-    let courseHref = "";
-    const cur = readLearningCursor();
-    if (cur) {
-      const course = getCourseById(cur.courseId);
-      const lesson = course?.lessons.find((l) => l.id === cur.lessonId);
-      if (course && lesson) {
-        courseLabel = `${course.short}: ${lesson.title}`;
-        courseHref = lessonHref(course.href, lesson.id);
-      }
-    }
-    if (!courseLabel) {
-      for (const c of allCareerCourses()) {
-        const n = nextOpenLesson(c);
-        if (n) {
-          courseLabel = `${c.short}: ${n.title}`;
-          courseHref = lessonHref(c.href, n.id);
-          break;
+    let cancelled = false;
+    void import("@/lib/courses/catalog")
+      .then(({ allCareerCourses, getCourseById }) => {
+        if (cancelled) return;
+        let label = "";
+        let href = "";
+        const cur = readLearningCursor();
+        if (cur) {
+          const course = getCourseById(cur.courseId);
+          const lesson = course?.lessons.find((l) => l.id === cur.lessonId);
+          if (course && lesson) {
+            label = `${course.short}: ${lesson.title}`;
+            href = lessonHref(course.href, lesson.id);
+          }
         }
-      }
-    }
-    setCourseLabel(courseLabel);
-    setCourseHref(courseHref);
+        if (!label) {
+          for (const c of allCareerCourses()) {
+            const n = nextOpenLesson(c);
+            if (n) {
+              label = `${c.short}: ${n.title}`;
+              href = lessonHref(c.href, n.id);
+              break;
+            }
+          }
+        }
+        setCourseLabel(label);
+        setCourseHref(href);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   if (!target) return null;

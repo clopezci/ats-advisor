@@ -1,8 +1,6 @@
-/* ATSAdvisor — SW de limpieza.
- * Versiones anteriores cacheaban toda la app y congelaban Chrome.
- * Este SW se desregistra solo y borra caches; no intercepta fetch. */
-const KILL = "atsadvisor-kill-v1";
-
+/* ATSAdvisor — sin service worker activo.
+ * No interceptar red. No navegar clientes. No cachear.
+ * Si Chrome aún tiene un SW viejo registrado, el cliente lo desregistra. */
 self.addEventListener("install", (event) => {
   event.waitUntil(self.skipWaiting());
 });
@@ -10,20 +8,18 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     (async () => {
-      const keys = await caches.keys();
-      await Promise.all(keys.map((k) => caches.delete(k)));
       try {
-        await caches.open(KILL).then((c) => c.put("/__sw_killed", new Response("1")));
+        const keys = await caches.keys();
+        await Promise.all(keys.map((k) => caches.delete(k)));
       } catch {
         /* ignore */
       }
-      await self.registration.unregister();
-      const clients = await self.clients.matchAll({ type: "window" });
-      for (const client of clients) {
-        client.navigate?.(client.url).catch?.(() => undefined);
+      try {
+        await self.registration.unregister();
+      } catch {
+        /* ignore */
       }
+      // NUNCA client.navigate(): provoca recargas en bucle y congela Chrome.
     })()
   );
 });
-
-/* Sin handler fetch: el navegador habla directo con la red. */

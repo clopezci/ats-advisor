@@ -104,6 +104,19 @@ export function AdSlot({ slot = "ats-free" }: { slot?: string }) {
           if (!cancelled) setEnabled(false);
           return;
         }
+        const cached = sessionStorage.getItem("ats_ads_cfg_v1");
+        if (cached) {
+          try {
+            const data = JSON.parse(cached) as AdsApi;
+            if (!cancelled) {
+              setCfg(data);
+              setEnabled(Boolean(data.enabled));
+            }
+            return;
+          } catch {
+            /* fall through */
+          }
+        }
         const res = await fetch("/api/ads/config");
         if (res.ok) {
           const data = (await res.json()) as AdsApi;
@@ -111,6 +124,11 @@ export function AdSlot({ slot = "ats-free" }: { slot?: string }) {
             setCfg(data);
             setEnabled(Boolean(data.enabled));
             localStorage.setItem("ats_feature_ads", data.enabled ? "1" : "0");
+            try {
+              sessionStorage.setItem("ats_ads_cfg_v1", JSON.stringify(data));
+            } catch {
+              /* ignore */
+            }
           }
         } else {
           const feat = await fetch("/api/features");

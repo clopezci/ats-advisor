@@ -28,7 +28,7 @@
         "Cuántos números hay entre dos números",
         "Velocidades: cruzarse y alcanzarse",
         "Repartos: proporcional y con diferencias",
-        "Problemas clásicos: patos y conejos, náufragos y el que no paga",
+        "Dos grupos, raciones inversas y faltantes compartidos",
         "Regla de tres directa e inversa",
         "Fracciones encadenadas: la palabra «de»",
         "Combinatoria de columnas: claves, palabras y parejas",
@@ -745,24 +745,24 @@
     },
     {
       "subjectId": "exa.psico-numerico",
-      "tema": "Problemas clásicos: patos y conejos, náufragos y el que no paga",
-      "titulo": "Patos y conejos: cabezas y patas",
-      "regla": "Patos = 2 patas, conejos = 4. Atajo: (cabezas × 2) − (patas ÷ 2) = cantidad de patos. El resto de las cabezas son conejos. Siempre comprueba con las patas.",
-      "ejemplo": "Enunciado: en una granja hay patos y conejos. Se cuentan 60 cabezas y 168 patas. ¿Cuántos patos hay?\n1) Cabezas × 2: 60 × 2 = 120.\n2) Mitad de las patas: 168 ÷ 2 = 84.\n3) Patos: 120 − 84 = 36. Conejos: 60 − 36 = 24.\nComprobación: 36×2 + 24×4 = 72 + 96 = 168 patas."
+      "tema": "Dos grupos, raciones inversas y faltantes compartidos",
+      "titulo": "Dos tipos que suman un total (ruedas, patas, monedas)",
+      "regla": "Cuando hay dos tipos con «peso» distinto (2 y 4, 3 y 5, 200 y 500), anota: cantidad total y suma de unidades. Atajo si son 2 y 4: (cantidad × 2) − (unidades ÷ 2) = cuántos son del tipo chico. El resto es el tipo grande. Siempre comprueba.",
+      "ejemplo": "Enunciado: en un parqueadero hay motos (2 ruedas) y carros (4 ruedas). Se cuentan 55 vehículos y 154 ruedas. ¿Cuántas motos hay?\n1) Vehículos × 2: 55 × 2 = 110.\n2) Mitad de las ruedas: 154 ÷ 2 = 77.\n3) Motos: 110 − 77 = 33. Carros: 55 − 33 = 22.\nComprobación: 33×2 + 22×4 = 66 + 88 = 154 ruedas.\nEs la misma cuenta con mesas de 3 y 4 patas o con monedas de dos valores: cambia el disfraz, no el método."
     },
     {
       "subjectId": "exa.psico-numerico",
-      "tema": "Problemas clásicos: patos y conejos, náufragos y el que no paga",
-      "titulo": "La cuenta cuando algunos no pagan",
-      "regla": "Calcula el faltante (gratis × precio). Ese hueco lo cubren los que sí pagan poniendo un extra cada uno. Faltante ÷ extra = cuántos pagaron. Suma los gratis y tienes el total del grupo.",
-      "ejemplo": "Enunciado: la entrada costaba 1.500 por persona. 6 personas no pagaron y las demás cubrieron el hueco poniendo 300 de más cada una. ¿Cuántas personas iban en total?\n1) Lo que faltó: 6 × 1.500 = 9.000.\n2) Cada uno que pagó puso 300 de más → pagaron: 9.000 ÷ 300 = 30.\n3) Total del grupo: 30 + 6 = 36."
+      "tema": "Dos grupos, raciones inversas y faltantes compartidos",
+      "titulo": "El faltante que otros tienen que cubrir",
+      "regla": "Calcula lo que faltó (quiénes no aportaron × lo que debían). Ese hueco lo cubren los demás poniendo un extra cada uno. Faltante ÷ extra = cuántos sí aportaron. Suma los que no aportaron y tienes el total del grupo.",
+      "ejemplo": "Enunciado: un regalo de oficina costaba 2.000 por persona. 4 personas no aportaron y el resto cubrió el hueco poniendo 250 de más cada una. ¿Cuántas personas hay en el grupo?\n1) Lo que faltó: 4 × 2.000 = 8.000.\n2) Cada aportante puso 250 de más → aportaron: 8.000 ÷ 250 = 32.\n3) Total del grupo: 32 + 4 = 36.\nSirve igual con boletas, cuotas de un paseo o cualquier cuenta compartida donde unos no ponen y otros compensan."
     },
     {
       "subjectId": "exa.psico-numerico",
-      "tema": "Problemas clásicos: patos y conejos, náufragos y el que no paga",
-      "titulo": "Náufragos y raciones: regla inversa",
-      "regla": "Más personas → las raciones alcanzan para menos días (regla de tres inversa). Multiplica personas iniciales × días iniciales y divide entre el nuevo número de personas.",
-      "ejemplo": "Enunciado: 18 náufragos tienen comida para 15 días. Llegan 9 más (quedan 27). ¿Para cuántos días alcanza ahora?\n1) Es inversa: más bocas → menos días.\n2) 18 × 15 = 270.\n3) 270 ÷ 27 = 10 días."
+      "tema": "Dos grupos, raciones inversas y faltantes compartidos",
+      "titulo": "Más gente, menos días: raciones inversas",
+      "regla": "Si aumenta el número de personas y la comida (o el material) es la misma, los días bajan: regla de tres inversa. Multiplica personas iniciales × días iniciales y divide entre el nuevo número de personas.",
+      "ejemplo": "Enunciado: 20 obreros tienen provisiones para 18 días. Contratan 10 más (quedan 30). ¿Para cuántos días alcanzan ahora las mismas provisiones?\n1) Es inversa: más bocas → menos días.\n2) 20 × 18 = 360.\n3) 360 ÷ 30 = 12 días."
     },
     {
       "subjectId": "exa.psico-numerico",
@@ -906,10 +906,10 @@
     },
     {
       "subjectId": "exa.psico-numerico",
-      "tema": "Problemas clásicos: patos y conejos, náufragos y el que no paga",
-      "titulo": "El rombo, que sirve para todas",
-      "regla": "Dibuja un rombo: cabezas a la izquierda, patas a la derecha, 4 arriba y 2 abajo. Cuenta: (cabezas × 4 − patas) ÷ (4 − 2). Sirve con cualquier par (monedas, mesas, boletas).",
-      "ejemplo": "Enunciado: en una granja hay patos (2 patas) y conejos (4 patas). Se cuentan 45 cabezas y 122 patas. ¿Cuántos patos hay?\n1) Si todos fueran de 4 patas: 45 × 4 = 180 patas.\n2) Patas de más en esa cuenta ficticia: 180 − 122 = 58.\n3) Cada pato «ahorra» 2 patas frente a un conejo: 58 ÷ 2 = 29 patos.\nConejos: 45 − 29 = 16.\nComprobación: 29×2 + 16×4 = 58 + 64 = 122."
+      "tema": "Dos grupos, raciones inversas y faltantes compartidos",
+      "titulo": "El rombo: herramienta general para dos tipos",
+      "regla": "Dibuja un rombo: cantidad a la izquierda, suma de unidades a la derecha, valor del tipo grande arriba y del chico abajo. Cuenta: (cantidad × grande − unidades) ÷ (grande − chico). Sirve para ruedas, patas, monedas o boletas.",
+      "ejemplo": "Enunciado: una caja tiene monedas de 200 y de 500. Hay 48 monedas y suman 15.600. ¿Cuántas son de 200?\n1) Si todas fueran de 500: 48 × 500 = 24.000.\n2) «De más» en esa cuenta ficticia: 24.000 − 15.600 = 8.400.\n3) Cada moneda de 200 «ahorra» 300 frente a una de 500: 8.400 ÷ 300 = 28 monedas de 200.\nDe 500: 48 − 28 = 20.\nComprobación: 28×200 + 20×500 = 5.600 + 10.000 = 15.600."
     },
     {
       "subjectId": "exa.psico-numerico",
@@ -1276,24 +1276,24 @@
     },
     {
       "materia": "exa.psico-numerico",
-      "tema": "Problemas clásicos: patos y conejos, náufragos y el que no paga",
-      "enunciado": "En una finca hay patos y conejos. Entre todos se cuentan 90 cabezas y 200 patas. ¿Cuántos patos hay?\n\nA) 100   B) 70   C) 80   D) 60",
+      "tema": "Dos grupos, raciones inversas y faltantes compartidos",
+      "enunciado": "En un parqueadero hay motos (2 ruedas) y carros (4 ruedas). Entre todos se cuentan 70 vehículos y 184 ruedas. ¿Cuántas motos hay?\n\nA) 60   B) 48   C) 52   D) 40",
       "caminoLargo": [
-        "Se le pone letra a cada animal: p los patos, c los conejos.",
-        "Se arman las dos ecuaciones. Por las cabezas: p + c = 90. Por las patas: 2p + 4c = 200.",
-        "Se despeja una en la otra. De la primera, c = 90 − p. Se reemplaza: 2p + 4(90 − p) = 200.",
-        "Se resuelve: 2p + 360 − 4p = 200, entonces −2p = −160, entonces p = 80.",
-        "Correcto, y es exactamente como se enseña en octavo. Toma minuto y medio bien hecho, y tiene tres sitios donde un signo mal puesto arruina todo."
+        "Se le pone letra a cada tipo: m las motos, c los carros.",
+        "Se arman las dos ecuaciones. Por vehículos: m + c = 70. Por ruedas: 2m + 4c = 184.",
+        "Se despeja una en la otra. De la primera, c = 70 − m. Se reemplaza: 2m + 4(70 − m) = 184.",
+        "Se resuelve: 2m + 280 − 4m = 184, entonces −2m = −96, entonces m = 48.",
+        "Correcto, y es exactamente como se enseña con sistemas de ecuaciones. Toma minuto y medio, y tiene tres sitios donde un signo mal puesto arruina todo."
       ],
       "pasos": [
-        "El razonamiento del atajo es este: imagínese que TODOS fueran conejos. Habría 90 × 4 = 360 patas. Pero solo hay 200. Sobran 160 patas imaginarias, y cada pato que se cambia por un conejo quita 2 patas. Entonces hay 160 ÷ 2 = 80 patos.",
-        "La misma cuenta, ya masticada para hacerla de memoria: cabezas × 2, menos la mitad de las patas. Aquí, 90 × 2 = 180, y la mitad de 200 es 100. Entonces 180 − 100 = 80 patos.",
-        "Los conejos salen por resta, sin cuenta nueva: 90 − 80 = 10 conejos.",
-        "Comprobación, que cuesta cinco segundos y sirve: 80 patos × 2 patas = 160, más 10 conejos × 4 patas = 40. Total 200 patas. Cuadra.",
-        "Es el mismo ejercicio con monedas de 500 y de 1.000, con motos y carros, o con mesas de tres y de cuatro patas: cambia el disfraz, no la cuenta."
+        "El atajo: imagínese que TODOS fueran carros. Habría 70 × 4 = 280 ruedas. Pero solo hay 184. Sobran 96 ruedas imaginarias, y cada moto que se cambia por un carro quita 2 ruedas. Entonces hay 96 ÷ 2 = 48 motos.",
+        "La misma cuenta, ya masticada: vehículos × 2, menos la mitad de las ruedas. Aquí, 70 × 2 = 140, y la mitad de 184 es 92. Entonces 140 − 92 = 48 motos.",
+        "Los carros salen por resta: 70 − 48 = 22 carros.",
+        "Comprobación: 48 motos × 2 = 96, más 22 carros × 4 = 88. Total 184 ruedas. Cuadra.",
+        "Es el mismo ejercicio con monedas de dos valores, mesas de tres y cuatro patas, o boletas de niño y adulto: cambia el disfraz, no la cuenta."
       ],
-      "respuesta": "C) 80",
-      "errorComun": "Responder cuántos conejos hay cuando preguntaron por los patos. El truco entrega los dos números casi a la vez y con el reloj encima es fácil marcar el que no era. Vale la pena subrayar en el enunciado QUÉ animal están preguntando antes de empezar a calcular."
+      "respuesta": "B) 48",
+      "errorComun": "Responder cuántos carros hay cuando preguntaron por las motos. El truco entrega los dos números casi a la vez y con el reloj encima es fácil marcar el que no era. Subraya en el enunciado QUÉ tipo están preguntando antes de calcular."
     },
     {
       "materia": "exa.psico-numerico",
@@ -1416,24 +1416,23 @@
     },
     {
       "materia": "exa.psico-numerico",
-      "tema": "Problemas clásicos: patos y conejos, náufragos y el que no paga",
-      "enunciado": "En una granja hay patos y conejos. En total se cuentan 42 cabezas y 88 patas. ¿Cuántos patos hay?\n\nA) 25   B) 20   C) 40   D) 30",
+      "tema": "Dos grupos, raciones inversas y faltantes compartidos",
+      "enunciado": "Una caja tiene monedas de 200 y de 500. En total hay 36 monedas y suman 12.000. ¿Cuántas monedas son de 200?\n\nA) 18   B) 20   C) 24   D) 16",
       "caminoLargo": [
-        "Con dos ecuaciones: p + c = 42 por las cabezas, y 2p + 4c = 88 por las patas.",
-        "Se despeja c = 42 − p y se reemplaza: 2p + 4(42 − p) = 88.",
-        "2p + 168 − 4p = 88, entonces −2p = −80, entonces p = 40.",
+        "Con dos ecuaciones: a + b = 36 por la cantidad, y 200a + 500b = 12.000 por el valor.",
+        "Se despeja b = 36 − a y se reemplaza: 200a + 500(36 − a) = 12.000.",
+        "200a + 18.000 − 500a = 12.000, entonces −300a = −6.000, entonces a = 20.",
         "Correcto. Toma minuto y medio y hay que cuidar tres signos."
       ],
       "pasos": [
-        "Este es el mismo ejercicio de patos y conejos, pero vale la pena verlo con la herramienta general, porque sirve para cualquier par de números y para cualquier disfraz.",
-        "Se dibuja un rombo. En la punta izquierda las cabezas, 42. En la derecha las patas, 88. Arriba el número de patas del animal grande, 4. Abajo el del pequeño, 2.",
-        "La cuenta se lee del dibujo: arriba, cabezas por el número de arriba menos las patas. Abajo, la resta de los dos números de las esquinas.",
-        "(42 × 4 − 88) ÷ (4 − 2) = (168 − 88) ÷ 2 = 80 ÷ 2 = 40 patos.",
-        "Los conejos son el resto: 42 − 40 = 2. Se comprueba: 40 × 2 + 2 × 4 = 80 + 8 = 88 patas. Cuadra.",
-        "El rombo sirve igual con monedas de 500 y 1.000, con mesas de tres y cuatro patas, o con boletas de niño y de adulto. Solo cambian los dos números de arriba y abajo."
+        "Este es el mismo tipo «dos grupos», pero conviene verlo con la herramienta general (el rombo), porque sirve para cualquier par de valores.",
+        "Rombo: izquierda 36 monedas, derecha 12.000. Arriba 500, abajo 200.",
+        "Cuenta: (36 × 500 − 12.000) ÷ (500 − 200) = (18.000 − 12.000) ÷ 300 = 6.000 ÷ 300 = 20 monedas de 200.",
+        "Las de 500 son el resto: 36 − 20 = 16. Comprobación: 20×200 + 16×500 = 4.000 + 8.000 = 12.000.",
+        "El rombo sirve igual con ruedas de moto y carro, mesas de tres y cuatro patas, o boletas de niño y adulto. Solo cambian los dos números de arriba y abajo."
       ],
-      "respuesta": "C) 40",
-      "errorComun": "Poner los números del rombo al revés —las patas donde van las cabezas— y sacar un número absurdo, como más animales que cabezas. La defensa es mirar el resultado un segundo antes de marcar: los patos nunca pueden ser más que las cabezas, y las patas siempre tienen que ser un número par."
+      "respuesta": "B) 20",
+      "errorComun": "Poner los números del rombo al revés —el valor total donde va la cantidad— y sacar un absurdo (más monedas de 200 que monedas en total). Mira el resultado un segundo: ninguna cantidad puede superar el total de monedas."
     },
     {
       "materia": "exa.psico-numerico",

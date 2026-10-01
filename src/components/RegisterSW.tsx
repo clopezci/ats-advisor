@@ -10,7 +10,7 @@ const HEAVY_KEYS = [
   "ats_psico_draft",
 ];
 
-const MAX_KEY_CHARS = 250_000;
+const MAX_KEY_CHARS = 80_000;
 
 function trimHeavyStorage() {
   try {
@@ -21,12 +21,21 @@ function trimHeavyStorage() {
         localStorage.removeItem(key);
         continue;
       }
-      if (key === "ats_wizard_draft" || key === "ats_workspace" || key === "ats_last_result") {
+      if (
+        key === "ats_wizard_draft" ||
+        key === "ats_workspace" ||
+        key === "ats_last_result" ||
+        key === "ats_wizard_result_v1"
+      ) {
         try {
           const parsed = JSON.parse(raw) as Record<string, unknown>;
           if (parsed && typeof parsed === "object" && parsed.result != null) {
-            const { result: _drop, ...rest } = parsed;
-            localStorage.setItem(key, JSON.stringify(rest));
+            const resultStr = JSON.stringify(parsed.result);
+            // Si el result viejo es gordo (heatmap completo), bórralo.
+            if (resultStr.length > 12_000) {
+              const { result: _drop, ...rest } = parsed;
+              localStorage.setItem(key, JSON.stringify(rest));
+            }
           }
         } catch {
           /* ignore */

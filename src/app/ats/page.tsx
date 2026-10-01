@@ -13,7 +13,7 @@ import { extractPlainCv } from "@/lib/ats/plainCv";
 import { HelpTip } from "@/components/HelpTip";
 import { glossaryForTitle } from "@/lib/ats/glossary";
 import { compareAtsResults, lineDiff, type ScoreDelta } from "@/lib/ats/compare";
-import { buildHistoryPayload, pushAtsHistory, readAtsWizardDraft, saveAtsWorkspace, writeAtsWizardDraft } from "@/lib/ats/history";
+import { buildHistoryPayload, pushAtsHistory, readAtsWizardDraft, saveAtsWorkspace, slimAtsResult, writeAtsWizardDraft } from "@/lib/ats/history";
 import { canRunAts, recordAtsRun } from "@/lib/limits/atsFree";
 import { openPrintableReport } from "@/lib/ats/report";
 import { bumpStreak } from "@/lib/engagement/streak";
@@ -1599,7 +1599,7 @@ export default function AtsPage() {
                           "ats_last_result",
                           JSON.stringify({
                             ...(last || {}),
-                            result,
+                            result: slimAtsResult(result),
                             jobText,
                             companyName,
                             jobId: saved.id,
@@ -1639,7 +1639,7 @@ export default function AtsPage() {
                           "ats_last_result",
                           JSON.stringify({
                             ...(last || {}),
-                            result,
+                            result: slimAtsResult(result),
                             jobText,
                             companyName,
                             jobId: saved.id,
@@ -1683,7 +1683,7 @@ export default function AtsPage() {
                           "ats_last_result",
                           JSON.stringify({
                             ...(last || {}),
-                            result,
+                            result: slimAtsResult(result),
                             jobText,
                             companyName,
                             jobId: saved.id,
@@ -1723,7 +1723,7 @@ export default function AtsPage() {
                           "ats_last_result",
                           JSON.stringify({
                             ...(last || {}),
-                            result,
+                            result: slimAtsResult(result),
                             jobText,
                             companyName,
                             jobId: saved.id,
@@ -1751,8 +1751,8 @@ export default function AtsPage() {
                   localStorage.setItem(
                     "ats_last_result",
                     JSON.stringify({
-                      ...(last || {}),
-                      result,
+                            ...(last || {}),
+                            result: slimAtsResult(result),
                       jobText,
                       companyName,
                     })

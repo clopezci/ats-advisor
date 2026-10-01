@@ -67,8 +67,9 @@ export default function MultiMatchPage() {
     setBulk("");
   }
 
-  function run() {
-    const r = rankJobsAgainstCv(cv, jobs, profile);
+  async function run() {
+    setRanked([]);
+    const r = await rankJobsAgainstCv(cv, jobs, profile);
     setRanked(r);
     try {
       localStorage.setItem("ats_multi_rank", JSON.stringify(r));

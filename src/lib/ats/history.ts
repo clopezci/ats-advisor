@@ -93,6 +93,25 @@ export function buildHistoryPayload(opts: {
   };
 }
 
+export function slimAtsResult(result: unknown): Record<string, unknown> | null {
+  if (!result || typeof result !== "object") return null;
+  const r = result as Record<string, unknown>;
+  const must = r.mustHave as { missing?: string[]; matched?: string[] } | undefined;
+  const hard = r.hardSkills as { missing?: string[] } | undefined;
+  return {
+    score: r.score,
+    semanticScore: r.semanticScore,
+    interviewProbability: r.interviewProbability,
+    mustHave: {
+      missing: (must?.missing || []).slice(0, 12),
+      matched: (must?.matched || []).slice(0, 12),
+    },
+    hardSkills: { missing: (hard?.missing || []).slice(0, 12) },
+    exclusiveGaps: Array.isArray(r.exclusiveGaps) ? (r.exclusiveGaps as string[]).slice(0, 5) : [],
+    embeddingProvider: r.embeddingProvider,
+  };
+}
+
 export function saveAtsWorkspace(data: {
   cvText: string;
   jobText: string;
@@ -101,10 +120,22 @@ export function saveAtsWorkspace(data: {
   result?: unknown;
 }) {
   try {
-    localStorage.setItem("ats_workspace", JSON.stringify({ ...data, savedAt: Date.now() }));
+    const workspace = {
+      cvText: data.cvText.slice(0, 80_000),
+      jobText: data.jobText.slice(0, 40_000),
+      jobUrl: (data.jobUrl || "").slice(0, 500),
+      atsProfile: data.atsProfile,
+      savedAt: Date.now(),
+    };
+    localStorage.setItem("ats_workspace", JSON.stringify(workspace));
+    // Nunca el result completo: heatmap/bullets/tips congelan Chrome al stringify.
     localStorage.setItem(
       "ats_last_result",
-      JSON.stringify({ result: data.result, atsProfile: data.atsProfile, jobText: data.jobText, cvText: data.cvText })
+      JSON.stringify({
+        result: slimAtsResult(data.result),
+        atsProfile: data.atsProfile,
+        jobText: data.jobText.slice(0, 8_000),
+      })
     );
   } catch {
     /* ignore */
@@ -145,15 +176,15 @@ export function writeAtsWizardDraft(draft: AtsWizardDraft) {
       localStorage.setItem(DRAFT_KEY, serial);
     }
 
-    // Resultado: solo si cambió y en clave aparte (no en cada tecla).
+    // Resultado: resumen chico (nunca el análisis completo).
     if (draft.result != null) {
       const resultKey = "ats_wizard_result_v1";
       const resultSerial = JSON.stringify({
-        result: draft.result,
+        result: slimAtsResult(draft.result),
         resultPhase: draft.resultPhase,
         atsProfile: draft.atsProfile,
       });
-      if (resultSerial.length < 350_000) {
+      if (resultSerial.length < 80_000) {
         const prevR = localStorage.getItem(resultKey);
         if (prevR !== resultSerial) localStorage.setItem(resultKey, resultSerial);
       }

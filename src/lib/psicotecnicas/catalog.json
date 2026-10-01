@@ -837,16 +837,16 @@
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Series numéricas: los 8 patrones que se repiten",
-      "titulo": "Arcos arriba y arcos abajo",
-      "regla": "A veces hay dos series intercaladas (posiciones impares y pares). Anota las diferencias de cada renglón por separado; el siguiente término es el que toque según la posición.",
-      "ejemplo": "Enunciado: completa la serie 2, 4, 8, 14, 16, 22, 28, 30, 36, ?\n1) Separa en dos renglones. Impares (posición 1,3,5…): 2, 8, 16, 28…\n2) Saltos de ese renglón: +6, +8, +12. El siguiente salto razonable es +16 → 28 + 16 = 44.\n3) Pares: 4, 14, 22, 30… (van por su cuenta). El «?» es la siguiente posición impar → 44."
+      "titulo": "Dos series intercaladas: una sí, una no",
+      "regla": "Si los saltos de toda la fila no tienen sentido, prueba a separar: números en posición 1, 3, 5… en un renglón; los de posición 2, 4, 6… en otro. Cada renglón lleva su propia regla. El «?» sigue la regla del renglón al que pertenece (mira si es impar o par en la lista).",
+      "ejemplo": "Enunciado: completa la serie 3, 10, 6, 20, 9, 30, 12, ?\n1) Escribe dos renglones:\n   • Posiciones impares (1ª, 3ª, 5ª, 7ª): 3, 6, 9, 12 → van de +3 en +3.\n   • Posiciones pares (2ª, 4ª, 6ª, 8ª): 10, 20, 30, ? → van de +10 en +10.\n2) El «?» es la 8ª posición → toca al renglón de los pares.\n3) 30 + 10 = 40.\nRespuesta: 40."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Series numéricas: los 8 patrones que se repiten",
-      "titulo": "Si la diferencia no basta, multiplica",
-      "regla": "Cuando los saltos no forman una serie clara a simple vista, mira por cuánto se multiplica cada salto (o si vienen en bloques). Ese segundo renglón suele ser el patrón.",
-      "ejemplo": "Enunciado: completa la serie 1, 2, 3, 6, 9, ?\n1) Saltos: +1, +1, +3, +3.\n2) Van en bloques de dos iguales; el siguiente bloque suele ser ×3 otra vez: +9, +9.\n3) 9 + 9 = 18."
+      "titulo": "Si la diferencia no basta, mira los saltos en bloques",
+      "regla": "Anota primero cuánto suma de un número al siguiente. Si ves el mismo salto dos veces seguidas y luego otro salto dos veces, suele venir un bloque nuevo (a menudo ×3 el salto anterior).",
+      "ejemplo": "Enunciado: completa la serie 4, 5, 6, 9, 12, ?\n1) Saltos entre números: +1, +1, +3, +3.\n2) Primero un bloque de dos veces +1; luego un bloque de dos veces +3.\n3) El siguiente bloque suele ser dos veces +9 (porque 3×3=9). Aquí solo piden el siguiente número: 12 + 9 = 21."
     },
     {
       "subjectId": "exa.psico-abstracto",
@@ -956,16 +956,16 @@
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Series numéricas: los 8 patrones que se repiten",
-      "titulo": "Series que alternan dos operaciones",
-      "regla": "Cuando ni las diferencias ni los factores cuadran solos, prueba si se turnan dos operaciones: una suma, una multiplicación, una suma, una multiplicación…",
-      "ejemplo": "Enunciado: completa la serie 1, 2, 4, 5, 10, 11, 22, ?\n1) Saltos: +1, ×2, +1, ×2, +1, ×2…\n2) Después de 22 toca +1 → 23."
+      "titulo": "Series que alternan sumar y multiplicar",
+      "regla": "Si ni las diferencias ni un solo factor explican la serie, prueba a turnar dos operaciones: sumar, multiplicar, sumar, multiplicar…",
+      "ejemplo": "Enunciado: completa la serie 3, 4, 8, 9, 18, 19, 38, ?\n1) Mira de uno en uno: 3→4 es +1; 4→8 es ×2; 8→9 es +1; 9→18 es ×2; 18→19 es +1; 19→38 es ×2.\n2) El patrón es: +1, ×2, +1, ×2…\n3) Después de 38 toca +1 → 39."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Series numéricas: los 8 patrones que se repiten",
-      "titulo": "Cuando los factores llevan su propia serie",
-      "regla": "Si los saltos son multiplicaciones que cambian, escribe los multiplicadores en un renglón aparte: ellos casi siempre sí forman una serie sencilla (primos, impares, +2, etc.).",
-      "ejemplo": "Enunciado: completa la serie 2, 2, 4, 12, 48, ?\n1) Factores: ×1, ×2, ×3, ×4…\n2) Siguiente factor: ×5.\n3) 48 × 5 = 240."
+      "titulo": "Cuando se multiplica por 1, 2, 3, 4…",
+      "regla": "Si cada paso es una multiplicación y el multiplicador cambia, anota aparte por cuánto se multiplicó. Ese renglón casi siempre es 1, 2, 3, 4… o los impares.",
+      "ejemplo": "Enunciado: completa la serie 3, 3, 6, 18, 72, ?\n1) 3→3 es ×1; 3→6 es ×2; 6→18 es ×3; 18→72 es ×4.\n2) Siguiente multiplicador: ×5.\n3) 72 × 5 = 360."
     },
     {
       "subjectId": "exa.psico-numerico",

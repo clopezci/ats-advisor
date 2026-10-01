@@ -208,29 +208,29 @@
       "subjectId": "exa.psico-numerico",
       "tema": "Cálculo mental y atajos",
       "titulo": "El 10 %, el 5 % y el 15 %",
-      "regla": "El 10 % es correr la coma un lugar. El 5 % es la mitad de eso. El 15 % es sumar los dos.",
-      "ejemplo": "15 % de 8.400 → 840 + 420 = 1.260."
+      "regla": "No multipliques por 0,15 de cabeza. Parte el porcentaje en piezas fáciles: 10 % (correr la coma), 5 % (la mitad del 10 %) y 15 % = 10 % + 5 %.",
+      "ejemplo": "¿Cuánto es el 15 % de 8.400?\n1) 10 % de 8.400 = 840 (corre la coma un lugar).\n2) 5 % = la mitad de 840 = 420.\n3) 15 % = 840 + 420 = 1.260.\nRespuesta: 1.260 (no te quedes en el 840 del paso 1)."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Porcentajes y proporciones rápidas",
       "titulo": "El 20 %, el 25 % y el 12,5 %",
       "regla": "El 20 % es la quinta parte, el 25 % es la cuarta y el 12,5 % es la octava. Dividir es más rápido que multiplicar por un decimal.",
-      "ejemplo": "25 % de 3.600 → 3.600 ÷ 4 = 900."
+      "ejemplo": "¿Cuánto es el 25 % de 3.600?\n1) 25 % = la cuarta parte → divides entre 4.\n2) 3.600 ÷ 4 = 900.\n(Si pedían 12,5 %: ÷ 8 → 450. Si pedían 20 %: ÷ 5 → 720.)"
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Porcentajes y proporciones rápidas",
       "titulo": "El porcentaje se puede voltear",
       "regla": "El x % de y es lo mismo que el y % de x. Cuando uno de los dos es un número redondo, voltéalo.",
-      "ejemplo": "4 % de 75 es difícil; 75 % de 4 son 3. Misma respuesta."
+      "ejemplo": "¿Cuánto es el 4 % de 75?\n1) 4 × 0,75 es feo de hacer a mano.\n2) Voltea: es lo mismo que el 75 % de 4.\n3) 75 % de 4 = (3/4) × 4 = 3.\nRespuesta: 3."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Porcentajes y proporciones rápidas",
       "titulo": "Subir 20 % y bajar 20 % no vuelve al mismo sitio",
-      "regla": "El segundo porcentaje se calcula sobre un número distinto. Siempre se queda por debajo del original.",
-      "ejemplo": "100 → +20 % = 120 → −20 % de 120 = 96, no 100."
+      "regla": "Cada porcentaje se calcula sobre el número que tienes en ese momento, no sobre el original. Por eso +20 % y luego −20 % no te deja donde empezaste: el segundo recorte es más grande.",
+      "ejemplo": "Empiezas con 100.\n1) Subes 20 %: 100 + 20 = 120.\n2) Bajas 20 % de 120 (no de 100): 20 % de 120 = 24.\n3) 120 − 24 = 96.\nQuedaste en 96, no en 100. La opción trampa suele ser 100."
     },
     {
       "subjectId": "exa.psico-numerico",
@@ -320,29 +320,29 @@
       "subjectId": "exa.psico-numerico",
       "tema": "Tablas y gráficas: encontrar el dato",
       "titulo": "Estima antes de calcular",
-      "regla": "Redondea, saca el resultado aproximado y tacha las opciones que se alejen. En opción múltiple casi siempre queda una sola.",
-      "ejemplo": "19 % de 24.500 ≈ 20 % = 4.900 → la respuesta es la que esté un poco por debajo."
+      "regla": "Antes de hacer la cuenta exacta, redondea y calcula un número aproximado. Con ese número tachas las opciones absurdas y casi siempre te queda una sola.",
+      "ejemplo": "Pregunta: ¿cuánto es el 19 % de 24.500?\nOpciones (ejemplo): A) 2.450  B) 4.655  C) 4.900  D) 12.250\n1) Redondea: 19 % ≈ 20 %.\n2) 20 % de 24.500 = 4.900.\n3) Como 19 % es un poco menos que 20 %, la respuesta real está un poco bajo 4.900 → B) 4.655.\nC es la trampa del redondeo sin ajustar; A es el 10 %."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Cómo administrar el tiempo y cuándo saltarse una",
       "titulo": "El resultado intermedio es una trampa",
-      "regla": "Si el número que acabas de calcular aparece entre las opciones, no significa que sea la respuesta. Significa que te falta un paso.",
-      "ejemplo": "15 % de 8.400: si te quedas en 840 (el 10 %), esa opción está ahí esperándote."
+      "regla": "En opción múltiple, el examen pone a propósito números que salen a mitad de camino. Si el número que acabas de sacar aparece en las opciones, no marques todavía: casi seguro te falta el último paso.",
+      "ejemplo": "Pregunta: ¿cuánto es el 15 % de 8.400?\nOpciones (ejemplo): A) 840  B) 1.260  C) 1.680  D) 8.400\n1) Sacas el 10 %: 840. Ves la opción A y da ganas de marcarla… pero pedían el 15 %, no el 10 %.\n2) Completas: 5 % = 420; 15 % = 840 + 420 = 1.260.\n3) Respuesta correcta: B) 1.260.\nA era el resultado intermedio (trampa). C sería el 20 %. D es el total sin porcentaje."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Series numéricas: los 8 patrones que se repiten",
       "titulo": "Escribe las diferencias debajo",
-      "regla": "Antes de probar nada, escribe la resta entre cada par de términos. La mayoría de las series se cae sola al hacerlo.",
-      "ejemplo": "3, 6, 12, 21, 33 → debajo: 3, 6, 9, 12 → suman 3 → sigue 48."
+      "regla": "Antes de adivinar la regla, escribe debajo la resta entre cada número y el anterior. Esa fila de diferencias suele revelar el patrón al instante.",
+      "ejemplo": "Serie: 3, 6, 12, 21, 33, ?\n1) Diferencias: 6−3=3; 12−6=6; 21−12=9; 33−21=12.\n2) Esas diferencias (3, 6, 9, 12) suben de 3 en 3.\n3) La siguiente diferencia es 12+3=15.\n4) Siguiente término: 33+15=48."
     },
     {
       "subjectId": "exa.psico-numerico",
       "tema": "Series numéricas: los 8 patrones que se repiten",
       "titulo": "Comprueba el patrón en todos los saltos",
-      "regla": "Las series se diseñan para que los tres primeros términos encajen con una regla falsa. Si no se cumple en el cuarto, no era.",
-      "ejemplo": "3, 6, 12 parece ×2, pero 12 → 21 no lo es."
+      "regla": "Una regla que solo funciona en los primeros términos suele ser falsa a propósito. Prueba la misma regla hasta el final; si se rompe en un salto, bórrala y busca otra.",
+      "ejemplo": "Serie: 3, 6, 12, 21, ?\n1) Hipótesis falsa: «se multiplica por 2» → 3×2=6, 6×2=12… parece bien.\n2) Siguiente salto: 12×2=24, pero el término real es 21. La regla ×2 se cae.\n3) Prueba diferencias: +3, +6, +9 → el siguiente es +12 → 21+12=33."
     },
     {
       "subjectId": "exa.psico-numerico",
@@ -369,8 +369,8 @@
       "subjectId": "exa.psico-numerico",
       "tema": "Sinónimos, antónimos y vocabulario",
       "titulo": "En los antónimos, la trampa es un sinónimo",
-      "regla": "Siempre meten entre las opciones una palabra parecida a la del enunciado, para el que lee rápido. Subraya ANTÓNIMO o SINÓNIMO antes de marcar.",
-      "ejemplo": "Antónimo de efímero: «frágil» está ahí para que caigas."
+      "regla": "Antes de mirar opciones, subraya si pide SINÓNIMO (igual) o ANTÓNIMO (contrario). En antónimos casi siempre meten una palabra parecida al enunciado para el que lee rápido.",
+      "ejemplo": "Pregunta: antónimo de «efímero» (que dura poco).\nOpciones (ejemplo): A) frágil  B) duradero  C) breve  D) débil\n1) Tú ya sabes: lo contrario de «dura poco» es «dura mucho».\n2) B) duradero encaja.\n3) A y D suenan «malos/débiles» pero no son lo contrario. C) breve es casi sinónimo: esa es la trampa típica."
     },
     {
       "subjectId": "exa.psico-abstracto",
@@ -446,15 +446,15 @@
       "subjectId": "exa.psico-abstracto",
       "tema": "Tiempo por pregunta y cuándo adivinar",
       "titulo": "La regla de los 30 segundos",
-      "regla": "Si en medio minuto no sabes ni por dónde empezar, marca cualquiera, señálala y sigue. Una pregunta difícil vale lo mismo que una fácil.",
-      "ejemplo": "3 minutos en una pregunta son 3 preguntas que no alcanzas a leer."
+      "regla": "Todas las preguntas valen lo mismo. Si en unos 30 segundos no sabes ni por dónde empezar, marca una opción, hazle una marca al margen y pasa a la siguiente. Luego vuelves si sobra tiempo.",
+      "ejemplo": "Prueba: 20 preguntas en 20 minutos (1 min por pregunta).\n1) Llevas 3 minutos en la pregunta 10 y aún no arrancas.\n2) Esos 3 minutos = tiempo de 3 preguntas que ni leíste.\n3) Marcas cualquiera en la 10, la señalas y saltas a la 11.\nObjetivo: no llegar al final con 5 preguntas en blanco por obsesionarte con una."
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Tiempo por pregunta y cuándo adivinar",
       "titulo": "Si no penalizan, no dejes nada en blanco",
-      "regla": "En blanco y equivocada valen lo mismo: cero. Marcada al azar entre cinco vale un quinto de punto. Si sí penalizan, adivina solo cuando puedas descartar una.",
-      "ejemplo": "10 preguntas en blanco entre 5 opciones son 2 puntos regalados."
+      "regla": "Pregunta primero si restan por error. Si NO restan: en blanco = 0 e incorrecta = 0, pero una marcada al azar puede sumar. Si SÍ restan: solo adivina cuando ya descartaste al menos una opción.",
+      "ejemplo": "Quedan 10 preguntas sin marcar y hay 5 opciones cada una.\n1) Sin penalización: marcar al azar ≈ 10 × (1/5) = 2 puntos esperados. Dejarlas en blanco = 0.\n2) Con penalización: no marques a ciegas; solo si ya eliminaste una o dos opciones (sube la probabilidad)."
     },
     {
       "subjectId": "exa.psico-abstracto",
@@ -593,22 +593,22 @@
       "subjectId": "exa.psico-personalidad",
       "tema": "Juicio situacional: el formato de los concursos públicos",
       "titulo": "Tacha la que resuelve a medias",
-      "regla": "El distractor más común no es falso: es cierto pero incompleto. Atiende una parte del caso y deja la otra sin resolver. La correcta resuelve todo.",
-      "ejemplo": "De 3 opciones, 2 suelen ser verdaderas; solo 1 cierra el caso completo."
+      "regla": "En juicio situacional, la opción trampa casi nunca es absurda: hace algo correcto pero deja el problema a medias. La buena cierra el caso completo (acción + seguimiento o constancia).",
+      "ejemplo": "Caso: llegó un documento urgente y el plazo vence hoy.\nA) Recibirlo y guardarlo en el escritorio.\nB) Recibirlo, sellar hora de llegada y avisarle al responsable por escrito.\nC) Decirle al mensajero que vuelva mañana.\n1) A hace una parte (recibir) pero no protege el plazo → trampa «a medias».\n2) C empeora el problema.\n3) B recibe + deja constancia + avisa → cierra todo."
     },
     {
       "subjectId": "exa.psico-personalidad",
       "tema": "Juicio situacional: el formato de los concursos públicos",
       "titulo": "Mira el verbo del enunciado",
       "regla": "«Analizar» no es «nombrar» ni «clasificar». Si pide analizar, la opción que solo cita una norma está mal aunque la norma sea la correcta.",
-      "ejemplo": "Enunciado con «analice» → la respuesta que solo dice «aplicar el artículo 5» no sirve."
+      "ejemplo": "Enunciado: «Analice qué debe hacer el funcionario ante el reclamo».\n1) Opción que solo dice «aplicar el artículo 5» → nombra, no analiza.\n2) Opción que explica el problema, la norma y el paso a seguir → responde al verbo «analice»."
     },
     {
       "subjectId": "exa.psico-personalidad",
       "tema": "Juicio situacional: el formato de los concursos públicos",
       "titulo": "Lo que no queda escrito no pasó",
       "regla": "Entre dos opciones que suenen igual de bien, gana la que deja registro: informar, documentar, dejar constancia.",
-      "ejemplo": "«Le aviso al jefe» pierde contra «le informo por escrito y dejo copia»."
+      "ejemplo": "Situación: debes avisarle al jefe de un error.\nA) «Le aviso al jefe de palabra».\nB) «Le informo por escrito y dejo copia en el expediente».\nGana B: si mañana preguntan, queda prueba de que avisaste."
     },
     {
       "subjectId": "exa.psico-personalidad",
@@ -663,8 +663,8 @@
       "subjectId": "exa.psico-numerico",
       "tema": "Trabajar desde las opciones, no desde el enunciado",
       "titulo": "¿Y si pruebo las opciones?",
-      "regla": "Antes de resolver, mira si sale más rápido meter cada opción en el enunciado y ver cuál cuadra. En ecuaciones y en «qué número cumple», casi siempre sale más rápido.",
-      "ejemplo": "3x² + 2x − 10 = 6 → prueba x = 2: 12 + 4 − 10 = 6 ✓"
+      "regla": "Cuando te dan opciones numéricas, a veces es más rápido probar cuál cumple el enunciado que resolver la ecuación desde cero.",
+      "ejemplo": "Ecuación: 3x² + 2x − 10 = 6. Opciones: A) 1  B) 2  C) 3  D) 4\n1) Prueba B) x=2: 3×(2²)=12; 2×2=4; 12+4−10=6. Cumple.\n2) No hace falta probar C ni D: ya encontraste la que funciona.\nTiempo: segundos, sin fórmula general."
     },
     {
       "subjectId": "exa.psico-numerico",

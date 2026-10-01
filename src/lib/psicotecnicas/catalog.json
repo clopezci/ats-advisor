@@ -257,8 +257,8 @@
       "subjectId": "exa.psico-numerico",
       "tema": "Cálculo mental y atajos",
       "titulo": "El cuadrado de un número terminado en 5",
-      "regla": "No multipliques por el 5. Toma solo lo que va delante del 5 y multiplícalo por el entero siguiente (ese mismo número + 1). Al resultado le escribes 25 al final.",
-      "ejemplo": "75² → delante del 5 queda 7 (el 5 no se multiplica) → 7 × (7+1) = 7 × 8 = 56 → escribes 25 al final → 5625. (Si hicieras 7×5=35 y pegaras 25 saldría 3525, y eso está mal: 75×75 = 5625.)"
+      "regla": "Toma solo la cifra (o cifras) que van delante del 5 y multiplícala por el entero siguiente (ese mismo número + 1). Al resultado le escribes 25 al final.",
+      "ejemplo": "75²\n1) Delante del 5 queda 7.\n2) 7 × (7 + 1) = 7 × 8 = 56.\n3) Escribes 25 al final → 5625."
     },
     {
       "subjectId": "exa.psico-numerico",
@@ -292,7 +292,7 @@
       "subjectId": "exa.psico-numerico",
       "tema": "Problemas de razonamiento con datos",
       "titulo": "El problema del tanque y las dos llaves",
-      "regla": "Error típico: sumar las horas (3+6=9) o promediarlas. Lo correcto: pensar cuánto llena cada llave en 1 hora, sumar esos aportes y preguntar: ¿cuántas horas hacen falta para llenar 1 tanque completo?",
+      "regla": "Piensa cuánto llena cada llave en 1 hora, suma esos aportes y pregunta: ¿cuántas horas hacen falta para llenar 1 tanque completo?",
       "ejemplo": "Una llave llena el tanque en 3 h y otra en 6 h. ¿Cuánto tardan juntas?\n1) En 1 hora la de 3 h llena 1/3 del tanque.\n2) En 1 hora la de 6 h llena 1/6 del tanque.\n3) Juntas en 1 hora: 1/3 + 1/6. Como 1/3 = 2/6, queda 2/6 + 1/6 = 3/6 = 1/2 del tanque por hora.\n4) Si en 1 hora llenan la mitad, para llenar el tanque entero necesitan 2 horas.\nComprobación: en 2 h la primera aporta 2×(1/3)=2/3 y la segunda 2×(1/6)=1/3; 2/3+1/3=1 tanque."
     },
     {

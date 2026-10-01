@@ -8,10 +8,14 @@ type SpeakButtonProps = {
 export function SpeakButton({ text, label = "Escuchar" }: SpeakButtonProps) {
   const speak = () => {
     if (typeof window === "undefined" || !window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = "es-CO";
-    window.speechSynthesis.speak(utter);
+    try {
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(text.replace(/\s+/g, " ").trim().slice(0, 1200));
+      utter.lang = "es-CO";
+      window.speechSynthesis.speak(utter);
+    } catch {
+      /* ignore */
+    }
   };
 
   return (

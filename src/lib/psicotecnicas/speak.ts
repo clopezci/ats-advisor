@@ -2,9 +2,13 @@
 
 /**
  * Lectura en voz alta (es-CO) con mute persistente para el wizard de psicotécnicas.
+ * Evita tormentas de cancel()/speak() que congelan Chrome.
  */
 
 const MUTE_KEY = "ats_psico_speak_muted_v1";
+const MAX_CHARS = 1200;
+let lastSpeakAt = 0;
+let lastSpeakHash = "";
 
 export function isPsicoSpeakMuted(): boolean {
   if (typeof window === "undefined") return false;
@@ -26,7 +30,12 @@ export function setPsicoSpeakMuted(muted: boolean) {
 
 export function stopSpeaking() {
   if (typeof window === "undefined" || !window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
+  try {
+    window.speechSynthesis.cancel();
+  } catch {
+    /* ignore */
+  }
+  lastSpeakHash = "";
 }
 
 export function speakText(
@@ -35,14 +44,32 @@ export function speakText(
 ): boolean {
   if (typeof window === "undefined" || !window.speechSynthesis) return false;
   if (!opts?.force && isPsicoSpeakMuted()) return false;
-  const clean = text.replace(/\s+/g, " ").trim();
+  const clean = text.replace(/\s+/g, " ").trim().slice(0, MAX_CHARS);
   if (!clean) return false;
-  window.speechSynthesis.cancel();
+
+  const now = Date.now();
+  // Misma frase o spam < 400ms: no cancelar/re-hablar (congela pestañas en Chrome).
+  if (!opts?.force && clean === lastSpeakHash && now - lastSpeakAt < 2500) return false;
+  if (!opts?.force && now - lastSpeakAt < 400) return false;
+
+  lastSpeakAt = now;
+  lastSpeakHash = clean;
+
+  try {
+    window.speechSynthesis.cancel();
+  } catch {
+    /* ignore */
+  }
+
   const utter = new SpeechSynthesisUtterance(clean);
   utter.lang = "es-CO";
   utter.rate = 0.95;
   if (opts?.onEnd) utter.onend = () => opts.onEnd?.();
-  window.speechSynthesis.speak(utter);
+  try {
+    window.speechSynthesis.speak(utter);
+  } catch {
+    return false;
+  }
   return true;
 }
 
@@ -66,7 +93,7 @@ export function ejercicioSpeakScript(e: {
   let s = `Prueba. ${e.tema}. Enunciado: ${e.enunciado}`;
   if (e.includeAnswer) {
     if (e.respuesta) s += ` Respuesta: ${e.respuesta}.`;
-    if (e.pasos?.length) s += ` Pasos: ${e.pasos.join(". ")}.`;
+    if (e.pasos?.length) s += ` Pasos: ${e.pasos.slice(0, 4).join(". ")}.`;
     if (e.errorComun) s += ` Error común: ${e.errorComun}.`;
   } else {
     s += " Piensa tu respuesta y luego verifica.";

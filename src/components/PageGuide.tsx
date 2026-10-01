@@ -24,7 +24,7 @@ export function PageGuide() {
       (focus === "carrera" && pathname.startsWith("/outplacement")) ||
       (focus === "gratis" && (pathname.startsWith("/tracker") || pathname.startsWith("/herramientas/checklist")));
     setShow(!quiet && Boolean(guide));
-  }, [pathname, guide]);
+  }, [pathname, guide?.path]);
 
   if (!show || !guide) return null;
 

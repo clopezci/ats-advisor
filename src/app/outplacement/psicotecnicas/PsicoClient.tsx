@@ -55,7 +55,7 @@ export function PsicoClient() {
       if (saved.revealed === true) setRevealed(true);
       if (typeof saved.materia === "string" && saved.materia) setMateria(saved.materia);
       if (saved.mode === "fichas" || saved.mode === "pruebas") setMode(saved.mode);
-      if (saved.spokenWizard === true) setSpokenWizard(true);
+      // No auto-reactivar voz al recuperar borrador: evita que la pestaña hable sola y se trabe.
     }
   );
 
@@ -85,48 +85,70 @@ export function PsicoClient() {
     return () => stopSpeaking();
   }, []);
 
-  const fichas = (bankFichas || publicFichas || PSICO_PREVIEW_FICHAS).filter(
-    (f) => f.subjectId === materia
+  const fichas = useMemo(
+    () => (bankFichas || publicFichas || PSICO_PREVIEW_FICHAS).filter((f) => f.subjectId === materia),
+    [bankFichas, publicFichas, materia]
   );
-  const ejercicios = bankEjercicios || trial.map((t) => t.item);
-  const banco = ejercicios
-    .map((item, index) => ({ item, index }))
-    .filter((x) => x.item.materia === materia);
+  const ejercicios = useMemo(
+    () => bankEjercicios || trial.map((t) => t.item),
+    [bankEjercicios, trial]
+  );
+  const banco = useMemo(
+    () =>
+      ejercicios
+        .map((item, index) => ({ item, index }))
+        .filter((x) => x.item.materia === materia),
+    [ejercicios, materia]
+  );
   const ficha = fichas[Math.min(fichaI, Math.max(0, fichas.length - 1))];
   const bancoItem = banco[Math.min(bancoI, Math.max(0, banco.length - 1))];
+  const fichaKey = ficha ? `${ficha.titulo}|${ficha.regla.slice(0, 40)}` : "";
+  const bancoKey = bancoItem ? `${bancoItem.index}|${bancoItem.item.tema}` : "";
 
   // Lee automáticamente ficha o prueba cuando el wizard hablado está activo
   useEffect(() => {
-    if (!spokenWizard || muted) return;
-    if (mode === "fichas" && ficha) {
-      speakText(fichaSpeakScript(ficha));
+    if (!spokenWizard || muted) {
+      stopSpeaking();
       return;
     }
-    if (mode === "pruebas" && bancoItem) {
-      speakText(
-        ejercicioSpeakScript({
-          tema: bancoItem.item.tema,
-          enunciado: bancoItem.item.enunciado,
-          includeAnswer: false,
-        })
-      );
-    }
-  }, [spokenWizard, muted, mode, materia, fichaI, bancoI, ficha, bancoItem]);
+    const id = window.setTimeout(() => {
+      if (mode === "fichas" && ficha) {
+        speakText(fichaSpeakScript(ficha));
+        return;
+      }
+      if (mode === "pruebas" && bancoItem) {
+        speakText(
+          ejercicioSpeakScript({
+            tema: bancoItem.item.tema,
+            enunciado: bancoItem.item.enunciado,
+            includeAnswer: false,
+          })
+        );
+      }
+    }, 350);
+    return () => window.clearTimeout(id);
+    // deps estables (no objetos que se recrean cada render)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [spokenWizard, muted, mode, materia, fichaI, bancoI, fichaKey, bancoKey]);
 
   // Si se revela la respuesta en pruebas + wizard, leer solución
   useEffect(() => {
     if (!spokenWizard || muted || mode !== "pruebas" || !revealed || !bancoItem) return;
-    speakText(
-      ejercicioSpeakScript({
-        tema: bancoItem.item.tema,
-        enunciado: "Verificación.",
-        respuesta: bancoItem.item.respuesta,
-        pasos: bancoItem.item.pasos,
-        errorComun: bancoItem.item.errorComun,
-        includeAnswer: true,
-      })
-    );
-  }, [revealed, spokenWizard, muted, mode, bancoItem]);
+    const id = window.setTimeout(() => {
+      speakText(
+        ejercicioSpeakScript({
+          tema: bancoItem.item.tema,
+          enunciado: "Verificación.",
+          respuesta: bancoItem.item.respuesta,
+          pasos: bancoItem.item.pasos,
+          errorComun: bancoItem.item.errorComun,
+          includeAnswer: true,
+        })
+      );
+    }, 400);
+    return () => window.clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [revealed, spokenWizard, muted, mode, bancoKey]);
 
   function markDone(index: number) {
     if (!done.includes(index)) setDone(saveTrialDone([...done, index]));
@@ -135,9 +157,6 @@ export function PsicoClient() {
   function toggleWizard(on: boolean) {
     setSpokenWizard(on);
     if (!on) stopSpeaking();
-    else if (!isPsicoSpeakMuted()) {
-      // el efecto se encarga de hablar el ítem actual
-    }
   }
 
   return (

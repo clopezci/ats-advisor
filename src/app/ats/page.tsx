@@ -154,7 +154,7 @@ export default function AtsPage() {
 
   useEffect(() => {
     if (!draftReady) return;
-    const id = window.setTimeout(() => rememberDraft(), 200);
+    const id = window.setTimeout(() => rememberDraft(), 600);
     const flush = () => rememberDraft();
     window.addEventListener("pagehide", flush);
     return () => {
@@ -227,11 +227,14 @@ export default function AtsPage() {
       setDetectMsg("");
       return;
     }
-    const d = detectAtsProfile({ jobText, jobUrl, companyDomain, companyName });
-    setDetectMsg(d.company ? `${d.reason} · Empresa: ${d.company.name}` : d.reason);
-    if (d.confidence === "high" || d.confidence === "medium") {
-      setAtsProfile(d.profile);
-    }
+    const id = window.setTimeout(() => {
+      const d = detectAtsProfile({ jobText, jobUrl, companyDomain, companyName });
+      setDetectMsg(d.company ? `${d.reason} · Empresa: ${d.company.name}` : d.reason);
+      if (d.confidence === "high" || d.confidence === "medium") {
+        setAtsProfile(d.profile);
+      }
+    }, 450);
+    return () => window.clearTimeout(id);
   }, [jobUrl, jobText, companyDomain, companyName]);
 
   const intro = useMemo(() => {

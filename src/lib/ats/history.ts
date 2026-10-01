@@ -149,7 +149,10 @@ export function readAtsWizardDraft(): AtsWizardDraft | null {
 
 export function writeAtsWizardDraft(draft: AtsWizardDraft) {
   try {
-    localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+    const serial = JSON.stringify(draft);
+    const existing = localStorage.getItem(DRAFT_KEY);
+    if (existing === serial) return;
+    localStorage.setItem(DRAFT_KEY, serial);
     if (draft.cvText.trim() || draft.jobText.trim()) {
       const prev = JSON.parse(localStorage.getItem("ats_workspace") || "null") || {};
       localStorage.setItem(

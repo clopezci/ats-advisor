@@ -440,10 +440,10 @@ export function PsicoClient() {
           {tipoChecked && (
             <p className="text-sm font-medium">
               {tipoOk
-                ? "Cuadra."
+                ? "¡Acertaste!"
                 : isPaywalledItem
-                  ? "No cuadra todavía. Con el plan ves la respuesta correcta y el paso a paso."
-                  : "No cuadra todavía. Puedes ver la respuesta y el paso a paso."}
+                  ? "No acertaste. Con el plan ves la respuesta correcta y el paso a paso."
+                  : "No acertaste. Puedes ver la respuesta y el paso a paso."}
             </p>
           )}
 
@@ -556,12 +556,12 @@ function ExerciseCard(props: {
           onClick={props.onSubmit}
           disabled={!props.answer.trim()}
         >
-          Ver si cuadra
+          Comprobar
         </button>
       )}
       {props.revealed && (
         <div className="space-y-2 text-sm">
-          <p className="font-medium">{props.correct ? "Cuadra." : "No cuadra. Mira el atajo."}</p>
+          <p className="font-medium">{props.correct ? "¡Acertaste!" : "No acertaste. Mira el atajo."}</p>
           <p>
             Respuesta: <strong>{item.respuesta}</strong>
           </p>

@@ -148,7 +148,7 @@ export function PracticaClient() {
       }
       const line = `${data.respuesta}\n${data.porque || ""}`.trim();
       const acierto = opts?.aleatorio && intento.trim() ? answersMatch(intento, String(data.respuesta || "")) : false;
-      setOut(opts?.aleatorio ? `${acierto ? "Cuadra." : intento.trim() ? "No cuadra." : "Respuesta."}\n${line}` : line);
+      setOut(opts?.aleatorio ? `${acierto ? "¡Acertaste!" : intento.trim() ? "No acertaste." : "Respuesta."}\n${line}` : line);
       setTipo(data.tipo || "");
       const row: SimulacroGuardado = {
         at: new Date().toISOString(),
@@ -413,7 +413,7 @@ export function PracticaClient() {
           <h2 className="font-semibold">Qué se le atravesó</h2>
           {fallos.length === 0 ? (
             <p className="text-sm muted">
-              Aún no hay fallos. Cuenta cuando pides la respuesta tras las pistas, o cuando un caso aleatorio no cuadra.
+              Aún no hay fallos. Cuenta cuando pides la respuesta tras las pistas, o cuando un caso aleatorio no aciertas.
             </p>
           ) : (
             <ul className="text-sm space-y-1">

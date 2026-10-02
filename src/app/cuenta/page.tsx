@@ -31,7 +31,62 @@ export default function CuentaPage() {
   const [sessionEmail, setSessionEmail] = useState<string | null>(null);
   const [sessionReady, setSessionReady] = useState(false);
   const [allowLocalPlans, setAllowLocalPlans] = useState(false);
+  const [isOwner, setIsOwner] = useState(false);
+  const [isTester, setIsTester] = useState(false);
   const [focusPath, setFocusPath] = useState<FocusPath | null>(null);
+  const [grantEmail, setGrantEmail] = useState("");
+  const [testerList, setTesterList] = useState<string[]>([]);
+  const [psicoList, setPsicoList] = useState<string[]>([]);
+  const [ownerBusy, setOwnerBusy] = useState(false);
+
+  async function refreshOwnerLists(accessToken?: string) {
+    const sb = createBrowserSupabase();
+    let token = accessToken;
+    if (!token && sb) {
+      const { data } = await sb.auth.getSession();
+      token = data.session?.access_token;
+    }
+    if (!token) return;
+    try {
+      const res = await fetch("/api/owner/whitelist", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) return;
+      const d = await res.json();
+      setTesterList(Array.isArray(d.tester_emails) ? d.tester_emails : []);
+      setPsicoList(Array.isArray(d.psico_practica_emails) ? d.psico_practica_emails : []);
+    } catch {
+      /* ignore */
+    }
+  }
+
+  async function checkPrivilege(em: string) {
+    if (!em.includes("@")) {
+      setIsOwner(false);
+      setIsTester(false);
+      return;
+    }
+    try {
+      const r = await fetch(`/api/testers/check?email=${encodeURIComponent(em)}`);
+      const d = await r.json();
+      const owner = Boolean(d?.owner);
+      const tester = Boolean(d?.tester || d?.owner);
+      setIsOwner(owner);
+      setIsTester(tester);
+      if (owner || tester) {
+        setAllowLocalPlans(true);
+        try {
+          localStorage.setItem("ats_admin_unlock", "1");
+        } catch {
+          /* ignore */
+        }
+      }
+      if (owner) void refreshOwnerLists();
+    } catch {
+      setIsOwner(false);
+      setIsTester(false);
+    }
+  }
 
   useEffect(() => {
     try {
@@ -40,6 +95,7 @@ export default function CuentaPage() {
         setName(p.name || "");
         setEmail(p.email || "");
         setChannel(p.channel || "pwa");
+        if (p.email) void checkPrivilege(String(p.email));
       }
       setPlanState(readEntitlement().plan);
       setFocusPath(readFocusPath());
@@ -62,10 +118,55 @@ export default function CuentaPage() {
         const elevated = await applySessionPrivileges(e);
         if (elevated) setPlanState(elevated);
         else await syncCloudPlan(e);
+        await checkPrivilege(e);
       }
       setSessionReady(true);
     }).catch(() => setSessionReady(true));
   }, []);
+
+  async function ownerGrant(list: "tester_emails" | "psico_practica_emails", action: "add" | "remove") {
+    const target = grantEmail.trim().toLowerCase();
+    if (!target.includes("@")) {
+      setMsg("Escribe un correo válido para dar o quitar permiso.");
+      return;
+    }
+    const sb = createBrowserSupabase();
+    const { data } = sb ? await sb.auth.getSession() : { data: { session: null } };
+    const token = data.session?.access_token;
+    if (!token) {
+      setMsg("Entra con magic link usando tu correo dueño para gestionar permisos.");
+      return;
+    }
+    setOwnerBusy(true);
+    setMsg("");
+    try {
+      const res = await fetch("/api/owner/whitelist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ email: target, list, action }),
+      });
+      const d = await res.json();
+      if (!res.ok) {
+        setMsg(d.error || "No se pudo guardar el permiso.");
+        return;
+      }
+      if (list === "tester_emails") setTesterList(d.emails || []);
+      else setPsicoList(d.emails || []);
+      setMsg(
+        action === "add"
+          ? `Permiso ${list === "tester_emails" ? "Tester" : "práctica psico"} otorgado a ${target}.`
+          : `Permiso quitado a ${target}.`
+      );
+      setGrantEmail("");
+    } catch {
+      setMsg("Error de red al guardar permisos.");
+    } finally {
+      setOwnerBusy(false);
+    }
+  }
 
   async function syncCloudPlan(em: string) {
     try {
@@ -164,13 +265,14 @@ export default function CuentaPage() {
     localStorage.setItem("ats_profile", JSON.stringify({ name, email, channel }));
     setMsg("Preferencias guardadas.");
     if (email.includes("@")) {
+      void checkPrivilege(email);
       fetch(`/api/testers/check?email=${encodeURIComponent(email)}`)
         .then((r) => r.json())
         .then((d) => {
-          if (d.tester) {
+          if (d.tester || d.owner) {
             setPlan("tester", "admin");
             setPlanState("tester");
-            setMsg("Preferencias guardadas. Correo en whitelist → plan Tester activado.");
+            setMsg("Preferencias guardadas. Correo dueño/tester → plan Tester activado.");
           }
         })
         .catch(() => undefined);
@@ -309,6 +411,22 @@ export default function CuentaPage() {
         <button type="button" className="btn-secondary" onClick={claimPayments}>
           Reclamar pago
         </button>
+        {(isOwner || isTester) && (
+          <button
+            type="button"
+            className="btn-primary"
+            onClick={() => {
+              setPlan("tester", "admin");
+              setPlanState("tester");
+              setMsg("Plan Tester activado en este navegador.");
+              window.setTimeout(() => {
+                window.location.assign("/outplacement");
+              }, 400);
+            }}
+          >
+            Activar Carrera sin pago (este navegador)
+          </button>
+        )}
         {allowLocalPlans && (
           <details className="rounded-xl border p-3" style={{ borderColor: "var(--border)" }}>
             <summary className="cursor-pointer text-sm font-medium">Probar un plan en este equipo</summary>
@@ -339,6 +457,75 @@ export default function CuentaPage() {
           </details>
         )}
       </div>
+
+      {isOwner ? (
+        <div className="bento-card space-y-3">
+          <h2 className="font-semibold">Dueño · admin y permisos</h2>
+          <p className="text-xs muted leading-relaxed">
+            Panel completo (precios, flags, salud) en /admin con la clave ADMIN_SECRET de Vercel. Aquí
+            puedes dar Tester o práctica psicotécnica a un correo sin esa clave (necesitas sesión magic
+            link con tu correo dueño).
+          </p>
+          <Link href="/admin" className="btn-primary">
+            Abrir panel admin
+          </Link>
+          <label className="block text-sm">
+            Correo a autorizar
+            <input
+              className="field mt-1"
+              type="email"
+              value={grantEmail}
+              onChange={(e) => setGrantEmail(e.target.value)}
+              placeholder="persona@correo.com"
+            />
+          </label>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              className="btn-secondary"
+              disabled={ownerBusy}
+              onClick={() => void ownerGrant("tester_emails", "add")}
+            >
+              Dar Tester (Carrera sin pago)
+            </button>
+            <button
+              type="button"
+              className="btn-secondary"
+              disabled={ownerBusy}
+              onClick={() => void ownerGrant("psico_practica_emails", "add")}
+            >
+              Dar práctica psico ilimitada
+            </button>
+            <button
+              type="button"
+              className="btn-secondary"
+              disabled={ownerBusy}
+              onClick={() => void ownerGrant("tester_emails", "remove")}
+            >
+              Quitar Tester
+            </button>
+            <button
+              type="button"
+              className="btn-secondary"
+              disabled={ownerBusy}
+              onClick={() => void ownerGrant("psico_practica_emails", "remove")}
+            >
+              Quitar práctica
+            </button>
+          </div>
+          {testerList.length > 0 ? (
+            <p className="text-xs muted">Testers: {testerList.join(", ")}</p>
+          ) : null}
+          {psicoList.length > 0 ? (
+            <p className="text-xs muted">Práctica psico: {psicoList.join(", ")}</p>
+          ) : null}
+          {!sessionEmail ? (
+            <p className="text-xs" style={{ color: "var(--brand)" }}>
+              Entra con magic link (/auth) usando tu correo dueño para guardar permisos en cloud.
+            </p>
+          ) : null}
+        </div>
+      ) : null}
 
       <div className="bento-card space-y-3">
         <h2 className="font-semibold">Mi IA (clave propia)</h2>

@@ -65,6 +65,7 @@ export default function PreciosPage() {
   const [returnNext, setReturnNext] = useState("/guia?recorrido=1");
   const [demoAllowed, setDemoAllowed] = useState(false);
   const [privileged, setPrivileged] = useState(false);
+  const [paymentsReady, setPaymentsReady] = useState(true);
 
   function activatePrivileged(kind: "carrera" | "psico_practica" | "both") {
     if (kind === "carrera" || kind === "both") {
@@ -76,15 +77,16 @@ export default function PreciosPage() {
     }
     const label =
       kind === "both"
-        ? "Carrera (Tester) + práctica psicotécnica activadas sin pago."
+        ? "Carrera (Tester) + práctica psicotécnica activadas en este navegador."
         : kind === "carrera"
-          ? "Plan Tester activo: puedes usar Carrera sin pagar."
-          : "Práctica psicotécnica activa 90 días (dueño/tester).";
+          ? "Plan Tester activo en este navegador (Carrera sin pagar)."
+          : "Práctica psicotécnica activa 90 días en este navegador.";
     setMsg(label);
+    // Ir a /outplacement (sin gate de middleware) para que el desbloqueo se vea al instante.
     if (kind === "both" || kind === "carrera") {
-      setTimeout(() => {
-        window.location.href = safeAppPath(returnNext, "/outplacement/cuadernillo");
-      }, 600);
+      window.setTimeout(() => {
+        window.location.assign("/outplacement");
+      }, 400);
     }
   }
 
@@ -146,6 +148,9 @@ export default function PreciosPage() {
             psico_practica: d.pricing.psico_practica || PSICO_PRACTICA_PRICE_COP,
             whatsapp_addon: 0,
           });
+        }
+        if (d.payments) {
+          setPaymentsReady(Boolean(d.payments.wompi || d.payments.mercadopago));
         }
       })
       .catch(() => undefined);
@@ -273,21 +278,7 @@ export default function PreciosPage() {
     }
     const em = email.trim().toLowerCase();
     try {
-      const priv = await fetch(`/api/testers/check?email=${encodeURIComponent(em)}`).then((r) =>
-        r.json()
-      );
-      if (priv?.tester || priv?.owner) {
-        if (plan === "psico_practica") {
-          activatePrivileged("psico_practica");
-        } else if (plan === "carrera" || plan === "plus") {
-          activatePrivileged("both");
-        } else {
-          activatePrivileged("carrera");
-        }
-        setLoading(null);
-        return;
-      }
-
+      // Dueño/tester: "Pagar" abre pasarela real. La activación sin cobro es solo con los botones de abajo.
       const res = await fetch("/api/payments/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -301,9 +292,10 @@ export default function PreciosPage() {
         }),
       });
       const data = await res.json();
-      if (data.mode === "demo") {
+      if (data.mode === "demo" || data.ok === false) {
         setMsg(
-          "El cobro real aún no está conectado (falta Wompi o Mercado Pago en el servidor). Si eres dueño/tester, usa los botones de activación sin pago abajo. Si no, escribe a soporte."
+          data.message ||
+            "La pasarela aún no está configurada (faltan WOMPI_* o MP_ACCESS_TOKEN en Vercel). Si eres dueño, usa «Activar sin pago» abajo; si no, escribe a soporte."
         );
         localStorage.setItem("ats_last_checkout", JSON.stringify(data));
         return;
@@ -319,7 +311,7 @@ export default function PreciosPage() {
       if (data.mode === "wompi") {
         await loadWompiScript();
         if (!window.WidgetCheckout) {
-          setMsg(`Referencia ${data.reference}. Widget no disponible; revisa la red.`);
+          setMsg(`Referencia ${data.reference}. No se pudo cargar el widget de Wompi; revisa la red o prueba Mercado Pago.`);
           return;
         }
         const checkoutWidget = new window.WidgetCheckout({
@@ -392,6 +384,13 @@ export default function PreciosPage() {
             {planLabel(currentPlan)}
           </span>
         </p>
+        {!paymentsReady ? (
+          <p className="text-sm rounded-xl border p-3" style={{ borderColor: "var(--brand)" }}>
+            Pasarela aún no configurada en el servidor (Wompi / Mercado Pago). Los botones «Pagar» no
+            abrirán cobro real hasta agregar las claves en Vercel. Si eres dueño, usa «Activar sin pago»
+            más abajo.
+          </p>
+        ) : null}
       </section>
 
       <section
@@ -567,14 +566,15 @@ export default function PreciosPage() {
       </section>
 
       {privileged ? (
-        <details className="bento-card space-y-2">
-          <summary className="cursor-pointer text-sm font-medium muted">Acceso dueño / tester</summary>
-          <p className="text-xs muted leading-relaxed mt-2">
-            Atajos sin cobro en este navegador. La whitelist de práctica ilimitada se gestiona en
+        <section className="bento-card space-y-3">
+          <h2 className="font-semibold text-sm">Activar sin pago (dueño / tester)</h2>
+          <p className="text-xs muted leading-relaxed">
+            Estos botones desbloquean Carrera en este navegador. «Pagar» arriba intenta la pasarela real
+            (no te salta a activación automática). Whitelist de correos: Mi cuenta → Permisos dueño, o
             /admin.
           </p>
-          <div className="flex flex-wrap gap-2 mt-2">
-            <button type="button" className="btn-secondary" onClick={() => activatePrivileged("both")}>
+          <div className="flex flex-wrap gap-2">
+            <button type="button" className="btn-primary" onClick={() => activatePrivileged("both")}>
               Activar Carrera + práctica
             </button>
             <button type="button" className="btn-secondary" onClick={() => activatePrivileged("carrera")}>
@@ -588,7 +588,10 @@ export default function PreciosPage() {
               Solo práctica
             </button>
           </div>
-        </details>
+          <Link href="/cuenta" className="btn-secondary">
+            Ir a Mi cuenta (admin y permisos)
+          </Link>
+        </section>
       ) : null}
 
       {demoAllowed && (

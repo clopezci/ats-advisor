@@ -23,6 +23,10 @@ export async function GET() {
       whatsapp_addon: resolveWhatsappAddonCop(s),
       currency: s.pricing.currency,
     },
+    payments: {
+      wompi: Boolean(process.env.WOMPI_PUBLIC_KEY && process.env.WOMPI_PRIVATE_KEY),
+      mercadopago: Boolean(process.env.MP_ACCESS_TOKEN || process.env.MERCADOPAGO_ACCESS_TOKEN),
+    },
     ai_limits: {
       free_ats_per_day: s.ai_limits.free_ats_per_day,
       out09_included_carrera: s.ai_limits.out09_included_carrera,

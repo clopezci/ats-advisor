@@ -44,6 +44,16 @@ const raw: Item[] = [
     ["30.000", "15.000", "10.000", "60.000"],
     0
   ),
+  withOptions(
+    "Interés compuesto: $100.000 al 10% anual por 2 años. ¿Interés?",
+    ["21.000", "20.000", "10.000", "121.000"],
+    0
+  ),
+  withOptions(
+    "Interés compuesto: $50.000 al 10% anual por 2 años. ¿Interés?",
+    ["10.500", "10.000", "5.000", "60.500"],
+    0
+  ),
   withOptions("Un sueldo de $2.000.000 sube 10%. ¿Nuevo sueldo?", ["2.200.000", "200.000", "1.800.000", "2.100.000"], 0),
   withOptions("Un sueldo de $1.500.000 sube 20%. ¿Nuevo sueldo?", ["1.800.000", "300.000", "1.200.000", "1.700.000"], 0),
   withOptions("Rectángulo 8 m × 5 m. ¿Perímetro?", ["26", "40", "13", "20"], 0),

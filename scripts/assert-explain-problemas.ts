@@ -21,6 +21,19 @@ assert.ok(meet.some((p) => /100/.test(p) && /2/.test(p)));
 const age = explainProblemaMatematico(
   "Hoy Ana tiene 20 y su madre 44. ¿En cuántos años la madre tendrá el doble de la edad de Ana?"
 )!;
-assert.ok(age.some((p) => /\bx = 4\b|\b4\./.test(p) || /x = 4/.test(p)));
+assert.ok(age.some((p) => /x = 4/.test(p)));
+
+const compound = explainProblemaMatematico(
+  "Interés compuesto: $100.000 al 10% anual por 2 años. ¿Interés?"
+)!;
+assert.ok(compound.some((p) => /COMPUESTO/i.test(p)));
+assert.ok(compound.some((p) => /21\.000|21000/.test(p.replace(/\./g, "")) || /21.000/.test(p)));
+assert.ok(compound.some((p) => /SIMPLE sería/i.test(p)));
+
+const simple = explainProblemaMatematico(
+  "Interés simple: $100.000 al 10% anual por 2 años. ¿Interés?"
+)!;
+assert.ok(simple.some((p) => /SIMPLE/i.test(p)));
+assert.ok(simple.some((p) => /20\.000|20000/.test(p.replace(/\./g, "")) || /20.000/.test(p)));
 
 console.log("explainProblemas ok");

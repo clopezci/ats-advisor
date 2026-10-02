@@ -153,6 +153,7 @@ function explainAverage(enunciado: string): string[] | null {
 }
 
 function explainInterest(enunciado: string): string[] | null {
+  if (!/inter[eé]s\s+simple/i.test(enunciado)) return null;
   const m = enunciado.match(
     /\$\s*([\d.]+)\s+al\s+(\d+(?:[.,]\d+)?)\s*%\s*anual\s+por\s+(\d+)\s*a[nñ]os/i
   );
@@ -162,11 +163,47 @@ function explainInterest(enunciado: string): string[] | null {
   const years = Number(m[3]);
   const interest = (capital * rate * years) / 100;
   return [
-    `Interés simple: I = capital × % × años ÷ 100.`,
+    `Interés SIMPLE: el % se calcula siempre sobre el capital inicial (no se reinvierte).`,
+    `I = capital × % × años ÷ 100.`,
     `${formatEsNumber(rate)}% de ${money(capital)} (1 año) = ${money(pctOf(capital, rate))}.`,
     `Por ${years} años: ${money(pctOf(capital, rate))} × ${years} = ${money(interest)}.`,
     `Respuesta: $${money(interest)} (solo el interés).`,
   ];
+}
+
+function explainCompoundInterest(enunciado: string): string[] | null {
+  if (!/inter[eé]s\s+compuesto/i.test(enunciado)) return null;
+  const m = enunciado.match(
+    /\$\s*([\d.]+)\s+al\s+(\d+(?:[.,]\d+)?)\s*%\s*anual\s+por\s+(\d+)\s*a[nñ]os/i
+  );
+  if (!m) return null;
+  const capital = Number(m[1].replace(/\./g, ""));
+  const rate = parseEsNumber(m[2])!;
+  const years = Number(m[3]);
+  const factor = 1 + rate / 100;
+  let monto = capital;
+  const pasos: string[] = [
+    `Interés COMPUESTO: cada año el % se calcula sobre el capital + intereses ya ganados (se reinvierten).`,
+    `No uses la fórmula del simple (capital × % × años): aquí el monto crece año a año.`,
+  ];
+  for (let y = 1; y <= years; y++) {
+    const prev = monto;
+    monto = Math.round(prev * factor * 100) / 100;
+    // For COP integers, keep integer if clean
+    if (Number.isInteger(prev * factor)) monto = prev * factor;
+    else monto = Math.round(prev * factor);
+    pasos.push(
+      `Año ${y}: ${money(prev)} × (1 + ${formatEsNumber(rate)}/100) = ${money(prev)} × ${formatEsNumber(factor)} = ${money(monto)}.`
+    );
+  }
+  const interest = monto - capital;
+  const simple = (capital * rate * years) / 100;
+  pasos.push(`Interés = monto final − capital = ${money(monto)} − ${money(capital)} = ${money(interest)}.`);
+  pasos.push(
+    `Contraste: si fuera SIMPLE sería $${money(simple)}; el compuesto da $${money(interest)} (más, porque se reinvierten).`
+  );
+  pasos.push(`Respuesta: $${money(interest)} (solo el interés).`);
+  return pasos;
 }
 
 function explainRaise(enunciado: string): string[] | null {
@@ -470,6 +507,7 @@ export function explainProblemaMatematico(enunciado: string): string[] | null {
     explainTrain(enunciado) ||
     explainUnitPrice(enunciado) ||
     explainAverage(enunciado) ||
+    explainCompoundInterest(enunciado) ||
     explainInterest(enunciado) ||
     explainRaise(enunciado) ||
     explainPerimeter(enunciado) ||

@@ -2242,7 +2242,8 @@
           "enunciado": "Interés simple: $100.000 al 10% anual por 2 años. ¿Interés?\n\nA) 20.000   B) 10.000   C) 120.000   D) 2.000",
           "respuesta": "A) 20.000",
           "pasos": [
-            "Interés simple: I = capital × % × años ÷ 100.",
+            "Interés SIMPLE: el % se calcula siempre sobre el capital inicial (no se reinvierte).",
+            "I = capital × % × años ÷ 100.",
             "10% de 100.000 (1 año) = 10.000.",
             "Por 2 años: 10.000 × 2 = 20.000.",
             "Respuesta: $20.000 (solo el interés)."
@@ -2252,10 +2253,37 @@
           "enunciado": "Interés simple: $200.000 al 5% anual por 3 años. ¿Interés?\n\nA) 30.000   B) 15.000   C) 10.000   D) 60.000",
           "respuesta": "A) 30.000",
           "pasos": [
-            "Interés simple: I = capital × % × años ÷ 100.",
+            "Interés SIMPLE: el % se calcula siempre sobre el capital inicial (no se reinvierte).",
+            "I = capital × % × años ÷ 100.",
             "5% de 200.000 (1 año) = 10.000.",
             "Por 3 años: 10.000 × 3 = 30.000.",
             "Respuesta: $30.000 (solo el interés)."
+          ]
+        },
+        {
+          "enunciado": "Interés compuesto: $100.000 al 10% anual por 2 años. ¿Interés?\n\nA) 21.000   B) 20.000   C) 10.000   D) 121.000",
+          "respuesta": "A) 21.000",
+          "pasos": [
+            "Interés COMPUESTO: cada año el % se calcula sobre el capital + intereses ya ganados (se reinvierten).",
+            "No uses la fórmula del simple (capital × % × años): aquí el monto crece año a año.",
+            "Año 1: 100.000 × (1 + 10/100) = 100.000 × 1,1 = 110.000.",
+            "Año 2: 110.000 × (1 + 10/100) = 110.000 × 1,1 = 121.000.",
+            "Interés = monto final − capital = 121.000 − 100.000 = 21.000.",
+            "Contraste: si fuera SIMPLE sería $20.000; el compuesto da $21.000 (más, porque se reinvierten).",
+            "Respuesta: $21.000 (solo el interés)."
+          ]
+        },
+        {
+          "enunciado": "Interés compuesto: $50.000 al 10% anual por 2 años. ¿Interés?\n\nA) 10.500   B) 10.000   C) 5.000   D) 60.500",
+          "respuesta": "A) 10.500",
+          "pasos": [
+            "Interés COMPUESTO: cada año el % se calcula sobre el capital + intereses ya ganados (se reinvierten).",
+            "No uses la fórmula del simple (capital × % × años): aquí el monto crece año a año.",
+            "Año 1: 50.000 × (1 + 10/100) = 50.000 × 1,1 = 55.000.",
+            "Año 2: 55.000 × (1 + 10/100) = 55.000 × 1,1 = 60.500.",
+            "Interés = monto final − capital = 60.500 − 50.000 = 10.500.",
+            "Contraste: si fuera SIMPLE sería $10.000; el compuesto da $10.500 (más, porque se reinvierten).",
+            "Respuesta: $10.500 (solo el interés)."
           ]
         },
         {

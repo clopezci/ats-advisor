@@ -19,8 +19,11 @@ import {
 import { AbstractFigure } from "@/components/psicotecnicas/AbstractFigures";
 import { ejercicioSpeakScript, fichaSpeakScript, stopSpeaking } from "@/lib/psicotecnicas/speak";
 import { writeFocusPath } from "@/lib/engagement/focusPath";
-import { hasPsicoPracticaLocal, PSICO_PRACTICA_PRICE_COP } from "@/lib/psicotecnicas/practicaAccess";
-import { readEntitlement } from "@/lib/entitlements";
+import {
+  canExplainTipoItem,
+  hasPsicoPracticaLocal,
+  PSICO_PRACTICA_PRICE_COP,
+} from "@/lib/psicotecnicas/practicaAccess";
 import { formatCop } from "@/lib/channels/pricing";
 import bancoTiposData from "@/lib/psicotecnicas/bancoTipos.json";
 
@@ -91,8 +94,8 @@ export function PsicoClient() {
   useEffect(() => {
     writeFocusPath("gratis");
     setDone(loadTrialDone());
-    const plan = readEntitlement().plan;
-    setPaid(hasPsicoPracticaLocal() || plan === "tester" || plan === "plus");
+    // Solo el add-on de práctica desbloquea explicaciones 5+. Tester/plus/Carrera no bastan.
+    setPaid(hasPsicoPracticaLocal());
     fetch("/api/psicotecnicas/bank")
       .then(async (res) => {
         const data = await res.json().catch(() => ({}));
@@ -130,8 +133,8 @@ export function PsicoClient() {
   const tipoItem = tipo?.items[Math.min(itemI, Math.max(0, (tipo?.items.length || 1) - 1))];
   const tipoTotal = BANCO.tipos.reduce((n, t) => n + t.items.length, 0);
   const tipoOk = tipoChecked && tipoItem ? answersMatch(tipoAnswer, tipoItem.respuesta) : false;
-  const explainUnlocked = paid || itemI < FREE_EXPLAIN;
-  const isPaywalledItem = !paid && itemI >= FREE_EXPLAIN;
+  const explainUnlocked = canExplainTipoItem(itemI, paid, FREE_EXPLAIN);
+  const isPaywalledItem = !explainUnlocked;
 
   function markDone(index: number) {
     if (!done.includes(index)) setDone(saveTrialDone([...done, index]));

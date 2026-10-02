@@ -22,6 +22,12 @@ export function hasPsicoPracticaLocal(): boolean {
   }
 }
 
+/** Explicación en «Pruebas por tipo»: primeras `freeCount` gratis; el resto exige add-on de práctica (no Carrera/tester/plus). */
+export function canExplainTipoItem(itemIndex: number, hasPracticaAddOn: boolean, freeCount = 4): boolean {
+  if (hasPracticaAddOn) return true;
+  return itemIndex >= 0 && itemIndex < freeCount;
+}
+
 export function psicoPracticaUntilFromCookie(cookieHeader: string): number {
   const m = cookieHeader.match(/(?:^|;\s*)ats_psico_practica=([^;]+)/);
   if (!m) return 0;

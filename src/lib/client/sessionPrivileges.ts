@@ -1,10 +1,10 @@
 import { setPlan, type PlanId } from "@/lib/entitlements";
-import { grantPsicoPractica } from "@/lib/psicotecnicas/practicaAccess";
+import { grantPsicoPractica, revokePsicoPractica } from "@/lib/psicotecnicas/practicaAccess";
 
 /**
  * Al entrar con correo: aplica plan cloud / tester / dueño.
- * El dueño (ADMIN_EMAIL o clpezci@gmail.com) recibe plan Tester + práctica psicotécnica.
- * /admin sigue pidiendo ADMIN_SECRET.
+ * Dueño y tester reciben plan Tester, pero NO práctica psicotécnica automática.
+ * Práctica ilimitada solo con whitelist admin (psico_practica_emails) o compra del add-on.
  */
 export async function applySessionPrivileges(email: string): Promise<PlanId | null> {
   const em = email.trim().toLowerCase();
@@ -18,13 +18,34 @@ export async function applySessionPrivileges(email: string): Promise<PlanId | nu
     const ent = entRes.ok ? await entRes.json() : null;
     const tester = testerRes.ok ? await testerRes.json() : null;
 
-    if (tester?.tester || tester?.owner || ent?.source === "owner" || ent?.source === "tester") {
-      setPlan("tester", "admin");
+    const elevated = Boolean(
+      tester?.tester || tester?.owner || ent?.source === "owner" || ent?.source === "tester"
+    );
+    const psicoWhitelist = Boolean(tester?.psicoPractica);
+    const psicoPaid = Boolean(
+      ent?.plan === "psico_practica" ||
+        ent?.psico_practica ||
+        ent?.addons?.psico_practica ||
+        ent?.cloud?.plan === "psico_practica"
+    );
+
+    if (psicoWhitelist || psicoPaid) {
       try {
-        grantPsicoPractica(90);
+        grantPsicoPractica(psicoWhitelist ? 90 : 31);
       } catch {
         /* ignore */
       }
+    } else if (elevated) {
+      // Dueño/tester sin permiso explícito: quitar grant automático viejo.
+      try {
+        revokePsicoPractica();
+      } catch {
+        /* ignore */
+      }
+    }
+
+    if (elevated) {
+      setPlan("tester", "admin");
       return "tester";
     }
     if (ent?.plan && ["carrera", "plus", "tester"].includes(ent.plan)) {

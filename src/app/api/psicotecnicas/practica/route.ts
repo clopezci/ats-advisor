@@ -17,18 +17,6 @@ import {
 
 export const runtime = "nodejs";
 
-const PAID_PLANS = new Set(["tester"]);
-
-function planFromCookie(cookie: string): string {
-  const m = cookie.match(/(?:^|;\s*)ats_plan=([^;]+)/);
-  if (!m) return "";
-  try {
-    return decodeURIComponent(m[1]).toLowerCase();
-  } catch {
-    return "";
-  }
-}
-
 function allowedImage(raw: unknown): { mime: string; data: string } | undefined {
   if (!raw || typeof raw !== "object") return undefined;
   const o = raw as { mime?: unknown; data?: unknown };
@@ -60,8 +48,7 @@ export async function POST(req: Request) {
 
   try {
     const cookie = req.headers.get("cookie") || "";
-    const plan = planFromCookie(cookie);
-    if (!hasPsicoPracticaCookie(cookie) && !PAID_PLANS.has(plan)) {
+    if (!hasPsicoPracticaCookie(cookie)) {
       return NextResponse.json(
         {
           error: "La práctica con tu perfil es un add-on de pago. Las fichas se leen gratis.",

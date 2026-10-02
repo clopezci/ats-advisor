@@ -64,6 +64,8 @@ export type AppSettings = {
   };
   promotions: { name: string; percent: number; amount: number; starts: string; ends: string; code: string }[];
   tester_emails: string[];
+  /** Correos con práctica psicotécnica ilimitada (explicaciones + IA), como si pagaran el add-on. */
+  psico_practica_emails: string[];
   microlearning_footer: string;
   /** Aliados expertos (coach CV, entrevista, etc.) — configurables en admin */
   allies: ExpertAlly[];
@@ -129,6 +131,10 @@ export function defaultSettings(): AppSettings {
       .split(",")
       .map((s) => s.trim().toLowerCase())
       .filter(Boolean),
+    psico_practica_emails: (process.env.ADMIN_PSICO_PRACTICA_EMAILS || "")
+      .split(",")
+      .map((s) => s.trim().toLowerCase())
+      .filter(Boolean),
     microlearning_footer:
       "ATSAdvisor · LOTIC — abre la app, marca la tarea y sigue tu tablero de avance.",
     allies: [],
@@ -184,6 +190,7 @@ function deepMerge(base: AppSettings, patch: Partial<AppSettings>): AppSettings 
     llm: { ...base.llm, ...(patch.llm || {}) },
     promotions: patch.promotions ?? base.promotions,
     tester_emails: patch.tester_emails ?? base.tester_emails,
+    psico_practica_emails: patch.psico_practica_emails ?? base.psico_practica_emails,
     microlearning_footer: patch.microlearning_footer ?? base.microlearning_footer,
     allies: patch.allies ?? base.allies,
     alumni: { ...base.alumni, ...(patch.alumni || {}) },

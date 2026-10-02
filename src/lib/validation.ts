@@ -43,6 +43,13 @@ export function sanitizeSettingsPatch(body: unknown): AppSettings {
         .slice(0, 100)
     : base.tester_emails;
 
+  const psicoEmails = Array.isArray(b.psico_practica_emails)
+    ? b.psico_practica_emails
+        .map((e) => String(e).trim().toLowerCase())
+        .filter((e) => e.includes("@") && e.length < 120)
+        .slice(0, 100)
+    : base.psico_practica_emails;
+
   return {
     pricing: {
       carrera: num(pricingIn.carrera, base.pricing.carrera, 0, 5_000_000),
@@ -89,6 +96,7 @@ export function sanitizeSettingsPatch(body: unknown): AppSettings {
     },
     promotions,
     tester_emails: emails,
+    psico_practica_emails: psicoEmails,
     microlearning_footer: str(b.microlearning_footer, base.microlearning_footer, 280),
     allies: (() => {
       const raw = Array.isArray(b.allies) ? b.allies : base.allies;

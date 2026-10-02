@@ -24,6 +24,8 @@ import {
   hasPsicoPracticaLocal,
   PSICO_PRACTICA_PRICE_COP,
 } from "@/lib/psicotecnicas/practicaAccess";
+import { applySessionPrivileges } from "@/lib/client/sessionPrivileges";
+import { createBrowserSupabase } from "@/lib/supabase/client";
 import { formatCop } from "@/lib/channels/pricing";
 import bancoTiposData from "@/lib/psicotecnicas/bancoTipos.json";
 
@@ -94,8 +96,17 @@ export function PsicoClient() {
   useEffect(() => {
     writeFocusPath("gratis");
     setDone(loadTrialDone());
-    // Solo el add-on de práctica desbloquea explicaciones 5+. Tester/plus/Carrera no bastan.
-    setPaid(hasPsicoPracticaLocal());
+    let alive = true;
+    (async () => {
+      try {
+        const sb = createBrowserSupabase();
+        const mail = sb ? (await sb.auth.getSession()).data.session?.user?.email : null;
+        if (mail) await applySessionPrivileges(mail);
+      } catch {
+        /* ignore */
+      }
+      if (alive) setPaid(hasPsicoPracticaLocal());
+    })();
     fetch("/api/psicotecnicas/bank")
       .then(async (res) => {
         const data = await res.json().catch(() => ({}));
@@ -108,7 +119,10 @@ export function PsicoClient() {
         setPublicFichas(data.fichas || []);
       })
       .catch(() => setBankMsg("No se pudo abrir el banco."));
-    return () => stopSpeaking();
+    return () => {
+      alive = false;
+      stopSpeaking();
+    };
   }, []);
 
   const fichas = useMemo(

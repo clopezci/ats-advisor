@@ -23,7 +23,6 @@ import {
 } from "@/lib/psicotecnicas/practicaAccess";
 import { TIPOS_CASO } from "@/lib/psicotecnicas/practicaScope";
 import { formatCop } from "@/lib/channels/pricing";
-import { readEntitlement } from "@/lib/entitlements";
 
 type Tab = "perfil" | "simulacro" | "aprendizaje" | "aleatorias" | "resumen";
 
@@ -57,8 +56,22 @@ export function PracticaClient() {
   useEffect(() => {
     setAnswers(loadPerfil());
     setHist(loadSimulacros());
-    const plan = readEntitlement().plan;
-    setPaid(hasPsicoPracticaLocal() || plan === "tester" || plan === "plus");
+    let alive = true;
+    (async () => {
+      try {
+        const { createBrowserSupabase } = await import("@/lib/supabase/client");
+        const { applySessionPrivileges } = await import("@/lib/client/sessionPrivileges");
+        const sb = createBrowserSupabase();
+        const mail = sb ? (await sb.auth.getSession()).data.session?.user?.email : null;
+        if (mail) await applySessionPrivileges(mail);
+      } catch {
+        /* ignore */
+      }
+      if (alive) setPaid(hasPsicoPracticaLocal());
+    })();
+    return () => {
+      alive = false;
+    };
   }, []);
 
   const bloque = BLOQUES_PERFIL[bloqueI];

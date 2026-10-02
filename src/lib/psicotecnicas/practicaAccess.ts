@@ -12,6 +12,13 @@ export function grantPsicoPractica(days = 31) {
   return until;
 }
 
+/** Quita el add-on local (p. ej. dueño/tester sin whitelist de práctica). */
+export function revokePsicoPractica() {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem(LOCAL_KEY);
+  document.cookie = `${PSICO_PRACTICA_COOKIE}=; path=/; max-age=0; SameSite=Lax`;
+}
+
 export function hasPsicoPracticaLocal(): boolean {
   if (typeof window === "undefined") return false;
   try {

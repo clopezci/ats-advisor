@@ -12,6 +12,7 @@ function deepMerge(base: AppSettings, patch: Partial<AppSettings>): AppSettings 
     llm: { ...base.llm, ...(patch.llm || {}) },
     promotions: patch.promotions ?? base.promotions,
     tester_emails: patch.tester_emails ?? base.tester_emails,
+    psico_practica_emails: patch.psico_practica_emails ?? base.psico_practica_emails,
     microlearning_footer: patch.microlearning_footer ?? base.microlearning_footer,
     allies: patch.allies ?? base.allies,
     alumni: { ...base.alumni, ...(patch.alumni || {}) },

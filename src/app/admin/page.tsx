@@ -317,6 +317,29 @@ export default function AdminPage() {
       </section>
 
       <section className="bento-card space-y-3">
+        <h2 className="font-semibold">Práctica psicotécnica ilimitada</h2>
+        <p className="text-xs muted leading-relaxed">
+          Correos con explicaciones ilimitadas en «Pruebas por tipo» y acceso a práctica IA, como si
+          hubieran pagado el add-on. Dueño/tester <strong>no</strong> lo tienen por defecto: agrégate
+          aquí si quieres probar sin límites.
+        </p>
+        <textarea
+          className="field min-h-24"
+          placeholder="tu@correo.com, otro@correo.com"
+          value={(settings.psico_practica_emails || []).join(", ")}
+          onChange={(e) =>
+            setSettings({
+              ...settings,
+              psico_practica_emails: e.target.value
+                .split(/[,;\n]/)
+                .map((s) => s.trim().toLowerCase())
+                .filter(Boolean),
+            })
+          }
+        />
+      </section>
+
+      <section className="bento-card space-y-3">
         <h2 className="font-semibold">Aliados expertos</h2>
         <p className="text-xs muted">
           Precio de servicio + % comisión (el COP de comisión se calcula solo). Clientes ven el

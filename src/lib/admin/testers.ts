@@ -31,3 +31,18 @@ export function isTesterEmail(email: string) {
   const fromSettings = (readSettings().tester_emails || []).map((s) => String(s).trim().toLowerCase());
   return new Set([...fromEnv, ...fromSettings]).has(e);
 }
+
+/**
+ * Práctica psicotécnica ilimitada (explicaciones + IA).
+ * Solo correos en settings.psico_practica_emails (o env ADMIN_PSICO_PRACTICA_EMAILS).
+ * Dueño/tester NO la tienen por defecto.
+ */
+export function isPsicoPracticaEmail(email: string) {
+  const e = email.trim().toLowerCase();
+  if (!e.includes("@")) return false;
+  const fromEnv = splitEmails(process.env.ADMIN_PSICO_PRACTICA_EMAILS);
+  const fromSettings = (readSettings().psico_practica_emails || []).map((s) =>
+    String(s).trim().toLowerCase()
+  );
+  return new Set([...fromEnv, ...fromSettings]).has(e);
+}

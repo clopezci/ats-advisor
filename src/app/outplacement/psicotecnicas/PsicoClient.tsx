@@ -30,6 +30,7 @@ import { readEntitlement } from "@/lib/entitlements";
 import { formatCop } from "@/lib/channels/pricing";
 import bancoTiposData from "@/lib/psicotecnicas/bancoTipos.json";
 import { explainCalculoMental } from "@/lib/psicotecnicas/explainMentalMul";
+import { explainProblemaMatematico } from "@/lib/psicotecnicas/explainProblemas";
 
 type Mode = "fichas" | "pruebas" | "banco";
 
@@ -149,10 +150,15 @@ export function PsicoClient() {
   const tipoItemRaw = tipo?.items[Math.min(itemI, Math.max(0, (tipo?.items.length || 1) - 1))];
   const tipoItem = useMemo(() => {
     if (!tipoItemRaw) return tipoItemRaw;
-    if (tipo?.id !== "calculo-mental") return tipoItemRaw;
-    const smart = explainCalculoMental(tipoItemRaw.enunciado);
-    if (!smart?.length) return tipoItemRaw;
-    return { ...tipoItemRaw, pasos: smart };
+    if (tipo?.id === "calculo-mental") {
+      const smart = explainCalculoMental(tipoItemRaw.enunciado);
+      if (smart?.length) return { ...tipoItemRaw, pasos: smart };
+    }
+    if (tipo?.id === "problemas-matematicos") {
+      const smart = explainProblemaMatematico(tipoItemRaw.enunciado);
+      if (smart?.length) return { ...tipoItemRaw, pasos: smart };
+    }
+    return tipoItemRaw;
   }, [tipo?.id, tipoItemRaw]);
   const tipoTotal = BANCO.tipos.reduce((n, t) => n + t.items.length, 0);
   const tipoOk = tipoChecked && tipoItem ? answersMatch(tipoAnswer, tipoItem.respuesta) : false;

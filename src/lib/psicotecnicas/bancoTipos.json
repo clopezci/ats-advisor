@@ -9,8 +9,8 @@
       "descripcion": "Relación A es a B como C es a ¿?. Misma relación, no palabra parecida.",
       "items": [
         {
-          "enunciado": "LIBRO es a BIBLIOTECA como CUADRO es a:\n\nA) Lienzo   B) Marco   C) MUSEO   D) Pintor",
-          "respuesta": "C) MUSEO",
+          "enunciado": "libro es a biblioteca como cuadro es a:\n\nA) lienzo   B) marco   C) museo   D) pintor",
+          "respuesta": "C) museo",
           "pasos": [
             "La relación es la misma que entre LIBRO y BIBLIOTECA.",
             "Aplicada a CUADRO, el par correcto es MUSEO.",
@@ -18,8 +18,8 @@
           ]
         },
         {
-          "enunciado": "MÉDICO es a HOSPITAL como MAESTRO es a:\n\nA) Pupitre   B) Estudiante   C) ESCUELA   D) Pizarra",
-          "respuesta": "C) ESCUELA",
+          "enunciado": "médico es a hospital como maestro es a:\n\nA) pupitre   B) estudiante   C) escuela   D) pizarra",
+          "respuesta": "C) escuela",
           "pasos": [
             "La relación es la misma que entre MÉDICO y HOSPITAL.",
             "Aplicada a MAESTRO, el par correcto es ESCUELA.",
@@ -27,8 +27,8 @@
           ]
         },
         {
-          "enunciado": "AGUA es a SED como COMIDA es a:\n\nA) Plato   B) Sabor   C) Cocina   D) HAMBRE",
-          "respuesta": "D) HAMBRE",
+          "enunciado": "agua es a sed como comida es a:\n\nA) plato   B) sabor   C) cocina   D) hambre",
+          "respuesta": "D) hambre",
           "pasos": [
             "La relación es la misma que entre AGUA y SED.",
             "Aplicada a COMIDA, el par correcto es HAMBRE.",
@@ -36,8 +36,8 @@
           ]
         },
         {
-          "enunciado": "OJO es a VER como OREJA es a:\n\nA) Sonido   B) Ruido   C) OÍR   D) Cara",
-          "respuesta": "C) OÍR",
+          "enunciado": "ojo es a ver como oreja es a:\n\nA) sonido   B) ruido   C) oír   D) cara",
+          "respuesta": "C) oír",
           "pasos": [
             "La relación es la misma que entre OJO y VER.",
             "Aplicada a OREJA, el par correcto es OÍR.",
@@ -45,8 +45,8 @@
           ]
         },
         {
-          "enunciado": "SEMILLA es a ÁRBOL como HUEVO es a:\n\nA) Pluma   B) Cascara   C) PÁJARO   D) Nido",
-          "respuesta": "C) PÁJARO",
+          "enunciado": "semilla es a árbol como huevo es a:\n\nA) pluma   B) cascara   C) pájaro   D) nido",
+          "respuesta": "C) pájaro",
           "pasos": [
             "La relación es la misma que entre SEMILLA y ÁRBOL.",
             "Aplicada a HUEVO, el par correcto es PÁJARO.",
@@ -54,8 +54,8 @@
           ]
         },
         {
-          "enunciado": "PILOTO es a AVIÓN como CAPITÁN es a:\n\nA) Mapa   B) Ancla   C) Puerto   D) BARCO",
-          "respuesta": "D) BARCO",
+          "enunciado": "piloto es a avión como capitán es a:\n\nA) mapa   B) ancla   C) puerto   D) barco",
+          "respuesta": "D) barco",
           "pasos": [
             "La relación es la misma que entre PILOTO y AVIÓN.",
             "Aplicada a CAPITÁN, el par correcto es BARCO.",
@@ -63,8 +63,8 @@
           ]
         },
         {
-          "enunciado": "TECLA es a PIANO como CUERDA es a:\n\nA) Nota   B) Músico   C) Arco   D) GUITARRA",
-          "respuesta": "D) GUITARRA",
+          "enunciado": "tecla es a piano como cuerda es a:\n\nA) nota   B) músico   C) arco   D) guitarra",
+          "respuesta": "D) guitarra",
           "pasos": [
             "La relación es la misma que entre TECLA y PIANO.",
             "Aplicada a CUERDA, el par correcto es GUITARRA.",
@@ -72,8 +72,8 @@
           ]
         },
         {
-          "enunciado": "AUTOR es a LIBRO como COMPOSITOR es a:\n\nA) Piano   B) PARTITURA   C) Concierto   D) Orquesta",
-          "respuesta": "B) PARTITURA",
+          "enunciado": "autor es a libro como compositor es a:\n\nA) piano   B) partitura   C) concierto   D) orquesta",
+          "respuesta": "B) partitura",
           "pasos": [
             "La relación es la misma que entre AUTOR y LIBRO.",
             "Aplicada a COMPOSITOR, el par correcto es PARTITURA.",
@@ -81,8 +81,8 @@
           ]
         },
         {
-          "enunciado": "LLAVE es a CERRADURA como CONTRASEÑA es a:\n\nA) Internet   B) Usuario   C) CUENTA   D) Teclado",
-          "respuesta": "C) CUENTA",
+          "enunciado": "llave es a cerradura como contraseña es a:\n\nA) internet   B) usuario   C) cuenta   D) teclado",
+          "respuesta": "C) cuenta",
           "pasos": [
             "La relación es la misma que entre LLAVE y CERRADURA.",
             "Aplicada a CONTRASEÑA, el par correcto es CUENTA.",
@@ -90,8 +90,8 @@
           ]
         },
         {
-          "enunciado": "JUEZ es a SENTENCIA como ÁRBITRO es a:\n\nA) DECISIÓN   B) Estadio   C) Equipo   D) Silbato",
-          "respuesta": "A) DECISIÓN",
+          "enunciado": "juez es a sentencia como árbitro es a:\n\nA) decisión   B) estadio   C) equipo   D) silbato",
+          "respuesta": "A) decisión",
           "pasos": [
             "La relación es la misma que entre JUEZ y SENTENCIA.",
             "Aplicada a ÁRBITRO, el par correcto es DECISIÓN.",
@@ -99,8 +99,8 @@
           ]
         },
         {
-          "enunciado": "DÍA es a SOL como NOCHE es a:\n\nA) LUNA   B) Sueño   C) Oscuridad   D) Estrella",
-          "respuesta": "A) LUNA",
+          "enunciado": "día es a sol como noche es a:\n\nA) luna   B) sueño   C) oscuridad   D) estrella",
+          "respuesta": "A) luna",
           "pasos": [
             "La relación es la misma que entre DÍA y SOL.",
             "Aplicada a NOCHE, el par correcto es LUNA.",
@@ -108,8 +108,8 @@
           ]
         },
         {
-          "enunciado": "PÁGINA es a LIBRO como ESLABÓN es a:\n\nA) Anillo   B) Metal   C) CADENA   D) Hierro",
-          "respuesta": "C) CADENA",
+          "enunciado": "página es a libro como eslabón es a:\n\nA) anillo   B) metal   C) cadena   D) hierro",
+          "respuesta": "C) cadena",
           "pasos": [
             "La relación es la misma que entre PÁGINA y LIBRO.",
             "Aplicada a ESLABÓN, el par correcto es CADENA.",
@@ -117,8 +117,8 @@
           ]
         },
         {
-          "enunciado": "PEZ es a AGUA como PÁJARO es a:\n\nA) Nido   B) Cielo   C) AIRE   D) Ala",
-          "respuesta": "C) AIRE",
+          "enunciado": "pez es a agua como pájaro es a:\n\nA) nido   B) cielo   C) aire   D) ala",
+          "respuesta": "C) aire",
           "pasos": [
             "La relación es la misma que entre PEZ y AGUA.",
             "Aplicada a PÁJARO, el par correcto es AIRE.",
@@ -126,8 +126,8 @@
           ]
         },
         {
-          "enunciado": "MINERO es a MINA como AGRICULTOR es a:\n\nA) Tractor   B) Semilla   C) CAMPO   D) Cosecha",
-          "respuesta": "C) CAMPO",
+          "enunciado": "minero es a mina como agricultor es a:\n\nA) tractor   B) semilla   C) campo   D) cosecha",
+          "respuesta": "C) campo",
           "pasos": [
             "La relación es la misma que entre MINERO y MINA.",
             "Aplicada a AGRICULTOR, el par correcto es CAMPO.",
@@ -135,8 +135,8 @@
           ]
         },
         {
-          "enunciado": "DEDAL es a DEDO como CASCO es a:\n\nA) CABEZA   B) Casco   C) Casco   D) Casco",
-          "respuesta": "A) CABEZA",
+          "enunciado": "dedal es a dedo como casco es a:\n\nA) cabeza   B) casco   C) casco   D) casco",
+          "respuesta": "A) cabeza",
           "pasos": [
             "La relación es la misma que entre DEDAL y DEDO.",
             "Aplicada a CASCO, el par correcto es CABEZA.",
@@ -144,8 +144,8 @@
           ]
         },
         {
-          "enunciado": "LÁPIZ es a ESCRIBIR como TIJERA es a:\n\nA) CORTAR   B) Mesa   C) Filo   D) Papel",
-          "respuesta": "A) CORTAR",
+          "enunciado": "lápiz es a escribir como tijera es a:\n\nA) cortar   B) mesa   C) filo   D) papel",
+          "respuesta": "A) cortar",
           "pasos": [
             "La relación es la misma que entre LÁPIZ y ESCRIBIR.",
             "Aplicada a TIJERA, el par correcto es CORTAR.",
@@ -153,8 +153,8 @@
           ]
         },
         {
-          "enunciado": "REY es a REINO como ALCALDE es a:\n\nA) Pueblo   B) Plaza   C) CIUDAD   D) Voto",
-          "respuesta": "C) CIUDAD",
+          "enunciado": "rey es a reino como alcalde es a:\n\nA) pueblo   B) plaza   C) ciudad   D) voto",
+          "respuesta": "C) ciudad",
           "pasos": [
             "La relación es la misma que entre REY y REINO.",
             "Aplicada a ALCALDE, el par correcto es CIUDAD.",
@@ -162,8 +162,8 @@
           ]
         },
         {
-          "enunciado": "HIELO es a FRÍO como FUEGO es a:\n\nA) Llama   B) Humo   C) Leña   D) CALOR",
-          "respuesta": "D) CALOR",
+          "enunciado": "hielo es a frío como fuego es a:\n\nA) llama   B) humo   C) leña   D) calor",
+          "respuesta": "D) calor",
           "pasos": [
             "La relación es la misma que entre HIELO y FRÍO.",
             "Aplicada a FUEGO, el par correcto es CALOR.",
@@ -171,8 +171,8 @@
           ]
         },
         {
-          "enunciado": "MAPA es a TERRITORIO como PLANO es a:\n\nA) EDIFICIO   B) Calle   C) Arquitecto   D) Ciudad",
-          "respuesta": "A) EDIFICIO",
+          "enunciado": "mapa es a territorio como plano es a:\n\nA) edificio   B) calle   C) arquitecto   D) ciudad",
+          "respuesta": "A) edificio",
           "pasos": [
             "La relación es la misma que entre MAPA y TERRITORIO.",
             "Aplicada a PLANO, el par correcto es EDIFICIO.",
@@ -180,8 +180,8 @@
           ]
         },
         {
-          "enunciado": "RATÓN es a QUESO como ABEJA es a:\n\nA) Abeja   B) Flor   C) Panal   D) MIEL",
-          "respuesta": "D) MIEL",
+          "enunciado": "ratón es a queso como abeja es a:\n\nA) abeja   B) flor   C) panal   D) miel",
+          "respuesta": "D) miel",
           "pasos": [
             "La relación es la misma que entre RATÓN y QUESO.",
             "Aplicada a ABEJA, el par correcto es MIEL.",
@@ -189,8 +189,8 @@
           ]
         },
         {
-          "enunciado": "GUANTE es a MANO como ZAPATO es a:\n\nA) Dedo   B) Calcetín   C) PIE   D) Camino",
-          "respuesta": "C) PIE",
+          "enunciado": "guante es a mano como zapato es a:\n\nA) dedo   B) calcetín   C) pie   D) camino",
+          "respuesta": "C) pie",
           "pasos": [
             "La relación es la misma que entre GUANTE y MANO.",
             "Aplicada a ZAPATO, el par correcto es PIE.",
@@ -205,8 +205,8 @@
       "descripcion": "Elige la opción más opuesta al significado.",
       "items": [
         {
-          "enunciado": "Opción más opuesta a GENEROSO:\n\nA) Humilde   B) TACAÑO   C) Rico   D) Amable",
-          "respuesta": "B) TACAÑO",
+          "enunciado": "Opción más opuesta a generoso:\n\nA) humilde   B) tacaño   C) rico   D) amable",
+          "respuesta": "B) tacaño",
           "pasos": [
             "GENEROSO y TACAÑO se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -214,8 +214,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a CLARO:\n\nA) Visible   B) OSCURO   C) Limpio   D) Brillante",
-          "respuesta": "B) OSCURO",
+          "enunciado": "Opción más opuesta a claro:\n\nA) visible   B) oscuro   C) limpio   D) brillante",
+          "respuesta": "B) oscuro",
           "pasos": [
             "CLARO y OSCURO se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -223,8 +223,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a PERMANENTE:\n\nA) Firme   B) Sólido   C) TEMPORAL   D) Eterno",
-          "respuesta": "C) TEMPORAL",
+          "enunciado": "Opción más opuesta a permanente:\n\nA) firme   B) sólido   C) temporal   D) eterno",
+          "respuesta": "C) temporal",
           "pasos": [
             "PERMANENTE y TEMPORAL se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -232,8 +232,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a ORDENADO:\n\nA) Limpio   B) Rápido   C) Formal   D) CAÓTICO",
-          "respuesta": "D) CAÓTICO",
+          "enunciado": "Opción más opuesta a ordenado:\n\nA) limpio   B) rápido   C) formal   D) caótico",
+          "respuesta": "D) caótico",
           "pasos": [
             "ORDENADO y CAÓTICO se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -241,8 +241,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a APROBADO:\n\nA) Evaluado   B) Presentado   C) Revisado   D) REPROBADO",
-          "respuesta": "D) REPROBADO",
+          "enunciado": "Opción más opuesta a aprobado:\n\nA) evaluado   B) presentado   C) revisado   D) reprobado",
+          "respuesta": "D) reprobado",
           "pasos": [
             "APROBADO y REPROBADO se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -250,8 +250,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a PÚBLICO:\n\nA) PRIVADO   B) Abierto   C) Masivo   D) Popular",
-          "respuesta": "A) PRIVADO",
+          "enunciado": "Opción más opuesta a público:\n\nA) privado   B) abierto   C) masivo   D) popular",
+          "respuesta": "A) privado",
           "pasos": [
             "PÚBLICO y PRIVADO se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -259,8 +259,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a AUMENTAR:\n\nA) DISMINUIR   B) Ampliar   C) Crecer   D) Sumar",
-          "respuesta": "A) DISMINUIR",
+          "enunciado": "Opción más opuesta a aumentar:\n\nA) disminuir   B) ampliar   C) crecer   D) sumar",
+          "respuesta": "A) disminuir",
           "pasos": [
             "AUMENTAR y DISMINUIR se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -268,8 +268,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a INICIO:\n\nA) Principio   B) Arranque   C) Origen   D) FINAL",
-          "respuesta": "D) FINAL",
+          "enunciado": "Opción más opuesta a inicio:\n\nA) principio   B) arranque   C) origen   D) final",
+          "respuesta": "D) final",
           "pasos": [
             "INICIO y FINAL se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -277,8 +277,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a RÁPIDO:\n\nA) Pronto   B) LENTO   C) Veloz   D) Ágil",
-          "respuesta": "B) LENTO",
+          "enunciado": "Opción más opuesta a rápido:\n\nA) pronto   B) lento   C) veloz   D) ágil",
+          "respuesta": "B) lento",
           "pasos": [
             "RÁPIDO y LENTO se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -286,8 +286,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a FÁCIL:\n\nA) Liviano   B) Sencillo   C) DIFÍCIL   D) Simple",
-          "respuesta": "C) DIFÍCIL",
+          "enunciado": "Opción más opuesta a fácil:\n\nA) liviano   B) sencillo   C) difícil   D) simple",
+          "respuesta": "C) difícil",
           "pasos": [
             "FÁCIL y DIFÍCIL se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -295,8 +295,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a VERDAD:\n\nA) MENTIRA   B) Certeza   C) Prueba   D) Hecho",
-          "respuesta": "A) MENTIRA",
+          "enunciado": "Opción más opuesta a verdad:\n\nA) mentira   B) certeza   C) prueba   D) hecho",
+          "respuesta": "A) mentira",
           "pasos": [
             "VERDAD y MENTIRA se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -304,8 +304,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a ÉXITO:\n\nA) Triunfo   B) Logro   C) FRACASO   D) Victoria",
-          "respuesta": "C) FRACASO",
+          "enunciado": "Opción más opuesta a éxito:\n\nA) triunfo   B) logro   C) fracaso   D) victoria",
+          "respuesta": "C) fracaso",
           "pasos": [
             "ÉXITO y FRACASO se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -313,8 +313,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a PRESENTE:\n\nA) Cercano   B) Actual   C) Hoy   D) AUSENTE",
-          "respuesta": "D) AUSENTE",
+          "enunciado": "Opción más opuesta a presente:\n\nA) cercano   B) actual   C) hoy   D) ausente",
+          "respuesta": "D) ausente",
           "pasos": [
             "PRESENTE y AUSENTE se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -322,8 +322,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a ABRIR:\n\nA) Iniciar   B) CERRAR   C) Descubrir   D) Liberar",
-          "respuesta": "B) CERRAR",
+          "enunciado": "Opción más opuesta a abrir:\n\nA) iniciar   B) cerrar   C) descubrir   D) liberar",
+          "respuesta": "B) cerrar",
           "pasos": [
             "ABRIR y CERRAR se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -331,8 +331,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a SUBIR:\n\nA) Ascender   B) Alzar   C) BAJAR   D) Elevar",
-          "respuesta": "C) BAJAR",
+          "enunciado": "Opción más opuesta a subir:\n\nA) ascender   B) alzar   C) bajar   D) elevar",
+          "respuesta": "C) bajar",
           "pasos": [
             "SUBIR y BAJAR se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -340,8 +340,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a GANAR:\n\nA) Obtener   B) PERDER   C) Conquistar   D) Triunfar",
-          "respuesta": "B) PERDER",
+          "enunciado": "Opción más opuesta a ganar:\n\nA) obtener   B) perder   C) conquistar   D) triunfar",
+          "respuesta": "B) perder",
           "pasos": [
             "GANAR y PERDER se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -349,8 +349,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a CALIENTE:\n\nA) Ardiente   B) Caluroso   C) Tibio   D) FRÍO",
-          "respuesta": "D) FRÍO",
+          "enunciado": "Opción más opuesta a caliente:\n\nA) ardiente   B) caluroso   C) tibio   D) frío",
+          "respuesta": "D) frío",
           "pasos": [
             "CALIENTE y FRÍO se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -358,8 +358,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a LARGO:\n\nA) Extenso   B) Prolongado   C) Amplio   D) CORTO",
-          "respuesta": "D) CORTO",
+          "enunciado": "Opción más opuesta a largo:\n\nA) extenso   B) prolongado   C) amplio   D) corto",
+          "respuesta": "D) corto",
           "pasos": [
             "LARGO y CORTO se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -367,8 +367,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a FUERTE:\n\nA) Potente   B) DÉBIL   C) Sólido   D) Robusto",
-          "respuesta": "B) DÉBIL",
+          "enunciado": "Opción más opuesta a fuerte:\n\nA) potente   B) débil   C) sólido   D) robusto",
+          "respuesta": "B) débil",
           "pasos": [
             "FUERTE y DÉBIL se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -376,8 +376,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a NUEVO:\n\nA) VIEJO   B) Fresco   C) Reciente   D) Actual",
-          "respuesta": "A) VIEJO",
+          "enunciado": "Opción más opuesta a nuevo:\n\nA) viejo   B) fresco   C) reciente   D) actual",
+          "respuesta": "A) viejo",
           "pasos": [
             "NUEVO y VIEJO se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -385,8 +385,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a LIMPIO:\n\nA) Brillante   B) Ordenado   C) SUCIO   D) Higiene",
-          "respuesta": "C) SUCIO",
+          "enunciado": "Opción más opuesta a limpio:\n\nA) brillante   B) ordenado   C) sucio   D) higiene",
+          "respuesta": "C) sucio",
           "pasos": [
             "LIMPIO y SUCIO se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -394,8 +394,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a HONESTO:\n\nA) Sincero   B) Íntegro   C) DESHONESTO   D) Leal",
-          "respuesta": "C) DESHONESTO",
+          "enunciado": "Opción más opuesta a honesto:\n\nA) sincero   B) íntegro   C) deshonesto   D) leal",
+          "respuesta": "C) deshonesto",
           "pasos": [
             "HONESTO y DESHONESTO se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -403,8 +403,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a ACTIVO:\n\nA) Dinámico   B) Vivo   C) Energico   D) PASIVO",
-          "respuesta": "D) PASIVO",
+          "enunciado": "Opción más opuesta a activo:\n\nA) dinámico   B) vivo   C) energico   D) pasivo",
+          "respuesta": "D) pasivo",
           "pasos": [
             "ACTIVO y PASIVO se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -412,8 +412,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a INCLUIR:\n\nA) Sumar   B) EXCLUIR   C) Integrar   D) Agregar",
-          "respuesta": "B) EXCLUIR",
+          "enunciado": "Opción más opuesta a incluir:\n\nA) sumar   B) excluir   C) integrar   D) agregar",
+          "respuesta": "B) excluir",
           "pasos": [
             "INCLUIR y EXCLUIR se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -421,8 +421,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a ACEPTAR:\n\nA) Recibir   B) Aprobar   C) Admitir   D) RECHAZAR",
-          "respuesta": "D) RECHAZAR",
+          "enunciado": "Opción más opuesta a aceptar:\n\nA) recibir   B) aprobar   C) admitir   D) rechazar",
+          "respuesta": "D) rechazar",
           "pasos": [
             "ACEPTAR y RECHAZAR se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -430,8 +430,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a CONSTRUIR:\n\nA) DESTRUIR   B) Edificar   C) Armar   D) Crear",
-          "respuesta": "A) DESTRUIR",
+          "enunciado": "Opción más opuesta a construir:\n\nA) destruir   B) edificar   C) armar   D) crear",
+          "respuesta": "A) destruir",
           "pasos": [
             "CONSTRUIR y DESTRUIR se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -439,8 +439,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a AVANZAR:\n\nA) Seguir   B) RETROCEDER   C) Progresar   D) Continuar",
-          "respuesta": "B) RETROCEDER",
+          "enunciado": "Opción más opuesta a avanzar:\n\nA) seguir   B) retroceder   C) progresar   D) continuar",
+          "respuesta": "B) retroceder",
           "pasos": [
             "AVANZAR y RETROCEDER se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -448,8 +448,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a COMPLETO:\n\nA) Total   B) Íntegro   C) Entero   D) INCOMPLETO",
-          "respuesta": "D) INCOMPLETO",
+          "enunciado": "Opción más opuesta a completo:\n\nA) total   B) íntegro   C) entero   D) incompleto",
+          "respuesta": "D) incompleto",
           "pasos": [
             "COMPLETO y INCOMPLETO se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -457,8 +457,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a LEGAL:\n\nA) Permitido   B) Lícito   C) Válido   D) ILEGAL",
-          "respuesta": "D) ILEGAL",
+          "enunciado": "Opción más opuesta a legal:\n\nA) permitido   B) lícito   C) válido   D) ilegal",
+          "respuesta": "D) ilegal",
           "pasos": [
             "LEGAL y ILEGAL se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -466,8 +466,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a OPTIMISTA:\n\nA) Positivo   B) PESIMISTA   C) Confianza   D) Esperanzado",
-          "respuesta": "B) PESIMISTA",
+          "enunciado": "Opción más opuesta a optimista:\n\nA) positivo   B) pesimista   C) confianza   D) esperanzado",
+          "respuesta": "B) pesimista",
           "pasos": [
             "OPTIMISTA y PESIMISTA se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -475,8 +475,8 @@
           ]
         },
         {
-          "enunciado": "Opción más opuesta a INTERNO:\n\nA) Dentro   B) EXTERNO   C) Íntimo   D) Interior",
-          "respuesta": "B) EXTERNO",
+          "enunciado": "Opción más opuesta a interno:\n\nA) dentro   B) externo   C) íntimo   D) interior",
+          "respuesta": "B) externo",
           "pasos": [
             "INTERNO y EXTERNO se niegan entre sí en el sentido principal.",
             "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
@@ -1819,8 +1819,8 @@
       "descripcion": "Describe figuras/patrones en texto: rota, alterna o cuenta.",
       "items": [
         {
-          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) Igual   B) Izquierda   C) Derecha (▶)   D) Abajo",
-          "respuesta": "C) Derecha (▶)",
+          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) igual   B) izquierda   C) derecha (▶)   D) abajo",
+          "respuesta": "C) derecha (▶)",
           "pasos": [
             "Arriba → derecha → abajo → izquierda.",
             "Un giro de 90° horario desde arriba es derecha.",
@@ -1837,8 +1837,8 @@
           ]
         },
         {
-          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) Blanco   B) Negro   C) Gris   D) No se sabe",
-          "respuesta": "A) Blanco",
+          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) blanco   B) negro   C) gris   D) no se sabe",
+          "respuesta": "A) blanco",
           "pasos": [
             "Patrón de 2: impar=blanco, par=negro.",
             "7 es impar → Blanco.",
@@ -1846,8 +1846,8 @@
           ]
         },
         {
-          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) Mediana   B) Vacía   C) Grande   D) Pequeña",
-          "respuesta": "C) Grande",
+          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) mediana   B) vacía   C) grande   D) pequeña",
+          "respuesta": "C) grande",
           "pasos": [
             "Ciclo de 3.",
             "Posición 4 = misma que 1 → grande.",
@@ -1855,7 +1855,7 @@
           ]
         },
         {
-          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊖   B) ⊕   C) Igual siempre   D) ⊗",
+          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊖   B) ⊕   C) igual siempre   D) ⊗",
           "respuesta": "A) ⊖",
           "pasos": [
             "Impar ⊕, par ⊖.",
@@ -1864,17 +1864,17 @@
           ]
         },
         {
-          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) E   B) F   C) D   D) A",
-          "respuesta": "C) D",
+          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) e   B) f   C) d   D) a",
+          "respuesta": "C) d",
           "pasos": [
             "A(1)→C(3) suma 2.",
-            "B(2)+2 = D(4).",
+            "b(2)+2 = d(4).",
             "Aplica el mismo salto."
           ]
         },
         {
-          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) Abajo   B) Derecha (▶)   C) Igual   D) Izquierda",
-          "respuesta": "B) Derecha (▶)",
+          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) abajo   B) derecha (▶)   C) igual   D) izquierda",
+          "respuesta": "B) derecha (▶)",
           "pasos": [
             "Arriba → derecha → abajo → izquierda.",
             "Un giro de 90° horario desde arriba es derecha.",
@@ -1891,8 +1891,8 @@
           ]
         },
         {
-          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) Negro   B) Blanco   C) No se sabe   D) Gris",
-          "respuesta": "B) Blanco",
+          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) negro   B) blanco   C) no se sabe   D) gris",
+          "respuesta": "B) blanco",
           "pasos": [
             "Patrón de 2: impar=blanco, par=negro.",
             "7 es impar → Blanco.",
@@ -1900,8 +1900,8 @@
           ]
         },
         {
-          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) Mediana   B) Pequeña   C) Vacía   D) Grande",
-          "respuesta": "D) Grande",
+          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) mediana   B) pequeña   C) vacía   D) grande",
+          "respuesta": "D) grande",
           "pasos": [
             "Ciclo de 3.",
             "Posición 4 = misma que 1 → grande.",
@@ -1909,7 +1909,7 @@
           ]
         },
         {
-          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊖   B) ⊕   C) Igual siempre   D) ⊗",
+          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊖   B) ⊕   C) igual siempre   D) ⊗",
           "respuesta": "A) ⊖",
           "pasos": [
             "Impar ⊕, par ⊖.",
@@ -1918,17 +1918,17 @@
           ]
         },
         {
-          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) F   B) E   C) D   D) A",
-          "respuesta": "C) D",
+          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) f   B) e   C) d   D) a",
+          "respuesta": "C) d",
           "pasos": [
             "A(1)→C(3) suma 2.",
-            "B(2)+2 = D(4).",
+            "b(2)+2 = d(4).",
             "Aplica el mismo salto."
           ]
         },
         {
-          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) Derecha (▶)   B) Abajo   C) Igual   D) Izquierda",
-          "respuesta": "A) Derecha (▶)",
+          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) derecha (▶)   B) abajo   C) igual   D) izquierda",
+          "respuesta": "A) derecha (▶)",
           "pasos": [
             "Arriba → derecha → abajo → izquierda.",
             "Un giro de 90° horario desde arriba es derecha.",
@@ -1945,8 +1945,8 @@
           ]
         },
         {
-          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) Gris   B) Negro   C) Blanco   D) No se sabe",
-          "respuesta": "C) Blanco",
+          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) gris   B) negro   C) blanco   D) no se sabe",
+          "respuesta": "C) blanco",
           "pasos": [
             "Patrón de 2: impar=blanco, par=negro.",
             "7 es impar → Blanco.",
@@ -1954,8 +1954,8 @@
           ]
         },
         {
-          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) Grande   B) Mediana   C) Pequeña   D) Vacía",
-          "respuesta": "A) Grande",
+          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) grande   B) mediana   C) pequeña   D) vacía",
+          "respuesta": "A) grande",
           "pasos": [
             "Ciclo de 3.",
             "Posición 4 = misma que 1 → grande.",
@@ -1963,7 +1963,7 @@
           ]
         },
         {
-          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊕   B) Igual siempre   C) ⊖   D) ⊗",
+          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊕   B) igual siempre   C) ⊖   D) ⊗",
           "respuesta": "C) ⊖",
           "pasos": [
             "Impar ⊕, par ⊖.",
@@ -1972,17 +1972,17 @@
           ]
         },
         {
-          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) A   B) D   C) F   D) E",
-          "respuesta": "B) D",
+          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) a   B) d   C) f   D) e",
+          "respuesta": "B) d",
           "pasos": [
             "A(1)→C(3) suma 2.",
-            "B(2)+2 = D(4).",
+            "b(2)+2 = d(4).",
             "Aplica el mismo salto."
           ]
         },
         {
-          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) Abajo   B) Derecha (▶)   C) Igual   D) Izquierda",
-          "respuesta": "B) Derecha (▶)",
+          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) abajo   B) derecha (▶)   C) igual   D) izquierda",
+          "respuesta": "B) derecha (▶)",
           "pasos": [
             "Arriba → derecha → abajo → izquierda.",
             "Un giro de 90° horario desde arriba es derecha.",
@@ -1999,8 +1999,8 @@
           ]
         },
         {
-          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) No se sabe   B) Gris   C) Blanco   D) Negro",
-          "respuesta": "C) Blanco",
+          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) no se sabe   B) gris   C) blanco   D) negro",
+          "respuesta": "C) blanco",
           "pasos": [
             "Patrón de 2: impar=blanco, par=negro.",
             "7 es impar → Blanco.",
@@ -2008,8 +2008,8 @@
           ]
         },
         {
-          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) Pequeña   B) Mediana   C) Grande   D) Vacía",
-          "respuesta": "C) Grande",
+          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) pequeña   B) mediana   C) grande   D) vacía",
+          "respuesta": "C) grande",
           "pasos": [
             "Ciclo de 3.",
             "Posición 4 = misma que 1 → grande.",
@@ -2017,7 +2017,7 @@
           ]
         },
         {
-          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊖   B) Igual siempre   C) ⊕   D) ⊗",
+          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊖   B) igual siempre   C) ⊕   D) ⊗",
           "respuesta": "A) ⊖",
           "pasos": [
             "Impar ⊕, par ⊖.",
@@ -2026,17 +2026,17 @@
           ]
         },
         {
-          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) E   B) D   C) A   D) F",
-          "respuesta": "B) D",
+          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) e   B) d   C) a   D) f",
+          "respuesta": "B) d",
           "pasos": [
             "A(1)→C(3) suma 2.",
-            "B(2)+2 = D(4).",
+            "b(2)+2 = d(4).",
             "Aplica el mismo salto."
           ]
         },
         {
-          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) Derecha (▶)   B) Izquierda   C) Igual   D) Abajo",
-          "respuesta": "A) Derecha (▶)",
+          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) derecha (▶)   B) izquierda   C) igual   D) abajo",
+          "respuesta": "A) derecha (▶)",
           "pasos": [
             "Arriba → derecha → abajo → izquierda.",
             "Un giro de 90° horario desde arriba es derecha.",
@@ -2053,8 +2053,8 @@
           ]
         },
         {
-          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) Negro   B) No se sabe   C) Gris   D) Blanco",
-          "respuesta": "D) Blanco",
+          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) negro   B) no se sabe   C) gris   D) blanco",
+          "respuesta": "D) blanco",
           "pasos": [
             "Patrón de 2: impar=blanco, par=negro.",
             "7 es impar → Blanco.",
@@ -2062,8 +2062,8 @@
           ]
         },
         {
-          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) Grande   B) Vacía   C) Mediana   D) Pequeña",
-          "respuesta": "A) Grande",
+          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) grande   B) vacía   C) mediana   D) pequeña",
+          "respuesta": "A) grande",
           "pasos": [
             "Ciclo de 3.",
             "Posición 4 = misma que 1 → grande.",
@@ -2071,7 +2071,7 @@
           ]
         },
         {
-          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊗   B) Igual siempre   C) ⊕   D) ⊖",
+          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊗   B) igual siempre   C) ⊕   D) ⊖",
           "respuesta": "D) ⊖",
           "pasos": [
             "Impar ⊕, par ⊖.",
@@ -2080,17 +2080,17 @@
           ]
         },
         {
-          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) F   B) D   C) E   D) A",
-          "respuesta": "B) D",
+          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) f   B) d   C) e   D) a",
+          "respuesta": "B) d",
           "pasos": [
             "A(1)→C(3) suma 2.",
-            "B(2)+2 = D(4).",
+            "b(2)+2 = d(4).",
             "Aplica el mismo salto."
           ]
         },
         {
-          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) Derecha (▶)   B) Igual   C) Izquierda   D) Abajo",
-          "respuesta": "A) Derecha (▶)",
+          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) derecha (▶)   B) igual   C) izquierda   D) abajo",
+          "respuesta": "A) derecha (▶)",
           "pasos": [
             "Arriba → derecha → abajo → izquierda.",
             "Un giro de 90° horario desde arriba es derecha.",
@@ -2107,8 +2107,8 @@
           ]
         },
         {
-          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) Negro   B) Gris   C) No se sabe   D) Blanco",
-          "respuesta": "D) Blanco",
+          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) negro   B) gris   C) no se sabe   D) blanco",
+          "respuesta": "D) blanco",
           "pasos": [
             "Patrón de 2: impar=blanco, par=negro.",
             "7 es impar → Blanco.",
@@ -2116,8 +2116,8 @@
           ]
         },
         {
-          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) Grande   B) Pequeña   C) Vacía   D) Mediana",
-          "respuesta": "A) Grande",
+          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) grande   B) pequeña   C) vacía   D) mediana",
+          "respuesta": "A) grande",
           "pasos": [
             "Ciclo de 3.",
             "Posición 4 = misma que 1 → grande.",
@@ -2125,7 +2125,7 @@
           ]
         },
         {
-          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊕   B) ⊗   C) ⊖   D) Igual siempre",
+          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊕   B) ⊗   C) ⊖   D) igual siempre",
           "respuesta": "C) ⊖",
           "pasos": [
             "Impar ⊕, par ⊖.",
@@ -2134,17 +2134,17 @@
           ]
         },
         {
-          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) A   B) D   C) F   D) E",
-          "respuesta": "B) D",
+          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) a   B) d   C) f   D) e",
+          "respuesta": "B) d",
           "pasos": [
             "A(1)→C(3) suma 2.",
-            "B(2)+2 = D(4).",
+            "b(2)+2 = d(4).",
             "Aplica el mismo salto."
           ]
         },
         {
-          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) Abajo   B) Derecha (▶)   C) Igual   D) Izquierda",
-          "respuesta": "B) Derecha (▶)",
+          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) abajo   B) derecha (▶)   C) igual   D) izquierda",
+          "respuesta": "B) derecha (▶)",
           "pasos": [
             "Arriba → derecha → abajo → izquierda.",
             "Un giro de 90° horario desde arriba es derecha.",
@@ -2161,8 +2161,8 @@
           ]
         },
         {
-          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) Negro   B) No se sabe   C) Gris   D) Blanco",
-          "respuesta": "D) Blanco",
+          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) negro   B) no se sabe   C) gris   D) blanco",
+          "respuesta": "D) blanco",
           "pasos": [
             "Patrón de 2: impar=blanco, par=negro.",
             "7 es impar → Blanco.",
@@ -2170,8 +2170,8 @@
           ]
         },
         {
-          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) Grande   B) Pequeña   C) Vacía   D) Mediana",
-          "respuesta": "A) Grande",
+          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) grande   B) pequeña   C) vacía   D) mediana",
+          "respuesta": "A) grande",
           "pasos": [
             "Ciclo de 3.",
             "Posición 4 = misma que 1 → grande.",
@@ -2179,7 +2179,7 @@
           ]
         },
         {
-          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊖   B) Igual siempre   C) ⊕   D) ⊗",
+          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊖   B) igual siempre   C) ⊕   D) ⊗",
           "respuesta": "A) ⊖",
           "pasos": [
             "Impar ⊕, par ⊖.",
@@ -2188,17 +2188,17 @@
           ]
         },
         {
-          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) F   B) E   C) D   D) A",
-          "respuesta": "C) D",
+          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) f   B) e   C) d   D) a",
+          "respuesta": "C) d",
           "pasos": [
             "A(1)→C(3) suma 2.",
-            "B(2)+2 = D(4).",
+            "b(2)+2 = d(4).",
             "Aplica el mismo salto."
           ]
         },
         {
-          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) Izquierda   B) Derecha (▶)   C) Igual   D) Abajo",
-          "respuesta": "B) Derecha (▶)",
+          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) izquierda   B) derecha (▶)   C) igual   D) abajo",
+          "respuesta": "B) derecha (▶)",
           "pasos": [
             "Arriba → derecha → abajo → izquierda.",
             "Un giro de 90° horario desde arriba es derecha.",
@@ -2215,8 +2215,8 @@
           ]
         },
         {
-          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) Blanco   B) Negro   C) Gris   D) No se sabe",
-          "respuesta": "A) Blanco",
+          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) blanco   B) negro   C) gris   D) no se sabe",
+          "respuesta": "A) blanco",
           "pasos": [
             "Patrón de 2: impar=blanco, par=negro.",
             "7 es impar → Blanco.",
@@ -2224,8 +2224,8 @@
           ]
         },
         {
-          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) Vacía   B) Pequeña   C) Mediana   D) Grande",
-          "respuesta": "D) Grande",
+          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) vacía   B) pequeña   C) mediana   D) grande",
+          "respuesta": "D) grande",
           "pasos": [
             "Ciclo de 3.",
             "Posición 4 = misma que 1 → grande.",
@@ -2233,7 +2233,7 @@
           ]
         },
         {
-          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊗   B) ⊕   C) ⊖   D) Igual siempre",
+          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊗   B) ⊕   C) ⊖   D) igual siempre",
           "respuesta": "C) ⊖",
           "pasos": [
             "Impar ⊕, par ⊖.",
@@ -2242,17 +2242,17 @@
           ]
         },
         {
-          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) D   B) F   C) E   D) A",
-          "respuesta": "A) D",
+          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) d   B) f   C) e   D) a",
+          "respuesta": "A) d",
           "pasos": [
             "A(1)→C(3) suma 2.",
-            "B(2)+2 = D(4).",
+            "b(2)+2 = d(4).",
             "Aplica el mismo salto."
           ]
         },
         {
-          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) Derecha (▶)   B) Izquierda   C) Abajo   D) Igual",
-          "respuesta": "A) Derecha (▶)",
+          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) derecha (▶)   B) izquierda   C) abajo   D) igual",
+          "respuesta": "A) derecha (▶)",
           "pasos": [
             "Arriba → derecha → abajo → izquierda.",
             "Un giro de 90° horario desde arriba es derecha.",
@@ -2269,8 +2269,8 @@
           ]
         },
         {
-          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) Negro   B) Gris   C) Blanco   D) No se sabe",
-          "respuesta": "C) Blanco",
+          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) negro   B) gris   C) blanco   D) no se sabe",
+          "respuesta": "C) blanco",
           "pasos": [
             "Patrón de 2: impar=blanco, par=negro.",
             "7 es impar → Blanco.",
@@ -2303,8 +2303,8 @@
           ]
         },
         {
-          "enunciado": "Norte arriba. Caminas norte, luego este, luego sur. ¿Hacia dónde miras al final?\n\nA) Norte   B) Sur   C) Este   D) Oeste",
-          "respuesta": "B) Sur",
+          "enunciado": "Norte arriba. Caminas norte, luego este, luego sur. ¿Hacia dónde miras al final?\n\nA) norte   B) sur   C) este   D) oeste",
+          "respuesta": "B) sur",
           "pasos": [
             "La orientación final es el último tramo.",
             "Último: sur.",
@@ -2321,8 +2321,8 @@
           ]
         },
         {
-          "enunciado": "Espejo vertical. Izquierda y derecha:\n\nA) Se mantienen   B) Se intercambian   C) Rotan 90°   D) Desaparecen",
-          "respuesta": "B) Se intercambian",
+          "enunciado": "Espejo vertical. Izquierda y derecha:\n\nA) se mantienen   B) se intercambian   C) rotan 90°   D) desaparecen",
+          "respuesta": "B) se intercambian",
           "pasos": [
             "Espejo vertical invierte I/D.",
             "Arriba/abajo se mantienen.",
@@ -2330,8 +2330,8 @@
           ]
         },
         {
-          "enunciado": "Vista desde arriba: círculo. Sólido más probable:\n\nA) Cubo   B) Cilindro   C) Pirámide triangular   D) Prisma triangular",
-          "respuesta": "B) Cilindro",
+          "enunciado": "Vista desde arriba: círculo. Sólido más probable:\n\nA) cubo   B) cilindro   C) pirámide triangular   D) prisma triangular",
+          "respuesta": "B) cilindro",
           "pasos": [
             "Vista superior circular → base redonda.",
             "Cilindro encaja.",
@@ -2339,8 +2339,8 @@
           ]
         },
         {
-          "enunciado": "Un papel con flecha ↑ se dobla por la mitad horizontal. La punta queda:\n\nA) Hacia el pliegue   B) Siempre abajo   C) Impossible   D) A la derecha",
-          "respuesta": "A) Hacia el pliegue",
+          "enunciado": "Un papel con flecha ↑ se dobla por la mitad horizontal. La punta queda:\n\nA) hacia el pliegue   B) siempre abajo   C) impossible   D) a la derecha",
+          "respuesta": "A) hacia el pliegue",
           "pasos": [
             "El doblez acerca extremos al pliegue.",
             "La punta se acerca al centro del doblez.",
@@ -2366,8 +2366,8 @@
           ]
         },
         {
-          "enunciado": "Silueta de L en 2D. Tras reflejo horizontal, la L:\n\nA) Queda igual   B) Se invierte izquierda-derecha   C) Se pone de cabeza   D) Desaparece",
-          "respuesta": "B) Se invierte izquierda-derecha",
+          "enunciado": "Silueta de L en 2D. Tras reflejo horizontal, la L:\n\nA) queda igual   B) se invierte izquierda-derecha   C) se pone de cabeza   D) desaparece",
+          "respuesta": "B) se invierte izquierda-derecha",
           "pasos": [
             "Reflejo horizontal = espejo vertical de la figura.",
             "Cambia I/D.",
@@ -2384,8 +2384,8 @@
           ]
         },
         {
-          "enunciado": "Vista lateral de un cono (punta arriba): se ve más como:\n\nA) Círculo   B) Triángulo   C) Cuadrado   D) Hexágono",
-          "respuesta": "B) Triángulo",
+          "enunciado": "Vista lateral de un cono (punta arriba): se ve más como:\n\nA) círculo   B) triángulo   C) cuadrado   D) hexágono",
+          "respuesta": "B) triángulo",
           "pasos": [
             "Corte/vista lateral típica = triángulo.",
             "Vista superior = círculo.",
@@ -2402,8 +2402,8 @@
           ]
         },
         {
-          "enunciado": "Mapa: giras 180°. Lo que estaba arriba-izquierda queda:\n\nA) Arriba-derecha   B) Abajo-derecha   C) Abajo-izquierda   D) Igual",
-          "respuesta": "B) Abajo-derecha",
+          "enunciado": "Mapa: giras 180°. Lo que estaba arriba-izquierda queda:\n\nA) arriba-derecha   B) abajo-derecha   C) abajo-izquierda   D) igual",
+          "respuesta": "B) abajo-derecha",
           "pasos": [
             "180°: arriba↔abajo e izquierda↔derecha.",
             "Arriba-izq → abajo-der.",
@@ -2411,8 +2411,8 @@
           ]
         },
         {
-          "enunciado": "Net de cubo en cruz: la cara opuesta al centro de la cruz suele ser:\n\nA) Un brazo extremo   B) Una esquina del papel   C) La misma cara   D) No hay opuesta",
-          "respuesta": "A) Un brazo extremo",
+          "enunciado": "Net de cubo en cruz: la cara opuesta al centro de la cruz suele ser:\n\nA) un brazo extremo   B) una esquina del papel   C) la misma cara   D) no hay opuesta",
+          "respuesta": "A) un brazo extremo",
           "pasos": [
             "En cruz, centro y extremo opuesto del eje largo suelen ser opuestos al plegar.",
             "Laterales quedan adyacentes.",
@@ -2420,8 +2420,8 @@
           ]
         },
         {
-          "enunciado": "Escalera vista de frente: peldaños se ven como:\n\nA) Círculos   B) Rectángulos/líneas horizontales   C) Triángulos   D) Puntos",
-          "respuesta": "B) Rectángulos/líneas horizontales",
+          "enunciado": "Escalera vista de frente: peldaños se ven como:\n\nA) círculos   B) rectángulos/líneas horizontales   C) triángulos   D) puntos",
+          "respuesta": "B) rectángulos/líneas horizontales",
           "pasos": [
             "Vista frontal comprime profundidad.",
             "Peldaños = bandas horizontales.",
@@ -2445,8 +2445,8 @@
           ]
         },
         {
-          "enunciado": "Todos los lunes el bus llega tarde. Hoy llegó tarde. ¿Hoy es lunes?\n\nA) Imposible   B) No necesariamente   C) Sí   D) Solo si llueve",
-          "respuesta": "B) No necesariamente",
+          "enunciado": "Todos los lunes el bus llega tarde. Hoy llegó tarde. ¿Hoy es lunes?\n\nA) imposible   B) no necesariamente   C) sí   D) solo si llueve",
+          "respuesta": "B) no necesariamente",
           "pasos": [
             "Si lunes → tarde no implica tarde → lunes.",
             "Puede llegar tarde otros días.",
@@ -2454,8 +2454,8 @@
           ]
         },
         {
-          "enunciado": "Letras: C,E,H,L, ?. Siguiente:\n\nA) R   B) P   C) Q   D) S",
-          "respuesta": "C) Q",
+          "enunciado": "Letras: C,E,H,L, ?. Siguiente:\n\nA) r   B) p   C) q   D) s",
+          "respuesta": "C) q",
           "pasos": [
             "Saltos +2,+3,+4…",
             "Siguiente +5 → Q.",
@@ -2463,8 +2463,8 @@
           ]
         },
         {
-          "enunciado": "Si suena la alarma, hay humo. Hoy hay humo. ¿Suena la alarma?\n\nA) Solo de noche   B) Sí seguro   C) No se puede asegurar   D) Nunca",
-          "respuesta": "C) No se puede asegurar",
+          "enunciado": "Si suena la alarma, hay humo. Hoy hay humo. ¿Suena la alarma?\n\nA) solo de noche   B) sí seguro   C) no se puede asegurar   D) nunca",
+          "respuesta": "C) no se puede asegurar",
           "pasos": [
             "Alarma→humo ≠ humo→alarma.",
             "Puede haber humo por otra causa.",
@@ -2490,8 +2490,8 @@
           ]
         },
         {
-          "enunciado": "Todos los lunes el bus llega tarde. Hoy llegó tarde. ¿Hoy es lunes?\n\nA) Sí   B) No necesariamente   C) Imposible   D) Solo si llueve",
-          "respuesta": "B) No necesariamente",
+          "enunciado": "Todos los lunes el bus llega tarde. Hoy llegó tarde. ¿Hoy es lunes?\n\nA) sí   B) no necesariamente   C) imposible   D) solo si llueve",
+          "respuesta": "B) no necesariamente",
           "pasos": [
             "Si lunes → tarde no implica tarde → lunes.",
             "Puede llegar tarde otros días.",
@@ -2499,8 +2499,8 @@
           ]
         },
         {
-          "enunciado": "Letras: C,E,H,L, ?. Siguiente:\n\nA) S   B) P   C) R   D) Q",
-          "respuesta": "D) Q",
+          "enunciado": "Letras: C,E,H,L, ?. Siguiente:\n\nA) s   B) p   C) r   D) q",
+          "respuesta": "D) q",
           "pasos": [
             "Saltos +2,+3,+4…",
             "Siguiente +5 → Q.",
@@ -2508,8 +2508,8 @@
           ]
         },
         {
-          "enunciado": "Si suena la alarma, hay humo. Hoy hay humo. ¿Suena la alarma?\n\nA) No se puede asegurar   B) Sí seguro   C) Solo de noche   D) Nunca",
-          "respuesta": "A) No se puede asegurar",
+          "enunciado": "Si suena la alarma, hay humo. Hoy hay humo. ¿Suena la alarma?\n\nA) no se puede asegurar   B) sí seguro   C) solo de noche   D) nunca",
+          "respuesta": "A) no se puede asegurar",
           "pasos": [
             "Alarma→humo ≠ humo→alarma.",
             "Puede haber humo por otra causa.",
@@ -2535,8 +2535,8 @@
           ]
         },
         {
-          "enunciado": "Todos los lunes el bus llega tarde. Hoy llegó tarde. ¿Hoy es lunes?\n\nA) Sí   B) Solo si llueve   C) Imposible   D) No necesariamente",
-          "respuesta": "D) No necesariamente",
+          "enunciado": "Todos los lunes el bus llega tarde. Hoy llegó tarde. ¿Hoy es lunes?\n\nA) sí   B) solo si llueve   C) imposible   D) no necesariamente",
+          "respuesta": "D) no necesariamente",
           "pasos": [
             "Si lunes → tarde no implica tarde → lunes.",
             "Puede llegar tarde otros días.",
@@ -2544,8 +2544,8 @@
           ]
         },
         {
-          "enunciado": "Letras: C,E,H,L, ?. Siguiente:\n\nA) Q   B) S   C) P   D) R",
-          "respuesta": "A) Q",
+          "enunciado": "Letras: C,E,H,L, ?. Siguiente:\n\nA) q   B) s   C) p   D) r",
+          "respuesta": "A) q",
           "pasos": [
             "Saltos +2,+3,+4…",
             "Siguiente +5 → Q.",
@@ -2553,8 +2553,8 @@
           ]
         },
         {
-          "enunciado": "Si suena la alarma, hay humo. Hoy hay humo. ¿Suena la alarma?\n\nA) Solo de noche   B) No se puede asegurar   C) Nunca   D) Sí seguro",
-          "respuesta": "B) No se puede asegurar",
+          "enunciado": "Si suena la alarma, hay humo. Hoy hay humo. ¿Suena la alarma?\n\nA) solo de noche   B) no se puede asegurar   C) nunca   D) sí seguro",
+          "respuesta": "B) no se puede asegurar",
           "pasos": [
             "Alarma→humo ≠ humo→alarma.",
             "Puede haber humo por otra causa.",
@@ -2580,8 +2580,8 @@
           ]
         },
         {
-          "enunciado": "Todos los lunes el bus llega tarde. Hoy llegó tarde. ¿Hoy es lunes?\n\nA) Imposible   B) Sí   C) Solo si llueve   D) No necesariamente",
-          "respuesta": "D) No necesariamente",
+          "enunciado": "Todos los lunes el bus llega tarde. Hoy llegó tarde. ¿Hoy es lunes?\n\nA) imposible   B) sí   C) solo si llueve   D) no necesariamente",
+          "respuesta": "D) no necesariamente",
           "pasos": [
             "Si lunes → tarde no implica tarde → lunes.",
             "Puede llegar tarde otros días.",
@@ -2589,8 +2589,8 @@
           ]
         },
         {
-          "enunciado": "Letras: C,E,H,L, ?. Siguiente:\n\nA) S   B) P   C) R   D) Q",
-          "respuesta": "D) Q",
+          "enunciado": "Letras: C,E,H,L, ?. Siguiente:\n\nA) s   B) p   C) r   D) q",
+          "respuesta": "D) q",
           "pasos": [
             "Saltos +2,+3,+4…",
             "Siguiente +5 → Q.",
@@ -2598,8 +2598,8 @@
           ]
         },
         {
-          "enunciado": "Si suena la alarma, hay humo. Hoy hay humo. ¿Suena la alarma?\n\nA) Solo de noche   B) No se puede asegurar   C) Sí seguro   D) Nunca",
-          "respuesta": "B) No se puede asegurar",
+          "enunciado": "Si suena la alarma, hay humo. Hoy hay humo. ¿Suena la alarma?\n\nA) solo de noche   B) no se puede asegurar   C) sí seguro   D) nunca",
+          "respuesta": "B) no se puede asegurar",
           "pasos": [
             "Alarma→humo ≠ humo→alarma.",
             "Puede haber humo por otra causa.",
@@ -2625,8 +2625,8 @@
           ]
         },
         {
-          "enunciado": "Todos los lunes el bus llega tarde. Hoy llegó tarde. ¿Hoy es lunes?\n\nA) Solo si llueve   B) Sí   C) Imposible   D) No necesariamente",
-          "respuesta": "D) No necesariamente",
+          "enunciado": "Todos los lunes el bus llega tarde. Hoy llegó tarde. ¿Hoy es lunes?\n\nA) solo si llueve   B) sí   C) imposible   D) no necesariamente",
+          "respuesta": "D) no necesariamente",
           "pasos": [
             "Si lunes → tarde no implica tarde → lunes.",
             "Puede llegar tarde otros días.",
@@ -2634,8 +2634,8 @@
           ]
         },
         {
-          "enunciado": "Letras: C,E,H,L, ?. Siguiente:\n\nA) P   B) Q   C) S   D) R",
-          "respuesta": "B) Q",
+          "enunciado": "Letras: C,E,H,L, ?. Siguiente:\n\nA) p   B) q   C) s   D) r",
+          "respuesta": "B) q",
           "pasos": [
             "Saltos +2,+3,+4…",
             "Siguiente +5 → Q.",
@@ -2643,8 +2643,8 @@
           ]
         },
         {
-          "enunciado": "Si suena la alarma, hay humo. Hoy hay humo. ¿Suena la alarma?\n\nA) No se puede asegurar   B) Nunca   C) Solo de noche   D) Sí seguro",
-          "respuesta": "A) No se puede asegurar",
+          "enunciado": "Si suena la alarma, hay humo. Hoy hay humo. ¿Suena la alarma?\n\nA) no se puede asegurar   B) nunca   C) solo de noche   D) sí seguro",
+          "respuesta": "A) no se puede asegurar",
           "pasos": [
             "Alarma→humo ≠ humo→alarma.",
             "Puede haber humo por otra causa.",
@@ -3395,8 +3395,8 @@
       "descripcion": "Comprensión, conectores y vocabulario preciso.",
       "items": [
         {
-          "enunciado": "«Aunque llovía, salió a correr.» La palabra de contraste es:\n\nA) Aunque   B) Llovía   C) Salió   D) Correr",
-          "respuesta": "A) Aunque",
+          "enunciado": "«Aunque llovía, salió a correr.» La palabra de contraste es:\n\nA) aunque   B) llovía   C) salió   D) correr",
+          "respuesta": "A) aunque",
           "pasos": [
             "«Aunque» marca concesión/contraste.",
             "El resto es contenido.",
@@ -3404,8 +3404,8 @@
           ]
         },
         {
-          "enunciado": "Sinónimo más cercano de ESCASO:\n\nA) Abundante   B) Insuficiente   C) Grande   D) Rápido",
-          "respuesta": "B) Insuficiente",
+          "enunciado": "Sinónimo más cercano de ESCASO:\n\nA) abundante   B) insuficiente   C) grande   D) rápido",
+          "respuesta": "B) insuficiente",
           "pasos": [
             "Escaso ≈ poco/insuficiente.",
             "Abundante es lo contrario.",
@@ -3422,8 +3422,8 @@
           ]
         },
         {
-          "enunciado": "La idea principal de un párrafo suele estar en:\n\nA) Solo ejemplos   B) La oración temática   C) La puntuación   D) Las comillas",
-          "respuesta": "B) La oración temática",
+          "enunciado": "La idea principal de un párrafo suele estar en:\n\nA) solo ejemplos   B) la oración temática   C) la puntuación   D) las comillas",
+          "respuesta": "B) la oración temática",
           "pasos": [
             "Resume la idea central.",
             "Ejemplos apoyan, no sustituyen.",
@@ -3440,8 +3440,8 @@
           ]
         },
         {
-          "enunciado": "Antónimo contextual de «obligatorio»:\n\nA) Necesario   B) Opcional   C) Urgente   D) Formal",
-          "respuesta": "B) Opcional",
+          "enunciado": "Antónimo contextual de «obligatorio»:\n\nA) necesario   B) opcional   C) urgente   D) formal",
+          "respuesta": "B) opcional",
           "pasos": [
             "Obligatorio = hay que hacerlo.",
             "Opcional = puedes no.",
@@ -3449,8 +3449,8 @@
           ]
         },
         {
-          "enunciado": "«Por tanto» introduce principalmente:\n\nA) Ejemplo   B) Conclusión/consecuencia   C) Contraste   D) Definición",
-          "respuesta": "B) Conclusión/consecuencia",
+          "enunciado": "«Por tanto» introduce principalmente:\n\nA) ejemplo   B) conclusión/consecuencia   C) contraste   D) definición",
+          "respuesta": "B) conclusión/consecuencia",
           "pasos": [
             "Por tanto = entonces/conclusión.",
             "No es contraste (pero/aunque).",
@@ -3458,8 +3458,8 @@
           ]
         },
         {
-          "enunciado": "Homófonos: «___ hecho el trabajo.»\n\nA) A   B) Ha   C) Ah   D) Á",
-          "respuesta": "B) Ha",
+          "enunciado": "Homófonos: «___ hecho el trabajo.»\n\nA) a   B) ha   C) ah   D) á",
+          "respuesta": "B) ha",
           "pasos": [
             "Ha = auxiliar de haber.",
             "A = preposición.",
@@ -3467,8 +3467,8 @@
           ]
         },
         {
-          "enunciado": "Mejor resumen de: «Estudió de noche; por eso llegó preparado.»\n\nA) Llegó tarde   B) Se preparó estudiando de noche   C) No estudió   D) Solo durmió",
-          "respuesta": "B) Se preparó estudiando de noche",
+          "enunciado": "Mejor resumen de: «Estudió de noche; por eso llegó preparado.»\n\nA) llegó tarde   B) se preparó estudiando de noche   C) no estudió   D) solo durmió",
+          "respuesta": "B) se preparó estudiando de noche",
           "pasos": [
             "Causa: estudió de noche → efecto: preparado.",
             "No inventes información.",
@@ -3476,8 +3476,8 @@
           ]
         },
         {
-          "enunciado": "«Sin embargo» equivale mejor a:\n\nA) Además   B) Pero   C) Porque   D) Entonces",
-          "respuesta": "B) Pero",
+          "enunciado": "«Sin embargo» equivale mejor a:\n\nA) además   B) pero   C) porque   D) entonces",
+          "respuesta": "B) pero",
           "pasos": [
             "Sin embargo = contraste.",
             "Como pero/no obstante.",
@@ -3485,8 +3485,8 @@
           ]
         },
         {
-          "enunciado": "Palabra mal usada en tono formal: «El jefe está re-busy.» Mejor:\n\nA) Muy ocupado   B) Super free   C) Mega late   D) Okis",
-          "respuesta": "A) Muy ocupado",
+          "enunciado": "Palabra mal usada en tono formal: «El jefe está re-busy.» Mejor:\n\nA) muy ocupado   B) super free   C) mega late   D) okis",
+          "respuesta": "A) muy ocupado",
           "pasos": [
             "Registro formal evita anglicismos coloquiales.",
             "«Muy ocupado» es claro.",
@@ -3494,8 +3494,8 @@
           ]
         },
         {
-          "enunciado": "Analogía verbal: «Escritor es a novela como pintor es a ___»\n\nA) Pincel   B) Cuadro   C) Museo   D) Color",
-          "respuesta": "B) Cuadro",
+          "enunciado": "Analogía verbal: «Escritor es a novela como pintor es a ___»\n\nA) pincel   B) cuadro   C) museo   D) color",
+          "respuesta": "B) cuadro",
           "pasos": [
             "Producto de la actividad.",
             "Novela = obra; cuadro = obra.",
@@ -3503,8 +3503,8 @@
           ]
         },
         {
-          "enunciado": "Detecta la conclusión: «Todos los gatos maúllan. Misu es un gato. Por tanto…»\n\nA) Misu ladra   B) Misu maúlla   C) Misu es perro   D) Nada",
-          "respuesta": "B) Misu maúlla",
+          "enunciado": "Detecta la conclusión: «Todos los gatos maúllan. Misu es un gato. Por tanto…»\n\nA) misu ladra   B) misu maúlla   C) misu es perro   D) nada",
+          "respuesta": "B) misu maúlla",
           "pasos": [
             "Silogismo válido.",
             "Aplica la regla universal al caso.",
@@ -3512,8 +3512,8 @@
           ]
         },
         {
-          "enunciado": "«Es decir» sirve para:\n\nA) Contradecir   B) Reformular/aclarar   C) Negar   D) Preguntar",
-          "respuesta": "B) Reformular/aclarar",
+          "enunciado": "«Es decir» sirve para:\n\nA) contradecir   B) reformular/aclarar   C) negar   D) preguntar",
+          "respuesta": "B) reformular/aclarar",
           "pasos": [
             "Introduce explicación equivalente.",
             "No marca oposición.",
@@ -3521,8 +3521,8 @@
           ]
         },
         {
-          "enunciado": "Prefijo «in-» en «incapaz» indica:\n\nA) Dentro   B) Negación   C) Repetición   D) Aumento",
-          "respuesta": "B) Negación",
+          "enunciado": "Prefijo «in-» en «incapaz» indica:\n\nA) dentro   B) negación   C) repetición   D) aumento",
+          "respuesta": "B) negación",
           "pasos": [
             "In- aquí = no capaz.",
             "Negación, no ubicación.",
@@ -3530,8 +3530,8 @@
           ]
         },
         {
-          "enunciado": "Orden lógico: 1) Premisa 2) ___ 3) Conclusión\n\nA) Ejemplo o desarrollo   B) Firma   C) Título solo   D) Nada",
-          "respuesta": "A) Ejemplo o desarrollo",
+          "enunciado": "Orden lógico: 1) Premisa 2) ___ 3) Conclusión\n\nA) ejemplo o desarrollo   B) firma   C) título solo   D) nada",
+          "respuesta": "A) ejemplo o desarrollo",
           "pasos": [
             "Tras la premisa viene el desarrollo.",
             "Luego la conclusión.",
@@ -3539,8 +3539,8 @@
           ]
         },
         {
-          "enunciado": "«Había» vs «habían»: «___ muchas personas.»\n\nA) Había   B) Habían   C) Haber   D) Hayan",
-          "respuesta": "A) Había",
+          "enunciado": "«Había» vs «habían»: «___ muchas personas.»\n\nA) había   B) habían   C) haber   D) hayan",
+          "respuesta": "A) había",
           "pasos": [
             "Haber impersonal: había + plural.",
             "No concuerda con el objeto.",
@@ -3548,8 +3548,8 @@
           ]
         },
         {
-          "enunciado": "Tono del aviso: «Se ruega silencio.» Es principalmente:\n\nA) Orden grosera   B) Petición cortés   C) Pregunta   D) Chiste",
-          "respuesta": "B) Petición cortés",
+          "enunciado": "Tono del aviso: «Se ruega silencio.» Es principalmente:\n\nA) orden grosera   B) petición cortés   C) pregunta   D) chiste",
+          "respuesta": "B) petición cortés",
           "pasos": [
             "«Se ruega» = petición formal.",
             "No es pregunta.",
@@ -3557,8 +3557,8 @@
           ]
         },
         {
-          "enunciado": "Cohesión: «Ana llegó tarde. ___ perdió el bus.»\n\nA) Por eso   B) Aunque   C) Sino   D) Si",
-          "respuesta": "A) Por eso",
+          "enunciado": "Cohesión: «Ana llegó tarde. ___ perdió el bus.»\n\nA) por eso   B) aunque   C) sino   D) si",
+          "respuesta": "A) por eso",
           "pasos": [
             "Relación causa-efecto.",
             "Por eso conecta ambas.",
@@ -3566,8 +3566,8 @@
           ]
         },
         {
-          "enunciado": "«Relevar» no debe confundirse con:\n\nA) Revelar (descubrir)   B) Sustituir en un turno   C) Ambos son iguales   D) Ninguna",
-          "respuesta": "A) Revelar (descubrir)",
+          "enunciado": "«Relevar» no debe confundirse con:\n\nA) revelar (descubrir)   B) sustituir en un turno   C) ambos son iguales   D) ninguna",
+          "respuesta": "A) revelar (descubrir)",
           "pasos": [
             "Relevar ≠ revelar.",
             "Relevar = sustituir/relevo.",
@@ -3575,8 +3575,8 @@
           ]
         },
         {
-          "enunciado": "Idea secundaria suele:\n\nA) Sustituir la principal   B) Apoyar con detalle/ejemplo   C) Borrar el tema   D) Cambiar de idioma",
-          "respuesta": "B) Apoyar con detalle/ejemplo",
+          "enunciado": "Idea secundaria suele:\n\nA) sustituir la principal   B) apoyar con detalle/ejemplo   C) borrar el tema   D) cambiar de idioma",
+          "respuesta": "B) apoyar con detalle/ejemplo",
           "pasos": [
             "Apoya la idea principal.",
             "No la reemplaza.",
@@ -3584,8 +3584,8 @@
           ]
         },
         {
-          "enunciado": "«Puesto que» introduce:\n\nA) Causa   B) Solo tiempo   C) Solo lugar   D) Duda",
-          "respuesta": "A) Causa",
+          "enunciado": "«Puesto que» introduce:\n\nA) causa   B) solo tiempo   C) solo lugar   D) duda",
+          "respuesta": "A) causa",
           "pasos": [
             "Puesto que ≈ porque.",
             "Causa/razón.",
@@ -3593,8 +3593,8 @@
           ]
         },
         {
-          "enunciado": "Mejor título para un texto sobre ahorrar agua en casa:\n\nA) Historia de Roma   B) Tips para reducir el consumo de agua   C) Recetas dulces   D) Fútbol hoy",
-          "respuesta": "B) Tips para reducir el consumo de agua",
+          "enunciado": "Mejor título para un texto sobre ahorrar agua en casa:\n\nA) historia de roma   B) tips para reducir el consumo de agua   C) recetas dulces   D) fútbol hoy",
+          "respuesta": "B) tips para reducir el consumo de agua",
           "pasos": [
             "El título debe reflejar el tema.",
             "Coincide con ahorro de agua.",
@@ -3611,8 +3611,8 @@
           ]
         },
         {
-          "enunciado": "Inferencia válida: «Solo los socios entran. Laura entró.»\n\nA) Laura es socia   B) Laura no es socia   C) Nadie entra   D) El local cerró",
-          "respuesta": "A) Laura es socia",
+          "enunciado": "Inferencia válida: «Solo los socios entran. Laura entró.»\n\nA) laura es socia   B) laura no es socia   C) nadie entra   D) el local cerró",
+          "respuesta": "A) laura es socia",
           "pasos": [
             "Solo socios entran + ella entró ⇒ es socia.",
             "Modus ponens restringido.",

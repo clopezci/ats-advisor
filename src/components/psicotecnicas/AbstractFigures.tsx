@@ -91,24 +91,36 @@ function ArrowUp({ x, y, rot = 0 }: { x: number; y: number; rot?: number }) {
   );
 }
 
-function Gear({ x, y, r, label }: { x: number; y: number; r: number; label: string }) {
-  const teeth = 10;
+function Gear({
+  x,
+  y,
+  r,
+  label,
+  teeth = 10,
+}: {
+  x: number;
+  y: number;
+  r: number;
+  label: string;
+  teeth?: number;
+}) {
   const pts: string[] = [];
   for (let i = 0; i < teeth; i++) {
-    const a0 = (i / teeth) * Math.PI * 2;
-    const a1 = ((i + 0.35) / teeth) * Math.PI * 2;
-    const a2 = ((i + 0.5) / teeth) * Math.PI * 2;
-    const a3 = ((i + 0.85) / teeth) * Math.PI * 2;
+    const a0 = (i / teeth) * Math.PI * 2 - Math.PI / 2;
+    const a1 = ((i + 0.28) / teeth) * Math.PI * 2 - Math.PI / 2;
+    const a2 = ((i + 0.5) / teeth) * Math.PI * 2 - Math.PI / 2;
+    const a3 = ((i + 0.72) / teeth) * Math.PI * 2 - Math.PI / 2;
+    const outer = r + Math.max(5, r * 0.14);
     pts.push(`${x + Math.cos(a0) * r},${y + Math.sin(a0) * r}`);
-    pts.push(`${x + Math.cos(a1) * (r + 6)},${y + Math.sin(a1) * (r + 6)}`);
-    pts.push(`${x + Math.cos(a2) * (r + 6)},${y + Math.sin(a2) * (r + 6)}`);
+    pts.push(`${x + Math.cos(a1) * outer},${y + Math.sin(a1) * outer}`);
+    pts.push(`${x + Math.cos(a2) * outer},${y + Math.sin(a2) * outer}`);
     pts.push(`${x + Math.cos(a3) * r},${y + Math.sin(a3) * r}`);
   }
   return (
     <g>
-      <polygon points={pts.join(" ")} fill={fill} stroke={stroke} strokeWidth="2" />
-      <circle cx={x} cy={y} r={r * 0.35} fill="white" stroke={stroke} strokeWidth="2" />
-      <text x={x} y={y + 4} textAnchor="middle" fontSize="12" fill={stroke} fontWeight="700">
+      <polygon points={pts.join(" ")} fill={fill} stroke={stroke} strokeWidth="2" strokeLinejoin="round" />
+      <circle cx={x} cy={y} r={r * 0.38} fill="white" stroke={stroke} strokeWidth="2" />
+      <text x={x} y={y + 4} textAnchor="middle" fontSize={r > 45 ? 13 : 11} fill={stroke} fontWeight="700">
         {label}
       </text>
     </g>
@@ -369,14 +381,127 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
     caption: "Dos ruedas que se tocan giran en sentido contrario.",
     node: (
       <Frame caption="Engranajes en contacto" w={360} h={180}>
-        <Gear x={110} y={90} r={40} label="A" />
-        <Gear x={210} y={90} r={40} label="B" />
-        <path d="M70,50 A40,40 0 0,1 110,50" fill="none" stroke={accent} strokeWidth="2" markerEnd="url(#arrow)" />
-        <text x={70} y={40} fontSize="11" fill={accent}>
+        <Gear x={115} y={95} r={42} label="A" teeth={12} />
+        <Gear x={225} y={95} r={42} label="B" teeth={12} />
+        <text x={115} y={40} textAnchor="middle" fontSize="16" fill={accent}>
           ↻
         </text>
-        <text x={230} y={40} fontSize="11" fill={accent}>
+        <text x={225} y={40} textAnchor="middle" fontSize="16" fill={accent}>
           ↺
+        </text>
+      </Frame>
+    ),
+  },
+  "engranajes-dientes": {
+    caption: "El chico (10 dientes) da más vueltas; el grande (40) da menos. 10×4 = 40×1.",
+    node: (
+      <Frame caption="Piñón chico + engranaje grande" w={360} h={200}>
+        <Gear x={95} y={110} r={28} label="10" teeth={10} />
+        <Gear x={230} y={110} r={70} label="40" teeth={20} />
+        <text x={95} y={40} textAnchor="middle" fontSize="11" fill={muted}>
+          piñón
+        </text>
+        <text x={95} y={55} textAnchor="middle" fontSize="12" fill={accent}>
+          4 vueltas
+        </text>
+        <text x={230} y={30} textAnchor="middle" fontSize="11" fill={muted}>
+          grande
+        </text>
+        <text x={230} y={45} textAnchor="middle" fontSize="12" fill={accent}>
+          1 vuelta
+        </text>
+      </Frame>
+    ),
+  },
+  "ruedas-diametro": {
+    caption: "Misma 1 vuelta: la rueda de diámetro doble avanza el doble (perímetro = π×D).",
+    node: (
+      <Frame caption="Ruedas que ruedan por el suelo" w={360} h={200}>
+        <line x1="20" y1="160" x2="340" y2="160" stroke={stroke} strokeWidth="3" />
+        <circle cx="90" cy="130" r="30" fill={fill} stroke={stroke} strokeWidth="3" />
+        <line x1="90" y1="130" x2="120" y2="130" stroke={accent} strokeWidth="3" />
+        <text x="90" y="135" textAnchor="middle" fontSize="11" fill={stroke}>
+          D
+        </text>
+        <text x="90" y="185" textAnchor="middle" fontSize="11" fill={muted}>
+          avanza π·D
+        </text>
+        <circle cx="250" cy={160 - 60} r="60" fill={fill} stroke={stroke} strokeWidth="3" />
+        <line x1="250" y1={100} x2="310" y2={100} stroke={accent} strokeWidth="3" />
+        <text x="250" y="105" textAnchor="middle" fontSize="11" fill={stroke}>
+          2D
+        </text>
+        <text x="250" y="185" textAnchor="middle" fontSize="11" fill={muted}>
+          avanza 2·π·D
+        </text>
+      </Frame>
+    ),
+  },
+  "orden-alturas": {
+    caption: "Flecha ↑ = «más alto que». Raya sin punta = iguales. Luego cuenta.",
+    node: (
+      <Frame caption="Mapa de alturas" h={170} w={340}>
+        <text x="35" y="85" fontSize="13" fill={stroke}>
+          Laura
+        </text>
+        <text x="95" y="55" fontSize="18" fill={accent}>
+          ↑
+        </text>
+        <text x="125" y="85" fontSize="13" fill={stroke}>
+          Andrés = Sofía
+        </text>
+        <text x="245" y="55" fontSize="18" fill={accent}>
+          ↑
+        </text>
+        <text x="275" y="85" fontSize="13" fill={stroke}>
+          Diego
+        </text>
+        <text x="170" y="130" textAnchor="middle" fontSize="11" fill={muted}>
+          Laura &gt; Andrés=Sofía &gt; Diego
+        </text>
+      </Frame>
+    ),
+  },
+  "familia-arbol": {
+    caption: "Lee la frase de atrás hacia adelante. Cada trozo te lleva a la siguiente persona.",
+    node: (
+      <Frame caption="Pasos: hijo → hermana → padre" w={340} h={200}>
+        <text x="40" y="45" fontSize="12" fill={muted}>
+          1. mi padre
+        </text>
+        <text x="40" y="75" fontSize="12" fill={stroke}>
+          2. hijo de mi padre = yo
+        </text>
+        <text x="40" y="105" fontSize="12" fill={stroke}>
+          3. hermana de ese hijo = mi hermana
+        </text>
+        <text x="40" y="135" fontSize="12" fill={accent} fontWeight="700">
+          4. padre de esa hermana = mi padre
+        </text>
+        <text x="170" y="175" textAnchor="middle" fontSize="11" fill={muted}>
+          Frase: «el padre de la hermana del hijo de mi padre»
+        </text>
+      </Frame>
+    ),
+  },
+  "plantilla-hueco": {
+    caption: "El hueco estrella es el «raro»: solo una pieza lo tapa. Empieza por ese.",
+    node: (
+      <Frame caption="Plantilla (izquierda) y piezas (derecha)" w={360} h={180}>
+        <rect x="20" y="35" width="120" height="110" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="80" y="28" textAnchor="middle" fontSize="10" fill={muted}>
+          plantilla
+        </text>
+        <polygon points="55,70 65,55 80,55 90,70 80,85 65,85" fill="white" stroke={accent} strokeWidth="2.5" />
+        <circle cx="110" cy="95" r="16" fill="white" stroke={stroke} strokeWidth="2" />
+        <text x="220" y="28" textAnchor="middle" fontSize="10" fill={muted}>
+          piezas
+        </text>
+        <circle cx="175" cy="80" r="18" fill="#e2e8f0" stroke={stroke} strokeWidth="2" />
+        <rect x="210" y="62" width="36" height="36" fill="#ede9fe" stroke={stroke} strokeWidth="2" />
+        <polygon points="280,55 295,70 280,85 265,70" fill="#c4b5fd" stroke={accent} strokeWidth="2.5" />
+        <text x="280" y="110" textAnchor="middle" fontSize="10" fill={accent}>
+          ← encaja
         </text>
       </Frame>
     ),
@@ -425,28 +550,6 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
         <rect x="220" y="75" width="30" height="22" fill={stroke} />
         <text x="235" y="60" textAnchor="middle" fontSize="11" fill={muted}>
           R
-        </text>
-      </Frame>
-    ),
-  },
-  "orden-alturas": {
-    caption: "Dibuja flechas «más alto que» y cuenta quién queda arriba.",
-    node: (
-      <Frame caption="Mapa de alturas" h={160} w={320}>
-        <text x="40" y="80" fontSize="13" fill={stroke}>
-          María
-        </text>
-        <text x="100" y="50" fontSize="18" fill={accent}>
-          ↑
-        </text>
-        <text x="130" y="80" fontSize="13" fill={stroke}>
-          Pedro = Bea
-        </text>
-        <text x="230" y="50" fontSize="18" fill={accent}>
-          ↑
-        </text>
-        <text x="260" y="80" fontSize="13" fill={stroke}>
-          Juan
         </text>
       </Frame>
     ),
@@ -510,41 +613,6 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
         <text x="150" y="140" textAnchor="middle" fontSize="10" fill={muted}>
           anota lo raro
         </text>
-      </Frame>
-    ),
-  },
-  "familia-arbol": {
-    caption: "Empieza por el final de la frase y sube el árbol.",
-    node: (
-      <Frame caption="Árbol familiar simplificado" h={180} w={280}>
-        <text x="140" y="40" textAnchor="middle" fontSize="12" fill={stroke}>
-          padre
-        </text>
-        <line x1="140" y1="48" x2="140" y2="70" stroke={muted} />
-        <text x="140" y="90" textAnchor="middle" fontSize="12" fill={accent}>
-          yo
-        </text>
-        <line x1="140" y1="98" x2="90" y2="120" stroke={muted} />
-        <line x1="140" y1="98" x2="190" y2="120" stroke={muted} />
-        <text x="90" y="140" textAnchor="middle" fontSize="11" fill={stroke}>
-          hermana
-        </text>
-        <text x="190" y="140" textAnchor="middle" fontSize="11" fill={stroke}>
-          hijo
-        </text>
-      </Frame>
-    ),
-  },
-  "plantilla-hueco": {
-    caption: "Busca el hueco más raro y descarta piezas que no lo tapan.",
-    node: (
-      <Frame caption="Plantilla y piezas" h={160} w={320}>
-        <rect x="30" y="40" width="100" height="80" fill={fill} stroke={stroke} strokeWidth="2" />
-        <rect x="55" y="55" width="25" height="25" fill="white" stroke={accent} strokeWidth="2" />
-        <circle cx="105" cy="80" r="12" fill="white" stroke={stroke} strokeWidth="2" />
-        <rect x="160" y="50" width="40" height="40" fill="#ede9fe" stroke={stroke} />
-        <circle cx="230" cy="70" r="20" fill="#e2e8f0" stroke={stroke} />
-        <rect x="270" y="55" width="25" height="25" fill="#c4b5fd" stroke={accent} strokeWidth="2" />
       </Frame>
     ),
   },

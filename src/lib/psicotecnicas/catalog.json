@@ -494,9 +494,9 @@
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Más dientes, más despacio",
-      "regla": "Más dientes = menos vueltas. La igualdad es: dientes₁ × vueltas₁ = dientes₂ × vueltas₂.",
-      "ejemplo": "Piñón de 10 dientes da 4 vueltas → 10×4=40.\nEngranaje de 40 dientes: 40 × vueltas = 40 → 1 vuelta.",
-      "figura": "engranajes-opuestos"
+      "regla": "Cuando dos engranajes se tocan, el que tiene MÁS dientes gira MÁS DESPACIO. La cuenta es siempre: dientes del uno × sus vueltas = dientes del otro × sus vueltas.",
+      "ejemplo": "Mira la figura: piñón de 10 dientes a la izquierda y engranaje de 40 a la derecha.\n1) El chico da 4 vueltas: 10 × 4 = 40.\n2) En el grande: 40 × vueltas = 40 → vueltas = 1.\n3) Mientras el piñón da 4 vueltas, el grande solo da 1. Más dientes → menos vueltas.",
+      "figura": "engranajes-dientes"
     },
     {
       "subjectId": "exa.psico-abstracto",
@@ -906,16 +906,16 @@
       "subjectId": "exa.psico-abstracto",
       "tema": "Ordenación: quién está por encima de quién",
       "titulo": "Dibuja las flechas y después cuenta",
-      "regla": "En ordenación de alturas: dibuja nombres y flechas «más alto que». Una raya sin punta = iguales. Luego lee el dibujo; no intentes memorizar el párrafo.",
-      "ejemplo": "Mira el esquema: María por encima de Pedro=Bea, y ellos por encima de Juan.\nCuenta cuántos quedan estrictamente más altos que alguien preguntado.",
+      "regla": "Traduce el párrafo a un dibujo: nombre + flecha «más alto que». Si dos miden igual, únelos con = (raya sin punta). Después lee el dibujo; no memorices el texto.",
+      "ejemplo": "Enunciado tipo: Laura es más alta que Andrés; Andrés mide igual que Sofía; Sofía es más alta que Diego.\n1) Dibujo: Laura ↑ Andrés = Sofía ↑ Diego.\n2) ¿Cuántos son estrictamente más altos que Diego? Andrés, Sofía y Laura → 3.\n3) ¿Cuántos más altos que Andrés? Solo Laura → 1.",
       "figura": "orden-alturas"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Relaciones familiares",
       "titulo": "Léelo al revés",
-      "regla": "En parentesco enredado, empieza por la ÚLTIMA persona de la frase y ve subiendo el árbol. Marca dónde estás tú.",
-      "ejemplo": "«El padre de la hermana del hijo de mi padre».\n1) Empieza por «mi padre» → sube.\n2) Sigue la figura del árbol paso a paso hasta el inicio de la frase.",
+      "regla": "Las frases de parentesco se leen desde el FINAL. Cada trozo («hijo de…», «hermana de…», «padre de…») te cambia de persona. Anota a quién llegaste en cada paso.",
+      "ejemplo": "Frase: «el padre de la hermana del hijo de mi padre».\n1) Empieza al final: «mi padre».\n2) «hijo de mi padre» → soy yo (o mi hermano).\n3) «hermana de ese hijo» → mi hermana.\n4) «padre de esa hermana» → mi padre.\nRespuesta: mi padre. Sin dibujar los pasos, es fácil perderse.",
       "figura": "familia-arbol"
     },
     {
@@ -938,8 +938,8 @@
       "subjectId": "exa.psico-abstracto",
       "tema": "Piezas que encajan: pletinas y plantillas",
       "titulo": "Mira un hueco raro, no la pieza entera",
-      "regla": "En encaje de piezas: no compares siluetas enteras. Elige el agujero más raro de la plantilla y mira cuál pieza sola lo tapa. Con eso eliminas casi todas las opciones.",
-      "ejemplo": "Figura: plantilla con hueco cuadrado y circular.\n1) El hueco cuadrado solo lo tapa la pieza cuadrada.\n2) Las otras piezas se descartan aunque «parezcan» encajar en otro lado.",
+      "regla": "No compares la plantilla completa con cada pieza. Elige el hueco MÁS RARO (el que menos piezas podrían tapar) y pregunta: ¿cuál pieza sola encaja ahí? Las demás se caen aunque «parezcan» servir en otro lado.",
+      "ejemplo": "Mira la figura: plantilla con hueco en forma de diamante (morado) y un círculo.\n1) El diamante es el raro: solo la pieza de diamante de la derecha lo tapa.\n2) El círculo y el cuadrado se descartan para ese hueco.\n3) Con un solo detalle raro sueles eliminar 2 o 3 opciones de una vez.",
       "figura": "plantilla-hueco"
     },
     {
@@ -1061,9 +1061,9 @@
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Rueda más grande, más avanza",
-      "regla": "En una vuelta completa, una rueda más grande recorre más distancia (perímetro = π×diámetro).",
-      "ejemplo": "Diámetro doble → en una vuelta avanza el doble.",
-      "figura": "engranajes-opuestos"
+      "regla": "Esto NO es de engranajes que se tocan: es una rueda que rueda por el suelo. En UNA vuelta completa avanza su perímetro (π × diámetro). Si el diámetro es el doble, en una vuelta avanza el doble.",
+      "ejemplo": "Mira la figura: rueda chica (diámetro D) y rueda grande (diámetro 2D) sobre el mismo piso.\n1) Chica, 1 vuelta → avanza π·D.\n2) Grande, 1 vuelta → avanza π·2D = 2·π·D (el doble).\n3) No confundas con engranajes: aquí lo que importa es el tamaño de la rueda que rueda, no los dientes.",
+      "figura": "ruedas-diametro"
     },
     {
       "subjectId": "exa.psico-abstracto",
@@ -1636,21 +1636,21 @@
     {
       "materia": "exa.psico-abstracto",
       "tema": "Ordenación: quién está por encima de quién",
-      "enunciado": "Pedro mide igual que Bea y es más alto que Juan. Pablo es más bajo que Bea. María y Dolores son más altas que Pedro. ¿Cuántas personas son más bajas que Dolores?\n\nA) 1   B) 2   C) 3   D) 4",
+      "enunciado": "Andrés mide igual que Sofía y es más alto que Diego. Pablo es más bajo que Sofía. Laura y Camila son más altas que Andrés. ¿Cuántas personas son más bajas que Camila?\n\nA) 1   B) 2   C) 3   D) 4",
       "caminoLargo": [
-        "El camino natural es tratar de armar la fila entera en la cabeza, de la más alta a la más baja, releyendo el enunciado cada vez que entra un nombre nuevo.",
-        "Con cinco o seis personas todavía se puede. El problema es que el enunciado no da todas las comparaciones —de María y Dolores no se sabe cuál es más alta— y la cabeza intenta inventarse el dato que falta para poder cerrar la fila.",
-        "Ahí es donde se pierde la pregunta: no por no saber ordenar, sino por ordenar de más."
+        "Se dibuja a cada persona y se unen con flechas «más alto que».",
+        "Con cinco o seis personas todavía se puede. El problema es que el enunciado no da todas las comparaciones —de Laura y Camila no se sabe cuál es más alta— y la cabeza intenta inventarse el dato que falta.",
+        "Por debajo de Camila quedan Andrés (=Sofía), Diego y Pablo: cuatro personas.",
+        "La respuesta es 4."
       ],
       "pasos": [
-        "Estos ejercicios no se resuelven leyendo: se resuelven dibujando. Cada persona es un círculo y una flecha apunta del más bajo al más alto. Cuando dos son iguales se unen con una raya sin punta.",
-        "Frase por frase: «Pedro mide igual que Bea» → raya entre los dos. «Pedro es más alto que Juan» → flecha de Juan a Pedro. «Pablo es más bajo que Bea» → flecha de Pablo a Bea. «María y Dolores son más altas que Pedro» → flecha de Pedro a cada una.",
-        "Con el dibujo delante ya no se razona: se cuenta. Por debajo de Dolores está Pedro, y por debajo de Pedro están Juan y Pablo. Y Bea, que mide igual que Pedro, también queda por debajo.",
-        "Son cuatro: Pedro, Bea, Juan y Pablo.",
-        "El dibujo deja ver además algo que la cabeza sola no ve: María y Dolores NO se pueden comparar entre ellas, porque el enunciado no lo dice. Muchos ejercicios de esta familia preguntan justamente por un par que no se puede ordenar, y la respuesta correcta es «no se puede saber»."
+        "Frase por frase: «Andrés mide igual que Sofía» → raya entre los dos. «Andrés es más alto que Diego» → flecha de Diego a Andrés. «Pablo es más bajo que Sofía» → flecha de Pablo a Sofía. «Laura y Camila son más altas que Andrés» → flecha de Andrés a cada una.",
+        "Con el dibujo delante se cuenta. Por debajo de Camila está Andrés, y por debajo de Andrés están Diego y Pablo. Sofía, que mide igual que Andrés, también queda por debajo.",
+        "Son cuatro: Andrés, Sofía, Diego y Pablo.",
+        "Laura y Camila NO se pueden comparar entre ellas: el enunciado no lo dice."
       ],
       "respuesta": "D) 4",
-      "errorComun": "Dejar por fuera a Bea. Como el enunciado dice que mide IGUAL que Pedro y no «más» ni «menos», es fácil tratarla como si no contara. Por eso la raya sin punta importa: en el dibujo Bea queda pegada a Pedro y se arrastra con él hacia donde vaya.",
+      "errorComun": "Dejar por fuera a Sofía. Como el enunciado dice que mide IGUAL que Andrés y no «más» ni «menos», es fácil tratarla como si no contara. Por eso la raya sin punta importa: en el dibujo Sofía queda pegada a Andrés y se arrastra con él.",
       "figura": "orden-alturas"
     },
     {

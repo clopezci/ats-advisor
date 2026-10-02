@@ -2673,16 +2673,16 @@
     {
       "id": "razonamiento-diagramatico",
       "nombre": "Razonamiento diagramático",
-      "descripcion": "Patrones con figura: giros, colores, tamaños y series. Usa el atajo de la imagen.",
+      "descripcion": "Patrones con figura: giros, colores, tamaños y series. Lee el atajo de la imagen y luego el enunciado.",
       "items": [
         {
           "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) igual   B) izquierda   C) derecha (▶)   D) abajo",
           "respuesta": "C) derecha (▶)",
           "pasos": [
-            "Atajo: ciclo horario de 4 → ↑ derecha ↓ izquierda (y vuelve a ↑).",
-            "Desde arriba, un giro 90° horario = derecha.",
-            "Antihorario sería lo contrario: arriba → izquierda.",
-            "Respuesta: derecha."
+            "Imagina una flecha. Giro horario 90° = un cuarto de vuelta a la derecha (como las manecillas del reloj).",
+            "Orden del ciclo: arriba → derecha → abajo → izquierda → (vuelve a arriba).",
+            "Si ahora apunta arriba, el siguiente paso del ciclo es derecha.",
+            "Truco: antihorario sería al revés (arriba → izquierda)."
           ],
           "figura": "diag-giro-90"
         },
@@ -2690,10 +2690,10 @@
           "enunciado": "Puntos en figuras: 2, 3, 5, 8, 12, ?. ¿Cuántos puntos siguen?\n\nA) 16   B) 19   C) 24   D) 17",
           "respuesta": "D) 17",
           "pasos": [
-            "Atajo: anota las diferencias entre números seguidos.",
-            "Si crecen +1, +2, +3… el siguiente salto suma uno más.",
-            "Aplica ese salto al último número de la lista.",
-            "Comprueba con la figura: cada círculo suma más puntos."
+            "No mires solo los números: mira cuánto crece de uno al siguiente.",
+            "2→3 (+1), 3→5 (+2), 5→8 (+3), 8→12 (+4). Los saltos aumentan de 1 en 1.",
+            "El siguiente salto es +5: 12 + 5 = 17.",
+            "Si las diferencias no crecen parejo, prueba otra regla; aquí sí crecen."
           ],
           "figura": "diag-puntos"
         },
@@ -2701,10 +2701,10 @@
           "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) blanco   B) negro   C) gris   D) no se sabe",
           "respuesta": "A) blanco",
           "pasos": [
-            "Atajo: patrón de 2 posiciones (impar / par).",
-            "Si 1ª = blanco, entonces impares = blanco y pares = negro.",
-            "Mira si el número pedido es impar o par y elige el color.",
-            "No cuentes de más: solo importa la posición."
+            "Hay solo 2 opciones que se repiten: blanco, negro, blanco, negro…",
+            "Si la 1ª es blanca: posiciones impares = blanco; pares = negro.",
+            "El 7.º es impar → blanco.",
+            "Atajo: divide la posición entre 2; si sobra 1 (impar) = el color de la 1ª."
           ],
           "figura": "diag-bn"
         },
@@ -2712,10 +2712,10 @@
           "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) mediana   B) vacía   C) grande   D) pequeña",
           "respuesta": "C) grande",
           "pasos": [
-            "Atajo ciclo de 3: G → M → P → G → …",
-            "Posición n equivale a la posición ((n−1) mod 3) + 1.",
-            "La 4ª = misma que la 1ª; la 5ª = misma que la 2ª.",
-            "Cuenta rápido con los dedos: 1G 2M 3P 4G…"
+            "El ciclo tiene 3 pasos y luego se repite: grande → mediana → pequeña → grande…",
+            "Cuenta con los dedos: 1 grande, 2 mediana, 3 pequeña, 4 grande…",
+            "La 4ª vuelve a ser la misma que la 1ª → grande.",
+            "Fórmula mental: resto al dividir la posición entre 3 (4÷3 sobra 1 → como la 1ª)."
           ],
           "figura": "diag-tamanos"
         },
@@ -2723,10 +2723,10 @@
           "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊖   B) ⊕   C) igual siempre   D) ⊗",
           "respuesta": "A) ⊖",
           "pasos": [
-            "Atajo: una posición ⊕, la siguiente ⊖ (alternancia estricta).",
-            "Si el 5.º es ⊕, el 6.º (siguiente) es ⊖.",
-            "Regla: impar/par según cómo empiece la serie en el enunciado.",
-            "No inventes un tercer símbolo: solo hay dos."
+            "Solo alternan dos símbolos: uno, el otro, uno, el otro…",
+            "Si el 5.º es ⊕, el 6.º tiene que ser el contrario: ⊖.",
+            "No inventes un tercer símbolo (⊗ no entra en la regla).",
+            "Atajo: consecutivo = siempre el opuesto del anterior."
           ],
           "figura": "diag-mas-menos"
         },
@@ -2734,21 +2734,21 @@
           "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) e   B) f   C) d   D) a",
           "respuesta": "C) d",
           "pasos": [
-            "Atajo: pasa letras a número (A=1, B=2…) y mira cuánto suma el ejemplo.",
-            "Aplica el mismo salto a la letra que preguntan.",
-            "Vuelve a letra: 1=A, 2=B, 3=C…",
-            "Comprueba con el par del enunciado antes de marcar."
+            "Este no es un dibujo de números: es un salto de letras (como el abecedario).",
+            "A→C: desde A saltas 2 letras (A→B→C). El salto es +2.",
+            "Aplica el mismo salto a B: B→C→D. Respuesta: d.",
+            "Atajo: A=1, B=2, C=3… Entonces 1+2=3 (C); 2+2=4 (D)."
           ],
-          "figura": "matriz-puntos"
+          "figura": "diag-letras"
         },
         {
           "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) abajo   B) derecha (▶)   C) igual   D) izquierda",
           "respuesta": "B) derecha (▶)",
           "pasos": [
-            "Atajo: ciclo horario de 4 → ↑ derecha ↓ izquierda (y vuelve a ↑).",
-            "Desde arriba, un giro 90° horario = derecha.",
-            "Antihorario sería lo contrario: arriba → izquierda.",
-            "Respuesta: derecha."
+            "Imagina una flecha. Giro horario 90° = un cuarto de vuelta a la derecha (como las manecillas del reloj).",
+            "Orden del ciclo: arriba → derecha → abajo → izquierda → (vuelve a arriba).",
+            "Si ahora apunta arriba, el siguiente paso del ciclo es derecha.",
+            "Truco: antihorario sería al revés (arriba → izquierda)."
           ],
           "figura": "diag-giro-90"
         },
@@ -2756,10 +2756,10 @@
           "enunciado": "Puntos en figuras: 2, 3, 5, 8, 12, ?. ¿Cuántos puntos siguen?\n\nA) 16   B) 19   C) 17   D) 24",
           "respuesta": "C) 17",
           "pasos": [
-            "Atajo: anota las diferencias entre números seguidos.",
-            "Si crecen +1, +2, +3… el siguiente salto suma uno más.",
-            "Aplica ese salto al último número de la lista.",
-            "Comprueba con la figura: cada círculo suma más puntos."
+            "No mires solo los números: mira cuánto crece de uno al siguiente.",
+            "2→3 (+1), 3→5 (+2), 5→8 (+3), 8→12 (+4). Los saltos aumentan de 1 en 1.",
+            "El siguiente salto es +5: 12 + 5 = 17.",
+            "Si las diferencias no crecen parejo, prueba otra regla; aquí sí crecen."
           ],
           "figura": "diag-puntos"
         },
@@ -2767,10 +2767,10 @@
           "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) negro   B) blanco   C) no se sabe   D) gris",
           "respuesta": "B) blanco",
           "pasos": [
-            "Atajo: patrón de 2 posiciones (impar / par).",
-            "Si 1ª = blanco, entonces impares = blanco y pares = negro.",
-            "Mira si el número pedido es impar o par y elige el color.",
-            "No cuentes de más: solo importa la posición."
+            "Hay solo 2 opciones que se repiten: blanco, negro, blanco, negro…",
+            "Si la 1ª es blanca: posiciones impares = blanco; pares = negro.",
+            "El 7.º es impar → blanco.",
+            "Atajo: divide la posición entre 2; si sobra 1 (impar) = el color de la 1ª."
           ],
           "figura": "diag-bn"
         },
@@ -2778,10 +2778,10 @@
           "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) mediana   B) pequeña   C) vacía   D) grande",
           "respuesta": "D) grande",
           "pasos": [
-            "Atajo ciclo de 3: G → M → P → G → …",
-            "Posición n equivale a la posición ((n−1) mod 3) + 1.",
-            "La 4ª = misma que la 1ª; la 5ª = misma que la 2ª.",
-            "Cuenta rápido con los dedos: 1G 2M 3P 4G…"
+            "El ciclo tiene 3 pasos y luego se repite: grande → mediana → pequeña → grande…",
+            "Cuenta con los dedos: 1 grande, 2 mediana, 3 pequeña, 4 grande…",
+            "La 4ª vuelve a ser la misma que la 1ª → grande.",
+            "Fórmula mental: resto al dividir la posición entre 3 (4÷3 sobra 1 → como la 1ª)."
           ],
           "figura": "diag-tamanos"
         },
@@ -2789,10 +2789,10 @@
           "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊖   B) ⊕   C) igual siempre   D) ⊗",
           "respuesta": "A) ⊖",
           "pasos": [
-            "Atajo: una posición ⊕, la siguiente ⊖ (alternancia estricta).",
-            "Si el 5.º es ⊕, el 6.º (siguiente) es ⊖.",
-            "Regla: impar/par según cómo empiece la serie en el enunciado.",
-            "No inventes un tercer símbolo: solo hay dos."
+            "Solo alternan dos símbolos: uno, el otro, uno, el otro…",
+            "Si el 5.º es ⊕, el 6.º tiene que ser el contrario: ⊖.",
+            "No inventes un tercer símbolo (⊗ no entra en la regla).",
+            "Atajo: consecutivo = siempre el opuesto del anterior."
           ],
           "figura": "diag-mas-menos"
         },
@@ -2800,21 +2800,21 @@
           "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) f   B) e   C) d   D) a",
           "respuesta": "C) d",
           "pasos": [
-            "Atajo: pasa letras a número (A=1, B=2…) y mira cuánto suma el ejemplo.",
-            "Aplica el mismo salto a la letra que preguntan.",
-            "Vuelve a letra: 1=A, 2=B, 3=C…",
-            "Comprueba con el par del enunciado antes de marcar."
+            "Este no es un dibujo de números: es un salto de letras (como el abecedario).",
+            "A→C: desde A saltas 2 letras (A→B→C). El salto es +2.",
+            "Aplica el mismo salto a B: B→C→D. Respuesta: d.",
+            "Atajo: A=1, B=2, C=3… Entonces 1+2=3 (C); 2+2=4 (D)."
           ],
-          "figura": "matriz-puntos"
+          "figura": "diag-letras"
         },
         {
           "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) derecha (▶)   B) abajo   C) igual   D) izquierda",
           "respuesta": "A) derecha (▶)",
           "pasos": [
-            "Atajo: ciclo horario de 4 → ↑ derecha ↓ izquierda (y vuelve a ↑).",
-            "Desde arriba, un giro 90° horario = derecha.",
-            "Antihorario sería lo contrario: arriba → izquierda.",
-            "Respuesta: derecha."
+            "Imagina una flecha. Giro horario 90° = un cuarto de vuelta a la derecha (como las manecillas del reloj).",
+            "Orden del ciclo: arriba → derecha → abajo → izquierda → (vuelve a arriba).",
+            "Si ahora apunta arriba, el siguiente paso del ciclo es derecha.",
+            "Truco: antihorario sería al revés (arriba → izquierda)."
           ],
           "figura": "diag-giro-90"
         },
@@ -2822,10 +2822,10 @@
           "enunciado": "Puntos en figuras: 2, 3, 5, 8, 12, ?. ¿Cuántos puntos siguen?\n\nA) 17   B) 16   C) 24   D) 19",
           "respuesta": "A) 17",
           "pasos": [
-            "Atajo: anota las diferencias entre números seguidos.",
-            "Si crecen +1, +2, +3… el siguiente salto suma uno más.",
-            "Aplica ese salto al último número de la lista.",
-            "Comprueba con la figura: cada círculo suma más puntos."
+            "No mires solo los números: mira cuánto crece de uno al siguiente.",
+            "2→3 (+1), 3→5 (+2), 5→8 (+3), 8→12 (+4). Los saltos aumentan de 1 en 1.",
+            "El siguiente salto es +5: 12 + 5 = 17.",
+            "Si las diferencias no crecen parejo, prueba otra regla; aquí sí crecen."
           ],
           "figura": "diag-puntos"
         },
@@ -2833,10 +2833,10 @@
           "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) gris   B) negro   C) blanco   D) no se sabe",
           "respuesta": "C) blanco",
           "pasos": [
-            "Atajo: patrón de 2 posiciones (impar / par).",
-            "Si 1ª = blanco, entonces impares = blanco y pares = negro.",
-            "Mira si el número pedido es impar o par y elige el color.",
-            "No cuentes de más: solo importa la posición."
+            "Hay solo 2 opciones que se repiten: blanco, negro, blanco, negro…",
+            "Si la 1ª es blanca: posiciones impares = blanco; pares = negro.",
+            "El 7.º es impar → blanco.",
+            "Atajo: divide la posición entre 2; si sobra 1 (impar) = el color de la 1ª."
           ],
           "figura": "diag-bn"
         },
@@ -2844,10 +2844,10 @@
           "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) grande   B) mediana   C) pequeña   D) vacía",
           "respuesta": "A) grande",
           "pasos": [
-            "Atajo ciclo de 3: G → M → P → G → …",
-            "Posición n equivale a la posición ((n−1) mod 3) + 1.",
-            "La 4ª = misma que la 1ª; la 5ª = misma que la 2ª.",
-            "Cuenta rápido con los dedos: 1G 2M 3P 4G…"
+            "El ciclo tiene 3 pasos y luego se repite: grande → mediana → pequeña → grande…",
+            "Cuenta con los dedos: 1 grande, 2 mediana, 3 pequeña, 4 grande…",
+            "La 4ª vuelve a ser la misma que la 1ª → grande.",
+            "Fórmula mental: resto al dividir la posición entre 3 (4÷3 sobra 1 → como la 1ª)."
           ],
           "figura": "diag-tamanos"
         },
@@ -2855,10 +2855,10 @@
           "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊕   B) igual siempre   C) ⊖   D) ⊗",
           "respuesta": "C) ⊖",
           "pasos": [
-            "Atajo: una posición ⊕, la siguiente ⊖ (alternancia estricta).",
-            "Si el 5.º es ⊕, el 6.º (siguiente) es ⊖.",
-            "Regla: impar/par según cómo empiece la serie en el enunciado.",
-            "No inventes un tercer símbolo: solo hay dos."
+            "Solo alternan dos símbolos: uno, el otro, uno, el otro…",
+            "Si el 5.º es ⊕, el 6.º tiene que ser el contrario: ⊖.",
+            "No inventes un tercer símbolo (⊗ no entra en la regla).",
+            "Atajo: consecutivo = siempre el opuesto del anterior."
           ],
           "figura": "diag-mas-menos"
         },
@@ -2866,21 +2866,21 @@
           "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) a   B) d   C) f   D) e",
           "respuesta": "B) d",
           "pasos": [
-            "Atajo: pasa letras a número (A=1, B=2…) y mira cuánto suma el ejemplo.",
-            "Aplica el mismo salto a la letra que preguntan.",
-            "Vuelve a letra: 1=A, 2=B, 3=C…",
-            "Comprueba con el par del enunciado antes de marcar."
+            "Este no es un dibujo de números: es un salto de letras (como el abecedario).",
+            "A→C: desde A saltas 2 letras (A→B→C). El salto es +2.",
+            "Aplica el mismo salto a B: B→C→D. Respuesta: d.",
+            "Atajo: A=1, B=2, C=3… Entonces 1+2=3 (C); 2+2=4 (D)."
           ],
-          "figura": "matriz-puntos"
+          "figura": "diag-letras"
         },
         {
           "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) abajo   B) derecha (▶)   C) igual   D) izquierda",
           "respuesta": "B) derecha (▶)",
           "pasos": [
-            "Atajo: ciclo horario de 4 → ↑ derecha ↓ izquierda (y vuelve a ↑).",
-            "Desde arriba, un giro 90° horario = derecha.",
-            "Antihorario sería lo contrario: arriba → izquierda.",
-            "Respuesta: derecha."
+            "Imagina una flecha. Giro horario 90° = un cuarto de vuelta a la derecha (como las manecillas del reloj).",
+            "Orden del ciclo: arriba → derecha → abajo → izquierda → (vuelve a arriba).",
+            "Si ahora apunta arriba, el siguiente paso del ciclo es derecha.",
+            "Truco: antihorario sería al revés (arriba → izquierda)."
           ],
           "figura": "diag-giro-90"
         },
@@ -2888,10 +2888,10 @@
           "enunciado": "Puntos en figuras: 2, 3, 5, 8, 12, ?. ¿Cuántos puntos siguen?\n\nA) 17   B) 19   C) 24   D) 16",
           "respuesta": "A) 17",
           "pasos": [
-            "Atajo: anota las diferencias entre números seguidos.",
-            "Si crecen +1, +2, +3… el siguiente salto suma uno más.",
-            "Aplica ese salto al último número de la lista.",
-            "Comprueba con la figura: cada círculo suma más puntos."
+            "No mires solo los números: mira cuánto crece de uno al siguiente.",
+            "2→3 (+1), 3→5 (+2), 5→8 (+3), 8→12 (+4). Los saltos aumentan de 1 en 1.",
+            "El siguiente salto es +5: 12 + 5 = 17.",
+            "Si las diferencias no crecen parejo, prueba otra regla; aquí sí crecen."
           ],
           "figura": "diag-puntos"
         },
@@ -2899,10 +2899,10 @@
           "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) no se sabe   B) gris   C) blanco   D) negro",
           "respuesta": "C) blanco",
           "pasos": [
-            "Atajo: patrón de 2 posiciones (impar / par).",
-            "Si 1ª = blanco, entonces impares = blanco y pares = negro.",
-            "Mira si el número pedido es impar o par y elige el color.",
-            "No cuentes de más: solo importa la posición."
+            "Hay solo 2 opciones que se repiten: blanco, negro, blanco, negro…",
+            "Si la 1ª es blanca: posiciones impares = blanco; pares = negro.",
+            "El 7.º es impar → blanco.",
+            "Atajo: divide la posición entre 2; si sobra 1 (impar) = el color de la 1ª."
           ],
           "figura": "diag-bn"
         },
@@ -2910,10 +2910,10 @@
           "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) pequeña   B) mediana   C) grande   D) vacía",
           "respuesta": "C) grande",
           "pasos": [
-            "Atajo ciclo de 3: G → M → P → G → …",
-            "Posición n equivale a la posición ((n−1) mod 3) + 1.",
-            "La 4ª = misma que la 1ª; la 5ª = misma que la 2ª.",
-            "Cuenta rápido con los dedos: 1G 2M 3P 4G…"
+            "El ciclo tiene 3 pasos y luego se repite: grande → mediana → pequeña → grande…",
+            "Cuenta con los dedos: 1 grande, 2 mediana, 3 pequeña, 4 grande…",
+            "La 4ª vuelve a ser la misma que la 1ª → grande.",
+            "Fórmula mental: resto al dividir la posición entre 3 (4÷3 sobra 1 → como la 1ª)."
           ],
           "figura": "diag-tamanos"
         },
@@ -2921,10 +2921,10 @@
           "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊖   B) igual siempre   C) ⊕   D) ⊗",
           "respuesta": "A) ⊖",
           "pasos": [
-            "Atajo: una posición ⊕, la siguiente ⊖ (alternancia estricta).",
-            "Si el 5.º es ⊕, el 6.º (siguiente) es ⊖.",
-            "Regla: impar/par según cómo empiece la serie en el enunciado.",
-            "No inventes un tercer símbolo: solo hay dos."
+            "Solo alternan dos símbolos: uno, el otro, uno, el otro…",
+            "Si el 5.º es ⊕, el 6.º tiene que ser el contrario: ⊖.",
+            "No inventes un tercer símbolo (⊗ no entra en la regla).",
+            "Atajo: consecutivo = siempre el opuesto del anterior."
           ],
           "figura": "diag-mas-menos"
         },
@@ -2932,21 +2932,21 @@
           "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) e   B) d   C) a   D) f",
           "respuesta": "B) d",
           "pasos": [
-            "Atajo: pasa letras a número (A=1, B=2…) y mira cuánto suma el ejemplo.",
-            "Aplica el mismo salto a la letra que preguntan.",
-            "Vuelve a letra: 1=A, 2=B, 3=C…",
-            "Comprueba con el par del enunciado antes de marcar."
+            "Este no es un dibujo de números: es un salto de letras (como el abecedario).",
+            "A→C: desde A saltas 2 letras (A→B→C). El salto es +2.",
+            "Aplica el mismo salto a B: B→C→D. Respuesta: d.",
+            "Atajo: A=1, B=2, C=3… Entonces 1+2=3 (C); 2+2=4 (D)."
           ],
-          "figura": "matriz-puntos"
+          "figura": "diag-letras"
         },
         {
           "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) derecha (▶)   B) izquierda   C) igual   D) abajo",
           "respuesta": "A) derecha (▶)",
           "pasos": [
-            "Atajo: ciclo horario de 4 → ↑ derecha ↓ izquierda (y vuelve a ↑).",
-            "Desde arriba, un giro 90° horario = derecha.",
-            "Antihorario sería lo contrario: arriba → izquierda.",
-            "Respuesta: derecha."
+            "Imagina una flecha. Giro horario 90° = un cuarto de vuelta a la derecha (como las manecillas del reloj).",
+            "Orden del ciclo: arriba → derecha → abajo → izquierda → (vuelve a arriba).",
+            "Si ahora apunta arriba, el siguiente paso del ciclo es derecha.",
+            "Truco: antihorario sería al revés (arriba → izquierda)."
           ],
           "figura": "diag-giro-90"
         },
@@ -2954,10 +2954,10 @@
           "enunciado": "Puntos en figuras: 2, 3, 5, 8, 12, ?. ¿Cuántos puntos siguen?\n\nA) 17   B) 19   C) 16   D) 24",
           "respuesta": "A) 17",
           "pasos": [
-            "Atajo: anota las diferencias entre números seguidos.",
-            "Si crecen +1, +2, +3… el siguiente salto suma uno más.",
-            "Aplica ese salto al último número de la lista.",
-            "Comprueba con la figura: cada círculo suma más puntos."
+            "No mires solo los números: mira cuánto crece de uno al siguiente.",
+            "2→3 (+1), 3→5 (+2), 5→8 (+3), 8→12 (+4). Los saltos aumentan de 1 en 1.",
+            "El siguiente salto es +5: 12 + 5 = 17.",
+            "Si las diferencias no crecen parejo, prueba otra regla; aquí sí crecen."
           ],
           "figura": "diag-puntos"
         },
@@ -2965,10 +2965,10 @@
           "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) negro   B) no se sabe   C) gris   D) blanco",
           "respuesta": "D) blanco",
           "pasos": [
-            "Atajo: patrón de 2 posiciones (impar / par).",
-            "Si 1ª = blanco, entonces impares = blanco y pares = negro.",
-            "Mira si el número pedido es impar o par y elige el color.",
-            "No cuentes de más: solo importa la posición."
+            "Hay solo 2 opciones que se repiten: blanco, negro, blanco, negro…",
+            "Si la 1ª es blanca: posiciones impares = blanco; pares = negro.",
+            "El 7.º es impar → blanco.",
+            "Atajo: divide la posición entre 2; si sobra 1 (impar) = el color de la 1ª."
           ],
           "figura": "diag-bn"
         },
@@ -2976,10 +2976,10 @@
           "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) grande   B) vacía   C) mediana   D) pequeña",
           "respuesta": "A) grande",
           "pasos": [
-            "Atajo ciclo de 3: G → M → P → G → …",
-            "Posición n equivale a la posición ((n−1) mod 3) + 1.",
-            "La 4ª = misma que la 1ª; la 5ª = misma que la 2ª.",
-            "Cuenta rápido con los dedos: 1G 2M 3P 4G…"
+            "El ciclo tiene 3 pasos y luego se repite: grande → mediana → pequeña → grande…",
+            "Cuenta con los dedos: 1 grande, 2 mediana, 3 pequeña, 4 grande…",
+            "La 4ª vuelve a ser la misma que la 1ª → grande.",
+            "Fórmula mental: resto al dividir la posición entre 3 (4÷3 sobra 1 → como la 1ª)."
           ],
           "figura": "diag-tamanos"
         },
@@ -2987,10 +2987,10 @@
           "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊗   B) igual siempre   C) ⊕   D) ⊖",
           "respuesta": "D) ⊖",
           "pasos": [
-            "Atajo: una posición ⊕, la siguiente ⊖ (alternancia estricta).",
-            "Si el 5.º es ⊕, el 6.º (siguiente) es ⊖.",
-            "Regla: impar/par según cómo empiece la serie en el enunciado.",
-            "No inventes un tercer símbolo: solo hay dos."
+            "Solo alternan dos símbolos: uno, el otro, uno, el otro…",
+            "Si el 5.º es ⊕, el 6.º tiene que ser el contrario: ⊖.",
+            "No inventes un tercer símbolo (⊗ no entra en la regla).",
+            "Atajo: consecutivo = siempre el opuesto del anterior."
           ],
           "figura": "diag-mas-menos"
         },
@@ -2998,21 +2998,21 @@
           "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) f   B) d   C) e   D) a",
           "respuesta": "B) d",
           "pasos": [
-            "Atajo: pasa letras a número (A=1, B=2…) y mira cuánto suma el ejemplo.",
-            "Aplica el mismo salto a la letra que preguntan.",
-            "Vuelve a letra: 1=A, 2=B, 3=C…",
-            "Comprueba con el par del enunciado antes de marcar."
+            "Este no es un dibujo de números: es un salto de letras (como el abecedario).",
+            "A→C: desde A saltas 2 letras (A→B→C). El salto es +2.",
+            "Aplica el mismo salto a B: B→C→D. Respuesta: d.",
+            "Atajo: A=1, B=2, C=3… Entonces 1+2=3 (C); 2+2=4 (D)."
           ],
-          "figura": "matriz-puntos"
+          "figura": "diag-letras"
         },
         {
           "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) derecha (▶)   B) igual   C) izquierda   D) abajo",
           "respuesta": "A) derecha (▶)",
           "pasos": [
-            "Atajo: ciclo horario de 4 → ↑ derecha ↓ izquierda (y vuelve a ↑).",
-            "Desde arriba, un giro 90° horario = derecha.",
-            "Antihorario sería lo contrario: arriba → izquierda.",
-            "Respuesta: derecha."
+            "Imagina una flecha. Giro horario 90° = un cuarto de vuelta a la derecha (como las manecillas del reloj).",
+            "Orden del ciclo: arriba → derecha → abajo → izquierda → (vuelve a arriba).",
+            "Si ahora apunta arriba, el siguiente paso del ciclo es derecha.",
+            "Truco: antihorario sería al revés (arriba → izquierda)."
           ],
           "figura": "diag-giro-90"
         },
@@ -3020,10 +3020,10 @@
           "enunciado": "Puntos en figuras: 2, 3, 5, 8, 12, ?. ¿Cuántos puntos siguen?\n\nA) 17   B) 16   C) 19   D) 24",
           "respuesta": "A) 17",
           "pasos": [
-            "Atajo: anota las diferencias entre números seguidos.",
-            "Si crecen +1, +2, +3… el siguiente salto suma uno más.",
-            "Aplica ese salto al último número de la lista.",
-            "Comprueba con la figura: cada círculo suma más puntos."
+            "No mires solo los números: mira cuánto crece de uno al siguiente.",
+            "2→3 (+1), 3→5 (+2), 5→8 (+3), 8→12 (+4). Los saltos aumentan de 1 en 1.",
+            "El siguiente salto es +5: 12 + 5 = 17.",
+            "Si las diferencias no crecen parejo, prueba otra regla; aquí sí crecen."
           ],
           "figura": "diag-puntos"
         },
@@ -3031,10 +3031,10 @@
           "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) negro   B) gris   C) no se sabe   D) blanco",
           "respuesta": "D) blanco",
           "pasos": [
-            "Atajo: patrón de 2 posiciones (impar / par).",
-            "Si 1ª = blanco, entonces impares = blanco y pares = negro.",
-            "Mira si el número pedido es impar o par y elige el color.",
-            "No cuentes de más: solo importa la posición."
+            "Hay solo 2 opciones que se repiten: blanco, negro, blanco, negro…",
+            "Si la 1ª es blanca: posiciones impares = blanco; pares = negro.",
+            "El 7.º es impar → blanco.",
+            "Atajo: divide la posición entre 2; si sobra 1 (impar) = el color de la 1ª."
           ],
           "figura": "diag-bn"
         },
@@ -3042,10 +3042,10 @@
           "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) grande   B) pequeña   C) vacía   D) mediana",
           "respuesta": "A) grande",
           "pasos": [
-            "Atajo ciclo de 3: G → M → P → G → …",
-            "Posición n equivale a la posición ((n−1) mod 3) + 1.",
-            "La 4ª = misma que la 1ª; la 5ª = misma que la 2ª.",
-            "Cuenta rápido con los dedos: 1G 2M 3P 4G…"
+            "El ciclo tiene 3 pasos y luego se repite: grande → mediana → pequeña → grande…",
+            "Cuenta con los dedos: 1 grande, 2 mediana, 3 pequeña, 4 grande…",
+            "La 4ª vuelve a ser la misma que la 1ª → grande.",
+            "Fórmula mental: resto al dividir la posición entre 3 (4÷3 sobra 1 → como la 1ª)."
           ],
           "figura": "diag-tamanos"
         },
@@ -3053,10 +3053,10 @@
           "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊕   B) ⊗   C) ⊖   D) igual siempre",
           "respuesta": "C) ⊖",
           "pasos": [
-            "Atajo: una posición ⊕, la siguiente ⊖ (alternancia estricta).",
-            "Si el 5.º es ⊕, el 6.º (siguiente) es ⊖.",
-            "Regla: impar/par según cómo empiece la serie en el enunciado.",
-            "No inventes un tercer símbolo: solo hay dos."
+            "Solo alternan dos símbolos: uno, el otro, uno, el otro…",
+            "Si el 5.º es ⊕, el 6.º tiene que ser el contrario: ⊖.",
+            "No inventes un tercer símbolo (⊗ no entra en la regla).",
+            "Atajo: consecutivo = siempre el opuesto del anterior."
           ],
           "figura": "diag-mas-menos"
         },
@@ -3064,21 +3064,21 @@
           "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) a   B) d   C) f   D) e",
           "respuesta": "B) d",
           "pasos": [
-            "Atajo: pasa letras a número (A=1, B=2…) y mira cuánto suma el ejemplo.",
-            "Aplica el mismo salto a la letra que preguntan.",
-            "Vuelve a letra: 1=A, 2=B, 3=C…",
-            "Comprueba con el par del enunciado antes de marcar."
+            "Este no es un dibujo de números: es un salto de letras (como el abecedario).",
+            "A→C: desde A saltas 2 letras (A→B→C). El salto es +2.",
+            "Aplica el mismo salto a B: B→C→D. Respuesta: d.",
+            "Atajo: A=1, B=2, C=3… Entonces 1+2=3 (C); 2+2=4 (D)."
           ],
-          "figura": "matriz-puntos"
+          "figura": "diag-letras"
         },
         {
           "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) abajo   B) derecha (▶)   C) igual   D) izquierda",
           "respuesta": "B) derecha (▶)",
           "pasos": [
-            "Atajo: ciclo horario de 4 → ↑ derecha ↓ izquierda (y vuelve a ↑).",
-            "Desde arriba, un giro 90° horario = derecha.",
-            "Antihorario sería lo contrario: arriba → izquierda.",
-            "Respuesta: derecha."
+            "Imagina una flecha. Giro horario 90° = un cuarto de vuelta a la derecha (como las manecillas del reloj).",
+            "Orden del ciclo: arriba → derecha → abajo → izquierda → (vuelve a arriba).",
+            "Si ahora apunta arriba, el siguiente paso del ciclo es derecha.",
+            "Truco: antihorario sería al revés (arriba → izquierda)."
           ],
           "figura": "diag-giro-90"
         },
@@ -3086,10 +3086,10 @@
           "enunciado": "Puntos en figuras: 2, 3, 5, 8, 12, ?. ¿Cuántos puntos siguen?\n\nA) 16   B) 19   C) 17   D) 24",
           "respuesta": "C) 17",
           "pasos": [
-            "Atajo: anota las diferencias entre números seguidos.",
-            "Si crecen +1, +2, +3… el siguiente salto suma uno más.",
-            "Aplica ese salto al último número de la lista.",
-            "Comprueba con la figura: cada círculo suma más puntos."
+            "No mires solo los números: mira cuánto crece de uno al siguiente.",
+            "2→3 (+1), 3→5 (+2), 5→8 (+3), 8→12 (+4). Los saltos aumentan de 1 en 1.",
+            "El siguiente salto es +5: 12 + 5 = 17.",
+            "Si las diferencias no crecen parejo, prueba otra regla; aquí sí crecen."
           ],
           "figura": "diag-puntos"
         },
@@ -3097,10 +3097,10 @@
           "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) negro   B) no se sabe   C) gris   D) blanco",
           "respuesta": "D) blanco",
           "pasos": [
-            "Atajo: patrón de 2 posiciones (impar / par).",
-            "Si 1ª = blanco, entonces impares = blanco y pares = negro.",
-            "Mira si el número pedido es impar o par y elige el color.",
-            "No cuentes de más: solo importa la posición."
+            "Hay solo 2 opciones que se repiten: blanco, negro, blanco, negro…",
+            "Si la 1ª es blanca: posiciones impares = blanco; pares = negro.",
+            "El 7.º es impar → blanco.",
+            "Atajo: divide la posición entre 2; si sobra 1 (impar) = el color de la 1ª."
           ],
           "figura": "diag-bn"
         },
@@ -3108,10 +3108,10 @@
           "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) grande   B) pequeña   C) vacía   D) mediana",
           "respuesta": "A) grande",
           "pasos": [
-            "Atajo ciclo de 3: G → M → P → G → …",
-            "Posición n equivale a la posición ((n−1) mod 3) + 1.",
-            "La 4ª = misma que la 1ª; la 5ª = misma que la 2ª.",
-            "Cuenta rápido con los dedos: 1G 2M 3P 4G…"
+            "El ciclo tiene 3 pasos y luego se repite: grande → mediana → pequeña → grande…",
+            "Cuenta con los dedos: 1 grande, 2 mediana, 3 pequeña, 4 grande…",
+            "La 4ª vuelve a ser la misma que la 1ª → grande.",
+            "Fórmula mental: resto al dividir la posición entre 3 (4÷3 sobra 1 → como la 1ª)."
           ],
           "figura": "diag-tamanos"
         },
@@ -3119,10 +3119,10 @@
           "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊖   B) igual siempre   C) ⊕   D) ⊗",
           "respuesta": "A) ⊖",
           "pasos": [
-            "Atajo: una posición ⊕, la siguiente ⊖ (alternancia estricta).",
-            "Si el 5.º es ⊕, el 6.º (siguiente) es ⊖.",
-            "Regla: impar/par según cómo empiece la serie en el enunciado.",
-            "No inventes un tercer símbolo: solo hay dos."
+            "Solo alternan dos símbolos: uno, el otro, uno, el otro…",
+            "Si el 5.º es ⊕, el 6.º tiene que ser el contrario: ⊖.",
+            "No inventes un tercer símbolo (⊗ no entra en la regla).",
+            "Atajo: consecutivo = siempre el opuesto del anterior."
           ],
           "figura": "diag-mas-menos"
         },
@@ -3130,21 +3130,21 @@
           "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) f   B) e   C) d   D) a",
           "respuesta": "C) d",
           "pasos": [
-            "Atajo: pasa letras a número (A=1, B=2…) y mira cuánto suma el ejemplo.",
-            "Aplica el mismo salto a la letra que preguntan.",
-            "Vuelve a letra: 1=A, 2=B, 3=C…",
-            "Comprueba con el par del enunciado antes de marcar."
+            "Este no es un dibujo de números: es un salto de letras (como el abecedario).",
+            "A→C: desde A saltas 2 letras (A→B→C). El salto es +2.",
+            "Aplica el mismo salto a B: B→C→D. Respuesta: d.",
+            "Atajo: A=1, B=2, C=3… Entonces 1+2=3 (C); 2+2=4 (D)."
           ],
-          "figura": "matriz-puntos"
+          "figura": "diag-letras"
         },
         {
           "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) izquierda   B) derecha (▶)   C) igual   D) abajo",
           "respuesta": "B) derecha (▶)",
           "pasos": [
-            "Atajo: ciclo horario de 4 → ↑ derecha ↓ izquierda (y vuelve a ↑).",
-            "Desde arriba, un giro 90° horario = derecha.",
-            "Antihorario sería lo contrario: arriba → izquierda.",
-            "Respuesta: derecha."
+            "Imagina una flecha. Giro horario 90° = un cuarto de vuelta a la derecha (como las manecillas del reloj).",
+            "Orden del ciclo: arriba → derecha → abajo → izquierda → (vuelve a arriba).",
+            "Si ahora apunta arriba, el siguiente paso del ciclo es derecha.",
+            "Truco: antihorario sería al revés (arriba → izquierda)."
           ],
           "figura": "diag-giro-90"
         },
@@ -3152,10 +3152,10 @@
           "enunciado": "Puntos en figuras: 2, 3, 5, 8, 12, ?. ¿Cuántos puntos siguen?\n\nA) 19   B) 24   C) 17   D) 16",
           "respuesta": "C) 17",
           "pasos": [
-            "Atajo: anota las diferencias entre números seguidos.",
-            "Si crecen +1, +2, +3… el siguiente salto suma uno más.",
-            "Aplica ese salto al último número de la lista.",
-            "Comprueba con la figura: cada círculo suma más puntos."
+            "No mires solo los números: mira cuánto crece de uno al siguiente.",
+            "2→3 (+1), 3→5 (+2), 5→8 (+3), 8→12 (+4). Los saltos aumentan de 1 en 1.",
+            "El siguiente salto es +5: 12 + 5 = 17.",
+            "Si las diferencias no crecen parejo, prueba otra regla; aquí sí crecen."
           ],
           "figura": "diag-puntos"
         },
@@ -3163,10 +3163,10 @@
           "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) blanco   B) negro   C) gris   D) no se sabe",
           "respuesta": "A) blanco",
           "pasos": [
-            "Atajo: patrón de 2 posiciones (impar / par).",
-            "Si 1ª = blanco, entonces impares = blanco y pares = negro.",
-            "Mira si el número pedido es impar o par y elige el color.",
-            "No cuentes de más: solo importa la posición."
+            "Hay solo 2 opciones que se repiten: blanco, negro, blanco, negro…",
+            "Si la 1ª es blanca: posiciones impares = blanco; pares = negro.",
+            "El 7.º es impar → blanco.",
+            "Atajo: divide la posición entre 2; si sobra 1 (impar) = el color de la 1ª."
           ],
           "figura": "diag-bn"
         },
@@ -3174,10 +3174,10 @@
           "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) vacía   B) pequeña   C) mediana   D) grande",
           "respuesta": "D) grande",
           "pasos": [
-            "Atajo ciclo de 3: G → M → P → G → …",
-            "Posición n equivale a la posición ((n−1) mod 3) + 1.",
-            "La 4ª = misma que la 1ª; la 5ª = misma que la 2ª.",
-            "Cuenta rápido con los dedos: 1G 2M 3P 4G…"
+            "El ciclo tiene 3 pasos y luego se repite: grande → mediana → pequeña → grande…",
+            "Cuenta con los dedos: 1 grande, 2 mediana, 3 pequeña, 4 grande…",
+            "La 4ª vuelve a ser la misma que la 1ª → grande.",
+            "Fórmula mental: resto al dividir la posición entre 3 (4÷3 sobra 1 → como la 1ª)."
           ],
           "figura": "diag-tamanos"
         },
@@ -3185,10 +3185,10 @@
           "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊗   B) ⊕   C) ⊖   D) igual siempre",
           "respuesta": "C) ⊖",
           "pasos": [
-            "Atajo: una posición ⊕, la siguiente ⊖ (alternancia estricta).",
-            "Si el 5.º es ⊕, el 6.º (siguiente) es ⊖.",
-            "Regla: impar/par según cómo empiece la serie en el enunciado.",
-            "No inventes un tercer símbolo: solo hay dos."
+            "Solo alternan dos símbolos: uno, el otro, uno, el otro…",
+            "Si el 5.º es ⊕, el 6.º tiene que ser el contrario: ⊖.",
+            "No inventes un tercer símbolo (⊗ no entra en la regla).",
+            "Atajo: consecutivo = siempre el opuesto del anterior."
           ],
           "figura": "diag-mas-menos"
         },
@@ -3196,21 +3196,21 @@
           "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) d   B) f   C) e   D) a",
           "respuesta": "A) d",
           "pasos": [
-            "Atajo: pasa letras a número (A=1, B=2…) y mira cuánto suma el ejemplo.",
-            "Aplica el mismo salto a la letra que preguntan.",
-            "Vuelve a letra: 1=A, 2=B, 3=C…",
-            "Comprueba con el par del enunciado antes de marcar."
+            "Este no es un dibujo de números: es un salto de letras (como el abecedario).",
+            "A→C: desde A saltas 2 letras (A→B→C). El salto es +2.",
+            "Aplica el mismo salto a B: B→C→D. Respuesta: d.",
+            "Atajo: A=1, B=2, C=3… Entonces 1+2=3 (C); 2+2=4 (D)."
           ],
-          "figura": "matriz-puntos"
+          "figura": "diag-letras"
         },
         {
           "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) derecha (▶)   B) izquierda   C) abajo   D) igual",
           "respuesta": "A) derecha (▶)",
           "pasos": [
-            "Atajo: ciclo horario de 4 → ↑ derecha ↓ izquierda (y vuelve a ↑).",
-            "Desde arriba, un giro 90° horario = derecha.",
-            "Antihorario sería lo contrario: arriba → izquierda.",
-            "Respuesta: derecha."
+            "Imagina una flecha. Giro horario 90° = un cuarto de vuelta a la derecha (como las manecillas del reloj).",
+            "Orden del ciclo: arriba → derecha → abajo → izquierda → (vuelve a arriba).",
+            "Si ahora apunta arriba, el siguiente paso del ciclo es derecha.",
+            "Truco: antihorario sería al revés (arriba → izquierda)."
           ],
           "figura": "diag-giro-90"
         },
@@ -3218,10 +3218,10 @@
           "enunciado": "Puntos en figuras: 2, 3, 5, 8, 12, ?. ¿Cuántos puntos siguen?\n\nA) 24   B) 17   C) 19   D) 16",
           "respuesta": "B) 17",
           "pasos": [
-            "Atajo: anota las diferencias entre números seguidos.",
-            "Si crecen +1, +2, +3… el siguiente salto suma uno más.",
-            "Aplica ese salto al último número de la lista.",
-            "Comprueba con la figura: cada círculo suma más puntos."
+            "No mires solo los números: mira cuánto crece de uno al siguiente.",
+            "2→3 (+1), 3→5 (+2), 5→8 (+3), 8→12 (+4). Los saltos aumentan de 1 en 1.",
+            "El siguiente salto es +5: 12 + 5 = 17.",
+            "Si las diferencias no crecen parejo, prueba otra regla; aquí sí crecen."
           ],
           "figura": "diag-puntos"
         },
@@ -3229,10 +3229,10 @@
           "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) negro   B) gris   C) blanco   D) no se sabe",
           "respuesta": "C) blanco",
           "pasos": [
-            "Atajo: patrón de 2 posiciones (impar / par).",
-            "Si 1ª = blanco, entonces impares = blanco y pares = negro.",
-            "Mira si el número pedido es impar o par y elige el color.",
-            "No cuentes de más: solo importa la posición."
+            "Hay solo 2 opciones que se repiten: blanco, negro, blanco, negro…",
+            "Si la 1ª es blanca: posiciones impares = blanco; pares = negro.",
+            "El 7.º es impar → blanco.",
+            "Atajo: divide la posición entre 2; si sobra 1 (impar) = el color de la 1ª."
           ],
           "figura": "diag-bn"
         }
@@ -3241,16 +3241,16 @@
     {
       "id": "razonamiento-espacial",
       "nombre": "Razonamiento espacial",
-      "descripcion": "Espacio con figura: cubos, dados, caminos y vistas. Atajo visual + regla corta.",
+      "descripcion": "Espacio con figura: cubos, dados, caminos y vistas. Usa el dibujo + el atajo corto.",
       "items": [
         {
           "enunciado": "Cubo 3×3×3 pintado por fuera. ¿Cuántos cubitos con exactamente 1 cara pintada?\n\nA) 6   B) 8   C) 12   D) 1",
           "respuesta": "A) 6",
           "pasos": [
-            "Atajo 3×3×3: piensa las 6 caras del cubo grande.",
-            "Exactamente 1 cara pintada = solo el cubito del CENTRO de cada cara.",
-            "6 caras → 6 cubitos.",
-            "Esquinas = 3 caras; aristas (no esquina) = 2; el muy centro interior = 0."
+            "Piensa un Rubik 3×3×3 pintado solo por fuera.",
+            "Exactamente 1 cara pintada = el cubito del centro de cada cara grande (no esquina ni arista).",
+            "Un cubo tiene 6 caras → 6 centros → 6 cubitos.",
+            "Para no confundirte: esquinas tienen 3 caras pintadas; aristas (sin esquina) tienen 2."
           ],
           "figura": "espacial-cubo-pintado"
         },
@@ -3258,10 +3258,10 @@
           "enunciado": "Si giras la letra «p» 180°, se parece más a:\n\nA) b   B) d   C) q   D) p",
           "respuesta": "B) d",
           "pasos": [
-            "Atajo: gira el papel mentalmente (o la cabeza) 180°.",
-            "La «p» rotada 180° se parece a una «d».",
-            "Espejo (sin girar) daría otra letra: no confundas giro con reflejo.",
-            "Respuesta: d."
+            "Giro 180° = media vuelta (como dar la vuelta al papel), no es un espejo.",
+            "La panza de la «p» queda arriba al otro lado → se parece a una «d».",
+            "Espejo (sin girar) daría otra letra; aquí el enunciado dice girar.",
+            "Truco: dibuja una p, gira la hoja media vuelta y mira qué letra ves."
           ],
           "figura": "giro-espejo-r"
         },
@@ -3269,10 +3269,10 @@
           "enunciado": "Norte arriba. Caminas norte, luego este, luego sur. ¿Hacia dónde miras al final?\n\nA) norte   B) sur   C) este   D) oeste",
           "respuesta": "B) sur",
           "pasos": [
-            "Atajo: la dirección en la que MIRAS al final = el último tramo.",
-            "Norte → este → sur: terminas caminando al sur.",
-            "No sumes giros de más: solo sigue la secuencia del enunciado.",
-            "Respuesta: sur."
+            "No hace falta dibujar un mapa perfecto: solo sigue el último tramo.",
+            "Caminas: 1) norte, 2) este, 3) sur.",
+            "Al final miras hacia donde vas en el último paso → sur.",
+            "Los tramos anteriores cambian de lugar, pero la mirada final = último rumbo."
           ],
           "figura": "espacial-brujula"
         },
@@ -3280,10 +3280,10 @@
           "enunciado": "Dados clásicos: opuestos suman 7. Opuesta a 3:\n\nA) 1   B) 4   C) 2   D) 6",
           "respuesta": "B) 4",
           "pasos": [
-            "Atajo de dado estándar: opuestos suman 7.",
-            "1↔6, 2↔5, 3↔4.",
-            "Si preguntan opuesta a 3 → 4.",
-            "No uses dados «raros» de juegos especiales salvo que lo digan."
+            "En el dado clásico, cada cara y su opuesta suman 7.",
+            "Parejas: 1 con 6, 2 con 5, 3 con 4.",
+            "Opuesta a 3 → 4 (porque 3+4=7).",
+            "No uses la cara de al lado: pregunta por la opuesta (la de atrás)."
           ],
           "figura": "dado-opuestos-7"
         },
@@ -3291,10 +3291,10 @@
           "enunciado": "Espejo vertical. Izquierda y derecha:\n\nA) se mantienen   B) se intercambian   C) rotan 90°   D) desaparecen",
           "respuesta": "B) se intercambian",
           "pasos": [
-            "Atajo: espejo vertical = cambia izquierda/derecha.",
-            "Arriba y abajo se quedan iguales.",
-            "Piensa en el espejo del baño: tu mano derecha parece la izquierda.",
-            "Respuesta: se invierten."
+            "Espejo vertical = el del baño (eje de arriba abajo).",
+            "Lo de la izquierda pasa a la derecha y viceversa.",
+            "Arriba y abajo no se cambian.",
+            "Por eso izquierda y derecha se intercambian."
           ],
           "figura": "espacial-espejo"
         },
@@ -3302,10 +3302,10 @@
           "enunciado": "Vista desde arriba: círculo. Sólido más probable:\n\nA) cubo   B) cilindro   C) pirámide triangular   D) prisma triangular",
           "respuesta": "B) cilindro",
           "pasos": [
-            "Atajo: vista superior circular ⇒ cuerpo redondo.",
-            "El sólido más simple: cilindro (también podría ser cono visto desde arriba).",
-            "Un cubo desde arriba se ve cuadrado, no círculo.",
-            "Respuesta: cilindro (o sólido de base circular)."
+            "Si desde arriba ves un círculo, la base del sólido es redonda.",
+            "Entre las opciones, el cilindro encaja (lata vista desde arriba).",
+            "Un cubo desde arriba se vería cuadrado; un prisma triangular, triángulo.",
+            "El cono también da círculo desde arriba, pero aquí la opción más directa es cilindro."
           ],
           "figura": "espacial-cilindro"
         },
@@ -3313,10 +3313,10 @@
           "enunciado": "Un papel con flecha ↑ se dobla por la mitad horizontal. La punta queda:\n\nA) hacia el pliegue   B) siempre abajo   C) impossible   D) a la derecha",
           "respuesta": "A) hacia el pliegue",
           "pasos": [
-            "Atajo: al doblar por la mitad, la punta se acerca al pliegue.",
-            "Visualiza la flecha ↑ y el pliegue horizontal: la punta baja hacia el centro.",
-            "No la gires 180° salvo que el enunciado diga girar.",
-            "Sigue solo la instrucción de doblar."
+            "Doblar no es girar: es juntar dos mitades por el pliegue.",
+            "La flecha ↑ está en el papel; al doblar por la mitad horizontal, la punta se acerca al pliegue.",
+            "Piensa en cerrar un cuaderno: lo de arriba baja hacia la línea del medio.",
+            "Respuesta: hacia el pliegue."
           ],
           "figura": "espacial-doblez"
         },
@@ -3324,21 +3324,21 @@
           "enunciado": "Cubo: caras adyacentes a la superior. ¿Cuántas?\n\nA) 2   B) 3   C) 4   D) 5",
           "respuesta": "C) 4",
           "pasos": [
-            "Atajo: un cubo tiene 6 caras; la superior toca a 4 laterales.",
-            "La inferior NO es adyacente a la superior (está opuesta).",
-            "Respuesta: 4.",
-            "Dibujo mental: tapa de una caja y sus cuatro paredes."
+            "Adyacente = que toca (comparte una arista).",
+            "La cara de arriba (tapa) toca las 4 laterales (paredes).",
+            "No toca la de abajo: esa es la opuesta, no vecina.",
+            "Respuesta: 4."
           ],
-          "figura": "cubo-vertice-tres"
+          "figura": "espacial-caras-adyacentes"
         },
         {
           "enunciado": "Reloj: manecilla en las 3. Giras el reloj 90° antihorario. ¿A qué hora 'apunta' visualmente?\n\nA) 12   B) 3   C) 6   D) 9",
           "respuesta": "A) 12",
           "pasos": [
-            "Atajo: 90° antihorario = un cuarto de vuelta «hacia atrás» en el reloj.",
-            "Si apunta a las 3, antihorario 90° apunta hacia las 12.",
-            "Horario 90° desde las 3 iría a las 6.",
-            "Dibuja el reloj rápido en el margen si puedes."
+            "Giras el reloj entero 90° antihorario (un cuarto de vuelta en sentido contrario a las manecillas).",
+            "Lo que apuntaba a las 3 queda apuntando hacia donde estaba el 12.",
+            "Atajo: antihorario 90° desde las 3 → 12; horario 90° desde las 3 → 6.",
+            "Si puedes, gira el teléfono/papel un cuarto y comprueba."
           ],
           "figura": "espacial-reloj"
         },
@@ -3346,10 +3346,10 @@
           "enunciado": "Silueta de L en 2D. Tras reflejo horizontal, la L:\n\nA) queda igual   B) se invierte izquierda-derecha   C) se pone de cabeza   D) desaparece",
           "respuesta": "B) se invierte izquierda-derecha",
           "pasos": [
-            "Atajo: en estos ítems «reflejo horizontal» = espejo que cambia izquierda↔derecha.",
-            "La L se ve como su espejo (no gira 90°).",
-            "Arriba/abajo no cambian; solo I/D.",
-            "Dibuja la L y el espejo vertical antes de marcar."
+            "Aquí «reflejo horizontal» se usa como espejo que cambia izquierda↔derecha (como el del baño).",
+            "La L se ve como su espejo: no gira 90° ni se pone de cabeza.",
+            "Arriba/abajo se mantienen; solo se invierte I/D.",
+            "Dibuja una L y su espejo antes de marcar."
           ],
           "figura": "espacial-espejo"
         },
@@ -3357,20 +3357,20 @@
           "enunciado": "Cuántas aristas tiene un cubo:\n\nA) 8   B) 10   C) 12   D) 16",
           "respuesta": "C) 12",
           "pasos": [
-            "Atajo: cubo = 12 aristas (4 arriba + 4 abajo + 4 verticales).",
-            "También: 8 vértices × 3 aristas / 2 = 12.",
-            "Caras = 6; vértices = 8; aristas = 12.",
+            "Arista = cada borde donde se juntan dos caras.",
+            "Cuenta fácil: 4 arriba + 4 abajo + 4 verticales = 12.",
+            "No confundas con vértices (esquinas = 8) ni caras (6).",
             "Respuesta: 12."
           ],
-          "figura": "cubo-vertice-tres"
+          "figura": "espacial-aristas"
         },
         {
           "enunciado": "Vista lateral de un cono (punta arriba): se ve más como:\n\nA) círculo   B) triángulo   C) cuadrado   D) hexágono",
           "respuesta": "B) triángulo",
           "pasos": [
-            "Atajo: cono de lado = triángulo (o silueta triangular).",
-            "Desde arriba sería círculo; de frente/lado suele verse el triángulo.",
-            "No lo confundas con el cilindro (rectángulo de lado).",
+            "Vista lateral = mirar el cono de lado (no desde arriba).",
+            "De lado se ve como un triángulo; desde arriba se vería un círculo.",
+            "No elijas círculo si el enunciado dice «lateral».",
             "Respuesta: triángulo."
           ],
           "figura": "espacial-cono-lado"
@@ -3379,32 +3379,32 @@
           "enunciado": "Pieza: 2 cubos pegados. ¿Máximo de caras visibles en una orientación?\n\nA) 6   B) 8   C) 10   D) 12",
           "respuesta": "C) 10",
           "pasos": [
-            "Atajo: 2 cubos sueltos = 12 caras; al pegarlos se ocultan 2 caras (1 de cada).",
-            "Visibles = 12 − 2 = 10 en el máximo típico.",
-            "Orienta para no tapar más caras de la cuenta.",
-            "Respuesta: 10 (según opciones del ítem)."
+            "Dos cubos sueltos tienen 6+6 = 12 caras.",
+            "Al pegarlos por una cara, se ocultan 2 caras (una de cada cubo).",
+            "Visibles = 12 − 2 = 10.",
+            "Ese es el máximo típico si solo se tocan por una cara."
           ],
-          "figura": "cubo-vertice-tres"
+          "figura": "espacial-dos-cubos"
         },
         {
           "enunciado": "Mapa: giras 180°. Lo que estaba arriba-izquierda queda:\n\nA) arriba-derecha   B) abajo-derecha   C) abajo-izquierda   D) igual",
           "respuesta": "B) abajo-derecha",
           "pasos": [
-            "Atajo giro 180°: arriba↔abajo e izquierda↔derecha a la vez.",
-            "Lo de arriba-izquierda pasa a abajo-derecha.",
-            "Como girar el mapa media vuelta sobre la mesa.",
-            "Respuesta: abajo-derecha."
+            "Giro 180° = media vuelta del mapa sobre la mesa.",
+            "Lo de arriba pasa abajo y lo de la izquierda pasa a la derecha (a la vez).",
+            "Por eso arriba-izquierda termina en abajo-derecha.",
+            "Truco: marca un punto en una esquina de un papel y gíralo media vuelta."
           ],
-          "figura": "espacial-brujula"
+          "figura": "espacial-mapa-180"
         },
         {
           "enunciado": "Net de cubo en cruz: la cara opuesta al centro de la cruz suele ser:\n\nA) un brazo extremo   B) una esquina del papel   C) la misma cara   D) no hay opuesta",
           "respuesta": "A) un brazo extremo",
           "pasos": [
-            "Atajo del desarrollo en cruz: el centro toca a cuatro brazos.",
-            "La cara opuesta al centro suele ser el extremo del brazo largo (el que no toca al centro por un lado).",
-            "Caras que comparten lado en el papel NO pueden ser opuestas en el cubo.",
-            "Marca mentalmente «opuesta = no toca»."
+            "El «net» es el cubo desarmado en el papel (cruz).",
+            "El centro de la cruz toca a varias caras; la opuesta no puede tocar al centro.",
+            "Suele ser el extremo del brazo largo (la cara más lejos en esa fila).",
+            "Regla de oro: si dos caras comparten lado en el papel, no son opuestas en el cubo."
           ],
           "figura": "espacial-net-cruz"
         },
@@ -3412,10 +3412,10 @@
           "enunciado": "Escalera vista de frente: peldaños se ven como:\n\nA) círculos   B) rectángulos/líneas horizontales   C) triángulos   D) puntos",
           "respuesta": "B) rectángulos/líneas horizontales",
           "pasos": [
-            "Atajo: de frente, los peldaños se ven como líneas/rectángulos apilados.",
-            "No inventes profundidad si preguntan la silueta frontal.",
-            "De perfil se vería la forma de sierra; de frente, franjas.",
-            "Elige la opción que coincida con «frente»."
+            "«De frente» = miras los peldaños de cara, sin ver el costado en sierra.",
+            "Se ven como franjas o rectángulos uno encima de otro.",
+            "De perfil (lado) se vería la forma de escalones en zigzag.",
+            "Elige la opción de franjas/rectángulos horizontales."
           ],
           "figura": "espacial-escalera"
         }

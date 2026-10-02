@@ -178,15 +178,15 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
     ),
   },
   "giro-espejo-r": {
-    caption: "Sigue la panza de la R: espejo ≠ giro 180°.",
+    caption: "Atajo: giro 180° ≠ espejo. Sigue la panza de la letra hasta ver a qué se parece.",
     node: (
-      <Frame caption="Misma letra R, tres transformaciones" w={360} h={220}>
+      <Frame caption="Espejo vs giro 180°" w={360} h={220}>
         <text x={60} y={28} textAnchor="middle" fontSize="12" fill={muted}>
           Original
         </text>
         <LetterR x={60} y={110} />
         <text x={180} y={28} textAnchor="middle" fontSize="12" fill={muted}>
-          Espejo vertical
+          Espejo
         </text>
         <LetterR x={180} y={110} mirror />
         <text x={300} y={28} textAnchor="middle" fontSize="12" fill={muted}>
@@ -194,13 +194,13 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
         </text>
         <LetterR x={300} y={110} rot={180} />
         <text x={180} y={200} textAnchor="middle" fontSize="11" fill={accent}>
-          No son la misma figura
+          No son lo mismo: lee si dice espejo o giro
         </text>
       </Frame>
     ),
   },
   "matriz-puntos": {
-    caption: "Regla A (número): fila × columna. Regla B (relleno): columnas blanco → gris → negro. Falta 3×3 negro = 9.",
+    caption: "Atajo: busca una regla para el número y otra para el relleno (no mezcles las dos).",
     node: (
       <Frame caption="Matriz 3×3: dos reglas" h={220} w={260}>
         {[
@@ -239,6 +239,40 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
             );
           })
         )}
+      </Frame>
+    ),
+  },
+  "diag-letras": {
+    caption: "Atajo: pasa letras a número (A=1, B=2…), aplica el mismo salto y vuelve a letra.",
+    node: (
+      <Frame caption="Salto de letras" w={320} h={160}>
+        <text x="50" y="55" textAnchor="middle" fontSize="28" fill={stroke} fontWeight="700">
+          A
+        </text>
+        <text x="110" y="50" textAnchor="middle" fontSize="14" fill={accent}>
+          +2
+        </text>
+        <text x="110" y="70" textAnchor="middle" fontSize="18" fill={accent}>
+          →
+        </text>
+        <text x="170" y="55" textAnchor="middle" fontSize="28" fill={stroke} fontWeight="700">
+          C
+        </text>
+        <text x="50" y="120" textAnchor="middle" fontSize="28" fill={stroke} fontWeight="700">
+          B
+        </text>
+        <text x="110" y="115" textAnchor="middle" fontSize="14" fill={accent}>
+          +?
+        </text>
+        <text x="110" y="135" textAnchor="middle" fontSize="18" fill={accent}>
+          →
+        </text>
+        <text x="170" y="120" textAnchor="middle" fontSize="28" fill={accent} fontWeight="700">
+          ?
+        </text>
+        <text x="250" y="90" textAnchor="middle" fontSize="11" fill={muted}>
+          misma regla
+        </text>
       </Frame>
     ),
   },
@@ -799,31 +833,33 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
     ),
   },
   "diag-giro-90": {
-    caption: "Atajo horario: arriba → derecha → abajo → izquierda → arriba.",
+    caption: "Atajo: memoriza el ciclo horario de 4 direcciones; cada 90° avanza un paso.",
     node: (
-      <Frame caption="Giro 90° horario" w={340} h={200}>
-        <ArrowUp x={50} y={90} rot={0} />
-        <text x={50} y={155} textAnchor="middle" fontSize="11" fill={muted}>
-          ahora ↑
+      <Frame caption="Ciclo 90° horario" w={280} h={200}>
+        <ArrowUp x={140} y={45} rot={0} />
+        <text x={140} y={18} textAnchor="middle" fontSize="11" fill={muted}>
+          ↑
         </text>
-        <text x={110} y={95} fill={accent} fontSize="22">
+        <ArrowUp x={210} y={100} rot={90} />
+        <text x={245} y={105} textAnchor="middle" fontSize="11" fill={muted}>
           →
         </text>
-        <ArrowUp x={170} y={90} rot={90} />
-        <text x={170} y={155} textAnchor="middle" fontSize="11" fill={accent}>
-          siguiente →
+        <ArrowUp x={140} y={155} rot={180} />
+        <text x={140} y={190} textAnchor="middle" fontSize="11" fill={muted}>
+          ↓
         </text>
-        <text x={250} y={50} fontSize="11" fill={muted}>
-          ciclo:
+        <ArrowUp x={70} y={100} rot={270} />
+        <text x={35} y={105} textAnchor="middle" fontSize="11" fill={muted}>
+          ←
         </text>
-        <text x={250} y={75} fontSize="12" fill={stroke}>
-          ↑ → ↓ ←
+        <text x={140} y={105} textAnchor="middle" fontSize="12" fill={accent}>
+          ⟳
         </text>
       </Frame>
     ),
   },
   "diag-puntos": {
-    caption: "Atajo: mira cuánto crece de un número al siguiente (+1,+2,+3…).",
+    caption: "Atajo: anota cuánto crece de un número al siguiente; el salto suele crecer.",
     node: (
       <Frame caption="Puntos en figuras" w={360} h={160}>
         {[2, 3, 5, 8].map((n, i) => (
@@ -834,11 +870,11 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
             </text>
             {i < 3 ? (
               <text x={85 + i * 80} y={76} textAnchor="middle" fontSize="12" fill={accent}>
-                +{i + 1}
+                +?
               </text>
             ) : (
               <text x={85 + i * 80} y={76} textAnchor="middle" fontSize="14" fill={accent}>
-                +? →
+                →
               </text>
             )}
           </g>
@@ -850,7 +886,7 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
     ),
   },
   "diag-bn": {
-    caption: "Atajo: posiciones impares = un color; pares = el otro.",
+    caption: "Atajo: con dos colores, usa impar / par según cómo empieza la fila.",
     node: (
       <Frame caption="Alternancia blanco / negro" w={340} h={140}>
         {[0, 1, 2, 3, 4, 5].map((i) => (
@@ -866,13 +902,13 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
           />
         ))}
         <text x={170} y={110} textAnchor="middle" fontSize="12" fill={muted}>
-          1B 2N 3B 4N 5B 6N…
+          1 · 2 · 3 · 4 · 5 · 6 · …
         </text>
       </Frame>
     ),
   },
   "diag-tamanos": {
-    caption: "Atajo ciclo de 3: posición 4 = misma que 1; 5 = misma que 2…",
+    caption: "Atajo ciclo de 3: la posición 4 repite la 1; la 5 repite la 2…",
     node: (
       <Frame caption="Grande → mediana → pequeña" w={340} h={160}>
         <rect x="30" y="40" width="70" height="70" fill={fill} stroke={stroke} strokeWidth="2" />
@@ -882,24 +918,31 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
           ?
         </text>
         <text x="65" y="135" textAnchor="middle" fontSize="11" fill={muted}>
-          1ª G
+          1ª
         </text>
         <text x="155" y="135" textAnchor="middle" fontSize="11" fill={muted}>
-          2ª M
+          2ª
         </text>
         <text x="235" y="135" textAnchor="middle" fontSize="11" fill={muted}>
-          3ª P
+          3ª
         </text>
       </Frame>
     ),
   },
   "diag-mas-menos": {
-    caption: "Atajo: impar ⊕, par ⊖ (o al revés si el enunciado lo dice).",
+    caption: "Atajo: solo hay dos símbolos; alternan uno sí y uno no.",
     node: (
       <Frame caption="Alterna ⊕ ⊖" w={320} h={130}>
         {["⊕", "⊖", "⊕", "⊖", "⊕", "?"].map((t, i) => (
           <g key={i}>
-            <circle cx={35 + i * 50} cy={55} r={18} fill={i === 5 ? "#ede9fe" : fill} stroke={i === 5 ? accent : stroke} strokeWidth="2" />
+            <circle
+              cx={35 + i * 50}
+              cy={55}
+              r={18}
+              fill={i === 5 ? "#ede9fe" : fill}
+              stroke={i === 5 ? accent : stroke}
+              strokeWidth="2"
+            />
             <text x={35 + i * 50} y={62} textAnchor="middle" fontSize="16" fill={stroke}>
               {t}
             </text>
@@ -909,9 +952,9 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
     ),
   },
   "espacial-cubo-pintado": {
-    caption: "Atajo 3×3×3: 1 cara = centro de cada cara grande → 6.",
+    caption: "Atajo: clasifica cubitos por caras pintadas (esquina / arista / centro de cara).",
     node: (
-      <Frame caption="Cubo 3×3×3 pintado por fuera" w={300} h={230}>
+      <Frame caption="Cubo 3×3×3 pintado por fuera" w={300} h={220}>
         {[0, 1, 2].map((r) =>
           [0, 1, 2].map((c) => {
             const x = 85 + c * 40;
@@ -931,42 +974,42 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
             );
           })
         )}
-        <text x="150" y="175" textAnchor="middle" fontSize="12" fill={accent} fontWeight="700">
-          centro = 1 cara pintada
+        <text x="150" y="180" textAnchor="middle" fontSize="12" fill={accent} fontWeight="700">
+          morado = centro de una cara
         </text>
-        <text x="150" y="198" textAnchor="middle" fontSize="11" fill={muted}>
-          6 caras del cubo → 6 cubitos
-        </text>
-        <text x="150" y="218" textAnchor="middle" fontSize="11" fill={muted}>
-          esquinas=3 · aristas=2 · centro cara=1
+        <text x="150" y="200" textAnchor="middle" fontSize="11" fill={muted}>
+          ¿cuántas caras tiene el cubo grande?
         </text>
       </Frame>
     ),
   },
   "espacial-brujula": {
-    caption: "Atajo: la dirección final es el último tramo del camino.",
+    caption: "Atajo: la dirección en la que miras al final = el último tramo del camino.",
     node: (
-      <Frame caption="Camino N → E → S" w={280} h={200}>
+      <Frame caption="Camino por tramos" w={280} h={200}>
         <line x1="140" y1="160" x2="140" y2="90" stroke={stroke} strokeWidth="3" />
         <polygon points="140,70 132,90 148,90" fill={stroke} />
         <line x1="140" y1="80" x2="190" y2="80" stroke={accent} strokeWidth="3" />
         <line x1="200" y1="80" x2="200" y2="130" stroke={accent} strokeWidth="3" />
         <polygon points="200,145 192,125 208,125" fill={accent} />
         <text x="125" y="120" fontSize="11" fill={muted}>
-          N
+          1
         </text>
         <text x="160" y="70" fontSize="11" fill={muted}>
-          E
+          2
         </text>
-        <text x="210" y="120" fontSize="11" fill={accent}>
-          S ← miras aquí
+        <text x="215" y="120" fontSize="11" fill={muted}>
+          3
         </text>
         <circle cx="140" cy="160" r="5" fill={stroke} />
+        <text x="140" y="185" textAnchor="middle" fontSize="11" fill={muted}>
+          inicio
+        </text>
       </Frame>
     ),
   },
   "espacial-espejo": {
-    caption: "Espejo vertical: izquierda↔derecha; arriba/abajo igual.",
+    caption: "Atajo: espejo vertical cambia izquierda↔derecha; arriba/abajo se mantienen.",
     node: (
       <Frame caption="Espejo vertical" w={300} h={160}>
         <text x="80" y="70" textAnchor="middle" fontSize="36" fill={stroke} fontWeight="700">
@@ -988,28 +1031,21 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
     ),
   },
   "espacial-cilindro": {
-    caption: "Vista desde arriba circular → cuerpo redondo (cilindro/cono).",
+    caption: "Atajo: la vista superior te dice la forma de la base del sólido.",
     node: (
-      <Frame caption="Vista superior" w={280} h={180}>
-        <ellipse cx="90" cy="90" rx="45" ry="45" fill={fill} stroke={stroke} strokeWidth="2" />
-        <text x="90" y="95" textAnchor="middle" fontSize="12" fill={muted}>
-          arriba
+      <Frame caption="Vista desde arriba" w={280} h={160}>
+        <ellipse cx="140" cy="75" rx="55" ry="55" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="140" y="80" textAnchor="middle" fontSize="14" fill={muted}>
+          círculo
         </text>
-        <text x="170" y="70" fontSize="18" fill={accent}>
-          →
-        </text>
-        <ellipse cx="230" cy="50" rx="35" ry="12" fill={fill} stroke={stroke} strokeWidth="2" />
-        <line x1="195" y1="50" x2="195" y2="130" stroke={stroke} strokeWidth="2" />
-        <line x1="265" y1="50" x2="265" y2="130" stroke={stroke} strokeWidth="2" />
-        <ellipse cx="230" cy="130" rx="35" ry="12" fill={fill} stroke={stroke} strokeWidth="2" />
-        <text x="230" y="165" textAnchor="middle" fontSize="11" fill={muted}>
-          cilindro
+        <text x="140" y="150" textAnchor="middle" fontSize="11" fill={muted}>
+          ¿qué sólido tiene esta vista?
         </text>
       </Frame>
     ),
   },
   "espacial-reloj": {
-    caption: "Girar el reloj 90° antihorario: la manecilla «salta» una hora atrás en apariencia.",
+    caption: "Atajo: 90° = un cuarto de vuelta; antihorario va «hacia atrás» en el reloj.",
     node: (
       <Frame caption="Reloj" w={260} h={180}>
         <circle cx="130" cy="90" r="55" fill={fill} stroke={stroke} strokeWidth="2" />
@@ -1021,13 +1057,13 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
           3
         </text>
         <text x="130" y="155" textAnchor="middle" fontSize="11" fill={muted}>
-          apunta a las 3
+          manecilla en las 3
         </text>
       </Frame>
     ),
   },
   "espacial-net-cruz": {
-    caption: "En cruz: la cara del extremo opuesto al brazo largo suele ser la opuesta al centro.",
+    caption: "Atajo: caras que comparten lado en el papel no pueden ser opuestas en el cubo.",
     node: (
       <Frame caption="Desarrollo en cruz" w={260} h={220}>
         <rect x="100" y="20" width="50" height="50" fill={fill} stroke={stroke} strokeWidth="2" />
@@ -1043,35 +1079,35 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
     ),
   },
   "espacial-doblez": {
-    caption: "Atajo: al doblar, la punta se acerca al pliegue (no gira sola).",
+    caption: "Atajo: al doblar, imagina el pliegue y hacia dónde se mueve cada punta.",
     node: (
       <Frame caption="Doblez horizontal" w={300} h={180}>
         <rect x="40" y="30" width="90" height="120" fill={fill} stroke={stroke} strokeWidth="2" />
         <ArrowUp x={85} y={90} rot={0} />
         <text x="85" y="165" textAnchor="middle" fontSize="11" fill={muted}>
-          antes ↑
+          antes
         </text>
         <text x="145" y="95" fontSize="18" fill={accent}>
           →
         </text>
         <rect x="170" y="50" width="90" height="60" fill={fill} stroke={stroke} strokeWidth="2" />
         <line x1="170" y1="80" x2="260" y2="80" stroke={accent} strokeWidth="2" strokeDasharray="4 3" />
-        <text x="215" y="70" textAnchor="middle" fontSize="11" fill={accent}>
-          punta → pliegue
+        <text x="215" y="70" textAnchor="middle" fontSize="11" fill={muted}>
+          pliegue
         </text>
-        <text x="215" y="130" textAnchor="middle" fontSize="11" fill={muted}>
-          después
+        <text x="215" y="130" textAnchor="middle" fontSize="11" fill={accent}>
+          ¿dónde queda la punta?
         </text>
       </Frame>
     ),
   },
   "espacial-cono-lado": {
-    caption: "Atajo: cono de lado = triángulo; desde arriba = círculo.",
+    caption: "Atajo: no mezcles vista de lado con vista desde arriba.",
     node: (
-      <Frame caption="Vistas del cono" w={300} h={170}>
+      <Frame caption="Vistas de un cono" w={300} h={170}>
         <polygon points="70,40 30,130 110,130" fill={fill} stroke={stroke} strokeWidth="2" />
         <text x="70" y="155" textAnchor="middle" fontSize="11" fill={muted}>
-          lateral
+          de lado
         </text>
         <ellipse cx="220" cy="90" rx="45" ry="45" fill={fill} stroke={stroke} strokeWidth="2" />
         <text x="220" y="155" textAnchor="middle" fontSize="11" fill={muted}>
@@ -1081,23 +1117,106 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
     ),
   },
   "espacial-escalera": {
-    caption: "Atajo: de frente los peldaños = franjas horizontales.",
+    caption: "Atajo: desde el frente ignora la profundidad; mira solo la silueta.",
     node: (
-      <Frame caption="Escalera de frente" w={260} h={180}>
+      <Frame caption="Escalera: ¿frente o perfil?" w={300} h={180}>
         {[0, 1, 2, 3].map((i) => (
           <rect
-            key={i}
-            x={40}
-            y={30 + i * 30}
-            width={180 - i * 10}
-            height="22"
+            key={`f-${i}`}
+            x={30}
+            y={30 + i * 28}
+            width={100}
+            height="20"
             fill={fill}
             stroke={stroke}
             strokeWidth="2"
           />
         ))}
-        <text x="130" y="165" textAnchor="middle" fontSize="11" fill={muted}>
-          rectángulos / líneas
+        <text x="80" y="160" textAnchor="middle" fontSize="11" fill={muted}>
+          frente
+        </text>
+        <polyline
+          points="180,140 200,120 220,120 240,100 260,100 280,80"
+          fill="none"
+          stroke={stroke}
+          strokeWidth="3"
+        />
+        <text x="230" y="160" textAnchor="middle" fontSize="11" fill={muted}>
+          perfil
+        </text>
+      </Frame>
+    ),
+  },
+  "espacial-mapa-180": {
+    caption: "Atajo giro 180°: arriba↔abajo e izquierda↔derecha a la vez.",
+    node: (
+      <Frame caption="Giro del mapa 180°" w={300} h={180}>
+        <rect x="30" y="30" width="90" height="90" fill={fill} stroke={stroke} strokeWidth="2" />
+        <circle cx="50" cy="50" r="10" fill={accent} />
+        <text x="75" y="140" textAnchor="middle" fontSize="11" fill={muted}>
+          marca arriba-izq
+        </text>
+        <text x="150" y="80" fontSize="18" fill={accent}>
+          ⟳180°
+        </text>
+        <rect x="180" y="30" width="90" height="90" fill={fill} stroke={stroke} strokeWidth="2" />
+        <circle cx="250" cy="100" r="10" fill="#ede9fe" stroke={accent} strokeWidth="2" strokeDasharray="3 2" />
+        <text x="225" y="140" textAnchor="middle" fontSize="11" fill={muted}>
+          ¿dónde queda?
+        </text>
+      </Frame>
+    ),
+  },
+  "espacial-aristas": {
+    caption: "Atajo: cuenta aristas de arriba, de abajo y las verticales (sin contar dos veces).",
+    node: (
+      <Frame caption="Aristas de un cubo" w={260} h={200}>
+        <path
+          d="M70,50 L160,50 L200,90 L110,90 Z"
+          fill="#ede9fe"
+          stroke={stroke}
+          strokeWidth="2"
+        />
+        <path d="M70,50 L70,140 L110,180 L110,90" fill={fill} stroke={stroke} strokeWidth="2" />
+        <path d="M160,50 L160,140 L200,180 L200,90" fill="none" stroke={stroke} strokeWidth="2" />
+        <line x1="70" y1="140" x2="160" y2="140" stroke={stroke} strokeWidth="2" />
+        <line x1="110" y1="180" x2="200" y2="180" stroke={stroke} strokeWidth="2" />
+        <text x="130" y="195" textAnchor="middle" fontSize="11" fill={muted}>
+          cuenta cada arista una vez
+        </text>
+      </Frame>
+    ),
+  },
+  "espacial-dos-cubos": {
+    caption: "Atajo: caras visibles = caras totales − las que quedan pegadas por dentro.",
+    node: (
+      <Frame caption="2 cubos pegados" w={300} h={170}>
+        <rect x="50" y="40" width="70" height="70" fill={fill} stroke={stroke} strokeWidth="2" />
+        <rect x="120" y="40" width="70" height="70" fill={fill} stroke={stroke} strokeWidth="2" />
+        <line x1="120" y1="40" x2="120" y2="110" stroke={accent} strokeWidth="3" strokeDasharray="4 3" />
+        <text x="120" y="135" textAnchor="middle" fontSize="11" fill={accent}>
+          unión (se ocultan caras)
+        </text>
+        <text x="150" y="155" textAnchor="middle" fontSize="11" fill={muted}>
+          2×6 caras − ocultas = visibles
+        </text>
+      </Frame>
+    ),
+  },
+  "espacial-caras-adyacentes": {
+    caption: "Atajo: la tapa toca las paredes laterales; el fondo es la cara opuesta (no vecina).",
+    node: (
+      <Frame caption="Caras del cubo" w={280} h={180}>
+        <rect x="90" y="20" width="70" height="40" fill="#ede9fe" stroke={accent} strokeWidth="2" />
+        <text x="125" y="45" textAnchor="middle" fontSize="11" fill={accent}>
+          superior
+        </text>
+        <rect x="40" y="60" width="50" height="70" fill={fill} stroke={stroke} strokeWidth="2" />
+        <rect x="90" y="60" width="70" height="70" fill={fill} stroke={stroke} strokeWidth="2" />
+        <rect x="160" y="60" width="50" height="70" fill={fill} stroke={stroke} strokeWidth="2" />
+        <rect x="90" y="130" width="70" height="30" fill="#e2e8f0" stroke={stroke} strokeWidth="2" />
+        <text x="125" y="150" textAnchor="middle" fontSize="10" fill={muted}>
+          inferior
         </text>
       </Frame>
     ),

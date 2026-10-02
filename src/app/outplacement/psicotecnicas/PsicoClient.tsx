@@ -46,7 +46,7 @@ const BANCO = bancoTiposData as {
 };
 
 const INTRO =
-  "Estudia gratis: fichas de método, pruebas guiadas y pruebas por tipo. La explicación paso a paso y la respuesta completa van con la práctica de pago.";
+  "Estudia gratis: fichas de método, pruebas guiadas y pruebas por tipo. Todas las preguntas se pueden intentar sin pagar; la explicación paso a paso y la respuesta correcta van con la práctica de pago.";
 
 const PRECIOS_PRACTICA = `/precios?plan=psico_practica&next=${encodeURIComponent("/outplacement/psicotecnicas")}`;
 
@@ -345,6 +345,29 @@ export function PsicoClient() {
             <p className="text-xs muted mt-1">{BANCO.nota}</p>
           </div>
 
+          {!paid ? (
+            <div className="rounded-lg border border-black/10 bg-black/[0.02] p-3 space-y-2">
+              <p className="text-sm font-medium">Opción de pago: explicación y respuesta correcta</p>
+              <p className="text-xs muted leading-relaxed">
+                Intentas gratis. Si quieres ver la respuesta correcta y el paso a paso (o practicar con IA),
+                activa la práctica psicotécnica ({formatCop(PSICO_PRACTICA_PRICE_COP)}/mes). No está incluida en
+                Carrera.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <Link href={PRECIOS_PRACTICA} className="btn-primary">
+                  Ver precio y pagar práctica
+                </Link>
+                <Link href="/outplacement/psicotecnicas/practica" className="btn-secondary">
+                  Ir a práctica IA
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <p className="text-xs muted rounded-lg border border-black/10 bg-black/[0.02] p-3">
+              Práctica activa: puedes revelar respuesta y paso a paso en cada ítem.
+            </p>
+          )}
+
           <div className="flex flex-wrap gap-2">
             {BANCO.tipos.map((t, i) => (
               <button
@@ -379,54 +402,49 @@ export function PsicoClient() {
               value={tipoAnswer}
               onChange={(e) => setTipoAnswer(e.target.value)}
               placeholder="Letra o texto (ej. B o 400)"
-              disabled={tipoChecked && showExplain && paid}
+              disabled={showExplain && paid}
             />
           </label>
 
-          {!tipoChecked ? (
+          <div className="flex flex-wrap gap-2">
             <button
               type="button"
               className="btn-primary"
-              disabled={!tipoAnswer.trim()}
+              disabled={!tipoAnswer.trim() || tipoChecked}
               onClick={() => setTipoChecked(true)}
             >
               Comprobar
             </button>
-          ) : (
-            <div className="space-y-2 text-sm">
-              <p className="font-medium">{tipoOk ? "Cuadra." : "No cuadra todavía."}</p>
+            {paid ? (
+              <button
+                type="button"
+                className="btn-secondary"
+                disabled={showExplain}
+                onClick={() => setShowExplain(true)}
+              >
+                Ver respuesta y paso a paso
+              </button>
+            ) : (
+              <Link href={PRECIOS_PRACTICA} className="btn-secondary">
+                Desbloquear explicación
+              </Link>
+            )}
+          </div>
 
-              {!showExplain ? (
-                paid ? (
-                  <button type="button" className="btn-primary" onClick={() => setShowExplain(true)}>
-                    Ver respuesta y paso a paso
-                  </button>
-                ) : (
-                  <div className="rounded-lg border border-black/10 bg-black/[0.02] p-3 space-y-2">
-                    <p className="text-xs muted leading-relaxed">
-                      La explicación paso a paso y la respuesta correcta forman parte de la práctica de pago (
-                      {formatCop(PSICO_PRACTICA_PRICE_COP)}/mes).
-                    </p>
-                    <Link href={PRECIOS_PRACTICA} className="btn-primary inline-flex">
-                      Activar práctica con explicación
-                    </Link>
-                    <Link href="/outplacement/psicotecnicas/practica" className="btn-secondary inline-flex ml-2">
-                      Ir a práctica IA
-                    </Link>
-                  </div>
-                )
-              ) : (
-                <div className="space-y-2">
-                  <p>
-                    Respuesta correcta: <strong>{tipoItem.respuesta}</strong>
-                  </p>
-                  <ol className="list-decimal pl-4 space-y-1 muted">
-                    {tipoItem.pasos.map((p) => (
-                      <li key={p.slice(0, 48)}>{p}</li>
-                    ))}
-                  </ol>
-                </div>
-              )}
+          {tipoChecked && (
+            <p className="text-sm font-medium">{tipoOk ? "Cuadra." : "No cuadra todavía."}</p>
+          )}
+
+          {showExplain && paid && (
+            <div className="space-y-2 text-sm">
+              <p>
+                Respuesta correcta: <strong>{tipoItem.respuesta}</strong>
+              </p>
+              <ol className="list-decimal pl-4 space-y-1 muted">
+                {tipoItem.pasos.map((p) => (
+                  <li key={p.slice(0, 48)}>{p}</li>
+                ))}
+              </ol>
             </div>
           )}
 

@@ -2093,27 +2093,29 @@
           "enunciado": "Recorres 4 km en 40 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 7   B) 8   C) 5   D) 6",
           "respuesta": "D) 6",
           "pasos": [
-            "En 40 minutos haces 4 km.",
-            "Para 60 minutos (1 hora): multiplica por 60/40 = 1,5.",
-            "4 × 1,5 = 6 km.",
-            "Atajo: (km × 60) ÷ minutos = (4 × 60) ÷ 40 = 6."
+            "Es regla de 3 directa: más tiempo → más kilómetros (al mismo ritmo).",
+            "Tabla mental: 40 min → 4 km; 60 min → ¿? km.",
+            "Directa: multiplica en cruz y divide. (? × 40) = 4 × 60.",
+            "?= (4 × 60) ÷ 40 = 6 km.",
+            "Respuesta: 6 km."
           ]
         },
         {
           "enunciado": "A llena en 6 h y B en 8 h. ¿Cuánto tardan juntas?\n\nA) 6   B) 1   C) 3.43   D) 3",
           "respuesta": "C) 3.43",
           "pasos": [
-            "Atajo (dos personas/grifos): tiempo junto = (A × B) ÷ (A + B).",
-            "Multiplica tiempos: 6 × 8 = 48.",
-            "Suma tiempos: 6 + 8 = 14.",
-            "Divide: 48 ÷ 14 = 3,43 h.",
-            "Idea: juntas avanzan más rápido, así que el tiempo es menor que el más rápido (6 h)."
+            "Aquí no es una regla de 3 de una sola magnitud: son dos ritmos que se suman.",
+            "Atajo de grifos/personas: tiempo juntas = (A × B) ÷ (A + B).",
+            "6 × 8 = 48; 6 + 8 = 14.",
+            "48 ÷ 14 = 3,43 h.",
+            "Comprueba la lógica: juntas van más rápido → el tiempo debe ser menor que 6 h."
           ]
         },
         {
           "enunciado": "Reparten $90.000 en partes 2. 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 30.000   B) 40.000   C) 20.000   D) 30.000",
           "respuesta": "A) 30.000",
           "pasos": [
+            "No es regla de 3: es reparto proporcional (partes).",
             "Partes 2 + 3 + 4 = 9 partes en total.",
             "Una parte = 90.000 ÷ 9 = 10.000.",
             "A quien le tocan 3 partes: 10.000 × 3 = 30.000.",
@@ -2124,11 +2126,12 @@
           "enunciado": "Si 10 obreros terminan en 8 días, ¿cuántos días tardan 14 (mismo ritmo)?\n\nA) 8   B) 8   C) 6   D) 5",
           "respuesta": "D) 5",
           "pasos": [
-            "Atajo: el trabajo total se mide en «obrero-días» = obreros × días.",
-            "10 × 8 = 80 obrero-días (ese es el trabajo completo).",
-            "Con 14 obreros: días = 80 ÷ 14 = 5,71.",
-            "En la prueba suelen pedir el entero de días completos: 5 días.",
-            "Regla: más obreros → menos días (proporción inversa)."
+            "Es regla de 3 inversa: más obreros → menos días (el trabajo es el mismo).",
+            "Cómo se nota: si sube una magnitud, la otra baja → se invierte al armar la cuenta.",
+            "Tabla: 10 obreros → 8 días; 14 obreros → ¿? días.",
+            "Inversa: el nuevo tiempo = días × (obreros viejos ÷ obreros nuevos).",
+            "?= 8 × (10 ÷ 14) = 8 × 0,71 = 5,71 días.",
+            "Sale 5,71; en opciones enteras eligen 5 (días completos)."
           ]
         },
         {
@@ -2145,9 +2148,11 @@
           "enunciado": "Si 8 cuadernos cuestan $44.000. ¿cuánto cuestan 5?\n\nA) 8.800   B) 5.500   C) 27.500   D) 44.000",
           "respuesta": "C) 27.500",
           "pasos": [
-            "Precio de uno: 44.000 ÷ 8 = 5.500.",
-            "Para 5: 5.500 × 5 = 27.500.",
-            "Atajo regla de tres: (5 × 44.000) ÷ 8 = 27.500.",
+            "Es regla de 3 directa: más cuadernos → más plata (mismo precio unitario).",
+            "Tabla: 8 cuadernos → $44.000; 5 cuadernos → ¿?",
+            "Directa: (? × 8) = 5 × 44.000.",
+            "?= (5 × 44.000) ÷ 8 = 27.500.",
+            "O más corto: uno cuesta 5.500; 5 × 5.500 = 27.500.",
             "Respuesta: $27.500."
           ]
         },
@@ -2164,27 +2169,29 @@
           "enunciado": "Recorres 6 km en 50 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 12   B) 7   C) 8   D) 6",
           "respuesta": "B) 7",
           "pasos": [
-            "En 50 minutos haces 6 km.",
-            "Para 60 minutos (1 hora): multiplica por 60/50 = 1,2.",
-            "6 × 1,2 = 7,2 km.",
-            "Atajo: (km × 60) ÷ minutos = (6 × 60) ÷ 50 = 7,2."
+            "Es regla de 3 directa: más tiempo → más kilómetros (al mismo ritmo).",
+            "Tabla mental: 50 min → 6 km; 60 min → ¿? km.",
+            "Directa: multiplica en cruz y divide. (? × 50) = 6 × 60.",
+            "?= (6 × 60) ÷ 50 = 7,2 km.",
+            "Respuesta: 7,2 km."
           ]
         },
         {
           "enunciado": "A llena en 8 h y B en 7 h. ¿Cuánto tardan juntas?\n\nA) 3.73   B) 3   C) 8   D) 1",
           "respuesta": "A) 3.73",
           "pasos": [
-            "Atajo (dos personas/grifos): tiempo junto = (A × B) ÷ (A + B).",
-            "Multiplica tiempos: 8 × 7 = 56.",
-            "Suma tiempos: 8 + 7 = 15.",
-            "Divide: 56 ÷ 15 = 3,73 h.",
-            "Idea: juntas avanzan más rápido, así que el tiempo es menor que el más rápido (7 h)."
+            "Aquí no es una regla de 3 de una sola magnitud: son dos ritmos que se suman.",
+            "Atajo de grifos/personas: tiempo juntas = (A × B) ÷ (A + B).",
+            "8 × 7 = 56; 8 + 7 = 15.",
+            "56 ÷ 15 = 3,73 h.",
+            "Comprueba la lógica: juntas van más rápido → el tiempo debe ser menor que 7 h."
           ]
         },
         {
           "enunciado": "Reparten $99.000 en partes 2. 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 33.000   B) 22.000   C) 33.000   D) 44.000",
           "respuesta": "A) 33.000",
           "pasos": [
+            "No es regla de 3: es reparto proporcional (partes).",
             "Partes 2 + 3 + 4 = 9 partes en total.",
             "Una parte = 99.000 ÷ 9 = 11.000.",
             "A quien le tocan 3 partes: 11.000 × 3 = 33.000.",
@@ -2195,11 +2202,12 @@
           "enunciado": "Si 7 obreros terminan en 11 días, ¿cuántos días tardan 11 (mismo ritmo)?\n\nA) 11   B) 8   C) 7   D) 11",
           "respuesta": "C) 7",
           "pasos": [
-            "Atajo: el trabajo total se mide en «obrero-días» = obreros × días.",
-            "7 × 11 = 77 obrero-días (ese es el trabajo completo).",
-            "Con 11 obreros: días = 77 ÷ 11 = 7.",
-            "Respuesta: 7 días.",
-            "Regla: más obreros → menos días (proporción inversa)."
+            "Es regla de 3 inversa: más obreros → menos días (el trabajo es el mismo).",
+            "Cómo se nota: si sube una magnitud, la otra baja → se invierte al armar la cuenta.",
+            "Tabla: 7 obreros → 11 días; 11 obreros → ¿? días.",
+            "Inversa: el nuevo tiempo = días × (obreros viejos ÷ obreros nuevos).",
+            "?= 11 × (7 ÷ 11) = 11 × 0,64 = 7 días.",
+            "Respuesta: 7 días."
           ]
         },
         {
@@ -2216,9 +2224,11 @@
           "enunciado": "Si 8 cuadernos cuestan $52.000. ¿cuánto cuestan 5?\n\nA) 32.500   B) 52.000   C) 6.500   D) 10.400",
           "respuesta": "A) 32.500",
           "pasos": [
-            "Precio de uno: 52.000 ÷ 8 = 6.500.",
-            "Para 5: 6.500 × 5 = 32.500.",
-            "Atajo regla de tres: (5 × 52.000) ÷ 8 = 32.500.",
+            "Es regla de 3 directa: más cuadernos → más plata (mismo precio unitario).",
+            "Tabla: 8 cuadernos → $52.000; 5 cuadernos → ¿?",
+            "Directa: (? × 8) = 5 × 52.000.",
+            "?= (5 × 52.000) ÷ 8 = 32.500.",
+            "O más corto: uno cuesta 6.500; 5 × 6.500 = 32.500.",
             "Respuesta: $32.500."
           ]
         },
@@ -2235,27 +2245,29 @@
           "enunciado": "Recorres 3 km en 30 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 5   B) 7   C) 6   D) 6",
           "respuesta": "C) 6",
           "pasos": [
-            "En 30 minutos haces 3 km.",
-            "Para 60 minutos (1 hora): multiplica por 60/30 = 2.",
-            "3 × 2 = 6 km.",
-            "Atajo: (km × 60) ÷ minutos = (3 × 60) ÷ 30 = 6."
+            "Es regla de 3 directa: más tiempo → más kilómetros (al mismo ritmo).",
+            "Tabla mental: 30 min → 3 km; 60 min → ¿? km.",
+            "Directa: multiplica en cruz y divide. (? × 30) = 3 × 60.",
+            "?= (3 × 60) ÷ 30 = 6 km.",
+            "Respuesta: 6 km."
           ]
         },
         {
           "enunciado": "A llena en 5 h y B en 6 h. ¿Cuánto tardan juntas?\n\nA) 2.73   B) 1   C) 3   D) 5",
           "respuesta": "A) 2.73",
           "pasos": [
-            "Atajo (dos personas/grifos): tiempo junto = (A × B) ÷ (A + B).",
-            "Multiplica tiempos: 5 × 6 = 30.",
-            "Suma tiempos: 5 + 6 = 11.",
-            "Divide: 30 ÷ 11 = 2,73 h.",
-            "Idea: juntas avanzan más rápido, así que el tiempo es menor que el más rápido (5 h)."
+            "Aquí no es una regla de 3 de una sola magnitud: son dos ritmos que se suman.",
+            "Atajo de grifos/personas: tiempo juntas = (A × B) ÷ (A + B).",
+            "5 × 6 = 30; 5 + 6 = 11.",
+            "30 ÷ 11 = 2,73 h.",
+            "Comprueba la lógica: juntas van más rápido → el tiempo debe ser menor que 5 h."
           ]
         },
         {
           "enunciado": "Reparten $108.000 en partes 2. 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 24.000   B) 48.000   C) 36.000   D) 36.000",
           "respuesta": "C) 36.000",
           "pasos": [
+            "No es regla de 3: es reparto proporcional (partes).",
             "Partes 2 + 3 + 4 = 9 partes en total.",
             "Una parte = 108.000 ÷ 9 = 12.000.",
             "A quien le tocan 3 partes: 12.000 × 3 = 36.000.",
@@ -2266,11 +2278,12 @@
           "enunciado": "Si 9 obreros terminan en 10 días, ¿cuántos días tardan 13 (mismo ritmo)?\n\nA) 10   B) 7   C) 6   D) 10",
           "respuesta": "C) 6",
           "pasos": [
-            "Atajo: el trabajo total se mide en «obrero-días» = obreros × días.",
-            "9 × 10 = 90 obrero-días (ese es el trabajo completo).",
-            "Con 13 obreros: días = 90 ÷ 13 = 6,92.",
-            "En la prueba suelen pedir el entero de días completos: 6 días.",
-            "Regla: más obreros → menos días (proporción inversa)."
+            "Es regla de 3 inversa: más obreros → menos días (el trabajo es el mismo).",
+            "Cómo se nota: si sube una magnitud, la otra baja → se invierte al armar la cuenta.",
+            "Tabla: 9 obreros → 10 días; 13 obreros → ¿? días.",
+            "Inversa: el nuevo tiempo = días × (obreros viejos ÷ obreros nuevos).",
+            "?= 10 × (9 ÷ 13) = 10 × 0,69 = 6,92 días.",
+            "Sale 6,92; en opciones enteras eligen 6 (días completos)."
           ]
         },
         {
@@ -2287,9 +2300,11 @@
           "enunciado": "Si 8 cuadernos cuestan $40.000. ¿cuánto cuestan 5?\n\nA) 25.000   B) 5.000   C) 8.000   D) 40.000",
           "respuesta": "A) 25.000",
           "pasos": [
-            "Precio de uno: 40.000 ÷ 8 = 5.000.",
-            "Para 5: 5.000 × 5 = 25.000.",
-            "Atajo regla de tres: (5 × 40.000) ÷ 8 = 25.000.",
+            "Es regla de 3 directa: más cuadernos → más plata (mismo precio unitario).",
+            "Tabla: 8 cuadernos → $40.000; 5 cuadernos → ¿?",
+            "Directa: (? × 8) = 5 × 40.000.",
+            "?= (5 × 40.000) ÷ 8 = 25.000.",
+            "O más corto: uno cuesta 5.000; 5 × 5.000 = 25.000.",
             "Respuesta: $25.000."
           ]
         },
@@ -2306,27 +2321,29 @@
           "enunciado": "Recorres 5 km en 40 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 7   B) 8   C) 10   D) 6",
           "respuesta": "A) 7",
           "pasos": [
-            "En 40 minutos haces 5 km.",
-            "Para 60 minutos (1 hora): multiplica por 60/40 = 1,5.",
-            "5 × 1,5 = 7,5 km.",
-            "Atajo: (km × 60) ÷ minutos = (5 × 60) ÷ 40 = 7,5."
+            "Es regla de 3 directa: más tiempo → más kilómetros (al mismo ritmo).",
+            "Tabla mental: 40 min → 5 km; 60 min → ¿? km.",
+            "Directa: multiplica en cruz y divide. (? × 40) = 5 × 60.",
+            "?= (5 × 60) ÷ 40 = 7,5 km.",
+            "Respuesta: 7,5 km."
           ]
         },
         {
           "enunciado": "A llena en 7 h y B en 9 h. ¿Cuánto tardan juntas?\n\nA) 7   B) 3   C) 3.94   D) 1",
           "respuesta": "C) 3.94",
           "pasos": [
-            "Atajo (dos personas/grifos): tiempo junto = (A × B) ÷ (A + B).",
-            "Multiplica tiempos: 7 × 9 = 63.",
-            "Suma tiempos: 7 + 9 = 16.",
-            "Divide: 63 ÷ 16 = 3,94 h.",
-            "Idea: juntas avanzan más rápido, así que el tiempo es menor que el más rápido (7 h)."
+            "Aquí no es una regla de 3 de una sola magnitud: son dos ritmos que se suman.",
+            "Atajo de grifos/personas: tiempo juntas = (A × B) ÷ (A + B).",
+            "7 × 9 = 63; 7 + 9 = 16.",
+            "63 ÷ 16 = 3,94 h.",
+            "Comprueba la lógica: juntas van más rápido → el tiempo debe ser menor que 7 h."
           ]
         },
         {
           "enunciado": "Reparten $90.000 en partes 2. 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 20.000   B) 30.000   C) 30.000   D) 40.000",
           "respuesta": "B) 30.000",
           "pasos": [
+            "No es regla de 3: es reparto proporcional (partes).",
             "Partes 2 + 3 + 4 = 9 partes en total.",
             "Una parte = 90.000 ÷ 9 = 10.000.",
             "A quien le tocan 3 partes: 10.000 × 3 = 30.000.",
@@ -2337,11 +2354,12 @@
           "enunciado": "Si 6 obreros terminan en 9 días, ¿cuántos días tardan 10 (mismo ritmo)?\n\nA) 9   B) 9   C) 5   D) 6",
           "respuesta": "C) 5",
           "pasos": [
-            "Atajo: el trabajo total se mide en «obrero-días» = obreros × días.",
-            "6 × 9 = 54 obrero-días (ese es el trabajo completo).",
-            "Con 10 obreros: días = 54 ÷ 10 = 5,4.",
-            "En la prueba suelen pedir el entero de días completos: 5 días.",
-            "Regla: más obreros → menos días (proporción inversa)."
+            "Es regla de 3 inversa: más obreros → menos días (el trabajo es el mismo).",
+            "Cómo se nota: si sube una magnitud, la otra baja → se invierte al armar la cuenta.",
+            "Tabla: 6 obreros → 9 días; 10 obreros → ¿? días.",
+            "Inversa: el nuevo tiempo = días × (obreros viejos ÷ obreros nuevos).",
+            "?= 9 × (6 ÷ 10) = 9 × 0,6 = 5,4 días.",
+            "Sale 5,4; en opciones enteras eligen 5 (días completos)."
           ]
         },
         {
@@ -2358,9 +2376,11 @@
           "enunciado": "Si 8 cuadernos cuestan $48.000. ¿cuánto cuestan 5?\n\nA) 9.600   B) 6.000   C) 48.000   D) 30.000",
           "respuesta": "D) 30.000",
           "pasos": [
-            "Precio de uno: 48.000 ÷ 8 = 6.000.",
-            "Para 5: 6.000 × 5 = 30.000.",
-            "Atajo regla de tres: (5 × 48.000) ÷ 8 = 30.000.",
+            "Es regla de 3 directa: más cuadernos → más plata (mismo precio unitario).",
+            "Tabla: 8 cuadernos → $48.000; 5 cuadernos → ¿?",
+            "Directa: (? × 8) = 5 × 48.000.",
+            "?= (5 × 48.000) ÷ 8 = 30.000.",
+            "O más corto: uno cuesta 6.000; 5 × 6.000 = 30.000.",
             "Respuesta: $30.000."
           ]
         },
@@ -2377,27 +2397,29 @@
           "enunciado": "Recorres 7 km en 50 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 9   B) 14   C) 8   D) 7",
           "respuesta": "C) 8",
           "pasos": [
-            "En 50 minutos haces 7 km.",
-            "Para 60 minutos (1 hora): multiplica por 60/50 = 1,2.",
-            "7 × 1,2 = 8,4 km.",
-            "Atajo: (km × 60) ÷ minutos = (7 × 60) ÷ 50 = 8,4."
+            "Es regla de 3 directa: más tiempo → más kilómetros (al mismo ritmo).",
+            "Tabla mental: 50 min → 7 km; 60 min → ¿? km.",
+            "Directa: multiplica en cruz y divide. (? × 50) = 7 × 60.",
+            "?= (7 × 60) ÷ 50 = 8,4 km.",
+            "Respuesta: 8,4 km."
           ]
         },
         {
           "enunciado": "A llena en 4 h y B en 8 h. ¿Cuánto tardan juntas?\n\nA) 1   B) 2.67   C) 4   D) 3",
           "respuesta": "B) 2.67",
           "pasos": [
-            "Atajo (dos personas/grifos): tiempo junto = (A × B) ÷ (A + B).",
-            "Multiplica tiempos: 4 × 8 = 32.",
-            "Suma tiempos: 4 + 8 = 12.",
-            "Divide: 32 ÷ 12 = 2,67 h.",
-            "Idea: juntas avanzan más rápido, así que el tiempo es menor que el más rápido (4 h)."
+            "Aquí no es una regla de 3 de una sola magnitud: son dos ritmos que se suman.",
+            "Atajo de grifos/personas: tiempo juntas = (A × B) ÷ (A + B).",
+            "4 × 8 = 32; 4 + 8 = 12.",
+            "32 ÷ 12 = 2,67 h.",
+            "Comprueba la lógica: juntas van más rápido → el tiempo debe ser menor que 4 h."
           ]
         },
         {
           "enunciado": "Reparten $99.000 en partes 2. 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 22.000   B) 44.000   C) 33.000   D) 33.000",
           "respuesta": "C) 33.000",
           "pasos": [
+            "No es regla de 3: es reparto proporcional (partes).",
             "Partes 2 + 3 + 4 = 9 partes en total.",
             "Una parte = 99.000 ÷ 9 = 11.000.",
             "A quien le tocan 3 partes: 11.000 × 3 = 33.000.",
@@ -2408,11 +2430,12 @@
           "enunciado": "Si 8 obreros terminan en 8 días, ¿cuántos días tardan 12 (mismo ritmo)?\n\nA) 5   B) 8   C) 6   D) 8",
           "respuesta": "A) 5",
           "pasos": [
-            "Atajo: el trabajo total se mide en «obrero-días» = obreros × días.",
-            "8 × 8 = 64 obrero-días (ese es el trabajo completo).",
-            "Con 12 obreros: días = 64 ÷ 12 = 5,33.",
-            "En la prueba suelen pedir el entero de días completos: 5 días.",
-            "Regla: más obreros → menos días (proporción inversa)."
+            "Es regla de 3 inversa: más obreros → menos días (el trabajo es el mismo).",
+            "Cómo se nota: si sube una magnitud, la otra baja → se invierte al armar la cuenta.",
+            "Tabla: 8 obreros → 8 días; 12 obreros → ¿? días.",
+            "Inversa: el nuevo tiempo = días × (obreros viejos ÷ obreros nuevos).",
+            "?= 8 × (8 ÷ 12) = 8 × 0,67 = 5,33 días.",
+            "Sale 5,33; en opciones enteras eligen 5 (días completos)."
           ]
         },
         {
@@ -2429,9 +2452,11 @@
           "enunciado": "Si 8 cuadernos cuestan $56.000. ¿cuánto cuestan 5?\n\nA) 56.000   B) 11.200   C) 7.000   D) 35.000",
           "respuesta": "D) 35.000",
           "pasos": [
-            "Precio de uno: 56.000 ÷ 8 = 7.000.",
-            "Para 5: 7.000 × 5 = 35.000.",
-            "Atajo regla de tres: (5 × 56.000) ÷ 8 = 35.000.",
+            "Es regla de 3 directa: más cuadernos → más plata (mismo precio unitario).",
+            "Tabla: 8 cuadernos → $56.000; 5 cuadernos → ¿?",
+            "Directa: (? × 8) = 5 × 56.000.",
+            "?= (5 × 56.000) ÷ 8 = 35.000.",
+            "O más corto: uno cuesta 7.000; 5 × 7.000 = 35.000.",
             "Respuesta: $35.000."
           ]
         },
@@ -2448,27 +2473,29 @@
           "enunciado": "Recorres 4 km en 30 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 9   B) 7   C) 8   D) 8",
           "respuesta": "C) 8",
           "pasos": [
-            "En 30 minutos haces 4 km.",
-            "Para 60 minutos (1 hora): multiplica por 60/30 = 2.",
-            "4 × 2 = 8 km.",
-            "Atajo: (km × 60) ÷ minutos = (4 × 60) ÷ 30 = 8."
+            "Es regla de 3 directa: más tiempo → más kilómetros (al mismo ritmo).",
+            "Tabla mental: 30 min → 4 km; 60 min → ¿? km.",
+            "Directa: multiplica en cruz y divide. (? × 30) = 4 × 60.",
+            "?= (4 × 60) ÷ 30 = 8 km.",
+            "Respuesta: 8 km."
           ]
         },
         {
           "enunciado": "A llena en 6 h y B en 7 h. ¿Cuánto tardan juntas?\n\nA) 1   B) 3   C) 6   D) 3.23",
           "respuesta": "D) 3.23",
           "pasos": [
-            "Atajo (dos personas/grifos): tiempo junto = (A × B) ÷ (A + B).",
-            "Multiplica tiempos: 6 × 7 = 42.",
-            "Suma tiempos: 6 + 7 = 13.",
-            "Divide: 42 ÷ 13 = 3,23 h.",
-            "Idea: juntas avanzan más rápido, así que el tiempo es menor que el más rápido (6 h)."
+            "Aquí no es una regla de 3 de una sola magnitud: son dos ritmos que se suman.",
+            "Atajo de grifos/personas: tiempo juntas = (A × B) ÷ (A + B).",
+            "6 × 7 = 42; 6 + 7 = 13.",
+            "42 ÷ 13 = 3,23 h.",
+            "Comprueba la lógica: juntas van más rápido → el tiempo debe ser menor que 6 h."
           ]
         },
         {
           "enunciado": "Reparten $108.000 en partes 2. 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 24.000   B) 36.000   C) 48.000   D) 36.000",
           "respuesta": "B) 36.000",
           "pasos": [
+            "No es regla de 3: es reparto proporcional (partes).",
             "Partes 2 + 3 + 4 = 9 partes en total.",
             "Una parte = 108.000 ÷ 9 = 12.000.",
             "A quien le tocan 3 partes: 12.000 × 3 = 36.000.",
@@ -2479,11 +2506,12 @@
           "enunciado": "Si 10 obreros terminan en 11 días, ¿cuántos días tardan 14 (mismo ritmo)?\n\nA) 7   B) 11   C) 8   D) 11",
           "respuesta": "A) 7",
           "pasos": [
-            "Atajo: el trabajo total se mide en «obrero-días» = obreros × días.",
-            "10 × 11 = 110 obrero-días (ese es el trabajo completo).",
-            "Con 14 obreros: días = 110 ÷ 14 = 7,86.",
-            "En la prueba suelen pedir el entero de días completos: 7 días.",
-            "Regla: más obreros → menos días (proporción inversa)."
+            "Es regla de 3 inversa: más obreros → menos días (el trabajo es el mismo).",
+            "Cómo se nota: si sube una magnitud, la otra baja → se invierte al armar la cuenta.",
+            "Tabla: 10 obreros → 11 días; 14 obreros → ¿? días.",
+            "Inversa: el nuevo tiempo = días × (obreros viejos ÷ obreros nuevos).",
+            "?= 11 × (10 ÷ 14) = 11 × 0,71 = 7,86 días.",
+            "Sale 7,86; en opciones enteras eligen 7 (días completos)."
           ]
         },
         {
@@ -2500,9 +2528,11 @@
           "enunciado": "Si 8 cuadernos cuestan $44.000. ¿cuánto cuestan 5?\n\nA) 5.500   B) 27.500   C) 44.000   D) 8.800",
           "respuesta": "B) 27.500",
           "pasos": [
-            "Precio de uno: 44.000 ÷ 8 = 5.500.",
-            "Para 5: 5.500 × 5 = 27.500.",
-            "Atajo regla de tres: (5 × 44.000) ÷ 8 = 27.500.",
+            "Es regla de 3 directa: más cuadernos → más plata (mismo precio unitario).",
+            "Tabla: 8 cuadernos → $44.000; 5 cuadernos → ¿?",
+            "Directa: (? × 8) = 5 × 44.000.",
+            "?= (5 × 44.000) ÷ 8 = 27.500.",
+            "O más corto: uno cuesta 5.500; 5 × 5.500 = 27.500.",
             "Respuesta: $27.500."
           ]
         },
@@ -2519,10 +2549,11 @@
           "enunciado": "Recorres 6 km en 40 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 10   B) 9   C) 12   D) 8",
           "respuesta": "B) 9",
           "pasos": [
-            "En 40 minutos haces 6 km.",
-            "Para 60 minutos (1 hora): multiplica por 60/40 = 1,5.",
-            "6 × 1,5 = 9 km.",
-            "Atajo: (km × 60) ÷ minutos = (6 × 60) ÷ 40 = 9."
+            "Es regla de 3 directa: más tiempo → más kilómetros (al mismo ritmo).",
+            "Tabla mental: 40 min → 6 km; 60 min → ¿? km.",
+            "Directa: multiplica en cruz y divide. (? × 40) = 6 × 60.",
+            "?= (6 × 60) ÷ 40 = 9 km.",
+            "Respuesta: 9 km."
           ]
         }
       ]

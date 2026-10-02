@@ -58,10 +58,11 @@ function explainDistance(enunciado: string): string[] | null {
   const min = Number(m[2]);
   const result = (km * 60) / min;
   return [
-    `En ${min} minutos haces ${formatEsNumber(km)} km.`,
-    `Para 60 minutos (1 hora): multiplica por 60/${min} = ${formatEsNumber(60 / min)}.`,
-    `${formatEsNumber(km)} × ${formatEsNumber(60 / min)} = ${formatEsNumber(result)} km.`,
-    `Atajo: (km × 60) ÷ minutos = (${formatEsNumber(km)} × 60) ÷ ${min} = ${formatEsNumber(result)}.`,
+    `Es regla de 3 directa: más tiempo → más kilómetros (al mismo ritmo).`,
+    `Tabla mental: ${min} min → ${formatEsNumber(km)} km; 60 min → ¿? km.`,
+    `Directa: multiplica en cruz y divide. (? × ${min}) = ${formatEsNumber(km)} × 60.`,
+    `?= (${formatEsNumber(km)} × 60) ÷ ${min} = ${formatEsNumber(result)} km.`,
+    `Respuesta: ${formatEsNumber(result)} km.`,
   ];
 }
 
@@ -77,28 +78,11 @@ function explainTogether(enunciado: string): string[] | null {
   const sum = a + b;
   const hours = round2(prod / sum);
   return [
-    `Atajo (dos personas/grifos): tiempo junto = (A × B) ÷ (A + B).`,
-    `Multiplica tiempos: ${a} × ${b} = ${prod}.`,
-    `Suma tiempos: ${a} + ${b} = ${sum}.`,
-    `Divide: ${prod} ÷ ${sum} = ${formatEsNumber(hours)} h.`,
-    `Idea: juntas avanzan más rápido, así que el tiempo es menor que el más rápido (${Math.min(a, b)} h).`,
-  ];
-}
-
-/** Reparto en partes 2, 3 y 4 → parte 3 */
-function explainParts(enunciado: string): string[] | null {
-  const m = enunciado.match(
-    /Reparten\s*\$?\s*([\d.]+)\s+en\s+partes\s+2[.,]\s*3\s+y\s+4.*?de\s+3/i
-  );
-  if (!m) return null;
-  const total = Number(m[1].replace(/\./g, ""));
-  const unit = total / 9;
-  const share = unit * 3;
-  return [
-    `Partes 2 + 3 + 4 = 9 partes en total.`,
-    `Una parte = ${money(total)} ÷ 9 = ${money(unit)}.`,
-    `A quien le tocan 3 partes: ${money(unit)} × 3 = ${money(share)}.`,
-    `Respuesta: $${money(share)}.`,
+    `Aquí no es una regla de 3 de una sola magnitud: son dos ritmos que se suman.`,
+    `Atajo de grifos/personas: tiempo juntas = (A × B) ÷ (A + B).`,
+    `${a} × ${b} = ${prod}; ${a} + ${b} = ${sum}.`,
+    `${prod} ÷ ${sum} = ${formatEsNumber(hours)} h.`,
+    `Comprueba la lógica: juntas van más rápido → el tiempo debe ser menor que ${Math.min(a, b)} h.`,
   ];
 }
 
@@ -111,39 +95,18 @@ function explainWorkers(enunciado: string): string[] | null {
   const n = Number(m[1]);
   const d = Number(m[2]);
   const m2 = Number(m[3]);
-  const work = n * d;
-  const exact = work / m2;
+  const exact = (d * n) / m2;
   const ans = Number.isInteger(exact) ? exact : Math.floor(exact);
 
   return [
-    `Atajo: el trabajo total se mide en «obrero-días» = obreros × días.`,
-    `${n} × ${d} = ${work} obrero-días (ese es el trabajo completo).`,
-    `Con ${m2} obreros: días = ${work} ÷ ${m2} = ${formatEsNumber(round2(exact))}.`,
+    `Es regla de 3 inversa: más obreros → menos días (el trabajo es el mismo).`,
+    `Cómo se nota: si sube una magnitud, la otra baja → se invierte al armar la cuenta.`,
+    `Tabla: ${n} obreros → ${d} días; ${m2} obreros → ¿? días.`,
+    `Inversa: el nuevo tiempo = días × (obreros viejos ÷ obreros nuevos).`,
+    `?= ${d} × (${n} ÷ ${m2}) = ${d} × ${formatEsNumber(round2(n / m2))} = ${formatEsNumber(round2(exact))} días.`,
     Number.isInteger(exact)
       ? `Respuesta: ${ans} días.`
-      : `En la prueba suelen pedir el entero de días completos: ${ans} días.`,
-    `Regla: más obreros → menos días (proporción inversa).`,
-  ];
-}
-
-/** Tren pasa poste: v = largo / tiempo */
-function explainTrain(enunciado: string): string[] | null {
-  const m = enunciado.match(
-    /tren\s+de\s+(\d+)\s*m\s+pasa\s+un\s+poste\s+en\s+(\d+)\s*s/i
-  );
-  if (!m) return null;
-  const len = Number(m[1]);
-  const sec = Number(m[2]);
-  const v = len / sec;
-  // Opciones enteras del banco suelen truncar (ej. 180/7 ≈ 25,71 → 25).
-  const shown = Number.isInteger(v) ? v : Math.floor(v);
-  return [
-    `Al pasar un poste (punto fijo), la distancia que cuenta es solo la longitud del tren.`,
-    `Velocidad = metros ÷ segundos: ${len} ÷ ${sec} = ${formatEsNumber(round2(v))} m/s.`,
-    Number.isInteger(v)
-      ? `Respuesta: ${shown} m/s.`
-      : `En opciones enteras: ${shown} m/s (aprox. del cálculo).`,
-    `No conviertas a km/h si la pregunta pide m/s.`,
+      : `Sale ${formatEsNumber(round2(exact))}; en opciones enteras eligen ${ans} (días completos).`,
   ];
 }
 
@@ -159,10 +122,50 @@ function explainUnitPrice(enunciado: string): string[] | null {
   const unit = total / n;
   const pay = unit * want;
   return [
-    `Precio de uno: ${money(total)} ÷ ${n} = ${money(unit)}.`,
-    `Para ${want}: ${money(unit)} × ${want} = ${money(pay)}.`,
-    `Atajo regla de tres: (${want} × ${money(total)}) ÷ ${n} = ${money(pay)}.`,
+    `Es regla de 3 directa: más cuadernos → más plata (mismo precio unitario).`,
+    `Tabla: ${n} cuadernos → $${money(total)}; ${want} cuadernos → ¿?`,
+    `Directa: (? × ${n}) = ${want} × ${money(total)}.`,
+    `?= (${want} × ${money(total)}) ÷ ${n} = ${money(pay)}.`,
+    `O más corto: uno cuesta ${money(unit)}; ${want} × ${money(unit)} = ${money(pay)}.`,
     `Respuesta: $${money(pay)}.`,
+  ];
+}
+
+/** Reparto en partes 2, 3 y 4 → parte 3 */
+function explainParts(enunciado: string): string[] | null {
+  const m = enunciado.match(
+    /Reparten\s*\$?\s*([\d.]+)\s+en\s+partes\s+2[.,]\s*3\s+y\s+4.*?de\s+3/i
+  );
+  if (!m) return null;
+  const total = Number(m[1].replace(/\./g, ""));
+  const unit = total / 9;
+  const share = unit * 3;
+  return [
+    `No es regla de 3: es reparto proporcional (partes).`,
+    `Partes 2 + 3 + 4 = 9 partes en total.`,
+    `Una parte = ${money(total)} ÷ 9 = ${money(unit)}.`,
+    `A quien le tocan 3 partes: ${money(unit)} × 3 = ${money(share)}.`,
+    `Respuesta: $${money(share)}.`,
+  ];
+}
+
+/** Tren pasa poste: v = largo / tiempo */
+function explainTrain(enunciado: string): string[] | null {
+  const m = enunciado.match(
+    /tren\s+de\s+(\d+)\s*m\s+pasa\s+un\s+poste\s+en\s+(\d+)\s*s/i
+  );
+  if (!m) return null;
+  const len = Number(m[1]);
+  const sec = Number(m[2]);
+  const v = len / sec;
+  const shown = Number.isInteger(v) ? v : Math.floor(v);
+  return [
+    `Al pasar un poste (punto fijo), la distancia que cuenta es solo la longitud del tren.`,
+    `Velocidad = metros ÷ segundos: ${len} ÷ ${sec} = ${formatEsNumber(round2(v))} m/s.`,
+    Number.isInteger(v)
+      ? `Respuesta: ${shown} m/s.`
+      : `En opciones enteras: ${shown} m/s (aprox. del cálculo).`,
+    `No conviertas a km/h si la pregunta pide m/s.`,
   ];
 }
 

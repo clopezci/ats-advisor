@@ -64,7 +64,7 @@
       "corto": "Psico abstracto",
       "nivel": "colegio",
       "verificador": "rubrica",
-      "prompt": "Preparas la parte de razonamiento abstracto, lógico y espacial de las pruebas de selección. Como las figuras no se pueden dibujar en un chat, las describes con precisión (posición, giro, cantidad, color, tamaño) y enseñas a buscar QUÉ cambia entre una figura y la siguiente.",
+      "prompt": "Preparas la parte de razonamiento abstracto, lógico y espacial de las pruebas de selección. Usas figuras claras y enseñas a buscar QUÉ cambia entre una figura y la siguiente (posición, giro, cantidad, relleno, tamaño).",
       "temario": [
         "Qué mide el razonamiento abstracto",
         "Qué cambia entre una figura y la siguiente",
@@ -377,70 +377,80 @@
       "tema": "Qué cambia entre una figura y la siguiente",
       "titulo": "No preguntes qué sigue, pregunta qué cambia",
       "regla": "En series de figuras, anota por separado cada cosa que puede cambiar: cantidad, posición, giro, espejo, tamaño, relleno. Sigue cada cambio como si fuera una columna propia.",
-      "ejemplo": "Figuras: un triángulo que en cada paso gira 90° y además aparece un punto más.\n1) Columna giro: 0° → 90° → 180° → 270° → vuelve a 0°.\n2) Columna puntos: 1 → 2 → 3 → 4.\n3) La siguiente figura combina el siguiente giro y el siguiente número de puntos."
+      "ejemplo": "Figuras: un triángulo que en cada paso gira 90° y además aparece un punto más.\n1) Columna giro: 0° → 90° → 180° → 270° → vuelve a 0°.\n2) Columna puntos: 1 → 2 → 3 → 4.\n3) La siguiente figura combina el siguiente giro y el siguiente número de puntos.",
+      "figura": "serie-triangulo-puntos"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Giros y rotaciones",
       "titulo": "El ciclo de cuatro",
       "regla": "Un giro de 90° se repite cada 4 pasos y vuelve al dibujo inicial. Por eso la figura 5 se parece a la 1, la 6 a la 2, y así.",
-      "ejemplo": "Si la figura 1 es una flecha hacia arriba y gira 90° a la derecha en cada paso:\n1 = arriba, 2 = derecha, 3 = abajo, 4 = izquierda, 5 = arriba otra vez.\nEntonces la 6 = derecha (igual que la 2)."
+      "ejemplo": "Si la figura 1 es una flecha hacia arriba y gira 90° a la derecha en cada paso:\n1 = arriba, 2 = derecha, 3 = abajo, 4 = izquierda, 5 = arriba otra vez.\nEntonces la 6 = derecha (igual que la 2).",
+      "figura": "ciclo-flechas-90"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Reflejos y simetrías",
       "titulo": "Giro de 180° o espejo",
       "regla": "Girar 180° y reflejar en espejo a veces se ven parecidos. Elige un detalle que no sea simétrico (una pata, una punta) y mira hacia dónde queda en cada opción.",
-      "ejemplo": "Figura: letra R.\n1) Espejo vertical: la panza queda al otro lado.\n2) Giro 180°: la R queda al revés, con la panza en otro sitio.\n3) No son la misma figura: sigue la panza, no la silueta entera."
+      "ejemplo": "Figura: letra R.\n1) Espejo vertical: la panza queda al otro lado.\n2) Giro 180°: la R queda al revés, con la panza en otro sitio.\n3) No son la misma figura: sigue la panza, no la silueta entera.",
+      "figura": "giro-espejo-r"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Matrices tipo test de inteligencia",
       "titulo": "En una matriz hay dos reglas, no una",
       "regla": "Una corre por las filas y otra por las columnas. Y el color o el relleno casi siempre sigue su propia regla, aparte del número.",
-      "ejemplo": "Resuelve «9» y «negro» por separado, y después busca la opción que tenga los dos."
+      "ejemplo": "Resuelve «9» y «negro» por separado, y después busca la opción que tenga los dos.",
+      "figura": "matriz-puntos"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento diagramático: los símbolos son órdenes",
       "titulo": "Escribe la fila intermedia",
       "regla": "Los símbolos son órdenes y se aplican en orden. Después de cada uno, escribe cómo quedó la fila. Hacer dos de cabeza es donde se pierde el punto.",
-      "ejemplo": "Con 2 símbolos todavía se puede de cabeza; con 4 seguidos, nadie puede."
+      "ejemplo": "Con 2 símbolos todavía se puede de cabeza; con 4 seguidos, nadie puede.",
+      "figura": "diagramatico-ordenes"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento espacial: armar y desarmar cubos",
       "titulo": "Las caras opuestas del cubo, sin armarlo",
       "regla": "Dos caras pegadas quedan contiguas. Dos caras separadas por una sola cara en línea recta quedan opuestas y no se ven nunca juntas.",
-      "ejemplo": "Marca los 3 pares de caras opuestas apenas veas el despliegue: con eso resuelves todo ese cubo."
+      "ejemplo": "Marca los 3 pares de caras opuestas apenas veas el despliegue: con eso resuelves todo ese cubo.",
+      "figura": "cubo-caras-opuestas"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento espacial: armar y desarmar cubos",
       "titulo": "Desde un vértice se ven tres caras",
       "regla": "Nunca más de tres, y esas tres son siempre contiguas entre sí. Cualquier opción que muestre cuatro está mal de entrada.",
-      "ejemplo": "Si la pregunta pide ver 4 símbolos a la vez, la respuesta es «no se puede»."
+      "ejemplo": "Si la pregunta pide ver 4 símbolos a la vez, la respuesta es «no se puede».",
+      "figura": "cubo-vertice-tres"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Series de dominó y de cartas",
       "titulo": "Las caras opuestas del dado suman 7",
       "regla": "1 con 6, 2 con 5, 3 con 4. Sirve para deducir la cara que no se ve en cualquier dibujo de dados.",
-      "ejemplo": "Si arriba hay un 2, abajo hay un 5."
+      "ejemplo": "Si arriba hay un 2, abajo hay un 5.",
+      "figura": "dado-opuestos-7"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Problemas de ingenio",
       "titulo": "Contar cuadrados en una cuadrícula",
       "regla": "No cuentes uno por uno. Cuenta por tamaños: los de 1×1, los de 2×2, los de 3×3, y suma.",
-      "ejemplo": "En una de 3×3: 9 pequeños + 4 medianos + 1 grande = 14."
+      "ejemplo": "En una de 3×3: 9 pequeños + 4 medianos + 1 grande = 14.",
+      "figura": "cuadricula-cuadrados"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Lógica: silogismos y deducción",
       "titulo": "«Todos los A son B» no se puede voltear",
       "regla": "Dibuja el círculo pequeño dentro del grande. Si queda espacio libre en el grande, del dato de que alguien está ahí no se deduce nada.",
-      "ejemplo": "De 100 que hicieron la práctica, puede que solo 60 se hayan graduado."
+      "ejemplo": "De 100 que hicieron la práctica, puede que solo 60 se hayan graduado.",
+      "figura": "venn-silogismo"
     },
     {
       "subjectId": "exa.psico-abstracto",
@@ -461,49 +471,56 @@
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Dos ruedas que se tocan giran al revés",
       "regla": "En una fila de engranajes se van alternando: las posiciones impares giran como el primero y las pares al contrario.",
-      "ejemplo": "Si el 1.º va a la derecha: el 2.º a la izquierda, el 3.º a la derecha, el 4.º a la izquierda."
+      "ejemplo": "Si el 1.º va a la derecha: el 2.º a la izquierda, el 3.º a la derecha, el 4.º a la izquierda.",
+      "figura": "engranajes-opuestos"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Con correa cambia todo",
       "regla": "Unidas por una correa o cadena derecha giran en el MISMO sentido. Si la correa va cruzada en ocho, en sentidos contrarios.",
-      "ejemplo": "2 ruedas que se tocan: al revés. Las mismas 2 con correa derecha: igual."
+      "ejemplo": "2 ruedas que se tocan: al revés. Las mismas 2 con correa derecha: igual.",
+      "figura": "engranajes-correa"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "El anillo impar se traba",
       "regla": "Engranajes en círculo cerrado: si son un número impar, el mecanismo no puede girar. Con número par, sí gira.",
-      "ejemplo": "3 o 5 engranajes en anillo → trabado. 4 o 6 → giran."
+      "ejemplo": "3 o 5 engranajes en anillo → trabado. 4 o 6 → giran.",
+      "figura": "engranajes-opuestos"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Más dientes, más despacio",
       "regla": "Las vueltas son inversamente proporcionales a los dientes. Multiplica dientes por vueltas en un lado y en el otro: los dos productos son iguales.",
-      "ejemplo": "10 dientes × 4 vueltas = 40 → una de 40 dientes da 1 vuelta."
+      "ejemplo": "10 dientes × 4 vueltas = 40 → una de 40 dientes da 1 vuelta.",
+      "figura": "engranajes-opuestos"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "La polea fija no ahorra nada",
       "regla": "Solo cambia la dirección, para tirar hacia abajo. La polea móvil, la que sube con la carga, sí parte la fuerza por dos.",
-      "ejemplo": "60 kg con polea fija: 60. Con una móvil: 30."
+      "ejemplo": "60 kg con polea fija: 60. Con una móvil: 30.",
+      "figura": "polea-fija"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Cuenta las cuerdas que sostienen",
       "regla": "En un aparejo, mira cuántos tramos de cuerda sostienen de verdad la carga y divide el peso entre ese número.",
-      "ejemplo": "120 kg colgando de 4 tramos → hay que hacer 30."
+      "ejemplo": "120 kg colgando de 4 tramos → hay que hacer 30.",
+      "figura": "polea-fija"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "La palanca se multiplica",
       "regla": "Fuerza por su distancia al apoyo = resistencia por la suya. Entre más lejos del apoyo empujes, menos fuerza necesitas.",
-      "ejemplo": "90 kg a 1 m del apoyo; empujando a 3 m bastan 30 kg."
+      "ejemplo": "90 kg a 1 m del apoyo; empujando a 3 m bastan 30 kg.",
+      "figura": "palanca"
     },
     {
       "subjectId": "exa.psico-abstracto",
@@ -517,147 +534,168 @@
       "tema": "Memoria: la lámina que te muestran dos minutos",
       "titulo": "Los cuatro barridos",
       "regla": "No mires «con atención»: haz cuatro pasadas en orden. Cuenta cosas, ubícalas por cuadrantes, lee todo lo escrito y busca lo que esté fuera de lugar.",
-      "ejemplo": "2 minutos alcanzan para 4 pasadas de 30 segundos."
+      "ejemplo": "2 minutos alcanzan para 4 pasadas de 30 segundos.",
+      "figura": "memoria-lamina"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Memoria: la lámina que te muestran dos minutos",
       "titulo": "Lo escrito es lo que más preguntan",
       "regla": "Letreros, placas, horas, precios y códigos. Es lo favorito de quien arma la prueba porque no se puede deducir: o lo leíste o no.",
-      "ejemplo": "«Farmacia La 14, abre 8:00» → nombre y hora, las dos se preguntan."
+      "ejemplo": "«Farmacia La 14, abre 8:00» → nombre y hora, las dos se preguntan.",
+      "figura": "memoria-lamina"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Memoria: la lámina que te muestran dos minutos",
       "titulo": "Dilo por dentro mientras miras",
       "regla": "Nombrar lo que ves deja una segunda huella, verbal además de visual. Se recuerda mucho más una frase que una imagen suelta.",
-      "ejemplo": "«3 carros, 2 motos, 4 personas» se recuerda mejor que la foto."
+      "ejemplo": "«3 carros, 2 motos, 4 personas» se recuerda mejor que la foto.",
+      "figura": "memoria-lamina"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Memoria: la lámina que te muestran dos minutos",
       "titulo": "Para códigos, asociación absurda",
       "regla": "Cuando hay que memorizar parejas sin sentido —un código y un destino— invéntate una conexión ridícula. Entre más absurda, más se pega.",
-      "ejemplo": "«K-7 va a Archivo» → un kilo de 7 libras archivado."
+      "ejemplo": "«K-7 va a Archivo» → un kilo de 7 libras archivado.",
+      "figura": "memoria-lamina"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Memoria: la lámina que te muestran dos minutos",
       "titulo": "Lo raro se pregunta",
       "regla": "Un paraguas en un día soleado, una ventana abierta, algo olvidado en el piso. Lo anómalo casi siempre tiene pregunta, porque el que mira sin método no lo ve.",
-      "ejemplo": "1 detalle fuera de lugar en la lámina = 1 pregunta casi segura."
+      "ejemplo": "1 detalle fuera de lugar en la lámina = 1 pregunta casi segura.",
+      "figura": "memoria-lamina"
     },
     {
       "subjectId": "exa.psico-personalidad",
       "tema": "Pruebas de atención y concentración",
       "titulo": "No te devuelvas",
-      "regla": "Un solo recorrido, de izquierda a derecha y de arriba abajo. Devolverse a comprobar es lo que más puntos cuesta: el reloj no perdona y la duda no se acaba nunca.",
-      "ejemplo": "1 pasada completa rinde más que 2 medias pasadas."
+      "regla": "De qué trata: estrategia de tiempo en atención. El reloj corre; si fallas una, no vuelvas a corregir filas anteriores. Una pasada completa suele rendir más que dos medias.\n\nUn solo recorrido, de izquierda a derecha y de arriba abajo. Devolverse a comprobar es lo que más puntos cuesta: el reloj no perdona y la duda no se acaba nunca.",
+      "ejemplo": "1 pasada completa rinde más que 2 medias pasadas.",
+      "figura": "atencion-fila-tachado"
     },
     {
       "subjectId": "exa.psico-personalidad",
       "tema": "Pruebas de atención y concentración",
       "titulo": "Mira una sola diferencia",
-      "regla": "No compares la figura entera con el modelo. Quédate con el detalle que las distingue y revisa solo esa esquina en cada una.",
-      "ejemplo": "Modelo con la rayita arriba a la derecha → revisa esa esquina en las 40 de la fila."
+      "regla": "De qué trata: pruebas de atención (tipo Toulouse-Piéron). Te dan un MODELO y una fila de figuritas casi iguales; tachas solo las que NO coinciden. Elige UN detalle (rayita, punta, esquina) y revisa solo ese en cada una.\n\nNo compares la figura entera con el modelo. Quédate con el detalle que las distingue y revisa solo esa esquina en cada una.",
+      "ejemplo": "Modelo con la rayita arriba a la derecha → revisa esa esquina en las 40 de la fila.",
+      "figura": "atencion-una-diferencia"
     },
     {
       "subjectId": "exa.psico-personalidad",
       "tema": "Pruebas de atención y concentración",
       "titulo": "Ritmo parejo, no arranque",
-      "regla": "Casi siempre los errores restan. Correr al principio y equivocarse sale más caro que ir parejo hasta el final.",
-      "ejemplo": "20 aciertos y 5 errores puede puntuar menos que 18 y 0."
+      "regla": "De qué trata: ritmo en atención. Arrancar muy rápido baja la precisión al final. Busca un ritmo constante; a veces menos aciertos con cero errores puntúa mejor que muchos aciertos con varios fallos.\n\nCasi siempre los errores restan. Correr al principio y equivocarse sale más caro que ir parejo hasta el final.",
+      "ejemplo": "20 aciertos y 5 errores puede puntuar menos que 18 y 0.",
+      "figura": "atencion-fila-tachado"
     },
     {
       "subjectId": "exa.psico-personalidad",
       "tema": "Pruebas de atención y concentración",
       "titulo": "Aquí se falla al final, no al principio",
-      "regla": "Lo que miden es aguante, no inteligencia. Si vas a practicar, hazlo con hojas largas: cinco minutos no entrenan nada.",
-      "ejemplo": "El Toulouse-Piéron trae unas 1.600 figuritas: el cansancio es la prueba."
+      "regla": "De qué trata: fatiga en atención. Las primeras filas casi nadie las falla; el cansancio llega al final (pruebas con cientos o miles de figuritas). Ahí respira y no aceleres.\n\nLo que miden es aguante, no inteligencia. Si vas a practicar, hazlo con hojas largas: cinco minutos no entrenan nada.",
+      "ejemplo": "El Toulouse-Piéron trae unas 1.600 figuritas: el cansancio es la prueba.",
+      "figura": "atencion-fila-tachado"
     },
     {
       "subjectId": "exa.psico-personalidad",
       "tema": "Juicio situacional: el formato de los concursos públicos",
       "titulo": "No es qué harías tú",
-      "regla": "Es qué corresponde hacer según el procedimiento y el manual de funciones. Responder con buen corazón en vez de con el reglamento es lo que más puntos cuesta.",
-      "ejemplo": "«Le presto mi usuario para que salga del apuro» → suena solidario y está mal."
+      "regla": "De qué trata: juicio situacional (SJTs). No buscan tu opinión personal sino la acción MÁS adecuada según normas del rol (servicio público, ética, procedimiento). Lo solidario puede estar mal si viola reglas.\n\nEs qué corresponde hacer según el procedimiento y el manual de funciones. Responder con buen corazón en vez de con el reglamento es lo que más puntos cuesta.",
+      "ejemplo": "«Le presto mi usuario para que salga del apuro» → suena solidario y está mal.",
+      "figura": "situacional-opciones"
     },
     {
       "subjectId": "exa.psico-personalidad",
       "tema": "Juicio situacional: el formato de los concursos públicos",
       "titulo": "Lee el enunciado antes que el caso",
-      "regla": "El caso son tres párrafos; el enunciado te dice qué buscar en ellos. Al revés lo lees dos veces.",
-      "ejemplo": "3 párrafos de contexto se leen distinto si ya sabes que preguntan por el plazo."
+      "regla": "De qué trata: orden de lectura en juicio situacional. Primero el verbo («más adecuado», «menos adecuado», «primero»). Luego el caso. Si lees el cuento sin saber qué preguntan, relees todo.\n\nEl caso son tres párrafos; el enunciado te dice qué buscar en ellos. Al revés lo lees dos veces.",
+      "ejemplo": "3 párrafos de contexto se leen distinto si ya sabes que preguntan por el plazo.",
+      "figura": "situacional-opciones"
     },
     {
       "subjectId": "exa.psico-personalidad",
       "tema": "Juicio situacional: el formato de los concursos públicos",
       "titulo": "Tacha la que resuelve a medias",
-      "regla": "En juicio situacional, la opción trampa casi nunca es absurda: hace algo correcto pero deja el problema a medias. La buena cierra el caso completo (acción + seguimiento o constancia).",
-      "ejemplo": "Caso: llegó un documento urgente y el plazo vence hoy.\nA) Recibirlo y guardarlo en el escritorio.\nB) Recibirlo, sellar hora de llegada y avisarle al responsable por escrito.\nC) Decirle al mensajero que vuelva mañana.\n1) A hace una parte (recibir) pero no protege el plazo → trampa «a medias».\n2) C empeora el problema.\n3) B recibe + deja constancia + avisa → cierra todo."
+      "regla": "De qué trata: descarte en juicio situacional. Una opción que solo arregla la mitad del problema suele ser trampa. Quédate con la que cierra el caso completo (aviso + registro + escalamiento si aplica).\n\nEn juicio situacional, la opción trampa casi nunca es absurda: hace algo correcto pero deja el problema a medias. La buena cierra el caso completo (acción + seguimiento o constancia).",
+      "ejemplo": "Caso: llegó un documento urgente y el plazo vence hoy.\nA) Recibirlo y guardarlo en el escritorio.\nB) Recibirlo, sellar hora de llegada y avisarle al responsable por escrito.\nC) Decirle al mensajero que vuelva mañana.\n1) A hace una parte (recibir) pero no protege el plazo → trampa «a medias».\n2) C empeora el problema.\n3) B recibe + deja constancia + avisa → cierra todo.",
+      "figura": "situacional-opciones"
     },
     {
       "subjectId": "exa.psico-personalidad",
       "tema": "Juicio situacional: el formato de los concursos públicos",
       "titulo": "Mira el verbo del enunciado",
-      "regla": "«Analizar» no es «nombrar» ni «clasificar». Si pide analizar, la opción que solo cita una norma está mal aunque la norma sea la correcta.",
-      "ejemplo": "Enunciado: «Analice qué debe hacer el funcionario ante el reclamo».\n1) Opción que solo dice «aplicar el artículo 5» → nombra, no analiza.\n2) Opción que explica el problema, la norma y el paso a seguir → responde al verbo «analice»."
+      "regla": "De qué trata: el verbo manda. «Analice», «priorice», «informe» no piden lo mismo. Subraya el verbo antes de mirar A/B/C/D.\n\n«Analizar» no es «nombrar» ni «clasificar». Si pide analizar, la opción que solo cita una norma está mal aunque la norma sea la correcta.",
+      "ejemplo": "Enunciado: «Analice qué debe hacer el funcionario ante el reclamo».\n1) Opción que solo dice «aplicar el artículo 5» → nombra, no analiza.\n2) Opción que explica el problema, la norma y el paso a seguir → responde al verbo «analice».",
+      "figura": "situacional-opciones"
     },
     {
       "subjectId": "exa.psico-personalidad",
       "tema": "Juicio situacional: el formato de los concursos públicos",
       "titulo": "Lo que no queda escrito no pasó",
-      "regla": "Entre dos opciones que suenen igual de bien, gana la que deja registro: informar, documentar, dejar constancia.",
-      "ejemplo": "Situación: debes avisarle al jefe de un error.\nA) «Le aviso al jefe de palabra».\nB) «Le informo por escrito y dejo copia en el expediente».\nGana B: si mañana preguntan, queda prueba de que avisaste."
+      "regla": "De qué trata: en roles formales, documentar cuenta. Una respuesta que solo «avisa de palabra» suele perder frente a la que deja registro (correo, acta, ticket).\n\nEntre dos opciones que suenen igual de bien, gana la que deja registro: informar, documentar, dejar constancia.",
+      "ejemplo": "Situación: debes avisarle al jefe de un error.\nA) «Le aviso al jefe de palabra».\nB) «Le informo por escrito y dejo copia en el expediente».\nGana B: si mañana preguntan, queda prueba de que avisaste.",
+      "figura": "situacional-opciones"
     },
     {
       "subjectId": "exa.psico-personalidad",
       "tema": "Juicio situacional: el formato de los concursos públicos",
       "titulo": "Aquí adivinar no rinde",
-      "regla": "Las 3 opciones suelen ser razonables, así que marcar al azar no funciona como en las de cálculo. Descartar con criterio es lo único que sube el puntaje.",
-      "ejemplo": "Al azar entre 3 aciertas 1 de cada 3; descartando la incompleta, 1 de cada 2."
+      "regla": "De qué trata: con 3–4 opciones, adivinar al azar rinde poco. Primero descarta la incompleta o la antiética; luego elige entre las dos que quedan.\n\nLas 3 opciones suelen ser razonables, así que marcar al azar no funciona como en las de cálculo. Descartar con criterio es lo único que sube el puntaje.",
+      "ejemplo": "Al azar entre 3 aciertas 1 de cada 3; descartando la incompleta, 1 de cada 2.",
+      "figura": "situacional-opciones"
     },
     {
       "subjectId": "exa.psico-personalidad",
       "tema": "Acciones y Actitudes: el bloque grande del concurso de patrulleros",
       "titulo": "Son 60 de las 150 preguntas",
-      "regla": "Casi la mitad de la psicotécnica de patrulleros, y es la parte que nadie prepara. Llegas ahí después de 90 preguntas: no la respondas de afán.",
-      "ejemplo": "30 cuantitativo + 30 lectura + 30 ciudadanas + 60 de este bloque = 150."
+      "regla": "De qué trata: bloque Acciones y Actitudes (concursos tipo patrulleros / grandes pruebas). Es la tajada más grande: conviene conocer el formato antes del día del examen.\n\nCasi la mitad de la psicotécnica de patrulleros, y es la parte que nadie prepara. Llegas ahí después de 90 preguntas: no la respondas de afán.",
+      "ejemplo": "30 cuantitativo + 30 lectura + 30 ciudadanas + 60 de este bloque = 150.",
+      "figura": "acciones-actitudes"
     },
     {
       "subjectId": "exa.psico-personalidad",
       "tema": "Acciones y Actitudes: el bloque grande del concurso de patrulleros",
       "titulo": "Son dos escalas distintas, no una",
-      "regla": "En Acciones respondes con qué frecuencia lo haces. En Actitudes, qué tan de acuerdo estás. Confundirlas es lo que rompe la coherencia.",
-      "ejemplo": "Acciones: Nunca → Siempre. Actitudes: Muy en desacuerdo → Muy de acuerdo."
+      "regla": "De qué trata: Acciones miden FRECUENCIA (nunca→siempre). Actitudes miden ACUERDO (en desacuerdo→de acuerdo). No uses la misma lógica en ambos.\n\nEn Acciones respondes con qué frecuencia lo haces. En Actitudes, qué tan de acuerdo estás. Confundirlas es lo que rompe la coherencia.",
+      "ejemplo": "Acciones: Nunca → Siempre. Actitudes: Muy en desacuerdo → Muy de acuerdo.",
+      "figura": "acciones-actitudes"
     },
     {
       "subjectId": "exa.psico-personalidad",
       "tema": "Acciones y Actitudes: el bloque grande del concurso de patrulleros",
       "titulo": "En Acciones va la frecuencia real",
-      "regla": "No la que te gustaría tener. Pregunta qué haces, no qué deberías hacer, y más adelante vuelve la misma idea escrita de otra forma.",
-      "ejemplo": "«Casi siempre» dicho de verdad vale más que 4 «Siempre» inventados."
+      "regla": "De qué trata: en Acciones responde con lo que de verdad sueles hacer, no con el ideal. «Casi siempre» honesto vale más que un «Siempre» inventado.\n\nNo la que te gustaría tener. Pregunta qué haces, no qué deberías hacer, y más adelante vuelve la misma idea escrita de otra forma.",
+      "ejemplo": "«Casi siempre» dicho de verdad vale más que 4 «Siempre» inventados.",
+      "figura": "acciones-actitudes"
     },
     {
       "subjectId": "exa.psico-personalidad",
       "tema": "Acciones y Actitudes: el bloque grande del concurso de patrulleros",
       "titulo": "«Algo» existe por algo",
-      "regla": "Las cuatro opciones miden matices. Marcar el extremo en todas no da un perfil: da una alerta.",
-      "ejemplo": "60 respuestas todas en «Muy de acuerdo» no describen a nadie."
+      "regla": "De qué trata: las opciones intermedias existen porque nadie es 100 % extremo. Si marcas siempre el polo virtuoso, la prueba lo detecta.\n\nLas cuatro opciones miden matices. Marcar el extremo en todas no da un perfil: da una alerta.",
+      "ejemplo": "60 respuestas todas en «Muy de acuerdo» no describen a nadie.",
+      "figura": "acciones-actitudes"
     },
     {
       "subjectId": "exa.psico-personalidad",
       "tema": "Competencias comportamentales: el cuestionario de acuerdo y desacuerdo",
       "titulo": "Responde rápido y parecido",
-      "regla": "La misma idea vuelve más adelante escrita de otra forma, para ver si coincides. El que contesta lo que cree que quieren oír no se acuerda y se contradice.",
-      "ejemplo": "La pregunta 8 y la 47 pueden ser la misma con otras palabras."
+      "regla": "De qué trata: cuestionarios de competencias / acuerdo-desacuerdo. Las mismas ideas se repiten con otras palabras. Responde con un patrón coherente (rápido y parecido), no inventes una persona distinta en cada ítem.\n\nLa misma idea vuelve más adelante escrita de otra forma, para ver si coincides. El que contesta lo que cree que quieren oír no se acuerda y se contradice.",
+      "ejemplo": "La pregunta 8 y la 47 pueden ser la misma con otras palabras.",
+      "figura": "likert-acuerdo"
     },
     {
       "subjectId": "exa.psico-personalidad",
       "tema": "Por qué mentir sale mal: las escalas de sinceridad",
       "titulo": "El extremo virtuoso te delata",
-      "regla": "Frases que nadie puede sostener —«nunca he llegado tarde»— no miden puntualidad: miden si estás maquillando. Acumularlas marca el perfil como no confiable.",
-      "ejemplo": "Marcar «totalmente de acuerdo» en 20 frases perfectas no da 20 puntos: da una alerta."
+      "regla": "De qué trata: escalas de sinceridad / deseabilidad social. Marcar «totalmente de acuerdo» en todas las frases perfectas no da un perfil ideal: da un perfil fingido. Usa tu experiencia real.\n\nFrases que nadie puede sostener —«nunca he llegado tarde»— no miden puntualidad: miden si estás maquillando. Acumularlas marca el perfil como no confiable.",
+      "ejemplo": "Marcar «totalmente de acuerdo» en 20 frases perfectas no da 20 puntos: da una alerta.",
+      "figura": "escala-sinceridad"
     },
     {
       "subjectId": "exa.psico-numerico",
@@ -853,49 +891,56 @@
       "tema": "Contar figuras: cuadrados y triángulos",
       "titulo": "Contar cuadrados de una cuadrícula",
       "regla": "Suma los cuadrados de 1 hasta el lado y ya está. Contarlos uno por uno es como se pierde la pregunta.",
-      "ejemplo": "Cuadrícula de 4×4 → 1 + 4 + 9 + 16 = 30"
+      "ejemplo": "Cuadrícula de 4×4 → 1 + 4 + 9 + 16 = 30",
+      "figura": "cuadricula-cuadrados"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Contar figuras: cuadrados y triángulos",
       "titulo": "Contar triángulos de un abanico",
       "regla": "Cuenta en cuántos pedazos está partida la base y aplica n por (n+1) dividido entre 2. Es la misma cuenta de sumar de 1 hasta n.",
-      "ejemplo": "Base partida en 3 → 3 × 4 / 2 = 6 triángulos"
+      "ejemplo": "Base partida en 3 → 3 × 4 / 2 = 6 triángulos",
+      "figura": "abanico-triangulos"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Ordenación: quién está por encima de quién",
       "titulo": "Dibuja las flechas y después cuenta",
       "regla": "Haz un mapa con una flecha de cada persona hacia la que está por encima, y una raya sin punta cuando son iguales. Luego cuenta sobre el dibujo.",
-      "ejemplo": "«Pedro mide igual que Bea» → únelos con raya, no con flecha"
+      "ejemplo": "«Pedro mide igual que Bea» → únelos con raya, no con flecha",
+      "figura": "orden-alturas"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Relaciones familiares",
       "titulo": "Léelo al revés",
       "regla": "Empieza por la última persona de la frase y ve subiendo mientras dibujas. Marca con un círculo dónde estás tú.",
-      "ejemplo": "«El abuelo del padre de la hermana del hijo de…» → arranca por el final"
+      "ejemplo": "«El abuelo del padre de la hermana del hijo de…» → arranca por el final",
+      "figura": "familia-arbol"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Perímetros y tamaños a ojo",
       "titulo": "La vuelta son tres diámetros",
       "regla": "El contorno de un círculo es poco más de tres veces su diámetro. Con eso escoges el segmento correcto sin calcular nada.",
-      "ejemplo": "π × D ≈ 3,14 diámetros de largo"
+      "ejemplo": "π × D ≈ 3,14 diámetros de largo",
+      "figura": "circulo-diametro"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Perímetros y tamaños a ojo",
       "titulo": "Si parto los dos lados a la mitad",
       "regla": "El área no queda en la mitad: queda en la cuarta parte. Lo que se parte dos veces se divide entre cuatro.",
-      "ejemplo": "10 × 6 = 60 → 5 × 3 = 15, que es 60 entre 4"
+      "ejemplo": "10 × 6 = 60 → 5 × 3 = 15, que es 60 entre 4",
+      "figura": "rectangulo-mitad"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Piezas que encajan: pletinas y plantillas",
       "titulo": "Mira un hueco raro, no la pieza entera",
       "regla": "Escoge el agujero más raro de la plantilla y busca cuál pieza lo tapa. Con ese solo detalle se caen tres opciones de una vez.",
-      "ejemplo": "El hueco de la esquina → solo 1 de las 4 piezas lo cubre"
+      "ejemplo": "El hueco de la esquina → solo 1 de las 4 piezas lo cubre",
+      "figura": "plantilla-hueco"
     },
     {
       "subjectId": "exa.psico-numerico",
@@ -993,28 +1038,32 @@
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Balancín: masa por distancia",
       "regla": "Multiplica cada peso por lo lejos que está del apoyo y compara los dos números. Baja el lado que dé más grande; si dan igual, queda nivelado.",
-      "ejemplo": "30 kg × 8 m = 240 y 60 kg × 4 m = 240 → equilibrio"
+      "ejemplo": "30 kg × 8 m = 240 y 60 kg × 4 m = 240 → equilibrio",
+      "figura": "balancin"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Cada polea móvil parte la fuerza",
       "regla": "Una polea fija solo cambia la dirección y no ahorra nada. Cada polea MÓVIL parte a la mitad la fuerza que hay que hacer. Cuenta solo las móviles.",
-      "ejemplo": "2 poleas móviles → levantas 100 kg haciendo fuerza de 25"
+      "ejemplo": "2 poleas móviles → levantas 100 kg haciendo fuerza de 25",
+      "figura": "polea-fija"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Engranajes pegados giran al revés",
       "regla": "Dos ruedas dentadas que se tocan nunca giran para el mismo lado. Numéralas: las impares van como la primera y las pares al contrario.",
-      "ejemplo": "1ª a la derecha → 2ª a la izquierda → 3ª a la derecha"
+      "ejemplo": "1ª a la derecha → 2ª a la izquierda → 3ª a la derecha",
+      "figura": "engranajes-opuestos"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Rueda más grande, más avanza",
       "regla": "Por cada vuelta, una rueda recorre su contorno: π por el diámetro. La grande avanza más aunque las dos den las mismas vueltas.",
-      "ejemplo": "1,5 m → 4,7 m por vuelta; 1,18 m → 3,7 m por vuelta"
+      "ejemplo": "1,5 m → 4,7 m por vuelta; 1,18 m → 3,7 m por vuelta",
+      "figura": "engranajes-opuestos"
     },
     {
       "subjectId": "exa.psico-abstracto",
@@ -1042,7 +1091,8 @@
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "En serie se apaga todo",
       "regla": "Si al quitar una bombilla se apagan las demás, estaban en serie. Si las otras siguen prendidas, estaban en paralelo.",
-      "ejemplo": "Se funde 1 y la otra sigue → están en paralelo"
+      "ejemplo": "Se funde 1 y la otra sigue → están en paralelo",
+      "figura": "circuito-serie"
     },
     {
       "subjectId": "exa.psico-abstracto",
@@ -1077,7 +1127,8 @@
       "tema": "Perímetros y tamaños a ojo",
       "titulo": "La fórmula pide radio y te dan diámetro",
       "regla": "Antes de reemplazar, mira cuál de los dos te dieron. La mitad del diámetro es el radio, y olvidarlo da justo el doble o el cuádruple.",
-      "ejemplo": "Diámetro 120 → radio 60 → 2 × π × 60 = 377 metros"
+      "ejemplo": "Diámetro 120 → radio 60 → 2 × π × 60 = 377 metros",
+      "figura": "circulo-diametro"
     },
     {
       "subjectId": "exa.psico-abstracto",
@@ -1465,7 +1516,8 @@
         "Se vuelven a juntar las dos columnas en una sola figura."
       ],
       "respuesta": "Un triángulo que apunta hacia arriba, con 5 puntos adentro.",
-      "errorComun": "Buscar una sola regla que explique todo y bloquearse cuando no aparece. En razonamiento abstracto casi siempre hay dos o tres atributos cambiando a la vez —posición, giro, cantidad, tamaño, relleno, color— y cada uno lleva su propio ritmo, a veces con ciclos de distinta longitud. Otro error caro es no notar que la orientación cicla de a cuatro: quien no cierra el ciclo se inventa una quinta orientación que no existe."
+      "errorComun": "Buscar una sola regla que explique todo y bloquearse cuando no aparece. En razonamiento abstracto casi siempre hay dos o tres atributos cambiando a la vez —posición, giro, cantidad, tamaño, relleno, color— y cada uno lleva su propio ritmo, a veces con ciclos de distinta longitud. Otro error caro es no notar que la orientación cicla de a cuatro: quien no cierra el ciclo se inventa una quinta orientación que no existe.",
+      "figura": "serie-triangulo-puntos"
     },
     {
       "materia": "exa.psico-abstracto",
@@ -1479,7 +1531,8 @@
         "Esta trampa tiene nombre: afirmación del consecuente. La premisa dice «si se graduó, entonces hizo la etapa» y se pretende recorrerla al revés."
       ],
       "respuesta": "No. Las premisas no permiten concluirlo: Camila pudo hacer la etapa productiva sin haberse graduado.",
-      "errorComun": "Leer «todos los A son B» como si además dijera «todos los B son A». Es el error más frecuente de toda la sección de lógica, y se evita con una regla mecánica: dibujar el círculo pequeño dentro del grande y preguntarse si queda espacio libre en el grande. Si queda —y con «todos» siempre queda, salvo que digan «solo» o «únicamente»—, entonces del dato de que alguien está en el grande no se deduce nada."
+      "errorComun": "Leer «todos los A son B» como si además dijera «todos los B son A». Es el error más frecuente de toda la sección de lógica, y se evita con una regla mecánica: dibujar el círculo pequeño dentro del grande y preguntarse si queda espacio libre en el grande. Si queda —y con «todos» siempre queda, salvo que digan «solo» o «únicamente»—, entonces del dato de que alguien está en el grande no se deduce nada.",
+      "figura": "venn-silogismo"
     },
     {
       "materia": "exa.psico-abstracto",
@@ -1494,7 +1547,8 @@
         "Se compara con las opciones: es la B. Y se comprueba al revés, que en este formato es rapidísimo: si a B se le deshace el ⊛ queda triángulo, flecha, cuadrado, y deshaciendo el ∿ queda cuadrado, triángulo, flecha, que es lo que entró. Cuadra."
       ],
       "respuesta": "B) [triángulo] [cuadrado] [flecha]",
-      "errorComun": "Aplicar el segundo símbolo sobre la fila original en lugar de sobre el resultado del primero. Es el error que definen estas pruebas y por eso la opción A está ahí: A es exactamente lo que sale de aplicar ∿ y quedarse. El antídoto no es concentrarse más, es escribir la fila intermedia: dos segundos de lápiz que valen el punto. Cuando el enunciado trae tres o cuatro símbolos seguidos, sin escribir es imposible."
+      "errorComun": "Aplicar el segundo símbolo sobre la fila original en lugar de sobre el resultado del primero. Es el error que definen estas pruebas y por eso la opción A está ahí: A es exactamente lo que sale de aplicar ∿ y quedarse. El antídoto no es concentrarse más, es escribir la fila intermedia: dos segundos de lápiz que valen el punto. Cuando el enunciado trae tres o cuatro símbolos seguidos, sin escribir es imposible.",
+      "figura": "diagramatico-ordenes"
     },
     {
       "materia": "exa.psico-abstracto",
@@ -1508,7 +1562,8 @@
         "Aquí hay un detalle que estas pruebas explotan: como el ciclo es de cuatro y la figura 5 repite a la figura 1, la 6 tiene que repetir a la 2. Contar el ciclo es más rápido y más seguro que imaginarse el giro, sobre todo cuando la figura es complicada."
       ],
       "respuesta": "B) Abertura hacia la derecha",
-      "errorComun": "Confundir un giro con un reflejo. Una figura girada 180° y su imagen en espejo se ven igual cuando la figura es simétrica, y las opciones incluyen las dos. La forma de salir de la duda es fijarse en un detalle asimétrico —una punta, una marca, un grosor distinto— y seguirlo. Si no hay ninguno, el giro es el más probable: son mucho más frecuentes que los reflejos."
+      "errorComun": "Confundir un giro con un reflejo. Una figura girada 180° y su imagen en espejo se ven igual cuando la figura es simétrica, y las opciones incluyen las dos. La forma de salir de la duda es fijarse en un detalle asimétrico —una punta, una marca, un grosor distinto— y seguirlo. Si no hay ninguno, el giro es el más probable: son mucho más frecuentes que los reflejos.",
+      "figura": "secuencia-c"
     },
     {
       "materia": "exa.psico-abstracto",
@@ -1523,7 +1578,8 @@
         "De hecho la matriz completa es la tabla de multiplicar: fila × columna. Pero no hace falta darse cuenta de eso para resolverla, y buscar «la idea genial» es justamente lo que hace perder el tiempo. Con seguir cada atributo por separado alcanza siempre."
       ],
       "respuesta": "A) Un cuadrado negro con 9 puntos",
-      "errorComun": "Acertar el número y equivocarse en el color, o al revés. Las opciones están armadas para eso: B tiene el número bien y el color mal, C tiene el color bien y el número mal. Por eso conviene resolver cada atributo aparte, escribir las dos respuestas —«9» y «negro»— y solo después buscar la opción que tenga las dos. Buscar directamente la figura completa entre las opciones es lo que produce el error."
+      "errorComun": "Acertar el número y equivocarse en el color, o al revés. Las opciones están armadas para eso: B tiene el número bien y el color mal, C tiene el color bien y el número mal. Por eso conviene resolver cada atributo aparte, escribir las dos respuestas —«9» y «negro»— y solo después buscar la opción que tenga las dos. Buscar directamente la figura completa entre las opciones es lo que produce el error.",
+      "figura": "matriz-puntos"
     },
     {
       "materia": "exa.psico-abstracto",
@@ -1538,7 +1594,8 @@
         "El truco práctico para la prueba: en cuanto se ve el despliegue, se marcan de una los tres pares de caras opuestas (son siempre tres pares). Con esos pares escritos al lado, cualquier pregunta sobre ese cubo se responde sin girar nada."
       ],
       "respuesta": "B) No, porque la X y la raya quedan opuestas",
-      "errorComun": "Intentar armar el cubo mentalmente y girarlo. Funciona para el que tiene mucha facilidad espacial y falla para todos los demás, y además es lentísimo: dos minutos por pregunta en una prueba que da uno. Las dos reglas del despliegue se aplican en diez segundos y no dependen de la imaginación. El otro descuido es olvidar que desde un vértice se ven tres caras como máximo, y responder que sí a preguntas que piden ver cuatro."
+      "errorComun": "Intentar armar el cubo mentalmente y girarlo. Funciona para el que tiene mucha facilidad espacial y falla para todos los demás, y además es lentísimo: dos minutos por pregunta en una prueba que da uno. Las dos reglas del despliegue se aplican en diez segundos y no dependen de la imaginación. El otro descuido es olvidar que desde un vértice se ven tres caras como máximo, y responder que sí a preguntas que piden ver cuatro.",
+      "figura": "cubo-caras-opuestas"
     },
     {
       "materia": "exa.psico-abstracto",
@@ -1552,7 +1609,8 @@
         "El orden en que se revisan los atributos, siempre el mismo: cantidad, posición, giro, reflejo, tamaño, relleno, y suma o resta de figuras. Se para en el primero que explique todo lo que cambia."
       ],
       "respuesta": "No hay que volver a analizar la serie: hay que escribir las tres condiciones que debe cumplir la figura siguiente y luego descartar opciones atributo por atributo, empezando por uno solo. La sensación de que «ninguna sirve» casi siempre viene de comparar las opciones enteras de un vistazo, no de que la serie tenga dos reglas en conflicto.",
-      "errorComun": "Empezar de cero buscando otra regla más ingeniosa. En estas pruebas los patrones son pocos y conocidos; la dificultad se construye superponiendo tres o cuatro sencillos, no escondiendo uno complicado. Quien sale a buscar la idea brillante pierde el tiempo dos veces: ahí y en las preguntas que ya no alcanza a leer."
+      "errorComun": "Empezar de cero buscando otra regla más ingeniosa. En estas pruebas los patrones son pocos y conocidos; la dificultad se construye superponiendo tres o cuatro sencillos, no escondiendo uno complicado. Quien sale a buscar la idea brillante pierde el tiempo dos veces: ahí y en las preguntas que ya no alcanza a leer.",
+      "figura": "serie-triangulo-puntos"
     },
     {
       "materia": "exa.psico-abstracto",
@@ -1572,7 +1630,8 @@
         "Con esa suma aprendida la pregunta se responde en cinco segundos sin mirar el dibujo: para 5×5 serían 30 + 25 = 55, y para 3×3, 14."
       ],
       "respuesta": "B) 30",
-      "errorComun": "Responder 16 porque se contaron solo las casillas. Es la opción que más se marca y por eso siempre está ahí. La señal de alarma es la frase «de cualquier tamaño» o «en total» en el enunciado: cuando aparece, la respuesta nunca es el número de casillas."
+      "errorComun": "Responder 16 porque se contaron solo las casillas. Es la opción que más se marca y por eso siempre está ahí. La señal de alarma es la frase «de cualquier tamaño» o «en total» en el enunciado: cuando aparece, la respuesta nunca es el número de casillas.",
+      "figura": "cuadricula-cuadrados"
     },
     {
       "materia": "exa.psico-abstracto",
@@ -1591,7 +1650,8 @@
         "El dibujo deja ver además algo que la cabeza sola no ve: María y Dolores NO se pueden comparar entre ellas, porque el enunciado no lo dice. Muchos ejercicios de esta familia preguntan justamente por un par que no se puede ordenar, y la respuesta correcta es «no se puede saber»."
       ],
       "respuesta": "D) 4",
-      "errorComun": "Dejar por fuera a Bea. Como el enunciado dice que mide IGUAL que Pedro y no «más» ni «menos», es fácil tratarla como si no contara. Por eso la raya sin punta importa: en el dibujo Bea queda pegada a Pedro y se arrastra con él hacia donde vaya."
+      "errorComun": "Dejar por fuera a Bea. Como el enunciado dice que mide IGUAL que Pedro y no «más» ni «menos», es fácil tratarla como si no contara. Por eso la raya sin punta importa: en el dibujo Bea queda pegada a Pedro y se arrastra con él hacia donde vaya.",
+      "figura": "orden-alturas"
     },
     {
       "materia": "exa.psico-abstracto",
@@ -1610,7 +1670,8 @@
         "La regla que sirve para toda la familia: «padre de» y «madre de» suben un nivel, «hijo de» baja uno, y «hermano de» o «hermana de» se queda en el mismo. Contando niveles sobre el dibujo no se falla nunca."
       ],
       "respuesta": "D) Mi padre",
-      "errorComun": "Leer de izquierda a derecha y empezar a construir desde «el padre». Así se arma el árbol al revés y se termina respondiendo cualquier cosa. La frase se construye de adentro hacia afuera, así que se lee de la última palabra hacia atrás. Y el dibujo no es opcional: en cuanto hay más de tres parentescos encadenados, la cabeza sola no alcanza."
+      "errorComun": "Leer de izquierda a derecha y empezar a construir desde «el padre». Así se arma el árbol al revés y se termina respondiendo cualquier cosa. La frase se construye de adentro hacia afuera, así que se lee de la última palabra hacia atrás. Y el dibujo no es opcional: en cuanto hay más de tres parentescos encadenados, la cabeza sola no alcanza.",
+      "figura": "familia-arbol"
     },
     {
       "materia": "exa.psico-abstracto",
@@ -1630,7 +1691,8 @@
         "La regla que sirve para toda esta familia: lo que se le hace a UN lado le pasa igual al área; lo que se le hace a LOS DOS le pasa al área dos veces. Si los dos lados se duplican, el área se multiplica por 4, no por 2."
       ],
       "respuesta": "A) Se reduce a la cuarta parte",
-      "errorComun": "Responder «a la mitad» porque el enunciado dice «a la mitad» dos veces y la palabra se queda pegada. Inventarse números concretos cuesta diez segundos y vuelve imposible ese error: con 10 × 6 = 60 y 5 × 3 = 15 delante, nadie responde 30."
+      "errorComun": "Responder «a la mitad» porque el enunciado dice «a la mitad» dos veces y la palabra se queda pegada. Inventarse números concretos cuesta diez segundos y vuelve imposible ese error: con 10 × 6 = 60 y 5 × 3 = 15 delante, nadie responde 30.",
+      "figura": "rectangulo-mitad"
     },
     {
       "materia": "exa.psico-abstracto",
@@ -1644,7 +1706,8 @@
         "Queda la A. Y conviene guardar la variante que casi siempre acompaña a esta pregunta: si los engranajes están en ANILLO cerrado en vez de en fila, un número impar de ruedas traba el mecanismo y no gira ninguna."
       ],
       "respuesta": "A. El engranaje E gira a la derecha, igual que A, y en total giran en ese sentido tres: A, C y E.",
-      "errorComun": "Contar con los dedos y perderse en el sexto. Por eso vale más la regla de impares y pares, que contesta igual con cinco que con quince. El otro error es aplicarle a una correa la regla de los dientes: dos ruedas unidas por una correa derecha giran en el MISMO sentido, no al contrario, y si la correa va cruzada en ocho, otra vez al contrario. En la figura hay que mirar siempre si se tocan o si hay correa."
+      "errorComun": "Contar con los dedos y perderse en el sexto. Por eso vale más la regla de impares y pares, que contesta igual con cinco que con quince. El otro error es aplicarle a una correa la regla de los dientes: dos ruedas unidas por una correa derecha giran en el MISMO sentido, no al contrario, y si la correa va cruzada en ocho, otra vez al contrario. En la figura hay que mirar siempre si se tocan o si hay correa.",
+      "figura": "engranajes-opuestos"
     },
     {
       "materia": "exa.psico-abstracto",
@@ -1658,7 +1721,8 @@
         "Y con una sola polea fija habría que hacer los 120 kg completos. Queda la B."
       ],
       "respuesta": "B. Con el aparejo de cuatro tramos hace 30 kg de fuerza; con una sola polea fija tendría que hacer los 120 kg, porque esa no ahorra fuerza, solo cambia la dirección.",
-      "errorComun": "Contar TODAS las cuerdas que se ven en el dibujo, incluida la punta de la que uno hala. Solo cuentan las que sostienen la carga. Y el error de fondo, el que hace fallar la mitad de estas preguntas: creer que cualquier polea ayuda. La fija no ayuda con el peso; ayuda con la postura. Por eso está en la opción A, que suena bien y es falsa."
+      "errorComun": "Contar TODAS las cuerdas que se ven en el dibujo, incluida la punta de la que uno hala. Solo cuentan las que sostienen la carga. Y el error de fondo, el que hace fallar la mitad de estas preguntas: creer que cualquier polea ayuda. La fija no ayuda con el peso; ayuda con la postura. Por eso está en la opción A, que suena bien y es falsa.",
+      "figura": "engranajes-opuestos"
     },
     {
       "materia": "exa.psico-abstracto",
@@ -1673,7 +1737,8 @@
         "Y mientras hace las cuatro, vaya diciendo lo que ve por dentro. Nombrarlo deja una segunda huella, verbal además de visual, y una frase se recuerda mucho mejor que una imagen suelta."
       ],
       "respuesta": "Cuatro pasadas de unos treinta segundos: contar (dos motos, un señor, un perro), ubicar por cuadrantes (tienda a la izquierda, perro bajo el árbol), leer todo lo escrito («Papelería El Lápiz», «8:00 a 19:00») y fijarse en lo anómalo (el paraguas abierto con el día despejado). Diciéndolo por dentro mientras se mira.",
-      "errorComun": "Gastarse los dos minutos en la parte bonita de la imagen —la escena, los colores, la gente— y no leer el aviso. Después preguntan a qué hora abre la papelería y no hay de dónde sacarlo. La otra falla es no contar: uno cree que se acuerda de «unas motos», y la pregunta dice si eran dos o tres. Contar y decir el número es lo que convierte un recuerdo vago en un dato."
+      "errorComun": "Gastarse los dos minutos en la parte bonita de la imagen —la escena, los colores, la gente— y no leer el aviso. Después preguntan a qué hora abre la papelería y no hay de dónde sacarlo. La otra falla es no contar: uno cree que se acuerda de «unas motos», y la pregunta dice si eran dos o tres. Contar y decir el número es lo que convierte un recuerdo vago en un dato.",
+      "figura": "memoria-lamina"
     },
     {
       "materia": "exa.psico-personalidad",
@@ -1687,7 +1752,8 @@
         "Resultado: en qué terminó, con un dato comprobable si existe, y qué quedó después —un acuerdo, un cambio de procedimiento, algo que se sostenga si preguntan más."
       ],
       "respuesta": "No puntúa porque no cuenta un episodio ni una acción propia: describe al otro y se autodefine. Armada con STAR: «En la bodega donde trabajaba en Itagüí, un compañero del turno de la tarde me dejaba sin organizar el inventario y yo llegaba a las 6 a.m. a resolverlo (S). A mí me respondían por el despacho antes de las 9, así que era mi problema (T). Le pedí hablar fuera del turno, le mostré con las planillas los tres días que salimos tarde y le propuse que cada uno dejara el cierre listo para el otro; lo escribimos en una hoja pegada en la estantería (A). En las siguientes cuatro semanas no volvimos a despachar tarde y el supervisor adoptó la hoja para los otros turnos (R)».",
-      "errorComun": "Gastarse la respuesta en la Situación. La gente cuenta cinco minutos de antecedentes, el entrevistador la interrumpe y la Acción y el Resultado nunca llegan, que son las dos partes que se califican. La otra fuga es hablar en «nosotros»: «nosotros decidimos», «nos organizamos». El entrevistador no puede evaluar al equipo, solo a usted; si la acción no está en primera persona del singular, no cuenta."
+      "errorComun": "Gastarse la respuesta en la Situación. La gente cuenta cinco minutos de antecedentes, el entrevistador la interrumpe y la Acción y el Resultado nunca llegan, que son las dos partes que se califican. La otra fuga es hablar en «nosotros»: «nosotros decidimos», «nos organizamos». El entrevistador no puede evaluar al equipo, solo a usted; si la acción no está en primera persona del singular, no cuenta.",
+      "figura": "likert-acuerdo"
     },
     {
       "materia": "exa.psico-personalidad",
@@ -1701,7 +1767,8 @@
         "De ahí sale la única estrategia que funciona: responder lo que uno efectivamente hace, rápido y sin darle vueltas —las primeras respuestas son las más consistentes entre sí—, y aceptar los ítems que reconocen defectos normales, que son los que hacen ver el perfil como creíble."
       ],
       "respuesta": "Sumó puntos en la escala de sinceridad, no en ningún rasgo bueno. Con suficientes respuestas así el perfil se reporta como no confiable, y eso descarta más rápido que cualquier puntaje bajo. Lo que corresponde es responder con lo que uno realmente hace, sin buscar la respuesta que suene mejor.",
-      "errorComun": "Creer que en un test de personalidad hay respuestas correctas, como en un examen de conocimientos. No las hay: hay un perfil que se compara con el del cargo, y un cargo puede requerir a alguien metódico donde otro requiere a alguien que improvise. Contestar todo en el extremo «virtuoso» no acerca a ningún perfil real, solo enciende la escala de sinceridad. Y hay un costo que nadie calcula: si uno finge un perfil y queda, entra a un cargo hecho para otra persona."
+      "errorComun": "Creer que en un test de personalidad hay respuestas correctas, como en un examen de conocimientos. No las hay: hay un perfil que se compara con el del cargo, y un cargo puede requerir a alguien metódico donde otro requiere a alguien que improvise. Contestar todo en el extremo «virtuoso» no acerca a ningún perfil real, solo enciende la escala de sinceridad. Y hay un costo que nadie calcula: si uno finge un perfil y queda, entra a un cargo hecho para otra persona.",
+      "figura": "likert-acuerdo"
     },
     {
       "materia": "exa.psico-personalidad",
@@ -1715,7 +1782,8 @@
         "Queda la B, y se comprueba con el criterio que decide estos empates: es la única que deja registro de las dos cosas, el recibido con fecha y hora y la falla del sistema. En lo público, lo que no queda escrito no pasó."
       ],
       "respuesta": "B. Es la única que protege el derecho de la ciudadana (el plazo se cumple con el recibido de hoy), deja constancia de una falla que no era suya y completa el trámite cuando el sistema vuelve. Las otras dos, o le trasladan el costo, o dejan el caso a medias.",
-      "errorComun": "Buscar «la respuesta buena persona». Mucha gente marca la C porque siente que recibir el documento ya es hacerle el favor a la señora. El juicio situacional no premia la buena intención: premia la actuación completa. Y el otro error, más caro, es marcar la A porque «así es como se hace de verdad en la oficina»: la prueba mide lo que corresponde hacer, no la costumbre del lugar donde uno trabajó."
+      "errorComun": "Buscar «la respuesta buena persona». Mucha gente marca la C porque siente que recibir el documento ya es hacerle el favor a la señora. El juicio situacional no premia la buena intención: premia la actuación completa. Y el otro error, más caro, es marcar la A porque «así es como se hace de verdad en la oficina»: la prueba mide lo que corresponde hacer, no la costumbre del lugar donde uno trabajó.",
+      "figura": "situacional-opciones"
     },
     {
       "materia": "exa.psico-personalidad",
@@ -1729,7 +1797,8 @@
         "Gana la B por la regla de siempre: informar y dejar por escrito. No es desconfianza hacia el proveedor; es que si mañana alguien revisa ese contrato, la constancia protege a la entidad y lo protege a usted."
       ],
       "respuesta": "B. Rechazar la invitación y además informarla por escrito al jefe inmediato. Rechazarla en silencio (C) atiende la mitad del caso; aceptarla por ser de poco valor (A) es justo el razonamiento que la norma no acepta.",
-      "errorComun": "Marcar la C convencido de que informar es exagerado, o desleal con el proveedor. En estas pruebas, entre dos opciones que hacen lo correcto, siempre gana la que además deja rastro. Vale la pena aprenderse esa jerarquía porque se repite en decenas de preguntas: primero no hacer lo indebido, después dejarlo registrado."
+      "errorComun": "Marcar la C convencido de que informar es exagerado, o desleal con el proveedor. En estas pruebas, entre dos opciones que hacen lo correcto, siempre gana la que además deja rastro. Vale la pena aprenderse esa jerarquía porque se repite en decenas de preguntas: primero no hacer lo indebido, después dejarlo registrado.",
+      "figura": "situacional-opciones"
     },
     {
       "materia": "exa.psico-personalidad",
@@ -1743,7 +1812,8 @@
         "Queda la A y se comprueba que cierra el caso completo: informa a quien decide, cuantifica el impacto y el tiempo (eso es analizar, no solo avisar) y propone quién hace el trabajo mientras tanto. Además no juzga al compañero ausente, que no puede defenderse."
       ],
       "respuesta": "A. Informar al líder con el detalle del error, su alcance y el tiempo de corrección, y ofrecerse a cubrir la sección. Es la única que atiende a la vez el resultado, la calidad y la ausencia del compañero.",
-      "errorComun": "Creer que «trabajo en equipo» significa tapar al compañero. En la evaluación por competencias, trabajo en equipo es que el equipo llegue al resultado con la información completa, no encubrir. La otra caída es la C: quien la marca confunde dejar constancia con actuar. Dejar constancia es lo que se hace ADEMÁS de resolver, nunca en lugar de resolver."
+      "errorComun": "Creer que «trabajo en equipo» significa tapar al compañero. En la evaluación por competencias, trabajo en equipo es que el equipo llegue al resultado con la información completa, no encubrir. La otra caída es la C: quien la marca confunde dejar constancia con actuar. Dejar constancia es lo que se hace ADEMÁS de resolver, nunca en lugar de resolver.",
+      "figura": "situacional-opciones"
     },
     {
       "materia": "exa.psico-personalidad",
@@ -1758,7 +1828,8 @@
         "Para practicar, hojas largas. Cinco minutos no entrenan nada: lo que hay que entrenar es la cabeza cansada, que es la que va a presentar el bloque real."
       ],
       "respuesta": "Se devolvió a comprobar y arrancó demasiado rápido, que son los dos errores que definen este bloque. Lo correcto es un solo recorrido sin devolverse, a ritmo parejo, mirando una sola diferencia en cada figura y sin saltarse ninguna casilla.",
-      "errorComun": "Creer que vale más tachar bien poquitas que avanzar. No: si los errores restan, tampoco vale correr. El punto exacto es el ritmo más alto que uno puede sostener sin equivocarse, y ese punto solo aparece practicando con hojas largas. Y hay un descuido tonto que arruina filas enteras: saltarse las casillas que a primera vista no son. Se mira todo, en el mismo orden, siempre."
+      "errorComun": "Creer que vale más tachar bien poquitas que avanzar. No: si los errores restan, tampoco vale correr. El punto exacto es el ritmo más alto que uno puede sostener sin equivocarse, y ese punto solo aparece practicando con hojas largas. Y hay un descuido tonto que arruina filas enteras: saltarse las casillas que a primera vista no son. Se mira todo, en el mismo orden, siempre.",
+      "figura": "atencion-una-diferencia"
     },
     {
       "materia": "exa.psico-personalidad",
@@ -1772,7 +1843,8 @@
         "Y hay un asunto de ritmo que cuesta puntos sin que nadie lo note: estas sesenta preguntas van al final de una prueba de 150, ya cansado. Quien no sabe que existen llega de afán y las despacha en bloque, que es exactamente lo que produce un perfil incoherente."
       ],
       "respuesta": "Que son dos escalas distintas: la primera pregunta con qué frecuencia lo hace (hecho) y la segunda qué tan de acuerdo está (valoración). En la de Acciones corresponde la frecuencia real —«Casi nunca» o «Casi siempre» según su vida—; en la de Actitudes, su valoración honesta. Y marcar el extremo en las sesenta no da mejor imagen: da un perfil que no corresponde a nadie.",
-      "errorComun": "Tratar este bloque como si fuera de conocimientos, buscando «la respuesta correcta». No la hay: hay un perfil que se compara con el del cargo, y la guía oficial dice expresamente que el diseño busca que el evaluado responda con franqueza. Lo único que de verdad se puede preparar es saber que el bloque existe, entender las dos escalas, y haber pensado antes con calma la propia postura frente a los asuntos que mide —la violencia, la diversidad, lo público, la ley— para no improvisarla con el reloj encima."
+      "errorComun": "Tratar este bloque como si fuera de conocimientos, buscando «la respuesta correcta». No la hay: hay un perfil que se compara con el del cargo, y la guía oficial dice expresamente que el diseño busca que el evaluado responda con franqueza. Lo único que de verdad se puede preparar es saber que el bloque existe, entender las dos escalas, y haber pensado antes con calma la propia postura frente a los asuntos que mide —la violencia, la diversidad, lo público, la ley— para no improvisarla con el reloj encima.",
+      "figura": "acciones-actitudes"
     }
   ]
 }

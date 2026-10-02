@@ -13,6 +13,8 @@ export type PsicoFicha = {
   titulo: string;
   regla: string;
   ejemplo: string;
+  /** Id de figura SVG en AbstractFigures (abstracto / atención / etc.). */
+  figura?: string;
 };
 
 export type PsicoEjercicio = {
@@ -23,6 +25,7 @@ export type PsicoEjercicio = {
   respuesta: string;
   errorComun?: string;
   caminoLargo?: string[];
+  figura?: string;
 };
 
 type TrialFile = {

@@ -16,6 +16,7 @@ import {
   type PsicoEjercicio,
   type PsicoFicha,
 } from "@/lib/psicotecnicas";
+import { AbstractFigure } from "@/components/psicotecnicas/AbstractFigures";
 import { ejercicioSpeakScript, fichaSpeakScript, stopSpeaking } from "@/lib/psicotecnicas/speak";
 import { writeFocusPath } from "@/lib/engagement/focusPath";
 
@@ -185,6 +186,17 @@ export function PsicoClient() {
             </div>
             <SpeakButton text={fichaSpeakScript(ficha)} label="Escuchar ficha" />
           </div>
+          {materia === "exa.psico-personalidad" && fichaI === 0 ? (
+            <p className="text-xs muted leading-relaxed rounded-lg border border-black/10 bg-black/[0.02] p-3">
+              Aquí estudias cómo son los test de empresas (atención, juicio situacional, Acciones/Actitudes, sinceridad).
+              El assessment de intereses RIASEC (tu código + roles) está aparte en{" "}
+              <Link href="/outplacement/assessment" className="underline">
+                /outplacement/assessment
+              </Link>
+              .
+            </p>
+          ) : null}
+          <AbstractFigure id={ficha.figura} />
           <p className="text-sm whitespace-pre-wrap leading-relaxed">{ficha.regla}</p>
           <p className="text-sm muted whitespace-pre-wrap leading-relaxed">{ficha.ejemplo}</p>
           <div className="flex gap-2">
@@ -295,6 +307,7 @@ function ExerciseCard(props: {
           label={props.revealed ? "Escuchar solución" : "Escuchar enunciado"}
         />
       </div>
+      <AbstractFigure id={item.figura} />
       <p className="text-sm whitespace-pre-wrap leading-relaxed">{item.enunciado}</p>
       <label className="block text-sm">
         Tu respuesta

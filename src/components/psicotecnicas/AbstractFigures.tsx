@@ -798,13 +798,324 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
       </Frame>
     ),
   },
+  "diag-giro-90": {
+    caption: "Atajo horario: arriba → derecha → abajo → izquierda → arriba.",
+    node: (
+      <Frame caption="Giro 90° horario" w={340} h={200}>
+        <ArrowUp x={50} y={90} rot={0} />
+        <text x={50} y={155} textAnchor="middle" fontSize="11" fill={muted}>
+          ahora ↑
+        </text>
+        <text x={110} y={95} fill={accent} fontSize="22">
+          →
+        </text>
+        <ArrowUp x={170} y={90} rot={90} />
+        <text x={170} y={155} textAnchor="middle" fontSize="11" fill={accent}>
+          siguiente →
+        </text>
+        <text x={250} y={50} fontSize="11" fill={muted}>
+          ciclo:
+        </text>
+        <text x={250} y={75} fontSize="12" fill={stroke}>
+          ↑ → ↓ ←
+        </text>
+      </Frame>
+    ),
+  },
+  "diag-puntos": {
+    caption: "Atajo: mira cuánto crece de un número al siguiente (+1,+2,+3…).",
+    node: (
+      <Frame caption="Puntos en figuras" w={360} h={160}>
+        {[2, 3, 5, 8].map((n, i) => (
+          <g key={n}>
+            <circle cx={45 + i * 80} cy={70} r={28} fill={fill} stroke={stroke} strokeWidth="2" />
+            <text x={45 + i * 80} y={76} textAnchor="middle" fontSize="16" fill={stroke} fontWeight="700">
+              {n}
+            </text>
+            {i < 3 ? (
+              <text x={85 + i * 80} y={76} textAnchor="middle" fontSize="12" fill={accent}>
+                +{i + 1}
+              </text>
+            ) : (
+              <text x={85 + i * 80} y={76} textAnchor="middle" fontSize="14" fill={accent}>
+                +? →
+              </text>
+            )}
+          </g>
+        ))}
+        <text x={340} y={76} textAnchor="middle" fontSize="16" fill={accent} fontWeight="700">
+          ?
+        </text>
+      </Frame>
+    ),
+  },
+  "diag-bn": {
+    caption: "Atajo: posiciones impares = un color; pares = el otro.",
+    node: (
+      <Frame caption="Alternancia blanco / negro" w={340} h={140}>
+        {[0, 1, 2, 3, 4, 5].map((i) => (
+          <rect
+            key={i}
+            x={20 + i * 50}
+            y={40}
+            width="40"
+            height="40"
+            fill={i % 2 === 0 ? "#ffffff" : "#1e293b"}
+            stroke={stroke}
+            strokeWidth="2"
+          />
+        ))}
+        <text x={170} y={110} textAnchor="middle" fontSize="12" fill={muted}>
+          1B 2N 3B 4N 5B 6N…
+        </text>
+      </Frame>
+    ),
+  },
+  "diag-tamanos": {
+    caption: "Atajo ciclo de 3: posición 4 = misma que 1; 5 = misma que 2…",
+    node: (
+      <Frame caption="Grande → mediana → pequeña" w={340} h={160}>
+        <rect x="30" y="40" width="70" height="70" fill={fill} stroke={stroke} strokeWidth="2" />
+        <rect x="130" y="55" width="50" height="50" fill={fill} stroke={stroke} strokeWidth="2" />
+        <rect x="220" y="70" width="30" height="30" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="280" y={90} fontSize="22" fill={accent}>
+          ?
+        </text>
+        <text x="65" y="135" textAnchor="middle" fontSize="11" fill={muted}>
+          1ª G
+        </text>
+        <text x="155" y="135" textAnchor="middle" fontSize="11" fill={muted}>
+          2ª M
+        </text>
+        <text x="235" y="135" textAnchor="middle" fontSize="11" fill={muted}>
+          3ª P
+        </text>
+      </Frame>
+    ),
+  },
+  "diag-mas-menos": {
+    caption: "Atajo: impar ⊕, par ⊖ (o al revés si el enunciado lo dice).",
+    node: (
+      <Frame caption="Alterna ⊕ ⊖" w={320} h={130}>
+        {["⊕", "⊖", "⊕", "⊖", "⊕", "?"].map((t, i) => (
+          <g key={i}>
+            <circle cx={35 + i * 50} cy={55} r={18} fill={i === 5 ? "#ede9fe" : fill} stroke={i === 5 ? accent : stroke} strokeWidth="2" />
+            <text x={35 + i * 50} y={62} textAnchor="middle" fontSize="16" fill={stroke}>
+              {t}
+            </text>
+          </g>
+        ))}
+      </Frame>
+    ),
+  },
+  "espacial-cubo-pintado": {
+    caption: "Atajo 3×3×3: 1 cara = centro de cada cara grande → 6.",
+    node: (
+      <Frame caption="Cubo 3×3×3 pintado por fuera" w={300} h={230}>
+        {[0, 1, 2].map((r) =>
+          [0, 1, 2].map((c) => {
+            const x = 85 + c * 40;
+            const y = 35 + r * 40;
+            const center = r === 1 && c === 1;
+            return (
+              <rect
+                key={`${r}-${c}`}
+                x={x}
+                y={y}
+                width="36"
+                height="36"
+                fill={center ? accent : "#e2e8f0"}
+                stroke={stroke}
+                strokeWidth="2"
+              />
+            );
+          })
+        )}
+        <text x="150" y="175" textAnchor="middle" fontSize="12" fill={accent} fontWeight="700">
+          centro = 1 cara pintada
+        </text>
+        <text x="150" y="198" textAnchor="middle" fontSize="11" fill={muted}>
+          6 caras del cubo → 6 cubitos
+        </text>
+        <text x="150" y="218" textAnchor="middle" fontSize="11" fill={muted}>
+          esquinas=3 · aristas=2 · centro cara=1
+        </text>
+      </Frame>
+    ),
+  },
+  "espacial-brujula": {
+    caption: "Atajo: la dirección final es el último tramo del camino.",
+    node: (
+      <Frame caption="Camino N → E → S" w={280} h={200}>
+        <line x1="140" y1="160" x2="140" y2="90" stroke={stroke} strokeWidth="3" />
+        <polygon points="140,70 132,90 148,90" fill={stroke} />
+        <line x1="140" y1="80" x2="190" y2="80" stroke={accent} strokeWidth="3" />
+        <line x1="200" y1="80" x2="200" y2="130" stroke={accent} strokeWidth="3" />
+        <polygon points="200,145 192,125 208,125" fill={accent} />
+        <text x="125" y="120" fontSize="11" fill={muted}>
+          N
+        </text>
+        <text x="160" y="70" fontSize="11" fill={muted}>
+          E
+        </text>
+        <text x="210" y="120" fontSize="11" fill={accent}>
+          S ← miras aquí
+        </text>
+        <circle cx="140" cy="160" r="5" fill={stroke} />
+      </Frame>
+    ),
+  },
+  "espacial-espejo": {
+    caption: "Espejo vertical: izquierda↔derecha; arriba/abajo igual.",
+    node: (
+      <Frame caption="Espejo vertical" w={300} h={160}>
+        <text x="80" y="70" textAnchor="middle" fontSize="36" fill={stroke} fontWeight="700">
+          L
+        </text>
+        <line x1="150" y1="25" x2="150" y2="120" stroke={accent} strokeWidth="3" strokeDasharray="4 3" />
+        <g transform="translate(220 70) scale(-1 1)">
+          <text x="0" y="0" textAnchor="middle" fontSize="36" fill={stroke} fontWeight="700">
+            L
+          </text>
+        </g>
+        <text x="80" y="120" textAnchor="middle" fontSize="11" fill={muted}>
+          original
+        </text>
+        <text x="220" y="120" textAnchor="middle" fontSize="11" fill={muted}>
+          reflejo
+        </text>
+      </Frame>
+    ),
+  },
+  "espacial-cilindro": {
+    caption: "Vista desde arriba circular → cuerpo redondo (cilindro/cono).",
+    node: (
+      <Frame caption="Vista superior" w={280} h={180}>
+        <ellipse cx="90" cy="90" rx="45" ry="45" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="90" y="95" textAnchor="middle" fontSize="12" fill={muted}>
+          arriba
+        </text>
+        <text x="170" y="70" fontSize="18" fill={accent}>
+          →
+        </text>
+        <ellipse cx="230" cy="50" rx="35" ry="12" fill={fill} stroke={stroke} strokeWidth="2" />
+        <line x1="195" y1="50" x2="195" y2="130" stroke={stroke} strokeWidth="2" />
+        <line x1="265" y1="50" x2="265" y2="130" stroke={stroke} strokeWidth="2" />
+        <ellipse cx="230" cy="130" rx="35" ry="12" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="230" y="165" textAnchor="middle" fontSize="11" fill={muted}>
+          cilindro
+        </text>
+      </Frame>
+    ),
+  },
+  "espacial-reloj": {
+    caption: "Girar el reloj 90° antihorario: la manecilla «salta» una hora atrás en apariencia.",
+    node: (
+      <Frame caption="Reloj" w={260} h={180}>
+        <circle cx="130" cy="90" r="55" fill={fill} stroke={stroke} strokeWidth="2" />
+        <line x1="130" y1="90" x2="175" y2="90" stroke={accent} strokeWidth="4" strokeLinecap="round" />
+        <text x="130" y="40" textAnchor="middle" fontSize="12" fill={stroke}>
+          12
+        </text>
+        <text x="185" y="95" fontSize="12" fill={stroke}>
+          3
+        </text>
+        <text x="130" y="155" textAnchor="middle" fontSize="11" fill={muted}>
+          apunta a las 3
+        </text>
+      </Frame>
+    ),
+  },
+  "espacial-net-cruz": {
+    caption: "En cruz: la cara del extremo opuesto al brazo largo suele ser la opuesta al centro.",
+    node: (
+      <Frame caption="Desarrollo en cruz" w={260} h={220}>
+        <rect x="100" y="20" width="50" height="50" fill={fill} stroke={stroke} strokeWidth="2" />
+        <rect x="50" y="70" width="50" height="50" fill={fill} stroke={stroke} strokeWidth="2" />
+        <rect x="100" y="70" width="50" height="50" fill="#ede9fe" stroke={accent} strokeWidth="2" />
+        <text x="125" y="100" textAnchor="middle" fontSize="12" fill={accent}>
+          centro
+        </text>
+        <rect x="150" y="70" width="50" height="50" fill={fill} stroke={stroke} strokeWidth="2" />
+        <rect x="100" y="120" width="50" height="50" fill={fill} stroke={stroke} strokeWidth="2" />
+        <rect x="100" y="170" width="50" height="50" fill={fill} stroke={stroke} strokeWidth="2" />
+      </Frame>
+    ),
+  },
+  "espacial-doblez": {
+    caption: "Atajo: al doblar, la punta se acerca al pliegue (no gira sola).",
+    node: (
+      <Frame caption="Doblez horizontal" w={300} h={180}>
+        <rect x="40" y="30" width="90" height="120" fill={fill} stroke={stroke} strokeWidth="2" />
+        <ArrowUp x={85} y={90} rot={0} />
+        <text x="85" y="165" textAnchor="middle" fontSize="11" fill={muted}>
+          antes ↑
+        </text>
+        <text x="145" y="95" fontSize="18" fill={accent}>
+          →
+        </text>
+        <rect x="170" y="50" width="90" height="60" fill={fill} stroke={stroke} strokeWidth="2" />
+        <line x1="170" y1="80" x2="260" y2="80" stroke={accent} strokeWidth="2" strokeDasharray="4 3" />
+        <text x="215" y="70" textAnchor="middle" fontSize="11" fill={accent}>
+          punta → pliegue
+        </text>
+        <text x="215" y="130" textAnchor="middle" fontSize="11" fill={muted}>
+          después
+        </text>
+      </Frame>
+    ),
+  },
+  "espacial-cono-lado": {
+    caption: "Atajo: cono de lado = triángulo; desde arriba = círculo.",
+    node: (
+      <Frame caption="Vistas del cono" w={300} h={170}>
+        <polygon points="70,40 30,130 110,130" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="70" y="155" textAnchor="middle" fontSize="11" fill={muted}>
+          lateral
+        </text>
+        <ellipse cx="220" cy="90" rx="45" ry="45" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="220" y="155" textAnchor="middle" fontSize="11" fill={muted}>
+          desde arriba
+        </text>
+      </Frame>
+    ),
+  },
+  "espacial-escalera": {
+    caption: "Atajo: de frente los peldaños = franjas horizontales.",
+    node: (
+      <Frame caption="Escalera de frente" w={260} h={180}>
+        {[0, 1, 2, 3].map((i) => (
+          <rect
+            key={i}
+            x={40}
+            y={30 + i * 30}
+            width={180 - i * 10}
+            height="22"
+            fill={fill}
+            stroke={stroke}
+            strokeWidth="2"
+          />
+        ))}
+        <text x="130" y="165" textAnchor="middle" fontSize="11" fill={muted}>
+          rectángulos / líneas
+        </text>
+      </Frame>
+    ),
+  },
 };
 
 export function AbstractFigure({ id }: { id?: string | null }) {
   if (!id) return null;
   const fig = FIGURES[id];
   if (!fig) return null;
-  return <>{fig.node}</>;
+  return (
+    <div className="my-2">
+      {fig.node}
+      {fig.caption ? (
+        <p className="text-[12px] text-center leading-snug text-[#6d28d9] font-medium px-1">{fig.caption}</p>
+      ) : null}
+    </div>
+  );
 }
 
 export function hasAbstractFigure(id?: string | null): boolean {

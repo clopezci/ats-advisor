@@ -38,6 +38,7 @@ type BancoItem = {
   enunciado: string;
   respuesta: string;
   pasos: string[];
+  figura?: string;
 };
 
 type BancoTipo = {
@@ -428,6 +429,7 @@ export function PsicoClient() {
               <span className="muted font-normal"> · explicación incluida</span>
             )}
           </p>
+          {tipoItem.figura ? <AbstractFigure id={tipoItem.figura} /> : null}
           <p className="text-sm whitespace-pre-wrap leading-relaxed">{tipoItem.enunciado}</p>
 
           <label className="block text-sm">

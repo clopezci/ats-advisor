@@ -29,6 +29,7 @@ import { createBrowserSupabase } from "@/lib/supabase/client";
 import { readEntitlement } from "@/lib/entitlements";
 import { formatCop } from "@/lib/channels/pricing";
 import bancoTiposData from "@/lib/psicotecnicas/bancoTipos.json";
+import { explainSimpleBinary } from "@/lib/psicotecnicas/explainMentalMul";
 
 type Mode = "fichas" | "pruebas" | "banco";
 
@@ -145,7 +146,14 @@ export function PsicoClient() {
   const bancoItem = banco[Math.min(bancoI, Math.max(0, banco.length - 1))];
 
   const tipo = BANCO.tipos[Math.min(tipoI, BANCO.tipos.length - 1)];
-  const tipoItem = tipo?.items[Math.min(itemI, Math.max(0, (tipo?.items.length || 1) - 1))];
+  const tipoItemRaw = tipo?.items[Math.min(itemI, Math.max(0, (tipo?.items.length || 1) - 1))];
+  const tipoItem = useMemo(() => {
+    if (!tipoItemRaw) return tipoItemRaw;
+    if (tipo?.id !== "calculo-mental") return tipoItemRaw;
+    const smart = explainSimpleBinary(tipoItemRaw.enunciado);
+    if (!smart?.length) return tipoItemRaw;
+    return { ...tipoItemRaw, pasos: smart };
+  }, [tipo?.id, tipoItemRaw]);
   const tipoTotal = BANCO.tipos.reduce((n, t) => n + t.items.length, 0);
   const tipoOk = tipoChecked && tipoItem ? answersMatch(tipoAnswer, tipoItem.respuesta) : false;
   const explainUnlocked = canExplainTipoItem(itemI, paid, FREE_EXPLAIN);
@@ -468,8 +476,8 @@ export function PsicoClient() {
                 Respuesta correcta: <strong>{tipoItem.respuesta}</strong>
               </p>
               <ol className="list-decimal pl-4 space-y-1 muted">
-                {tipoItem.pasos.map((p) => (
-                  <li key={p.slice(0, 48)}>{p}</li>
+                {tipoItem.pasos.map((p, idx) => (
+                  <li key={`${idx}-${p.slice(0, 40)}`}>{p}</li>
                 ))}
               </ol>
             </div>

@@ -1,7 +1,7 @@
 {
   "titulo": "Pruebas por tipo",
   "gratisExplicaciones": 4,
-  "nota": "Modelo: las primeras 4 preguntas de cada tipo incluyen comprobar + ver respuesta y paso a paso gratis. Desde la 5.ª sigues viendo el enunciado y puedes intentar; para la explicación y la respuesta correcta necesitas el plan de práctica de pago. Banco completo reescrito en texto (mismo volumen que el material original por categoría).",
+  "nota": "Modelo: las primeras 4 preguntas de cada tipo incluyen comprobar + ver respuesta y paso a paso gratis. Desde la 5.ª sigues viendo el enunciado y puedes intentar; para la explicación y la respuesta correcta necesitas el plan de práctica de pago. Sinónimos y antónimos incluyen vocabulario culto (no solo palabras cotidianas).",
   "tipos": [
     {
       "id": "analogias",
@@ -200,10 +200,656 @@
       ]
     },
     {
+      "id": "sinonimos",
+      "nombre": "Sinónimos",
+      "descripcion": "Elige el significado más cercano. Vocabulario formal y poco común (estilo pruebas verbales de oposición); busca precisión, no solo 'parecido'.",
+      "items": [
+        {
+          "enunciado": "sinónimo más cercano de escaso:\n\nA) profuso   B) frugal   C) exiguo   D) abundante",
+          "respuesta": "C) exiguo",
+          "pasos": [
+            "escaso = de poca cantidad.",
+            "exiguo = insuficiente / muy reducido.",
+            "abundante y profuso van al contrario; frugal es moderación al comer."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de ínfimo:\n\nA) óptimo   B) elevado   C) mínimo   D) máximo",
+          "respuesta": "C) mínimo",
+          "pasos": [
+            "ínfimo = el más bajo o pequeño de su clase.",
+            "mínimo es el sinónimo más preciso.",
+            "máximo y elevado son lo opuesto."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de efímero:\n\nA) duradero   B) pasajero   C) eterno   D) permanente",
+          "respuesta": "B) pasajero",
+          "pasos": [
+            "efímero = de muy corta duración.",
+            "pasajero = que dura poco.",
+            "eterno/permanente/duradero niegan la idea."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de lacónico:\n\nA) conciso   B) locuaz   C) verboso   D) elocuente",
+          "respuesta": "A) conciso",
+          "pasos": [
+            "lacónico = pocas palabras, breve.",
+            "conciso = breve y preciso.",
+            "locuaz y verboso son lo contrario."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de prístino:\n\nA) primigenio   B) impuro   C) moderno   D) alterado",
+          "respuesta": "A) primigenio",
+          "pasos": [
+            "prístino = original, sin alterar.",
+            "primigenio = del origen.",
+            "impuro/alterado niegan pureza original."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de tergiversar:\n\nA) confirmar   B) exponer   C) desvirtuar   D) aclarar",
+          "respuesta": "C) desvirtuar",
+          "pasos": [
+            "tergiversar = torcer el sentido.",
+            "desvirtuar = quitar el verdadero sentido.",
+            "aclarar y confirmar van en otra dirección."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de ávido:\n\nA) indiferente   B) ansioso   C) hastiado   D) saciado",
+          "respuesta": "B) ansioso",
+          "pasos": [
+            "ávido = con fuerte deseo.",
+            "ansioso = deseo vehemente.",
+            "hastiado/saciado = ya no desea."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de plausible:\n\nA) censurable   B) dudoso   C) criticable   D) admisible",
+          "respuesta": "D) admisible",
+          "pasos": [
+            "plausible = aceptable / digno de crédito.",
+            "admisible = que se puede admitir.",
+            "censurable y criticable empujan a rechazo."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de pérfido:\n\nA) leal   B) honesto   C) sincero   D) traicionero",
+          "respuesta": "D) traicionero",
+          "pasos": [
+            "pérfido = desleal, de mala fe.",
+            "traicionero es el sinónimo directo.",
+            "leal/honesto son antónimos."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de prolijo:\n\nA) conciso   B) extenso   C) breve   D) escueto",
+          "respuesta": "B) extenso",
+          "pasos": [
+            "prolijo = largo en exceso / demasiado detallado.",
+            "extenso captura esa longitud.",
+            "breve/escueto/conciso son lo contrario."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de sagaz:\n\nA) lento   B) ingenuo   C) astuto   D) torpe",
+          "respuesta": "C) astuto",
+          "pasos": [
+            "sagaz = perspicaz, agudo.",
+            "astuto es el más cercano.",
+            "torpe e ingenuo niegan agudeza."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de gallardo:\n\nA) encogido   B) desgarbado   C) airoso   D) torpe",
+          "respuesta": "C) airoso",
+          "pasos": [
+            "gallardo = elegante, gallardo de porte.",
+            "airoso = con gracia y desenvoltura.",
+            "desgarbado es lo opuesto."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de taimado:\n\nA) candoroso   B) ladino   C) ingenuo   D) franco",
+          "respuesta": "B) ladino",
+          "pasos": [
+            "taimado = astuto con malicia.",
+            "ladino = astuto, artero.",
+            "ingenuo/candoroso = sin malicia."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de hirsuto:\n\nA) suave   B) calvo   C) erizado   D) lampiño",
+          "respuesta": "C) erizado",
+          "pasos": [
+            "hirsuto = peludo, erizado.",
+            "erizado describe el mismo aspecto.",
+            "lampiño/calvo niegan vello."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de iracundo:\n\nA) apacible   B) sereno   C) flemático   D) colérico",
+          "respuesta": "D) colérico",
+          "pasos": [
+            "iracundo = propenso a la ira.",
+            "colérico = de genio airado.",
+            "apacible/sereno son lo contrario."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de peculio:\n\nA) deuda   B) limosna   C) castigo   D) patrimonio",
+          "respuesta": "D) patrimonio",
+          "pasos": [
+            "peculio = bienes / caudal propio.",
+            "patrimonio es el sinónimo más cercano.",
+            "deuda es lo opuesto económico."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de falaz:\n\nA) veraz   B) fiel   C) engañoso   D) sincero",
+          "respuesta": "C) engañoso",
+          "pasos": [
+            "falaz = engañoso, capcioso.",
+            "engañoso es equivalente.",
+            "sincero/veraz niegan engaño."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de zaino:\n\nA) leal   B) franco   C) abierto   D) traidor",
+          "respuesta": "D) traidor",
+          "pasos": [
+            "zaino (fig.) = falso, traidor.",
+            "traidor es el sentido figurado buscado.",
+            "leal es el antónimo."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de dilucidar:\n\nA) enturbiar   B) ocultar   C) complicar   D) aclarar",
+          "respuesta": "D) aclarar",
+          "pasos": [
+            "dilucidar = poner en claro.",
+            "aclarar es el sinónimo directo.",
+            "enturbiar/ocultar van al revés."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de perentorio:\n\nA) laxo   B) inaplazable   C) opcional   D) diferible",
+          "respuesta": "B) inaplazable",
+          "pasos": [
+            "perentorio = urgente, que no admite demora.",
+            "inaplazable captura esa urgencia.",
+            "diferible es lo contrario."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de recalcitrante:\n\nA) dócil   B) flexible   C) sumiso   D) obstinado",
+          "respuesta": "D) obstinado",
+          "pasos": [
+            "recalcitrante = que se resiste con terquedad.",
+            "obstinado es el sinónimo.",
+            "dócil/sumiso son antónimos."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de acervo:\n\nA) caudal   B) carencia   C) vacío   D) deuda",
+          "respuesta": "A) caudal",
+          "pasos": [
+            "acervo = conjunto de bienes o saberes.",
+            "caudal / patrimonio cultural o material.",
+            "carencia niega acumulación."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de fehaciente:\n\nA) fidedigno   B) dudoso   C) falso   D) impreciso",
+          "respuesta": "A) fidedigno",
+          "pasos": [
+            "fehaciente = que hace fe, confiable.",
+            "fidedigno = digno de fe.",
+            "dudoso/falso son lo opuesto."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de abyecto:\n\nA) honroso   B) vil   C) noble   D) elevado",
+          "respuesta": "B) vil",
+          "pasos": [
+            "abyecto = despreciable, vil.",
+            "vil es el sinónimo directo.",
+            "noble/honroso son antónimos."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de nimio:\n\nA) insignificante   B) trascendental   C) grave   D) crucial",
+          "respuesta": "A) insignificante",
+          "pasos": [
+            "nimio = de poca importancia.",
+            "insignificante es el sinónimo.",
+            "grave/crucial son lo contrario."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de imberbe:\n\nA) hirsuto   B) velludo   C) lampiño   D) barbudo",
+          "respuesta": "C) lampiño",
+          "pasos": [
+            "imberbe = sin barba (joven).",
+            "lampiño = sin vello facial.",
+            "barbudo/hirsuto son lo opuesto."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de alienar:\n\nA) enajenar   B) apropiar   C) conservar   D) integrar",
+          "respuesta": "A) enajenar",
+          "pasos": [
+            "alienar = enajenar (bienes o afecto).",
+            "enajenar es el sinónimo técnico.",
+            "apropiar/conservar van al revés."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de baladí:\n\nA) trascendente   B) crucial   C) solemne   D) trivial",
+          "respuesta": "D) trivial",
+          "pasos": [
+            "baladí = de poca monta.",
+            "trivial = sin importancia.",
+            "trascendente es el antónimo."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de pusilánime:\n\nA) temerario   B) cobarde   C) osado   D) valiente",
+          "respuesta": "B) cobarde",
+          "pasos": [
+            "pusilánime = falta de ánimo.",
+            "cobarde es el sinónimo más claro.",
+            "osado/valiente son antónimos."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de óbice:\n\nA) ayuda   B) atajo   C) obstáculo   D) facilidades",
+          "respuesta": "C) obstáculo",
+          "pasos": [
+            "óbice = impedimento.",
+            "obstáculo es el sinónimo.",
+            "ayuda/facilidades niegan impedimento."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de epítome:\n\nA) prólogo   B) compendio   C) digresión   D) ampliación",
+          "respuesta": "B) compendio",
+          "pasos": [
+            "epítome = resumen o compendio.",
+            "compendio es el sinónimo.",
+            "ampliación es lo contrario."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de execrar:\n\nA) bendecir   B) elogiar   C) abominar   D) alabar",
+          "respuesta": "C) abominar",
+          "pasos": [
+            "execrar = condenar con horror.",
+            "abominar es equivalente.",
+            "alabar/elogiar son antónimos."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de infausto:\n\nA) afortunado   B) feliz   C) venturoso   D) desgraciado",
+          "respuesta": "D) desgraciado",
+          "pasos": [
+            "infausto = de mal agüero / desgraciado.",
+            "desgraciado es el sinónimo.",
+            "venturoso es lo opuesto."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de sibarita:\n\nA) frugal   B) hedonista   C) asceta   D) austero",
+          "respuesta": "B) hedonista",
+          "pasos": [
+            "sibarita = amante del lujo y placer.",
+            "hedonista es el más cercano.",
+            "asceta/austero niegan placer."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de taciturno:\n\nA) locuaz   B) hablador   C) verborreico   D) callado",
+          "respuesta": "D) callado",
+          "pasos": [
+            "taciturno = poco hablador, silencioso.",
+            "callado es el sinónimo simple.",
+            "locuaz es el antónimo."
+          ]
+        },
+        {
+          "enunciado": "sinónimo más cercano de venal:\n\nA) honesto   B) incorruptible   C) sobornable   D) íntegro",
+          "respuesta": "C) sobornable",
+          "pasos": [
+            "venal = que se deja comprar.",
+            "sobornable es el sinónimo.",
+            "íntegro/incorruptible son antónimos."
+          ]
+        }
+      ]
+    },
+    {
       "id": "antonimos",
       "nombre": "Antónimos",
-      "descripcion": "Elige la opción más opuesta al significado.",
+      "descripcion": "Elige la opción más opuesta. Incluye vocabulario culto/poco común de estilo oposición; descarta sinónimos disfrazados de antónimo.",
       "items": [
+        {
+          "enunciado": "opción más opuesta a opaco:\n\nA) turbio   B) denso   C) diáfano   D) oscuro",
+          "respuesta": "C) diáfano",
+          "pasos": [
+            "opaco = no deja pasar la luz.",
+            "diáfano = transparente / deja pasar luz.",
+            "oscuro refuerza opacidad, no la niega."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a parsimonia:\n\nA) pachorra   B) precipitación   C) calma   D) mesura",
+          "respuesta": "B) precipitación",
+          "pasos": [
+            "parsimonia = calma / lentitud medida.",
+            "precipitación = apresuramiento.",
+            "calma y mesura son cercanos, no opuestos."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a insigne:\n\nA) notable   B) ilustre   C) emérito   D) anónimo",
+          "respuesta": "D) anónimo",
+          "pasos": [
+            "insigne = famoso, señalado.",
+            "anónimo = sin nombre / sin fama.",
+            "notable/ilustre son sinónimos."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a arduo:\n\nA) intrincado   B) sencillo   C) complicado   D) difícil",
+          "respuesta": "B) sencillo",
+          "pasos": [
+            "arduo = muy difícil.",
+            "sencillo = fácil.",
+            "complicado/difícil refuerzan arduo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a munificente:\n\nA) dadivoso   B) rácano   C) generoso   D) espléndido",
+          "respuesta": "B) rácano",
+          "pasos": [
+            "munificente = muy generoso.",
+            "rácano = tacaño.",
+            "generoso/dadivoso son sinónimos."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a patente:\n\nA) evidente   B) manifiesto   C) claro   D) oculto",
+          "respuesta": "D) oculto",
+          "pasos": [
+            "patente = manifiesto, visible.",
+            "oculto = escondido.",
+            "evidente/claro son sinónimos."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a acerbo:\n\nA) apacible   B) amargo   C) áspero   D) cruel",
+          "respuesta": "A) apacible",
+          "pasos": [
+            "acerbo = áspero, severo.",
+            "apacible = suave, agradable.",
+            "amargo/áspero refuerzan acerbo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a vetusto:\n\nA) caduco   B) decadente   C) moderno   D) antiguo",
+          "respuesta": "C) moderno",
+          "pasos": [
+            "vetusto = muy antiguo.",
+            "moderno = reciente.",
+            "antiguo/caduco van en la misma línea."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a prodigioso:\n\nA) admirable   B) vulgar   C) maravilloso   D) extraordinario",
+          "respuesta": "B) vulgar",
+          "pasos": [
+            "prodigioso = asombroso.",
+            "vulgar = común, sin distinción.",
+            "maravilloso es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a cicatero:\n\nA) mezquino   B) avaro   C) generoso   D) tacaño",
+          "respuesta": "C) generoso",
+          "pasos": [
+            "cicatero = mezquino, tacaño.",
+            "generoso es el antónimo.",
+            "tacaño/avaro son sinónimos."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a falaz:\n\nA) capcioso   B) falso   C) veraz   D) engañoso",
+          "respuesta": "C) veraz",
+          "pasos": [
+            "falaz = engañoso.",
+            "veraz = verdadero, sincero.",
+            "engañoso refuerza falaz."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a pulcro:\n\nA) aseado   B) limpio   C) cuidadoso   D) desaliñado",
+          "respuesta": "D) desaliñado",
+          "pasos": [
+            "pulcro = muy limpio / cuidadoso.",
+            "desaliñado = desordenado, sucio de porte.",
+            "aseado es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a venal:\n\nA) mercenario   B) corruptible   C) íntegro   D) sobornable",
+          "respuesta": "C) íntegro",
+          "pasos": [
+            "venal = sobornable.",
+            "íntegro = incorruptible.",
+            "sobornable es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a díscolo:\n\nA) rebelde   B) indócil   C) suspicaz   D) obediente",
+          "respuesta": "D) obediente",
+          "pasos": [
+            "díscolo = rebelde, indócil.",
+            "obediente es el antónimo.",
+            "rebelde es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a nescio:\n\nA) ignorante   B) necio   C) iletrado   D) sabio",
+          "respuesta": "D) sabio",
+          "pasos": [
+            "nescio = ignorante.",
+            "sabio es el antónimo.",
+            "ignorante/necio son sinónimos."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a beato:\n\nA) santurrón   B) impío   C) devoto   D) piadoso",
+          "respuesta": "B) impío",
+          "pasos": [
+            "beato = muy piadoso (a veces hipócrita).",
+            "impío = sin piedad religiosa.",
+            "devoto es cercano, no opuesto."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a pródigo:\n\nA) avaro   B) derrochador   C) generoso   D) espléndido",
+          "respuesta": "A) avaro",
+          "pasos": [
+            "pródigo = que gasta en exceso.",
+            "avaro = que retiene con exceso.",
+            "derrochador es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a ubérrimo:\n\nA) fértil   B) fecundo   C) abundante   D) estéril",
+          "respuesta": "D) estéril",
+          "pasos": [
+            "ubérrimo = muy fértil.",
+            "estéril = sin fruto.",
+            "fértil/fecundo son sinónimos."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a candoroso:\n\nA) malicioso   B) ingenuo   C) franco   D) sincero",
+          "respuesta": "A) malicioso",
+          "pasos": [
+            "candoroso = ingenuo, sin malicia.",
+            "malicioso = con malicia.",
+            "ingenuo es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a loable:\n\nA) encomiable   B) censurable   C) laudable   D) admirable",
+          "respuesta": "B) censurable",
+          "pasos": [
+            "loable = digno de elogio.",
+            "censurable = digno de crítica.",
+            "laudable es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a infausto:\n\nA) desgraciado   B) aciago   C) funesto   D) venturoso",
+          "respuesta": "D) venturoso",
+          "pasos": [
+            "infausto = de mal agüero.",
+            "venturoso = afortunado.",
+            "aciago/funesto son sinónimos."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a pusilánime:\n\nA) apocado   B) osado   C) cobarde   D) miedoso",
+          "respuesta": "B) osado",
+          "pasos": [
+            "pusilánime = sin valor.",
+            "osado = atrevido.",
+            "cobarde es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a lacónico:\n\nA) verboso   B) conciso   C) breve   D) escueto",
+          "respuesta": "A) verboso",
+          "pasos": [
+            "lacónico = de pocas palabras.",
+            "verboso = de muchas palabras.",
+            "conciso es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a efímero:\n\nA) momentáneo   B) perenne   C) pasajero   D) fugaz",
+          "respuesta": "B) perenne",
+          "pasos": [
+            "efímero = breve.",
+            "perenne = duradero / continuo.",
+            "pasajero es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a ávido:\n\nA) deseoso   B) hastiado   C) ansioso   D) codicioso",
+          "respuesta": "B) hastiado",
+          "pasos": [
+            "ávido = con ganas fuertes.",
+            "hastiado = harto, sin ganas.",
+            "ansioso es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a pérfido:\n\nA) traicionero   B) desleal   C) falso   D) leal",
+          "respuesta": "D) leal",
+          "pasos": [
+            "pérfido = traidor.",
+            "leal es el antónimo.",
+            "traicionero es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a prolijo:\n\nA) verboso   B) conciso   C) extenso   D) dilatado",
+          "respuesta": "B) conciso",
+          "pasos": [
+            "prolijo = demasiado largo.",
+            "conciso = breve.",
+            "extenso es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a recalcitrante:\n\nA) obstinado   B) terco   C) contumaz   D) dócil",
+          "respuesta": "D) dócil",
+          "pasos": [
+            "recalcitrante = terco en resistir.",
+            "dócil = fácil de guiar.",
+            "obstinado es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a abyecto:\n\nA) despreciable   B) noble   C) vil   D) ruin",
+          "respuesta": "B) noble",
+          "pasos": [
+            "abyecto = vil.",
+            "noble es el antónimo.",
+            "vil es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a nimio:\n\nA) trascendental   B) insignificante   C) baladí   D) trivial",
+          "respuesta": "A) trascendental",
+          "pasos": [
+            "nimio = sin importancia.",
+            "trascendental = de gran importancia.",
+            "trivial es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a imberbe:\n\nA) jovenzuelo   B) rasurado   C) barbado   D) lampiño",
+          "respuesta": "C) barbado",
+          "pasos": [
+            "imberbe = sin barba.",
+            "barbado = con barba.",
+            "lampiño es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a taimado:\n\nA) astuto   B) candoroso   C) ladino   D) artero",
+          "respuesta": "B) candoroso",
+          "pasos": [
+            "taimado = astuto con dolo.",
+            "candoroso = sin malicia.",
+            "ladino es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a hirsuto:\n\nA) erizado   B) velludo   C) lampiño   D) peludo",
+          "respuesta": "C) lampiño",
+          "pasos": [
+            "hirsuto = muy peludo.",
+            "lampiño = sin vello.",
+            "peludo es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a iracundo:\n\nA) colérico   B) furioso   C) airado   D) apacible",
+          "respuesta": "D) apacible",
+          "pasos": [
+            "iracundo = iracundo de genio.",
+            "apacible = tranquilo.",
+            "colérico es sinónimo."
+          ]
+        },
+        {
+          "enunciado": "opción más opuesta a perentorio:\n\nA) inmediato   B) aplazable   C) urgente   D) inaplazable",
+          "respuesta": "B) aplazable",
+          "pasos": [
+            "perentorio = que no admite demora.",
+            "aplazable = que se puede diferir.",
+            "urgente es sinónimo."
+          ]
+        },
         {
           "enunciado": "Opción más opuesta a generoso:\n\nA) humilde   B) tacaño   C) rico   D) amable",
           "respuesta": "B) tacaño",

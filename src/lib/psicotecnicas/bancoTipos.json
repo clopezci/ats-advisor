@@ -2078,482 +2078,556 @@
     {
       "id": "problemas-matematicos",
       "nombre": "Problemas matemáticos",
-      "descripcion": "Enunciado con datos. Usa el atajo del tipo (descuento, grifos, obreros…) y comprueba.",
+      "descripcion": "Variedad de problemas con atajos: regla de 3 directa/inversa, %, promedios, interés, geometría…",
       "items": [
         {
-          "enunciado": "Un artículo vale $50.000. Con 10% de descuento. ¿cuánto pagas?\n\nA) 50.000   B) 45.000   C) 5.000   D) 45.000",
-          "respuesta": "B) 45.000",
+          "enunciado": "Un artículo vale $50.000. Con 10% de descuento. ¿cuánto pagas?\n\nA) 45.000   B) 40.000   C) 55.000   D) 5.000",
+          "respuesta": "A) 45.000",
           "pasos": [
-            "10% de 50.000: divide entre 10 → 5.000.",
-            "Restas el descuento del precio: 50.000 − 5.000 = 45.000.",
-            "Respuesta: $45.000 (el % se resta, no se suma)."
+            "10% de 50.000: ÷10 → 5.000.",
+            "Pagas: 50.000 − 5.000 = 45.000.",
+            "Respuesta: $45.000."
           ]
         },
         {
-          "enunciado": "Recorres 4 km en 40 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 7   B) 8   C) 5   D) 6",
-          "respuesta": "D) 6",
+          "enunciado": "Un artículo vale $80.000. Con 25% de descuento. ¿cuánto pagas?\n\nA) 60.000   B) 20.000   C) 75.000   D) 55.000",
+          "respuesta": "A) 60.000",
           "pasos": [
-            "Es regla de 3 directa: más tiempo → más kilómetros (al mismo ritmo).",
-            "Tabla mental: 40 min → 4 km; 60 min → ¿? km.",
-            "Directa: multiplica en cruz y divide. (? × 40) = 4 × 60.",
+            "25% = ÷4: 80.000 ÷ 4 = 20.000.",
+            "Pagas: 80.000 − 20.000 = 60.000.",
+            "Respuesta: $60.000."
+          ]
+        },
+        {
+          "enunciado": "Recorres 4 km en 40 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 6   B) 4   C) 8   D) 5",
+          "respuesta": "A) 6",
+          "pasos": [
+            "Regla de 3 directa: más tiempo → más km.",
+            "40 min → 4 km; 60 min → ¿?",
             "?= (4 × 60) ÷ 40 = 6 km.",
             "Respuesta: 6 km."
           ]
         },
         {
-          "enunciado": "A llena en 6 h y B en 8 h. ¿Cuánto tardan juntas?\n\nA) 6   B) 1   C) 3.43   D) 3",
-          "respuesta": "C) 3.43",
+          "enunciado": "Recorres 3 km en 30 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 6   B) 3   C) 9   D) 5",
+          "respuesta": "A) 6",
           "pasos": [
-            "Aquí no es una regla de 3 de una sola magnitud: son dos ritmos que se suman.",
-            "Atajo de grifos/personas: tiempo juntas = (A × B) ÷ (A + B).",
-            "6 × 8 = 48; 6 + 8 = 14.",
-            "48 ÷ 14 = 3,43 h.",
-            "Comprueba la lógica: juntas van más rápido → el tiempo debe ser menor que 6 h."
-          ]
-        },
-        {
-          "enunciado": "Reparten $90.000 en partes 2. 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 30.000   B) 40.000   C) 20.000   D) 30.000",
-          "respuesta": "A) 30.000",
-          "pasos": [
-            "No es regla de 3: es reparto proporcional (partes).",
-            "Partes 2 + 3 + 4 = 9 partes en total.",
-            "Una parte = 90.000 ÷ 9 = 10.000.",
-            "A quien le tocan 3 partes: 10.000 × 3 = 30.000.",
-            "Respuesta: $30.000."
-          ]
-        },
-        {
-          "enunciado": "Si 10 obreros terminan en 8 días, ¿cuántos días tardan 14 (mismo ritmo)?\n\nA) 8   B) 8   C) 6   D) 5",
-          "respuesta": "D) 5",
-          "pasos": [
-            "Es regla de 3 inversa: más obreros → menos días (el trabajo es el mismo).",
-            "Cómo se nota: si sube una magnitud, la otra baja → se invierte al armar la cuenta.",
-            "Tabla: 10 obreros → 8 días; 14 obreros → ¿? días.",
-            "Inversa: el nuevo tiempo = días × (obreros viejos ÷ obreros nuevos).",
-            "?= 8 × (10 ÷ 14) = 8 × 0,71 = 5,71 días.",
-            "Sale 5,71; en opciones enteras eligen 5 (días completos)."
-          ]
-        },
-        {
-          "enunciado": "Un tren de 150 m pasa un poste en 6 s. ¿Velocidad en m/s?\n\nA) 27   B) 25   C) 15   D) 6",
-          "respuesta": "B) 25",
-          "pasos": [
-            "Al pasar un poste (punto fijo), la distancia que cuenta es solo la longitud del tren.",
-            "Velocidad = metros ÷ segundos: 150 ÷ 6 = 25 m/s.",
-            "Respuesta: 25 m/s.",
-            "No conviertas a km/h si la pregunta pide m/s."
-          ]
-        },
-        {
-          "enunciado": "Si 8 cuadernos cuestan $44.000. ¿cuánto cuestan 5?\n\nA) 8.800   B) 5.500   C) 27.500   D) 44.000",
-          "respuesta": "C) 27.500",
-          "pasos": [
-            "Es regla de 3 directa: más cuadernos → más plata (mismo precio unitario).",
-            "Tabla: 8 cuadernos → $44.000; 5 cuadernos → ¿?",
-            "Directa: (? × 8) = 5 × 44.000.",
-            "?= (5 × 44.000) ÷ 8 = 27.500.",
-            "O más corto: uno cuesta 5.500; 5 × 5.500 = 27.500.",
-            "Respuesta: $27.500."
-          ]
-        },
-        {
-          "enunciado": "Un artículo vale $85.000. Con 25% de descuento. ¿cuánto pagas?\n\nA) 63.750   B) 21.250   C) 80.000   D) 85.000",
-          "respuesta": "A) 63.750",
-          "pasos": [
-            "25% = la cuarta parte: 85.000 ÷ 4 = 21.250.",
-            "Restas el descuento del precio: 85.000 − 21.250 = 63.750.",
-            "Respuesta: $63.750 (el % se resta, no se suma)."
-          ]
-        },
-        {
-          "enunciado": "Recorres 6 km en 50 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 12   B) 7   C) 8   D) 6",
-          "respuesta": "B) 7",
-          "pasos": [
-            "Es regla de 3 directa: más tiempo → más kilómetros (al mismo ritmo).",
-            "Tabla mental: 50 min → 6 km; 60 min → ¿? km.",
-            "Directa: multiplica en cruz y divide. (? × 50) = 6 × 60.",
-            "?= (6 × 60) ÷ 50 = 7,2 km.",
-            "Respuesta: 7,2 km."
-          ]
-        },
-        {
-          "enunciado": "A llena en 8 h y B en 7 h. ¿Cuánto tardan juntas?\n\nA) 3.73   B) 3   C) 8   D) 1",
-          "respuesta": "A) 3.73",
-          "pasos": [
-            "Aquí no es una regla de 3 de una sola magnitud: son dos ritmos que se suman.",
-            "Atajo de grifos/personas: tiempo juntas = (A × B) ÷ (A + B).",
-            "8 × 7 = 56; 8 + 7 = 15.",
-            "56 ÷ 15 = 3,73 h.",
-            "Comprueba la lógica: juntas van más rápido → el tiempo debe ser menor que 7 h."
-          ]
-        },
-        {
-          "enunciado": "Reparten $99.000 en partes 2. 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 33.000   B) 22.000   C) 33.000   D) 44.000",
-          "respuesta": "A) 33.000",
-          "pasos": [
-            "No es regla de 3: es reparto proporcional (partes).",
-            "Partes 2 + 3 + 4 = 9 partes en total.",
-            "Una parte = 99.000 ÷ 9 = 11.000.",
-            "A quien le tocan 3 partes: 11.000 × 3 = 33.000.",
-            "Respuesta: $33.000."
-          ]
-        },
-        {
-          "enunciado": "Si 7 obreros terminan en 11 días, ¿cuántos días tardan 11 (mismo ritmo)?\n\nA) 11   B) 8   C) 7   D) 11",
-          "respuesta": "C) 7",
-          "pasos": [
-            "Es regla de 3 inversa: más obreros → menos días (el trabajo es el mismo).",
-            "Cómo se nota: si sube una magnitud, la otra baja → se invierte al armar la cuenta.",
-            "Tabla: 7 obreros → 11 días; 11 obreros → ¿? días.",
-            "Inversa: el nuevo tiempo = días × (obreros viejos ÷ obreros nuevos).",
-            "?= 11 × (7 ÷ 11) = 11 × 0,64 = 7 días.",
-            "Respuesta: 7 días."
-          ]
-        },
-        {
-          "enunciado": "Un tren de 120 m pasa un poste en 8 s. ¿Velocidad en m/s?\n\nA) 15   B) 12   C) 8   D) 17",
-          "respuesta": "A) 15",
-          "pasos": [
-            "Al pasar un poste (punto fijo), la distancia que cuenta es solo la longitud del tren.",
-            "Velocidad = metros ÷ segundos: 120 ÷ 8 = 15 m/s.",
-            "Respuesta: 15 m/s.",
-            "No conviertas a km/h si la pregunta pide m/s."
-          ]
-        },
-        {
-          "enunciado": "Si 8 cuadernos cuestan $52.000. ¿cuánto cuestan 5?\n\nA) 32.500   B) 52.000   C) 6.500   D) 10.400",
-          "respuesta": "A) 32.500",
-          "pasos": [
-            "Es regla de 3 directa: más cuadernos → más plata (mismo precio unitario).",
-            "Tabla: 8 cuadernos → $52.000; 5 cuadernos → ¿?",
-            "Directa: (? × 8) = 5 × 52.000.",
-            "?= (5 × 52.000) ÷ 8 = 32.500.",
-            "O más corto: uno cuesta 6.500; 5 × 6.500 = 32.500.",
-            "Respuesta: $32.500."
-          ]
-        },
-        {
-          "enunciado": "Un artículo vale $70.000. Con 20% de descuento. ¿cuánto pagas?\n\nA) 65.000   B) 70.000   C) 14.000   D) 56.000",
-          "respuesta": "D) 56.000",
-          "pasos": [
-            "10% = 7.000; 20% = el doble → 14.000.",
-            "Restas el descuento del precio: 70.000 − 14.000 = 56.000.",
-            "Respuesta: $56.000 (el % se resta, no se suma)."
-          ]
-        },
-        {
-          "enunciado": "Recorres 3 km en 30 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 5   B) 7   C) 6   D) 6",
-          "respuesta": "C) 6",
-          "pasos": [
-            "Es regla de 3 directa: más tiempo → más kilómetros (al mismo ritmo).",
-            "Tabla mental: 30 min → 3 km; 60 min → ¿? km.",
-            "Directa: multiplica en cruz y divide. (? × 30) = 3 × 60.",
+            "Regla de 3 directa: más tiempo → más km.",
+            "30 min → 3 km; 60 min → ¿?",
             "?= (3 × 60) ÷ 30 = 6 km.",
             "Respuesta: 6 km."
           ]
         },
         {
-          "enunciado": "A llena en 5 h y B en 6 h. ¿Cuánto tardan juntas?\n\nA) 2.73   B) 1   C) 3   D) 5",
-          "respuesta": "A) 2.73",
+          "enunciado": "A llena en 6 h y B en 8 h. ¿Cuánto tardan juntas?\n\nA) 3,43   B) 6   C) 7   D) 2",
+          "respuesta": "A) 3,43",
           "pasos": [
-            "Aquí no es una regla de 3 de una sola magnitud: son dos ritmos que se suman.",
-            "Atajo de grifos/personas: tiempo juntas = (A × B) ÷ (A + B).",
-            "5 × 6 = 30; 5 + 6 = 11.",
-            "30 ÷ 11 = 2,73 h.",
-            "Comprueba la lógica: juntas van más rápido → el tiempo debe ser menor que 5 h."
+            "Dos ritmos que se suman (no es regla de 3 simple).",
+            "Atajo: tiempo juntas = (A × B) ÷ (A + B).",
+            "6 × 8 = 48; 6 + 8 = 14.",
+            "48 ÷ 14 = 3,43 h.",
+            "Debe salir menos que 6 h."
           ]
         },
         {
-          "enunciado": "Reparten $108.000 en partes 2. 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 24.000   B) 48.000   C) 36.000   D) 36.000",
-          "respuesta": "C) 36.000",
+          "enunciado": "A llena en 4 h y B en 12 h. ¿Cuánto tardan juntas?\n\nA) 3   B) 4   C) 8   D) 2",
+          "respuesta": "A) 3",
           "pasos": [
-            "No es regla de 3: es reparto proporcional (partes).",
-            "Partes 2 + 3 + 4 = 9 partes en total.",
-            "Una parte = 108.000 ÷ 9 = 12.000.",
-            "A quien le tocan 3 partes: 12.000 × 3 = 36.000.",
-            "Respuesta: $36.000."
+            "Dos ritmos que se suman (no es regla de 3 simple).",
+            "Atajo: tiempo juntas = (A × B) ÷ (A + B).",
+            "4 × 12 = 48; 4 + 12 = 16.",
+            "48 ÷ 16 = 3 h.",
+            "Debe salir menos que 4 h."
           ]
         },
         {
-          "enunciado": "Si 9 obreros terminan en 10 días, ¿cuántos días tardan 13 (mismo ritmo)?\n\nA) 10   B) 7   C) 6   D) 10",
-          "respuesta": "C) 6",
+          "enunciado": "Reparten $90.000 en partes 2, 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 30.000   B) 20.000   C) 40.000   D) 10.000",
+          "respuesta": "A) 30.000",
           "pasos": [
-            "Es regla de 3 inversa: más obreros → menos días (el trabajo es el mismo).",
-            "Cómo se nota: si sube una magnitud, la otra baja → se invierte al armar la cuenta.",
-            "Tabla: 9 obreros → 10 días; 13 obreros → ¿? días.",
-            "Inversa: el nuevo tiempo = días × (obreros viejos ÷ obreros nuevos).",
-            "?= 10 × (9 ÷ 13) = 10 × 0,69 = 6,92 días.",
-            "Sale 6,92; en opciones enteras eligen 6 (días completos)."
+            "Reparto proporcional: 2+3+4 = 9 partes.",
+            "Una parte = 90.000 ÷ 9 = 10.000.",
+            "3 partes = 10.000 × 3 = 30.000.",
+            "Respuesta: $30.000."
           ]
         },
         {
-          "enunciado": "Un tren de 210 m pasa un poste en 10 s. ¿Velocidad en m/s?\n\nA) 21   B) 21   C) 10   D) 23",
-          "respuesta": "A) 21",
+          "enunciado": "Reparten $180.000 en partes 2, 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 60.000   B) 40.000   C) 80.000   D) 20.000",
+          "respuesta": "A) 60.000",
           "pasos": [
-            "Al pasar un poste (punto fijo), la distancia que cuenta es solo la longitud del tren.",
-            "Velocidad = metros ÷ segundos: 210 ÷ 10 = 21 m/s.",
-            "Respuesta: 21 m/s.",
-            "No conviertas a km/h si la pregunta pide m/s."
+            "Reparto proporcional: 2+3+4 = 9 partes.",
+            "Una parte = 180.000 ÷ 9 = 20.000.",
+            "3 partes = 20.000 × 3 = 60.000.",
+            "Respuesta: $60.000."
           ]
         },
         {
-          "enunciado": "Si 8 cuadernos cuestan $40.000. ¿cuánto cuestan 5?\n\nA) 25.000   B) 5.000   C) 8.000   D) 40.000",
+          "enunciado": "Si 10 obreros terminan en 8 días, ¿cuántos días tardan 16 (mismo ritmo)?\n\nA) 5   B) 8   C) 10   D) 4",
+          "respuesta": "A) 5",
+          "pasos": [
+            "Regla de 3 inversa: más obreros → menos días.",
+            "10 obreros → 8 días; 16 obreros → ¿?",
+            "Inversa: ?= 8 × (10 ÷ 16) = 5 días.",
+            "Respuesta: 5 días."
+          ]
+        },
+        {
+          "enunciado": "Si 6 obreros terminan en 10 días, ¿cuántos días tardan 12 (mismo ritmo)?\n\nA) 5   B) 6   C) 10   D) 8",
+          "respuesta": "A) 5",
+          "pasos": [
+            "Regla de 3 inversa: más obreros → menos días.",
+            "6 obreros → 10 días; 12 obreros → ¿?",
+            "Inversa: ?= 10 × (6 ÷ 12) = 5 días.",
+            "Respuesta: 5 días."
+          ]
+        },
+        {
+          "enunciado": "Un tren de 150 m pasa un poste en 6 s. ¿Velocidad en m/s?\n\nA) 25   B) 20   C) 30   D) 15",
+          "respuesta": "A) 25",
+          "pasos": [
+            "Poste = punto: la distancia es la longitud del tren.",
+            "v = 150 ÷ 6 = 25 m/s.",
+            "Respuesta: 25 m/s."
+          ]
+        },
+        {
+          "enunciado": "Un tren de 210 m pasa un poste en 7 s. ¿Velocidad en m/s?\n\nA) 30   B) 25   C) 21   D) 35",
+          "respuesta": "A) 30",
+          "pasos": [
+            "Poste = punto: la distancia es la longitud del tren.",
+            "v = 210 ÷ 7 = 30 m/s.",
+            "Respuesta: 30 m/s."
+          ]
+        },
+        {
+          "enunciado": "Si 8 cuadernos cuestan $40.000, ¿cuánto cuestan 5?\n\nA) 25.000   B) 20.000   C) 32.000   D) 8.000",
           "respuesta": "A) 25.000",
           "pasos": [
-            "Es regla de 3 directa: más cuadernos → más plata (mismo precio unitario).",
-            "Tabla: 8 cuadernos → $40.000; 5 cuadernos → ¿?",
-            "Directa: (? × 8) = 5 × 40.000.",
+            "Regla de 3 directa: más cuadernos → más plata.",
+            "8 → $40.000; 5 → ¿?",
             "?= (5 × 40.000) ÷ 8 = 25.000.",
-            "O más corto: uno cuesta 5.000; 5 × 5.000 = 25.000.",
             "Respuesta: $25.000."
           ]
         },
         {
-          "enunciado": "Un artículo vale $55.000. Con 15% de descuento. ¿cuánto pagas?\n\nA) 46.750   B) 50.000   C) 8.250   D) 55.000",
-          "respuesta": "A) 46.750",
+          "enunciado": "Si 10 cuadernos cuestan $60.000, ¿cuánto cuestan 4?\n\nA) 24.000   B) 30.000   C) 15.000   D) 40.000",
+          "respuesta": "A) 24.000",
           "pasos": [
-            "10% = 5.500; 5% = mitad → 2.750; 15% = 5.500 + 2.750 = 8.250.",
-            "Restas el descuento del precio: 55.000 − 8.250 = 46.750.",
-            "Respuesta: $46.750 (el % se resta, no se suma)."
+            "Regla de 3 directa: más cuadernos → más plata.",
+            "10 → $60.000; 4 → ¿?",
+            "?= (4 × 60.000) ÷ 10 = 24.000.",
+            "Respuesta: $24.000."
           ]
         },
         {
-          "enunciado": "Recorres 5 km en 40 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 7   B) 8   C) 10   D) 6",
-          "respuesta": "A) 7",
+          "enunciado": "Las notas 3, 4 y 5. ¿Promedio?\n\nA) 4   B) 3   C) 5   D) 12",
+          "respuesta": "A) 4",
           "pasos": [
-            "Es regla de 3 directa: más tiempo → más kilómetros (al mismo ritmo).",
-            "Tabla mental: 40 min → 5 km; 60 min → ¿? km.",
-            "Directa: multiplica en cruz y divide. (? × 40) = 5 × 60.",
-            "?= (5 × 60) ÷ 40 = 7,5 km.",
-            "Respuesta: 7,5 km."
+            "Promedio = suma ÷ cantidad.",
+            "Suma: 3 + 4 + 5 = 12.",
+            "Hay 3 notas → 12 ÷ 3 = 4.",
+            "Respuesta: 4."
           ]
         },
         {
-          "enunciado": "A llena en 7 h y B en 9 h. ¿Cuánto tardan juntas?\n\nA) 7   B) 3   C) 3.94   D) 1",
-          "respuesta": "C) 3.94",
+          "enunciado": "Las notas 2, 4, 4 y 6. ¿Promedio?\n\nA) 4   B) 3   C) 5   D) 16",
+          "respuesta": "A) 4",
           "pasos": [
-            "Aquí no es una regla de 3 de una sola magnitud: son dos ritmos que se suman.",
-            "Atajo de grifos/personas: tiempo juntas = (A × B) ÷ (A + B).",
-            "7 × 9 = 63; 7 + 9 = 16.",
-            "63 ÷ 16 = 3,94 h.",
-            "Comprueba la lógica: juntas van más rápido → el tiempo debe ser menor que 7 h."
+            "Promedio = suma ÷ cantidad.",
+            "Suma: 2 + 4 + 4 + 6 = 16.",
+            "Hay 4 notas → 16 ÷ 4 = 4.",
+            "Respuesta: 4."
           ]
         },
         {
-          "enunciado": "Reparten $90.000 en partes 2. 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 20.000   B) 30.000   C) 30.000   D) 40.000",
-          "respuesta": "B) 30.000",
+          "enunciado": "Interés simple: $100.000 al 10% anual por 2 años. ¿Interés?\n\nA) 20.000   B) 10.000   C) 120.000   D) 2.000",
+          "respuesta": "A) 20.000",
           "pasos": [
-            "No es regla de 3: es reparto proporcional (partes).",
-            "Partes 2 + 3 + 4 = 9 partes en total.",
-            "Una parte = 90.000 ÷ 9 = 10.000.",
-            "A quien le tocan 3 partes: 10.000 × 3 = 30.000.",
-            "Respuesta: $30.000."
+            "Interés simple: I = capital × % × años ÷ 100.",
+            "10% de 100.000 (1 año) = 10.000.",
+            "Por 2 años: 10.000 × 2 = 20.000.",
+            "Respuesta: $20.000 (solo el interés)."
           ]
         },
         {
-          "enunciado": "Si 6 obreros terminan en 9 días, ¿cuántos días tardan 10 (mismo ritmo)?\n\nA) 9   B) 9   C) 5   D) 6",
-          "respuesta": "C) 5",
+          "enunciado": "Interés simple: $200.000 al 5% anual por 3 años. ¿Interés?\n\nA) 30.000   B) 15.000   C) 10.000   D) 60.000",
+          "respuesta": "A) 30.000",
           "pasos": [
-            "Es regla de 3 inversa: más obreros → menos días (el trabajo es el mismo).",
-            "Cómo se nota: si sube una magnitud, la otra baja → se invierte al armar la cuenta.",
-            "Tabla: 6 obreros → 9 días; 10 obreros → ¿? días.",
-            "Inversa: el nuevo tiempo = días × (obreros viejos ÷ obreros nuevos).",
-            "?= 9 × (6 ÷ 10) = 9 × 0,6 = 5,4 días.",
-            "Sale 5,4; en opciones enteras eligen 5 (días completos)."
+            "Interés simple: I = capital × % × años ÷ 100.",
+            "5% de 200.000 (1 año) = 10.000.",
+            "Por 3 años: 10.000 × 3 = 30.000.",
+            "Respuesta: $30.000 (solo el interés)."
           ]
         },
         {
-          "enunciado": "Un tren de 180 m pasa un poste en 7 s. ¿Velocidad en m/s?\n\nA) 25   B) 27   C) 7   D) 18",
-          "respuesta": "A) 25",
+          "enunciado": "Un sueldo de $2.000.000 sube 10%. ¿Nuevo sueldo?\n\nA) 2.200.000   B) 200.000   C) 1.800.000   D) 2.100.000",
+          "respuesta": "A) 2.200.000",
           "pasos": [
-            "Al pasar un poste (punto fijo), la distancia que cuenta es solo la longitud del tren.",
-            "Velocidad = metros ÷ segundos: 180 ÷ 7 = 25,71 m/s.",
-            "En opciones enteras: 25 m/s (aprox. del cálculo).",
-            "No conviertas a km/h si la pregunta pide m/s."
+            "Aumento %: calculas el % y lo sumas al sueldo.",
+            "10% de 2.000.000 = 200.000.",
+            "Nuevo = 2.000.000 + 200.000 = 2.200.000.",
+            "Respuesta: $2.200.000."
           ]
         },
         {
-          "enunciado": "Si 8 cuadernos cuestan $48.000. ¿cuánto cuestan 5?\n\nA) 9.600   B) 6.000   C) 48.000   D) 30.000",
-          "respuesta": "D) 30.000",
+          "enunciado": "Un sueldo de $1.500.000 sube 20%. ¿Nuevo sueldo?\n\nA) 1.800.000   B) 300.000   C) 1.200.000   D) 1.700.000",
+          "respuesta": "A) 1.800.000",
           "pasos": [
-            "Es regla de 3 directa: más cuadernos → más plata (mismo precio unitario).",
-            "Tabla: 8 cuadernos → $48.000; 5 cuadernos → ¿?",
-            "Directa: (? × 8) = 5 × 48.000.",
-            "?= (5 × 48.000) ÷ 8 = 30.000.",
-            "O más corto: uno cuesta 6.000; 5 × 6.000 = 30.000.",
-            "Respuesta: $30.000."
+            "Aumento %: calculas el % y lo sumas al sueldo.",
+            "20% de 1.500.000 = 300.000.",
+            "Nuevo = 1.500.000 + 300.000 = 1.800.000.",
+            "Respuesta: $1.800.000."
           ]
         },
         {
-          "enunciado": "Un artículo vale $90.000. Con 10% de descuento. ¿cuánto pagas?\n\nA) 9.000   B) 81.000   C) 90.000   D) 85.000",
-          "respuesta": "B) 81.000",
+          "enunciado": "Rectángulo 8 m × 5 m. ¿Perímetro?\n\nA) 26   B) 40   C) 13   D) 20",
+          "respuesta": "A) 26",
           "pasos": [
-            "10% de 90.000: divide entre 10 → 9.000.",
-            "Restas el descuento del precio: 90.000 − 9.000 = 81.000.",
-            "Respuesta: $81.000 (el % se resta, no se suma)."
+            "Perímetro del rectángulo = 2 × (largo + ancho).",
+            "Largo + ancho = 8 + 5 = 13.",
+            "×2 → 26 m.",
+            "Respuesta: 26."
           ]
         },
         {
-          "enunciado": "Recorres 7 km en 50 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 9   B) 14   C) 8   D) 7",
-          "respuesta": "C) 8",
+          "enunciado": "Rectángulo 12 m × 3 m. ¿Perímetro?\n\nA) 30   B) 36   C) 15   D) 24",
+          "respuesta": "A) 30",
           "pasos": [
-            "Es regla de 3 directa: más tiempo → más kilómetros (al mismo ritmo).",
-            "Tabla mental: 50 min → 7 km; 60 min → ¿? km.",
-            "Directa: multiplica en cruz y divide. (? × 50) = 7 × 60.",
-            "?= (7 × 60) ÷ 50 = 8,4 km.",
-            "Respuesta: 8,4 km."
+            "Perímetro del rectángulo = 2 × (largo + ancho).",
+            "Largo + ancho = 12 + 3 = 15.",
+            "×2 → 30 m.",
+            "Respuesta: 30."
           ]
         },
         {
-          "enunciado": "A llena en 4 h y B en 8 h. ¿Cuánto tardan juntas?\n\nA) 1   B) 2.67   C) 4   D) 3",
-          "respuesta": "B) 2.67",
+          "enunciado": "Cuadrado de lado 6. ¿Área?\n\nA) 36   B) 24   C) 12   D) 18",
+          "respuesta": "A) 36",
           "pasos": [
-            "Aquí no es una regla de 3 de una sola magnitud: son dos ritmos que se suman.",
-            "Atajo de grifos/personas: tiempo juntas = (A × B) ÷ (A + B).",
-            "4 × 8 = 32; 4 + 8 = 12.",
-            "32 ÷ 12 = 2,67 h.",
-            "Comprueba la lógica: juntas van más rápido → el tiempo debe ser menor que 4 h."
+            "Área del cuadrado = lado × lado.",
+            "6 × 6 = 36.",
+            "Respuesta: 36."
           ]
         },
         {
-          "enunciado": "Reparten $99.000 en partes 2. 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 22.000   B) 44.000   C) 33.000   D) 33.000",
-          "respuesta": "C) 33.000",
+          "enunciado": "Cuadrado de lado 9. ¿Área?\n\nA) 81   B) 36   C) 18   D) 27",
+          "respuesta": "A) 81",
           "pasos": [
-            "No es regla de 3: es reparto proporcional (partes).",
-            "Partes 2 + 3 + 4 = 9 partes en total.",
-            "Una parte = 99.000 ÷ 9 = 11.000.",
-            "A quien le tocan 3 partes: 11.000 × 3 = 33.000.",
-            "Respuesta: $33.000."
+            "Área del cuadrado = lado × lado.",
+            "9 × 9 = 81.",
+            "Respuesta: 81."
           ]
         },
         {
-          "enunciado": "Si 8 obreros terminan en 8 días, ¿cuántos días tardan 12 (mismo ritmo)?\n\nA) 5   B) 8   C) 6   D) 8",
+          "enunciado": "Suma 1 a 10. ¿Resultado?\n\nA) 55   B) 45   C) 50   D) 100",
+          "respuesta": "A) 55",
+          "pasos": [
+            "Atajo: suma 1…n = n × (n+1) ÷ 2.",
+            "10 × 11 = 110.",
+            "110 ÷ 2 = 55.",
+            "Respuesta: 55."
+          ]
+        },
+        {
+          "enunciado": "Suma 1 a 20. ¿Resultado?\n\nA) 210   B) 200   C) 190   D) 220",
+          "respuesta": "A) 210",
+          "pasos": [
+            "Atajo: suma 1…n = n × (n+1) ÷ 2.",
+            "20 × 21 = 420.",
+            "420 ÷ 2 = 210.",
+            "Respuesta: 210."
+          ]
+        },
+        {
+          "enunciado": "Dos trenes a 60 y 40 km/h se acercan desde 200 km. ¿En cuántas horas se encuentran?\n\nA) 2   B) 4   C) 5   D) 3",
+          "respuesta": "A) 2",
+          "pasos": [
+            "Se acercan: sumas velocidades (regla de encuentro).",
+            "Velocidad relativa = 60 + 40 = 100 km/h.",
+            "Tiempo = distancia ÷ relativa = 200 ÷ 100 = 2 h.",
+            "Respuesta: 2."
+          ]
+        },
+        {
+          "enunciado": "Dos trenes a 50 y 30 km/h se acercan desde 160 km. ¿En cuántas horas se encuentran?\n\nA) 2   B) 3   C) 4   D) 5",
+          "respuesta": "A) 2",
+          "pasos": [
+            "Se acercan: sumas velocidades (regla de encuentro).",
+            "Velocidad relativa = 50 + 30 = 80 km/h.",
+            "Tiempo = distancia ÷ relativa = 160 ÷ 80 = 2 h.",
+            "Respuesta: 2."
+          ]
+        },
+        {
+          "enunciado": "A llena en 6 h y B vacía en 12 h. ¿Cuánto tardan para llenar el tanque juntas?\n\nA) 12   B) 6   C) 9   D) 4",
+          "respuesta": "A) 12",
+          "pasos": [
+            "Uno llena y otro vacía: restas ritmos.",
+            "Atajo: tiempo = (A × B) ÷ (B − A) si B > A (vacía más lento que llena).",
+            "6 × 12 = 72; 12 − 6 = 6.",
+            "72 ÷ 6 = 12 h.",
+            "Respuesta: 12."
+          ]
+        },
+        {
+          "enunciado": "A llena en 5 h y B vacía en 20 h. ¿Cuánto tardan para llenar el tanque juntas?\n\nA) 6,67   B) 5   C) 4   D) 10",
+          "respuesta": "A) 6,67",
+          "pasos": [
+            "Uno llena y otro vacía: restas ritmos.",
+            "Atajo: tiempo = (A × B) ÷ (B − A) si B > A (vacía más lento que llena).",
+            "5 × 20 = 100; 20 − 5 = 15.",
+            "100 ÷ 15 = 6,67 h.",
+            "Respuesta: 6,67."
+          ]
+        },
+        {
+          "enunciado": "Lee 20 pág/h. ¿Cuántas páginas en 3,5 h?\n\nA) 70   B) 60   C) 23,5   D) 40",
+          "respuesta": "A) 70",
+          "pasos": [
+            "Regla de 3 directa: más horas → más páginas.",
+            "20 pág/h × 3,5 h = 70.",
+            "Respuesta: 70."
+          ]
+        },
+        {
+          "enunciado": "Lee 15 pág/h. ¿Cuántas páginas en 4 h?\n\nA) 60   B) 45   C) 19   D) 30",
+          "respuesta": "A) 60",
+          "pasos": [
+            "Regla de 3 directa: más horas → más páginas.",
+            "15 pág/h × 4 h = 60.",
+            "Respuesta: 60."
+          ]
+        },
+        {
+          "enunciado": "1 USD = 4.000 COP. ¿Cuántos USD con 20.000 COP?\n\nA) 5   B) 4   C) 8   D) 2",
           "respuesta": "A) 5",
           "pasos": [
-            "Es regla de 3 inversa: más obreros → menos días (el trabajo es el mismo).",
-            "Cómo se nota: si sube una magnitud, la otra baja → se invierte al armar la cuenta.",
-            "Tabla: 8 obreros → 8 días; 12 obreros → ¿? días.",
-            "Inversa: el nuevo tiempo = días × (obreros viejos ÷ obreros nuevos).",
-            "?= 8 × (8 ÷ 12) = 8 × 0,67 = 5,33 días.",
-            "Sale 5,33; en opciones enteras eligen 5 (días completos)."
+            "Regla de 3 directa: más COP → más USD.",
+            "1 USD = $4.000 COP; ¿cuántos USD con $20.000?",
+            "?= 20.000 ÷ 4.000 = 5.",
+            "Respuesta: 5."
           ]
         },
         {
-          "enunciado": "Un tren de 150 m pasa un poste en 9 s. ¿Velocidad en m/s?\n\nA) 15   B) 16   C) 18   D) 9",
-          "respuesta": "B) 16",
+          "enunciado": "1 USD = 4.000 COP. ¿Cuántos USD con 12.000 COP?\n\nA) 3   B) 4   C) 2   D) 6",
+          "respuesta": "A) 3",
           "pasos": [
-            "Al pasar un poste (punto fijo), la distancia que cuenta es solo la longitud del tren.",
-            "Velocidad = metros ÷ segundos: 150 ÷ 9 = 16,67 m/s.",
-            "En opciones enteras: 16 m/s (aprox. del cálculo).",
-            "No conviertas a km/h si la pregunta pide m/s."
+            "Regla de 3 directa: más COP → más USD.",
+            "1 USD = $4.000 COP; ¿cuántos USD con $12.000?",
+            "?= 12.000 ÷ 4.000 = 3.",
+            "Respuesta: 3."
           ]
         },
         {
-          "enunciado": "Si 8 cuadernos cuestan $56.000. ¿cuánto cuestan 5?\n\nA) 56.000   B) 11.200   C) 7.000   D) 35.000",
-          "respuesta": "D) 35.000",
+          "enunciado": "Al dividir 50 por 7 el resto es:\n\nA) 1   B) 7   C) 0   D) 5",
+          "respuesta": "A) 1",
           "pasos": [
-            "Es regla de 3 directa: más cuadernos → más plata (mismo precio unitario).",
-            "Tabla: 8 cuadernos → $56.000; 5 cuadernos → ¿?",
-            "Directa: (? × 8) = 5 × 56.000.",
-            "?= (5 × 56.000) ÷ 8 = 35.000.",
-            "O más corto: uno cuesta 7.000; 5 × 7.000 = 35.000.",
-            "Respuesta: $35.000."
+            "División con resto: 50 = 7 × cociente + resto.",
+            "7 cabe 7 veces: 7 × 7 = 49.",
+            "Resto = 50 − 49 = 1.",
+            "Respuesta: 1."
           ]
         },
         {
-          "enunciado": "Un artículo vale $75.000. Con 25% de descuento. ¿cuánto pagas?\n\nA) 18.750   B) 70.000   C) 75.000   D) 56.250",
-          "respuesta": "D) 56.250",
+          "enunciado": "Al dividir 100 por 9 el resto es:\n\nA) 1   B) 9   C) 11   D) 0",
+          "respuesta": "A) 1",
           "pasos": [
-            "25% = la cuarta parte: 75.000 ÷ 4 = 18.750.",
-            "Restas el descuento del precio: 75.000 − 18.750 = 56.250.",
-            "Respuesta: $56.250 (el % se resta, no se suma)."
+            "División con resto: 100 = 9 × cociente + resto.",
+            "9 cabe 11 veces: 9 × 11 = 99.",
+            "Resto = 100 − 99 = 1.",
+            "Respuesta: 1."
           ]
         },
         {
-          "enunciado": "Recorres 4 km en 30 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 9   B) 7   C) 8   D) 8",
-          "respuesta": "C) 8",
+          "enunciado": "Compra a $40.000 y vende a $50.000. ¿% de ganancia?\n\nA) 25   B) 10   C) 20   D) 50",
+          "respuesta": "A) 25",
           "pasos": [
-            "Es regla de 3 directa: más tiempo → más kilómetros (al mismo ritmo).",
-            "Tabla mental: 30 min → 4 km; 60 min → ¿? km.",
-            "Directa: multiplica en cruz y divide. (? × 30) = 4 × 60.",
-            "?= (4 × 60) ÷ 30 = 8 km.",
-            "Respuesta: 8 km."
+            "% de ganancia = (ganancia ÷ costo) × 100.",
+            "Ganancia = 50.000 − 40.000 = 10.000.",
+            "(10.000 ÷ 40.000) × 100 = 25%.",
+            "Respuesta: 25."
           ]
         },
         {
-          "enunciado": "A llena en 6 h y B en 7 h. ¿Cuánto tardan juntas?\n\nA) 1   B) 3   C) 6   D) 3.23",
-          "respuesta": "D) 3.23",
+          "enunciado": "Compra a $80.000 y vende a $100.000. ¿% de ganancia?\n\nA) 25   B) 20   C) 80   D) 12,5",
+          "respuesta": "A) 25",
           "pasos": [
-            "Aquí no es una regla de 3 de una sola magnitud: son dos ritmos que se suman.",
-            "Atajo de grifos/personas: tiempo juntas = (A × B) ÷ (A + B).",
-            "6 × 7 = 42; 6 + 7 = 13.",
-            "42 ÷ 13 = 3,23 h.",
-            "Comprueba la lógica: juntas van más rápido → el tiempo debe ser menor que 6 h."
+            "% de ganancia = (ganancia ÷ costo) × 100.",
+            "Ganancia = 100.000 − 80.000 = 20.000.",
+            "(20.000 ÷ 80.000) × 100 = 25%.",
+            "Respuesta: 25."
           ]
         },
         {
-          "enunciado": "Reparten $108.000 en partes 2. 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 24.000   B) 36.000   C) 48.000   D) 36.000",
-          "respuesta": "B) 36.000",
+          "enunciado": "2 h 15 min en minutos. ¿Cuántos?\n\nA) 135   B) 215   C) 75   D) 150",
+          "respuesta": "A) 135",
           "pasos": [
-            "No es regla de 3: es reparto proporcional (partes).",
-            "Partes 2 + 3 + 4 = 9 partes en total.",
-            "Una parte = 108.000 ÷ 9 = 12.000.",
-            "A quien le tocan 3 partes: 12.000 × 3 = 36.000.",
-            "Respuesta: $36.000."
+            "1 hora = 60 minutos.",
+            "2 h → 2 × 60 = 120 min.",
+            "Suma los 15 min: 120 + 15 = 135.",
+            "Respuesta: 135."
           ]
         },
         {
-          "enunciado": "Si 10 obreros terminan en 11 días, ¿cuántos días tardan 14 (mismo ritmo)?\n\nA) 7   B) 11   C) 8   D) 11",
-          "respuesta": "A) 7",
+          "enunciado": "3 h 20 min en minutos. ¿Cuántos?\n\nA) 200   B) 320   C) 180   D) 60",
+          "respuesta": "A) 200",
           "pasos": [
-            "Es regla de 3 inversa: más obreros → menos días (el trabajo es el mismo).",
-            "Cómo se nota: si sube una magnitud, la otra baja → se invierte al armar la cuenta.",
-            "Tabla: 10 obreros → 11 días; 14 obreros → ¿? días.",
-            "Inversa: el nuevo tiempo = días × (obreros viejos ÷ obreros nuevos).",
-            "?= 11 × (10 ÷ 14) = 11 × 0,71 = 7,86 días.",
-            "Sale 7,86; en opciones enteras eligen 7 (días completos)."
+            "1 hora = 60 minutos.",
+            "3 h → 3 × 60 = 180 min.",
+            "Suma los 20 min: 180 + 20 = 200.",
+            "Respuesta: 200."
           ]
         },
         {
-          "enunciado": "Un tren de 120 m pasa un poste en 6 s. ¿Velocidad en m/s?\n\nA) 20   B) 22   C) 6   D) 12",
-          "respuesta": "A) 20",
+          "enunciado": "En mapa 1 cm = 5 km. 8 cm representan:\n\nA) 40   B) 13   C) 5   D) 80",
+          "respuesta": "A) 40",
           "pasos": [
-            "Al pasar un poste (punto fijo), la distancia que cuenta es solo la longitud del tren.",
-            "Velocidad = metros ÷ segundos: 120 ÷ 6 = 20 m/s.",
-            "Respuesta: 20 m/s.",
-            "No conviertas a km/h si la pregunta pide m/s."
+            "Regla de 3 directa: más cm en el mapa → más km reales.",
+            "1 cm → 5 km; 8 cm → ¿?",
+            "?= 8 × 5 = 40 km.",
+            "Respuesta: 40."
           ]
         },
         {
-          "enunciado": "Si 8 cuadernos cuestan $44.000. ¿cuánto cuestan 5?\n\nA) 5.500   B) 27.500   C) 44.000   D) 8.800",
-          "respuesta": "B) 27.500",
+          "enunciado": "En mapa 1 cm = 10 km. 6 cm representan:\n\nA) 60   B) 16   C) 10   D) 6",
+          "respuesta": "A) 60",
           "pasos": [
-            "Es regla de 3 directa: más cuadernos → más plata (mismo precio unitario).",
-            "Tabla: 8 cuadernos → $44.000; 5 cuadernos → ¿?",
-            "Directa: (? × 8) = 5 × 44.000.",
-            "?= (5 × 44.000) ÷ 8 = 27.500.",
-            "O más corto: uno cuesta 5.500; 5 × 5.500 = 27.500.",
-            "Respuesta: $27.500."
+            "Regla de 3 directa: más cm en el mapa → más km reales.",
+            "1 cm → 10 km; 6 cm → ¿?",
+            "?= 6 × 10 = 60 km.",
+            "Respuesta: 60."
           ]
         },
         {
-          "enunciado": "Un artículo vale $60.000. Con 20% de descuento. ¿cuánto pagas?\n\nA) 55.000   B) 12.000   C) 60.000   D) 48.000",
-          "respuesta": "D) 48.000",
+          "enunciado": "4 personas pagan juntos $80.000. ¿Cuánto paga cada una?\n\nA) 20.000   B) 40.000   C) 16.000   D) 80.000",
+          "respuesta": "A) 20.000",
           "pasos": [
-            "10% = 6.000; 20% = el doble → 12.000.",
-            "Restas el descuento del precio: 60.000 − 12.000 = 48.000.",
-            "Respuesta: $48.000 (el % se resta, no se suma)."
+            "Reparto igual: divides el total entre las personas.",
+            "80.000 ÷ 4 = 20.000.",
+            "Respuesta: $20.000."
           ]
         },
         {
-          "enunciado": "Recorres 6 km en 40 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 10   B) 9   C) 12   D) 8",
-          "respuesta": "B) 9",
+          "enunciado": "5 personas pagan juntos $100.000. ¿Cuánto paga cada una?\n\nA) 20.000   B) 25.000   C) 50.000   D) 5.000",
+          "respuesta": "A) 20.000",
           "pasos": [
-            "Es regla de 3 directa: más tiempo → más kilómetros (al mismo ritmo).",
-            "Tabla mental: 40 min → 6 km; 60 min → ¿? km.",
-            "Directa: multiplica en cruz y divide. (? × 40) = 6 × 60.",
-            "?= (6 × 60) ÷ 40 = 9 km.",
-            "Respuesta: 9 km."
+            "Reparto igual: divides el total entre las personas.",
+            "100.000 ÷ 5 = 20.000.",
+            "Respuesta: $20.000."
+          ]
+        },
+        {
+          "enunciado": "Recorren 240 km en 3 h. ¿Velocidad en km/h?\n\nA) 80   B) 240   C) 72   D) 60",
+          "respuesta": "A) 80",
+          "pasos": [
+            "Velocidad = distancia ÷ tiempo.",
+            "240 ÷ 3 = 80 km/h.",
+            "Respuesta: 80."
+          ]
+        },
+        {
+          "enunciado": "Recorren 150 km en 2 h. ¿Velocidad en km/h?\n\nA) 75   B) 150   C) 50   D) 100",
+          "respuesta": "A) 75",
+          "pasos": [
+            "Velocidad = distancia ÷ tiempo.",
+            "150 ÷ 2 = 75 km/h.",
+            "Respuesta: 75."
+          ]
+        },
+        {
+          "enunciado": "3/4 de 80 = ?\n\nA) 60   B) 20   C) 40   D) 75",
+          "respuesta": "A) 60",
+          "pasos": [
+            "Atajo: primero divide entre el denominador, luego multiplica el numerador.",
+            "80 ÷ 4 = 20 (una parte).",
+            "20 × 3 = 60.",
+            "Respuesta: 60."
+          ]
+        },
+        {
+          "enunciado": "2/5 de 100 = ?\n\nA) 40   B) 20   C) 50   D) 25",
+          "respuesta": "A) 40",
+          "pasos": [
+            "Atajo: primero divide entre el denominador, luego multiplica el numerador.",
+            "100 ÷ 5 = 20 (una parte).",
+            "20 × 2 = 40.",
+            "Respuesta: 40."
+          ]
+        },
+        {
+          "enunciado": "Triángulo rectángulo con catetos 3 y 4. ¿Hipotenusa?\n\nA) 5   B) 7   C) 12   D) 6",
+          "respuesta": "A) 5",
+          "pasos": [
+            "Pitágoras: hipotenusa² = cateto² + cateto².",
+            "3² = 9; 4² = 16; suma = 25.",
+            "√25 = 5.",
+            "Respuesta: 5."
+          ]
+        },
+        {
+          "enunciado": "Triángulo rectángulo con catetos 6 y 8. ¿Hipotenusa?\n\nA) 10   B) 14   C) 48   D) 9",
+          "respuesta": "A) 10",
+          "pasos": [
+            "Pitágoras: hipotenusa² = cateto² + cateto².",
+            "6² = 36; 8² = 64; suma = 100.",
+            "√100 = 10.",
+            "Respuesta: 10."
+          ]
+        },
+        {
+          "enunciado": "Tanque 120 L, sale a 15 L/min. ¿Minutos para vaciar?\n\nA) 8   B) 15   C) 120   D) 10",
+          "respuesta": "A) 8",
+          "pasos": [
+            "Tiempo = capacidad ÷ caudal.",
+            "120 ÷ 15 = 8 min.",
+            "Respuesta: 8."
+          ]
+        },
+        {
+          "enunciado": "Tanque 90 L, sale a 10 L/min. ¿Minutos para vaciar?\n\nA) 9   B) 10   C) 90   D) 19",
+          "respuesta": "A) 9",
+          "pasos": [
+            "Tiempo = capacidad ÷ caudal.",
+            "90 ÷ 10 = 9 min.",
+            "Respuesta: 9."
+          ]
+        },
+        {
+          "enunciado": "Hoy Ana tiene 20 y su madre 44. ¿En cuántos años la madre tendrá el doble de la edad de Ana?\n\nA) 4   B) 12   C) 24   D) 8",
+          "respuesta": "A) 4",
+          "pasos": [
+            "En x años: madre = 44+x y hija = 20+x; madre = 2 × hija.",
+            "44 + x = 2 × (20 + x).",
+            "44 + x = 40 + 2x → 44 − 40 = x → x = 4.",
+            "Respuesta: 4."
+          ]
+        },
+        {
+          "enunciado": "Hoy Luis tiene 15 y su padre 40. ¿En cuántos años el padre tendrá el doble de la edad de Luis?\n\nA) 10   B) 5   C) 25   D) 15",
+          "respuesta": "A) 10",
+          "pasos": [
+            "En x años: madre = 40+x y hija = 15+x; madre = 2 × hija.",
+            "40 + x = 2 × (15 + x).",
+            "40 + x = 30 + 2x → 40 − 30 = x → x = 10.",
+            "Respuesta: 10."
+          ]
+        },
+        {
+          "enunciado": "¿Ángulo entre manecillas a las 3?\n\nA) 90   B) 180   C) 45   D) 30",
+          "respuesta": "A) 90",
+          "pasos": [
+            "A las H en punto: cada hora son 30° (360÷12).",
+            "Ángulo = 30 × 3 = 90°.",
+            "El menor entre manecillas es min(90, 270) = 90°.",
+            "Respuesta: 90."
+          ]
+        },
+        {
+          "enunciado": "¿Ángulo entre manecillas a las 6?\n\nA) 180   B) 90   C) 60   D) 120",
+          "respuesta": "A) 180",
+          "pasos": [
+            "A las H en punto: cada hora son 30° (360÷12).",
+            "Ángulo = 30 × 6 = 180°.",
+            "El menor entre manecillas es min(180, 180) = 180°.",
+            "Respuesta: 180."
           ]
         }
       ]

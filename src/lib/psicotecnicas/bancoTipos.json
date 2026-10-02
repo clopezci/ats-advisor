@@ -1134,924 +1134,929 @@
     {
       "id": "calculo-mental",
       "nombre": "Cálculo mental",
-      "descripcion": "Operaciones rápidas: prioriza × ÷ antes que + −.",
+      "descripcion": "Operaciones rápidas con resultado exacto (con decimales si no da entero). Haz × y ÷ primero; en fracciones parte el total y luego multiplica.",
       "items": [
         {
-          "enunciado": "12 ÷ 3 + 4 × 2 = ?\n\nA) 14   B) 19   C) 9   D) 12",
-          "respuesta": "D) 12",
-          "pasos": [
-            "Primero 12÷3=4 y 4×2=8.",
-            "Suma: 4+8=12.",
-            "No sumes de izquierda a derecha sin priorizar × ÷."
-          ]
-        },
-        {
-          "enunciado": "15% de 50 = ?\n\nA) 75   B) 7   C) 9   D) 5",
-          "respuesta": "B) 7",
-          "pasos": [
-            "(15/100)×50 = 7.",
-            "Atajo: 10% de 50=5; escala al 15%.",
-            "Comprueba que el resultado sea menor que la base."
-          ]
-        },
-        {
-          "enunciado": "7² − 5² = ?\n\nA) 35   B) 74   C) 24   D) 4",
-          "respuesta": "C) 24",
-          "pasos": [
-            "7²=49, 5²=25.",
-            "Resta: 24.",
-            "Atajo: (7-5)(7+5)=2×12=24."
-          ]
-        },
-        {
-          "enunciado": "3/4 de 72 = ?\n\nA) 36   B) 54   C) 18   D) 48",
-          "respuesta": "B) 54",
-          "pasos": [
-            "1/4 de 72 = 18.",
-            "3/4 = 3×18 = 54.",
-            "No multipliques 3×4 sobre el total."
-          ]
-        },
-        {
-          "enunciado": "11 × 10 = ?\n\nA) 99   B) 21   C) 121   D) 110",
-          "respuesta": "D) 110",
-          "pasos": [
-            "Producto directo: 11×10=110.",
-            "Si te trabas, descompón: (a×5)+(a×resto).",
-            "Revisa no haber sumado en vez de multiplicar."
-          ]
-        },
-        {
-          "enunciado": "Si 1/5 de un número es 27, el número es:\n\nA) 108   B) 140   C) 135   D) 162",
-          "respuesta": "C) 135",
-          "pasos": [
-            "El entero = 27×5.",
-            "27×5=135.",
-            "Multiplica, no divides otra vez."
-          ]
-        },
-        {
-          "enunciado": "175 × 0,4 = ?\n\nA) 87   B) 43   C) 70   D) 35",
-          "respuesta": "C) 70",
-          "pasos": [
-            "0,4 = 2/5.",
-            "175×2/5 = 70.",
-            "Equivale a tomar el 40%."
-          ]
-        },
-        {
-          "enunciado": "(16 + 6) × 5 = ?\n\nA) 110   B) 27   C) 480   D) 46",
-          "respuesta": "A) 110",
-          "pasos": [
-            "Primero paréntesis: 16+6=22.",
-            "Luego ×5 = 110.",
-            "Sin paréntesis sería distinto: respeta el orden."
-          ]
-        },
-        {
-          "enunciado": "20 ÷ 6 + 6 × 2 = ?\n\nA) 17   B) 15   C) 12   D) 32",
-          "respuesta": "B) 15",
-          "pasos": [
-            "Primero 20÷6=3 y 6×2=12.",
-            "Suma: 3+12=15.",
-            "No sumes de izquierda a derecha sin priorizar × ÷."
-          ]
-        },
-        {
-          "enunciado": "30% de 40 = ?\n\nA) 14   B) 10   C) 120   D) 12",
-          "respuesta": "D) 12",
-          "pasos": [
-            "(30/100)×40 = 12.",
-            "Atajo: 10% de 40=4; escala al 30%.",
-            "Comprueba que el resultado sea menor que la base."
-          ]
-        },
-        {
-          "enunciado": "5² − 6² = ?\n\nA) 1   B) 30   C) 61   D) -11",
-          "respuesta": "D) -11",
-          "pasos": [
-            "5²=25, 6²=36.",
-            "Resta: -11.",
-            "Atajo: (5-6)(5+6)=-1×11=-11."
-          ]
-        },
-        {
-          "enunciado": "3/4 de 88 = ?\n\nA) 22   B) 44   C) 66   D) 58",
-          "respuesta": "C) 66",
-          "pasos": [
-            "1/4 de 88 = 22.",
-            "3/4 = 3×22 = 66.",
-            "No multipliques 3×4 sobre el total."
-          ]
-        },
-        {
-          "enunciado": "10 × 10 = ?\n\nA) 90   B) 100   C) 20   D) 110",
-          "respuesta": "B) 100",
-          "pasos": [
-            "Producto directo: 10×10=100.",
-            "Si te trabas, descompón: (a×5)+(a×resto).",
-            "Revisa no haber sumado en vez de multiplicar."
-          ]
-        },
-        {
-          "enunciado": "Si 1/5 de un número es 21, el número es:\n\nA) 84   B) 110   C) 105   D) 126",
-          "respuesta": "C) 105",
-          "pasos": [
-            "El entero = 21×5.",
-            "21×5=105.",
-            "Multiplica, no divides otra vez."
-          ]
-        },
-        {
-          "enunciado": "175 × 0,4 = ?\n\nA) 87   B) 35   C) 43   D) 70",
-          "respuesta": "D) 70",
-          "pasos": [
-            "0,4 = 2/5.",
-            "175×2/5 = 70.",
-            "Equivale a tomar el 40%."
-          ]
-        },
-        {
-          "enunciado": "(16 + 4) × 5 = ?\n\nA) 25   B) 320   C) 100   D) 36",
-          "respuesta": "C) 100",
-          "pasos": [
-            "Primero paréntesis: 16+4=20.",
-            "Luego ×5 = 100.",
-            "Sin paréntesis sería distinto: respeta el orden."
-          ]
-        },
-        {
-          "enunciado": "28 ÷ 4 + 8 × 2 = ?\n\nA) 20   B) 23   C) 40   D) 25",
-          "respuesta": "B) 23",
-          "pasos": [
-            "Primero 28÷4=7 y 8×2=16.",
-            "Suma: 7+16=23.",
-            "No sumes de izquierda a derecha sin priorizar × ÷."
-          ]
-        },
-        {
-          "enunciado": "20% de 120 = ?\n\nA) 24   B) 240   C) 22   D) 26",
-          "respuesta": "A) 24",
-          "pasos": [
-            "(20/100)×120 = 24.",
-            "Atajo: 10% de 120=12; escala al 20%.",
-            "Comprueba que el resultado sea menor que la base."
-          ]
-        },
-        {
-          "enunciado": "13² − 7² = ?\n\nA) 218   B) 120   C) 36   D) 91",
-          "respuesta": "B) 120",
-          "pasos": [
-            "13²=169, 7²=49.",
-            "Resta: 120.",
-            "Atajo: (13-7)(13+7)=6×20=120."
-          ]
-        },
-        {
-          "enunciado": "3/4 de 56 = ?\n\nA) 14   B) 37   C) 42   D) 28",
-          "respuesta": "C) 42",
-          "pasos": [
-            "1/4 de 56 = 14.",
-            "3/4 = 3×14 = 42.",
-            "No multipliques 3×4 sobre el total."
-          ]
-        },
-        {
-          "enunciado": "9 × 10 = ?\n\nA) 99   B) 19   C) 90   D) 81",
-          "respuesta": "C) 90",
-          "pasos": [
-            "Producto directo: 9×10=90.",
-            "Si te trabas, descompón: (a×5)+(a×resto).",
-            "Revisa no haber sumado en vez de multiplicar."
-          ]
-        },
-        {
-          "enunciado": "Si 1/5 de un número es 15, el número es:\n\nA) 90   B) 80   C) 75   D) 60",
-          "respuesta": "C) 75",
-          "pasos": [
-            "El entero = 15×5.",
-            "15×5=75.",
-            "Multiplica, no divides otra vez."
-          ]
-        },
-        {
-          "enunciado": "175 × 0,4 = ?\n\nA) 87   B) 70   C) 43   D) 35",
-          "respuesta": "B) 70",
-          "pasos": [
-            "0,4 = 2/5.",
-            "175×2/5 = 70.",
-            "Equivale a tomar el 40%."
-          ]
-        },
-        {
-          "enunciado": "(16 + 7) × 5 = ?\n\nA) 28   B) 560   C) 115   D) 51",
-          "respuesta": "C) 115",
-          "pasos": [
-            "Primero paréntesis: 16+7=23.",
-            "Luego ×5 = 115.",
-            "Sin paréntesis sería distinto: respeta el orden."
-          ]
-        },
-        {
-          "enunciado": "16 ÷ 7 + 4 × 2 = ?\n\nA) 10   B) 7   C) 12   D) 27",
-          "respuesta": "A) 10",
-          "pasos": [
-            "Primero 16÷7=2 y 4×2=8.",
-            "Suma: 2+8=10.",
-            "No sumes de izquierda a derecha sin priorizar × ÷."
-          ]
-        },
-        {
-          "enunciado": "10% de 110 = ?\n\nA) 110   B) 9   C) 13   D) 11",
-          "respuesta": "D) 11",
-          "pasos": [
-            "(10/100)×110 = 11.",
-            "Atajo: 10% de 110=11; escala al 10%.",
-            "Comprueba que el resultado sea menor que la base."
-          ]
-        },
-        {
-          "enunciado": "11² − 8² = ?\n\nA) 57   B) 185   C) 9   D) 88",
-          "respuesta": "A) 57",
-          "pasos": [
-            "11²=121, 8²=64.",
-            "Resta: 57.",
-            "Atajo: (11-8)(11+8)=3×19=57."
-          ]
-        },
-        {
-          "enunciado": "3/4 de 72 = ?\n\nA) 36   B) 18   C) 48   D) 54",
-          "respuesta": "D) 54",
-          "pasos": [
-            "1/4 de 72 = 18.",
-            "3/4 = 3×18 = 54.",
-            "No multipliques 3×4 sobre el total."
-          ]
-        },
-        {
-          "enunciado": "8 × 10 = ?\n\nA) 80   B) 72   C) 88   D) 18",
-          "respuesta": "A) 80",
-          "pasos": [
-            "Producto directo: 8×10=80.",
-            "Si te trabas, descompón: (a×5)+(a×resto).",
-            "Revisa no haber sumado en vez de multiplicar."
-          ]
-        },
-        {
-          "enunciado": "Si 1/5 de un número es 39, el número es:\n\nA) 234   B) 156   C) 200   D) 195",
-          "respuesta": "D) 195",
-          "pasos": [
-            "El entero = 39×5.",
-            "39×5=195.",
-            "Multiplica, no divides otra vez."
-          ]
-        },
-        {
-          "enunciado": "175 × 0,4 = ?\n\nA) 70   B) 43   C) 87   D) 35",
-          "respuesta": "A) 70",
-          "pasos": [
-            "0,4 = 2/5.",
-            "175×2/5 = 70.",
-            "Equivale a tomar el 40%."
-          ]
-        },
-        {
-          "enunciado": "(16 + 5) × 5 = ?\n\nA) 41   B) 105   C) 400   D) 26",
-          "respuesta": "B) 105",
-          "pasos": [
-            "Primero paréntesis: 16+5=21.",
-            "Luego ×5 = 105.",
-            "Sin paréntesis sería distinto: respeta el orden."
-          ]
-        },
-        {
-          "enunciado": "24 ÷ 5 + 6 × 2 = ?\n\nA) 18   B) 16   C) 13   D) 35",
-          "respuesta": "B) 16",
-          "pasos": [
-            "Primero 24÷5=4 y 6×2=12.",
-            "Suma: 4+12=16.",
-            "No sumes de izquierda a derecha sin priorizar × ÷."
-          ]
-        },
-        {
-          "enunciado": "25% de 100 = ?\n\nA) 250   B) 27   C) 25   D) 23",
-          "respuesta": "C) 25",
-          "pasos": [
-            "(25/100)×100 = 25.",
-            "Atajo: 10% de 100=10; escala al 25%.",
-            "Comprueba que el resultado sea menor que la base."
-          ]
-        },
-        {
-          "enunciado": "9² − 9² = ?\n\nA) 162   B) 81   C) 0   D) 0",
-          "respuesta": "C) 0",
-          "pasos": [
-            "9²=81, 9²=81.",
-            "Resta: 0.",
-            "Atajo: (9-9)(9+9)=0×18=0."
-          ]
-        },
-        {
-          "enunciado": "3/4 de 88 = ?\n\nA) 58   B) 66   C) 22   D) 44",
-          "respuesta": "B) 66",
-          "pasos": [
-            "1/4 de 88 = 22.",
-            "3/4 = 3×22 = 66.",
-            "No multipliques 3×4 sobre el total."
-          ]
-        },
-        {
-          "enunciado": "7 × 10 = ?\n\nA) 70   B) 17   C) 63   D) 77",
-          "respuesta": "A) 70",
-          "pasos": [
-            "Producto directo: 7×10=70.",
-            "Si te trabas, descompón: (a×5)+(a×resto).",
-            "Revisa no haber sumado en vez de multiplicar."
-          ]
-        },
-        {
-          "enunciado": "Si 1/5 de un número es 33, el número es:\n\nA) 170   B) 132   C) 198   D) 165",
-          "respuesta": "D) 165",
-          "pasos": [
-            "El entero = 33×5.",
-            "33×5=165.",
-            "Multiplica, no divides otra vez."
-          ]
-        },
-        {
-          "enunciado": "175 × 0,4 = ?\n\nA) 70   B) 43   C) 87   D) 35",
-          "respuesta": "A) 70",
-          "pasos": [
-            "0,4 = 2/5.",
-            "175×2/5 = 70.",
-            "Equivale a tomar el 40%."
-          ]
-        },
-        {
-          "enunciado": "(16 + 8) × 5 = ?\n\nA) 120   B) 29   C) 56   D) 640",
-          "respuesta": "A) 120",
-          "pasos": [
-            "Primero paréntesis: 16+8=24.",
-            "Luego ×5 = 120.",
-            "Sin paréntesis sería distinto: respeta el orden."
-          ]
-        },
-        {
-          "enunciado": "12 ÷ 3 + 8 × 2 = ?\n\nA) 17   B) 23   C) 20   D) 22",
-          "respuesta": "C) 20",
-          "pasos": [
-            "Primero 12÷3=4 y 8×2=16.",
-            "Suma: 4+16=20.",
-            "No sumes de izquierda a derecha sin priorizar × ÷."
-          ]
-        },
-        {
-          "enunciado": "15% de 90 = ?\n\nA) 15   B) 13   C) 11   D) 135",
-          "respuesta": "B) 13",
-          "pasos": [
-            "(15/100)×90 = 13.",
-            "Atajo: 10% de 90=9; escala al 15%.",
-            "Comprueba que el resultado sea menor que la base."
-          ]
-        },
-        {
-          "enunciado": "7² − 3² = ?\n\nA) 21   B) 40   C) 58   D) 16",
-          "respuesta": "B) 40",
-          "pasos": [
-            "7²=49, 3²=9.",
-            "Resta: 40.",
-            "Atajo: (7-3)(7+3)=4×10=40."
-          ]
-        },
-        {
-          "enunciado": "3/4 de 56 = ?\n\nA) 37   B) 42   C) 14   D) 28",
-          "respuesta": "B) 42",
-          "pasos": [
-            "1/4 de 56 = 14.",
-            "3/4 = 3×14 = 42.",
-            "No multipliques 3×4 sobre el total."
-          ]
-        },
-        {
-          "enunciado": "15 × 10 = ?\n\nA) 150   B) 25   C) 165   D) 135",
-          "respuesta": "A) 150",
-          "pasos": [
-            "Producto directo: 15×10=150.",
-            "Si te trabas, descompón: (a×5)+(a×resto).",
-            "Revisa no haber sumado en vez de multiplicar."
-          ]
-        },
-        {
-          "enunciado": "Si 1/5 de un número es 27, el número es:\n\nA) 135   B) 162   C) 108   D) 140",
-          "respuesta": "A) 135",
-          "pasos": [
-            "El entero = 27×5.",
-            "27×5=135.",
-            "Multiplica, no divides otra vez."
-          ]
-        },
-        {
-          "enunciado": "175 × 0,4 = ?\n\nA) 70   B) 87   C) 35   D) 43",
-          "respuesta": "A) 70",
-          "pasos": [
-            "0,4 = 2/5.",
-            "175×2/5 = 70.",
-            "Equivale a tomar el 40%."
-          ]
-        },
-        {
-          "enunciado": "(16 + 6) × 5 = ?\n\nA) 27   B) 110   C) 480   D) 46",
-          "respuesta": "B) 110",
-          "pasos": [
-            "Primero paréntesis: 16+6=22.",
-            "Luego ×5 = 110.",
-            "Sin paréntesis sería distinto: respeta el orden."
-          ]
-        },
-        {
-          "enunciado": "20 ÷ 6 + 4 × 2 = ?\n\nA) 11   B) 13   C) 30   D) 8",
-          "respuesta": "A) 11",
-          "pasos": [
-            "Primero 20÷6=3 y 4×2=8.",
-            "Suma: 3+8=11.",
-            "No sumes de izquierda a derecha sin priorizar × ÷."
-          ]
-        },
-        {
-          "enunciado": "30% de 80 = ?\n\nA) 22   B) 26   C) 240   D) 24",
-          "respuesta": "D) 24",
-          "pasos": [
-            "(30/100)×80 = 24.",
-            "Atajo: 10% de 80=8; escala al 30%.",
-            "Comprueba que el resultado sea menor que la base."
-          ]
-        },
-        {
-          "enunciado": "5² − 4² = ?\n\nA) 20   B) 1   C) 9   D) 41",
-          "respuesta": "C) 9",
-          "pasos": [
-            "5²=25, 4²=16.",
-            "Resta: 9.",
-            "Atajo: (5-4)(5+4)=1×9=9."
-          ]
-        },
-        {
-          "enunciado": "3/4 de 72 = ?\n\nA) 18   B) 36   C) 48   D) 54",
-          "respuesta": "D) 54",
-          "pasos": [
-            "1/4 de 72 = 18.",
-            "3/4 = 3×18 = 54.",
-            "No multipliques 3×4 sobre el total."
-          ]
-        },
-        {
-          "enunciado": "14 × 10 = ?\n\nA) 24   B) 140   C) 154   D) 126",
-          "respuesta": "B) 140",
-          "pasos": [
-            "Producto directo: 14×10=140.",
-            "Si te trabas, descompón: (a×5)+(a×resto).",
-            "Revisa no haber sumado en vez de multiplicar."
-          ]
-        },
-        {
-          "enunciado": "Si 1/5 de un número es 21, el número es:\n\nA) 126   B) 105   C) 84   D) 110",
-          "respuesta": "B) 105",
-          "pasos": [
-            "El entero = 21×5.",
-            "21×5=105.",
-            "Multiplica, no divides otra vez."
-          ]
-        },
-        {
-          "enunciado": "175 × 0,4 = ?\n\nA) 70   B) 35   C) 43   D) 87",
-          "respuesta": "A) 70",
-          "pasos": [
-            "0,4 = 2/5.",
-            "175×2/5 = 70.",
-            "Equivale a tomar el 40%."
-          ]
-        },
-        {
-          "enunciado": "(16 + 4) × 5 = ?\n\nA) 25   B) 320   C) 100   D) 36",
-          "respuesta": "C) 100",
-          "pasos": [
-            "Primero paréntesis: 16+4=20.",
-            "Luego ×5 = 100.",
-            "Sin paréntesis sería distinto: respeta el orden."
-          ]
-        },
-        {
-          "enunciado": "28 ÷ 4 + 6 × 2 = ?\n\nA) 16   B) 38   C) 21   D) 19",
-          "respuesta": "D) 19",
-          "pasos": [
-            "Primero 28÷4=7 y 6×2=12.",
-            "Suma: 7+12=19.",
-            "No sumes de izquierda a derecha sin priorizar × ÷."
-          ]
-        },
-        {
-          "enunciado": "20% de 70 = ?\n\nA) 14   B) 140   C) 12   D) 16",
-          "respuesta": "A) 14",
-          "pasos": [
-            "(20/100)×70 = 14.",
-            "Atajo: 10% de 70=7; escala al 20%.",
-            "Comprueba que el resultado sea menor que la base."
-          ]
-        },
-        {
-          "enunciado": "13² − 5² = ?\n\nA) 194   B) 65   C) 64   D) 144",
-          "respuesta": "D) 144",
-          "pasos": [
-            "13²=169, 5²=25.",
-            "Resta: 144.",
-            "Atajo: (13-5)(13+5)=8×18=144."
-          ]
-        },
-        {
-          "enunciado": "3/4 de 88 = ?\n\nA) 44   B) 58   C) 22   D) 66",
-          "respuesta": "D) 66",
-          "pasos": [
-            "1/4 de 88 = 22.",
-            "3/4 = 3×22 = 66.",
-            "No multipliques 3×4 sobre el total."
-          ]
-        },
-        {
-          "enunciado": "13 × 10 = ?\n\nA) 130   B) 23   C) 143   D) 117",
-          "respuesta": "A) 130",
-          "pasos": [
-            "Producto directo: 13×10=130.",
-            "Si te trabas, descompón: (a×5)+(a×resto).",
-            "Revisa no haber sumado en vez de multiplicar."
-          ]
-        },
-        {
-          "enunciado": "Si 1/5 de un número es 15, el número es:\n\nA) 75   B) 60   C) 90   D) 80",
-          "respuesta": "A) 75",
-          "pasos": [
-            "El entero = 15×5.",
-            "15×5=75.",
-            "Multiplica, no divides otra vez."
-          ]
-        },
-        {
-          "enunciado": "175 × 0,4 = ?\n\nA) 35   B) 43   C) 70   D) 87",
-          "respuesta": "C) 70",
-          "pasos": [
-            "0,4 = 2/5.",
-            "175×2/5 = 70.",
-            "Equivale a tomar el 40%."
-          ]
-        },
-        {
-          "enunciado": "(16 + 7) × 5 = ?\n\nA) 560   B) 115   C) 51   D) 28",
-          "respuesta": "B) 115",
-          "pasos": [
-            "Primero paréntesis: 16+7=23.",
-            "Luego ×5 = 115.",
-            "Sin paréntesis sería distinto: respeta el orden."
-          ]
-        },
-        {
-          "enunciado": "16 ÷ 7 + 8 × 2 = ?\n\nA) 18   B) 20   C) 31   D) 15",
-          "respuesta": "A) 18",
-          "pasos": [
-            "Primero 16÷7=2 y 8×2=16.",
-            "Suma: 2+16=18.",
-            "No sumes de izquierda a derecha sin priorizar × ÷."
-          ]
-        },
-        {
-          "enunciado": "10% de 60 = ?\n\nA) 6   B) 4   C) 60   D) 8",
-          "respuesta": "A) 6",
-          "pasos": [
-            "(10/100)×60 = 6.",
-            "Atajo: 10% de 60=6; escala al 10%.",
-            "Comprueba que el resultado sea menor que la base."
-          ]
-        },
-        {
-          "enunciado": "11² − 6² = ?\n\nA) 66   B) 157   C) 25   D) 85",
-          "respuesta": "D) 85",
-          "pasos": [
-            "11²=121, 6²=36.",
-            "Resta: 85.",
-            "Atajo: (11-6)(11+6)=5×17=85."
-          ]
-        },
-        {
-          "enunciado": "3/4 de 56 = ?\n\nA) 42   B) 28   C) 37   D) 14",
-          "respuesta": "A) 42",
-          "pasos": [
-            "1/4 de 56 = 14.",
-            "3/4 = 3×14 = 42.",
-            "No multipliques 3×4 sobre el total."
-          ]
-        },
-        {
-          "enunciado": "12 × 10 = ?\n\nA) 22   B) 120   C) 108   D) 132",
-          "respuesta": "B) 120",
-          "pasos": [
-            "Producto directo: 12×10=120.",
-            "Si te trabas, descompón: (a×5)+(a×resto).",
-            "Revisa no haber sumado en vez de multiplicar."
-          ]
-        },
-        {
-          "enunciado": "Si 1/5 de un número es 39, el número es:\n\nA) 200   B) 234   C) 195   D) 156",
-          "respuesta": "C) 195",
-          "pasos": [
-            "El entero = 39×5.",
-            "39×5=195.",
-            "Multiplica, no divides otra vez."
-          ]
-        },
-        {
-          "enunciado": "175 × 0,4 = ?\n\nA) 43   B) 70   C) 35   D) 87",
-          "respuesta": "B) 70",
-          "pasos": [
-            "0,4 = 2/5.",
-            "175×2/5 = 70.",
-            "Equivale a tomar el 40%."
-          ]
-        },
-        {
-          "enunciado": "(16 + 5) × 5 = ?\n\nA) 400   B) 26   C) 105   D) 41",
-          "respuesta": "C) 105",
-          "pasos": [
-            "Primero paréntesis: 16+5=21.",
-            "Luego ×5 = 105.",
-            "Sin paréntesis sería distinto: respeta el orden."
-          ]
-        },
-        {
-          "enunciado": "24 ÷ 5 + 4 × 2 = ?\n\nA) 12   B) 9   C) 14   D) 33",
-          "respuesta": "A) 12",
-          "pasos": [
-            "Primero 24÷5=4 y 4×2=8.",
-            "Suma: 4+8=12.",
-            "No sumes de izquierda a derecha sin priorizar × ÷."
-          ]
-        },
-        {
-          "enunciado": "25% de 50 = ?\n\nA) 14   B) 10   C) 12   D) 125",
+          "enunciado": "12 ÷ 3 + 4 × 2 = ?\n\nA) 60   B) 21   C) 12   D) 10",
           "respuesta": "C) 12",
           "pasos": [
-            "(25/100)×50 = 12.",
-            "Atajo: 10% de 50=5; escala al 25%.",
-            "Comprueba que el resultado sea menor que la base."
+            "Haz primero la división y la multiplicación: 12 ÷ 3 = 4.",
+            "4 × 2 = 8.",
+            "Al final suma: 4 + 8 = 12."
           ]
         },
         {
-          "enunciado": "9² − 7² = ?\n\nA) 4   B) 32   C) 130   D) 63",
-          "respuesta": "B) 32",
+          "enunciado": "18 ÷ 6 + 5 × 3 = ?\n\nA) 32   B) 11   C) 120   D) 18",
+          "respuesta": "D) 18",
           "pasos": [
-            "9²=81, 7²=49.",
-            "Resta: 32.",
-            "Atajo: (9-7)(9+7)=2×16=32."
+            "Haz primero la división y la multiplicación: 18 ÷ 6 = 3.",
+            "5 × 3 = 15.",
+            "Al final suma: 3 + 15 = 18."
           ]
         },
         {
-          "enunciado": "3/4 de 72 = ?\n\nA) 36   B) 54   C) 18   D) 48",
-          "respuesta": "B) 54",
+          "enunciado": "24 ÷ 8 + 7 × 2 = ?\n\nA) 41   B) 17   C) 224   D) 12",
+          "respuesta": "B) 17",
           "pasos": [
-            "1/4 de 72 = 18.",
-            "3/4 = 3×18 = 54.",
-            "No multipliques 3×4 sobre el total."
+            "Haz primero la división y la multiplicación: 24 ÷ 8 = 3.",
+            "7 × 2 = 14.",
+            "Al final suma: 3 + 14 = 17."
           ]
         },
         {
-          "enunciado": "11 × 10 = ?\n\nA) 110   B) 99   C) 21   D) 121",
-          "respuesta": "A) 110",
+          "enunciado": "36 ÷ 6 + 4 × 5 = ?\n\nA) 168   B) 15   C) 26   D) 51",
+          "respuesta": "C) 26",
           "pasos": [
-            "Producto directo: 11×10=110.",
-            "Si te trabas, descompón: (a×5)+(a×resto).",
-            "Revisa no haber sumado en vez de multiplicar."
+            "Haz primero la división y la multiplicación: 36 ÷ 6 = 6.",
+            "4 × 5 = 20.",
+            "Al final suma: 6 + 20 = 26."
           ]
         },
         {
-          "enunciado": "Si 1/5 de un número es 33, el número es:\n\nA) 132   B) 165   C) 198   D) 170",
-          "respuesta": "B) 165",
+          "enunciado": "45 ÷ 9 + 6 × 3 = ?\n\nA) 14   B) 23   C) 63   D) 324",
+          "respuesta": "B) 23",
           "pasos": [
-            "El entero = 33×5.",
-            "33×5=165.",
-            "Multiplica, no divides otra vez."
+            "Haz primero la división y la multiplicación: 45 ÷ 9 = 5.",
+            "6 × 3 = 18.",
+            "Al final suma: 5 + 18 = 23."
           ]
         },
         {
-          "enunciado": "175 × 0,4 = ?\n\nA) 35   B) 43   C) 70   D) 87",
-          "respuesta": "C) 70",
+          "enunciado": "56 ÷ 7 + 8 × 2 = ?\n\nA) 18   B) 504   C) 24   D) 73",
+          "respuesta": "C) 24",
           "pasos": [
-            "0,4 = 2/5.",
-            "175×2/5 = 70.",
-            "Equivale a tomar el 40%."
+            "Haz primero la división y la multiplicación: 56 ÷ 7 = 8.",
+            "8 × 2 = 16.",
+            "Al final suma: 8 + 16 = 24."
           ]
         },
         {
-          "enunciado": "(16 + 8) × 5 = ?\n\nA) 640   B) 120   C) 56   D) 29",
-          "respuesta": "B) 120",
+          "enunciado": "64 ÷ 8 + 3 × 4 = ?\n\nA) 79   B) 216   C) 15   D) 20",
+          "respuesta": "D) 20",
           "pasos": [
-            "Primero paréntesis: 16+8=24.",
-            "Luego ×5 = 120.",
-            "Sin paréntesis sería distinto: respeta el orden."
+            "Haz primero la división y la multiplicación: 64 ÷ 8 = 8.",
+            "3 × 4 = 12.",
+            "Al final suma: 8 + 12 = 20."
           ]
         },
         {
-          "enunciado": "12 ÷ 3 + 6 × 2 = ?\n\nA) 16   B) 13   C) 18   D) 21",
-          "respuesta": "A) 16",
+          "enunciado": "72 ÷ 9 + 5 × 2 = ?\n\nA) 405   B) 18   C) 15   D) 88",
+          "respuesta": "B) 18",
           "pasos": [
-            "Primero 12÷3=4 y 6×2=12.",
-            "Suma: 4+12=16.",
-            "No sumes de izquierda a derecha sin priorizar × ÷."
+            "Haz primero la división y la multiplicación: 72 ÷ 9 = 8.",
+            "5 × 2 = 10.",
+            "Al final suma: 8 + 10 = 18."
           ]
         },
         {
-          "enunciado": "15% de 40 = ?\n\nA) 4   B) 6   C) 60   D) 8",
+          "enunciado": "81 ÷ 9 + 4 × 3 = ?\n\nA) 97   B) 16   C) 21   D) 360",
+          "respuesta": "C) 21",
+          "pasos": [
+            "Haz primero la división y la multiplicación: 81 ÷ 9 = 9.",
+            "4 × 3 = 12.",
+            "Al final suma: 9 + 12 = 21."
+          ]
+        },
+        {
+          "enunciado": "90 ÷ 10 + 6 × 4 = ?\n\nA) 110   B) 600   C) 19   D) 33",
+          "respuesta": "D) 33",
+          "pasos": [
+            "Haz primero la división y la multiplicación: 90 ÷ 10 = 9.",
+            "6 × 4 = 24.",
+            "Al final suma: 9 + 24 = 33."
+          ]
+        },
+        {
+          "enunciado": "48 ÷ 6 + 7 × 2 = ?\n\nA) 378   B) 22   C) 63   D) 17",
+          "respuesta": "B) 22",
+          "pasos": [
+            "Haz primero la división y la multiplicación: 48 ÷ 6 = 8.",
+            "7 × 2 = 14.",
+            "Al final suma: 8 + 14 = 22."
+          ]
+        },
+        {
+          "enunciado": "35 ÷ 5 + 4 × 3 = ?\n\nA) 160   B) 47   C) 14   D) 19",
+          "respuesta": "D) 19",
+          "pasos": [
+            "Haz primero la división y la multiplicación: 35 ÷ 5 = 7.",
+            "4 × 3 = 12.",
+            "Al final suma: 7 + 12 = 19."
+          ]
+        },
+        {
+          "enunciado": "10% de 80 = ?\n\nA) 80   B) 6   C) 8   D) 10",
+          "respuesta": "C) 8",
+          "pasos": [
+            "La pregunta pide el 10% de 80.",
+            "Eso es (10 ÷ 100) × 80 = 8.",
+            "Camino fácil: 10% se obtiene dividiendo entre 10 → 80 ÷ 10 = 8."
+          ]
+        },
+        {
+          "enunciado": "20% de 45 = ?\n\nA) 11   B) 90   C) 9   D) 7",
+          "respuesta": "C) 9",
+          "pasos": [
+            "La pregunta pide el 20% de 45.",
+            "Eso es (20 ÷ 100) × 45 = 9.",
+            "Camino fácil: 1% de 45 = 0,45; luego 0,45 × 20 = 9."
+          ]
+        },
+        {
+          "enunciado": "25% de 84 = ?\n\nA) 23   B) 210   C) 19   D) 21",
+          "respuesta": "D) 21",
+          "pasos": [
+            "La pregunta pide el 25% de 84.",
+            "Eso es (25 ÷ 100) × 84 = 21.",
+            "Camino fácil: 25% es la cuarta parte → 84 ÷ 4 = 21."
+          ]
+        },
+        {
+          "enunciado": "15% de 80 = ?\n\nA) 12   B) 14   C) 10   D) 120",
+          "respuesta": "A) 12",
+          "pasos": [
+            "La pregunta pide el 15% de 80.",
+            "Eso es (15 ÷ 100) × 80 = 12.",
+            "Camino fácil: 10% de 80 = 8; la mitad de eso (5%) = 4; súmalos = 12."
+          ]
+        },
+        {
+          "enunciado": "15% de 60 = ?\n\nA) 9   B) 90   C) 11   D) 7",
+          "respuesta": "A) 9",
+          "pasos": [
+            "La pregunta pide el 15% de 60.",
+            "Eso es (15 ÷ 100) × 60 = 9.",
+            "Camino fácil: 10% de 60 = 6; la mitad de eso (5%) = 3; súmalos = 9."
+          ]
+        },
+        {
+          "enunciado": "15% de 40 = ?\n\nA) 60   B) 6   C) 8   D) 4",
           "respuesta": "B) 6",
           "pasos": [
-            "(15/100)×40 = 6.",
-            "Atajo: 10% de 40=4; escala al 15%.",
-            "Comprueba que el resultado sea menor que la base."
+            "La pregunta pide el 15% de 40.",
+            "Eso es (15 ÷ 100) × 40 = 6.",
+            "Camino fácil: 10% de 40 = 4; la mitad de eso (5%) = 2; súmalos = 6."
           ]
         },
         {
-          "enunciado": "7² − 8² = ?\n\nA) 1   B) 56   C) 113   D) -15",
-          "respuesta": "D) -15",
+          "enunciado": "15% de 50 = ?\n\nA) 75   B) 7,5   C) 5,5   D) 9,5",
+          "respuesta": "B) 7,5",
           "pasos": [
-            "7²=49, 8²=64.",
-            "Resta: -15.",
-            "Atajo: (7-8)(7+8)=-1×15=-15."
+            "La pregunta pide el 15% de 50.",
+            "Eso es (15 ÷ 100) × 50 = 7,5.",
+            "Camino fácil: 10% de 50 = 5; la mitad de eso (5%) = 2,5; súmalos = 7,5.",
+            "Da decimal: la respuesta exacta es 7,5 (no la redondees)."
           ]
         },
         {
-          "enunciado": "3/4 de 88 = ?\n\nA) 58   B) 22   C) 44   D) 66",
-          "respuesta": "D) 66",
+          "enunciado": "12% de 50 = ?\n\nA) 60   B) 8   C) 4   D) 6",
+          "respuesta": "D) 6",
           "pasos": [
-            "1/4 de 88 = 22.",
-            "3/4 = 3×22 = 66.",
-            "No multipliques 3×4 sobre el total."
+            "La pregunta pide el 12% de 50.",
+            "Eso es (12 ÷ 100) × 50 = 6.",
+            "Camino fácil: 1% de 50 = 0,5; luego 0,5 × 12 = 6."
           ]
         },
         {
-          "enunciado": "10 × 10 = ?\n\nA) 110   B) 100   C) 90   D) 20",
-          "respuesta": "B) 100",
+          "enunciado": "5% de 90 = ?\n\nA) 4,5   B) 2,5   C) 6,5   D) 45",
+          "respuesta": "A) 4,5",
           "pasos": [
-            "Producto directo: 10×10=100.",
-            "Si te trabas, descompón: (a×5)+(a×resto).",
-            "Revisa no haber sumado en vez de multiplicar."
+            "La pregunta pide el 5% de 90.",
+            "Eso es (5 ÷ 100) × 90 = 4,5.",
+            "Camino fácil: 1% de 90 = 0,9; luego 0,9 × 5 = 4,5.",
+            "Da decimal: la respuesta exacta es 4,5 (no la redondees)."
           ]
         },
         {
-          "enunciado": "Si 1/5 de un número es 27, el número es:\n\nA) 140   B) 162   C) 108   D) 135",
-          "respuesta": "D) 135",
+          "enunciado": "30% de 70 = ?\n\nA) 23   B) 21   C) 210   D) 19",
+          "respuesta": "B) 21",
           "pasos": [
-            "El entero = 27×5.",
-            "27×5=135.",
-            "Multiplica, no divides otra vez."
+            "La pregunta pide el 30% de 70.",
+            "Eso es (30 ÷ 100) × 70 = 21.",
+            "Camino fácil: 1% de 70 = 0,7; luego 0,7 × 30 = 21."
           ]
         },
         {
-          "enunciado": "175 × 0,4 = ?\n\nA) 87   B) 43   C) 70   D) 35",
-          "respuesta": "C) 70",
+          "enunciado": "40% de 55 = ?\n\nA) 220   B) 24   C) 20   D) 22",
+          "respuesta": "D) 22",
           "pasos": [
-            "0,4 = 2/5.",
-            "175×2/5 = 70.",
-            "Equivale a tomar el 40%."
+            "La pregunta pide el 40% de 55.",
+            "Eso es (40 ÷ 100) × 55 = 22.",
+            "Camino fácil: 1% de 55 = 0,55; luego 0,55 × 40 = 22."
           ]
         },
         {
-          "enunciado": "(16 + 6) × 5 = ?\n\nA) 110   B) 27   C) 46   D) 480",
-          "respuesta": "A) 110",
+          "enunciado": "75% de 48 = ?\n\nA) 34   B) 36   C) 360   D) 38",
+          "respuesta": "B) 36",
           "pasos": [
-            "Primero paréntesis: 16+6=22.",
-            "Luego ×5 = 110.",
-            "Sin paréntesis sería distinto: respeta el orden."
+            "La pregunta pide el 75% de 48.",
+            "Eso es (75 ÷ 100) × 48 = 36.",
+            "Camino fácil: 1% de 48 = 0,48; luego 0,48 × 75 = 36."
           ]
         },
         {
-          "enunciado": "20 ÷ 6 + 8 × 2 = ?\n\nA) 19   B) 34   C) 21   D) 16",
-          "respuesta": "A) 19",
+          "enunciado": "8% de 25 = ?\n\nA) 7   B) 2   C) 4   D) 20",
+          "respuesta": "B) 2",
           "pasos": [
-            "Primero 20÷6=3 y 8×2=16.",
-            "Suma: 3+16=19.",
-            "No sumes de izquierda a derecha sin priorizar × ÷."
+            "La pregunta pide el 8% de 25.",
+            "Eso es (8 ÷ 100) × 25 = 2.",
+            "Camino fácil: 1% de 25 = 0,25; luego 0,25 × 8 = 2."
           ]
         },
         {
-          "enunciado": "30% de 120 = ?\n\nA) 34   B) 360   C) 38   D) 36",
-          "respuesta": "D) 36",
+          "enunciado": "35% de 20 = ?\n\nA) 70   B) 9   C) 5   D) 7",
+          "respuesta": "D) 7",
           "pasos": [
-            "(30/100)×120 = 36.",
-            "Atajo: 10% de 120=12; escala al 30%.",
-            "Comprueba que el resultado sea menor que la base."
+            "La pregunta pide el 35% de 20.",
+            "Eso es (35 ÷ 100) × 20 = 7.",
+            "Camino fácil: 1% de 20 = 0,2; luego 0,2 × 35 = 7."
           ]
         },
         {
-          "enunciado": "5² − 9² = ?\n\nA) 16   B) 45   C) 106   D) -56",
-          "respuesta": "D) -56",
+          "enunciado": "15% de 70 = ?\n\nA) 10,5   B) 12,5   C) 105   D) 8,5",
+          "respuesta": "A) 10,5",
           "pasos": [
-            "5²=25, 9²=81.",
-            "Resta: -56.",
-            "Atajo: (5-9)(5+9)=-4×14=-56."
+            "La pregunta pide el 15% de 70.",
+            "Eso es (15 ÷ 100) × 70 = 10,5.",
+            "Camino fácil: 10% de 70 = 7; la mitad de eso (5%) = 3,5; súmalos = 10,5.",
+            "Da decimal: la respuesta exacta es 10,5 (no la redondees)."
           ]
         },
         {
-          "enunciado": "3/4 de 56 = ?\n\nA) 14   B) 37   C) 28   D) 42",
-          "respuesta": "D) 42",
+          "enunciado": "25% de 50 = ?\n\nA) 12,5   B) 14,5   C) 10,5   D) 125",
+          "respuesta": "A) 12,5",
           "pasos": [
-            "1/4 de 56 = 14.",
-            "3/4 = 3×14 = 42.",
-            "No multipliques 3×4 sobre el total."
+            "La pregunta pide el 25% de 50.",
+            "Eso es (25 ÷ 100) × 50 = 12,5.",
+            "Camino fácil: 25% es la cuarta parte → 50 ÷ 4 = 12,5.",
+            "Da decimal: la respuesta exacta es 12,5 (no la redondees)."
           ]
         },
         {
-          "enunciado": "9 × 10 = ?\n\nA) 19   B) 99   C) 81   D) 90",
+          "enunciado": "12,5% de 80 = ?\n\nA) 8   B) 12   C) 100   D) 10",
+          "respuesta": "D) 10",
+          "pasos": [
+            "La pregunta pide el 12,5% de 80.",
+            "Eso es (12,5 ÷ 100) × 80 = 10.",
+            "Camino fácil: 1% de 80 = 0,8; luego 0,8 × 12,5 = 10."
+          ]
+        },
+        {
+          "enunciado": "17,5% de 40 = ?\n\nA) 9   B) 7   C) 5   D) 70",
+          "respuesta": "B) 7",
+          "pasos": [
+            "La pregunta pide el 17,5% de 40.",
+            "Eso es (17,5 ÷ 100) × 40 = 7.",
+            "Camino fácil: 1% de 40 = 0,4; luego 0,4 × 17,5 = 7."
+          ]
+        },
+        {
+          "enunciado": "2,5% de 200 = ?\n\nA) 50   B) 7   C) 3   D) 5",
+          "respuesta": "D) 5",
+          "pasos": [
+            "La pregunta pide el 2,5% de 200.",
+            "Eso es (2,5 ÷ 100) × 200 = 5.",
+            "Camino fácil: 1% de 200 = 2; luego 2 × 2,5 = 5."
+          ]
+        },
+        {
+          "enunciado": "7,5% de 80 = ?\n\nA) 6   B) 4   C) 8   D) 60",
+          "respuesta": "A) 6",
+          "pasos": [
+            "La pregunta pide el 7,5% de 80.",
+            "Eso es (7,5 ÷ 100) × 80 = 6.",
+            "Camino fácil: 1% de 80 = 0,8; luego 0,8 × 7,5 = 6."
+          ]
+        },
+        {
+          "enunciado": "9² − 6² = ?\n\nA) 54   B) 117   C) 45   D) 9",
+          "respuesta": "C) 45",
+          "pasos": [
+            "Calcula cada cuadrado: 9² = 81 y 6² = 36.",
+            "Resta: 81 − 36 = 45.",
+            "Atajo: (9 − 6) × (9 + 6) = 3 × 15 = 45."
+          ]
+        },
+        {
+          "enunciado": "8² − 3² = ?\n\nA) 73   B) 24   C) 55   D) 25",
+          "respuesta": "C) 55",
+          "pasos": [
+            "Calcula cada cuadrado: 8² = 64 y 3² = 9.",
+            "Resta: 64 − 9 = 55.",
+            "Atajo: (8 − 3) × (8 + 3) = 5 × 11 = 55."
+          ]
+        },
+        {
+          "enunciado": "11² − 4² = ?\n\nA) 137   B) 49   C) 105   D) 44",
+          "respuesta": "C) 105",
+          "pasos": [
+            "Calcula cada cuadrado: 11² = 121 y 4² = 16.",
+            "Resta: 121 − 16 = 105.",
+            "Atajo: (11 − 4) × (11 + 4) = 7 × 15 = 105."
+          ]
+        },
+        {
+          "enunciado": "12² − 5² = ?\n\nA) 169   B) 60   C) 119   D) 49",
+          "respuesta": "C) 119",
+          "pasos": [
+            "Calcula cada cuadrado: 12² = 144 y 5² = 25.",
+            "Resta: 144 − 25 = 119.",
+            "Atajo: (12 − 5) × (12 + 5) = 7 × 17 = 119."
+          ]
+        },
+        {
+          "enunciado": "7² − 2² = ?\n\nA) 45   B) 25   C) 53   D) 14",
+          "respuesta": "A) 45",
+          "pasos": [
+            "Calcula cada cuadrado: 7² = 49 y 2² = 4.",
+            "Resta: 49 − 4 = 45.",
+            "Atajo: (7 − 2) × (7 + 2) = 5 × 9 = 45."
+          ]
+        },
+        {
+          "enunciado": "13² − 5² = ?\n\nA) 64   B) 194   C) 65   D) 144",
+          "respuesta": "D) 144",
+          "pasos": [
+            "Calcula cada cuadrado: 13² = 169 y 5² = 25.",
+            "Resta: 169 − 25 = 144.",
+            "Atajo: (13 − 5) × (13 + 5) = 8 × 18 = 144."
+          ]
+        },
+        {
+          "enunciado": "10² − 4² = ?\n\nA) 84   B) 116   C) 36   D) 40",
+          "respuesta": "A) 84",
+          "pasos": [
+            "Calcula cada cuadrado: 10² = 100 y 4² = 16.",
+            "Resta: 100 − 16 = 84.",
+            "Atajo: (10 − 4) × (10 + 4) = 6 × 14 = 84."
+          ]
+        },
+        {
+          "enunciado": "15² − 9² = ?\n\nA) 144   B) 36   C) 135   D) 306",
+          "respuesta": "A) 144",
+          "pasos": [
+            "Calcula cada cuadrado: 15² = 225 y 9² = 81.",
+            "Resta: 225 − 81 = 144.",
+            "Atajo: (15 − 9) × (15 + 9) = 6 × 24 = 144."
+          ]
+        },
+        {
+          "enunciado": "3/4 de 64 = ?\n\nA) 48   B) 85   C) 16   D) 32",
+          "respuesta": "A) 48",
+          "pasos": [
+            "Parte el total en 4 trozos iguales: 64 ÷ 4 = 16. Eso es 1/4.",
+            "Como piden 3/4, toma 3 de esos trozos: 16 × 3 = 48.",
+            "Respuesta: 48."
+          ]
+        },
+        {
+          "enunciado": "2/5 de 45 = ?\n\nA) 22   B) 112   C) 18   D) 9",
+          "respuesta": "C) 18",
+          "pasos": [
+            "Parte el total en 5 trozos iguales: 45 ÷ 5 = 9. Eso es 1/5.",
+            "Como piden 2/5, toma 2 de esos trozos: 9 × 2 = 18.",
+            "Respuesta: 18."
+          ]
+        },
+        {
+          "enunciado": "3/5 de 80 = ?\n\nA) 40   B) 133   C) 48   D) 16",
+          "respuesta": "C) 48",
+          "pasos": [
+            "Parte el total en 5 trozos iguales: 80 ÷ 5 = 16. Eso es 1/5.",
+            "Como piden 3/5, toma 3 de esos trozos: 16 × 3 = 48.",
+            "Respuesta: 48."
+          ]
+        },
+        {
+          "enunciado": "1/4 de 96 = ?\n\nA) 48   B) 85   C) 24   D) 384",
+          "respuesta": "C) 24",
+          "pasos": [
+            "Parte el total en 4 trozos iguales: 96 ÷ 4 = 24. Eso es 1/4.",
+            "Como piden 1/4, toma 1 de esos trozos: 24 × 1 = 24.",
+            "Respuesta: 24."
+          ]
+        },
+        {
+          "enunciado": "5/8 de 48 = ?\n\nA) 30   B) 76   C) 24   D) 6",
+          "respuesta": "A) 30",
+          "pasos": [
+            "Parte el total en 8 trozos iguales: 48 ÷ 8 = 6. Eso es 1/8.",
+            "Como piden 5/8, toma 5 de esos trozos: 6 × 5 = 30.",
+            "Respuesta: 30."
+          ]
+        },
+        {
+          "enunciado": "2/3 de 90 = ?\n\nA) 135   B) 30   C) 45   D) 60",
+          "respuesta": "D) 60",
+          "pasos": [
+            "Parte el total en 3 trozos iguales: 90 ÷ 3 = 30. Eso es 1/3.",
+            "Como piden 2/3, toma 2 de esos trozos: 30 × 2 = 60.",
+            "Respuesta: 60."
+          ]
+        },
+        {
+          "enunciado": "5/6 de 72 = ?\n\nA) 60   B) 12   C) 36   D) 86",
+          "respuesta": "A) 60",
+          "pasos": [
+            "Parte el total en 6 trozos iguales: 72 ÷ 6 = 12. Eso es 1/6.",
+            "Como piden 5/6, toma 5 de esos trozos: 12 × 5 = 60.",
+            "Respuesta: 60."
+          ]
+        },
+        {
+          "enunciado": "7/8 de 56 = ?\n\nA) 28   B) 49   C) 64   D) 7",
+          "respuesta": "B) 49",
+          "pasos": [
+            "Parte el total en 8 trozos iguales: 56 ÷ 8 = 7. Eso es 1/8.",
+            "Como piden 7/8, toma 7 de esos trozos: 7 × 7 = 49.",
+            "Respuesta: 49."
+          ]
+        },
+        {
+          "enunciado": "7 × 8 = ?\n\nA) 56   B) 15   C) 49   D) 63",
+          "respuesta": "A) 56",
+          "pasos": [
+            "Multiplica: 7 × 8 = 56.",
+            "Si te ayuda: 7 × 7 = 49, y sumas otro 7 → 56.",
+            "Respuesta: 56."
+          ]
+        },
+        {
+          "enunciado": "9 × 6 = ?\n\nA) 54   B) 45   C) 15   D) 63",
+          "respuesta": "A) 54",
+          "pasos": [
+            "Multiplica: 9 × 6 = 54.",
+            "Si te ayuda: 9 × 5 = 45, y sumas otro 9 → 54.",
+            "Respuesta: 54."
+          ]
+        },
+        {
+          "enunciado": "12 × 11 = ?\n\nA) 144   B) 120   C) 23   D) 132",
+          "respuesta": "D) 132",
+          "pasos": [
+            "Multiplica: 12 × 11 = 132.",
+            "Si te ayuda: 12 × 10 = 120, y sumas otro 12 → 132.",
+            "Respuesta: 132."
+          ]
+        },
+        {
+          "enunciado": "15 × 14 = ?\n\nA) 29   B) 195   C) 225   D) 210",
+          "respuesta": "D) 210",
+          "pasos": [
+            "Multiplica: 15 × 14 = 210.",
+            "Si te ayuda: 15 × 13 = 195, y sumas otro 15 → 210.",
+            "Respuesta: 210."
+          ]
+        },
+        {
+          "enunciado": "8 × 13 = ?\n\nA) 96   B) 104   C) 112   D) 21",
+          "respuesta": "B) 104",
+          "pasos": [
+            "Multiplica: 8 × 13 = 104.",
+            "Si te ayuda: 8 × 12 = 96, y sumas otro 8 → 104.",
+            "Respuesta: 104."
+          ]
+        },
+        {
+          "enunciado": "16 × 5 = ?\n\nA) 64   B) 96   C) 21   D) 80",
+          "respuesta": "D) 80",
+          "pasos": [
+            "Multiplica: 16 × 5 = 80.",
+            "Si te ayuda: 16 × 4 = 64, y sumas otro 16 → 80.",
+            "Respuesta: 80."
+          ]
+        },
+        {
+          "enunciado": "9 × 12 = ?\n\nA) 21   B) 99   C) 117   D) 108",
+          "respuesta": "D) 108",
+          "pasos": [
+            "Multiplica: 9 × 12 = 108.",
+            "Si te ayuda: 9 × 11 = 99, y sumas otro 9 → 108.",
+            "Respuesta: 108."
+          ]
+        },
+        {
+          "enunciado": "11 × 11 = ?\n\nA) 110   B) 132   C) 22   D) 121",
+          "respuesta": "D) 121",
+          "pasos": [
+            "Multiplica: 11 × 11 = 121.",
+            "Si te ayuda: 11 × 10 = 110, y sumas otro 11 → 121.",
+            "Respuesta: 121."
+          ]
+        },
+        {
+          "enunciado": "Si 1/5 de un número es 18, el número es:\n\nA) 23   B) 72   C) 108   D) 90",
           "respuesta": "D) 90",
           "pasos": [
-            "Producto directo: 9×10=90.",
-            "Si te trabas, descompón: (a×5)+(a×resto).",
-            "Revisa no haber sumado en vez de multiplicar."
+            "Te dan una sola parte de 5: esa parte vale 18.",
+            "El número completo son las 5 partes: 18 × 5 = 90.",
+            "Respuesta: 90."
           ]
         },
         {
-          "enunciado": "Si 1/5 de un número es 21, el número es:\n\nA) 84   B) 110   C) 126   D) 105",
-          "respuesta": "D) 105",
+          "enunciado": "Si 1/4 de un número es 12, el número es:\n\nA) 48   B) 60   C) 16   D) 36",
+          "respuesta": "A) 48",
           "pasos": [
-            "El entero = 21×5.",
-            "21×5=105.",
-            "Multiplica, no divides otra vez."
+            "Te dan una sola parte de 4: esa parte vale 12.",
+            "El número completo son las 4 partes: 12 × 4 = 48.",
+            "Respuesta: 48."
           ]
         },
         {
-          "enunciado": "175 × 0,4 = ?\n\nA) 35   B) 87   C) 70   D) 43",
-          "respuesta": "C) 70",
+          "enunciado": "Si 1/3 de un número es 15, el número es:\n\nA) 45   B) 30   C) 60   D) 18",
+          "respuesta": "A) 45",
           "pasos": [
-            "0,4 = 2/5.",
-            "175×2/5 = 70.",
-            "Equivale a tomar el 40%."
+            "Te dan una sola parte de 3: esa parte vale 15.",
+            "El número completo son las 3 partes: 15 × 3 = 45.",
+            "Respuesta: 45."
           ]
         },
         {
-          "enunciado": "(16 + 4) × 5 = ?\n\nA) 36   B) 25   C) 320   D) 100",
-          "respuesta": "D) 100",
+          "enunciado": "Si 1/6 de un número es 9, el número es:\n\nA) 45   B) 15   C) 54   D) 63",
+          "respuesta": "C) 54",
           "pasos": [
-            "Primero paréntesis: 16+4=20.",
-            "Luego ×5 = 100.",
-            "Sin paréntesis sería distinto: respeta el orden."
+            "Te dan una sola parte de 6: esa parte vale 9.",
+            "El número completo son las 6 partes: 9 × 6 = 54.",
+            "Respuesta: 54."
           ]
         },
         {
-          "enunciado": "28 ÷ 4 + 4 × 2 = ?\n\nA) 15   B) 17   C) 12   D) 36",
-          "respuesta": "A) 15",
+          "enunciado": "Si 1/7 de un número es 14, el número es:\n\nA) 98   B) 21   C) 84   D) 112",
+          "respuesta": "A) 98",
           "pasos": [
-            "Primero 28÷4=7 y 4×2=8.",
-            "Suma: 7+8=15.",
-            "No sumes de izquierda a derecha sin priorizar × ÷."
+            "Te dan una sola parte de 7: esa parte vale 14.",
+            "El número completo son las 7 partes: 14 × 7 = 98.",
+            "Respuesta: 98."
           ]
         },
         {
-          "enunciado": "20% de 110 = ?\n\nA) 24   B) 220   C) 22   D) 20",
-          "respuesta": "C) 22",
+          "enunciado": "Si 1/5 de un número es 11, el número es:\n\nA) 16   B) 55   C) 44   D) 66",
+          "respuesta": "B) 55",
           "pasos": [
-            "(20/100)×110 = 22.",
-            "Atajo: 10% de 110=11; escala al 20%.",
-            "Comprueba que el resultado sea menor que la base."
+            "Te dan una sola parte de 5: esa parte vale 11.",
+            "El número completo son las 5 partes: 11 × 5 = 55.",
+            "Respuesta: 55."
           ]
         },
         {
-          "enunciado": "13² − 3² = ?\n\nA) 100   B) 160   C) 39   D) 178",
-          "respuesta": "B) 160",
+          "enunciado": "Si 1/8 de un número es 16, el número es:\n\nA) 24   B) 144   C) 128   D) 112",
+          "respuesta": "C) 128",
           "pasos": [
-            "13²=169, 3²=9.",
-            "Resta: 160.",
-            "Atajo: (13-3)(13+3)=10×16=160."
+            "Te dan una sola parte de 8: esa parte vale 16.",
+            "El número completo son las 8 partes: 16 × 8 = 128.",
+            "Respuesta: 128."
           ]
         },
         {
-          "enunciado": "3/4 de 72 = ?\n\nA) 48   B) 36   C) 18   D) 54",
-          "respuesta": "D) 54",
+          "enunciado": "Si 1/4 de un número es 13, el número es:\n\nA) 65   B) 52   C) 39   D) 17",
+          "respuesta": "B) 52",
           "pasos": [
-            "1/4 de 72 = 18.",
-            "3/4 = 3×18 = 54.",
-            "No multipliques 3×4 sobre el total."
+            "Te dan una sola parte de 4: esa parte vale 13.",
+            "El número completo son las 4 partes: 13 × 4 = 52.",
+            "Respuesta: 52."
           ]
         },
         {
-          "enunciado": "8 × 10 = ?\n\nA) 18   B) 80   C) 88   D) 72",
+          "enunciado": "125 × 0,4 = ?\n\nA) 25   B) 31,25   C) 62   D) 50",
+          "respuesta": "D) 50",
+          "pasos": [
+            "Estás multiplicando 125 por 0,4.",
+            "125 × 0,4 = 50.",
+            "Respuesta: 50."
+          ]
+        },
+        {
+          "enunciado": "80 × 0,4 = ?\n\nA) 40   B) 32   C) 16   D) 20",
+          "respuesta": "B) 32",
+          "pasos": [
+            "Estás multiplicando 80 por 0,4.",
+            "80 × 0,4 = 32.",
+            "Respuesta: 32."
+          ]
+        },
+        {
+          "enunciado": "150 × 0,5 = ?\n\nA) 37,5   B) 75   C) 98   D) 30",
+          "respuesta": "B) 75",
+          "pasos": [
+            "Estás multiplicando 150 por 0,5.",
+            "150 × 0,5 = 75.",
+            "Respuesta: 75."
+          ]
+        },
+        {
+          "enunciado": "64 × 0,25 = ?\n\nA) 16   B) 12,8   C) 90   D) 32",
+          "respuesta": "A) 16",
+          "pasos": [
+            "Estás multiplicando 64 por 0,25.",
+            "64 × 0,25 = 16.",
+            "Respuesta: 16."
+          ]
+        },
+        {
+          "enunciado": "200 × 0,35 = ?\n\nA) 40   B) 70   C) 100   D) 50",
+          "respuesta": "B) 70",
+          "pasos": [
+            "Estás multiplicando 200 por 0,35.",
+            "200 × 0,35 = 70.",
+            "Respuesta: 70."
+          ]
+        },
+        {
+          "enunciado": "90 × 0,2 = ?\n\nA) 22,5   B) 18   C) 69   D) 45",
+          "respuesta": "B) 18",
+          "pasos": [
+            "Estás multiplicando 90 por 0,2.",
+            "90 × 0,2 = 18.",
+            "Respuesta: 18."
+          ]
+        },
+        {
+          "enunciado": "48 × 0,75 = ?\n\nA) 9,6   B) 24   C) 36   D) 12",
+          "respuesta": "C) 36",
+          "pasos": [
+            "Estás multiplicando 48 por 0,75.",
+            "48 × 0,75 = 36.",
+            "Respuesta: 36."
+          ]
+        },
+        {
+          "enunciado": "36 × 1,5 = ?\n\nA) 7,2   B) 18   C) 54   D) 9",
+          "respuesta": "C) 54",
+          "pasos": [
+            "Estás multiplicando 36 por 1,5.",
+            "36 × 1,5 = 54.",
+            "Respuesta: 54."
+          ]
+        },
+        {
+          "enunciado": "(9 + 4) × 2 = ?\n\nA) 17   B) 26   C) 15   D) 72",
+          "respuesta": "B) 26",
+          "pasos": [
+            "Primero resuelve lo del paréntesis: 9 + 4 = 13.",
+            "Después multiplica ese resultado por 2: 13 × 2 = 26.",
+            "Respuesta: 26."
+          ]
+        },
+        {
+          "enunciado": "(8 + 7) × 3 = ?\n\nA) 18   B) 168   C) 29   D) 45",
+          "respuesta": "D) 45",
+          "pasos": [
+            "Primero resuelve lo del paréntesis: 8 + 7 = 15.",
+            "Después multiplica ese resultado por 3: 15 × 3 = 45.",
+            "Respuesta: 45."
+          ]
+        },
+        {
+          "enunciado": "(6 + 5) × 4 = ?\n\nA) 15   B) 26   C) 44   D) 120",
+          "respuesta": "C) 44",
+          "pasos": [
+            "Primero resuelve lo del paréntesis: 6 + 5 = 11.",
+            "Después multiplica ese resultado por 4: 11 × 4 = 44.",
+            "Respuesta: 44."
+          ]
+        },
+        {
+          "enunciado": "(11 + 3) × 5 = ?\n\nA) 70   B) 26   C) 165   D) 19",
+          "respuesta": "A) 70",
+          "pasos": [
+            "Primero resuelve lo del paréntesis: 11 + 3 = 14.",
+            "Después multiplica ese resultado por 5: 14 × 5 = 70.",
+            "Respuesta: 70."
+          ]
+        },
+        {
+          "enunciado": "(12 + 8) × 2 = ?\n\nA) 28   B) 22   C) 40   D) 192",
+          "respuesta": "C) 40",
+          "pasos": [
+            "Primero resuelve lo del paréntesis: 12 + 8 = 20.",
+            "Después multiplica ese resultado por 2: 20 × 2 = 40.",
+            "Respuesta: 40."
+          ]
+        },
+        {
+          "enunciado": "(7 + 9) × 3 = ?\n\nA) 189   B) 34   C) 19   D) 48",
+          "respuesta": "D) 48",
+          "pasos": [
+            "Primero resuelve lo del paréntesis: 7 + 9 = 16.",
+            "Después multiplica ese resultado por 3: 16 × 3 = 48.",
+            "Respuesta: 48."
+          ]
+        },
+        {
+          "enunciado": "(15 + 5) × 4 = ?\n\nA) 300   B) 80   C) 24   D) 35",
           "respuesta": "B) 80",
           "pasos": [
-            "Producto directo: 8×10=80.",
-            "Si te trabas, descompón: (a×5)+(a×resto).",
-            "Revisa no haber sumado en vez de multiplicar."
+            "Primero resuelve lo del paréntesis: 15 + 5 = 20.",
+            "Después multiplica ese resultado por 4: 20 × 4 = 80.",
+            "Respuesta: 80."
           ]
         },
         {
-          "enunciado": "Si 1/5 de un número es 15, el número es:\n\nA) 60   B) 80   C) 90   D) 75",
-          "respuesta": "D) 75",
+          "enunciado": "(10 + 6) × 3 = ?\n\nA) 28   B) 48   C) 180   D) 19",
+          "respuesta": "B) 48",
           "pasos": [
-            "El entero = 15×5.",
-            "15×5=75.",
-            "Multiplica, no divides otra vez."
+            "Primero resuelve lo del paréntesis: 10 + 6 = 16.",
+            "Después multiplica ese resultado por 3: 16 × 3 = 48.",
+            "Respuesta: 48."
+          ]
+        },
+        {
+          "enunciado": "13 × 4 = ?\n\nA) 52   B) 17   C) 39   D) 65",
+          "respuesta": "A) 52",
+          "pasos": [
+            "Multiplica: 13 × 4 = 52.",
+            "Si te ayuda: 13 × 3 = 39, y sumas otro 13 → 52.",
+            "Respuesta: 52."
+          ]
+        },
+        {
+          "enunciado": "14 × 6 = ?\n\nA) 20   B) 98   C) 70   D) 84",
+          "respuesta": "D) 84",
+          "pasos": [
+            "Multiplica: 14 × 6 = 84.",
+            "Si te ayuda: 14 × 5 = 70, y sumas otro 14 → 84.",
+            "Respuesta: 84."
+          ]
+        },
+        {
+          "enunciado": "16 × 3 = ?\n\nA) 19   B) 48   C) 32   D) 64",
+          "respuesta": "B) 48",
+          "pasos": [
+            "Multiplica: 16 × 3 = 48.",
+            "Si te ayuda: 16 × 2 = 32, y sumas otro 16 → 48.",
+            "Respuesta: 48."
+          ]
+        },
+        {
+          "enunciado": "18 × 5 = ?\n\nA) 72   B) 23   C) 90   D) 108",
+          "respuesta": "C) 90",
+          "pasos": [
+            "Multiplica: 18 × 5 = 90.",
+            "Si te ayuda: 18 × 4 = 72, y sumas otro 18 → 90.",
+            "Respuesta: 90."
+          ]
+        },
+        {
+          "enunciado": "20 × 4 = ?\n\nA) 100   B) 24   C) 80   D) 60",
+          "respuesta": "C) 80",
+          "pasos": [
+            "Multiplica: 20 × 4 = 80.",
+            "Si te ayuda: 20 × 3 = 60, y sumas otro 20 → 80.",
+            "Respuesta: 80."
+          ]
+        },
+        {
+          "enunciado": "21 × 3 = ?\n\nA) 42   B) 63   C) 24   D) 84",
+          "respuesta": "B) 63",
+          "pasos": [
+            "Multiplica: 21 × 3 = 63.",
+            "Si te ayuda: 21 × 2 = 42, y sumas otro 21 → 63.",
+            "Respuesta: 63."
+          ]
+        },
+        {
+          "enunciado": "17 × 5 = ?\n\nA) 102   B) 68   C) 85   D) 22",
+          "respuesta": "C) 85",
+          "pasos": [
+            "Multiplica: 17 × 5 = 85.",
+            "Si te ayuda: 17 × 4 = 68, y sumas otro 17 → 85.",
+            "Respuesta: 85."
+          ]
+        },
+        {
+          "enunciado": "19 × 4 = ?\n\nA) 57   B) 23   C) 95   D) 76",
+          "respuesta": "D) 76",
+          "pasos": [
+            "Multiplica: 19 × 4 = 76.",
+            "Si te ayuda: 19 × 3 = 57, y sumas otro 19 → 76.",
+            "Respuesta: 76."
+          ]
+        },
+        {
+          "enunciado": "(5 + 3) × 6 = ?\n\nA) 48   B) 14   C) 21   D) 23",
+          "respuesta": "A) 48",
+          "pasos": [
+            "Primero resuelve lo del paréntesis: 5 + 3 = 8.",
+            "Después multiplica ese resultado por 6: 8 × 6 = 48.",
+            "Respuesta: 48."
+          ]
+        },
+        {
+          "enunciado": "(8 + 2) × 9 = ?\n\nA) 26   B) 19   C) 90   D) 25",
+          "respuesta": "C) 90",
+          "pasos": [
+            "Primero resuelve lo del paréntesis: 8 + 2 = 10.",
+            "Después multiplica ese resultado por 9: 10 × 9 = 90.",
+            "Respuesta: 90."
+          ]
+        },
+        {
+          "enunciado": "(7 + 4) × 5 = ?\n\nA) 27   B) 33   C) 16   D) 55",
+          "respuesta": "D) 55",
+          "pasos": [
+            "Primero resuelve lo del paréntesis: 7 + 4 = 11.",
+            "Después multiplica ese resultado por 5: 11 × 5 = 55.",
+            "Respuesta: 55."
+          ]
+        },
+        {
+          "enunciado": "(9 + 1) × 8 = ?\n\nA) 18   B) 80   C) 68   D) 17",
+          "respuesta": "B) 80",
+          "pasos": [
+            "Primero resuelve lo del paréntesis: 9 + 1 = 10.",
+            "Después multiplica ese resultado por 8: 10 × 8 = 80.",
+            "Respuesta: 80."
+          ]
+        },
+        {
+          "enunciado": "(6 + 6) × 3 = ?\n\nA) 39   B) 15   C) 36   D) 24",
+          "respuesta": "C) 36",
+          "pasos": [
+            "Primero resuelve lo del paréntesis: 6 + 6 = 12.",
+            "Después multiplica ese resultado por 3: 12 × 3 = 36.",
+            "Respuesta: 36."
+          ]
+        },
+        {
+          "enunciado": "(4 + 8) × 4 = ?\n\nA) 36   B) 48   C) 28   D) 16",
+          "respuesta": "B) 48",
+          "pasos": [
+            "Primero resuelve lo del paréntesis: 4 + 8 = 12.",
+            "Después multiplica ese resultado por 4: 12 × 4 = 48.",
+            "Respuesta: 48."
+          ]
+        },
+        {
+          "enunciado": "5% de 120 = ?\n\nA) 6   B) 5   C) 9   D) 4",
+          "respuesta": "A) 6",
+          "pasos": [
+            "La pregunta pide el 5% de 120.",
+            "Eso es (5 ÷ 100) × 120 = 6.",
+            "Camino fácil: 1% de 120 = 1,2; luego 1,2 × 5 = 6."
+          ]
+        },
+        {
+          "enunciado": "20% de 85 = ?\n\nA) 17   B) 20   C) 15   D) 17",
+          "respuesta": "A) 17",
+          "pasos": [
+            "La pregunta pide el 20% de 85.",
+            "Eso es (20 ÷ 100) × 85 = 17.",
+            "Camino fácil: 1% de 85 = 0,85; luego 0,85 × 20 = 17."
+          ]
+        },
+        {
+          "enunciado": "50% de 36 = ?\n\nA) 18   B) 21   C) 16   D) 50",
+          "respuesta": "A) 18",
+          "pasos": [
+            "La pregunta pide el 50% de 36.",
+            "Eso es (50 ÷ 100) × 36 = 18.",
+            "Camino fácil: 50% es la mitad → 36 ÷ 2 = 18."
+          ]
+        },
+        {
+          "enunciado": "60% de 45 = ?\n\nA) 60   B) 27   C) 25   D) 30",
+          "respuesta": "B) 27",
+          "pasos": [
+            "La pregunta pide el 60% de 45.",
+            "Eso es (60 ÷ 100) × 45 = 27.",
+            "Camino fácil: 1% de 45 = 0,45; luego 0,45 × 60 = 27."
+          ]
+        },
+        {
+          "enunciado": "12% de 75 = ?\n\nA) 7   B) 68   C) 12   D) 9",
+          "respuesta": "D) 9",
+          "pasos": [
+            "La pregunta pide el 12% de 75.",
+            "Eso es (12 ÷ 100) × 75 = 9.",
+            "Camino fácil: 1% de 75 = 0,75; luego 0,75 × 12 = 9."
+          ]
+        },
+        {
+          "enunciado": "18% de 50 = ?\n\nA) 12   B) 7   C) 18   D) 9",
+          "respuesta": "D) 9",
+          "pasos": [
+            "La pregunta pide el 18% de 50.",
+            "Eso es (18 ÷ 100) × 50 = 9.",
+            "Camino fácil: 1% de 50 = 0,5; luego 0,5 × 18 = 9."
+          ]
+        },
+        {
+          "enunciado": "22% de 50 = ?\n\nA) 9   B) 11   C) 22   D) 14",
+          "respuesta": "B) 11",
+          "pasos": [
+            "La pregunta pide el 22% de 50.",
+            "Eso es (22 ÷ 100) × 50 = 11.",
+            "Camino fácil: 1% de 50 = 0,5; luego 0,5 × 22 = 11."
+          ]
+        },
+        {
+          "enunciado": "9% de 80 = ?\n\nA) 9   B) 5,2   C) 10,2   D) 7,2",
+          "respuesta": "D) 7,2",
+          "pasos": [
+            "La pregunta pide el 9% de 80.",
+            "Eso es (9 ÷ 100) × 80 = 7,2.",
+            "Camino fácil: 1% de 80 = 0,8; luego 0,8 × 9 = 7,2.",
+            "Da decimal: la respuesta exacta es 7,2 (no la redondees)."
           ]
         }
       ]

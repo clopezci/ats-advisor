@@ -90,5 +90,14 @@ export function answersMatch(given: string, expected: string): boolean {
   }
   const rest = e.replace(/^[a-e]\)\s*/, "");
   if (rest.length > 1 && (g === rest || g.includes(rest) || rest.includes(g))) return true;
+  // Decimales: 7,5 ≈ 7.5
+  const asNum = (s: string) => {
+    const t = s.replace(/^[a-e]\)\s*/, "").replace(/\s/g, "").replace(",", ".");
+    if (!/^-?\d+(\.\d+)?$/.test(t)) return null;
+    return Number(t);
+  };
+  const gn = asNum(g);
+  const en = asNum(rest.length ? rest : e);
+  if (gn != null && en != null && Math.abs(gn - en) < 1e-9) return true;
   return false;
 }

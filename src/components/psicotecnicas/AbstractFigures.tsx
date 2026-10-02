@@ -393,22 +393,28 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
     ),
   },
   "engranajes-dientes": {
-    caption: "El chico (10 dientes) da más vueltas; el grande (40) da menos. 10×4 = 40×1.",
+    caption: "Chico 10 dientes / grande 40. Si el chico da 4 vueltas, el grande da 1 (10×4 = 40×1).",
     node: (
-      <Frame caption="Piñón chico + engranaje grande" w={360} h={200}>
-        <Gear x={95} y={110} r={28} label="10" teeth={10} />
-        <Gear x={230} y={110} r={70} label="40" teeth={20} />
-        <text x={95} y={40} textAnchor="middle" fontSize="11" fill={muted}>
-          piñón
+      <Frame caption="Mismo «recorrido» de dientes: 40 = 40" w={360} h={210}>
+        <Gear x={95} y={115} r={28} label="10" teeth={10} />
+        <Gear x={230} y={115} r={70} label="40" teeth={20} />
+        <text x={95} y={38} textAnchor="middle" fontSize="11" fill={muted}>
+          chico
         </text>
-        <text x={95} y={55} textAnchor="middle" fontSize="12" fill={accent}>
+        <text x={95} y={54} textAnchor="middle" fontSize="12" fill={accent}>
           4 vueltas
         </text>
-        <text x={230} y={30} textAnchor="middle" fontSize="11" fill={muted}>
+        <text x={95} y={190} textAnchor="middle" fontSize="11" fill={stroke}>
+          10 × 4 = 40
+        </text>
+        <text x={230} y={28} textAnchor="middle" fontSize="11" fill={muted}>
           grande
         </text>
-        <text x={230} y={45} textAnchor="middle" fontSize="12" fill={accent}>
+        <text x={230} y={44} textAnchor="middle" fontSize="12" fill={accent}>
           1 vuelta
+        </text>
+        <text x={230} y={190} textAnchor="middle" fontSize="11" fill={stroke}>
+          40 × 1 = 40
         </text>
       </Frame>
     ),

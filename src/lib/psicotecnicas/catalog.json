@@ -494,8 +494,8 @@
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Más dientes, más despacio",
-      "regla": "Cuando dos engranajes se tocan, el que tiene MÁS dientes gira MÁS DESPACIO. La cuenta es siempre: dientes del uno × sus vueltas = dientes del otro × sus vueltas.",
-      "ejemplo": "Mira la figura: piñón de 10 dientes a la izquierda y engranaje de 40 a la derecha.\n1) El chico da 4 vueltas: 10 × 4 = 40.\n2) En el grande: 40 × vueltas = 40 → vueltas = 1.\n3) Mientras el piñón da 4 vueltas, el grande solo da 1. Más dientes → menos vueltas.",
+      "regla": "Idea simple: el engranaje GRANDE siempre gira más lento que el CHICO cuando se tocan. ¿Por qué? Porque en cada vuelta el chico «empuja» pocos dientes y el grande tiene que recibir muchos. Para no inventar: multiplica dientes × vueltas en un lado; el otro lado debe dar el mismo número.",
+      "ejemplo": "Mira la figura: a la izquierda un piñón de 10 dientes; a la derecha uno de 40.\n\nPregunta típica: si el de 10 da 4 vueltas, ¿cuántas da el de 40?\n\n1) Lo que «recorre» el chico: 10 dientes × 4 vueltas = 40.\n2) El grande también tiene que «recorrer» 40 (porque se tocan y no resbalan).\n3) El grande tiene 40 dientes, así que: 40 × ¿cuántas vueltas? = 40 → solo 1 vuelta.\n\nEn corto: el chico da 4 vueltas y el grande da 1. Cuatro veces más dientes → cuatro veces más despacio.",
       "figura": "engranajes-dientes"
     },
     {

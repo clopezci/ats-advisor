@@ -10,8 +10,8 @@ const accent = "#6d28d9";
 function Frame({
   children,
   caption,
-  w = 320,
-  h = 160,
+  w = 360,
+  h = 200,
 }: {
   children: ReactNode;
   caption?: string;
@@ -19,8 +19,14 @@ function Frame({
   h?: number;
 }) {
   return (
-    <figure className="mx-auto my-2 w-full max-w-[220px] rounded-lg border border-black/10 bg-white p-2">
-      <svg viewBox={`0 0 ${w} ${h}`} className="mx-auto h-auto w-full" role="img" aria-label={caption || "Figura"}>
+    <figure className="mx-auto my-2 w-full max-w-[280px] overflow-visible rounded-lg border border-black/10 bg-white p-2">
+      <svg
+        viewBox={`0 0 ${w} ${h}`}
+        className="mx-auto block h-auto w-full overflow-visible"
+        preserveAspectRatio="xMidYMid meet"
+        role="img"
+        aria-label={caption || "Figura"}
+      >
         {children}
       </svg>
       {caption ? <figcaption className="text-[11px] muted mt-1.5 text-center leading-snug">{caption}</figcaption> : null}
@@ -113,30 +119,30 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
   "serie-triangulo-puntos": {
     caption: "En cada paso: giro 90° a la derecha y un punto más adentro.",
     node: (
-      <Frame caption="Serie: ¿qué cambia en cada figura?">
-        <Triangle x={50} y={100} rot={0} dots={1} />
-        <text x={90} y={105} fill={muted} fontSize="22">
+      <Frame caption="Serie: ¿qué cambia en cada figura?" w={360} h={200}>
+        <Triangle x={48} y={95} rot={0} dots={1} size={24} />
+        <text x={88} y={100} fill={muted} fontSize="20">
           →
         </text>
-        <Triangle x={140} y={100} rot={90} dots={2} />
-        <text x={180} y={105} fill={muted} fontSize="22">
+        <Triangle x={130} y={95} rot={90} dots={2} size={24} />
+        <text x={170} y={100} fill={muted} fontSize="20">
           →
         </text>
-        <Triangle x={230} y={100} rot={180} dots={3} />
-        <text x={270} y={105} fill={muted} fontSize="22">
+        <Triangle x={212} y={95} rot={180} dots={3} size={24} />
+        <text x={252} y={100} fill={muted} fontSize="20">
           →
         </text>
-        <Triangle x={320} y={100} rot={270} dots={4} />
-        <text x={50} y={175} textAnchor="middle" fontSize="11" fill={muted}>
+        <Triangle x={294} y={95} rot={270} dots={4} size={24} />
+        <text x={48} y={175} textAnchor="middle" fontSize="12" fill={muted}>
           1
         </text>
-        <text x={140} y={175} textAnchor="middle" fontSize="11" fill={muted}>
+        <text x={130} y={175} textAnchor="middle" fontSize="12" fill={muted}>
           2
         </text>
-        <text x={230} y={175} textAnchor="middle" fontSize="11" fill={muted}>
+        <text x={212} y={175} textAnchor="middle" fontSize="12" fill={muted}>
           3
         </text>
-        <text x={320} y={175} textAnchor="middle" fontSize="11" fill={muted}>
+        <text x={294} y={175} textAnchor="middle" fontSize="12" fill={muted}>
           4
         </text>
       </Frame>
@@ -145,14 +151,14 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
   "ciclo-flechas-90": {
     caption: "Giro de 90°: la 5ª vuelve a verse como la 1ª.",
     node: (
-      <Frame caption="Ciclo de cuatro giros">
-        <ArrowUp x={45} y={90} rot={0} />
-        <ArrowUp x={115} y={90} rot={90} />
-        <ArrowUp x={185} y={90} rot={180} />
-        <ArrowUp x={255} y={90} rot={270} />
-        <ArrowUp x={325} y={90} rot={0} />
+      <Frame caption="Ciclo de cuatro giros" w={360} h={190}>
+        <ArrowUp x={40} y={85} rot={0} />
+        <ArrowUp x={110} y={85} rot={90} />
+        <ArrowUp x={180} y={85} rot={180} />
+        <ArrowUp x={250} y={85} rot={270} />
+        <ArrowUp x={320} y={85} rot={0} />
         {["1↑", "2→", "3↓", "4←", "5↑"].map((t, i) => (
-          <text key={t} x={45 + i * 70} y={165} textAnchor="middle" fontSize="12" fill={muted}>
+          <text key={t} x={40 + i * 70} y={170} textAnchor="middle" fontSize="12" fill={muted}>
             {t}
           </text>
         ))}
@@ -162,7 +168,7 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
   "giro-espejo-r": {
     caption: "Sigue la panza de la R: espejo ≠ giro 180°.",
     node: (
-      <Frame caption="Misma letra R, tres transformaciones" h={220}>
+      <Frame caption="Misma letra R, tres transformaciones" w={360} h={220}>
         <text x={60} y={28} textAnchor="middle" fontSize="12" fill={muted}>
           Original
         </text>
@@ -362,7 +368,7 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
   "engranajes-opuestos": {
     caption: "Dos ruedas que se tocan giran en sentido contrario.",
     node: (
-      <Frame caption="Engranajes en contacto" h={180}>
+      <Frame caption="Engranajes en contacto" w={360} h={180}>
         <Gear x={110} y={90} r={40} label="A" />
         <Gear x={210} y={90} r={40} label="B" />
         <path d="M70,50 A40,40 0 0,1 110,50" fill="none" stroke={accent} strokeWidth="2" markerEnd="url(#arrow)" />
@@ -378,7 +384,7 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
   "engranajes-correa": {
     caption: "Con correa (sin cruce) las dos giran al mismo sentido.",
     node: (
-      <Frame caption="Poleas con correa" h={180}>
+      <Frame caption="Poleas con correa" w={360} h={180}>
         <circle cx="100" cy="90" r="35" fill={fill} stroke={stroke} strokeWidth="3" />
         <circle cx="250" cy="90" r="35" fill={fill} stroke={stroke} strokeWidth="3" />
         <path d="M100,55 Q175,20 250,55" fill="none" stroke={accent} strokeWidth="3" />
@@ -448,7 +454,7 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
   "secuencia-c": {
     caption: "La abertura de la C gira; sigue solo ese detalle.",
     node: (
-      <Frame caption="Serie tipo C" h={160}>
+      <Frame caption="Serie tipo C" w={360} h={160}>
         {[0, 90, 180, 270].map((rot, i) => (
           <g key={rot} transform={`translate(${55 + i * 80} 80) rotate(${rot})`}>
             <path d="M18,0 A18,18 0 1,1 -18,0" fill="none" stroke={stroke} strokeWidth="5" strokeLinecap="round" />

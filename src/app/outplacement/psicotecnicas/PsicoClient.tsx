@@ -42,11 +42,15 @@ type BancoTipo = {
 const BANCO = bancoTiposData as {
   titulo: string;
   nota: string;
+  gratisExplicaciones?: number;
   tipos: BancoTipo[];
 };
 
+/** Primeras N por tipo: respuesta + pasos gratis. Desde N+1: enunciado gratis, explicación de pago. */
+const FREE_EXPLAIN = BANCO.gratisExplicaciones ?? 4;
+
 const INTRO =
-  "Estudia gratis: fichas de método, pruebas guiadas y pruebas por tipo. Todas las preguntas se pueden intentar sin pagar; la explicación paso a paso y la respuesta correcta van con la práctica de pago.";
+  "Fichas y pruebas guiadas gratis. En pruebas por tipo: las primeras 4 de cada categoría incluyen respuesta y paso a paso; desde la 5.ª ves el enunciado e intentas, pero la explicación pide el plan de práctica.";
 
 const PRECIOS_PRACTICA = `/precios?plan=psico_practica&next=${encodeURIComponent("/outplacement/psicotecnicas")}`;
 
@@ -126,6 +130,8 @@ export function PsicoClient() {
   const tipoItem = tipo?.items[Math.min(itemI, Math.max(0, (tipo?.items.length || 1) - 1))];
   const tipoTotal = BANCO.tipos.reduce((n, t) => n + t.items.length, 0);
   const tipoOk = tipoChecked && tipoItem ? answersMatch(tipoAnswer, tipoItem.respuesta) : false;
+  const explainUnlocked = paid || itemI < FREE_EXPLAIN;
+  const isPaywalledItem = !paid && itemI >= FREE_EXPLAIN;
 
   function markDone(index: number) {
     if (!done.includes(index)) setDone(saveTrialDone([...done, index]));
@@ -342,31 +348,23 @@ export function PsicoClient() {
             <p className="text-xs muted">{BANCO.titulo}</p>
             <h2 className="text-lg font-semibold">{tipo.nombre}</h2>
             <p className="text-xs muted mt-1 leading-relaxed">{tipo.descripcion}</p>
-            <p className="text-xs muted mt-1">{BANCO.nota}</p>
           </div>
 
-          {!paid ? (
-            <div className="rounded-lg border border-black/10 bg-black/[0.02] p-3 space-y-2">
-              <p className="text-sm font-medium">Opción de pago: explicación y respuesta correcta</p>
-              <p className="text-xs muted leading-relaxed">
-                Intentas gratis. Si quieres ver la respuesta correcta y el paso a paso (o practicar con IA),
-                activa la práctica psicotécnica ({formatCop(PSICO_PRACTICA_PRICE_COP)}/mes). No está incluida en
-                Carrera.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <Link href={PRECIOS_PRACTICA} className="btn-primary">
-                  Ver precio y pagar práctica
-                </Link>
-                <Link href="/outplacement/psicotecnicas/practica" className="btn-secondary">
-                  Ir a práctica IA
-                </Link>
-              </div>
-            </div>
-          ) : (
-            <p className="text-xs muted rounded-lg border border-black/10 bg-black/[0.02] p-3">
-              Práctica activa: puedes revelar respuesta y paso a paso en cada ítem.
+          <div className="rounded-lg border border-black/10 bg-black/[0.02] p-3 space-y-2">
+            <p className="text-sm font-medium">Modelo de acceso</p>
+            <p className="text-xs muted leading-relaxed">{BANCO.nota}</p>
+            <p className="text-xs leading-relaxed">
+              En este tipo: ítems 1–{FREE_EXPLAIN} con explicación gratis
+              {paid
+                ? "; práctica activa → explicación en todos."
+                : `; desde el ${FREE_EXPLAIN + 1}.º el enunciado sigue gratis y el botón pasa a tomar el plan (${formatCop(PSICO_PRACTICA_PRICE_COP)}/mes).`}
             </p>
-          )}
+            {!paid && (
+              <Link href={PRECIOS_PRACTICA} className="btn-primary inline-flex">
+                Tomar plan de práctica
+              </Link>
+            )}
+          </div>
 
           <div className="flex flex-wrap gap-2">
             {BANCO.tipos.map((t, i) => (
@@ -392,6 +390,11 @@ export function PsicoClient() {
 
           <p className="text-sm font-medium">
             Ítem {itemI + 1} / {tipo.items.length}
+            {isPaywalledItem ? (
+              <span className="muted font-normal"> · enunciado gratis · explicación con plan</span>
+            ) : (
+              <span className="muted font-normal"> · explicación incluida</span>
+            )}
           </p>
           <p className="text-sm whitespace-pre-wrap leading-relaxed">{tipoItem.enunciado}</p>
 
@@ -402,7 +405,7 @@ export function PsicoClient() {
               value={tipoAnswer}
               onChange={(e) => setTipoAnswer(e.target.value)}
               placeholder="Letra o texto (ej. B o 400)"
-              disabled={showExplain && paid}
+              disabled={showExplain && explainUnlocked}
             />
           </label>
 
@@ -415,7 +418,7 @@ export function PsicoClient() {
             >
               Comprobar
             </button>
-            {paid ? (
+            {explainUnlocked ? (
               <button
                 type="button"
                 className="btn-secondary"
@@ -425,17 +428,23 @@ export function PsicoClient() {
                 Ver respuesta y paso a paso
               </button>
             ) : (
-              <Link href={PRECIOS_PRACTICA} className="btn-secondary">
-                Desbloquear explicación
+              <Link href={PRECIOS_PRACTICA} className="btn-primary">
+                Tomar plan para ver respuesta
               </Link>
             )}
           </div>
 
           {tipoChecked && (
-            <p className="text-sm font-medium">{tipoOk ? "Cuadra." : "No cuadra todavía."}</p>
+            <p className="text-sm font-medium">
+              {tipoOk
+                ? "Cuadra."
+                : isPaywalledItem
+                  ? "No cuadra todavía. Con el plan ves la respuesta correcta y el paso a paso."
+                  : "No cuadra todavía. Puedes ver la respuesta y el paso a paso."}
+            </p>
           )}
 
-          {showExplain && paid && (
+          {showExplain && explainUnlocked && (
             <div className="space-y-2 text-sm">
               <p>
                 Respuesta correcta: <strong>{tipoItem.respuesta}</strong>

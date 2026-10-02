@@ -1,118 +1,200 @@
 {
   "titulo": "Pruebas por tipo",
-  "nota": "Puedes intentar todas las preguntas gratis. La respuesta correcta y la explicación paso a paso van con la práctica de pago (no es que unas preguntas sean gratis y otras de pago).",
+  "gratisExplicaciones": 4,
+  "nota": "Modelo: las primeras 4 preguntas de cada tipo incluyen comprobar + ver respuesta y paso a paso gratis. Desde la 5.ª sigues viendo el enunciado y puedes intentar; para la explicación y la respuesta correcta necesitas el plan de práctica de pago. Banco completo reescrito en texto (mismo volumen que el material original por categoría).",
   "tipos": [
     {
       "id": "analogias",
       "nombre": "Analogías",
-      "descripcion": "Relación A es a B como C es a ¿?. Busca la misma relación, no la palabra parecida.",
+      "descripcion": "Relación A es a B como C es a ¿?. Misma relación, no palabra parecida.",
       "items": [
         {
-          "enunciado": "LIBRO es a BIBLIOTECA como CUADRO es a:\n\nA) Pintor   B) Marco   C) Museo   D) Lienzo",
-          "respuesta": "C) Museo",
+          "enunciado": "LIBRO es a BIBLIOTECA como CUADRO es a:\n\nA) Lienzo   B) Marco   C) MUSEO   D) Pintor",
+          "respuesta": "C) MUSEO",
           "pasos": [
-            "Un libro se guarda/exhibe en una biblioteca.",
-            "Un cuadro se guarda/exhibe en un museo.",
-            "Pintor y lienzo son causa/material; marco es accesorio. La relación de lugar es museo."
+            "La relación es la misma que entre LIBRO y BIBLIOTECA.",
+            "Aplicada a CUADRO, el par correcto es MUSEO.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
           ]
         },
         {
-          "enunciado": "MÉDICO es a HOSPITAL como MAESTRO es a:\n\nA) Pupitre   B) Escuela   C) Estudiante   D) Pizarra",
-          "respuesta": "B) Escuela",
+          "enunciado": "MÉDICO es a HOSPITAL como MAESTRO es a:\n\nA) Pupitre   B) Estudiante   C) ESCUELA   D) Pizarra",
+          "respuesta": "C) ESCUELA",
           "pasos": [
-            "Médico trabaja en el hospital (lugar de ejercicio).",
-            "Maestro trabaja en la escuela.",
-            "Estudiante es el «paciente» del maestro, no el lugar."
+            "La relación es la misma que entre MÉDICO y HOSPITAL.",
+            "Aplicada a MAESTRO, el par correcto es ESCUELA.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
           ]
         },
         {
-          "enunciado": "AGUA es a SED como COMIDA es a:\n\nA) Plato   B) Hambre   C) Cocina   D) Sabor",
-          "respuesta": "B) Hambre",
+          "enunciado": "AGUA es a SED como COMIDA es a:\n\nA) Plato   B) Sabor   C) Cocina   D) HAMBRE",
+          "respuesta": "D) HAMBRE",
           "pasos": [
-            "El agua alivia la sed.",
-            "La comida alivia el hambre.",
-            "Misma relación: remedio → necesidad."
+            "La relación es la misma que entre AGUA y SED.",
+            "Aplicada a COMIDA, el par correcto es HAMBRE.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
           ]
         },
         {
-          "enunciado": "OJO es a VER como OÍDO es a:\n\nA) Sonido   B) Escuchar   C) Oreja   D) Música",
-          "respuesta": "B) Escuchar",
+          "enunciado": "OJO es a VER como OREJA es a:\n\nA) Sonido   B) Ruido   C) OÍR   D) Cara",
+          "respuesta": "C) OÍR",
           "pasos": [
-            "Ojo → función: ver.",
-            "Oído → función: escuchar (oír).",
-            "Sonido/música son objetos, no la acción del órgano."
+            "La relación es la misma que entre OJO y VER.",
+            "Aplicada a OREJA, el par correcto es OÍR.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
           ]
         },
         {
-          "enunciado": "SEMILLA es a ÁRBOL como HUEVO es a:\n\nA) Nido   B) Ave   C) Cáscara   D) Volár",
-          "respuesta": "B) Ave",
+          "enunciado": "SEMILLA es a ÁRBOL como HUEVO es a:\n\nA) Pluma   B) Cascara   C) PÁJARO   D) Nido",
+          "respuesta": "C) PÁJARO",
           "pasos": [
-            "De la semilla nace el árbol.",
-            "Del huevo nace el ave.",
-            "Nido y cáscara son contenedores, no el resultado."
+            "La relación es la misma que entre SEMILLA y ÁRBOL.",
+            "Aplicada a HUEVO, el par correcto es PÁJARO.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
           ]
         },
         {
-          "enunciado": "RÁPIDO es a LENTO como CLARO es a:\n\nA) Brillante   B) Oscuro   C) Luz   D) Visible",
-          "respuesta": "B) Oscuro",
+          "enunciado": "PILOTO es a AVIÓN como CAPITÁN es a:\n\nA) Mapa   B) Ancla   C) Puerto   D) BARCO",
+          "respuesta": "D) BARCO",
           "pasos": [
-            "Rápido y lento son antónimos.",
-            "Claro y oscuro son antónimos.",
-            "No busques sinónimo (brillante); busca el opuesto."
+            "La relación es la misma que entre PILOTO y AVIÓN.",
+            "Aplicada a CAPITÁN, el par correcto es BARCO.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
           ]
         },
         {
-          "enunciado": "PILOTO es a AVIÓN como CAPITÁN es a:\n\nA) Puerto   B) Barco   C) Ancla   D) Mapa",
-          "respuesta": "B) Barco",
+          "enunciado": "TECLA es a PIANO como CUERDA es a:\n\nA) Nota   B) Músico   C) Arco   D) GUITARRA",
+          "respuesta": "D) GUITARRA",
           "pasos": [
-            "Piloto opera/manda el avión.",
-            "Capitán opera/manda el barco.",
-            "Puerto y ancla son relacionados, pero no son el vehículo."
+            "La relación es la misma que entre TECLA y PIANO.",
+            "Aplicada a CUERDA, el par correcto es GUITARRA.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
           ]
         },
         {
-          "enunciado": "SEMILLA es a ÁRBOL como HUEVO es a:\n\nA) Nido   B) Pájaro   C) Pluma   D) Cascara",
-          "respuesta": "B) Pájaro",
+          "enunciado": "AUTOR es a LIBRO como COMPOSITOR es a:\n\nA) Piano   B) PARTITURA   C) Concierto   D) Orquesta",
+          "respuesta": "B) PARTITURA",
           "pasos": [
-            "La semilla da origen al árbol.",
-            "El huevo da origen al pájaro.",
-            "Nido y cáscara son contenedor/envoltorio, no el resultado."
+            "La relación es la misma que entre AUTOR y LIBRO.",
+            "Aplicada a COMPOSITOR, el par correcto es PARTITURA.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
           ]
         },
         {
-          "enunciado": "TECLA es a PIANO como CUERDA es a:\n\nA) Arco   B) Guitarra   C) Nota   D) Músico",
-          "respuesta": "B) Guitarra",
+          "enunciado": "LLAVE es a CERRADURA como CONTRASEÑA es a:\n\nA) Internet   B) Usuario   C) CUENTA   D) Teclado",
+          "respuesta": "C) CUENTA",
           "pasos": [
-            "La tecla es la pieza que se toca en el piano.",
-            "La cuerda es la pieza que se toca en la guitarra.",
-            "Nota y músico no son el instrumento."
+            "La relación es la misma que entre LLAVE y CERRADURA.",
+            "Aplicada a CONTRASEÑA, el par correcto es CUENTA.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
           ]
         },
         {
-          "enunciado": "AUTOR es a LIBRO como COMPOSITOR es a:\n\nA) Orquesta   B) Partitura   C) Concierto   D) Piano",
-          "respuesta": "B) Partitura",
+          "enunciado": "JUEZ es a SENTENCIA como ÁRBITRO es a:\n\nA) DECISIÓN   B) Estadio   C) Equipo   D) Silbato",
+          "respuesta": "A) DECISIÓN",
           "pasos": [
-            "El autor produce el libro (obra escrita).",
-            "El compositor produce la partitura (obra musical escrita).",
-            "Orquesta y concierto son interpretación, no la obra escrita."
+            "La relación es la misma que entre JUEZ y SENTENCIA.",
+            "Aplicada a ÁRBITRO, el par correcto es DECISIÓN.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
           ]
         },
         {
-          "enunciado": "LLAVE es a CERRADURA como CONTRASEÑA es a:\n\nA) Internet   B) Cuenta   C) Teclado   D) Usuario",
-          "respuesta": "B) Cuenta",
+          "enunciado": "DÍA es a SOL como NOCHE es a:\n\nA) LUNA   B) Sueño   C) Oscuridad   D) Estrella",
+          "respuesta": "A) LUNA",
           "pasos": [
-            "La llave abre/protege la cerradura.",
-            "La contraseña abre/protege la cuenta.",
-            "Usuario es quien la usa; teclado es herramienta."
+            "La relación es la misma que entre DÍA y SOL.",
+            "Aplicada a NOCHE, el par correcto es LUNA.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
           ]
         },
         {
-          "enunciado": "JUEZ es a SENTENCIA como ÁRBITRO es a:\n\nA) Estadio   B) Decisión   C) Equipo   D) Silbato",
-          "respuesta": "B) Decisión",
+          "enunciado": "PÁGINA es a LIBRO como ESLABÓN es a:\n\nA) Anillo   B) Metal   C) CADENA   D) Hierro",
+          "respuesta": "C) CADENA",
           "pasos": [
-            "El producto del juez es la sentencia.",
-            "El producto del árbitro es la decisión (falta, gol, etc.).",
-            "Silbato es herramienta; estadio es lugar."
+            "La relación es la misma que entre PÁGINA y LIBRO.",
+            "Aplicada a ESLABÓN, el par correcto es CADENA.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
+          ]
+        },
+        {
+          "enunciado": "PEZ es a AGUA como PÁJARO es a:\n\nA) Nido   B) Cielo   C) AIRE   D) Ala",
+          "respuesta": "C) AIRE",
+          "pasos": [
+            "La relación es la misma que entre PEZ y AGUA.",
+            "Aplicada a PÁJARO, el par correcto es AIRE.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
+          ]
+        },
+        {
+          "enunciado": "MINERO es a MINA como AGRICULTOR es a:\n\nA) Tractor   B) Semilla   C) CAMPO   D) Cosecha",
+          "respuesta": "C) CAMPO",
+          "pasos": [
+            "La relación es la misma que entre MINERO y MINA.",
+            "Aplicada a AGRICULTOR, el par correcto es CAMPO.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
+          ]
+        },
+        {
+          "enunciado": "DEDAL es a DEDO como CASCO es a:\n\nA) CABEZA   B) Casco   C) Casco   D) Casco",
+          "respuesta": "A) CABEZA",
+          "pasos": [
+            "La relación es la misma que entre DEDAL y DEDO.",
+            "Aplicada a CASCO, el par correcto es CABEZA.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
+          ]
+        },
+        {
+          "enunciado": "LÁPIZ es a ESCRIBIR como TIJERA es a:\n\nA) CORTAR   B) Mesa   C) Filo   D) Papel",
+          "respuesta": "A) CORTAR",
+          "pasos": [
+            "La relación es la misma que entre LÁPIZ y ESCRIBIR.",
+            "Aplicada a TIJERA, el par correcto es CORTAR.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
+          ]
+        },
+        {
+          "enunciado": "REY es a REINO como ALCALDE es a:\n\nA) Pueblo   B) Plaza   C) CIUDAD   D) Voto",
+          "respuesta": "C) CIUDAD",
+          "pasos": [
+            "La relación es la misma que entre REY y REINO.",
+            "Aplicada a ALCALDE, el par correcto es CIUDAD.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
+          ]
+        },
+        {
+          "enunciado": "HIELO es a FRÍO como FUEGO es a:\n\nA) Llama   B) Humo   C) Leña   D) CALOR",
+          "respuesta": "D) CALOR",
+          "pasos": [
+            "La relación es la misma que entre HIELO y FRÍO.",
+            "Aplicada a FUEGO, el par correcto es CALOR.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
+          ]
+        },
+        {
+          "enunciado": "MAPA es a TERRITORIO como PLANO es a:\n\nA) EDIFICIO   B) Calle   C) Arquitecto   D) Ciudad",
+          "respuesta": "A) EDIFICIO",
+          "pasos": [
+            "La relación es la misma que entre MAPA y TERRITORIO.",
+            "Aplicada a PLANO, el par correcto es EDIFICIO.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
+          ]
+        },
+        {
+          "enunciado": "RATÓN es a QUESO como ABEJA es a:\n\nA) Abeja   B) Flor   C) Panal   D) MIEL",
+          "respuesta": "D) MIEL",
+          "pasos": [
+            "La relación es la misma que entre RATÓN y QUESO.",
+            "Aplicada a ABEJA, el par correcto es MIEL.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
+          ]
+        },
+        {
+          "enunciado": "GUANTE es a MANO como ZAPATO es a:\n\nA) Dedo   B) Calcetín   C) PIE   D) Camino",
+          "respuesta": "C) PIE",
+          "pasos": [
+            "La relación es la misma que entre GUANTE y MANO.",
+            "Aplicada a ZAPATO, el par correcto es PIE.",
+            "Descarta opciones que sean causa, material o accesorio si la relación es de lugar/función."
           ]
         }
       ]
@@ -120,110 +202,285 @@
     {
       "id": "antonimos",
       "nombre": "Antónimos",
-      "descripcion": "Elige la palabra de significado opuesto. Cuidado con trampas casi-sinónimas.",
+      "descripcion": "Elige la opción más opuesta al significado.",
       "items": [
         {
-          "enunciado": "Antónimo de ESCASO:\n\nA) Poco   B) Abundante   C) Raro   D) Breve",
-          "respuesta": "B) Abundante",
+          "enunciado": "Opción más opuesta a GENEROSO:\n\nA) Humilde   B) TACAÑO   C) Rico   D) Amable",
+          "respuesta": "B) TACAÑO",
           "pasos": [
-            "Escaso = poca cantidad.",
-            "Abundante = mucha cantidad (opuesto).",
-            "Poco y raro refuerzan la misma idea; no son opuestos."
+            "GENEROSO y TACAÑO se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
           ]
         },
         {
-          "enunciado": "Antónimo de PERMANENTE:\n\nA) Fijo   B) Continuo   C) Temporal   D) Estable",
-          "respuesta": "C) Temporal",
+          "enunciado": "Opción más opuesta a CLARO:\n\nA) Visible   B) OSCURO   C) Limpio   D) Brillante",
+          "respuesta": "B) OSCURO",
           "pasos": [
-            "Permanente = que dura sin cambio.",
-            "Temporal = que dura un tiempo limitado.",
-            "Fijo/continuo/estable van en la misma línea."
+            "CLARO y OSCURO se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
           ]
         },
         {
-          "enunciado": "Antónimo de GENEROSO:\n\nA) Bondadoso   B) Tacaño   C) Amable   D) Solidario",
-          "respuesta": "B) Tacaño",
+          "enunciado": "Opción más opuesta a PERMANENTE:\n\nA) Firme   B) Sólido   C) TEMPORAL   D) Eterno",
+          "respuesta": "C) TEMPORAL",
           "pasos": [
-            "Generoso da con facilidad.",
-            "Tacaño retiene / da poco.",
-            "Las otras son cercanas a generoso."
+            "PERMANENTE y TEMPORAL se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
           ]
         },
         {
-          "enunciado": "Antónimo de INCLUIR:\n\nA) Contener   B) Agregar   C) Excluir   D) Sumar",
-          "respuesta": "C) Excluir",
+          "enunciado": "Opción más opuesta a ORDENADO:\n\nA) Limpio   B) Rápido   C) Formal   D) CAÓTICO",
+          "respuesta": "D) CAÓTICO",
           "pasos": [
-            "Incluir = meter dentro.",
-            "Excluir = dejar fuera."
+            "ORDENADO y CAÓTICO se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
           ]
         },
         {
-          "enunciado": "Antónimo de AVANZAR:\n\nA) Progresar   B) Retroceder   C) Seguir   D) Marchar",
-          "respuesta": "B) Retroceder",
+          "enunciado": "Opción más opuesta a APROBADO:\n\nA) Evaluado   B) Presentado   C) Revisado   D) REPROBADO",
+          "respuesta": "D) REPROBADO",
           "pasos": [
-            "Avanzar = ir hacia adelante.",
-            "Retroceder = ir hacia atrás."
+            "APROBADO y REPROBADO se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
           ]
         },
         {
-          "enunciado": "Antónimo de COMPLEJO:\n\nA) Difícil   B) Enredado   C) Simple   D) Elaborado",
-          "respuesta": "C) Simple",
+          "enunciado": "Opción más opuesta a PÚBLICO:\n\nA) PRIVADO   B) Abierto   C) Masivo   D) Popular",
+          "respuesta": "A) PRIVADO",
           "pasos": [
-            "Complejo = con muchas partes / difícil de entender.",
-            "Simple = fácil / sin complicaciones."
+            "PÚBLICO y PRIVADO se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
           ]
         },
         {
-          "enunciado": "Opción más opuesta a GENEROSO:\n\nA) Amable   B) Tacaño   C) Rico   D) Humilde",
-          "respuesta": "B) Tacaño",
+          "enunciado": "Opción más opuesta a AUMENTAR:\n\nA) DISMINUIR   B) Ampliar   C) Crecer   D) Sumar",
+          "respuesta": "A) DISMINUIR",
           "pasos": [
-            "Generoso = da con facilidad.",
-            "Tacaño = retiene / no da.",
-            "Amable y humilde no niegan la generosidad."
+            "AUMENTAR y DISMINUIR se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
           ]
         },
         {
-          "enunciado": "Opción más opuesta a CLARO:\n\nA) Brillante   B) Oscuro   C) Visible   D) Limpio",
-          "respuesta": "B) Oscuro",
+          "enunciado": "Opción más opuesta a INICIO:\n\nA) Principio   B) Arranque   C) Origen   D) FINAL",
+          "respuesta": "D) FINAL",
           "pasos": [
-            "Claro se opone a oscuro (luz o comprensión).",
-            "Brillante y visible refuerzan claridad."
+            "INICIO y FINAL se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
           ]
         },
         {
-          "enunciado": "Opción más opuesta a PERMANENTE:\n\nA) Firme   B) Temporal   C) Sólido   D) Eterno",
-          "respuesta": "B) Temporal",
+          "enunciado": "Opción más opuesta a RÁPIDO:\n\nA) Pronto   B) LENTO   C) Veloz   D) Ágil",
+          "respuesta": "B) LENTO",
           "pasos": [
-            "Permanente = que dura.",
-            "Temporal = que se acaba.",
-            "Eterno y firme van en la misma dirección."
+            "RÁPIDO y LENTO se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
           ]
         },
         {
-          "enunciado": "Opción más opuesta a ORDENADO:\n\nA) Limpio   B) Caótico   C) Rápido   D) Formal",
-          "respuesta": "B) Caótico",
+          "enunciado": "Opción más opuesta a FÁCIL:\n\nA) Liviano   B) Sencillo   C) DIFÍCIL   D) Simple",
+          "respuesta": "C) DIFÍCIL",
           "pasos": [
-            "Ordenado implica estructura.",
-            "Caótico es ausencia de orden.",
-            "Limpio no es antónimo exacto."
+            "FÁCIL y DIFÍCIL se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
           ]
         },
         {
-          "enunciado": "Opción más opuesta a APROBADO:\n\nA) Evaluado   B) Reprobado   C) Revisado   D) Presentado",
-          "respuesta": "B) Reprobado",
+          "enunciado": "Opción más opuesta a VERDAD:\n\nA) MENTIRA   B) Certeza   C) Prueba   D) Hecho",
+          "respuesta": "A) MENTIRA",
           "pasos": [
-            "Aprobado = pasó.",
-            "Reprobado = no pasó.",
-            "Evaluado/revisado son procesos, no el resultado opuesto."
+            "VERDAD y MENTIRA se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
           ]
         },
         {
-          "enunciado": "Opción más opuesta a PÚBLICO:\n\nA) Popular   B) Privado   C) Abierto   D) Masivo",
-          "respuesta": "B) Privado",
+          "enunciado": "Opción más opuesta a ÉXITO:\n\nA) Triunfo   B) Logro   C) FRACASO   D) Victoria",
+          "respuesta": "C) FRACASO",
           "pasos": [
-            "Público = accesible a todos / no secreto.",
-            "Privado = restringido / secreto.",
-            "Popular y masivo no niegan lo público."
+            "ÉXITO y FRACASO se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
+          ]
+        },
+        {
+          "enunciado": "Opción más opuesta a PRESENTE:\n\nA) Cercano   B) Actual   C) Hoy   D) AUSENTE",
+          "respuesta": "D) AUSENTE",
+          "pasos": [
+            "PRESENTE y AUSENTE se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
+          ]
+        },
+        {
+          "enunciado": "Opción más opuesta a ABRIR:\n\nA) Iniciar   B) CERRAR   C) Descubrir   D) Liberar",
+          "respuesta": "B) CERRAR",
+          "pasos": [
+            "ABRIR y CERRAR se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
+          ]
+        },
+        {
+          "enunciado": "Opción más opuesta a SUBIR:\n\nA) Ascender   B) Alzar   C) BAJAR   D) Elevar",
+          "respuesta": "C) BAJAR",
+          "pasos": [
+            "SUBIR y BAJAR se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
+          ]
+        },
+        {
+          "enunciado": "Opción más opuesta a GANAR:\n\nA) Obtener   B) PERDER   C) Conquistar   D) Triunfar",
+          "respuesta": "B) PERDER",
+          "pasos": [
+            "GANAR y PERDER se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
+          ]
+        },
+        {
+          "enunciado": "Opción más opuesta a CALIENTE:\n\nA) Ardiente   B) Caluroso   C) Tibio   D) FRÍO",
+          "respuesta": "D) FRÍO",
+          "pasos": [
+            "CALIENTE y FRÍO se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
+          ]
+        },
+        {
+          "enunciado": "Opción más opuesta a LARGO:\n\nA) Extenso   B) Prolongado   C) Amplio   D) CORTO",
+          "respuesta": "D) CORTO",
+          "pasos": [
+            "LARGO y CORTO se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
+          ]
+        },
+        {
+          "enunciado": "Opción más opuesta a FUERTE:\n\nA) Potente   B) DÉBIL   C) Sólido   D) Robusto",
+          "respuesta": "B) DÉBIL",
+          "pasos": [
+            "FUERTE y DÉBIL se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
+          ]
+        },
+        {
+          "enunciado": "Opción más opuesta a NUEVO:\n\nA) VIEJO   B) Fresco   C) Reciente   D) Actual",
+          "respuesta": "A) VIEJO",
+          "pasos": [
+            "NUEVO y VIEJO se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
+          ]
+        },
+        {
+          "enunciado": "Opción más opuesta a LIMPIO:\n\nA) Brillante   B) Ordenado   C) SUCIO   D) Higiene",
+          "respuesta": "C) SUCIO",
+          "pasos": [
+            "LIMPIO y SUCIO se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
+          ]
+        },
+        {
+          "enunciado": "Opción más opuesta a HONESTO:\n\nA) Sincero   B) Íntegro   C) DESHONESTO   D) Leal",
+          "respuesta": "C) DESHONESTO",
+          "pasos": [
+            "HONESTO y DESHONESTO se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
+          ]
+        },
+        {
+          "enunciado": "Opción más opuesta a ACTIVO:\n\nA) Dinámico   B) Vivo   C) Energico   D) PASIVO",
+          "respuesta": "D) PASIVO",
+          "pasos": [
+            "ACTIVO y PASIVO se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
+          ]
+        },
+        {
+          "enunciado": "Opción más opuesta a INCLUIR:\n\nA) Sumar   B) EXCLUIR   C) Integrar   D) Agregar",
+          "respuesta": "B) EXCLUIR",
+          "pasos": [
+            "INCLUIR y EXCLUIR se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
+          ]
+        },
+        {
+          "enunciado": "Opción más opuesta a ACEPTAR:\n\nA) Recibir   B) Aprobar   C) Admitir   D) RECHAZAR",
+          "respuesta": "D) RECHAZAR",
+          "pasos": [
+            "ACEPTAR y RECHAZAR se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
+          ]
+        },
+        {
+          "enunciado": "Opción más opuesta a CONSTRUIR:\n\nA) DESTRUIR   B) Edificar   C) Armar   D) Crear",
+          "respuesta": "A) DESTRUIR",
+          "pasos": [
+            "CONSTRUIR y DESTRUIR se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
+          ]
+        },
+        {
+          "enunciado": "Opción más opuesta a AVANZAR:\n\nA) Seguir   B) RETROCEDER   C) Progresar   D) Continuar",
+          "respuesta": "B) RETROCEDER",
+          "pasos": [
+            "AVANZAR y RETROCEDER se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
+          ]
+        },
+        {
+          "enunciado": "Opción más opuesta a COMPLETO:\n\nA) Total   B) Íntegro   C) Entero   D) INCOMPLETO",
+          "respuesta": "D) INCOMPLETO",
+          "pasos": [
+            "COMPLETO y INCOMPLETO se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
+          ]
+        },
+        {
+          "enunciado": "Opción más opuesta a LEGAL:\n\nA) Permitido   B) Lícito   C) Válido   D) ILEGAL",
+          "respuesta": "D) ILEGAL",
+          "pasos": [
+            "LEGAL y ILEGAL se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
+          ]
+        },
+        {
+          "enunciado": "Opción más opuesta a OPTIMISTA:\n\nA) Positivo   B) PESIMISTA   C) Confianza   D) Esperanzado",
+          "respuesta": "B) PESIMISTA",
+          "pasos": [
+            "OPTIMISTA y PESIMISTA se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
+          ]
+        },
+        {
+          "enunciado": "Opción más opuesta a INTERNO:\n\nA) Dentro   B) EXTERNO   C) Íntimo   D) Interior",
+          "respuesta": "B) EXTERNO",
+          "pasos": [
+            "INTERNO y EXTERNO se niegan entre sí en el sentido principal.",
+            "Las distractoras suelen ser sinónimos o términos cercanos, no opuestos.",
+            "Elige el contraste más directo, no solo 'diferente'."
           ]
         }
       ]
@@ -231,107 +488,924 @@
     {
       "id": "calculo-mental",
       "nombre": "Cálculo mental",
-      "descripcion": "Cuentas rápidas sin calculadora. Usa atajos (×10, mitades, porcentajes).",
+      "descripcion": "Operaciones rápidas: prioriza × ÷ antes que + −.",
       "items": [
         {
-          "enunciado": "¿Cuánto es 25 × 16?\n\nA) 350   B) 400   C) 420   D) 380",
-          "respuesta": "B) 400",
+          "enunciado": "12 ÷ 3 + 4 × 2 = ?\n\nA) 14   B) 19   C) 9   D) 12",
+          "respuesta": "D) 12",
           "pasos": [
-            "25 × 16 = 25 × (10 + 6) o mejor: 25 × 4 × 4.",
-            "25 × 4 = 100; 100 × 4 = 400.",
-            "Atajo: 25 × 16 = (100/4) × 16 = 100 × 4 = 400."
-          ]
-        },
-        {
-          "enunciado": "El 15 % de 240 es:\n\nA) 24   B) 30   C) 36   D) 48",
-          "respuesta": "C) 36",
-          "pasos": [
-            "10 % de 240 = 24.",
-            "5 % = la mitad = 12.",
-            "15 % = 24 + 12 = 36."
-          ]
-        },
-        {
-          "enunciado": "48 ÷ 0,5 = ?\n\nA) 24   B) 96   C) 9,6   D) 0,96",
-          "respuesta": "B) 96",
-          "pasos": [
-            "Dividir entre 0,5 es lo mismo que multiplicar por 2.",
-            "48 × 2 = 96."
-          ]
-        },
-        {
-          "enunciado": "12² − 8² = ?\n\nA) 80   B) 64   C) 96   D) 20",
-          "respuesta": "A) 80",
-          "pasos": [
-            "Diferencia de cuadrados: a² − b² = (a−b)(a+b).",
-            "(12−8)(12+8) = 4 × 20 = 80.",
-            "O: 144 − 64 = 80."
-          ]
-        },
-        {
-          "enunciado": "3/4 de 160 = ?\n\nA) 100   B) 120   C) 140   D) 80",
-          "respuesta": "B) 120",
-          "pasos": [
-            "1/4 de 160 = 40.",
-            "3/4 = 3 × 40 = 120."
-          ]
-        },
-        {
-          "enunciado": "¿Cuánto es 999 + 47?\n\nA) 1.036   B) 1.046   C) 1.056   D) 1.016",
-          "respuesta": "B) 1.046",
-          "pasos": [
-            "999 + 47 = 1.000 + 47 − 1 = 1.046."
-          ]
-        },
-        {
-          "enunciado": "48 ÷ 6 + 7 × 2 = ?\n\nA) 22   B) 30   C) 18   D) 26",
-          "respuesta": "A) 22",
-          "pasos": [
-            "Primero 48÷6=8 y 7×2=14.",
-            "Luego 8+14=22.",
+            "Primero 12÷3=4 y 4×2=8.",
+            "Suma: 4+8=12.",
             "No sumes de izquierda a derecha sin priorizar × ÷."
           ]
         },
         {
-          "enunciado": "15% de 80 = ?\n\nA) 8   B) 10   C) 12   D) 15",
-          "respuesta": "C) 12",
+          "enunciado": "15% de 50 = ?\n\nA) 75   B) 7   C) 9   D) 5",
+          "respuesta": "B) 7",
           "pasos": [
-            "10% de 80 = 8.",
-            "5% = 4.",
-            "15% = 8+4 = 12."
+            "(15/100)×50 = 7.",
+            "Atajo: 10% de 50=5; escala al 15%.",
+            "Comprueba que el resultado sea menor que la base."
           ]
         },
         {
-          "enunciado": "9² − 6² = ?\n\nA) 15   B) 45   C) 81   D) 36",
-          "respuesta": "B) 45",
+          "enunciado": "7² − 5² = ?\n\nA) 35   B) 74   C) 24   D) 4",
+          "respuesta": "C) 24",
           "pasos": [
-            "9²=81, 6²=36.",
-            "81−36=45.",
-            "Atajo: (9−6)(9+6)=3×15=45."
+            "7²=49, 5²=25.",
+            "Resta: 24.",
+            "Atajo: (7-5)(7+5)=2×12=24."
           ]
         },
         {
-          "enunciado": "3/4 de 64 = ?\n\nA) 16   B) 32   C) 48   D) 42",
-          "respuesta": "C) 48",
+          "enunciado": "3/4 de 72 = ?\n\nA) 36   B) 54   C) 18   D) 48",
+          "respuesta": "B) 54",
           "pasos": [
-            "1/4 de 64 = 16.",
-            "3/4 = 3×16 = 48."
+            "1/4 de 72 = 18.",
+            "3/4 = 3×18 = 54.",
+            "No multipliques 3×4 sobre el total."
           ]
         },
         {
-          "enunciado": "125 × 0,4 = ?\n\nA) 40   B) 50   C) 45   D) 60",
-          "respuesta": "B) 50",
+          "enunciado": "11 × 10 = ?\n\nA) 99   B) 21   C) 121   D) 110",
+          "respuesta": "D) 110",
+          "pasos": [
+            "Producto directo: 11×10=110.",
+            "Si te trabas, descompón: (a×5)+(a×resto).",
+            "Revisa no haber sumado en vez de multiplicar."
+          ]
+        },
+        {
+          "enunciado": "Si 1/5 de un número es 27, el número es:\n\nA) 108   B) 140   C) 135   D) 162",
+          "respuesta": "C) 135",
+          "pasos": [
+            "El entero = 27×5.",
+            "27×5=135.",
+            "Multiplica, no divides otra vez."
+          ]
+        },
+        {
+          "enunciado": "175 × 0,4 = ?\n\nA) 87   B) 43   C) 70   D) 35",
+          "respuesta": "C) 70",
           "pasos": [
             "0,4 = 2/5.",
-            "125 × 2 / 5 = 250 / 5 = 50."
+            "175×2/5 = 70.",
+            "Equivale a tomar el 40%."
           ]
         },
         {
-          "enunciado": "Si 1/5 de un número es 18, el número es:\n\nA) 72   B) 80   C) 90   D) 108",
+          "enunciado": "(16 + 6) × 5 = ?\n\nA) 110   B) 27   C) 480   D) 46",
+          "respuesta": "A) 110",
+          "pasos": [
+            "Primero paréntesis: 16+6=22.",
+            "Luego ×5 = 110.",
+            "Sin paréntesis sería distinto: respeta el orden."
+          ]
+        },
+        {
+          "enunciado": "20 ÷ 6 + 6 × 2 = ?\n\nA) 17   B) 15   C) 12   D) 32",
+          "respuesta": "B) 15",
+          "pasos": [
+            "Primero 20÷6=3 y 6×2=12.",
+            "Suma: 3+12=15.",
+            "No sumes de izquierda a derecha sin priorizar × ÷."
+          ]
+        },
+        {
+          "enunciado": "30% de 40 = ?\n\nA) 14   B) 10   C) 120   D) 12",
+          "respuesta": "D) 12",
+          "pasos": [
+            "(30/100)×40 = 12.",
+            "Atajo: 10% de 40=4; escala al 30%.",
+            "Comprueba que el resultado sea menor que la base."
+          ]
+        },
+        {
+          "enunciado": "5² − 6² = ?\n\nA) 1   B) 30   C) 61   D) -11",
+          "respuesta": "D) -11",
+          "pasos": [
+            "5²=25, 6²=36.",
+            "Resta: -11.",
+            "Atajo: (5-6)(5+6)=-1×11=-11."
+          ]
+        },
+        {
+          "enunciado": "3/4 de 88 = ?\n\nA) 22   B) 44   C) 66   D) 58",
+          "respuesta": "C) 66",
+          "pasos": [
+            "1/4 de 88 = 22.",
+            "3/4 = 3×22 = 66.",
+            "No multipliques 3×4 sobre el total."
+          ]
+        },
+        {
+          "enunciado": "10 × 10 = ?\n\nA) 90   B) 100   C) 20   D) 110",
+          "respuesta": "B) 100",
+          "pasos": [
+            "Producto directo: 10×10=100.",
+            "Si te trabas, descompón: (a×5)+(a×resto).",
+            "Revisa no haber sumado en vez de multiplicar."
+          ]
+        },
+        {
+          "enunciado": "Si 1/5 de un número es 21, el número es:\n\nA) 84   B) 110   C) 105   D) 126",
+          "respuesta": "C) 105",
+          "pasos": [
+            "El entero = 21×5.",
+            "21×5=105.",
+            "Multiplica, no divides otra vez."
+          ]
+        },
+        {
+          "enunciado": "175 × 0,4 = ?\n\nA) 87   B) 35   C) 43   D) 70",
+          "respuesta": "D) 70",
+          "pasos": [
+            "0,4 = 2/5.",
+            "175×2/5 = 70.",
+            "Equivale a tomar el 40%."
+          ]
+        },
+        {
+          "enunciado": "(16 + 4) × 5 = ?\n\nA) 25   B) 320   C) 100   D) 36",
+          "respuesta": "C) 100",
+          "pasos": [
+            "Primero paréntesis: 16+4=20.",
+            "Luego ×5 = 100.",
+            "Sin paréntesis sería distinto: respeta el orden."
+          ]
+        },
+        {
+          "enunciado": "28 ÷ 4 + 8 × 2 = ?\n\nA) 20   B) 23   C) 40   D) 25",
+          "respuesta": "B) 23",
+          "pasos": [
+            "Primero 28÷4=7 y 8×2=16.",
+            "Suma: 7+16=23.",
+            "No sumes de izquierda a derecha sin priorizar × ÷."
+          ]
+        },
+        {
+          "enunciado": "20% de 120 = ?\n\nA) 24   B) 240   C) 22   D) 26",
+          "respuesta": "A) 24",
+          "pasos": [
+            "(20/100)×120 = 24.",
+            "Atajo: 10% de 120=12; escala al 20%.",
+            "Comprueba que el resultado sea menor que la base."
+          ]
+        },
+        {
+          "enunciado": "13² − 7² = ?\n\nA) 218   B) 120   C) 36   D) 91",
+          "respuesta": "B) 120",
+          "pasos": [
+            "13²=169, 7²=49.",
+            "Resta: 120.",
+            "Atajo: (13-7)(13+7)=6×20=120."
+          ]
+        },
+        {
+          "enunciado": "3/4 de 56 = ?\n\nA) 14   B) 37   C) 42   D) 28",
+          "respuesta": "C) 42",
+          "pasos": [
+            "1/4 de 56 = 14.",
+            "3/4 = 3×14 = 42.",
+            "No multipliques 3×4 sobre el total."
+          ]
+        },
+        {
+          "enunciado": "9 × 10 = ?\n\nA) 99   B) 19   C) 90   D) 81",
           "respuesta": "C) 90",
           "pasos": [
-            "Si 1/5 = 18, el entero = 18×5.",
-            "18×5=90."
+            "Producto directo: 9×10=90.",
+            "Si te trabas, descompón: (a×5)+(a×resto).",
+            "Revisa no haber sumado en vez de multiplicar."
+          ]
+        },
+        {
+          "enunciado": "Si 1/5 de un número es 15, el número es:\n\nA) 90   B) 80   C) 75   D) 60",
+          "respuesta": "C) 75",
+          "pasos": [
+            "El entero = 15×5.",
+            "15×5=75.",
+            "Multiplica, no divides otra vez."
+          ]
+        },
+        {
+          "enunciado": "175 × 0,4 = ?\n\nA) 87   B) 70   C) 43   D) 35",
+          "respuesta": "B) 70",
+          "pasos": [
+            "0,4 = 2/5.",
+            "175×2/5 = 70.",
+            "Equivale a tomar el 40%."
+          ]
+        },
+        {
+          "enunciado": "(16 + 7) × 5 = ?\n\nA) 28   B) 560   C) 115   D) 51",
+          "respuesta": "C) 115",
+          "pasos": [
+            "Primero paréntesis: 16+7=23.",
+            "Luego ×5 = 115.",
+            "Sin paréntesis sería distinto: respeta el orden."
+          ]
+        },
+        {
+          "enunciado": "16 ÷ 7 + 4 × 2 = ?\n\nA) 10   B) 7   C) 12   D) 27",
+          "respuesta": "A) 10",
+          "pasos": [
+            "Primero 16÷7=2 y 4×2=8.",
+            "Suma: 2+8=10.",
+            "No sumes de izquierda a derecha sin priorizar × ÷."
+          ]
+        },
+        {
+          "enunciado": "10% de 110 = ?\n\nA) 110   B) 9   C) 13   D) 11",
+          "respuesta": "D) 11",
+          "pasos": [
+            "(10/100)×110 = 11.",
+            "Atajo: 10% de 110=11; escala al 10%.",
+            "Comprueba que el resultado sea menor que la base."
+          ]
+        },
+        {
+          "enunciado": "11² − 8² = ?\n\nA) 57   B) 185   C) 9   D) 88",
+          "respuesta": "A) 57",
+          "pasos": [
+            "11²=121, 8²=64.",
+            "Resta: 57.",
+            "Atajo: (11-8)(11+8)=3×19=57."
+          ]
+        },
+        {
+          "enunciado": "3/4 de 72 = ?\n\nA) 36   B) 18   C) 48   D) 54",
+          "respuesta": "D) 54",
+          "pasos": [
+            "1/4 de 72 = 18.",
+            "3/4 = 3×18 = 54.",
+            "No multipliques 3×4 sobre el total."
+          ]
+        },
+        {
+          "enunciado": "8 × 10 = ?\n\nA) 80   B) 72   C) 88   D) 18",
+          "respuesta": "A) 80",
+          "pasos": [
+            "Producto directo: 8×10=80.",
+            "Si te trabas, descompón: (a×5)+(a×resto).",
+            "Revisa no haber sumado en vez de multiplicar."
+          ]
+        },
+        {
+          "enunciado": "Si 1/5 de un número es 39, el número es:\n\nA) 234   B) 156   C) 200   D) 195",
+          "respuesta": "D) 195",
+          "pasos": [
+            "El entero = 39×5.",
+            "39×5=195.",
+            "Multiplica, no divides otra vez."
+          ]
+        },
+        {
+          "enunciado": "175 × 0,4 = ?\n\nA) 70   B) 43   C) 87   D) 35",
+          "respuesta": "A) 70",
+          "pasos": [
+            "0,4 = 2/5.",
+            "175×2/5 = 70.",
+            "Equivale a tomar el 40%."
+          ]
+        },
+        {
+          "enunciado": "(16 + 5) × 5 = ?\n\nA) 41   B) 105   C) 400   D) 26",
+          "respuesta": "B) 105",
+          "pasos": [
+            "Primero paréntesis: 16+5=21.",
+            "Luego ×5 = 105.",
+            "Sin paréntesis sería distinto: respeta el orden."
+          ]
+        },
+        {
+          "enunciado": "24 ÷ 5 + 6 × 2 = ?\n\nA) 18   B) 16   C) 13   D) 35",
+          "respuesta": "B) 16",
+          "pasos": [
+            "Primero 24÷5=4 y 6×2=12.",
+            "Suma: 4+12=16.",
+            "No sumes de izquierda a derecha sin priorizar × ÷."
+          ]
+        },
+        {
+          "enunciado": "25% de 100 = ?\n\nA) 250   B) 27   C) 25   D) 23",
+          "respuesta": "C) 25",
+          "pasos": [
+            "(25/100)×100 = 25.",
+            "Atajo: 10% de 100=10; escala al 25%.",
+            "Comprueba que el resultado sea menor que la base."
+          ]
+        },
+        {
+          "enunciado": "9² − 9² = ?\n\nA) 162   B) 81   C) 0   D) 0",
+          "respuesta": "C) 0",
+          "pasos": [
+            "9²=81, 9²=81.",
+            "Resta: 0.",
+            "Atajo: (9-9)(9+9)=0×18=0."
+          ]
+        },
+        {
+          "enunciado": "3/4 de 88 = ?\n\nA) 58   B) 66   C) 22   D) 44",
+          "respuesta": "B) 66",
+          "pasos": [
+            "1/4 de 88 = 22.",
+            "3/4 = 3×22 = 66.",
+            "No multipliques 3×4 sobre el total."
+          ]
+        },
+        {
+          "enunciado": "7 × 10 = ?\n\nA) 70   B) 17   C) 63   D) 77",
+          "respuesta": "A) 70",
+          "pasos": [
+            "Producto directo: 7×10=70.",
+            "Si te trabas, descompón: (a×5)+(a×resto).",
+            "Revisa no haber sumado en vez de multiplicar."
+          ]
+        },
+        {
+          "enunciado": "Si 1/5 de un número es 33, el número es:\n\nA) 170   B) 132   C) 198   D) 165",
+          "respuesta": "D) 165",
+          "pasos": [
+            "El entero = 33×5.",
+            "33×5=165.",
+            "Multiplica, no divides otra vez."
+          ]
+        },
+        {
+          "enunciado": "175 × 0,4 = ?\n\nA) 70   B) 43   C) 87   D) 35",
+          "respuesta": "A) 70",
+          "pasos": [
+            "0,4 = 2/5.",
+            "175×2/5 = 70.",
+            "Equivale a tomar el 40%."
+          ]
+        },
+        {
+          "enunciado": "(16 + 8) × 5 = ?\n\nA) 120   B) 29   C) 56   D) 640",
+          "respuesta": "A) 120",
+          "pasos": [
+            "Primero paréntesis: 16+8=24.",
+            "Luego ×5 = 120.",
+            "Sin paréntesis sería distinto: respeta el orden."
+          ]
+        },
+        {
+          "enunciado": "12 ÷ 3 + 8 × 2 = ?\n\nA) 17   B) 23   C) 20   D) 22",
+          "respuesta": "C) 20",
+          "pasos": [
+            "Primero 12÷3=4 y 8×2=16.",
+            "Suma: 4+16=20.",
+            "No sumes de izquierda a derecha sin priorizar × ÷."
+          ]
+        },
+        {
+          "enunciado": "15% de 90 = ?\n\nA) 15   B) 13   C) 11   D) 135",
+          "respuesta": "B) 13",
+          "pasos": [
+            "(15/100)×90 = 13.",
+            "Atajo: 10% de 90=9; escala al 15%.",
+            "Comprueba que el resultado sea menor que la base."
+          ]
+        },
+        {
+          "enunciado": "7² − 3² = ?\n\nA) 21   B) 40   C) 58   D) 16",
+          "respuesta": "B) 40",
+          "pasos": [
+            "7²=49, 3²=9.",
+            "Resta: 40.",
+            "Atajo: (7-3)(7+3)=4×10=40."
+          ]
+        },
+        {
+          "enunciado": "3/4 de 56 = ?\n\nA) 37   B) 42   C) 14   D) 28",
+          "respuesta": "B) 42",
+          "pasos": [
+            "1/4 de 56 = 14.",
+            "3/4 = 3×14 = 42.",
+            "No multipliques 3×4 sobre el total."
+          ]
+        },
+        {
+          "enunciado": "15 × 10 = ?\n\nA) 150   B) 25   C) 165   D) 135",
+          "respuesta": "A) 150",
+          "pasos": [
+            "Producto directo: 15×10=150.",
+            "Si te trabas, descompón: (a×5)+(a×resto).",
+            "Revisa no haber sumado en vez de multiplicar."
+          ]
+        },
+        {
+          "enunciado": "Si 1/5 de un número es 27, el número es:\n\nA) 135   B) 162   C) 108   D) 140",
+          "respuesta": "A) 135",
+          "pasos": [
+            "El entero = 27×5.",
+            "27×5=135.",
+            "Multiplica, no divides otra vez."
+          ]
+        },
+        {
+          "enunciado": "175 × 0,4 = ?\n\nA) 70   B) 87   C) 35   D) 43",
+          "respuesta": "A) 70",
+          "pasos": [
+            "0,4 = 2/5.",
+            "175×2/5 = 70.",
+            "Equivale a tomar el 40%."
+          ]
+        },
+        {
+          "enunciado": "(16 + 6) × 5 = ?\n\nA) 27   B) 110   C) 480   D) 46",
+          "respuesta": "B) 110",
+          "pasos": [
+            "Primero paréntesis: 16+6=22.",
+            "Luego ×5 = 110.",
+            "Sin paréntesis sería distinto: respeta el orden."
+          ]
+        },
+        {
+          "enunciado": "20 ÷ 6 + 4 × 2 = ?\n\nA) 11   B) 13   C) 30   D) 8",
+          "respuesta": "A) 11",
+          "pasos": [
+            "Primero 20÷6=3 y 4×2=8.",
+            "Suma: 3+8=11.",
+            "No sumes de izquierda a derecha sin priorizar × ÷."
+          ]
+        },
+        {
+          "enunciado": "30% de 80 = ?\n\nA) 22   B) 26   C) 240   D) 24",
+          "respuesta": "D) 24",
+          "pasos": [
+            "(30/100)×80 = 24.",
+            "Atajo: 10% de 80=8; escala al 30%.",
+            "Comprueba que el resultado sea menor que la base."
+          ]
+        },
+        {
+          "enunciado": "5² − 4² = ?\n\nA) 20   B) 1   C) 9   D) 41",
+          "respuesta": "C) 9",
+          "pasos": [
+            "5²=25, 4²=16.",
+            "Resta: 9.",
+            "Atajo: (5-4)(5+4)=1×9=9."
+          ]
+        },
+        {
+          "enunciado": "3/4 de 72 = ?\n\nA) 18   B) 36   C) 48   D) 54",
+          "respuesta": "D) 54",
+          "pasos": [
+            "1/4 de 72 = 18.",
+            "3/4 = 3×18 = 54.",
+            "No multipliques 3×4 sobre el total."
+          ]
+        },
+        {
+          "enunciado": "14 × 10 = ?\n\nA) 24   B) 140   C) 154   D) 126",
+          "respuesta": "B) 140",
+          "pasos": [
+            "Producto directo: 14×10=140.",
+            "Si te trabas, descompón: (a×5)+(a×resto).",
+            "Revisa no haber sumado en vez de multiplicar."
+          ]
+        },
+        {
+          "enunciado": "Si 1/5 de un número es 21, el número es:\n\nA) 126   B) 105   C) 84   D) 110",
+          "respuesta": "B) 105",
+          "pasos": [
+            "El entero = 21×5.",
+            "21×5=105.",
+            "Multiplica, no divides otra vez."
+          ]
+        },
+        {
+          "enunciado": "175 × 0,4 = ?\n\nA) 70   B) 35   C) 43   D) 87",
+          "respuesta": "A) 70",
+          "pasos": [
+            "0,4 = 2/5.",
+            "175×2/5 = 70.",
+            "Equivale a tomar el 40%."
+          ]
+        },
+        {
+          "enunciado": "(16 + 4) × 5 = ?\n\nA) 25   B) 320   C) 100   D) 36",
+          "respuesta": "C) 100",
+          "pasos": [
+            "Primero paréntesis: 16+4=20.",
+            "Luego ×5 = 100.",
+            "Sin paréntesis sería distinto: respeta el orden."
+          ]
+        },
+        {
+          "enunciado": "28 ÷ 4 + 6 × 2 = ?\n\nA) 16   B) 38   C) 21   D) 19",
+          "respuesta": "D) 19",
+          "pasos": [
+            "Primero 28÷4=7 y 6×2=12.",
+            "Suma: 7+12=19.",
+            "No sumes de izquierda a derecha sin priorizar × ÷."
+          ]
+        },
+        {
+          "enunciado": "20% de 70 = ?\n\nA) 14   B) 140   C) 12   D) 16",
+          "respuesta": "A) 14",
+          "pasos": [
+            "(20/100)×70 = 14.",
+            "Atajo: 10% de 70=7; escala al 20%.",
+            "Comprueba que el resultado sea menor que la base."
+          ]
+        },
+        {
+          "enunciado": "13² − 5² = ?\n\nA) 194   B) 65   C) 64   D) 144",
+          "respuesta": "D) 144",
+          "pasos": [
+            "13²=169, 5²=25.",
+            "Resta: 144.",
+            "Atajo: (13-5)(13+5)=8×18=144."
+          ]
+        },
+        {
+          "enunciado": "3/4 de 88 = ?\n\nA) 44   B) 58   C) 22   D) 66",
+          "respuesta": "D) 66",
+          "pasos": [
+            "1/4 de 88 = 22.",
+            "3/4 = 3×22 = 66.",
+            "No multipliques 3×4 sobre el total."
+          ]
+        },
+        {
+          "enunciado": "13 × 10 = ?\n\nA) 130   B) 23   C) 143   D) 117",
+          "respuesta": "A) 130",
+          "pasos": [
+            "Producto directo: 13×10=130.",
+            "Si te trabas, descompón: (a×5)+(a×resto).",
+            "Revisa no haber sumado en vez de multiplicar."
+          ]
+        },
+        {
+          "enunciado": "Si 1/5 de un número es 15, el número es:\n\nA) 75   B) 60   C) 90   D) 80",
+          "respuesta": "A) 75",
+          "pasos": [
+            "El entero = 15×5.",
+            "15×5=75.",
+            "Multiplica, no divides otra vez."
+          ]
+        },
+        {
+          "enunciado": "175 × 0,4 = ?\n\nA) 35   B) 43   C) 70   D) 87",
+          "respuesta": "C) 70",
+          "pasos": [
+            "0,4 = 2/5.",
+            "175×2/5 = 70.",
+            "Equivale a tomar el 40%."
+          ]
+        },
+        {
+          "enunciado": "(16 + 7) × 5 = ?\n\nA) 560   B) 115   C) 51   D) 28",
+          "respuesta": "B) 115",
+          "pasos": [
+            "Primero paréntesis: 16+7=23.",
+            "Luego ×5 = 115.",
+            "Sin paréntesis sería distinto: respeta el orden."
+          ]
+        },
+        {
+          "enunciado": "16 ÷ 7 + 8 × 2 = ?\n\nA) 18   B) 20   C) 31   D) 15",
+          "respuesta": "A) 18",
+          "pasos": [
+            "Primero 16÷7=2 y 8×2=16.",
+            "Suma: 2+16=18.",
+            "No sumes de izquierda a derecha sin priorizar × ÷."
+          ]
+        },
+        {
+          "enunciado": "10% de 60 = ?\n\nA) 6   B) 4   C) 60   D) 8",
+          "respuesta": "A) 6",
+          "pasos": [
+            "(10/100)×60 = 6.",
+            "Atajo: 10% de 60=6; escala al 10%.",
+            "Comprueba que el resultado sea menor que la base."
+          ]
+        },
+        {
+          "enunciado": "11² − 6² = ?\n\nA) 66   B) 157   C) 25   D) 85",
+          "respuesta": "D) 85",
+          "pasos": [
+            "11²=121, 6²=36.",
+            "Resta: 85.",
+            "Atajo: (11-6)(11+6)=5×17=85."
+          ]
+        },
+        {
+          "enunciado": "3/4 de 56 = ?\n\nA) 42   B) 28   C) 37   D) 14",
+          "respuesta": "A) 42",
+          "pasos": [
+            "1/4 de 56 = 14.",
+            "3/4 = 3×14 = 42.",
+            "No multipliques 3×4 sobre el total."
+          ]
+        },
+        {
+          "enunciado": "12 × 10 = ?\n\nA) 22   B) 120   C) 108   D) 132",
+          "respuesta": "B) 120",
+          "pasos": [
+            "Producto directo: 12×10=120.",
+            "Si te trabas, descompón: (a×5)+(a×resto).",
+            "Revisa no haber sumado en vez de multiplicar."
+          ]
+        },
+        {
+          "enunciado": "Si 1/5 de un número es 39, el número es:\n\nA) 200   B) 234   C) 195   D) 156",
+          "respuesta": "C) 195",
+          "pasos": [
+            "El entero = 39×5.",
+            "39×5=195.",
+            "Multiplica, no divides otra vez."
+          ]
+        },
+        {
+          "enunciado": "175 × 0,4 = ?\n\nA) 43   B) 70   C) 35   D) 87",
+          "respuesta": "B) 70",
+          "pasos": [
+            "0,4 = 2/5.",
+            "175×2/5 = 70.",
+            "Equivale a tomar el 40%."
+          ]
+        },
+        {
+          "enunciado": "(16 + 5) × 5 = ?\n\nA) 400   B) 26   C) 105   D) 41",
+          "respuesta": "C) 105",
+          "pasos": [
+            "Primero paréntesis: 16+5=21.",
+            "Luego ×5 = 105.",
+            "Sin paréntesis sería distinto: respeta el orden."
+          ]
+        },
+        {
+          "enunciado": "24 ÷ 5 + 4 × 2 = ?\n\nA) 12   B) 9   C) 14   D) 33",
+          "respuesta": "A) 12",
+          "pasos": [
+            "Primero 24÷5=4 y 4×2=8.",
+            "Suma: 4+8=12.",
+            "No sumes de izquierda a derecha sin priorizar × ÷."
+          ]
+        },
+        {
+          "enunciado": "25% de 50 = ?\n\nA) 14   B) 10   C) 12   D) 125",
+          "respuesta": "C) 12",
+          "pasos": [
+            "(25/100)×50 = 12.",
+            "Atajo: 10% de 50=5; escala al 25%.",
+            "Comprueba que el resultado sea menor que la base."
+          ]
+        },
+        {
+          "enunciado": "9² − 7² = ?\n\nA) 4   B) 32   C) 130   D) 63",
+          "respuesta": "B) 32",
+          "pasos": [
+            "9²=81, 7²=49.",
+            "Resta: 32.",
+            "Atajo: (9-7)(9+7)=2×16=32."
+          ]
+        },
+        {
+          "enunciado": "3/4 de 72 = ?\n\nA) 36   B) 54   C) 18   D) 48",
+          "respuesta": "B) 54",
+          "pasos": [
+            "1/4 de 72 = 18.",
+            "3/4 = 3×18 = 54.",
+            "No multipliques 3×4 sobre el total."
+          ]
+        },
+        {
+          "enunciado": "11 × 10 = ?\n\nA) 110   B) 99   C) 21   D) 121",
+          "respuesta": "A) 110",
+          "pasos": [
+            "Producto directo: 11×10=110.",
+            "Si te trabas, descompón: (a×5)+(a×resto).",
+            "Revisa no haber sumado en vez de multiplicar."
+          ]
+        },
+        {
+          "enunciado": "Si 1/5 de un número es 33, el número es:\n\nA) 132   B) 165   C) 198   D) 170",
+          "respuesta": "B) 165",
+          "pasos": [
+            "El entero = 33×5.",
+            "33×5=165.",
+            "Multiplica, no divides otra vez."
+          ]
+        },
+        {
+          "enunciado": "175 × 0,4 = ?\n\nA) 35   B) 43   C) 70   D) 87",
+          "respuesta": "C) 70",
+          "pasos": [
+            "0,4 = 2/5.",
+            "175×2/5 = 70.",
+            "Equivale a tomar el 40%."
+          ]
+        },
+        {
+          "enunciado": "(16 + 8) × 5 = ?\n\nA) 640   B) 120   C) 56   D) 29",
+          "respuesta": "B) 120",
+          "pasos": [
+            "Primero paréntesis: 16+8=24.",
+            "Luego ×5 = 120.",
+            "Sin paréntesis sería distinto: respeta el orden."
+          ]
+        },
+        {
+          "enunciado": "12 ÷ 3 + 6 × 2 = ?\n\nA) 16   B) 13   C) 18   D) 21",
+          "respuesta": "A) 16",
+          "pasos": [
+            "Primero 12÷3=4 y 6×2=12.",
+            "Suma: 4+12=16.",
+            "No sumes de izquierda a derecha sin priorizar × ÷."
+          ]
+        },
+        {
+          "enunciado": "15% de 40 = ?\n\nA) 4   B) 6   C) 60   D) 8",
+          "respuesta": "B) 6",
+          "pasos": [
+            "(15/100)×40 = 6.",
+            "Atajo: 10% de 40=4; escala al 15%.",
+            "Comprueba que el resultado sea menor que la base."
+          ]
+        },
+        {
+          "enunciado": "7² − 8² = ?\n\nA) 1   B) 56   C) 113   D) -15",
+          "respuesta": "D) -15",
+          "pasos": [
+            "7²=49, 8²=64.",
+            "Resta: -15.",
+            "Atajo: (7-8)(7+8)=-1×15=-15."
+          ]
+        },
+        {
+          "enunciado": "3/4 de 88 = ?\n\nA) 58   B) 22   C) 44   D) 66",
+          "respuesta": "D) 66",
+          "pasos": [
+            "1/4 de 88 = 22.",
+            "3/4 = 3×22 = 66.",
+            "No multipliques 3×4 sobre el total."
+          ]
+        },
+        {
+          "enunciado": "10 × 10 = ?\n\nA) 110   B) 100   C) 90   D) 20",
+          "respuesta": "B) 100",
+          "pasos": [
+            "Producto directo: 10×10=100.",
+            "Si te trabas, descompón: (a×5)+(a×resto).",
+            "Revisa no haber sumado en vez de multiplicar."
+          ]
+        },
+        {
+          "enunciado": "Si 1/5 de un número es 27, el número es:\n\nA) 140   B) 162   C) 108   D) 135",
+          "respuesta": "D) 135",
+          "pasos": [
+            "El entero = 27×5.",
+            "27×5=135.",
+            "Multiplica, no divides otra vez."
+          ]
+        },
+        {
+          "enunciado": "175 × 0,4 = ?\n\nA) 87   B) 43   C) 70   D) 35",
+          "respuesta": "C) 70",
+          "pasos": [
+            "0,4 = 2/5.",
+            "175×2/5 = 70.",
+            "Equivale a tomar el 40%."
+          ]
+        },
+        {
+          "enunciado": "(16 + 6) × 5 = ?\n\nA) 110   B) 27   C) 46   D) 480",
+          "respuesta": "A) 110",
+          "pasos": [
+            "Primero paréntesis: 16+6=22.",
+            "Luego ×5 = 110.",
+            "Sin paréntesis sería distinto: respeta el orden."
+          ]
+        },
+        {
+          "enunciado": "20 ÷ 6 + 8 × 2 = ?\n\nA) 19   B) 34   C) 21   D) 16",
+          "respuesta": "A) 19",
+          "pasos": [
+            "Primero 20÷6=3 y 8×2=16.",
+            "Suma: 3+16=19.",
+            "No sumes de izquierda a derecha sin priorizar × ÷."
+          ]
+        },
+        {
+          "enunciado": "30% de 120 = ?\n\nA) 34   B) 360   C) 38   D) 36",
+          "respuesta": "D) 36",
+          "pasos": [
+            "(30/100)×120 = 36.",
+            "Atajo: 10% de 120=12; escala al 30%.",
+            "Comprueba que el resultado sea menor que la base."
+          ]
+        },
+        {
+          "enunciado": "5² − 9² = ?\n\nA) 16   B) 45   C) 106   D) -56",
+          "respuesta": "D) -56",
+          "pasos": [
+            "5²=25, 9²=81.",
+            "Resta: -56.",
+            "Atajo: (5-9)(5+9)=-4×14=-56."
+          ]
+        },
+        {
+          "enunciado": "3/4 de 56 = ?\n\nA) 14   B) 37   C) 28   D) 42",
+          "respuesta": "D) 42",
+          "pasos": [
+            "1/4 de 56 = 14.",
+            "3/4 = 3×14 = 42.",
+            "No multipliques 3×4 sobre el total."
+          ]
+        },
+        {
+          "enunciado": "9 × 10 = ?\n\nA) 19   B) 99   C) 81   D) 90",
+          "respuesta": "D) 90",
+          "pasos": [
+            "Producto directo: 9×10=90.",
+            "Si te trabas, descompón: (a×5)+(a×resto).",
+            "Revisa no haber sumado en vez de multiplicar."
+          ]
+        },
+        {
+          "enunciado": "Si 1/5 de un número es 21, el número es:\n\nA) 84   B) 110   C) 126   D) 105",
+          "respuesta": "D) 105",
+          "pasos": [
+            "El entero = 21×5.",
+            "21×5=105.",
+            "Multiplica, no divides otra vez."
+          ]
+        },
+        {
+          "enunciado": "175 × 0,4 = ?\n\nA) 35   B) 87   C) 70   D) 43",
+          "respuesta": "C) 70",
+          "pasos": [
+            "0,4 = 2/5.",
+            "175×2/5 = 70.",
+            "Equivale a tomar el 40%."
+          ]
+        },
+        {
+          "enunciado": "(16 + 4) × 5 = ?\n\nA) 36   B) 25   C) 320   D) 100",
+          "respuesta": "D) 100",
+          "pasos": [
+            "Primero paréntesis: 16+4=20.",
+            "Luego ×5 = 100.",
+            "Sin paréntesis sería distinto: respeta el orden."
+          ]
+        },
+        {
+          "enunciado": "28 ÷ 4 + 4 × 2 = ?\n\nA) 15   B) 17   C) 12   D) 36",
+          "respuesta": "A) 15",
+          "pasos": [
+            "Primero 28÷4=7 y 4×2=8.",
+            "Suma: 7+8=15.",
+            "No sumes de izquierda a derecha sin priorizar × ÷."
+          ]
+        },
+        {
+          "enunciado": "20% de 110 = ?\n\nA) 24   B) 220   C) 22   D) 20",
+          "respuesta": "C) 22",
+          "pasos": [
+            "(20/100)×110 = 22.",
+            "Atajo: 10% de 110=11; escala al 20%.",
+            "Comprueba que el resultado sea menor que la base."
+          ]
+        },
+        {
+          "enunciado": "13² − 3² = ?\n\nA) 100   B) 160   C) 39   D) 178",
+          "respuesta": "B) 160",
+          "pasos": [
+            "13²=169, 3²=9.",
+            "Resta: 160.",
+            "Atajo: (13-3)(13+3)=10×16=160."
+          ]
+        },
+        {
+          "enunciado": "3/4 de 72 = ?\n\nA) 48   B) 36   C) 18   D) 54",
+          "respuesta": "D) 54",
+          "pasos": [
+            "1/4 de 72 = 18.",
+            "3/4 = 3×18 = 54.",
+            "No multipliques 3×4 sobre el total."
+          ]
+        },
+        {
+          "enunciado": "8 × 10 = ?\n\nA) 18   B) 80   C) 88   D) 72",
+          "respuesta": "B) 80",
+          "pasos": [
+            "Producto directo: 8×10=80.",
+            "Si te trabas, descompón: (a×5)+(a×resto).",
+            "Revisa no haber sumado en vez de multiplicar."
+          ]
+        },
+        {
+          "enunciado": "Si 1/5 de un número es 15, el número es:\n\nA) 60   B) 80   C) 90   D) 75",
+          "respuesta": "D) 75",
+          "pasos": [
+            "El entero = 15×5.",
+            "15×5=75.",
+            "Multiplica, no divides otra vez."
           ]
         }
       ]
@@ -339,105 +1413,402 @@
     {
       "id": "problemas-matematicos",
       "nombre": "Problemas matemáticos",
-      "descripcion": "Enunciados con datos. Traduce a una cuenta corta; comprueba el resultado.",
+      "descripcion": "Enunciado con datos; traduce a operación y comprueba.",
       "items": [
         {
-          "enunciado": "Un artículo costaba $80.000 y bajó 25 %. ¿Cuánto cuesta ahora?\n\nA) 60.000   B) 55.000   C) 20.000   D) 65.000",
-          "respuesta": "A) 60.000",
+          "enunciado": "Un artículo vale $50.000. Con 10% de descuento. ¿cuánto pagas?\n\nA) 50.000   B) 45.000   C) 5.000   D) 45.000",
+          "respuesta": "B) 45.000",
           "pasos": [
-            "25 % de 80.000 = 20.000.",
-            "Precio nuevo = 80.000 − 20.000 = 60.000.",
-            "O: pagas el 75 % → 0,75 × 80.000 = 60.000."
+            "10% de 50000 = 5000.",
+            "Pagas 50000 − eso = 45000.",
+            "El descuento se resta del precio, no se suma."
           ]
         },
         {
-          "enunciado": "Ana tiene el triple de lo que tiene Luis. Entre los dos suman $48.000. ¿Cuánto tiene Luis?\n\nA) 12.000   B) 16.000   C) 24.000   D) 36.000",
-          "respuesta": "A) 12.000",
+          "enunciado": "Recorres 4 km en 40 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 7   B) 8   C) 5   D) 6",
+          "respuesta": "D) 6",
           "pasos": [
-            "Si Luis = x, Ana = 3x.",
-            "x + 3x = 48.000 → 4x = 48.000 → x = 12.000."
+            "En 40 min → 4 km.",
+            "En 60 min: 4×(60/40) = 6.",
+            "Proporción directa tiempo-distancia."
           ]
         },
         {
-          "enunciado": "Un tren recorre 180 km en 3 horas a velocidad constante. ¿Cuántos km hará en 5 horas?\n\nA) 250   B) 300   C) 360   D) 280",
-          "respuesta": "B) 300",
+          "enunciado": "A llena en 6 h y B en 8 h. ¿Cuánto tardan juntas?\n\nA) 6   B) 1   C) 3.43   D) 3",
+          "respuesta": "C) 3.43",
           "pasos": [
-            "Velocidad = 180 ÷ 3 = 60 km/h.",
-            "En 5 h: 60 × 5 = 300 km."
+            "A: 1/6 por hora; B: 1/8.",
+            "Juntas: (a+b)/(a·b) inverso → 3.43 h.",
+            "Más grifos → menos tiempo (regla inversa)."
           ]
         },
         {
-          "enunciado": "Reparten $90.000 en partes proporcionales a 2, 3 y 4. ¿Cuánto le toca a la parte de 3?\n\nA) 27.000   B) 30.000   C) 36.000   D) 24.000",
-          "respuesta": "B) 30.000",
+          "enunciado": "Reparten $90.000 en partes 2. 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 30.000   B) 40.000   C) 20.000   D) 30.000",
+          "respuesta": "A) 30.000",
           "pasos": [
-            "Suma de partes: 2+3+4 = 9.",
-            "Una parte = 90.000 ÷ 9 = 10.000.",
-            "A la de 3: 3 × 10.000 = 30.000."
+            "Suma partes = 9.",
+            "Una parte = 90000/9 = 10000.",
+            "×3 = 30000."
           ]
         },
         {
-          "enunciado": "Si 6 obreros terminan un muro en 10 días, ¿cuántos días tardan 10 obreros (mismo ritmo)?\n\nA) 4   B) 5   C) 6   D) 8",
-          "respuesta": "C) 6",
+          "enunciado": "Si 10 obreros terminan en 8 días, ¿cuántos días tardan 14 (mismo ritmo)?\n\nA) 8   B) 8   C) 6   D) 5",
+          "respuesta": "D) 5",
           "pasos": [
-            "Trabajo total = 6 × 10 = 60 «obrero-días».",
-            "Con 10 obreros: 60 ÷ 10 = 6 días.",
-            "Es regla inversa: más gente → menos días."
+            "Trabajo = 10×8 = 80 obrero-días.",
+            "Con 14: 80/14 = 5.",
+            "Más gente → menos días."
           ]
         },
         {
-          "enunciado": "La edad de Carla es el doble de la de su hijo. Juntas suman 54 años. ¿Cuántos años tiene el hijo?\n\nA) 14   B) 18   C) 27   D) 36",
-          "respuesta": "B) 18",
-          "pasos": [
-            "Hijo = x; Carla = 2x.",
-            "x + 2x = 54 → 3x = 54 → x = 18."
-          ]
-        },
-        {
-          "enunciado": "Un artículo vale $80.000. Con 15% de descuento, ¿cuánto pagas?\n\nA) 68.000   B) 65.000   C) 72.000   D) 70.000",
-          "respuesta": "A) 68.000",
-          "pasos": [
-            "15% de 80.000 = 12.000.",
-            "80.000 − 12.000 = 68.000."
-          ]
-        },
-        {
-          "enunciado": "Camila recorre 4 km en 40 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 5   B) 6   C) 7   D) 8",
-          "respuesta": "B) 6",
-          "pasos": [
-            "40 min → 4 km ⇒ 10 min → 1 km.",
-            "60 min → 6 km."
-          ]
-        },
-        {
-          "enunciado": "Una cisterna se llena con A en 6 h y con B en 3 h. ¿Cuánto tardan juntas?\n\nA) 1 h   B) 2 h   C) 2,5 h   D) 4 h",
-          "respuesta": "B) 2 h",
-          "pasos": [
-            "A: 1/6 por hora; B: 1/3 = 2/6.",
-            "Juntas: 3/6 = 1/2 por hora → 2 horas."
-          ]
-        },
-        {
-          "enunciado": "De 50 aspirantes, 30 pasan el test y 18 la entrevista. Si 12 pasan ambos, ¿cuántos pasan al menos uno?\n\nA) 36   B) 48   C) 40   D) 30",
-          "respuesta": "A) 36",
-          "pasos": [
-            "Unión = solo test + solo entrevista + ambos.",
-            "Fórmula: 30+18−12 = 36."
-          ]
-        },
-        {
-          "enunciado": "Un tren de 180 m pasa un poste en 9 s. ¿Velocidad en m/s?\n\nA) 15   B) 18   C) 20   D) 22",
-          "respuesta": "C) 20",
+          "enunciado": "Un tren de 150 m pasa un poste en 6 s. ¿Velocidad en m/s?\n\nA) 27   B) 25   C) 15   D) 6",
+          "respuesta": "B) 25",
           "pasos": [
             "Para un poste, distancia = longitud del tren.",
-            "v = 180/9 = 20 m/s."
+            "v = 150/6 = 25 m/s.",
+            "No uses km/h si preguntan m/s."
           ]
         },
         {
-          "enunciado": "Si 8 cuadernos cuestan $48.000, ¿cuánto cuestan 5?\n\nA) 25.000   B) 28.000   C) 30.000   D) 32.000",
-          "respuesta": "C) 30.000",
+          "enunciado": "Si 8 cuadernos cuestan $44.000. ¿cuánto cuestan 5?\n\nA) 8.800   B) 5.500   C) 27.500   D) 44.000",
+          "respuesta": "C) 27.500",
           "pasos": [
-            "Uno: 48.000÷8 = 6.000.",
-            "Cinco: 5×6.000 = 30.000."
+            "Uno = 44000/8 = 5500.",
+            "5×5500 = 27500.",
+            "Regla de tres directa."
+          ]
+        },
+        {
+          "enunciado": "Un artículo vale $85.000. Con 25% de descuento. ¿cuánto pagas?\n\nA) 63.750   B) 21.250   C) 80.000   D) 85.000",
+          "respuesta": "A) 63.750",
+          "pasos": [
+            "25% de 85000 = 21250.",
+            "Pagas 85000 − eso = 63750.",
+            "El descuento se resta del precio, no se suma."
+          ]
+        },
+        {
+          "enunciado": "Recorres 6 km en 50 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 12   B) 7   C) 8   D) 6",
+          "respuesta": "B) 7",
+          "pasos": [
+            "En 50 min → 6 km.",
+            "En 60 min: 6×(60/50) = 7.",
+            "Proporción directa tiempo-distancia."
+          ]
+        },
+        {
+          "enunciado": "A llena en 8 h y B en 7 h. ¿Cuánto tardan juntas?\n\nA) 3.73   B) 3   C) 8   D) 1",
+          "respuesta": "A) 3.73",
+          "pasos": [
+            "A: 1/8 por hora; B: 1/7.",
+            "Juntas: (a+b)/(a·b) inverso → 3.73 h.",
+            "Más grifos → menos tiempo (regla inversa)."
+          ]
+        },
+        {
+          "enunciado": "Reparten $99.000 en partes 2. 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 33.000   B) 22.000   C) 33.000   D) 44.000",
+          "respuesta": "A) 33.000",
+          "pasos": [
+            "Suma partes = 9.",
+            "Una parte = 99000/9 = 11000.",
+            "×3 = 33000."
+          ]
+        },
+        {
+          "enunciado": "Si 7 obreros terminan en 11 días, ¿cuántos días tardan 11 (mismo ritmo)?\n\nA) 11   B) 8   C) 7   D) 11",
+          "respuesta": "C) 7",
+          "pasos": [
+            "Trabajo = 7×11 = 77 obrero-días.",
+            "Con 11: 77/11 = 7.",
+            "Más gente → menos días."
+          ]
+        },
+        {
+          "enunciado": "Un tren de 120 m pasa un poste en 8 s. ¿Velocidad en m/s?\n\nA) 15   B) 12   C) 8   D) 17",
+          "respuesta": "A) 15",
+          "pasos": [
+            "Para un poste, distancia = longitud del tren.",
+            "v = 120/8 = 15 m/s.",
+            "No uses km/h si preguntan m/s."
+          ]
+        },
+        {
+          "enunciado": "Si 8 cuadernos cuestan $52.000. ¿cuánto cuestan 5?\n\nA) 32.500   B) 52.000   C) 6.500   D) 10.400",
+          "respuesta": "A) 32.500",
+          "pasos": [
+            "Uno = 52000/8 = 6500.",
+            "5×6500 = 32500.",
+            "Regla de tres directa."
+          ]
+        },
+        {
+          "enunciado": "Un artículo vale $70.000. Con 20% de descuento. ¿cuánto pagas?\n\nA) 65.000   B) 70.000   C) 14.000   D) 56.000",
+          "respuesta": "D) 56.000",
+          "pasos": [
+            "20% de 70000 = 14000.",
+            "Pagas 70000 − eso = 56000.",
+            "El descuento se resta del precio, no se suma."
+          ]
+        },
+        {
+          "enunciado": "Recorres 3 km en 30 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 5   B) 7   C) 6   D) 6",
+          "respuesta": "C) 6",
+          "pasos": [
+            "En 30 min → 3 km.",
+            "En 60 min: 3×(60/30) = 6.",
+            "Proporción directa tiempo-distancia."
+          ]
+        },
+        {
+          "enunciado": "A llena en 5 h y B en 6 h. ¿Cuánto tardan juntas?\n\nA) 2.73   B) 1   C) 3   D) 5",
+          "respuesta": "A) 2.73",
+          "pasos": [
+            "A: 1/5 por hora; B: 1/6.",
+            "Juntas: (a+b)/(a·b) inverso → 2.73 h.",
+            "Más grifos → menos tiempo (regla inversa)."
+          ]
+        },
+        {
+          "enunciado": "Reparten $108.000 en partes 2. 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 24.000   B) 48.000   C) 36.000   D) 36.000",
+          "respuesta": "C) 36.000",
+          "pasos": [
+            "Suma partes = 9.",
+            "Una parte = 108000/9 = 12000.",
+            "×3 = 36000."
+          ]
+        },
+        {
+          "enunciado": "Si 9 obreros terminan en 10 días, ¿cuántos días tardan 13 (mismo ritmo)?\n\nA) 10   B) 7   C) 6   D) 10",
+          "respuesta": "C) 6",
+          "pasos": [
+            "Trabajo = 9×10 = 90 obrero-días.",
+            "Con 13: 90/13 = 6.",
+            "Más gente → menos días."
+          ]
+        },
+        {
+          "enunciado": "Un tren de 210 m pasa un poste en 10 s. ¿Velocidad en m/s?\n\nA) 21   B) 21   C) 10   D) 23",
+          "respuesta": "A) 21",
+          "pasos": [
+            "Para un poste, distancia = longitud del tren.",
+            "v = 210/10 = 21 m/s.",
+            "No uses km/h si preguntan m/s."
+          ]
+        },
+        {
+          "enunciado": "Si 8 cuadernos cuestan $40.000. ¿cuánto cuestan 5?\n\nA) 25.000   B) 5.000   C) 8.000   D) 40.000",
+          "respuesta": "A) 25.000",
+          "pasos": [
+            "Uno = 40000/8 = 5000.",
+            "5×5000 = 25000.",
+            "Regla de tres directa."
+          ]
+        },
+        {
+          "enunciado": "Un artículo vale $55.000. Con 15% de descuento. ¿cuánto pagas?\n\nA) 46.750   B) 50.000   C) 8.250   D) 55.000",
+          "respuesta": "A) 46.750",
+          "pasos": [
+            "15% de 55000 = 8250.",
+            "Pagas 55000 − eso = 46750.",
+            "El descuento se resta del precio, no se suma."
+          ]
+        },
+        {
+          "enunciado": "Recorres 5 km en 40 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 7   B) 8   C) 10   D) 6",
+          "respuesta": "A) 7",
+          "pasos": [
+            "En 40 min → 5 km.",
+            "En 60 min: 5×(60/40) = 7.",
+            "Proporción directa tiempo-distancia."
+          ]
+        },
+        {
+          "enunciado": "A llena en 7 h y B en 9 h. ¿Cuánto tardan juntas?\n\nA) 7   B) 3   C) 3.94   D) 1",
+          "respuesta": "C) 3.94",
+          "pasos": [
+            "A: 1/7 por hora; B: 1/9.",
+            "Juntas: (a+b)/(a·b) inverso → 3.94 h.",
+            "Más grifos → menos tiempo (regla inversa)."
+          ]
+        },
+        {
+          "enunciado": "Reparten $90.000 en partes 2. 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 20.000   B) 30.000   C) 30.000   D) 40.000",
+          "respuesta": "B) 30.000",
+          "pasos": [
+            "Suma partes = 9.",
+            "Una parte = 90000/9 = 10000.",
+            "×3 = 30000."
+          ]
+        },
+        {
+          "enunciado": "Si 6 obreros terminan en 9 días, ¿cuántos días tardan 10 (mismo ritmo)?\n\nA) 9   B) 9   C) 5   D) 6",
+          "respuesta": "C) 5",
+          "pasos": [
+            "Trabajo = 6×9 = 54 obrero-días.",
+            "Con 10: 54/10 = 5.",
+            "Más gente → menos días."
+          ]
+        },
+        {
+          "enunciado": "Un tren de 180 m pasa un poste en 7 s. ¿Velocidad en m/s?\n\nA) 25   B) 27   C) 7   D) 18",
+          "respuesta": "A) 25",
+          "pasos": [
+            "Para un poste, distancia = longitud del tren.",
+            "v = 180/7 = 25 m/s.",
+            "No uses km/h si preguntan m/s."
+          ]
+        },
+        {
+          "enunciado": "Si 8 cuadernos cuestan $48.000. ¿cuánto cuestan 5?\n\nA) 9.600   B) 6.000   C) 48.000   D) 30.000",
+          "respuesta": "D) 30.000",
+          "pasos": [
+            "Uno = 48000/8 = 6000.",
+            "5×6000 = 30000.",
+            "Regla de tres directa."
+          ]
+        },
+        {
+          "enunciado": "Un artículo vale $90.000. Con 10% de descuento. ¿cuánto pagas?\n\nA) 9.000   B) 81.000   C) 90.000   D) 85.000",
+          "respuesta": "B) 81.000",
+          "pasos": [
+            "10% de 90000 = 9000.",
+            "Pagas 90000 − eso = 81000.",
+            "El descuento se resta del precio, no se suma."
+          ]
+        },
+        {
+          "enunciado": "Recorres 7 km en 50 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 9   B) 14   C) 8   D) 7",
+          "respuesta": "C) 8",
+          "pasos": [
+            "En 50 min → 7 km.",
+            "En 60 min: 7×(60/50) = 8.",
+            "Proporción directa tiempo-distancia."
+          ]
+        },
+        {
+          "enunciado": "A llena en 4 h y B en 8 h. ¿Cuánto tardan juntas?\n\nA) 1   B) 2.67   C) 4   D) 3",
+          "respuesta": "B) 2.67",
+          "pasos": [
+            "A: 1/4 por hora; B: 1/8.",
+            "Juntas: (a+b)/(a·b) inverso → 2.67 h.",
+            "Más grifos → menos tiempo (regla inversa)."
+          ]
+        },
+        {
+          "enunciado": "Reparten $99.000 en partes 2. 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 22.000   B) 44.000   C) 33.000   D) 33.000",
+          "respuesta": "C) 33.000",
+          "pasos": [
+            "Suma partes = 9.",
+            "Una parte = 99000/9 = 11000.",
+            "×3 = 33000."
+          ]
+        },
+        {
+          "enunciado": "Si 8 obreros terminan en 8 días, ¿cuántos días tardan 12 (mismo ritmo)?\n\nA) 5   B) 8   C) 6   D) 8",
+          "respuesta": "A) 5",
+          "pasos": [
+            "Trabajo = 8×8 = 64 obrero-días.",
+            "Con 12: 64/12 = 5.",
+            "Más gente → menos días."
+          ]
+        },
+        {
+          "enunciado": "Un tren de 150 m pasa un poste en 9 s. ¿Velocidad en m/s?\n\nA) 15   B) 16   C) 18   D) 9",
+          "respuesta": "B) 16",
+          "pasos": [
+            "Para un poste, distancia = longitud del tren.",
+            "v = 150/9 = 16 m/s.",
+            "No uses km/h si preguntan m/s."
+          ]
+        },
+        {
+          "enunciado": "Si 8 cuadernos cuestan $56.000. ¿cuánto cuestan 5?\n\nA) 56.000   B) 11.200   C) 7.000   D) 35.000",
+          "respuesta": "D) 35.000",
+          "pasos": [
+            "Uno = 56000/8 = 7000.",
+            "5×7000 = 35000.",
+            "Regla de tres directa."
+          ]
+        },
+        {
+          "enunciado": "Un artículo vale $75.000. Con 25% de descuento. ¿cuánto pagas?\n\nA) 18.750   B) 70.000   C) 75.000   D) 56.250",
+          "respuesta": "D) 56.250",
+          "pasos": [
+            "25% de 75000 = 18750.",
+            "Pagas 75000 − eso = 56250.",
+            "El descuento se resta del precio, no se suma."
+          ]
+        },
+        {
+          "enunciado": "Recorres 4 km en 30 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 9   B) 7   C) 8   D) 8",
+          "respuesta": "C) 8",
+          "pasos": [
+            "En 30 min → 4 km.",
+            "En 60 min: 4×(60/30) = 8.",
+            "Proporción directa tiempo-distancia."
+          ]
+        },
+        {
+          "enunciado": "A llena en 6 h y B en 7 h. ¿Cuánto tardan juntas?\n\nA) 1   B) 3   C) 6   D) 3.23",
+          "respuesta": "D) 3.23",
+          "pasos": [
+            "A: 1/6 por hora; B: 1/7.",
+            "Juntas: (a+b)/(a·b) inverso → 3.23 h.",
+            "Más grifos → menos tiempo (regla inversa)."
+          ]
+        },
+        {
+          "enunciado": "Reparten $108.000 en partes 2. 3 y 4. ¿Cuánto le toca a la de 3?\n\nA) 24.000   B) 36.000   C) 48.000   D) 36.000",
+          "respuesta": "B) 36.000",
+          "pasos": [
+            "Suma partes = 9.",
+            "Una parte = 108000/9 = 12000.",
+            "×3 = 36000."
+          ]
+        },
+        {
+          "enunciado": "Si 10 obreros terminan en 11 días, ¿cuántos días tardan 14 (mismo ritmo)?\n\nA) 7   B) 11   C) 8   D) 11",
+          "respuesta": "A) 7",
+          "pasos": [
+            "Trabajo = 10×11 = 110 obrero-días.",
+            "Con 14: 110/14 = 7.",
+            "Más gente → menos días."
+          ]
+        },
+        {
+          "enunciado": "Un tren de 120 m pasa un poste en 6 s. ¿Velocidad en m/s?\n\nA) 20   B) 22   C) 6   D) 12",
+          "respuesta": "A) 20",
+          "pasos": [
+            "Para un poste, distancia = longitud del tren.",
+            "v = 120/6 = 20 m/s.",
+            "No uses km/h si preguntan m/s."
+          ]
+        },
+        {
+          "enunciado": "Si 8 cuadernos cuestan $44.000. ¿cuánto cuestan 5?\n\nA) 5.500   B) 27.500   C) 44.000   D) 8.800",
+          "respuesta": "B) 27.500",
+          "pasos": [
+            "Uno = 44000/8 = 5500.",
+            "5×5500 = 27500.",
+            "Regla de tres directa."
+          ]
+        },
+        {
+          "enunciado": "Un artículo vale $60.000. Con 20% de descuento. ¿cuánto pagas?\n\nA) 55.000   B) 12.000   C) 60.000   D) 48.000",
+          "respuesta": "D) 48.000",
+          "pasos": [
+            "20% de 60000 = 12000.",
+            "Pagas 60000 − eso = 48000.",
+            "El descuento se resta del precio, no se suma."
+          ]
+        },
+        {
+          "enunciado": "Recorres 6 km en 40 min. ¿Cuántos km en 1 hora al mismo ritmo?\n\nA) 10   B) 9   C) 12   D) 8",
+          "respuesta": "B) 9",
+          "pasos": [
+            "En 40 min → 6 km.",
+            "En 60 min: 6×(60/40) = 9.",
+            "Proporción directa tiempo-distancia."
           ]
         }
       ]
@@ -445,105 +1816,465 @@
     {
       "id": "razonamiento-diagramatico",
       "nombre": "Razonamiento diagramático",
-      "descripcion": "Símbolos = órdenes sobre una fila. Aplica una por una y anota el resultado intermedio.",
+      "descripcion": "Describe figuras/patrones en texto: rota, alterna o cuenta.",
       "items": [
         {
-          "enunciado": "Fila inicial: ■ ▲ ●\nOrden 1: invertir el orden.\nOrden 2: quitar la figura del medio.\n¿Cómo queda la fila?\n\nA) ● ■   B) ■ ●   C) ▲ ●   D) ● ▲",
-          "respuesta": "A) ● ■",
+          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) Igual   B) Izquierda   C) Derecha (▶)   D) Abajo",
+          "respuesta": "C) Derecha (▶)",
           "pasos": [
-            "Después de invertir: ● ▲ ■.",
-            "Quitar la del medio (▲): quedan ● ■.",
-            "Si haces las dos órdenes de memoria sin anotar, es fácil equivocarte el orden."
+            "Arriba → derecha → abajo → izquierda.",
+            "Un giro de 90° horario desde arriba es derecha.",
+            "No confundas con antihorario."
           ]
         },
         {
-          "enunciado": "Fila: A B C D\nOrden: intercambiar el primero con el último.\nResultado:\n\nA) D B C A   B) A D C B   C) D C B A   D) B A C D",
-          "respuesta": "A) D B C A",
+          "enunciado": "Puntos en figuras: 2, 3, 5, 8, 12, ?. ¿Cuántos puntos siguen?\n\nA) 16   B) 19   C) 24   D) 17",
+          "respuesta": "D) 17",
           "pasos": [
-            "Primero = A, último = D.",
-            "Tras el intercambio: D B C A."
+            "Las diferencias crecen +1, +2, +3…",
+            "Tras +4, sigue +5 → 17.",
+            "Cuenta puntos, no inventes otro patrón."
           ]
         },
         {
-          "enunciado": "Fila: 2 4 6 8\nOrden: duplicar cada número.\nLuego: sumar 1 al primero.\n¿Cuál es el primero de la fila final?\n\nA) 4   B) 5   C) 3   D) 2",
-          "respuesta": "B) 5",
-          "pasos": [
-            "Duplicar: 4 8 12 16.",
-            "Sumar 1 al primero: 5 8 12 16.",
-            "El primero queda en 5."
-          ]
-        },
-        {
-          "enunciado": "Fila: ○ □ △\nOrden: girar la fila una posición a la izquierda (el primero pasa al final).\nResultado:\n\nA) □ △ ○   B) △ ○ □   C) ○ △ □   D) □ ○ △",
-          "respuesta": "A) □ △ ○",
-          "pasos": [
-            "El primero (○) sale y va al final.",
-            "Queda □ △ ○."
-          ]
-        },
-        {
-          "enunciado": "Dos órdenes sobre [1 2 3]: (1) invertir; (2) invertir otra vez. Resultado final:\n\nA) 3 2 1   B) 1 2 3   C) 2 1 3   D) 1 3 2",
-          "respuesta": "B) 1 2 3",
-          "pasos": [
-            "Invertir: 3 2 1.",
-            "Invertir otra vez: vuelve a 1 2 3.",
-            "Dos inversiones se anulan."
-          ]
-        },
-        {
-          "enunciado": "Fila: X Y Z\nOrden: borrar la última letra y repetir la primera al final.\nResultado:\n\nA) X Y X   B) X X Y   C) Y Z X   D) X Y Z",
-          "respuesta": "A) X Y X",
-          "pasos": [
-            "Quitar Z → X Y.",
-            "Repetir la primera (X) al final → X Y X."
-          ]
-        },
-        {
-          "enunciado": "Regla: cada figura gira 90° en sentido horario. Tras ▲ apuntando arriba, ¿siguiente?\n\nA) ▲ abajo   B) ▶ derecha   C) ◀ izquierda   D) ■",
-          "respuesta": "B) ▶ derecha",
-          "pasos": [
-            "Arriba → derecha (90° horario).",
-            "Luego iría abajo, luego izquierda."
-          ]
-        },
-        {
-          "enunciado": "Serie de puntos: 1, 2, 4, 7, ?. ¿Qué número de puntos sigue?\n\nA) 8   B) 10   C) 11   D) 12",
-          "respuesta": "C) 11",
-          "pasos": [
-            "Diferencias: +1, +2, +3.",
-            "Siguiente diferencia +4 → 7+4=11."
-          ]
-        },
-        {
-          "enunciado": "En una fila: círculo blanco, negro, blanco, negro. El 7.º es:\n\nA) Blanco   B) Negro   C) Gris   D) No se puede saber",
+          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) Blanco   B) Negro   C) Gris   D) No se sabe",
           "respuesta": "A) Blanco",
           "pasos": [
             "Patrón de 2: impar=blanco, par=negro.",
-            "7 es impar → blanco."
+            "7 es impar → Blanco.",
+            "Extiende la alternancia."
           ]
         },
         {
-          "enunciado": "Matriz 2×2: fila1 A B; fila2 C ?. Si cada celda suma letras A=1… y fila suma 5, ¿?\n\nA) D   B) E   C) F   D) A",
-          "respuesta": "A) D",
+          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) Mediana   B) Vacía   C) Grande   D) Pequeña",
+          "respuesta": "C) Grande",
           "pasos": [
-            "A+B=1+2=3; falta 2 para llegar a 5 en analogía simple.",
-            "C=3; para espejo A→C (+2), B→D (+2)."
+            "Ciclo de 3.",
+            "Posición 4 = misma que 1 → grande.",
+            "Mod 3 de la posición."
           ]
         },
         {
-          "enunciado": "Símbolo ⊕ gira y se vuelve ⊖, luego ⊕ otra vez. Si el 5.º es ⊕, el 6.º es:\n\nA) ⊕   B) ⊖   C) ⊗   D) Igual siempre",
-          "respuesta": "B) ⊖",
+          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊖   B) ⊕   C) Igual siempre   D) ⊗",
+          "respuesta": "A) ⊖",
           "pasos": [
-            "Alterna ⊕ ⊖ ⊕ ⊖…",
-            "Impar ⊕, par ⊖ → 6.º = ⊖."
+            "Impar ⊕, par ⊖.",
+            "6 es par → ⊖.",
+            "No inventes un tercer símbolo."
           ]
         },
         {
-          "enunciado": "Tres figuras: grande, mediana, pequeña. La 4.ª del ciclo vuelve a:\n\nA) Grande   B) Mediana   C) Pequeña   D) Vacía",
+          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) E   B) F   C) D   D) A",
+          "respuesta": "C) D",
+          "pasos": [
+            "A(1)→C(3) suma 2.",
+            "B(2)+2 = D(4).",
+            "Aplica el mismo salto."
+          ]
+        },
+        {
+          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) Abajo   B) Derecha (▶)   C) Igual   D) Izquierda",
+          "respuesta": "B) Derecha (▶)",
+          "pasos": [
+            "Arriba → derecha → abajo → izquierda.",
+            "Un giro de 90° horario desde arriba es derecha.",
+            "No confundas con antihorario."
+          ]
+        },
+        {
+          "enunciado": "Puntos en figuras: 2, 3, 5, 8, 12, ?. ¿Cuántos puntos siguen?\n\nA) 16   B) 19   C) 17   D) 24",
+          "respuesta": "C) 17",
+          "pasos": [
+            "Las diferencias crecen +1, +2, +3…",
+            "Tras +4, sigue +5 → 17.",
+            "Cuenta puntos, no inventes otro patrón."
+          ]
+        },
+        {
+          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) Negro   B) Blanco   C) No se sabe   D) Gris",
+          "respuesta": "B) Blanco",
+          "pasos": [
+            "Patrón de 2: impar=blanco, par=negro.",
+            "7 es impar → Blanco.",
+            "Extiende la alternancia."
+          ]
+        },
+        {
+          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) Mediana   B) Pequeña   C) Vacía   D) Grande",
+          "respuesta": "D) Grande",
+          "pasos": [
+            "Ciclo de 3.",
+            "Posición 4 = misma que 1 → grande.",
+            "Mod 3 de la posición."
+          ]
+        },
+        {
+          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊖   B) ⊕   C) Igual siempre   D) ⊗",
+          "respuesta": "A) ⊖",
+          "pasos": [
+            "Impar ⊕, par ⊖.",
+            "6 es par → ⊖.",
+            "No inventes un tercer símbolo."
+          ]
+        },
+        {
+          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) F   B) E   C) D   D) A",
+          "respuesta": "C) D",
+          "pasos": [
+            "A(1)→C(3) suma 2.",
+            "B(2)+2 = D(4).",
+            "Aplica el mismo salto."
+          ]
+        },
+        {
+          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) Derecha (▶)   B) Abajo   C) Igual   D) Izquierda",
+          "respuesta": "A) Derecha (▶)",
+          "pasos": [
+            "Arriba → derecha → abajo → izquierda.",
+            "Un giro de 90° horario desde arriba es derecha.",
+            "No confundas con antihorario."
+          ]
+        },
+        {
+          "enunciado": "Puntos en figuras: 2, 3, 5, 8, 12, ?. ¿Cuántos puntos siguen?\n\nA) 17   B) 16   C) 24   D) 19",
+          "respuesta": "A) 17",
+          "pasos": [
+            "Las diferencias crecen +1, +2, +3…",
+            "Tras +4, sigue +5 → 17.",
+            "Cuenta puntos, no inventes otro patrón."
+          ]
+        },
+        {
+          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) Gris   B) Negro   C) Blanco   D) No se sabe",
+          "respuesta": "C) Blanco",
+          "pasos": [
+            "Patrón de 2: impar=blanco, par=negro.",
+            "7 es impar → Blanco.",
+            "Extiende la alternancia."
+          ]
+        },
+        {
+          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) Grande   B) Mediana   C) Pequeña   D) Vacía",
           "respuesta": "A) Grande",
           "pasos": [
-            "Ciclo de 3 tamaños.",
-            "Posición 4 = misma que 1 → grande."
+            "Ciclo de 3.",
+            "Posición 4 = misma que 1 → grande.",
+            "Mod 3 de la posición."
+          ]
+        },
+        {
+          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊕   B) Igual siempre   C) ⊖   D) ⊗",
+          "respuesta": "C) ⊖",
+          "pasos": [
+            "Impar ⊕, par ⊖.",
+            "6 es par → ⊖.",
+            "No inventes un tercer símbolo."
+          ]
+        },
+        {
+          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) A   B) D   C) F   D) E",
+          "respuesta": "B) D",
+          "pasos": [
+            "A(1)→C(3) suma 2.",
+            "B(2)+2 = D(4).",
+            "Aplica el mismo salto."
+          ]
+        },
+        {
+          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) Abajo   B) Derecha (▶)   C) Igual   D) Izquierda",
+          "respuesta": "B) Derecha (▶)",
+          "pasos": [
+            "Arriba → derecha → abajo → izquierda.",
+            "Un giro de 90° horario desde arriba es derecha.",
+            "No confundas con antihorario."
+          ]
+        },
+        {
+          "enunciado": "Puntos en figuras: 2, 3, 5, 8, 12, ?. ¿Cuántos puntos siguen?\n\nA) 17   B) 19   C) 24   D) 16",
+          "respuesta": "A) 17",
+          "pasos": [
+            "Las diferencias crecen +1, +2, +3…",
+            "Tras +4, sigue +5 → 17.",
+            "Cuenta puntos, no inventes otro patrón."
+          ]
+        },
+        {
+          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) No se sabe   B) Gris   C) Blanco   D) Negro",
+          "respuesta": "C) Blanco",
+          "pasos": [
+            "Patrón de 2: impar=blanco, par=negro.",
+            "7 es impar → Blanco.",
+            "Extiende la alternancia."
+          ]
+        },
+        {
+          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) Pequeña   B) Mediana   C) Grande   D) Vacía",
+          "respuesta": "C) Grande",
+          "pasos": [
+            "Ciclo de 3.",
+            "Posición 4 = misma que 1 → grande.",
+            "Mod 3 de la posición."
+          ]
+        },
+        {
+          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊖   B) Igual siempre   C) ⊕   D) ⊗",
+          "respuesta": "A) ⊖",
+          "pasos": [
+            "Impar ⊕, par ⊖.",
+            "6 es par → ⊖.",
+            "No inventes un tercer símbolo."
+          ]
+        },
+        {
+          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) E   B) D   C) A   D) F",
+          "respuesta": "B) D",
+          "pasos": [
+            "A(1)→C(3) suma 2.",
+            "B(2)+2 = D(4).",
+            "Aplica el mismo salto."
+          ]
+        },
+        {
+          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) Derecha (▶)   B) Izquierda   C) Igual   D) Abajo",
+          "respuesta": "A) Derecha (▶)",
+          "pasos": [
+            "Arriba → derecha → abajo → izquierda.",
+            "Un giro de 90° horario desde arriba es derecha.",
+            "No confundas con antihorario."
+          ]
+        },
+        {
+          "enunciado": "Puntos en figuras: 2, 3, 5, 8, 12, ?. ¿Cuántos puntos siguen?\n\nA) 17   B) 19   C) 16   D) 24",
+          "respuesta": "A) 17",
+          "pasos": [
+            "Las diferencias crecen +1, +2, +3…",
+            "Tras +4, sigue +5 → 17.",
+            "Cuenta puntos, no inventes otro patrón."
+          ]
+        },
+        {
+          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) Negro   B) No se sabe   C) Gris   D) Blanco",
+          "respuesta": "D) Blanco",
+          "pasos": [
+            "Patrón de 2: impar=blanco, par=negro.",
+            "7 es impar → Blanco.",
+            "Extiende la alternancia."
+          ]
+        },
+        {
+          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) Grande   B) Vacía   C) Mediana   D) Pequeña",
+          "respuesta": "A) Grande",
+          "pasos": [
+            "Ciclo de 3.",
+            "Posición 4 = misma que 1 → grande.",
+            "Mod 3 de la posición."
+          ]
+        },
+        {
+          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊗   B) Igual siempre   C) ⊕   D) ⊖",
+          "respuesta": "D) ⊖",
+          "pasos": [
+            "Impar ⊕, par ⊖.",
+            "6 es par → ⊖.",
+            "No inventes un tercer símbolo."
+          ]
+        },
+        {
+          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) F   B) D   C) E   D) A",
+          "respuesta": "B) D",
+          "pasos": [
+            "A(1)→C(3) suma 2.",
+            "B(2)+2 = D(4).",
+            "Aplica el mismo salto."
+          ]
+        },
+        {
+          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) Derecha (▶)   B) Igual   C) Izquierda   D) Abajo",
+          "respuesta": "A) Derecha (▶)",
+          "pasos": [
+            "Arriba → derecha → abajo → izquierda.",
+            "Un giro de 90° horario desde arriba es derecha.",
+            "No confundas con antihorario."
+          ]
+        },
+        {
+          "enunciado": "Puntos en figuras: 2, 3, 5, 8, 12, ?. ¿Cuántos puntos siguen?\n\nA) 17   B) 16   C) 19   D) 24",
+          "respuesta": "A) 17",
+          "pasos": [
+            "Las diferencias crecen +1, +2, +3…",
+            "Tras +4, sigue +5 → 17.",
+            "Cuenta puntos, no inventes otro patrón."
+          ]
+        },
+        {
+          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) Negro   B) Gris   C) No se sabe   D) Blanco",
+          "respuesta": "D) Blanco",
+          "pasos": [
+            "Patrón de 2: impar=blanco, par=negro.",
+            "7 es impar → Blanco.",
+            "Extiende la alternancia."
+          ]
+        },
+        {
+          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) Grande   B) Pequeña   C) Vacía   D) Mediana",
+          "respuesta": "A) Grande",
+          "pasos": [
+            "Ciclo de 3.",
+            "Posición 4 = misma que 1 → grande.",
+            "Mod 3 de la posición."
+          ]
+        },
+        {
+          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊕   B) ⊗   C) ⊖   D) Igual siempre",
+          "respuesta": "C) ⊖",
+          "pasos": [
+            "Impar ⊕, par ⊖.",
+            "6 es par → ⊖.",
+            "No inventes un tercer símbolo."
+          ]
+        },
+        {
+          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) A   B) D   C) F   D) E",
+          "respuesta": "B) D",
+          "pasos": [
+            "A(1)→C(3) suma 2.",
+            "B(2)+2 = D(4).",
+            "Aplica el mismo salto."
+          ]
+        },
+        {
+          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) Abajo   B) Derecha (▶)   C) Igual   D) Izquierda",
+          "respuesta": "B) Derecha (▶)",
+          "pasos": [
+            "Arriba → derecha → abajo → izquierda.",
+            "Un giro de 90° horario desde arriba es derecha.",
+            "No confundas con antihorario."
+          ]
+        },
+        {
+          "enunciado": "Puntos en figuras: 2, 3, 5, 8, 12, ?. ¿Cuántos puntos siguen?\n\nA) 16   B) 19   C) 17   D) 24",
+          "respuesta": "C) 17",
+          "pasos": [
+            "Las diferencias crecen +1, +2, +3…",
+            "Tras +4, sigue +5 → 17.",
+            "Cuenta puntos, no inventes otro patrón."
+          ]
+        },
+        {
+          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) Negro   B) No se sabe   C) Gris   D) Blanco",
+          "respuesta": "D) Blanco",
+          "pasos": [
+            "Patrón de 2: impar=blanco, par=negro.",
+            "7 es impar → Blanco.",
+            "Extiende la alternancia."
+          ]
+        },
+        {
+          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) Grande   B) Pequeña   C) Vacía   D) Mediana",
+          "respuesta": "A) Grande",
+          "pasos": [
+            "Ciclo de 3.",
+            "Posición 4 = misma que 1 → grande.",
+            "Mod 3 de la posición."
+          ]
+        },
+        {
+          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊖   B) Igual siempre   C) ⊕   D) ⊗",
+          "respuesta": "A) ⊖",
+          "pasos": [
+            "Impar ⊕, par ⊖.",
+            "6 es par → ⊖.",
+            "No inventes un tercer símbolo."
+          ]
+        },
+        {
+          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) F   B) E   C) D   D) A",
+          "respuesta": "C) D",
+          "pasos": [
+            "A(1)→C(3) suma 2.",
+            "B(2)+2 = D(4).",
+            "Aplica el mismo salto."
+          ]
+        },
+        {
+          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) Izquierda   B) Derecha (▶)   C) Igual   D) Abajo",
+          "respuesta": "B) Derecha (▶)",
+          "pasos": [
+            "Arriba → derecha → abajo → izquierda.",
+            "Un giro de 90° horario desde arriba es derecha.",
+            "No confundas con antihorario."
+          ]
+        },
+        {
+          "enunciado": "Puntos en figuras: 2, 3, 5, 8, 12, ?. ¿Cuántos puntos siguen?\n\nA) 19   B) 24   C) 17   D) 16",
+          "respuesta": "C) 17",
+          "pasos": [
+            "Las diferencias crecen +1, +2, +3…",
+            "Tras +4, sigue +5 → 17.",
+            "Cuenta puntos, no inventes otro patrón."
+          ]
+        },
+        {
+          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) Blanco   B) Negro   C) Gris   D) No se sabe",
+          "respuesta": "A) Blanco",
+          "pasos": [
+            "Patrón de 2: impar=blanco, par=negro.",
+            "7 es impar → Blanco.",
+            "Extiende la alternancia."
+          ]
+        },
+        {
+          "enunciado": "Ciclo de tamaños: grande → mediana → pequeña → (repite). La 4.ª es:\n\nA) Vacía   B) Pequeña   C) Mediana   D) Grande",
+          "respuesta": "D) Grande",
+          "pasos": [
+            "Ciclo de 3.",
+            "Posición 4 = misma que 1 → grande.",
+            "Mod 3 de la posición."
+          ]
+        },
+        {
+          "enunciado": "Alterna ⊕ ⊖ ⊕ ⊖… Si el 5.º es ⊕, el 6.º es:\n\nA) ⊗   B) ⊕   C) ⊖   D) Igual siempre",
+          "respuesta": "C) ⊖",
+          "pasos": [
+            "Impar ⊕, par ⊖.",
+            "6 es par → ⊖.",
+            "No inventes un tercer símbolo."
+          ]
+        },
+        {
+          "enunciado": "Matriz: A→C (+2 letras), B→?. Misma regla:\n\nA) D   B) F   C) E   D) A",
+          "respuesta": "A) D",
+          "pasos": [
+            "A(1)→C(3) suma 2.",
+            "B(2)+2 = D(4).",
+            "Aplica el mismo salto."
+          ]
+        },
+        {
+          "enunciado": "Regla: gira 90° horario. Si ahora apunta arriba, el siguiente apunta:\n\nA) Derecha (▶)   B) Izquierda   C) Abajo   D) Igual",
+          "respuesta": "A) Derecha (▶)",
+          "pasos": [
+            "Arriba → derecha → abajo → izquierda.",
+            "Un giro de 90° horario desde arriba es derecha.",
+            "No confundas con antihorario."
+          ]
+        },
+        {
+          "enunciado": "Puntos en figuras: 2, 3, 5, 8, 12, ?. ¿Cuántos puntos siguen?\n\nA) 24   B) 17   C) 19   D) 16",
+          "respuesta": "B) 17",
+          "pasos": [
+            "Las diferencias crecen +1, +2, +3…",
+            "Tras +4, sigue +5 → 17.",
+            "Cuenta puntos, no inventes otro patrón."
+          ]
+        },
+        {
+          "enunciado": "Fila: blanco, negro, blanco, negro… El 7.º es:\n\nA) Negro   B) Gris   C) Blanco   D) No se sabe",
+          "respuesta": "C) Blanco",
+          "pasos": [
+            "Patrón de 2: impar=blanco, par=negro.",
+            "7 es impar → Blanco.",
+            "Extiende la alternancia."
           ]
         }
       ]
@@ -551,101 +2282,150 @@
     {
       "id": "razonamiento-espacial",
       "nombre": "Razonamiento espacial",
-      "descripcion": "Cubos, giros y vistas. Piensa qué caras se tocan y qué se vería desde un vértice.",
+      "descripcion": "Giros, vistas y cubos descritos en palabras.",
       "items": [
         {
-          "enunciado": "En un cubo, ¿cuántas caras se ven como máximo desde un solo vértice?\n\nA) 2   B) 3   C) 4   D) 6",
-          "respuesta": "B) 3",
-          "pasos": [
-            "Desde una esquina siempre ves exactamente tres caras.",
-            "Nunca cuatro a la vez desde un solo punto de vista de vértice."
-          ]
-        },
-        {
-          "enunciado": "Si en un dado estándar arriba está el 6, ¿qué número está abajo?\n\nA) 1   B) 2   C) 3   D) 5",
-          "respuesta": "A) 1",
-          "pasos": [
-            "Caras opuestas suman 7.",
-            "6 + 1 = 7 → abajo es 1."
-          ]
-        },
-        {
-          "enunciado": "Un desarrollo de cubo muestra la cara A pegada a la derecha de B. Al armar el cubo, A y B:\n\nA) Quedan opuestas   B) Quedan contiguas   C) No pueden tocarse   D) Quedan en diagonal",
-          "respuesta": "B) Quedan contiguas",
-          "pasos": [
-            "Si en el desarrollo comparten un lado, al armar quedan juntas (contiguas).",
-            "Opuestas son las que en el desarrollo quedan separadas por una cara en línea."
-          ]
-        },
-        {
-          "enunciado": "Una flecha apunta arriba. Tras un giro de 90° a la derecha, apunta:\n\nA) Izquierda   B) Derecha   C) Abajo   D) Arriba",
-          "respuesta": "B) Derecha",
-          "pasos": [
-            "Giro 90° horario: arriba → derecha → abajo → izquierda."
-          ]
-        },
-        {
-          "enunciado": "Tras un giro de 180°, una letra R asimétrica:\n\nA) Se ve igual que en espejo vertical   B) Queda boca abajo, distinta al espejo   C) No cambia   D) Solo cambia de color",
-          "respuesta": "B) Queda boca abajo, distinta al espejo",
-          "pasos": [
-            "Espejo y giro 180° no son lo mismo.",
-            "Sigue un detalle (la panza de la R) para distinguirlos."
-          ]
-        },
-        {
-          "enunciado": "¿Cuántas aristas tiene un cubo?\n\nA) 6   B) 8   C) 12   D) 16",
-          "respuesta": "C) 12",
-          "pasos": [
-            "Un cubo tiene 12 aristas (3 por cada una de 4 «pisos» de esquinas, o 4×3).",
-            "8 vértices, 6 caras, 12 aristas."
-          ]
-        },
-        {
-          "enunciado": "Un cubo pintado por fuera se corta en 27 cubitos (3×3×3). ¿Cuántos tienen exactamente 1 cara pintada?\n\nA) 6   B) 8   C) 12   D) 1",
+          "enunciado": "Cubo 3×3×3 pintado por fuera. ¿Cuántos cubitos con exactamente 1 cara pintada?\n\nA) 6   B) 8   C) 12   D) 1",
           "respuesta": "A) 6",
           "pasos": [
-            "Una cara pintada = centro de cada cara.",
-            "Hay 6 caras → 6 cubitos."
+            "Una cara = centro de cada cara.",
+            "6 caras → 6 cubitos.",
+            "Esquinas tienen 3; aristas 2."
           ]
         },
         {
           "enunciado": "Si giras la letra «p» 180°, se parece más a:\n\nA) b   B) d   C) q   D) p",
           "respuesta": "B) d",
           "pasos": [
-            "Rotación 180° de p suele verse como d.",
-            "Espejo horizontal daría q."
+            "Rotación 180° de p ≈ d.",
+            "Espejo horizontal daría q.",
+            "No confundas giro con reflejo."
           ]
         },
         {
-          "enunciado": "Un mapa: norte arriba. Caminas norte, luego este, luego sur. ¿Hacia dónde miras al final?\n\nA) Norte   B) Sur   C) Este   D) Oeste",
+          "enunciado": "Norte arriba. Caminas norte, luego este, luego sur. ¿Hacia dónde miras al final?\n\nA) Norte   B) Sur   C) Este   D) Oeste",
           "respuesta": "B) Sur",
           "pasos": [
-            "La última instrucción es sur.",
-            "La orientación final es la del último tramo."
+            "La orientación final es el último tramo.",
+            "Último: sur.",
+            "Los tramos previos no cambian la mirada final."
           ]
         },
         {
-          "enunciado": "Desarrollo de cubo: cara opuesta a 1 es 6, a 2 es 5. ¿Opuesta a 3?\n\nA) 1   B) 4   C) 2   D) 6",
+          "enunciado": "Dados clásicos: opuestos suman 7. Opuesta a 3:\n\nA) 1   B) 4   C) 2   D) 6",
           "respuesta": "B) 4",
           "pasos": [
-            "En dados clásicos: opuestos suman 7.",
-            "3+4=7."
+            "3+4=7.",
+            "1↔6, 2↔5, 3↔4.",
+            "Usa la suma, no la adyacencia."
           ]
         },
         {
-          "enunciado": "Una figura se refleja en un espejo vertical. Izquierda y derecha:\n\nA) Se mantienen   B) Se intercambian   C) Rotan 90°   D) Desaparecen",
+          "enunciado": "Espejo vertical. Izquierda y derecha:\n\nA) Se mantienen   B) Se intercambian   C) Rotan 90°   D) Desaparecen",
           "respuesta": "B) Se intercambian",
           "pasos": [
-            "Espejo vertical invierte izquierda/derecha.",
-            "Arriba/abajo se mantienen."
+            "Espejo vertical invierte I/D.",
+            "Arriba/abajo se mantienen.",
+            "No es un giro."
           ]
         },
         {
-          "enunciado": "Vista desde arriba de un vaso: se ve un círculo. ¿Qué sólido es más probable?\n\nA) Cubo   B) Cilindro   C) Pirámide triangular   D) Prisma triangular",
+          "enunciado": "Vista desde arriba: círculo. Sólido más probable:\n\nA) Cubo   B) Cilindro   C) Pirámide triangular   D) Prisma triangular",
           "respuesta": "B) Cilindro",
           "pasos": [
             "Vista superior circular → base redonda.",
-            "Cilindro encaja; cubo daría cuadrado."
+            "Cilindro encaja.",
+            "Cubo daría cuadrado."
+          ]
+        },
+        {
+          "enunciado": "Un papel con flecha ↑ se dobla por la mitad horizontal. La punta queda:\n\nA) Hacia el pliegue   B) Siempre abajo   C) Impossible   D) A la derecha",
+          "respuesta": "A) Hacia el pliegue",
+          "pasos": [
+            "El doblez acerca extremos al pliegue.",
+            "La punta se acerca al centro del doblez.",
+            "Visualiza antes de marcar."
+          ]
+        },
+        {
+          "enunciado": "Cubo: caras adyacentes a la superior. ¿Cuántas?\n\nA) 2   B) 3   C) 4   D) 5",
+          "respuesta": "C) 4",
+          "pasos": [
+            "Superior toca 4 laterales.",
+            "No toca la inferior.",
+            "4 vecinos laterales."
+          ]
+        },
+        {
+          "enunciado": "Reloj: manecilla en las 3. Giras el reloj 90° antihorario. ¿A qué hora 'apunta' visualmente?\n\nA) 12   B) 3   C) 6   D) 9",
+          "respuesta": "A) 12",
+          "pasos": [
+            "90° antihorario: 3 → 12.",
+            "Gira el marco, no solo la manecilla.",
+            "Cuenta cuartos de vuelta."
+          ]
+        },
+        {
+          "enunciado": "Silueta de L en 2D. Tras reflejo horizontal, la L:\n\nA) Queda igual   B) Se invierte izquierda-derecha   C) Se pone de cabeza   D) Desaparece",
+          "respuesta": "B) Se invierte izquierda-derecha",
+          "pasos": [
+            "Reflejo horizontal = espejo vertical de la figura.",
+            "Cambia I/D.",
+            "Cabeza/pies solo con reflejo vertical."
+          ]
+        },
+        {
+          "enunciado": "Cuántas aristas tiene un cubo:\n\nA) 8   B) 10   C) 12   D) 16",
+          "respuesta": "C) 12",
+          "pasos": [
+            "8 vértices, 12 aristas, 6 caras.",
+            "Cada cara 4 aristas / 2 = 12.",
+            "No confundas con vértices."
+          ]
+        },
+        {
+          "enunciado": "Vista lateral de un cono (punta arriba): se ve más como:\n\nA) Círculo   B) Triángulo   C) Cuadrado   D) Hexágono",
+          "respuesta": "B) Triángulo",
+          "pasos": [
+            "Corte/vista lateral típica = triángulo.",
+            "Vista superior = círculo.",
+            "Distingue vistas."
+          ]
+        },
+        {
+          "enunciado": "Pieza: 2 cubos pegados. ¿Máximo de caras visibles en una orientación?\n\nA) 6   B) 8   C) 10   D) 12",
+          "respuesta": "C) 10",
+          "pasos": [
+            "2 cubos sueltos: 12 caras; pierden 2 al pegar.",
+            "12−2=10 visibles en total del sólido.",
+            "No cuentes la cara interna."
+          ]
+        },
+        {
+          "enunciado": "Mapa: giras 180°. Lo que estaba arriba-izquierda queda:\n\nA) Arriba-derecha   B) Abajo-derecha   C) Abajo-izquierda   D) Igual",
+          "respuesta": "B) Abajo-derecha",
+          "pasos": [
+            "180°: arriba↔abajo e izquierda↔derecha.",
+            "Arriba-izq → abajo-der.",
+            "Es rotación, no solo un eje."
+          ]
+        },
+        {
+          "enunciado": "Net de cubo en cruz: la cara opuesta al centro de la cruz suele ser:\n\nA) Un brazo extremo   B) Una esquina del papel   C) La misma cara   D) No hay opuesta",
+          "respuesta": "A) Un brazo extremo",
+          "pasos": [
+            "En cruz, centro y extremo opuesto del eje largo suelen ser opuestos al plegar.",
+            "Laterales quedan adyacentes.",
+            "Practica con un papel."
+          ]
+        },
+        {
+          "enunciado": "Escalera vista de frente: peldaños se ven como:\n\nA) Círculos   B) Rectángulos/líneas horizontales   C) Triángulos   D) Puntos",
+          "respuesta": "B) Rectángulos/líneas horizontales",
+          "pasos": [
+            "Vista frontal comprime profundidad.",
+            "Peldaños = bandas horizontales.",
+            "No es planta."
           ]
         }
       ]
@@ -653,103 +2433,231 @@
     {
       "id": "razonamiento-inductivo",
       "nombre": "Razonamiento inductivo",
-      "descripcion": "Series y patrones: encuentra qué cambia y proyecta el siguiente término.",
+      "descripcion": "Halla la regla a partir de ejemplos y aplícala.",
       "items": [
         {
-          "enunciado": "Serie: 3, 6, 12, 24, ?\n\nA) 36   B) 48   C) 30   D) 42",
-          "respuesta": "B) 48",
+          "enunciado": "2, 3, 5, 8, 12, ?. Siguiente:\n\nA) 16   B) 18   C) 16   D) 17",
+          "respuesta": "D) 17",
           "pasos": [
-            "Cada término se multiplica por 2.",
-            "24 × 2 = 48."
+            "Diferencias +1,+2,+3,+4…",
+            "Siguiente +5 → 17.",
+            "Confirma las diferencias antes de marcar."
           ]
         },
         {
-          "enunciado": "Serie: 2, 5, 10, 17, 26, ?\n\nA) 35   B) 37   C) 38   D) 39",
-          "respuesta": "B) 37",
-          "pasos": [
-            "Saltos: +3, +5, +7, +9 (impares consecutivos).",
-            "Siguiente salto +11: 26 + 11 = 37."
-          ]
-        },
-        {
-          "enunciado": "Serie: 1, 1, 2, 3, 5, 8, ?\n\nA) 11   B) 12   C) 13   D) 10",
-          "respuesta": "C) 13",
-          "pasos": [
-            "Cada uno es la suma de los dos anteriores (Fibonacci).",
-            "5 + 8 = 13."
-          ]
-        },
-        {
-          "enunciado": "Letras: A, C, F, J, ?\n\nA) M   B) N   C) O   D) L",
-          "respuesta": "C) O",
-          "pasos": [
-            "Saltos en el abecedario: +2, +3, +4…",
-            "A→C (+2), C→F (+3), F→J (+4), J→O (+5)."
-          ]
-        },
-        {
-          "enunciado": "Serie intercalada: 4, 9, 5, 8, 6, 7, 7, ?\n\nA) 6   B) 8   C) 5   D) 9",
-          "respuesta": "A) 6",
-          "pasos": [
-            "Impares: 4, 5, 6, 7… (+1).",
-            "Pares: 9, 8, 7, ?… (−1) → 6.",
-            "El ? es posición par → 6."
-          ]
-        },
-        {
-          "enunciado": "Serie: 81, 27, 9, 3, ?\n\nA) 1   B) 0   C) 2   D) 1/3",
-          "respuesta": "A) 1",
-          "pasos": [
-            "Se divide entre 3 en cada paso.",
-            "3 ÷ 3 = 1."
-          ]
-        },
-        {
-          "enunciado": "2, 3, 5, 8, 12, ?. Siguiente:\n\nA) 15   B) 16   C) 17   D) 18",
-          "respuesta": "C) 17",
-          "pasos": [
-            "Diferencias: +1,+2,+3,+4.",
-            "Siguiente +5 → 12+5=17."
-          ]
-        },
-        {
-          "enunciado": "Todos los lunes el bus llega tarde. Hoy llegó tarde. ¿Se concluye que hoy es lunes?\n\nA) Sí   B) No necesariamente   C) Imposible   D) Solo si llueve",
+          "enunciado": "Todos los lunes el bus llega tarde. Hoy llegó tarde. ¿Hoy es lunes?\n\nA) Imposible   B) No necesariamente   C) Sí   D) Solo si llueve",
           "respuesta": "B) No necesariamente",
           "pasos": [
-            "«Si lunes → tarde» no implica «si tarde → lunes».",
-            "Puede llegar tarde otros días."
+            "Si lunes → tarde no implica tarde → lunes.",
+            "Puede llegar tarde otros días.",
+            "Cuidado con afirmar el consecuente."
           ]
         },
         {
-          "enunciado": "Serie de letras: A, C, F, J, ?. Siguiente:\n\nA) M   B) N   C) O   D) L",
-          "respuesta": "C) O",
+          "enunciado": "Letras: C,E,H,L, ?. Siguiente:\n\nA) R   B) P   C) Q   D) S",
+          "respuesta": "C) Q",
           "pasos": [
-            "Saltos: +2,+3,+4.",
-            "Siguiente +5: J(10)+5=O(15)."
+            "Saltos +2,+3,+4…",
+            "Siguiente +5 → Q.",
+            "Cuenta posiciones en el abecedario."
           ]
         },
         {
-          "enunciado": "Observación: cada vez que suena la alarma, hay humo. Hoy hay humo. ¿Suena la alarma?\n\nA) Sí seguro   B) No se puede asegurar   C) Nunca   D) Solo de noche",
+          "enunciado": "Si suena la alarma, hay humo. Hoy hay humo. ¿Suena la alarma?\n\nA) Solo de noche   B) Sí seguro   C) No se puede asegurar   D) Nunca",
+          "respuesta": "C) No se puede asegurar",
+          "pasos": [
+            "Alarma→humo ≠ humo→alarma.",
+            "Puede haber humo por otra causa.",
+            "No inviertas la implicación."
+          ]
+        },
+        {
+          "enunciado": "Triangulares: 3, 6, 10, 15, ?\n\nA) 24   B) 18   C) 20   D) 21",
+          "respuesta": "D) 21",
+          "pasos": [
+            "+3,+4,+5…",
+            "Siguiente +6 → 21.",
+            "Son números triangulares."
+          ]
+        },
+        {
+          "enunciado": "3, 4, 6, 9, 13, ?. Siguiente:\n\nA) 17   B) 17   C) 19   D) 18",
+          "respuesta": "D) 18",
+          "pasos": [
+            "Diferencias +1,+2,+3,+4…",
+            "Siguiente +5 → 18.",
+            "Confirma las diferencias antes de marcar."
+          ]
+        },
+        {
+          "enunciado": "Todos los lunes el bus llega tarde. Hoy llegó tarde. ¿Hoy es lunes?\n\nA) Sí   B) No necesariamente   C) Imposible   D) Solo si llueve",
+          "respuesta": "B) No necesariamente",
+          "pasos": [
+            "Si lunes → tarde no implica tarde → lunes.",
+            "Puede llegar tarde otros días.",
+            "Cuidado con afirmar el consecuente."
+          ]
+        },
+        {
+          "enunciado": "Letras: C,E,H,L, ?. Siguiente:\n\nA) S   B) P   C) R   D) Q",
+          "respuesta": "D) Q",
+          "pasos": [
+            "Saltos +2,+3,+4…",
+            "Siguiente +5 → Q.",
+            "Cuenta posiciones en el abecedario."
+          ]
+        },
+        {
+          "enunciado": "Si suena la alarma, hay humo. Hoy hay humo. ¿Suena la alarma?\n\nA) No se puede asegurar   B) Sí seguro   C) Solo de noche   D) Nunca",
+          "respuesta": "A) No se puede asegurar",
+          "pasos": [
+            "Alarma→humo ≠ humo→alarma.",
+            "Puede haber humo por otra causa.",
+            "No inviertas la implicación."
+          ]
+        },
+        {
+          "enunciado": "Triangulares: 3, 6, 10, 15, ?\n\nA) 24   B) 20   C) 18   D) 21",
+          "respuesta": "D) 21",
+          "pasos": [
+            "+3,+4,+5…",
+            "Siguiente +6 → 21.",
+            "Son números triangulares."
+          ]
+        },
+        {
+          "enunciado": "4, 5, 7, 10, 14, ?. Siguiente:\n\nA) 19   B) 18   C) 18   D) 20",
+          "respuesta": "A) 19",
+          "pasos": [
+            "Diferencias +1,+2,+3,+4…",
+            "Siguiente +5 → 19.",
+            "Confirma las diferencias antes de marcar."
+          ]
+        },
+        {
+          "enunciado": "Todos los lunes el bus llega tarde. Hoy llegó tarde. ¿Hoy es lunes?\n\nA) Sí   B) Solo si llueve   C) Imposible   D) No necesariamente",
+          "respuesta": "D) No necesariamente",
+          "pasos": [
+            "Si lunes → tarde no implica tarde → lunes.",
+            "Puede llegar tarde otros días.",
+            "Cuidado con afirmar el consecuente."
+          ]
+        },
+        {
+          "enunciado": "Letras: C,E,H,L, ?. Siguiente:\n\nA) Q   B) S   C) P   D) R",
+          "respuesta": "A) Q",
+          "pasos": [
+            "Saltos +2,+3,+4…",
+            "Siguiente +5 → Q.",
+            "Cuenta posiciones en el abecedario."
+          ]
+        },
+        {
+          "enunciado": "Si suena la alarma, hay humo. Hoy hay humo. ¿Suena la alarma?\n\nA) Solo de noche   B) No se puede asegurar   C) Nunca   D) Sí seguro",
           "respuesta": "B) No se puede asegurar",
           "pasos": [
-            "Alarma → humo no es lo mismo que humo → alarma.",
-            "Puede haber humo por otra causa."
+            "Alarma→humo ≠ humo→alarma.",
+            "Puede haber humo por otra causa.",
+            "No inviertas la implicación."
           ]
         },
         {
-          "enunciado": "Triángulos: 3, 6, 10, 15, ?. Siguiente:\n\nA) 18   B) 20   C) 21   D) 24",
+          "enunciado": "Triangulares: 3, 6, 10, 15, ?\n\nA) 18   B) 20   C) 21   D) 24",
           "respuesta": "C) 21",
           "pasos": [
-            "Números triangulares: +3,+4,+5.",
-            "Siguiente +6 → 15+6=21."
+            "+3,+4,+5…",
+            "Siguiente +6 → 21.",
+            "Son números triangulares."
           ]
         },
         {
-          "enunciado": "Regla hallada: «si es divisible por 4, es par». ¿Es correcta?\n\nA) Sí siempre   B) No siempre   C) Solo impares   D) Solo >100",
-          "respuesta": "A) Sí siempre",
+          "enunciado": "5, 6, 8, 11, 15, ?. Siguiente:\n\nA) 21   B) 19   C) 20   D) 19",
+          "respuesta": "C) 20",
           "pasos": [
-            "Todo múltiplo de 4 es múltiplo de 2.",
-            "Luego es par. La regla es válida."
+            "Diferencias +1,+2,+3,+4…",
+            "Siguiente +5 → 20.",
+            "Confirma las diferencias antes de marcar."
+          ]
+        },
+        {
+          "enunciado": "Todos los lunes el bus llega tarde. Hoy llegó tarde. ¿Hoy es lunes?\n\nA) Imposible   B) Sí   C) Solo si llueve   D) No necesariamente",
+          "respuesta": "D) No necesariamente",
+          "pasos": [
+            "Si lunes → tarde no implica tarde → lunes.",
+            "Puede llegar tarde otros días.",
+            "Cuidado con afirmar el consecuente."
+          ]
+        },
+        {
+          "enunciado": "Letras: C,E,H,L, ?. Siguiente:\n\nA) S   B) P   C) R   D) Q",
+          "respuesta": "D) Q",
+          "pasos": [
+            "Saltos +2,+3,+4…",
+            "Siguiente +5 → Q.",
+            "Cuenta posiciones en el abecedario."
+          ]
+        },
+        {
+          "enunciado": "Si suena la alarma, hay humo. Hoy hay humo. ¿Suena la alarma?\n\nA) Solo de noche   B) No se puede asegurar   C) Sí seguro   D) Nunca",
+          "respuesta": "B) No se puede asegurar",
+          "pasos": [
+            "Alarma→humo ≠ humo→alarma.",
+            "Puede haber humo por otra causa.",
+            "No inviertas la implicación."
+          ]
+        },
+        {
+          "enunciado": "Triangulares: 3, 6, 10, 15, ?\n\nA) 21   B) 24   C) 20   D) 18",
+          "respuesta": "A) 21",
+          "pasos": [
+            "+3,+4,+5…",
+            "Siguiente +6 → 21.",
+            "Son números triangulares."
+          ]
+        },
+        {
+          "enunciado": "6, 7, 9, 12, 16, ?. Siguiente:\n\nA) 20   B) 22   C) 21   D) 20",
+          "respuesta": "C) 21",
+          "pasos": [
+            "Diferencias +1,+2,+3,+4…",
+            "Siguiente +5 → 21.",
+            "Confirma las diferencias antes de marcar."
+          ]
+        },
+        {
+          "enunciado": "Todos los lunes el bus llega tarde. Hoy llegó tarde. ¿Hoy es lunes?\n\nA) Solo si llueve   B) Sí   C) Imposible   D) No necesariamente",
+          "respuesta": "D) No necesariamente",
+          "pasos": [
+            "Si lunes → tarde no implica tarde → lunes.",
+            "Puede llegar tarde otros días.",
+            "Cuidado con afirmar el consecuente."
+          ]
+        },
+        {
+          "enunciado": "Letras: C,E,H,L, ?. Siguiente:\n\nA) P   B) Q   C) S   D) R",
+          "respuesta": "B) Q",
+          "pasos": [
+            "Saltos +2,+3,+4…",
+            "Siguiente +5 → Q.",
+            "Cuenta posiciones en el abecedario."
+          ]
+        },
+        {
+          "enunciado": "Si suena la alarma, hay humo. Hoy hay humo. ¿Suena la alarma?\n\nA) No se puede asegurar   B) Nunca   C) Solo de noche   D) Sí seguro",
+          "respuesta": "A) No se puede asegurar",
+          "pasos": [
+            "Alarma→humo ≠ humo→alarma.",
+            "Puede haber humo por otra causa.",
+            "No inviertas la implicación."
+          ]
+        },
+        {
+          "enunciado": "Triangulares: 3, 6, 10, 15, ?\n\nA) 20   B) 21   C) 18   D) 24",
+          "respuesta": "B) 21",
+          "pasos": [
+            "+3,+4,+5…",
+            "Siguiente +6 → 21.",
+            "Son números triangulares."
           ]
         }
       ]
@@ -757,77 +2665,321 @@
     {
       "id": "razonamiento-numerico",
       "nombre": "Razonamiento numérico",
-      "descripcion": "Proporciones, promedios y lectura de datos numéricos.",
+      "descripcion": "Porcentajes, razones, promedios y equivalencias.",
       "items": [
         {
-          "enunciado": "Si 5 lapiceros cuestan $12.500, ¿cuánto cuestan 8?\n\nA) 18.000   B) 20.000   C) 22.500   D) 15.000",
-          "respuesta": "B) 20.000",
+          "enunciado": "¿Qué % es 30 de 150?\n\nA) 15%   B) 20%   C) 25%   D) 30%",
+          "respuesta": "B) 20%",
           "pasos": [
-            "Uno: 12.500 ÷ 5 = 2.500.",
-            "Ocho: 2.500 × 8 = 20.000."
+            "30/150 = 0.20.",
+            "×100 = 20%.",
+            "Parte entre total, no al revés."
           ]
         },
         {
-          "enunciado": "Promedio de 4, 6, 10 y 12:\n\nA) 7   B) 8   C) 9   D) 10",
-          "respuesta": "B) 8",
+          "enunciado": "Promedio de 9, 11 y 19:\n\nA) 10   B) 39   C) 15   D) 13",
+          "respuesta": "D) 13",
           "pasos": [
-            "Suma = 32.",
-            "32 ÷ 4 = 8."
+            "Suma 9+11+19=39.",
+            "÷3 = 13.",
+            "Promedio ≠ mediana aquí."
           ]
         },
         {
-          "enunciado": "Una razón 2:5 equivale a ¿qué fracción?\n\nA) 2/5   B) 5/2   C) 2/7   D) 5/7",
-          "respuesta": "A) 2/5",
+          "enunciado": "Si x/7 = 12, entonces x =\n\nA) 84   B) 91   C) 72   D) 12",
+          "respuesta": "A) 84",
           "pasos": [
-            "a:b = a/b.",
-            "2:5 = 2/5."
+            "x = 12×7 = 84.",
+            "Despeja multiplicando.",
+            "No dividas otra vez."
           ]
         },
         {
-          "enunciado": "El 40 % de un número es 80. ¿Cuál es el número?\n\nA) 160   B) 200   C) 240   D) 320",
-          "respuesta": "B) 200",
+          "enunciado": "Una razón 3:5 equivale a:\n\nA) 9:15   B) 4:7   C) 6:8   D) 12:16",
+          "respuesta": "A) 9:15",
           "pasos": [
-            "0,40 × N = 80 → N = 80 ÷ 0,40 = 200."
+            "Multiplica ambos por 3: 9 y 15.",
+            "Conserva la proporción.",
+            "6:8 es 3:4, distinta."
           ]
         },
         {
-          "enunciado": "En una urna hay 3 bolas rojas y 5 azules. Probabilidad de sacar azul:\n\nA) 3/8   B) 5/8   C) 5/3   D) 1/5",
-          "respuesta": "B) 5/8",
+          "enunciado": "2.5 horas en minutos:\n\nA) 150   B) 170   C) 120   D) 120",
+          "respuesta": "A) 150",
           "pasos": [
-            "Total = 8.",
-            "Favorables azules = 5 → 5/8."
+            "1 h = 60 min.",
+            "2.5×60 = 150.",
+            "Media hora = 30 min."
           ]
         },
         {
-          "enunciado": "Un precio sube 10 % y luego baja 10 %. Sobre el original:\n\nA) Queda igual   B) Baja   C) Sube   D) Sube 1 %",
-          "respuesta": "B) Baja",
+          "enunciado": "IVA 19% sobre $100.000. Total con IVA:\n\nA) 190.000   B) 110.000   C) 109.000   D) 119.000",
+          "respuesta": "D) 119.000",
           "pasos": [
-            "Empieza en 100 → +10 % = 110.",
-            "−10 % de 110 = 11 → 110 − 11 = 99.",
-            "Queda por debajo del original (99 < 100)."
+            "19% de 100.000 = 19.000.",
+            "Total = 119.000.",
+            "Suma base + IVA."
           ]
         },
         {
-          "enunciado": "¿Qué % es 45 de 150?\n\nA) 25%   B) 30%   C) 35%   D) 40%",
-          "respuesta": "B) 30%",
+          "enunciado": "Simplifica la razón 18:24\n\nA) 3:4   B) 18:24   C) 3:24   D) 24:18",
+          "respuesta": "A) 3:4",
           "pasos": [
-            "45/150 = 0,3.",
-            "0,3 × 100 = 30%."
+            "Divide ambos por 6.",
+            "Queda 3:4.",
+            "Misma proporción, números menores."
           ]
         },
         {
-          "enunciado": "Promedio de 8, 10 y 18:\n\nA) 10   B) 12   C) 14   D) 16",
-          "respuesta": "B) 12",
+          "enunciado": "De 90 a 115, el aumento porcentual es:\n\nA) 20%   B) 32%   C) 27%   D) 25%",
+          "respuesta": "C) 27%",
           "pasos": [
-            "Suma 8+10+18=36.",
-            "36÷3=12."
+            "Incremento = 25.",
+            "(25/90)×100 = 27%.",
+            "Base = valor inicial."
           ]
         },
         {
-          "enunciado": "Si x/5 = 12, entonces x =\n\nA) 50   B) 55   C) 60   D) 65",
+          "enunciado": "¿Qué % es 45 de 150?\n\nA) 35%   B) 45%   C) 30%   D) 25%",
+          "respuesta": "C) 30%",
+          "pasos": [
+            "45/150 = 0.30.",
+            "×100 = 30%.",
+            "Parte entre total, no al revés."
+          ]
+        },
+        {
+          "enunciado": "Promedio de 12, 11 y 21:\n\nA) 44   B) 14   C) 16   D) 11",
+          "respuesta": "B) 14",
+          "pasos": [
+            "Suma 12+11+21=44.",
+            "÷3 = 14.",
+            "Promedio ≠ mediana aquí."
+          ]
+        },
+        {
+          "enunciado": "Si x/9 = 12, entonces x =\n\nA) 117   B) 96   C) 108   D) 12",
+          "respuesta": "C) 108",
+          "pasos": [
+            "x = 12×9 = 108.",
+            "Despeja multiplicando.",
+            "No dividas otra vez."
+          ]
+        },
+        {
+          "enunciado": "Una razón 3:5 equivale a:\n\nA) 6:8   B) 9:15   C) 4:7   D) 12:16",
+          "respuesta": "B) 9:15",
+          "pasos": [
+            "Multiplica ambos por 3: 9 y 15.",
+            "Conserva la proporción.",
+            "6:8 es 3:4, distinta."
+          ]
+        },
+        {
+          "enunciado": "2 horas en minutos:\n\nA) 90   B) 120   C) 140   D) 120",
+          "respuesta": "B) 120",
+          "pasos": [
+            "1 h = 60 min.",
+            "2.0×60 = 120.",
+            "Media hora = 30 min."
+          ]
+        },
+        {
+          "enunciado": "IVA 19% sobre $100.000. Total con IVA:\n\nA) 109.000   B) 119.000   C) 110.000   D) 190.000",
+          "respuesta": "B) 119.000",
+          "pasos": [
+            "19% de 100.000 = 19.000.",
+            "Total = 119.000.",
+            "Suma base + IVA."
+          ]
+        },
+        {
+          "enunciado": "Simplifica la razón 18:18\n\nA) 18:18   B) 1:1   C) 1:18   D) 18:18",
+          "respuesta": "B) 1:1",
+          "pasos": [
+            "Divide ambos por 18.",
+            "Queda 1:1.",
+            "Misma proporción, números menores."
+          ]
+        },
+        {
+          "enunciado": "De 80 a 115, el aumento porcentual es:\n\nA) 20%   B) 35%   C) 48%   D) 43%",
+          "respuesta": "D) 43%",
+          "pasos": [
+            "Incremento = 35.",
+            "(35/80)×100 = 43%.",
+            "Base = valor inicial."
+          ]
+        },
+        {
+          "enunciado": "¿Qué % es 35 de 150?\n\nA) 28%   B) 18%   C) 23%   D) 35%",
+          "respuesta": "C) 23%",
+          "pasos": [
+            "35/150 = 0.23.",
+            "×100 = 23%.",
+            "Parte entre total, no al revés."
+          ]
+        },
+        {
+          "enunciado": "Promedio de 10, 11 y 23:\n\nA) 14   B) 10   C) 44   D) 16",
+          "respuesta": "A) 14",
+          "pasos": [
+            "Suma 10+11+23=44.",
+            "÷3 = 14.",
+            "Promedio ≠ mediana aquí."
+          ]
+        },
+        {
+          "enunciado": "Si x/5 = 12, entonces x =\n\nA) 48   B) 65   C) 60   D) 12",
           "respuesta": "C) 60",
           "pasos": [
-            "x = 12×5 = 60."
+            "x = 12×5 = 60.",
+            "Despeja multiplicando.",
+            "No dividas otra vez."
+          ]
+        },
+        {
+          "enunciado": "Una razón 3:5 equivale a:\n\nA) 9:15   B) 12:16   C) 6:8   D) 4:7",
+          "respuesta": "A) 9:15",
+          "pasos": [
+            "Multiplica ambos por 3: 9 y 15.",
+            "Conserva la proporción.",
+            "6:8 es 3:4, distinta."
+          ]
+        },
+        {
+          "enunciado": "3 horas en minutos:\n\nA) 200   B) 120   C) 150   D) 180",
+          "respuesta": "D) 180",
+          "pasos": [
+            "1 h = 60 min.",
+            "3.0×60 = 180.",
+            "Media hora = 30 min."
+          ]
+        },
+        {
+          "enunciado": "IVA 19% sobre $100.000. Total con IVA:\n\nA) 190.000   B) 109.000   C) 119.000   D) 110.000",
+          "respuesta": "C) 119.000",
+          "pasos": [
+            "19% de 100.000 = 19.000.",
+            "Total = 119.000.",
+            "Suma base + IVA."
+          ]
+        },
+        {
+          "enunciado": "Simplifica la razón 18:19\n\nA) 18:19   B) 18:19   C) 18:19   D) 19:18",
+          "respuesta": "A) 18:19",
+          "pasos": [
+            "Divide ambos por 1.",
+            "Queda 18:19.",
+            "Misma proporción, números menores."
+          ]
+        },
+        {
+          "enunciado": "De 95 a 115, el aumento porcentual es:\n\nA) 20%   B) 20%   C) 26%   D) 21%",
+          "respuesta": "D) 21%",
+          "pasos": [
+            "Incremento = 20.",
+            "(20/95)×100 = 21%.",
+            "Base = valor inicial."
+          ]
+        },
+        {
+          "enunciado": "¿Qué % es 50 de 150?\n\nA) 33%   B) 28%   C) 38%   D) 50%",
+          "respuesta": "A) 33%",
+          "pasos": [
+            "50/150 = 0.33.",
+            "×100 = 33%.",
+            "Parte entre total, no al revés."
+          ]
+        },
+        {
+          "enunciado": "Promedio de 8, 11 y 19:\n\nA) 12   B) 14   C) 38   D) 9",
+          "respuesta": "A) 12",
+          "pasos": [
+            "Suma 8+11+19=38.",
+            "÷3 = 12.",
+            "Promedio ≠ mediana aquí."
+          ]
+        },
+        {
+          "enunciado": "Si x/7 = 12, entonces x =\n\nA) 91   B) 72   C) 12   D) 84",
+          "respuesta": "D) 84",
+          "pasos": [
+            "x = 12×7 = 84.",
+            "Despeja multiplicando.",
+            "No dividas otra vez."
+          ]
+        },
+        {
+          "enunciado": "Una razón 3:5 equivale a:\n\nA) 12:16   B) 6:8   C) 9:15   D) 4:7",
+          "respuesta": "C) 9:15",
+          "pasos": [
+            "Multiplica ambos por 3: 9 y 15.",
+            "Conserva la proporción.",
+            "6:8 es 3:4, distinta."
+          ]
+        },
+        {
+          "enunciado": "2.5 horas en minutos:\n\nA) 120   B) 150   C) 170   D) 120",
+          "respuesta": "B) 150",
+          "pasos": [
+            "1 h = 60 min.",
+            "2.5×60 = 150.",
+            "Media hora = 30 min."
+          ]
+        },
+        {
+          "enunciado": "IVA 19% sobre $100.000. Total con IVA:\n\nA) 119.000   B) 110.000   C) 190.000   D) 109.000",
+          "respuesta": "A) 119.000",
+          "pasos": [
+            "19% de 100.000 = 19.000.",
+            "Total = 119.000.",
+            "Suma base + IVA."
+          ]
+        },
+        {
+          "enunciado": "Simplifica la razón 18:20\n\nA) 18:20   B) 20:18   C) 9:10   D) 9:20",
+          "respuesta": "C) 9:10",
+          "pasos": [
+            "Divide ambos por 2.",
+            "Queda 9:10.",
+            "Misma proporción, números menores."
+          ]
+        },
+        {
+          "enunciado": "De 85 a 115, el aumento porcentual es:\n\nA) 30%   B) 40%   C) 20%   D) 35%",
+          "respuesta": "D) 35%",
+          "pasos": [
+            "Incremento = 30.",
+            "(30/85)×100 = 35%.",
+            "Base = valor inicial."
+          ]
+        },
+        {
+          "enunciado": "¿Qué % es 40 de 150?\n\nA) 31%   B) 21%   C) 26%   D) 40%",
+          "respuesta": "C) 26%",
+          "pasos": [
+            "40/150 = 0.27.",
+            "×100 = 26%.",
+            "Parte entre total, no al revés."
+          ]
+        },
+        {
+          "enunciado": "Promedio de 11, 11 y 21:\n\nA) 11   B) 14   C) 43   D) 16",
+          "respuesta": "B) 14",
+          "pasos": [
+            "Suma 11+11+21=43.",
+            "÷3 = 14.",
+            "Promedio ≠ mediana aquí."
+          ]
+        },
+        {
+          "enunciado": "Si x/9 = 12, entonces x =\n\nA) 108   B) 12   C) 117   D) 96",
+          "respuesta": "A) 108",
+          "pasos": [
+            "x = 12×9 = 108.",
+            "Despeja multiplicando.",
+            "No dividas otra vez."
           ]
         },
         {
@@ -835,23 +2987,404 @@
           "respuesta": "B) 9:15",
           "pasos": [
             "Multiplica ambos por 3: 9 y 15.",
-            "Conserva la misma proporción."
+            "Conserva la proporción.",
+            "6:8 es 3:4, distinta."
           ]
         },
         {
-          "enunciado": "2,5 horas en minutos:\n\nA) 120   B) 140   C) 150   D) 180",
-          "respuesta": "C) 150",
+          "enunciado": "2 horas en minutos:\n\nA) 90   B) 120   C) 140   D) 120",
+          "respuesta": "B) 120",
           "pasos": [
-            "1 h = 60 min → 2 h = 120.",
-            "0,5 h = 30 → total 150."
+            "1 h = 60 min.",
+            "2.0×60 = 120.",
+            "Media hora = 30 min."
           ]
         },
         {
-          "enunciado": "Si el IVA es 19% y la base es $100.000, el total con IVA es:\n\nA) 110.000   B) 119.000   C) 190.000   D) 109.000",
-          "respuesta": "B) 119.000",
+          "enunciado": "IVA 19% sobre $100.000. Total con IVA:\n\nA) 119.000   B) 110.000   C) 190.000   D) 109.000",
+          "respuesta": "A) 119.000",
           "pasos": [
             "19% de 100.000 = 19.000.",
-            "Total = 100.000+19.000 = 119.000."
+            "Total = 119.000.",
+            "Suma base + IVA."
+          ]
+        },
+        {
+          "enunciado": "Simplifica la razón 18:21\n\nA) 6:21   B) 18:21   C) 6:7   D) 21:18",
+          "respuesta": "C) 6:7",
+          "pasos": [
+            "Divide ambos por 3.",
+            "Queda 6:7.",
+            "Misma proporción, números menores."
+          ]
+        },
+        {
+          "enunciado": "De 100 a 115, el aumento porcentual es:\n\nA) 15%   B) 15%   C) 20%   D) 20%",
+          "respuesta": "A) 15%",
+          "pasos": [
+            "Incremento = 15.",
+            "(15/100)×100 = 15%.",
+            "Base = valor inicial."
+          ]
+        },
+        {
+          "enunciado": "¿Qué % es 30 de 150?\n\nA) 15%   B) 20%   C) 30%   D) 25%",
+          "respuesta": "B) 20%",
+          "pasos": [
+            "30/150 = 0.20.",
+            "×100 = 20%.",
+            "Parte entre total, no al revés."
+          ]
+        },
+        {
+          "enunciado": "Promedio de 9, 11 y 23:\n\nA) 14   B) 16   C) 10   D) 43",
+          "respuesta": "A) 14",
+          "pasos": [
+            "Suma 9+11+23=43.",
+            "÷3 = 14.",
+            "Promedio ≠ mediana aquí."
+          ]
+        },
+        {
+          "enunciado": "Si x/5 = 12, entonces x =\n\nA) 48   B) 12   C) 65   D) 60",
+          "respuesta": "D) 60",
+          "pasos": [
+            "x = 12×5 = 60.",
+            "Despeja multiplicando.",
+            "No dividas otra vez."
+          ]
+        },
+        {
+          "enunciado": "Una razón 3:5 equivale a:\n\nA) 12:16   B) 4:7   C) 9:15   D) 6:8",
+          "respuesta": "C) 9:15",
+          "pasos": [
+            "Multiplica ambos por 3: 9 y 15.",
+            "Conserva la proporción.",
+            "6:8 es 3:4, distinta."
+          ]
+        },
+        {
+          "enunciado": "3 horas en minutos:\n\nA) 150   B) 120   C) 200   D) 180",
+          "respuesta": "D) 180",
+          "pasos": [
+            "1 h = 60 min.",
+            "3.0×60 = 180.",
+            "Media hora = 30 min."
+          ]
+        },
+        {
+          "enunciado": "IVA 19% sobre $100.000. Total con IVA:\n\nA) 190.000   B) 110.000   C) 109.000   D) 119.000",
+          "respuesta": "D) 119.000",
+          "pasos": [
+            "19% de 100.000 = 19.000.",
+            "Total = 119.000.",
+            "Suma base + IVA."
+          ]
+        },
+        {
+          "enunciado": "Simplifica la razón 18:22\n\nA) 9:22   B) 22:18   C) 9:11   D) 18:22",
+          "respuesta": "C) 9:11",
+          "pasos": [
+            "Divide ambos por 2.",
+            "Queda 9:11.",
+            "Misma proporción, números menores."
+          ]
+        },
+        {
+          "enunciado": "De 90 a 115, el aumento porcentual es:\n\nA) 32%   B) 20%   C) 25%   D) 27%",
+          "respuesta": "D) 27%",
+          "pasos": [
+            "Incremento = 25.",
+            "(25/90)×100 = 27%.",
+            "Base = valor inicial."
+          ]
+        },
+        {
+          "enunciado": "¿Qué % es 45 de 150?\n\nA) 25%   B) 45%   C) 30%   D) 35%",
+          "respuesta": "C) 30%",
+          "pasos": [
+            "45/150 = 0.30.",
+            "×100 = 30%.",
+            "Parte entre total, no al revés."
+          ]
+        },
+        {
+          "enunciado": "Promedio de 12, 11 y 19:\n\nA) 11   B) 14   C) 42   D) 16",
+          "respuesta": "B) 14",
+          "pasos": [
+            "Suma 12+11+19=42.",
+            "÷3 = 14.",
+            "Promedio ≠ mediana aquí."
+          ]
+        },
+        {
+          "enunciado": "Si x/7 = 12, entonces x =\n\nA) 91   B) 72   C) 84   D) 12",
+          "respuesta": "C) 84",
+          "pasos": [
+            "x = 12×7 = 84.",
+            "Despeja multiplicando.",
+            "No dividas otra vez."
+          ]
+        },
+        {
+          "enunciado": "Una razón 3:5 equivale a:\n\nA) 6:8   B) 4:7   C) 9:15   D) 12:16",
+          "respuesta": "C) 9:15",
+          "pasos": [
+            "Multiplica ambos por 3: 9 y 15.",
+            "Conserva la proporción.",
+            "6:8 es 3:4, distinta."
+          ]
+        },
+        {
+          "enunciado": "2.5 horas en minutos:\n\nA) 120   B) 170   C) 120   D) 150",
+          "respuesta": "D) 150",
+          "pasos": [
+            "1 h = 60 min.",
+            "2.5×60 = 150.",
+            "Media hora = 30 min."
+          ]
+        },
+        {
+          "enunciado": "IVA 19% sobre $100.000. Total con IVA:\n\nA) 109.000   B) 110.000   C) 119.000   D) 190.000",
+          "respuesta": "C) 119.000",
+          "pasos": [
+            "19% de 100.000 = 19.000.",
+            "Total = 119.000.",
+            "Suma base + IVA."
+          ]
+        },
+        {
+          "enunciado": "Simplifica la razón 18:23\n\nA) 23:18   B) 18:23   C) 18:23   D) 18:23",
+          "respuesta": "B) 18:23",
+          "pasos": [
+            "Divide ambos por 1.",
+            "Queda 18:23.",
+            "Misma proporción, números menores."
+          ]
+        },
+        {
+          "enunciado": "De 80 a 115, el aumento porcentual es:\n\nA) 35%   B) 48%   C) 20%   D) 43%",
+          "respuesta": "D) 43%",
+          "pasos": [
+            "Incremento = 35.",
+            "(35/80)×100 = 43%.",
+            "Base = valor inicial."
+          ]
+        },
+        {
+          "enunciado": "¿Qué % es 35 de 150?\n\nA) 28%   B) 35%   C) 18%   D) 23%",
+          "respuesta": "D) 23%",
+          "pasos": [
+            "35/150 = 0.23.",
+            "×100 = 23%.",
+            "Parte entre total, no al revés."
+          ]
+        },
+        {
+          "enunciado": "Promedio de 10, 11 y 21:\n\nA) 14   B) 42   C) 16   D) 10",
+          "respuesta": "A) 14",
+          "pasos": [
+            "Suma 10+11+21=42.",
+            "÷3 = 14.",
+            "Promedio ≠ mediana aquí."
+          ]
+        },
+        {
+          "enunciado": "Si x/9 = 12, entonces x =\n\nA) 12   B) 96   C) 117   D) 108",
+          "respuesta": "D) 108",
+          "pasos": [
+            "x = 12×9 = 108.",
+            "Despeja multiplicando.",
+            "No dividas otra vez."
+          ]
+        },
+        {
+          "enunciado": "Una razón 3:5 equivale a:\n\nA) 4:7   B) 6:8   C) 12:16   D) 9:15",
+          "respuesta": "D) 9:15",
+          "pasos": [
+            "Multiplica ambos por 3: 9 y 15.",
+            "Conserva la proporción.",
+            "6:8 es 3:4, distinta."
+          ]
+        },
+        {
+          "enunciado": "2 horas en minutos:\n\nA) 90   B) 120   C) 140   D) 120",
+          "respuesta": "B) 120",
+          "pasos": [
+            "1 h = 60 min.",
+            "2.0×60 = 120.",
+            "Media hora = 30 min."
+          ]
+        },
+        {
+          "enunciado": "IVA 19% sobre $100.000. Total con IVA:\n\nA) 109.000   B) 190.000   C) 110.000   D) 119.000",
+          "respuesta": "D) 119.000",
+          "pasos": [
+            "19% de 100.000 = 19.000.",
+            "Total = 119.000.",
+            "Suma base + IVA."
+          ]
+        },
+        {
+          "enunciado": "Simplifica la razón 18:24\n\nA) 18:24   B) 3:4   C) 24:18   D) 3:24",
+          "respuesta": "B) 3:4",
+          "pasos": [
+            "Divide ambos por 6.",
+            "Queda 3:4.",
+            "Misma proporción, números menores."
+          ]
+        },
+        {
+          "enunciado": "De 95 a 115, el aumento porcentual es:\n\nA) 21%   B) 26%   C) 20%   D) 20%",
+          "respuesta": "A) 21%",
+          "pasos": [
+            "Incremento = 20.",
+            "(20/95)×100 = 21%.",
+            "Base = valor inicial."
+          ]
+        },
+        {
+          "enunciado": "¿Qué % es 50 de 150?\n\nA) 28%   B) 38%   C) 50%   D) 33%",
+          "respuesta": "D) 33%",
+          "pasos": [
+            "50/150 = 0.33.",
+            "×100 = 33%.",
+            "Parte entre total, no al revés."
+          ]
+        },
+        {
+          "enunciado": "Promedio de 8, 11 y 23:\n\nA) 9   B) 42   C) 14   D) 16",
+          "respuesta": "C) 14",
+          "pasos": [
+            "Suma 8+11+23=42.",
+            "÷3 = 14.",
+            "Promedio ≠ mediana aquí."
+          ]
+        },
+        {
+          "enunciado": "Si x/5 = 12, entonces x =\n\nA) 60   B) 65   C) 48   D) 12",
+          "respuesta": "A) 60",
+          "pasos": [
+            "x = 12×5 = 60.",
+            "Despeja multiplicando.",
+            "No dividas otra vez."
+          ]
+        },
+        {
+          "enunciado": "Una razón 3:5 equivale a:\n\nA) 9:15   B) 6:8   C) 12:16   D) 4:7",
+          "respuesta": "A) 9:15",
+          "pasos": [
+            "Multiplica ambos por 3: 9 y 15.",
+            "Conserva la proporción.",
+            "6:8 es 3:4, distinta."
+          ]
+        },
+        {
+          "enunciado": "3 horas en minutos:\n\nA) 180   B) 150   C) 200   D) 120",
+          "respuesta": "A) 180",
+          "pasos": [
+            "1 h = 60 min.",
+            "3.0×60 = 180.",
+            "Media hora = 30 min."
+          ]
+        },
+        {
+          "enunciado": "IVA 19% sobre $100.000. Total con IVA:\n\nA) 110.000   B) 109.000   C) 190.000   D) 119.000",
+          "respuesta": "D) 119.000",
+          "pasos": [
+            "19% de 100.000 = 19.000.",
+            "Total = 119.000.",
+            "Suma base + IVA."
+          ]
+        },
+        {
+          "enunciado": "Simplifica la razón 18:18\n\nA) 1:1   B) 18:18   C) 1:18   D) 18:18",
+          "respuesta": "A) 1:1",
+          "pasos": [
+            "Divide ambos por 18.",
+            "Queda 1:1.",
+            "Misma proporción, números menores."
+          ]
+        },
+        {
+          "enunciado": "De 85 a 115, el aumento porcentual es:\n\nA) 35%   B) 30%   C) 20%   D) 40%",
+          "respuesta": "A) 35%",
+          "pasos": [
+            "Incremento = 30.",
+            "(30/85)×100 = 35%.",
+            "Base = valor inicial."
+          ]
+        },
+        {
+          "enunciado": "¿Qué % es 40 de 150?\n\nA) 26%   B) 21%   C) 31%   D) 40%",
+          "respuesta": "A) 26%",
+          "pasos": [
+            "40/150 = 0.27.",
+            "×100 = 26%.",
+            "Parte entre total, no al revés."
+          ]
+        },
+        {
+          "enunciado": "Promedio de 11, 11 y 19:\n\nA) 11   B) 41   C) 15   D) 13",
+          "respuesta": "D) 13",
+          "pasos": [
+            "Suma 11+11+19=41.",
+            "÷3 = 13.",
+            "Promedio ≠ mediana aquí."
+          ]
+        },
+        {
+          "enunciado": "Si x/7 = 12, entonces x =\n\nA) 84   B) 91   C) 72   D) 12",
+          "respuesta": "A) 84",
+          "pasos": [
+            "x = 12×7 = 84.",
+            "Despeja multiplicando.",
+            "No dividas otra vez."
+          ]
+        },
+        {
+          "enunciado": "Una razón 3:5 equivale a:\n\nA) 4:7   B) 6:8   C) 9:15   D) 12:16",
+          "respuesta": "C) 9:15",
+          "pasos": [
+            "Multiplica ambos por 3: 9 y 15.",
+            "Conserva la proporción.",
+            "6:8 es 3:4, distinta."
+          ]
+        },
+        {
+          "enunciado": "2.5 horas en minutos:\n\nA) 120   B) 170   C) 120   D) 150",
+          "respuesta": "D) 150",
+          "pasos": [
+            "1 h = 60 min.",
+            "2.5×60 = 150.",
+            "Media hora = 30 min."
+          ]
+        },
+        {
+          "enunciado": "IVA 19% sobre $100.000. Total con IVA:\n\nA) 190.000   B) 109.000   C) 110.000   D) 119.000",
+          "respuesta": "D) 119.000",
+          "pasos": [
+            "19% de 100.000 = 19.000.",
+            "Total = 119.000.",
+            "Suma base + IVA."
+          ]
+        },
+        {
+          "enunciado": "Simplifica la razón 18:19\n\nA) 18:19   B) 18:19   C) 18:19   D) 19:18",
+          "respuesta": "A) 18:19",
+          "pasos": [
+            "Divide ambos por 1.",
+            "Queda 18:19.",
+            "Misma proporción, números menores."
+          ]
+        },
+        {
+          "enunciado": "De 100 a 115, el aumento porcentual es:\n\nA) 20%   B) 15%   C) 20%   D) 15%",
+          "respuesta": "B) 15%",
+          "pasos": [
+            "Incremento = 15.",
+            "(15/100)×100 = 15%.",
+            "Base = valor inicial."
           ]
         }
       ]
@@ -859,97 +3392,231 @@
     {
       "id": "razonamiento-verbal",
       "nombre": "Razonamiento verbal",
-      "descripcion": "Comprensión de enunciados cortos y vocabulario en contexto.",
+      "descripcion": "Comprensión, conectores y vocabulario preciso.",
       "items": [
         {
-          "enunciado": "«Aunque llovía, salieron a caminar.» La palabra Aunque indica:\n\nA) Causa   B) Contraste / concesión   C) Tiempo   D) Lugar",
-          "respuesta": "B) Contraste / concesión",
-          "pasos": [
-            "Aunque introduce una idea que no impide la otra.",
-            "Es concesión/contraste, no causa."
-          ]
-        },
-        {
-          "enunciado": "Sinónimo de BREVE en «una reunión breve»:\n\nA) Larga   B) Corta   C) Aburrida   D) Importante",
-          "respuesta": "B) Corta",
-          "pasos": [
-            "Breve = de poca duración → corta."
-          ]
-        },
-        {
-          "enunciado": "«El informe fue exhaustivo.» Exhaustivo significa:\n\nA) Superficial   B) Incompleto   C) Muy completo / detallado   D) Confuso",
-          "respuesta": "C) Muy completo / detallado",
-          "pasos": [
-            "Exhaustivo = que no deja nada importante por fuera."
-          ]
-        },
-        {
-          "enunciado": "¿Cuál oración está mejor puntuada?\n\nA) Cuando llegue avísame.   B) Cuando llegue, avísame.   C) Cuando, llegue avísame.   D) Cuando llegue avísame,",
-          "respuesta": "B) Cuando llegue, avísame.",
-          "pasos": [
-            "La subordinada temporal al inicio lleva coma: Cuando…, …"
-          ]
-        },
-        {
-          "enunciado": "En «No solo estudió, sino que también trabajó», la correlación correcta es:\n\nA) no solo / sino que también   B) no solo / pero   C) solo / también   D) no / sino",
-          "respuesta": "A) no solo / sino que también",
-          "pasos": [
-            "La pareja fija es «no solo… sino (que) también…»."
-          ]
-        },
-        {
-          "enunciado": "La idea principal de: «El sueño mejora la memoria; por eso conviene dormir bien antes de un examen.»\n\nA) Los exámenes son difíciles   B) Dormir bien ayuda a recordar   C) La memoria no importa   D) Hay que estudiar de noche",
-          "respuesta": "B) Dormir bien ayuda a recordar",
-          "pasos": [
-            "La primera cláusula da el hecho; «por eso» da la conclusión práctica."
-          ]
-        },
-        {
-          "enunciado": "«Aunque llovía, salió a correr.» La palabra que marca contraste es:\n\nA) Aunque   B) Llovía   C) Salió   D) Correr",
+          "enunciado": "«Aunque llovía, salió a correr.» La palabra de contraste es:\n\nA) Aunque   B) Llovía   C) Salió   D) Correr",
           "respuesta": "A) Aunque",
           "pasos": [
-            "«Aunque» introduce contraste/concesión.",
-            "El resto son contenido, no conector."
+            "«Aunque» marca concesión/contraste.",
+            "El resto es contenido.",
+            "Busca el conector."
           ]
         },
         {
           "enunciado": "Sinónimo más cercano de ESCASO:\n\nA) Abundante   B) Insuficiente   C) Grande   D) Rápido",
           "respuesta": "B) Insuficiente",
           "pasos": [
-            "Escaso ≈ poco / insuficiente.",
-            "Abundante es lo contrario."
+            "Escaso ≈ poco/insuficiente.",
+            "Abundante es lo contrario.",
+            "Elige el más cercano."
           ]
         },
         {
           "enunciado": "Completa: «No solo estudió, ___ también trabajó.»\n\nA) sino   B) si no   C) porque   D) aunque",
           "respuesta": "A) sino",
           "pasos": [
-            "«No solo… sino también» es la pareja correcta.",
-            "«Si no» es condicional, no este patrón."
+            "Patrón: no solo… sino también.",
+            "«Si no» es condicional.",
+            "No mezcles las formas."
           ]
         },
         {
           "enunciado": "La idea principal de un párrafo suele estar en:\n\nA) Solo ejemplos   B) La oración temática   C) La puntuación   D) Las comillas",
           "respuesta": "B) La oración temática",
           "pasos": [
-            "La oración temática resume la idea central.",
-            "Ejemplos la apoyan, no la sustituyen."
+            "Resume la idea central.",
+            "Ejemplos apoyan, no sustituyen.",
+            "Busca la tesis del párrafo."
           ]
         },
         {
-          "enunciado": "«El informe fue preciso y ___ .» Mejor complemento:\n\nA) confuso   B) claro   C) largo   D) caro",
+          "enunciado": "«El informe fue preciso y ___ .» Mejor:\n\nA) confuso   B) claro   C) largo   D) caro",
           "respuesta": "B) claro",
           "pasos": [
-            "Preciso y claro van en la misma línea de calidad.",
-            "Confuso contradice preciso."
+            "Preciso y claro van juntos.",
+            "Confuso contradice.",
+            "Coherencia semántica."
           ]
         },
         {
-          "enunciado": "Antónimo contextual de «obligatorio» en un aviso:\n\nA) Necesario   B) Opcional   C) Urgente   D) Formal",
+          "enunciado": "Antónimo contextual de «obligatorio»:\n\nA) Necesario   B) Opcional   C) Urgente   D) Formal",
           "respuesta": "B) Opcional",
           "pasos": [
             "Obligatorio = hay que hacerlo.",
-            "Opcional = puedes no hacerlo."
+            "Opcional = puedes no.",
+            "Necesario no es antónimo claro."
+          ]
+        },
+        {
+          "enunciado": "«Por tanto» introduce principalmente:\n\nA) Ejemplo   B) Conclusión/consecuencia   C) Contraste   D) Definición",
+          "respuesta": "B) Conclusión/consecuencia",
+          "pasos": [
+            "Por tanto = entonces/conclusión.",
+            "No es contraste (pero/aunque).",
+            "Marca inferencia."
+          ]
+        },
+        {
+          "enunciado": "Homófonos: «___ hecho el trabajo.»\n\nA) A   B) Ha   C) Ah   D) Á",
+          "respuesta": "B) Ha",
+          "pasos": [
+            "Ha = auxiliar de haber.",
+            "A = preposición.",
+            "Ah = interjección."
+          ]
+        },
+        {
+          "enunciado": "Mejor resumen de: «Estudió de noche; por eso llegó preparado.»\n\nA) Llegó tarde   B) Se preparó estudiando de noche   C) No estudió   D) Solo durmió",
+          "respuesta": "B) Se preparó estudiando de noche",
+          "pasos": [
+            "Causa: estudió de noche → efecto: preparado.",
+            "No inventes información.",
+            "Conserva la relación causal."
+          ]
+        },
+        {
+          "enunciado": "«Sin embargo» equivale mejor a:\n\nA) Además   B) Pero   C) Porque   D) Entonces",
+          "respuesta": "B) Pero",
+          "pasos": [
+            "Sin embargo = contraste.",
+            "Como pero/no obstante.",
+            "No es causa ni suma."
+          ]
+        },
+        {
+          "enunciado": "Palabra mal usada en tono formal: «El jefe está re-busy.» Mejor:\n\nA) Muy ocupado   B) Super free   C) Mega late   D) Okis",
+          "respuesta": "A) Muy ocupado",
+          "pasos": [
+            "Registro formal evita anglicismos coloquiales.",
+            "«Muy ocupado» es claro.",
+            "Mantén tono profesional."
+          ]
+        },
+        {
+          "enunciado": "Analogía verbal: «Escritor es a novela como pintor es a ___»\n\nA) Pincel   B) Cuadro   C) Museo   D) Color",
+          "respuesta": "B) Cuadro",
+          "pasos": [
+            "Producto de la actividad.",
+            "Novela = obra; cuadro = obra.",
+            "Pincel es herramienta."
+          ]
+        },
+        {
+          "enunciado": "Detecta la conclusión: «Todos los gatos maúllan. Misu es un gato. Por tanto…»\n\nA) Misu ladra   B) Misu maúlla   C) Misu es perro   D) Nada",
+          "respuesta": "B) Misu maúlla",
+          "pasos": [
+            "Silogismo válido.",
+            "Aplica la regla universal al caso.",
+            "No cambies el predicado."
+          ]
+        },
+        {
+          "enunciado": "«Es decir» sirve para:\n\nA) Contradecir   B) Reformular/aclarar   C) Negar   D) Preguntar",
+          "respuesta": "B) Reformular/aclarar",
+          "pasos": [
+            "Introduce explicación equivalente.",
+            "No marca oposición.",
+            "Aclara lo anterior."
+          ]
+        },
+        {
+          "enunciado": "Prefijo «in-» en «incapaz» indica:\n\nA) Dentro   B) Negación   C) Repetición   D) Aumento",
+          "respuesta": "B) Negación",
+          "pasos": [
+            "In- aquí = no capaz.",
+            "Negación, no ubicación.",
+            "Mira el sentido de la palabra."
+          ]
+        },
+        {
+          "enunciado": "Orden lógico: 1) Premisa 2) ___ 3) Conclusión\n\nA) Ejemplo o desarrollo   B) Firma   C) Título solo   D) Nada",
+          "respuesta": "A) Ejemplo o desarrollo",
+          "pasos": [
+            "Tras la premisa viene el desarrollo.",
+            "Luego la conclusión.",
+            "Estructura básica."
+          ]
+        },
+        {
+          "enunciado": "«Había» vs «habían»: «___ muchas personas.»\n\nA) Había   B) Habían   C) Haber   D) Hayan",
+          "respuesta": "A) Había",
+          "pasos": [
+            "Haber impersonal: había + plural.",
+            "No concuerda con el objeto.",
+            "Regla clásica de impersonal."
+          ]
+        },
+        {
+          "enunciado": "Tono del aviso: «Se ruega silencio.» Es principalmente:\n\nA) Orden grosera   B) Petición cortés   C) Pregunta   D) Chiste",
+          "respuesta": "B) Petición cortés",
+          "pasos": [
+            "«Se ruega» = petición formal.",
+            "No es pregunta.",
+            "Registro cortés."
+          ]
+        },
+        {
+          "enunciado": "Cohesión: «Ana llegó tarde. ___ perdió el bus.»\n\nA) Por eso   B) Aunque   C) Sino   D) Si",
+          "respuesta": "A) Por eso",
+          "pasos": [
+            "Relación causa-efecto.",
+            "Por eso conecta ambas.",
+            "Aunque sería contraste."
+          ]
+        },
+        {
+          "enunciado": "«Relevar» no debe confundirse con:\n\nA) Revelar (descubrir)   B) Sustituir en un turno   C) Ambos son iguales   D) Ninguna",
+          "respuesta": "A) Revelar (descubrir)",
+          "pasos": [
+            "Relevar ≠ revelar.",
+            "Relevar = sustituir/relevo.",
+            "Cuidado con ortografía."
+          ]
+        },
+        {
+          "enunciado": "Idea secundaria suele:\n\nA) Sustituir la principal   B) Apoyar con detalle/ejemplo   C) Borrar el tema   D) Cambiar de idioma",
+          "respuesta": "B) Apoyar con detalle/ejemplo",
+          "pasos": [
+            "Apoya la idea principal.",
+            "No la reemplaza.",
+            "Busca ejemplos y datos."
+          ]
+        },
+        {
+          "enunciado": "«Puesto que» introduce:\n\nA) Causa   B) Solo tiempo   C) Solo lugar   D) Duda",
+          "respuesta": "A) Causa",
+          "pasos": [
+            "Puesto que ≈ porque.",
+            "Causa/razón.",
+            "No es ubicación."
+          ]
+        },
+        {
+          "enunciado": "Mejor título para un texto sobre ahorrar agua en casa:\n\nA) Historia de Roma   B) Tips para reducir el consumo de agua   C) Recetas dulces   D) Fútbol hoy",
+          "respuesta": "B) Tips para reducir el consumo de agua",
+          "pasos": [
+            "El título debe reflejar el tema.",
+            "Coincide con ahorro de agua.",
+            "Evita títulos ajenos."
+          ]
+        },
+        {
+          "enunciado": "«Ninguno» concuerda en: «Ninguno de los informes ___ listo.»\n\nA) están   B) está   C) somos   D) van",
+          "respuesta": "B) está",
+          "pasos": [
+            "Ninguno → singular.",
+            "Está listo.",
+            "No uses plural por 'informes'."
+          ]
+        },
+        {
+          "enunciado": "Inferencia válida: «Solo los socios entran. Laura entró.»\n\nA) Laura es socia   B) Laura no es socia   C) Nadie entra   D) El local cerró",
+          "respuesta": "A) Laura es socia",
+          "pasos": [
+            "Solo socios entran + ella entró ⇒ es socia.",
+            "Modus ponens restringido.",
+            "No inventes cierre del local."
           ]
         }
       ]
@@ -957,101 +3624,240 @@
     {
       "id": "secuencias-numericas",
       "nombre": "Secuencias numéricas",
-      "descripcion": "Completa el término que falta. Anota diferencias o factores debajo de la serie.",
+      "descripcion": "Encuentra el patrón (suma, producto, intercaladas).",
       "items": [
         {
-          "enunciado": "7, 14, 28, 56, ?\n\nA) 84   B) 112   C) 98   D) 70",
-          "respuesta": "B) 112",
-          "pasos": [
-            "×2 en cada paso.",
-            "56 × 2 = 112."
-          ]
-        },
-        {
-          "enunciado": "100, 95, 85, 70, ?\n\nA) 60   B) 50   C) 55   D) 45",
-          "respuesta": "B) 50",
-          "pasos": [
-            "Saltos: −5, −10, −15…",
-            "Siguiente −20: 70 − 20 = 50."
-          ]
-        },
-        {
-          "enunciado": "1, 4, 9, 16, 25, ?\n\nA) 30   B) 36   C) 49   D) 32",
-          "respuesta": "B) 36",
-          "pasos": [
-            "Cuadrados: 1², 2², 3², 4², 5² → siguiente 6² = 36."
-          ]
-        },
-        {
-          "enunciado": "2, 3, 5, 8, 12, ?\n\nA) 15   B) 16   C) 17   D) 18",
-          "respuesta": "C) 17",
-          "pasos": [
-            "Saltos +1, +2, +3, +4…",
-            "Siguiente +5: 12 + 5 = 17."
-          ]
-        },
-        {
-          "enunciado": "5, 10, 8, 16, 14, 28, ?\n\nA) 26   B) 24   C) 30   D) 32",
-          "respuesta": "A) 26",
-          "pasos": [
-            "Patrón: ×2, −2, ×2, −2…",
-            "28 vino de 14×2; sigue −2 → 26."
-          ]
-        },
-        {
-          "enunciado": "64, 32, 16, 8, ?\n\nA) 2   B) 4   C) 6   D) 1",
-          "respuesta": "B) 4",
-          "pasos": [
-            "Mitad en cada paso.",
-            "8 ÷ 2 = 4."
-          ]
-        },
-        {
-          "enunciado": "5, 10, 20, 40, ?\n\nA) 60   B) 70   C) 80   D) 90",
-          "respuesta": "C) 80",
+          "enunciado": "5, 10, 20, 40, ?\n\nA) 80   B) 60   C) 50   D) 85",
+          "respuesta": "A) 80",
           "pasos": [
             "Cada término ×2.",
-            "40×2=80."
+            "40×2=80.",
+            "Patrón geométrico."
           ]
         },
         {
-          "enunciado": "81, 27, 9, 3, ?\n\nA) 0   B) 1   C) 2   D) 6",
-          "respuesta": "B) 1",
+          "enunciado": "81, 27, 9, 3, ?\n\nA) 6   B) 2   C) 0   D) 1",
+          "respuesta": "D) 1",
           "pasos": [
-            "Divide entre 3 cada vez.",
-            "3÷3=1."
+            "÷3 cada vez.",
+            "3÷3=1.",
+            "Serie geométrica decreciente."
           ]
         },
         {
-          "enunciado": "4, 9, 16, 25, ?\n\nA) 30   B) 32   C) 36   D) 49",
-          "respuesta": "C) 36",
+          "enunciado": "16, 25, 36, 49, ?\n\nA) 63   B) 49   C) 64   D) 59",
+          "respuesta": "C) 64",
           "pasos": [
-            "Cuadrados: 2²,3²,4²,5².",
-            "Siguiente 6²=36."
+            "Cuadrados consecutivos.",
+            "Siguiente 8²=64.",
+            "No sumes una constante fija si crece el salto."
           ]
         },
         {
-          "enunciado": "1, 1, 2, 3, 5, 8, ?\n\nA) 10   B) 11   C) 12   D) 13",
+          "enunciado": "1, 1, 2, 3, 5, 8, ?\n\nA) 13   B) 12   C) 11   D) 10",
+          "respuesta": "A) 13",
+          "pasos": [
+            "Fibonacci: suma de los dos anteriores.",
+            "5+8=13.",
+            "Patrón clásico."
+          ]
+        },
+        {
+          "enunciado": "100, 95, 85, 70, ?\n\nA) 55   B) 60   C) 50   D) 40",
+          "respuesta": "C) 50",
+          "pasos": [
+            "Restas −5,−10,−15…",
+            "Siguiente −20 → 50.",
+            "Las diferencias crecen."
+          ]
+        },
+        {
+          "enunciado": "Serie intercalada (impares y pares): 1, 2, 3, 4, 5, 6, 7, ?\n\nA) 7   B) 9   C) 8   D) 10",
+          "respuesta": "C) 8",
+          "pasos": [
+            "Una subserie: 1,3,5,7…",
+            "Otra: 2,4,6,8…",
+            "Tras 7 sigue el par 8."
+          ]
+        },
+        {
+          "enunciado": "11, 22, 44, 88, ?\n\nA) 132   B) 176   C) 187   D) 110",
+          "respuesta": "B) 176",
+          "pasos": [
+            "Cada término ×2.",
+            "88×2=176.",
+            "Patrón geométrico."
+          ]
+        },
+        {
+          "enunciado": "81, 27, 9, 3, ?\n\nA) 0   B) 6   C) 1   D) 2",
+          "respuesta": "C) 1",
+          "pasos": [
+            "÷3 cada vez.",
+            "3÷3=1.",
+            "Serie geométrica decreciente."
+          ]
+        },
+        {
+          "enunciado": "16, 25, 36, 49, ?\n\nA) 64   B) 63   C) 49   D) 59",
+          "respuesta": "A) 64",
+          "pasos": [
+            "Cuadrados consecutivos.",
+            "Siguiente 8²=64.",
+            "No sumes una constante fija si crece el salto."
+          ]
+        },
+        {
+          "enunciado": "1, 1, 2, 3, 5, 8, ?\n\nA) 12   B) 13   C) 10   D) 11",
+          "respuesta": "B) 13",
+          "pasos": [
+            "Fibonacci: suma de los dos anteriores.",
+            "5+8=13.",
+            "Patrón clásico."
+          ]
+        },
+        {
+          "enunciado": "100, 95, 85, 70, ?\n\nA) 55   B) 60   C) 50   D) 40",
+          "respuesta": "C) 50",
+          "pasos": [
+            "Restas −5,−10,−15…",
+            "Siguiente −20 → 50.",
+            "Las diferencias crecen."
+          ]
+        },
+        {
+          "enunciado": "Serie intercalada (impares y pares): 1, 2, 3, 4, 5, 6, 7, ?\n\nA) 9   B) 10   C) 7   D) 8",
+          "respuesta": "D) 8",
+          "pasos": [
+            "Una subserie: 1,3,5,7…",
+            "Otra: 2,4,6,8…",
+            "Tras 7 sigue el par 8."
+          ]
+        },
+        {
+          "enunciado": "17, 34, 68, 136, ?\n\nA) 170   B) 289   C) 204   D) 272",
+          "respuesta": "D) 272",
+          "pasos": [
+            "Cada término ×2.",
+            "136×2=272.",
+            "Patrón geométrico."
+          ]
+        },
+        {
+          "enunciado": "81, 27, 9, 3, ?\n\nA) 1   B) 2   C) 0   D) 6",
+          "respuesta": "A) 1",
+          "pasos": [
+            "÷3 cada vez.",
+            "3÷3=1.",
+            "Serie geométrica decreciente."
+          ]
+        },
+        {
+          "enunciado": "16, 25, 36, 49, ?\n\nA) 49   B) 63   C) 64   D) 59",
+          "respuesta": "C) 64",
+          "pasos": [
+            "Cuadrados consecutivos.",
+            "Siguiente 8²=64.",
+            "No sumes una constante fija si crece el salto."
+          ]
+        },
+        {
+          "enunciado": "1, 1, 2, 3, 5, 8, ?\n\nA) 13   B) 10   C) 12   D) 11",
+          "respuesta": "A) 13",
+          "pasos": [
+            "Fibonacci: suma de los dos anteriores.",
+            "5+8=13.",
+            "Patrón clásico."
+          ]
+        },
+        {
+          "enunciado": "100, 95, 85, 70, ?\n\nA) 40   B) 55   C) 60   D) 50",
+          "respuesta": "D) 50",
+          "pasos": [
+            "Restas −5,−10,−15…",
+            "Siguiente −20 → 50.",
+            "Las diferencias crecen."
+          ]
+        },
+        {
+          "enunciado": "Serie intercalada (impares y pares): 1, 2, 3, 4, 5, 6, 7, ?\n\nA) 7   B) 8   C) 10   D) 9",
+          "respuesta": "B) 8",
+          "pasos": [
+            "Una subserie: 1,3,5,7…",
+            "Otra: 2,4,6,8…",
+            "Tras 7 sigue el par 8."
+          ]
+        },
+        {
+          "enunciado": "23, 46, 92, 184, ?\n\nA) 391   B) 276   C) 230   D) 368",
+          "respuesta": "D) 368",
+          "pasos": [
+            "Cada término ×2.",
+            "184×2=368.",
+            "Patrón geométrico."
+          ]
+        },
+        {
+          "enunciado": "81, 27, 9, 3, ?\n\nA) 1   B) 2   C) 0   D) 6",
+          "respuesta": "A) 1",
+          "pasos": [
+            "÷3 cada vez.",
+            "3÷3=1.",
+            "Serie geométrica decreciente."
+          ]
+        },
+        {
+          "enunciado": "16, 25, 36, 49, ?\n\nA) 59   B) 64   C) 63   D) 49",
+          "respuesta": "B) 64",
+          "pasos": [
+            "Cuadrados consecutivos.",
+            "Siguiente 8²=64.",
+            "No sumes una constante fija si crece el salto."
+          ]
+        },
+        {
+          "enunciado": "1, 1, 2, 3, 5, 8, ?\n\nA) 12   B) 11   C) 10   D) 13",
           "respuesta": "D) 13",
           "pasos": [
-            "Fibonacci: cada uno = suma de los dos anteriores.",
-            "5+8=13."
+            "Fibonacci: suma de los dos anteriores.",
+            "5+8=13.",
+            "Patrón clásico."
           ]
         },
         {
-          "enunciado": "100, 95, 85, 70, ?\n\nA) 40   B) 50   C) 55   D) 60",
-          "respuesta": "B) 50",
+          "enunciado": "100, 95, 85, 70, ?\n\nA) 60   B) 55   C) 40   D) 50",
+          "respuesta": "D) 50",
           "pasos": [
-            "Restas: −5, −10, −15.",
-            "Siguiente −20 → 70−20=50."
+            "Restas −5,−10,−15…",
+            "Siguiente −20 → 50.",
+            "Las diferencias crecen."
           ]
         },
         {
-          "enunciado": "2, 6, 12, 20, 30, ?\n\nA) 40   B) 42   C) 44   D) 48",
-          "respuesta": "B) 42",
+          "enunciado": "Serie intercalada (impares y pares): 1, 2, 3, 4, 5, 6, 7, ?\n\nA) 9   B) 7   C) 8   D) 10",
+          "respuesta": "C) 8",
           "pasos": [
-            "Diferencias +4,+6,+8,+10.",
-            "Siguiente +12 → 30+12=42."
+            "Una subserie: 1,3,5,7…",
+            "Otra: 2,4,6,8…",
+            "Tras 7 sigue el par 8."
+          ]
+        },
+        {
+          "enunciado": "29, 58, 116, 232, ?\n\nA) 290   B) 464   C) 348   D) 493",
+          "respuesta": "B) 464",
+          "pasos": [
+            "Cada término ×2.",
+            "232×2=464.",
+            "Patrón geométrico."
+          ]
+        },
+        {
+          "enunciado": "81, 27, 9, 3, ?\n\nA) 2   B) 0   C) 6   D) 1",
+          "respuesta": "D) 1",
+          "pasos": [
+            "÷3 cada vez.",
+            "3÷3=1.",
+            "Serie geométrica decreciente."
           ]
         }
       ]

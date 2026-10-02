@@ -348,7 +348,7 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
     ),
   },
   "dado-opuestos-7": {
-    caption: "En un dado estándar, caras opuestas suman 7 (1-6, 2-5, 3-4).",
+    caption: "Atajo: en un dado clásico, cada cara tiene una opuesta fija (suma constante).",
     node: (
       <Frame caption="Dado" h={180} w={220}>
         <rect x="60" y="50" width="80" height="80" rx="8" fill={fill} stroke={stroke} strokeWidth="3" />
@@ -1009,7 +1009,7 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
     ),
   },
   "espacial-espejo": {
-    caption: "Atajo: espejo vertical cambia izquierda↔derecha; arriba/abajo se mantienen.",
+    caption: "Atajo: en espejo vertical, piensa qué se mantiene y qué se invierte.",
     node: (
       <Frame caption="Espejo vertical" w={300} h={160}>
         <text x="80" y="70" textAnchor="middle" fontSize="36" fill={stroke} fontWeight="700">
@@ -1148,7 +1148,7 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
     ),
   },
   "espacial-mapa-180": {
-    caption: "Atajo giro 180°: arriba↔abajo e izquierda↔derecha a la vez.",
+    caption: "Atajo giro 180°: media vuelta; arriba/abajo e izquierda/derecha cambian juntos.",
     node: (
       <Frame caption="Giro del mapa 180°" w={300} h={180}>
         <rect x="30" y="30" width="90" height="90" fill={fill} stroke={stroke} strokeWidth="2" />

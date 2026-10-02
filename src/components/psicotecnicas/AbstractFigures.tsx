@@ -10,8 +10,8 @@ const accent = "#6d28d9";
 function Frame({
   children,
   caption,
-  w = 360,
-  h = 200,
+  w = 320,
+  h = 160,
 }: {
   children: ReactNode;
   caption?: string;
@@ -19,11 +19,11 @@ function Frame({
   h?: number;
 }) {
   return (
-    <figure className="rounded-xl border border-black/10 bg-white p-3 my-2">
-      <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-auto" role="img" aria-label={caption || "Figura"}>
+    <figure className="mx-auto my-2 w-full max-w-[220px] rounded-lg border border-black/10 bg-white p-2">
+      <svg viewBox={`0 0 ${w} ${h}`} className="mx-auto h-auto w-full" role="img" aria-label={caption || "Figura"}>
         {children}
       </svg>
-      {caption ? <figcaption className="text-xs muted mt-2 text-center leading-relaxed">{caption}</figcaption> : null}
+      {caption ? <figcaption className="text-[11px] muted mt-1.5 text-center leading-snug">{caption}</figcaption> : null}
     </figure>
   );
 }
@@ -182,25 +182,40 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
     ),
   },
   "matriz-puntos": {
-    caption: "Filas y columnas llevan reglas distintas. Falta la casilla inferior derecha.",
+    caption: "Regla A (número): fila × columna. Regla B (relleno): columnas blanco → gris → negro. Falta 3×3 negro = 9.",
     node: (
-      <Frame caption="Matriz 3×3 (ejemplo)" h={240} w={280}>
-        {[0, 1, 2].map((r) =>
-          [0, 1, 2].map((c) => {
-            const x = 40 + c * 70;
-            const y = 30 + r * 70;
-            const n = r === 2 && c === 2 ? 0 : (r + 1) * (c + 1);
+      <Frame caption="Matriz 3×3: dos reglas" h={220} w={260}>
+        {[
+          [1, 2, 3],
+          [2, 4, 6],
+          [3, 6, null],
+        ].map((row, r) =>
+          row.map((n, c) => {
+            const x = 30 + c * 70;
+            const y = 20 + r * 65;
+            const fills = ["#ffffff", "#cbd5e1", "#1e293b"];
+            const cellFill = fills[c];
+            const ink = c === 2 ? "#f8fafc" : stroke;
             return (
               <g key={`${r}-${c}`}>
-                <rect x={x} y={y} width="56" height="56" fill={fill} stroke={stroke} strokeWidth="2" strokeDasharray={r === 2 && c === 2 ? "4 3" : undefined} />
-                {r === 2 && c === 2 ? (
-                  <text x={x + 28} y={y + 34} textAnchor="middle" fontSize="22" fill={accent}>
+                <rect
+                  x={x}
+                  y={y}
+                  width="58"
+                  height="55"
+                  fill={n === null ? fill : cellFill}
+                  stroke={stroke}
+                  strokeWidth="2"
+                  strokeDasharray={n === null ? "4 3" : undefined}
+                />
+                {n === null ? (
+                  <text x={x + 29} y={y + 34} textAnchor="middle" fontSize="20" fill={accent}>
                     ?
                   </text>
                 ) : (
-                  Array.from({ length: Math.min(n, 6) }).map((_, i) => (
-                    <circle key={i} cx={x + 14 + (i % 3) * 14} cy={y + 18 + Math.floor(i / 3) * 16} r="4" fill={stroke} />
-                  ))
+                  <text x={x + 29} y={y + 34} textAnchor="middle" fontSize="18" fill={ink} fontWeight="700">
+                    {n}
+                  </text>
                 )}
               </g>
             );
@@ -210,25 +225,37 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
     ),
   },
   "diagramatico-ordenes": {
-    caption: "Cada símbolo es una orden sobre la fila de figuras.",
+    caption: "Orden = invertir la fila. Entrada □ △ ○ → salida ○ △ □. Anota el resultado tras CADA orden.",
     node: (
-      <Frame caption="Entrada → órdenes → salida" h={180}>
-        <rect x="20" y="60" width="40" height="40" fill={fill} stroke={stroke} strokeWidth="2" />
-        <polygon points="80,60 110,80 80,100" fill={fill} stroke={stroke} strokeWidth="2" />
-        <circle cx="145" cy="80" r="18" fill={fill} stroke={stroke} strokeWidth="2" />
-        <text x="185" y="85" fontSize="20" fill={muted}>
+      <Frame caption="Entrada → orden → salida" h={150} w={340}>
+        <rect x="12" y="55" width="28" height="28" fill={fill} stroke={stroke} strokeWidth="2" />
+        <polygon points="55,55 72,83 38,83" fill={fill} stroke={stroke} strokeWidth="2" />
+        <circle cx="95" cy="69" r="14" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="125" y="74" fontSize="16" fill={muted}>
           →
         </text>
-        <text x="230" y="70" textAnchor="middle" fontSize="28" fill={accent}>
-          ↻
+        <rect x="145" y="48" width="70" height="42" rx="6" fill="#ede9fe" stroke={accent} strokeWidth="2" />
+        <text x="180" y="65" textAnchor="middle" fontSize="10" fill={accent}>
+          orden
         </text>
-        <text x="230" y="100" textAnchor="middle" fontSize="11" fill={muted}>
-          gira 90°
+        <text x="180" y="80" textAnchor="middle" fontSize="10" fill={stroke}>
+          invertir
         </text>
-        <text x="270" y="85" fontSize="20" fill={muted}>
+        <text x="230" y="74" fontSize="16" fill={muted}>
           →
         </text>
-        <rect x="300" y="60" width="40" height="40" fill={fill} stroke={stroke} strokeWidth="2" transform="rotate(90 320 80)" />
+        <circle cx="260" cy="69" r="14" fill={fill} stroke={stroke} strokeWidth="2" />
+        <polygon points="290,55 307,83 273,83" fill={fill} stroke={stroke} strokeWidth="2" />
+        <rect x="318" y="55" width="28" height="28" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="55" y="120" textAnchor="middle" fontSize="10" fill={muted}>
+          entrada
+        </text>
+        <text x="180" y="120" textAnchor="middle" fontSize="10" fill={muted}>
+          símbolo
+        </text>
+        <text x="295" y="120" textAnchor="middle" fontSize="10" fill={muted}>
+          salida
+        </text>
       </Frame>
     ),
   },

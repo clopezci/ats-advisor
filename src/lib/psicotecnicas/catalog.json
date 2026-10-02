@@ -376,197 +376,197 @@
       "subjectId": "exa.psico-abstracto",
       "tema": "Qué cambia entre una figura y la siguiente",
       "titulo": "No preguntes qué sigue, pregunta qué cambia",
-      "regla": "En series de figuras, anota por separado cada cosa que puede cambiar: cantidad, posición, giro, espejo, tamaño, relleno. Sigue cada cambio como si fuera una columna propia.",
-      "ejemplo": "Figuras: un triángulo que en cada paso gira 90° y además aparece un punto más.\n1) Columna giro: 0° → 90° → 180° → 270° → vuelve a 0°.\n2) Columna puntos: 1 → 2 → 3 → 4.\n3) La siguiente figura combina el siguiente giro y el siguiente número de puntos.",
+      "regla": "En una serie de figuras no adivines «la siguiente» de golpe. Anota por separado cada cosa que cambia (giro, cantidad de puntos, relleno…). Cada cambio es una columna: proyecta cada columna un paso y luego juntas el resultado.",
+      "ejemplo": "Mira la figura: triángulos.\n1) Columna GIRO: cada paso rota 90° a la derecha (arriba → derecha → abajo → izquierda).\n2) Columna PUNTOS: 1, 2, 3, 4…\n3) La figura 5 sería: giro otra vez arriba + 5 puntos.\nNo inventes una sola regla mágica: sigue las dos columnas.",
       "figura": "serie-triangulo-puntos"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Giros y rotaciones",
       "titulo": "El ciclo de cuatro",
-      "regla": "Un giro de 90° se repite cada 4 pasos y vuelve al dibujo inicial. Por eso la figura 5 se parece a la 1, la 6 a la 2, y así.",
-      "ejemplo": "Si la figura 1 es una flecha hacia arriba y gira 90° a la derecha en cada paso:\n1 = arriba, 2 = derecha, 3 = abajo, 4 = izquierda, 5 = arriba otra vez.\nEntonces la 6 = derecha (igual que la 2).",
+      "regla": "Si algo gira 90° en cada paso, el ciclo dura 4 figuras y luego se repite. Figura 5 = figura 1, figura 6 = figura 2. Cuenta el resto al dividir la posición entre 4.",
+      "ejemplo": "Flecha: 1↑ 2→ 3↓ 4← 5↑.\n1) De 1 a 5 hay 4 pasos → vuelve al inicio.\n2) ¿Qué es la 6? Igual que la 2 → derecha.\nAtajo: posición 6 → 6÷4 sobra 2 → igual que la figura 2.",
       "figura": "ciclo-flechas-90"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Reflejos y simetrías",
       "titulo": "Giro de 180° o espejo",
-      "regla": "Girar 180° y reflejar en espejo a veces se ven parecidos. Elige un detalle que no sea simétrico (una pata, una punta) y mira hacia dónde queda en cada opción.",
-      "ejemplo": "Figura: letra R.\n1) Espejo vertical: la panza queda al otro lado.\n2) Giro 180°: la R queda al revés, con la panza en otro sitio.\n3) No son la misma figura: sigue la panza, no la silueta entera.",
+      "regla": "Un espejo y un giro de 180° a veces se parecen, pero no son lo mismo. Elige un detalle asimétrico (la panza de una R, una pata) y mira a qué lado queda en cada opción.",
+      "ejemplo": "Mira las tres R de la figura.\n1) Original: panza a la derecha.\n2) Espejo vertical: panza a la izquierda (como si hubiera un espejo en el medio).\n3) Giro 180°: queda boca abajo; la panza no queda igual que en el espejo.\nSi la opción mezcla espejo con giro, está mal.",
       "figura": "giro-espejo-r"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Matrices tipo test de inteligencia",
       "titulo": "En una matriz hay dos reglas, no una",
-      "regla": "Una corre por las filas y otra por las columnas. Y el color o el relleno casi siempre sigue su propia regla, aparte del número.",
-      "ejemplo": "Resuelve «9» y «negro» por separado, y después busca la opción que tenga los dos.",
+      "regla": "En una matriz 3×3 casi siempre hay al menos DOS reglas: una por filas/columnas (números) y otra aparte (color o relleno). Resuelve cada regla sola y busca la opción que cumpla las dos.",
+      "ejemplo": "Mira la matriz de la figura.\n1) Números: cada casilla = fila × columna → 1,2,3 / 2,4,6 / 3,6,? → el ? es 3×3 = 9.\n2) Relleno: columna 1 blanca, columna 2 gris, columna 3 negra → el ? (columna 3) es negro.\n3) Respuesta: casilla con 9 y fondo negro. Si solo miras el 9 o solo el color, te engañan.",
       "figura": "matriz-puntos"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento diagramático: los símbolos son órdenes",
       "titulo": "Escribe la fila intermedia",
-      "regla": "Los símbolos son órdenes y se aplican en orden. Después de cada uno, escribe cómo quedó la fila. Hacer dos de cabeza es donde se pierde el punto.",
-      "ejemplo": "Con 2 símbolos todavía se puede de cabeza; con 4 seguidos, nadie puede.",
+      "regla": "En razonamiento diagramático cada símbolo es una ORDEN (invertir, girar, borrar…). Se aplican en orden de izquierda a derecha. Después de CADA orden anota cómo quedó la fila; hacer dos órdenes de memoria es donde se pierde el punto.",
+      "ejemplo": "Mira la figura: entrada □ △ ○.\n1) El símbolo dice «invertir» → la fila se lee al revés.\n2) Salida: ○ △ □.\n3) Si hubiera un segundo símbolo, partirías de ○ △ □ (no de la entrada original).\nCon 2 órdenes aún se puede de cabeza; con 4, escribe siempre el paso intermedio.",
       "figura": "diagramatico-ordenes"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento espacial: armar y desarmar cubos",
       "titulo": "Las caras opuestas del cubo, sin armarlo",
-      "regla": "Dos caras pegadas quedan contiguas. Dos caras separadas por una sola cara en línea recta quedan opuestas y no se ven nunca juntas.",
-      "ejemplo": "Marca los 3 pares de caras opuestas apenas veas el despliegue: con eso resuelves todo ese cubo.",
+      "regla": "En el desarrollo (cruz de cuadrados): dos caras que comparten un lado quedan juntas al armar. Dos caras separadas por exactamente una cara en línea recta quedan OPUESTAS y nunca se ven a la vez.",
+      "ejemplo": "Mira el desarrollo de la figura (●, X, —).\n1) ● está arriba de X → al armar quedan contiguas, no opuestas.\n2) Busca pares separados por una cara en línea: esos son opuestos.\n3) Marca los 3 pares opuestos antes de mirar las opciones: con eso resuelves el cubo.",
       "figura": "cubo-caras-opuestas"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento espacial: armar y desarmar cubos",
       "titulo": "Desde un vértice se ven tres caras",
-      "regla": "Nunca más de tres, y esas tres son siempre contiguas entre sí. Cualquier opción que muestre cuatro está mal de entrada.",
-      "ejemplo": "Si la pregunta pide ver 4 símbolos a la vez, la respuesta es «no se puede».",
+      "regla": "Si miras un cubo desde una esquina (vértice), siempre ves exactamente 3 caras, y esas 3 se tocan entre sí. Cualquier dibujo con 4 caras visibles a la vez está mal.",
+      "ejemplo": "Mira el cubo en perspectiva de la figura: se ven 3 caras.\n1) Si la pregunta pide ver 4 símbolos a la vez → imposible.\n2) Las 3 caras visibles siempre son vecinas (comparten el vértice).",
       "figura": "cubo-vertice-tres"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Series de dominó y de cartas",
       "titulo": "Las caras opuestas del dado suman 7",
-      "regla": "1 con 6, 2 con 5, 3 con 4. Sirve para deducir la cara que no se ve en cualquier dibujo de dados.",
-      "ejemplo": "Si arriba hay un 2, abajo hay un 5.",
+      "regla": "En un dado estándar: 1 frente a 6, 2 frente a 5, 3 frente a 4 (siempre suman 7). Sirve para saber la cara oculta sin girar el dibujo.",
+      "ejemplo": "Si arriba ves un 5, abajo (oculto) es 2 porque 5+2=7.\nComprueba: 1+6=7, 2+5=7, 3+4=7.",
       "figura": "dado-opuestos-7"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Problemas de ingenio",
       "titulo": "Contar cuadrados en una cuadrícula",
-      "regla": "No cuentes uno por uno. Cuenta por tamaños: los de 1×1, los de 2×2, los de 3×3, y suma.",
-      "ejemplo": "En una de 3×3: 9 pequeños + 4 medianos + 1 grande = 14.",
+      "regla": "No cuentes al azar. Cuenta por tamaños: primero todos los de 1×1, luego 2×2, luego 3×3… y suma.",
+      "ejemplo": "Cuadrícula 3×3 (como la figura, el borde grande marcado):\n1) 1×1: hay 9.\n2) 2×2: hay 4 (el morado es uno de ellos).\n3) 3×3: hay 1.\nTotal: 9+4+1 = 14.",
       "figura": "cuadricula-cuadrados"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Lógica: silogismos y deducción",
       "titulo": "«Todos los A son B» no se puede voltear",
-      "regla": "Dibuja el círculo pequeño dentro del grande. Si queda espacio libre en el grande, del dato de que alguien está ahí no se deduce nada.",
-      "ejemplo": "De 100 que hicieron la práctica, puede que solo 60 se hayan graduado.",
+      "regla": "«Todos los A son B» pone el círculo A dentro del círculo B. Alguien que está en B puede estar fuera de A. No se puede concluir «si es B, entonces es A».",
+      "ejemplo": "Mira el diagrama: A dentro de B.\n1) Todo graduado hizo la práctica (A ⊂ B).\n2) Camila hizo la práctica (está en B) → puede o no ser graduada.\n3) Respuesta: no se puede concluir que se graduó.",
       "figura": "venn-silogismo"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Tiempo por pregunta y cuándo adivinar",
       "titulo": "La regla de los 30 segundos",
-      "regla": "Todas las preguntas valen lo mismo. Si en unos 30 segundos no sabes ni por dónde empezar, marca una opción, hazle una marca al margen y pasa a la siguiente. Luego vuelves si sobra tiempo.",
-      "ejemplo": "Prueba: 20 preguntas en 20 minutos (1 min por pregunta).\n1) Llevas 3 minutos en la pregunta 10 y aún no arrancas.\n2) Esos 3 minutos = tiempo de 3 preguntas que ni leíste.\n3) Marcas cualquiera en la 10, la señalas y saltas a la 11.\nObjetivo: no llegar al final con 5 preguntas en blanco por obsesionarte con una."
+      "regla": "Todas las preguntas valen igual. Si en ~30 s no sabes por dónde empezar, marca, anota el número y salta. Vuelves si sobra tiempo.",
+      "ejemplo": "20 preguntas en 20 min. Llevas 3 min en la 10 sin arrancar → ya gastaste 3 preguntas. Marca, marca el margen y pasa a la 11."
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Tiempo por pregunta y cuándo adivinar",
       "titulo": "Si no penalizan, no dejes nada en blanco",
-      "regla": "Pregunta primero si restan por error. Si NO restan: en blanco = 0 e incorrecta = 0, pero una marcada al azar puede sumar. Si SÍ restan: solo adivina cuando ya descartaste al menos una opción.",
-      "ejemplo": "Quedan 10 preguntas sin marcar y hay 5 opciones cada una.\n1) Sin penalización: marcar al azar ≈ 10 × (1/5) = 2 puntos esperados. Dejarlas en blanco = 0.\n2) Con penalización: no marques a ciegas; solo si ya eliminaste una o dos opciones (sube la probabilidad)."
+      "regla": "Pregunta si restan por error. Sin resta: en blanco = 0; al azar puede sumar. Con resta: solo adivina si ya descartaste opciones.",
+      "ejemplo": "10 en blanco, 5 opciones, sin penalización → esperar ~2 aciertos al azar. En blanco garantizan 0."
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Dos ruedas que se tocan giran al revés",
-      "regla": "En una fila de engranajes se van alternando: las posiciones impares giran como el primero y las pares al contrario.",
-      "ejemplo": "Si el 1.º va a la derecha: el 2.º a la izquierda, el 3.º a la derecha, el 4.º a la izquierda.",
+      "regla": "Si dos engranajes se tocan, giran en sentidos CONTRARIOS. En una fila: posiciones impares igual que el primero; pares al revés.",
+      "ejemplo": "Mira A y B en contacto.\n1) Si A gira a la derecha (↻), B gira a la izquierda (↺).\n2) Si hay C tocando a B, C gira como A otra vez.",
       "figura": "engranajes-opuestos"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Con correa cambia todo",
-      "regla": "Unidas por una correa o cadena derecha giran en el MISMO sentido. Si la correa va cruzada en ocho, en sentidos contrarios.",
-      "ejemplo": "2 ruedas que se tocan: al revés. Las mismas 2 con correa derecha: igual.",
+      "regla": "Si dos ruedas van unidas por correa SIN cruzar, giran en el MISMO sentido. Si la correa va cruzada en 8, giran al revés. No es lo mismo que engranajes que se tocan.",
+      "ejemplo": "Figura: A y B con correa por arriba y abajo (sin cruce).\n1) A ↻ → B también ↻.\n2) Las mismas dos ruedas si se tocaran como dientes → girarían al revés.",
       "figura": "engranajes-correa"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "El anillo impar se traba",
-      "regla": "Engranajes en círculo cerrado: si son un número impar, el mecanismo no puede girar. Con número par, sí gira.",
-      "ejemplo": "3 o 5 engranajes en anillo → trabado. 4 o 6 → giran.",
+      "regla": "Engranajes en círculo cerrado: con número IMPAR el sentido se contradice y el mecanismo no puede girar. Con número PAR sí gira.",
+      "ejemplo": "3 o 5 engranajes en anillo → trabado.\n4 o 6 en anillo → pueden girar.\nCuenta cuántos hay en el círculo antes de marcar.",
       "figura": "engranajes-opuestos"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Más dientes, más despacio",
-      "regla": "Las vueltas son inversamente proporcionales a los dientes. Multiplica dientes por vueltas en un lado y en el otro: los dos productos son iguales.",
-      "ejemplo": "10 dientes × 4 vueltas = 40 → una de 40 dientes da 1 vuelta.",
+      "regla": "Más dientes = menos vueltas. La igualdad es: dientes₁ × vueltas₁ = dientes₂ × vueltas₂.",
+      "ejemplo": "Piñón de 10 dientes da 4 vueltas → 10×4=40.\nEngranaje de 40 dientes: 40 × vueltas = 40 → 1 vuelta.",
       "figura": "engranajes-opuestos"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "La polea fija no ahorra nada",
-      "regla": "Solo cambia la dirección, para tirar hacia abajo. La polea móvil, la que sube con la carga, sí parte la fuerza por dos.",
-      "ejemplo": "60 kg con polea fija: 60. Con una móvil: 30.",
+      "regla": "Polea FIJA (colgada del techo): solo cambia la dirección del tiro; la fuerza es la misma que el peso. Polea MÓVIL (sube con la carga): sí divide la fuerza.",
+      "ejemplo": "Mira la figura: polea fija y carga abajo.\n1) Carga 60 kg → tiras con ~60 kg (solo hacia abajo es más cómodo).\n2) Con una polea móvil la fuerza cae cerca de la mitad (~30).",
       "figura": "polea-fija"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Cuenta las cuerdas que sostienen",
-      "regla": "En un aparejo, mira cuántos tramos de cuerda sostienen de verdad la carga y divide el peso entre ese número.",
-      "ejemplo": "120 kg colgando de 4 tramos → hay que hacer 30.",
+      "regla": "En un aparejo, la fuerza se reparte entre los tramos de cuerda que sostienen la carga. Cuenta esos tramos y divide el peso entre ese número.",
+      "ejemplo": "Carga 120 kg colgada de 4 tramos → 120÷4 = 30 kg de tiro (ideal, sin fricción).",
       "figura": "polea-fija"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "La palanca se multiplica",
-      "regla": "Fuerza por su distancia al apoyo = resistencia por la suya. Entre más lejos del apoyo empujes, menos fuerza necesitas.",
-      "ejemplo": "90 kg a 1 m del apoyo; empujando a 3 m bastan 30 kg.",
+      "regla": "En una palanca: fuerza × distancia al fulcro = resistencia × su distancia. Si te alejas del punto de apoyo, necesitas menos fuerza.",
+      "ejemplo": "Mira la figura: fulcro en el centro, F a la izquierda, R a la derecha.\nSi el brazo de F es el doble que el de R, la fuerza puede ser la mitad de la resistencia.",
       "figura": "palanca"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "El agua no sabe de formas",
-      "regla": "En vasos comunicantes el líquido queda al mismo nivel en todos, sin importar si uno es ancho y el otro angosto.",
-      "ejemplo": "3 tubos conectados de grosores distintos → el agua en la misma raya."
+      "regla": "El agua toma la forma del recipiente; el volumen se conserva si no se derrama.",
+      "ejemplo": "Misma agua en vaso ancho y vaso alto: cambia la altura, no la cantidad."
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Memoria: la lámina que te muestran dos minutos",
       "titulo": "Los cuatro barridos",
-      "regla": "No mires «con atención»: haz cuatro pasadas en orden. Cuenta cosas, ubícalas por cuadrantes, lee todo lo escrito y busca lo que esté fuera de lugar.",
-      "ejemplo": "2 minutos alcanzan para 4 pasadas de 30 segundos.",
+      "regla": "En memoria de lámina tienes ~2 minutos. Haz cuatro pasadas: esquinas → letreros/números → personas → lo raro. Ese orden cubre lo que más preguntan.",
+      "ejemplo": "Mira el esquema de la esquina con tienda.\n1) Esquinas del cuadro.\n2) Texto TIENDA.\n3) Persona / poste.\n4) Lo que sobra de lo normal (eso suele ser la pregunta).",
       "figura": "memoria-lamina"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Memoria: la lámina que te muestran dos minutos",
       "titulo": "Lo escrito es lo que más preguntan",
-      "regla": "Letreros, placas, horas, precios y códigos. Es lo favorito de quien arma la prueba porque no se puede deducir: o lo leíste o no.",
-      "ejemplo": "«Farmacia La 14, abre 8:00» → nombre y hora, las dos se preguntan.",
+      "regla": "En la lámina, prioriza letreros, números y relojes: salen más en las preguntas que el color del cielo.",
+      "ejemplo": "Si hay un letrero «TIENDA» y un número en una puerta, memorízalos antes que el árbol del fondo.",
       "figura": "memoria-lamina"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Memoria: la lámina que te muestran dos minutos",
       "titulo": "Dilo por dentro mientras miras",
-      "regla": "Nombrar lo que ves deja una segunda huella, verbal además de visual. Se recuerda mucho más una frase que una imagen suelta.",
-      "ejemplo": "«3 carros, 2 motos, 4 personas» se recuerda mejor que la foto.",
+      "regla": "Repite en silencio una frase corta de lo que ves («tienda a la izquierda, persona al centro»). La huella verbal se recuerda mejor que la imagen suelta.",
+      "ejemplo": "Mientras miras la lámina: «tienda morada, persona negra, poste gris».",
       "figura": "memoria-lamina"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Memoria: la lámina que te muestran dos minutos",
       "titulo": "Para códigos, asociación absurda",
-      "regla": "Cuando hay que memorizar parejas sin sentido —un código y un destino— invéntate una conexión ridícula. Entre más absurda, más se pega.",
-      "ejemplo": "«K-7 va a Archivo» → un kilo de 7 libras archivado.",
+      "regla": "Si hay un código (letras/números), inventa una imagen ridícula que los una. Lo absurdo se pega mejor.",
+      "ejemplo": "Código B7 → «Beatriz con 7 globos». Al preguntar, recuperas la escena.",
       "figura": "memoria-lamina"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Memoria: la lámina que te muestran dos minutos",
       "titulo": "Lo raro se pregunta",
-      "regla": "Un paraguas en un día soleado, una ventana abierta, algo olvidado en el piso. Lo anómalo casi siempre tiene pregunta, porque el que mira sin método no lo ve.",
-      "ejemplo": "1 detalle fuera de lugar en la lámina = 1 pregunta casi segura.",
+      "regla": "Lo que rompe el patrón de la escena (un objeto fuera de lugar) tiene alta probabilidad de aparecer en la pregunta.",
+      "ejemplo": "Si en una calle normal hay un paraguas abierto con sol, anótalo: suele ser el detalle trampa.",
       "figura": "memoria-lamina"
     },
     {
@@ -890,56 +890,56 @@
       "subjectId": "exa.psico-abstracto",
       "tema": "Contar figuras: cuadrados y triángulos",
       "titulo": "Contar cuadrados de una cuadrícula",
-      "regla": "Suma los cuadrados de 1 hasta el lado y ya está. Contarlos uno por uno es como se pierde la pregunta.",
-      "ejemplo": "Cuadrícula de 4×4 → 1 + 4 + 9 + 16 = 30",
+      "regla": "Misma receta: cuenta 1×1, luego 2×2, 3×3… y suma. No intentes contar «todos» de un vistazo.",
+      "ejemplo": "En 4×4 casillas: 16 (1×1) + 9 (2×2) + 4 (3×3) + 1 (4×4) = 30.",
       "figura": "cuadricula-cuadrados"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Contar figuras: cuadrados y triángulos",
       "titulo": "Contar triángulos de un abanico",
-      "regla": "Cuenta en cuántos pedazos está partida la base y aplica n por (n+1) dividido entre 2. Es la misma cuenta de sumar de 1 hasta n.",
-      "ejemplo": "Base partida en 3 → 3 × 4 / 2 = 6 triángulos",
+      "regla": "Si la base está partida en n segmentos desde un vértice, el total de triángulos es n×(n+1)÷2.",
+      "ejemplo": "Figura: abanico con base en 3 trozos.\n1) n=3 → 3×4÷2 = 6 triángulos (los chicos y los compuestos).\n2) No cuentes solo los tres pequeños: también cuentan los que juntan 2 o 3 segmentos.",
       "figura": "abanico-triangulos"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Ordenación: quién está por encima de quién",
       "titulo": "Dibuja las flechas y después cuenta",
-      "regla": "Haz un mapa con una flecha de cada persona hacia la que está por encima, y una raya sin punta cuando son iguales. Luego cuenta sobre el dibujo.",
-      "ejemplo": "«Pedro mide igual que Bea» → únelos con raya, no con flecha",
+      "regla": "En ordenación de alturas: dibuja nombres y flechas «más alto que». Una raya sin punta = iguales. Luego lee el dibujo; no intentes memorizar el párrafo.",
+      "ejemplo": "Mira el esquema: María por encima de Pedro=Bea, y ellos por encima de Juan.\nCuenta cuántos quedan estrictamente más altos que alguien preguntado.",
       "figura": "orden-alturas"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Relaciones familiares",
       "titulo": "Léelo al revés",
-      "regla": "Empieza por la última persona de la frase y ve subiendo mientras dibujas. Marca con un círculo dónde estás tú.",
-      "ejemplo": "«El abuelo del padre de la hermana del hijo de…» → arranca por el final",
+      "regla": "En parentesco enredado, empieza por la ÚLTIMA persona de la frase y ve subiendo el árbol. Marca dónde estás tú.",
+      "ejemplo": "«El padre de la hermana del hijo de mi padre».\n1) Empieza por «mi padre» → sube.\n2) Sigue la figura del árbol paso a paso hasta el inicio de la frase.",
       "figura": "familia-arbol"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Perímetros y tamaños a ojo",
       "titulo": "La vuelta son tres diámetros",
-      "regla": "El contorno de un círculo es poco más de tres veces su diámetro. Con eso escoges el segmento correcto sin calcular nada.",
-      "ejemplo": "π × D ≈ 3,14 diámetros de largo",
+      "regla": "El contorno de un círculo (perímetro) es un poco más de 3 veces el diámetro (π≈3,14). Con eso eliges el segmento correcto a ojo.",
+      "ejemplo": "Mira el círculo con el diámetro marcado.\nSi el diámetro mide 1, la vuelta completa mide ≈ 3,14.",
       "figura": "circulo-diametro"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Perímetros y tamaños a ojo",
       "titulo": "Si parto los dos lados a la mitad",
-      "regla": "El área no queda en la mitad: queda en la cuarta parte. Lo que se parte dos veces se divide entre cuatro.",
-      "ejemplo": "10 × 6 = 60 → 5 × 3 = 15, que es 60 entre 4",
+      "regla": "Si reduces a la mitad el largo Y el ancho, el área no queda a la mitad: queda en la CUARTA parte (½×½=¼).",
+      "ejemplo": "Figura: rectángulo grande → rectángulo chico.\nOriginal 10×6=60. Mitad y mitad: 5×3=15, que es 60÷4.",
       "figura": "rectangulo-mitad"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Piezas que encajan: pletinas y plantillas",
       "titulo": "Mira un hueco raro, no la pieza entera",
-      "regla": "Escoge el agujero más raro de la plantilla y busca cuál pieza lo tapa. Con ese solo detalle se caen tres opciones de una vez.",
-      "ejemplo": "El hueco de la esquina → solo 1 de las 4 piezas lo cubre",
+      "regla": "En encaje de piezas: no compares siluetas enteras. Elige el agujero más raro de la plantilla y mira cuál pieza sola lo tapa. Con eso eliminas casi todas las opciones.",
+      "ejemplo": "Figura: plantilla con hueco cuadrado y circular.\n1) El hueco cuadrado solo lo tapa la pieza cuadrada.\n2) Las otras piezas se descartan aunque «parezcan» encajar en otro lado.",
       "figura": "plantilla-hueco"
     },
     {
@@ -1037,105 +1037,105 @@
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Balancín: masa por distancia",
-      "regla": "Multiplica cada peso por lo lejos que está del apoyo y compara los dos números. Baja el lado que dé más grande; si dan igual, queda nivelado.",
-      "ejemplo": "30 kg × 8 m = 240 y 60 kg × 4 m = 240 → equilibrio",
+      "regla": "Equilibrio en balancín: masa × distancia (izquierda) = masa × distancia (derecha).",
+      "ejemplo": "Figura: masa 2 a la izquierda y masa 1 a la derecha.\nSi la de 2 está a distancia 1, la de 1 debe estar a distancia 2 para equilibrar (2×1 = 1×2).",
       "figura": "balancin"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Cada polea móvil parte la fuerza",
-      "regla": "Una polea fija solo cambia la dirección y no ahorra nada. Cada polea MÓVIL parte a la mitad la fuerza que hay que hacer. Cuenta solo las móviles.",
-      "ejemplo": "2 poleas móviles → levantas 100 kg haciendo fuerza de 25",
+      "regla": "Cada polea que sube con la carga añade tramos que sostienen: más tramos → menos fuerza de tiro.",
+      "ejemplo": "2 tramos → fuerza ≈ peso/2. 4 tramos → ≈ peso/4.",
       "figura": "polea-fija"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Engranajes pegados giran al revés",
-      "regla": "Dos ruedas dentadas que se tocan nunca giran para el mismo lado. Numéralas: las impares van como la primera y las pares al contrario.",
-      "ejemplo": "1ª a la derecha → 2ª a la izquierda → 3ª a la derecha",
+      "regla": "Igual que dos ruedas en contacto: sentido contrario. Si hay una cadena de engranajes, alterna.",
+      "ejemplo": "A toca B toca C. A ↻ → B ↺ → C ↻.",
       "figura": "engranajes-opuestos"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Rueda más grande, más avanza",
-      "regla": "Por cada vuelta, una rueda recorre su contorno: π por el diámetro. La grande avanza más aunque las dos den las mismas vueltas.",
-      "ejemplo": "1,5 m → 4,7 m por vuelta; 1,18 m → 3,7 m por vuelta",
+      "regla": "En una vuelta completa, una rueda más grande recorre más distancia (perímetro = π×diámetro).",
+      "ejemplo": "Diámetro doble → en una vuelta avanza el doble.",
       "figura": "engranajes-opuestos"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Péndulo de Newton: salen las que entran",
-      "regla": "Sueltas dos bolas, salen dos por el otro lado. Ni una más ni una menos, y a la misma altura.",
-      "ejemplo": "Sueltas 2 → salen 2. Sueltas 4 → salen 4."
+      "regla": "En las bolas de Newton, el mismo número que golpea de un lado sale del otro. La del medio casi no se mueve.",
+      "ejemplo": "Entran 2 bolas por la izquierda → salen 2 por la derecha."
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Qué cae primero",
-      "regla": "Con aire, gana lo pesado y compacto porque a lo liviano lo frena. En el vacío caen igual, sin importar el peso: esa es la pregunta con trampa.",
-      "ejemplo": "Pluma y bola desde 30 m: con aire, la bola. En vacío, las 2 juntas."
+      "regla": "Sin aire, dos cuerpos sueltos caen igual. La diferencia la pone el aire (papel vs piedra), no el «peso» a solas.",
+      "ejemplo": "Misma altura, sin resistencia: llegan juntos. Con aire: la más compacta llega antes."
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Flota el más gordo",
-      "regla": "Con la misma masa, flota el que ocupe más espacio. No es cuestión de peso sino de cuánta agua desaloja.",
-      "ejemplo": "3 bloques de 5 kg → flota el más grande de los 3"
+      "regla": "Flota lo menos denso que el líquido (no «lo más gordo» por tamaño). Densidad = masa/volumen.",
+      "ejemplo": "Un tronco grande flota y una bolita de acero se hunde: gana la densidad, no el tamaño."
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "En serie se apaga todo",
-      "regla": "Si al quitar una bombilla se apagan las demás, estaban en serie. Si las otras siguen prendidas, estaban en paralelo.",
-      "ejemplo": "Se funde 1 y la otra sigue → están en paralelo",
+      "regla": "Circuito en serie: la corriente pasa por todos los elementos. Si abres un interruptor, se apaga todo.",
+      "ejemplo": "Mira la figura: batería → bombillo → interruptor abierto → no hay circuito cerrado → bombillo apagado.",
       "figura": "circuito-serie"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Los colores de la luz no son los de la pintura",
-      "regla": "Con luz, los que se mezclan son rojo, verde y azul. Rojo con verde da amarillo, que con témpera no pasaría nunca.",
-      "ejemplo": "Rojo + verde = amarillo. Los 3 juntos = blanco."
+      "regla": "Luz: primarios rojo/verde/azul (suma). Pintura: cian/magenta/amarillo (resta). No mezcles las dos reglas.",
+      "ejemplo": "Luz roja+verde ≈ amarillo. Pintura azul+amarillo ≈ verde. Son sistemas distintos."
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Lo que se calienta se dilata",
-      "regla": "Casi todo se estira con el calor y se encoge con el frío. Si la pregunta es qué le pasa a una barra caliente, se alarga.",
-      "ejemplo": "Una barra a 20° calentada a 400° → se alarga"
+      "regla": "Al calentar, casi todos los materiales se expanden; al enfriar, se contraen. Por eso hay juntas en puentes.",
+      "ejemplo": "Un riel al sol se alarga un poco; si no hay holgura, se comba."
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "El tiro más lejano va a 45 grados",
-      "regla": "Con la misma fuerza, lo que más lejos llega sale a media altura entre el suelo y la vertical. Ni muy rasante ni muy hacia arriba.",
-      "ejemplo": "45° gana. A 20° cae cerca y a 70° sube pero no avanza."
+      "regla": "Sin aire, el alcance máximo de un proyectil es cerca de 45°. Más vertical o más rasante llega menos lejos.",
+      "ejemplo": "30° y 60° llegan parecido (y menos que 45°)."
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Razonamiento mecánico: poleas, engranajes y palancas",
       "titulo": "Las bolitas se amontonan en el centro",
-      "regla": "Cuando muchas cosas caen por un laberinto de obstáculos, se acumulan en el medio y casi ninguna llega a los extremos. Es la campana.",
-      "ejemplo": "Caen 100 bolas → los 2 compartimentos centrales se llenan"
+      "regla": "En un recipiente que gira, el líquido/bolitas se van al borde (centrífugas); el centro baja.",
+      "ejemplo": "Si la pregunta dice que se acumulan en el centro al girar rápido, desconfía: lo normal es el borde."
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Perímetros y tamaños a ojo",
       "titulo": "La fórmula pide radio y te dan diámetro",
-      "regla": "Antes de reemplazar, mira cuál de los dos te dieron. La mitad del diámetro es el radio, y olvidarlo da justo el doble o el cuádruple.",
-      "ejemplo": "Diámetro 120 → radio 60 → 2 × π × 60 = 377 metros",
+      "regla": "Radio = diámetro ÷ 2. Si la fórmula trae r y el dibujo muestra el diámetro completo, primero parte a la mitad.",
+      "ejemplo": "Diámetro 10 → radio 5. Si usas 10 como radio, el área sale 4 veces más grande.",
       "figura": "circulo-diametro"
     },
     {
       "subjectId": "exa.psico-abstracto",
       "tema": "Perímetros y tamaños a ojo",
       "titulo": "Todo volumen es la base por la altura",
-      "regla": "Caja, cilindro o prisma: saca el área de la tapa de abajo y multiplícala por lo alto. Una sola fórmula para las tres figuras.",
-      "ejemplo": "Base 4 × 6 = 24 y altura 12 → 288 m³"
+      "regla": "Prisma/cilindro: volumen ≈ área de la base × altura. Identifica base y altura antes de multiplicar.",
+      "ejemplo": "Caja base 3×4 y alto 5 → volumen 12×5 = 60."
     }
   ],
   "ejercicios": [

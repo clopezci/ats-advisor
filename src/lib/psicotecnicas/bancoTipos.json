@@ -1134,450 +1134,450 @@
     {
       "id": "calculo-mental",
       "nombre": "Cálculo mental",
-      "descripcion": "Operaciones rápidas con resultado exacto (con decimales si no da entero). Haz × y ÷ primero; en fracciones parte el total y luego multiplica.",
+      "descripcion": "Cálculo rápido con resultado exacto (decimales si hacen falta). Cada explicación usa los números del enunciado, paso a paso.",
       "items": [
         {
           "enunciado": "12 ÷ 3 + 4 × 2 = ?\n\nA) 60   B) 21   C) 12   D) 10",
           "respuesta": "C) 12",
           "pasos": [
-            "Haz primero la división y la multiplicación: 12 ÷ 3 = 4.",
-            "4 × 2 = 8.",
-            "Al final suma: 4 + 8 = 12."
+            "Paso 1: 12 ÷ 3 = 4.",
+            "Paso 2: 4 × 2 = 8.",
+            "Paso 3: suma 4 + 8 = 12. Esa es la respuesta."
           ]
         },
         {
           "enunciado": "18 ÷ 6 + 5 × 3 = ?\n\nA) 32   B) 11   C) 120   D) 18",
           "respuesta": "D) 18",
           "pasos": [
-            "Haz primero la división y la multiplicación: 18 ÷ 6 = 3.",
-            "5 × 3 = 15.",
-            "Al final suma: 3 + 15 = 18."
+            "Paso 1: 18 ÷ 6 = 3.",
+            "Paso 2: 5 × 3 = 15.",
+            "Paso 3: suma 3 + 15 = 18. Esa es la respuesta."
           ]
         },
         {
           "enunciado": "24 ÷ 8 + 7 × 2 = ?\n\nA) 41   B) 17   C) 224   D) 12",
           "respuesta": "B) 17",
           "pasos": [
-            "Haz primero la división y la multiplicación: 24 ÷ 8 = 3.",
-            "7 × 2 = 14.",
-            "Al final suma: 3 + 14 = 17."
+            "Paso 1: 24 ÷ 8 = 3.",
+            "Paso 2: 7 × 2 = 14.",
+            "Paso 3: suma 3 + 14 = 17. Esa es la respuesta."
           ]
         },
         {
           "enunciado": "36 ÷ 6 + 4 × 5 = ?\n\nA) 168   B) 15   C) 26   D) 51",
           "respuesta": "C) 26",
           "pasos": [
-            "Haz primero la división y la multiplicación: 36 ÷ 6 = 6.",
-            "4 × 5 = 20.",
-            "Al final suma: 6 + 20 = 26."
+            "Paso 1: 36 ÷ 6 = 6.",
+            "Paso 2: 4 × 5 = 20.",
+            "Paso 3: suma 6 + 20 = 26. Esa es la respuesta."
           ]
         },
         {
           "enunciado": "45 ÷ 9 + 6 × 3 = ?\n\nA) 14   B) 23   C) 63   D) 324",
           "respuesta": "B) 23",
           "pasos": [
-            "Haz primero la división y la multiplicación: 45 ÷ 9 = 5.",
-            "6 × 3 = 18.",
-            "Al final suma: 5 + 18 = 23."
+            "Paso 1: 45 ÷ 9 = 5.",
+            "Paso 2: 6 × 3 = 18.",
+            "Paso 3: suma 5 + 18 = 23. Esa es la respuesta."
           ]
         },
         {
           "enunciado": "56 ÷ 7 + 8 × 2 = ?\n\nA) 18   B) 504   C) 24   D) 73",
           "respuesta": "C) 24",
           "pasos": [
-            "Haz primero la división y la multiplicación: 56 ÷ 7 = 8.",
-            "8 × 2 = 16.",
-            "Al final suma: 8 + 16 = 24."
+            "Paso 1: 56 ÷ 7 = 8.",
+            "Paso 2: 8 × 2 = 16.",
+            "Paso 3: suma 8 + 16 = 24. Esa es la respuesta."
           ]
         },
         {
           "enunciado": "64 ÷ 8 + 3 × 4 = ?\n\nA) 79   B) 216   C) 15   D) 20",
           "respuesta": "D) 20",
           "pasos": [
-            "Haz primero la división y la multiplicación: 64 ÷ 8 = 8.",
-            "3 × 4 = 12.",
-            "Al final suma: 8 + 12 = 20."
+            "Paso 1: 64 ÷ 8 = 8.",
+            "Paso 2: 3 × 4 = 12.",
+            "Paso 3: suma 8 + 12 = 20. Esa es la respuesta."
           ]
         },
         {
           "enunciado": "72 ÷ 9 + 5 × 2 = ?\n\nA) 405   B) 18   C) 15   D) 88",
           "respuesta": "B) 18",
           "pasos": [
-            "Haz primero la división y la multiplicación: 72 ÷ 9 = 8.",
-            "5 × 2 = 10.",
-            "Al final suma: 8 + 10 = 18."
+            "Paso 1: 72 ÷ 9 = 8.",
+            "Paso 2: 5 × 2 = 10.",
+            "Paso 3: suma 8 + 10 = 18. Esa es la respuesta."
           ]
         },
         {
           "enunciado": "81 ÷ 9 + 4 × 3 = ?\n\nA) 97   B) 16   C) 21   D) 360",
           "respuesta": "C) 21",
           "pasos": [
-            "Haz primero la división y la multiplicación: 81 ÷ 9 = 9.",
-            "4 × 3 = 12.",
-            "Al final suma: 9 + 12 = 21."
+            "Paso 1: 81 ÷ 9 = 9.",
+            "Paso 2: 4 × 3 = 12.",
+            "Paso 3: suma 9 + 12 = 21. Esa es la respuesta."
           ]
         },
         {
           "enunciado": "90 ÷ 10 + 6 × 4 = ?\n\nA) 110   B) 600   C) 19   D) 33",
           "respuesta": "D) 33",
           "pasos": [
-            "Haz primero la división y la multiplicación: 90 ÷ 10 = 9.",
-            "6 × 4 = 24.",
-            "Al final suma: 9 + 24 = 33."
+            "Paso 1: 90 ÷ 10 = 9.",
+            "Paso 2: 6 × 4 = 24.",
+            "Paso 3: suma 9 + 24 = 33. Esa es la respuesta."
           ]
         },
         {
           "enunciado": "48 ÷ 6 + 7 × 2 = ?\n\nA) 378   B) 22   C) 63   D) 17",
           "respuesta": "B) 22",
           "pasos": [
-            "Haz primero la división y la multiplicación: 48 ÷ 6 = 8.",
-            "7 × 2 = 14.",
-            "Al final suma: 8 + 14 = 22."
+            "Paso 1: 48 ÷ 6 = 8.",
+            "Paso 2: 7 × 2 = 14.",
+            "Paso 3: suma 8 + 14 = 22. Esa es la respuesta."
           ]
         },
         {
           "enunciado": "35 ÷ 5 + 4 × 3 = ?\n\nA) 160   B) 47   C) 14   D) 19",
           "respuesta": "D) 19",
           "pasos": [
-            "Haz primero la división y la multiplicación: 35 ÷ 5 = 7.",
-            "4 × 3 = 12.",
-            "Al final suma: 7 + 12 = 19."
+            "Paso 1: 35 ÷ 5 = 7.",
+            "Paso 2: 4 × 3 = 12.",
+            "Paso 3: suma 7 + 12 = 19. Esa es la respuesta."
           ]
         },
         {
           "enunciado": "10% de 80 = ?\n\nA) 80   B) 6   C) 8   D) 10",
           "respuesta": "C) 8",
           "pasos": [
-            "La pregunta pide el 10% de 80.",
-            "Eso es (10 ÷ 100) × 80 = 8.",
-            "Camino fácil: 10% se obtiene dividiendo entre 10 → 80 ÷ 10 = 8."
+            "Quieres el 10 por ciento de 80.",
+            "Cuenta: 10 ÷ 100 = 0,1; luego 0,1 × 80 = 8.",
+            "Más fácil: para el 10% divides entre 10 → 80 ÷ 10 = 8."
           ]
         },
         {
           "enunciado": "20% de 45 = ?\n\nA) 11   B) 90   C) 9   D) 7",
           "respuesta": "C) 9",
           "pasos": [
-            "La pregunta pide el 20% de 45.",
-            "Eso es (20 ÷ 100) × 45 = 9.",
-            "Camino fácil: 1% de 45 = 0,45; luego 0,45 × 20 = 9."
+            "Quieres el 20 por ciento de 45.",
+            "Cuenta: 20 ÷ 100 = 0,2; luego 0,2 × 45 = 9.",
+            "Más fácil: 10% = 4,5; el doble (20%) = 9."
           ]
         },
         {
           "enunciado": "25% de 84 = ?\n\nA) 23   B) 210   C) 19   D) 21",
           "respuesta": "D) 21",
           "pasos": [
-            "La pregunta pide el 25% de 84.",
-            "Eso es (25 ÷ 100) × 84 = 21.",
-            "Camino fácil: 25% es la cuarta parte → 84 ÷ 4 = 21."
+            "Quieres el 25 por ciento de 84.",
+            "Cuenta: 25 ÷ 100 = 0,25; luego 0,25 × 84 = 21.",
+            "Más fácil: 25% es repartir 84 en 4 partes → 84 ÷ 4 = 21."
           ]
         },
         {
           "enunciado": "15% de 80 = ?\n\nA) 12   B) 14   C) 10   D) 120",
           "respuesta": "A) 12",
           "pasos": [
-            "La pregunta pide el 15% de 80.",
-            "Eso es (15 ÷ 100) × 80 = 12.",
-            "Camino fácil: 10% de 80 = 8; la mitad de eso (5%) = 4; súmalos = 12."
+            "Quieres el 15 por ciento de 80.",
+            "Cuenta: 15 ÷ 100 = 0,15; luego 0,15 × 80 = 12.",
+            "Más fácil: 10% de 80 es 8, 5% es 4. Suma: 8 + 4 = 12."
           ]
         },
         {
           "enunciado": "15% de 60 = ?\n\nA) 9   B) 90   C) 11   D) 7",
           "respuesta": "A) 9",
           "pasos": [
-            "La pregunta pide el 15% de 60.",
-            "Eso es (15 ÷ 100) × 60 = 9.",
-            "Camino fácil: 10% de 60 = 6; la mitad de eso (5%) = 3; súmalos = 9."
+            "Quieres el 15 por ciento de 60.",
+            "Cuenta: 15 ÷ 100 = 0,15; luego 0,15 × 60 = 9.",
+            "Más fácil: 10% de 60 es 6, 5% es 3. Suma: 6 + 3 = 9."
           ]
         },
         {
           "enunciado": "15% de 40 = ?\n\nA) 60   B) 6   C) 8   D) 4",
           "respuesta": "B) 6",
           "pasos": [
-            "La pregunta pide el 15% de 40.",
-            "Eso es (15 ÷ 100) × 40 = 6.",
-            "Camino fácil: 10% de 40 = 4; la mitad de eso (5%) = 2; súmalos = 6."
+            "Quieres el 15 por ciento de 40.",
+            "Cuenta: 15 ÷ 100 = 0,15; luego 0,15 × 40 = 6.",
+            "Más fácil: 10% de 40 es 4, 5% es 2. Suma: 4 + 2 = 6."
           ]
         },
         {
           "enunciado": "15% de 50 = ?\n\nA) 75   B) 7,5   C) 5,5   D) 9,5",
           "respuesta": "B) 7,5",
           "pasos": [
-            "La pregunta pide el 15% de 50.",
-            "Eso es (15 ÷ 100) × 50 = 7,5.",
-            "Camino fácil: 10% de 50 = 5; la mitad de eso (5%) = 2,5; súmalos = 7,5.",
-            "Da decimal: la respuesta exacta es 7,5 (no la redondees)."
+            "Quieres el 15 por ciento de 50.",
+            "Cuenta: 15 ÷ 100 = 0,15; luego 0,15 × 50 = 7,5.",
+            "Más fácil: 10% de 50 es 5, 5% es 2,5. Suma: 5 + 2,5 = 7,5.",
+            "Importante: la respuesta exacta lleva decimal → 7,5."
           ]
         },
         {
           "enunciado": "12% de 50 = ?\n\nA) 60   B) 8   C) 4   D) 6",
           "respuesta": "D) 6",
           "pasos": [
-            "La pregunta pide el 12% de 50.",
-            "Eso es (12 ÷ 100) × 50 = 6.",
-            "Camino fácil: 1% de 50 = 0,5; luego 0,5 × 12 = 6."
+            "Quieres el 12 por ciento de 50.",
+            "Cuenta: 12 ÷ 100 = 0,12; luego 0,12 × 50 = 6.",
+            "Más fácil: 1% de 50 = 0,5. Multiplica por 12: 0,5 × 12 = 6."
           ]
         },
         {
           "enunciado": "5% de 90 = ?\n\nA) 4,5   B) 2,5   C) 6,5   D) 45",
           "respuesta": "A) 4,5",
           "pasos": [
-            "La pregunta pide el 5% de 90.",
-            "Eso es (5 ÷ 100) × 90 = 4,5.",
-            "Camino fácil: 1% de 90 = 0,9; luego 0,9 × 5 = 4,5.",
-            "Da decimal: la respuesta exacta es 4,5 (no la redondees)."
+            "Quieres el 5 por ciento de 90.",
+            "Cuenta: 5 ÷ 100 = 0,05; luego 0,05 × 90 = 4,5.",
+            "Más fácil: 1% de 90 = 0,9. Multiplica por 5: 0,9 × 5 = 4,5.",
+            "Importante: la respuesta exacta lleva decimal → 4,5."
           ]
         },
         {
           "enunciado": "30% de 70 = ?\n\nA) 23   B) 21   C) 210   D) 19",
           "respuesta": "B) 21",
           "pasos": [
-            "La pregunta pide el 30% de 70.",
-            "Eso es (30 ÷ 100) × 70 = 21.",
-            "Camino fácil: 1% de 70 = 0,7; luego 0,7 × 30 = 21."
+            "Quieres el 30 por ciento de 70.",
+            "Cuenta: 30 ÷ 100 = 0,3; luego 0,3 × 70 = 21.",
+            "Más fácil: 1% de 70 = 0,7. Multiplica por 30: 0,7 × 30 = 21."
           ]
         },
         {
           "enunciado": "40% de 55 = ?\n\nA) 220   B) 24   C) 20   D) 22",
           "respuesta": "D) 22",
           "pasos": [
-            "La pregunta pide el 40% de 55.",
-            "Eso es (40 ÷ 100) × 55 = 22.",
-            "Camino fácil: 1% de 55 = 0,55; luego 0,55 × 40 = 22."
+            "Quieres el 40 por ciento de 55.",
+            "Cuenta: 40 ÷ 100 = 0,4; luego 0,4 × 55 = 22.",
+            "Más fácil: 1% de 55 = 0,55. Multiplica por 40: 0,55 × 40 = 22."
           ]
         },
         {
           "enunciado": "75% de 48 = ?\n\nA) 34   B) 36   C) 360   D) 38",
           "respuesta": "B) 36",
           "pasos": [
-            "La pregunta pide el 75% de 48.",
-            "Eso es (75 ÷ 100) × 48 = 36.",
-            "Camino fácil: 1% de 48 = 0,48; luego 0,48 × 75 = 36."
+            "Quieres el 75 por ciento de 48.",
+            "Cuenta: 75 ÷ 100 = 0,75; luego 0,75 × 48 = 36.",
+            "Más fácil: 1% de 48 = 0,48. Multiplica por 75: 0,48 × 75 = 36."
           ]
         },
         {
           "enunciado": "8% de 25 = ?\n\nA) 7   B) 2   C) 4   D) 20",
           "respuesta": "B) 2",
           "pasos": [
-            "La pregunta pide el 8% de 25.",
-            "Eso es (8 ÷ 100) × 25 = 2.",
-            "Camino fácil: 1% de 25 = 0,25; luego 0,25 × 8 = 2."
+            "Quieres el 8 por ciento de 25.",
+            "Cuenta: 8 ÷ 100 = 0,08; luego 0,08 × 25 = 2.",
+            "Más fácil: 1% de 25 = 0,25. Multiplica por 8: 0,25 × 8 = 2."
           ]
         },
         {
           "enunciado": "35% de 20 = ?\n\nA) 70   B) 9   C) 5   D) 7",
           "respuesta": "D) 7",
           "pasos": [
-            "La pregunta pide el 35% de 20.",
-            "Eso es (35 ÷ 100) × 20 = 7.",
-            "Camino fácil: 1% de 20 = 0,2; luego 0,2 × 35 = 7."
+            "Quieres el 35 por ciento de 20.",
+            "Cuenta: 35 ÷ 100 = 0,35; luego 0,35 × 20 = 7.",
+            "Más fácil: 1% de 20 = 0,2. Multiplica por 35: 0,2 × 35 = 7."
           ]
         },
         {
           "enunciado": "15% de 70 = ?\n\nA) 10,5   B) 12,5   C) 105   D) 8,5",
           "respuesta": "A) 10,5",
           "pasos": [
-            "La pregunta pide el 15% de 70.",
-            "Eso es (15 ÷ 100) × 70 = 10,5.",
-            "Camino fácil: 10% de 70 = 7; la mitad de eso (5%) = 3,5; súmalos = 10,5.",
-            "Da decimal: la respuesta exacta es 10,5 (no la redondees)."
+            "Quieres el 15 por ciento de 70.",
+            "Cuenta: 15 ÷ 100 = 0,15; luego 0,15 × 70 = 10,5.",
+            "Más fácil: 10% de 70 es 7, 5% es 3,5. Suma: 7 + 3,5 = 10,5.",
+            "Importante: la respuesta exacta lleva decimal → 10,5."
           ]
         },
         {
           "enunciado": "25% de 50 = ?\n\nA) 12,5   B) 14,5   C) 10,5   D) 125",
           "respuesta": "A) 12,5",
           "pasos": [
-            "La pregunta pide el 25% de 50.",
-            "Eso es (25 ÷ 100) × 50 = 12,5.",
-            "Camino fácil: 25% es la cuarta parte → 50 ÷ 4 = 12,5.",
-            "Da decimal: la respuesta exacta es 12,5 (no la redondees)."
+            "Quieres el 25 por ciento de 50.",
+            "Cuenta: 25 ÷ 100 = 0,25; luego 0,25 × 50 = 12,5.",
+            "Más fácil: 25% es repartir 50 en 4 partes → 50 ÷ 4 = 12,5.",
+            "Importante: la respuesta exacta lleva decimal → 12,5."
           ]
         },
         {
           "enunciado": "12,5% de 80 = ?\n\nA) 8   B) 12   C) 100   D) 10",
           "respuesta": "D) 10",
           "pasos": [
-            "La pregunta pide el 12,5% de 80.",
-            "Eso es (12,5 ÷ 100) × 80 = 10.",
-            "Camino fácil: 1% de 80 = 0,8; luego 0,8 × 12,5 = 10."
+            "Quieres el 12,5 por ciento de 80.",
+            "Cuenta: 12,5 ÷ 100 = 0,12; luego 0,12 × 80 = 10.",
+            "Más fácil: 1% de 80 = 0,8. Multiplica por 12,5: 0,8 × 12,5 = 10."
           ]
         },
         {
           "enunciado": "17,5% de 40 = ?\n\nA) 9   B) 7   C) 5   D) 70",
           "respuesta": "B) 7",
           "pasos": [
-            "La pregunta pide el 17,5% de 40.",
-            "Eso es (17,5 ÷ 100) × 40 = 7.",
-            "Camino fácil: 1% de 40 = 0,4; luego 0,4 × 17,5 = 7."
+            "Quieres el 17,5 por ciento de 40.",
+            "Cuenta: 17,5 ÷ 100 = 0,17; luego 0,17 × 40 = 7.",
+            "Más fácil: 1% de 40 = 0,4. Multiplica por 17,5: 0,4 × 17,5 = 7."
           ]
         },
         {
           "enunciado": "2,5% de 200 = ?\n\nA) 50   B) 7   C) 3   D) 5",
           "respuesta": "D) 5",
           "pasos": [
-            "La pregunta pide el 2,5% de 200.",
-            "Eso es (2,5 ÷ 100) × 200 = 5.",
-            "Camino fácil: 1% de 200 = 2; luego 2 × 2,5 = 5."
+            "Quieres el 2,5 por ciento de 200.",
+            "Cuenta: 2,5 ÷ 100 = 0,03; luego 0,03 × 200 = 5.",
+            "Más fácil: 1% de 200 = 2. Multiplica por 2,5: 2 × 2,5 = 5."
           ]
         },
         {
           "enunciado": "7,5% de 80 = ?\n\nA) 6   B) 4   C) 8   D) 60",
           "respuesta": "A) 6",
           "pasos": [
-            "La pregunta pide el 7,5% de 80.",
-            "Eso es (7,5 ÷ 100) × 80 = 6.",
-            "Camino fácil: 1% de 80 = 0,8; luego 0,8 × 7,5 = 6."
+            "Quieres el 7,5 por ciento de 80.",
+            "Cuenta: 7,5 ÷ 100 = 0,07; luego 0,07 × 80 = 6.",
+            "Más fácil: 1% de 80 = 0,8. Multiplica por 7,5: 0,8 × 7,5 = 6."
           ]
         },
         {
           "enunciado": "9² − 6² = ?\n\nA) 54   B) 117   C) 45   D) 9",
           "respuesta": "C) 45",
           "pasos": [
-            "Calcula cada cuadrado: 9² = 81 y 6² = 36.",
-            "Resta: 81 − 36 = 45.",
-            "Atajo: (9 − 6) × (9 + 6) = 3 × 15 = 45."
+            "Paso 1: 9 al cuadrado es 9×9 = 81.",
+            "Paso 2: 6 al cuadrado es 6×6 = 36.",
+            "Paso 3: resta 81 − 36 = 45. Respuesta: 45."
           ]
         },
         {
           "enunciado": "8² − 3² = ?\n\nA) 73   B) 24   C) 55   D) 25",
           "respuesta": "C) 55",
           "pasos": [
-            "Calcula cada cuadrado: 8² = 64 y 3² = 9.",
-            "Resta: 64 − 9 = 55.",
-            "Atajo: (8 − 3) × (8 + 3) = 5 × 11 = 55."
+            "Paso 1: 8 al cuadrado es 8×8 = 64.",
+            "Paso 2: 3 al cuadrado es 3×3 = 9.",
+            "Paso 3: resta 64 − 9 = 55. Respuesta: 55."
           ]
         },
         {
           "enunciado": "11² − 4² = ?\n\nA) 137   B) 49   C) 105   D) 44",
           "respuesta": "C) 105",
           "pasos": [
-            "Calcula cada cuadrado: 11² = 121 y 4² = 16.",
-            "Resta: 121 − 16 = 105.",
-            "Atajo: (11 − 4) × (11 + 4) = 7 × 15 = 105."
+            "Paso 1: 11 al cuadrado es 11×11 = 121.",
+            "Paso 2: 4 al cuadrado es 4×4 = 16.",
+            "Paso 3: resta 121 − 16 = 105. Respuesta: 105."
           ]
         },
         {
           "enunciado": "12² − 5² = ?\n\nA) 169   B) 60   C) 119   D) 49",
           "respuesta": "C) 119",
           "pasos": [
-            "Calcula cada cuadrado: 12² = 144 y 5² = 25.",
-            "Resta: 144 − 25 = 119.",
-            "Atajo: (12 − 5) × (12 + 5) = 7 × 17 = 119."
+            "Paso 1: 12 al cuadrado es 12×12 = 144.",
+            "Paso 2: 5 al cuadrado es 5×5 = 25.",
+            "Paso 3: resta 144 − 25 = 119. Respuesta: 119."
           ]
         },
         {
           "enunciado": "7² − 2² = ?\n\nA) 45   B) 25   C) 53   D) 14",
           "respuesta": "A) 45",
           "pasos": [
-            "Calcula cada cuadrado: 7² = 49 y 2² = 4.",
-            "Resta: 49 − 4 = 45.",
-            "Atajo: (7 − 2) × (7 + 2) = 5 × 9 = 45."
+            "Paso 1: 7 al cuadrado es 7×7 = 49.",
+            "Paso 2: 2 al cuadrado es 2×2 = 4.",
+            "Paso 3: resta 49 − 4 = 45. Respuesta: 45."
           ]
         },
         {
           "enunciado": "13² − 5² = ?\n\nA) 64   B) 194   C) 65   D) 144",
           "respuesta": "D) 144",
           "pasos": [
-            "Calcula cada cuadrado: 13² = 169 y 5² = 25.",
-            "Resta: 169 − 25 = 144.",
-            "Atajo: (13 − 5) × (13 + 5) = 8 × 18 = 144."
+            "Paso 1: 13 al cuadrado es 13×13 = 169.",
+            "Paso 2: 5 al cuadrado es 5×5 = 25.",
+            "Paso 3: resta 169 − 25 = 144. Respuesta: 144."
           ]
         },
         {
           "enunciado": "10² − 4² = ?\n\nA) 84   B) 116   C) 36   D) 40",
           "respuesta": "A) 84",
           "pasos": [
-            "Calcula cada cuadrado: 10² = 100 y 4² = 16.",
-            "Resta: 100 − 16 = 84.",
-            "Atajo: (10 − 4) × (10 + 4) = 6 × 14 = 84."
+            "Paso 1: 10 al cuadrado es 10×10 = 100.",
+            "Paso 2: 4 al cuadrado es 4×4 = 16.",
+            "Paso 3: resta 100 − 16 = 84. Respuesta: 84."
           ]
         },
         {
           "enunciado": "15² − 9² = ?\n\nA) 144   B) 36   C) 135   D) 306",
           "respuesta": "A) 144",
           "pasos": [
-            "Calcula cada cuadrado: 15² = 225 y 9² = 81.",
-            "Resta: 225 − 81 = 144.",
-            "Atajo: (15 − 9) × (15 + 9) = 6 × 24 = 144."
+            "Paso 1: 15 al cuadrado es 15×15 = 225.",
+            "Paso 2: 9 al cuadrado es 9×9 = 81.",
+            "Paso 3: resta 225 − 81 = 144. Respuesta: 144."
           ]
         },
         {
           "enunciado": "3/4 de 64 = ?\n\nA) 48   B) 85   C) 16   D) 32",
           "respuesta": "A) 48",
           "pasos": [
-            "Parte el total en 4 trozos iguales: 64 ÷ 4 = 16. Eso es 1/4.",
-            "Como piden 3/4, toma 3 de esos trozos: 16 × 3 = 48.",
-            "Respuesta: 48."
+            "Imagina 64 repartido en 4 partes iguales. Cada parte es 64 ÷ 4 = 16.",
+            "Te piden 3 de esas partes: 16 × 3 = 48.",
+            "Entonces 3/4 de 64 = 48."
           ]
         },
         {
           "enunciado": "2/5 de 45 = ?\n\nA) 22   B) 112   C) 18   D) 9",
           "respuesta": "C) 18",
           "pasos": [
-            "Parte el total en 5 trozos iguales: 45 ÷ 5 = 9. Eso es 1/5.",
-            "Como piden 2/5, toma 2 de esos trozos: 9 × 2 = 18.",
-            "Respuesta: 18."
+            "Imagina 45 repartido en 5 partes iguales. Cada parte es 45 ÷ 5 = 9.",
+            "Te piden 2 de esas partes: 9 × 2 = 18.",
+            "Entonces 2/5 de 45 = 18."
           ]
         },
         {
           "enunciado": "3/5 de 80 = ?\n\nA) 40   B) 133   C) 48   D) 16",
           "respuesta": "C) 48",
           "pasos": [
-            "Parte el total en 5 trozos iguales: 80 ÷ 5 = 16. Eso es 1/5.",
-            "Como piden 3/5, toma 3 de esos trozos: 16 × 3 = 48.",
-            "Respuesta: 48."
+            "Imagina 80 repartido en 5 partes iguales. Cada parte es 80 ÷ 5 = 16.",
+            "Te piden 3 de esas partes: 16 × 3 = 48.",
+            "Entonces 3/5 de 80 = 48."
           ]
         },
         {
           "enunciado": "1/4 de 96 = ?\n\nA) 48   B) 85   C) 24   D) 384",
           "respuesta": "C) 24",
           "pasos": [
-            "Parte el total en 4 trozos iguales: 96 ÷ 4 = 24. Eso es 1/4.",
-            "Como piden 1/4, toma 1 de esos trozos: 24 × 1 = 24.",
-            "Respuesta: 24."
+            "Imagina 96 repartido en 4 partes iguales. Cada parte es 96 ÷ 4 = 24.",
+            "Te piden 1 de esas partes: 24 × 1 = 24.",
+            "Entonces 1/4 de 96 = 24."
           ]
         },
         {
           "enunciado": "5/8 de 48 = ?\n\nA) 30   B) 76   C) 24   D) 6",
           "respuesta": "A) 30",
           "pasos": [
-            "Parte el total en 8 trozos iguales: 48 ÷ 8 = 6. Eso es 1/8.",
-            "Como piden 5/8, toma 5 de esos trozos: 6 × 5 = 30.",
-            "Respuesta: 30."
+            "Imagina 48 repartido en 8 partes iguales. Cada parte es 48 ÷ 8 = 6.",
+            "Te piden 5 de esas partes: 6 × 5 = 30.",
+            "Entonces 5/8 de 48 = 30."
           ]
         },
         {
           "enunciado": "2/3 de 90 = ?\n\nA) 135   B) 30   C) 45   D) 60",
           "respuesta": "D) 60",
           "pasos": [
-            "Parte el total en 3 trozos iguales: 90 ÷ 3 = 30. Eso es 1/3.",
-            "Como piden 2/3, toma 2 de esos trozos: 30 × 2 = 60.",
-            "Respuesta: 60."
+            "Imagina 90 repartido en 3 partes iguales. Cada parte es 90 ÷ 3 = 30.",
+            "Te piden 2 de esas partes: 30 × 2 = 60.",
+            "Entonces 2/3 de 90 = 60."
           ]
         },
         {
           "enunciado": "5/6 de 72 = ?\n\nA) 60   B) 12   C) 36   D) 86",
           "respuesta": "A) 60",
           "pasos": [
-            "Parte el total en 6 trozos iguales: 72 ÷ 6 = 12. Eso es 1/6.",
-            "Como piden 5/6, toma 5 de esos trozos: 12 × 5 = 60.",
-            "Respuesta: 60."
+            "Imagina 72 repartido en 6 partes iguales. Cada parte es 72 ÷ 6 = 12.",
+            "Te piden 5 de esas partes: 12 × 5 = 60.",
+            "Entonces 5/6 de 72 = 60."
           ]
         },
         {
           "enunciado": "7/8 de 56 = ?\n\nA) 28   B) 49   C) 64   D) 7",
           "respuesta": "B) 49",
           "pasos": [
-            "Parte el total en 8 trozos iguales: 56 ÷ 8 = 7. Eso es 1/8.",
-            "Como piden 7/8, toma 7 de esos trozos: 7 × 7 = 49.",
-            "Respuesta: 49."
+            "Imagina 56 repartido en 8 partes iguales. Cada parte es 56 ÷ 8 = 7.",
+            "Te piden 7 de esas partes: 7 × 7 = 49.",
+            "Entonces 7/8 de 56 = 49."
           ]
         },
         {
           "enunciado": "7 × 8 = ?\n\nA) 56   B) 15   C) 49   D) 63",
           "respuesta": "A) 56",
           "pasos": [
-            "Multiplica: 7 × 8 = 56.",
-            "Si te ayuda: 7 × 7 = 49, y sumas otro 7 → 56.",
+            "Multiplica 7 por 8.",
+            "7 × 8 = 56.",
             "Respuesta: 56."
           ]
         },
@@ -1585,26 +1585,26 @@
           "enunciado": "9 × 6 = ?\n\nA) 54   B) 45   C) 15   D) 63",
           "respuesta": "A) 54",
           "pasos": [
-            "Multiplica: 9 × 6 = 54.",
-            "Si te ayuda: 9 × 5 = 45, y sumas otro 9 → 54.",
+            "Multiplica 9 por 6.",
+            "9 × 6 = 54.",
             "Respuesta: 54."
           ]
         },
         {
-          "enunciado": "12 × 11 = ?\n\nA) 144   B) 120   C) 23   D) 132",
-          "respuesta": "D) 132",
+          "enunciado": "11 × 10 = ?\n\nA) 99   B) 21   C) 121   D) 110",
+          "respuesta": "D) 110",
           "pasos": [
-            "Multiplica: 12 × 11 = 132.",
-            "Si te ayuda: 12 × 10 = 120, y sumas otro 12 → 132.",
-            "Respuesta: 132."
+            "Multiplicar por 10 es agregar un cero a la derecha de 11.",
+            "11 × 10 = 110.",
+            "Respuesta: 110."
           ]
         },
         {
           "enunciado": "15 × 14 = ?\n\nA) 29   B) 195   C) 225   D) 210",
           "respuesta": "D) 210",
           "pasos": [
-            "Multiplica: 15 × 14 = 210.",
-            "Si te ayuda: 15 × 13 = 195, y sumas otro 15 → 210.",
+            "Multiplica 15 por 14.",
+            "15 × 14 = 210.",
             "Respuesta: 210."
           ]
         },
@@ -1612,8 +1612,8 @@
           "enunciado": "8 × 13 = ?\n\nA) 96   B) 104   C) 112   D) 21",
           "respuesta": "B) 104",
           "pasos": [
-            "Multiplica: 8 × 13 = 104.",
-            "Si te ayuda: 8 × 12 = 96, y sumas otro 8 → 104.",
+            "Multiplica 8 por 13.",
+            "8 × 13 = 104.",
             "Respuesta: 104."
           ]
         },
@@ -1621,8 +1621,8 @@
           "enunciado": "16 × 5 = ?\n\nA) 64   B) 96   C) 21   D) 80",
           "respuesta": "D) 80",
           "pasos": [
-            "Multiplica: 16 × 5 = 80.",
-            "Si te ayuda: 16 × 4 = 64, y sumas otro 16 → 80.",
+            "×5: primero 16 × 10 = 160, luego divide entre 2 → 160 ÷ 2 = 80.",
+            "O directo: 16 × 5 = 80.",
             "Respuesta: 80."
           ]
         },
@@ -1630,8 +1630,8 @@
           "enunciado": "9 × 12 = ?\n\nA) 21   B) 99   C) 117   D) 108",
           "respuesta": "D) 108",
           "pasos": [
-            "Multiplica: 9 × 12 = 108.",
-            "Si te ayuda: 9 × 11 = 99, y sumas otro 9 → 108.",
+            "Multiplica 9 por 12.",
+            "9 × 12 = 108.",
             "Respuesta: 108."
           ]
         },
@@ -1639,17 +1639,17 @@
           "enunciado": "11 × 11 = ?\n\nA) 110   B) 132   C) 22   D) 121",
           "respuesta": "D) 121",
           "pasos": [
-            "Multiplica: 11 × 11 = 121.",
-            "Si te ayuda: 11 × 10 = 110, y sumas otro 11 → 121.",
-            "Respuesta: 121."
+            "11 × 11 = 11 × 10 + 11 × 1.",
+            "11 × 10 = 110; 11 × 1 = 11.",
+            "Suma: 110 + 11 = 121. Respuesta: 121."
           ]
         },
         {
           "enunciado": "Si 1/5 de un número es 18, el número es:\n\nA) 23   B) 72   C) 108   D) 90",
           "respuesta": "D) 90",
           "pasos": [
-            "Te dan una sola parte de 5: esa parte vale 18.",
-            "El número completo son las 5 partes: 18 × 5 = 90.",
+            "Una parte (1/5) vale 18.",
+            "El número completo tiene 5 partes iguales: 18 × 5 = 90.",
             "Respuesta: 90."
           ]
         },
@@ -1657,8 +1657,8 @@
           "enunciado": "Si 1/4 de un número es 12, el número es:\n\nA) 48   B) 60   C) 16   D) 36",
           "respuesta": "A) 48",
           "pasos": [
-            "Te dan una sola parte de 4: esa parte vale 12.",
-            "El número completo son las 4 partes: 12 × 4 = 48.",
+            "Una parte (1/4) vale 12.",
+            "El número completo tiene 4 partes iguales: 12 × 4 = 48.",
             "Respuesta: 48."
           ]
         },
@@ -1666,8 +1666,8 @@
           "enunciado": "Si 1/3 de un número es 15, el número es:\n\nA) 45   B) 30   C) 60   D) 18",
           "respuesta": "A) 45",
           "pasos": [
-            "Te dan una sola parte de 3: esa parte vale 15.",
-            "El número completo son las 3 partes: 15 × 3 = 45.",
+            "Una parte (1/3) vale 15.",
+            "El número completo tiene 3 partes iguales: 15 × 3 = 45.",
             "Respuesta: 45."
           ]
         },
@@ -1675,8 +1675,8 @@
           "enunciado": "Si 1/6 de un número es 9, el número es:\n\nA) 45   B) 15   C) 54   D) 63",
           "respuesta": "C) 54",
           "pasos": [
-            "Te dan una sola parte de 6: esa parte vale 9.",
-            "El número completo son las 6 partes: 9 × 6 = 54.",
+            "Una parte (1/6) vale 9.",
+            "El número completo tiene 6 partes iguales: 9 × 6 = 54.",
             "Respuesta: 54."
           ]
         },
@@ -1684,8 +1684,8 @@
           "enunciado": "Si 1/7 de un número es 14, el número es:\n\nA) 98   B) 21   C) 84   D) 112",
           "respuesta": "A) 98",
           "pasos": [
-            "Te dan una sola parte de 7: esa parte vale 14.",
-            "El número completo son las 7 partes: 14 × 7 = 98.",
+            "Una parte (1/7) vale 14.",
+            "El número completo tiene 7 partes iguales: 14 × 7 = 98.",
             "Respuesta: 98."
           ]
         },
@@ -1693,8 +1693,8 @@
           "enunciado": "Si 1/5 de un número es 11, el número es:\n\nA) 16   B) 55   C) 44   D) 66",
           "respuesta": "B) 55",
           "pasos": [
-            "Te dan una sola parte de 5: esa parte vale 11.",
-            "El número completo son las 5 partes: 11 × 5 = 55.",
+            "Una parte (1/5) vale 11.",
+            "El número completo tiene 5 partes iguales: 11 × 5 = 55.",
             "Respuesta: 55."
           ]
         },
@@ -1702,8 +1702,8 @@
           "enunciado": "Si 1/8 de un número es 16, el número es:\n\nA) 24   B) 144   C) 128   D) 112",
           "respuesta": "C) 128",
           "pasos": [
-            "Te dan una sola parte de 8: esa parte vale 16.",
-            "El número completo son las 8 partes: 16 × 8 = 128.",
+            "Una parte (1/8) vale 16.",
+            "El número completo tiene 8 partes iguales: 16 × 8 = 128.",
             "Respuesta: 128."
           ]
         },
@@ -1711,8 +1711,8 @@
           "enunciado": "Si 1/4 de un número es 13, el número es:\n\nA) 65   B) 52   C) 39   D) 17",
           "respuesta": "B) 52",
           "pasos": [
-            "Te dan una sola parte de 4: esa parte vale 13.",
-            "El número completo son las 4 partes: 13 × 4 = 52.",
+            "Una parte (1/4) vale 13.",
+            "El número completo tiene 4 partes iguales: 13 × 4 = 52.",
             "Respuesta: 52."
           ]
         },
@@ -1720,7 +1720,7 @@
           "enunciado": "125 × 0,4 = ?\n\nA) 25   B) 31,25   C) 62   D) 50",
           "respuesta": "D) 50",
           "pasos": [
-            "Estás multiplicando 125 por 0,4.",
+            "Multiplica 125 por 0,4.",
             "125 × 0,4 = 50.",
             "Respuesta: 50."
           ]
@@ -1729,7 +1729,7 @@
           "enunciado": "80 × 0,4 = ?\n\nA) 40   B) 32   C) 16   D) 20",
           "respuesta": "B) 32",
           "pasos": [
-            "Estás multiplicando 80 por 0,4.",
+            "Multiplica 80 por 0,4.",
             "80 × 0,4 = 32.",
             "Respuesta: 32."
           ]
@@ -1738,7 +1738,7 @@
           "enunciado": "150 × 0,5 = ?\n\nA) 37,5   B) 75   C) 98   D) 30",
           "respuesta": "B) 75",
           "pasos": [
-            "Estás multiplicando 150 por 0,5.",
+            "Multiplica 150 por 0,5.",
             "150 × 0,5 = 75.",
             "Respuesta: 75."
           ]
@@ -1747,7 +1747,7 @@
           "enunciado": "64 × 0,25 = ?\n\nA) 16   B) 12,8   C) 90   D) 32",
           "respuesta": "A) 16",
           "pasos": [
-            "Estás multiplicando 64 por 0,25.",
+            "Multiplica 64 por 0,25.",
             "64 × 0,25 = 16.",
             "Respuesta: 16."
           ]
@@ -1756,7 +1756,7 @@
           "enunciado": "200 × 0,35 = ?\n\nA) 40   B) 70   C) 100   D) 50",
           "respuesta": "B) 70",
           "pasos": [
-            "Estás multiplicando 200 por 0,35.",
+            "Multiplica 200 por 0,35.",
             "200 × 0,35 = 70.",
             "Respuesta: 70."
           ]
@@ -1765,7 +1765,7 @@
           "enunciado": "90 × 0,2 = ?\n\nA) 22,5   B) 18   C) 69   D) 45",
           "respuesta": "B) 18",
           "pasos": [
-            "Estás multiplicando 90 por 0,2.",
+            "Multiplica 90 por 0,2.",
             "90 × 0,2 = 18.",
             "Respuesta: 18."
           ]
@@ -1774,7 +1774,7 @@
           "enunciado": "48 × 0,75 = ?\n\nA) 9,6   B) 24   C) 36   D) 12",
           "respuesta": "C) 36",
           "pasos": [
-            "Estás multiplicando 48 por 0,75.",
+            "Multiplica 48 por 0,75.",
             "48 × 0,75 = 36.",
             "Respuesta: 36."
           ]
@@ -1783,7 +1783,7 @@
           "enunciado": "36 × 1,5 = ?\n\nA) 7,2   B) 18   C) 54   D) 9",
           "respuesta": "C) 54",
           "pasos": [
-            "Estás multiplicando 36 por 1,5.",
+            "Multiplica 36 por 1,5.",
             "36 × 1,5 = 54.",
             "Respuesta: 54."
           ]
@@ -1792,8 +1792,8 @@
           "enunciado": "(9 + 4) × 2 = ?\n\nA) 17   B) 26   C) 15   D) 72",
           "respuesta": "B) 26",
           "pasos": [
-            "Primero resuelve lo del paréntesis: 9 + 4 = 13.",
-            "Después multiplica ese resultado por 2: 13 × 2 = 26.",
+            "Primero el paréntesis: 9 + 4 = 13.",
+            "Luego multiplica: 13 × 2 = 26.",
             "Respuesta: 26."
           ]
         },
@@ -1801,8 +1801,8 @@
           "enunciado": "(8 + 7) × 3 = ?\n\nA) 18   B) 168   C) 29   D) 45",
           "respuesta": "D) 45",
           "pasos": [
-            "Primero resuelve lo del paréntesis: 8 + 7 = 15.",
-            "Después multiplica ese resultado por 3: 15 × 3 = 45.",
+            "Primero el paréntesis: 8 + 7 = 15.",
+            "Luego multiplica: 15 × 3 = 45.",
             "Respuesta: 45."
           ]
         },
@@ -1810,8 +1810,8 @@
           "enunciado": "(6 + 5) × 4 = ?\n\nA) 15   B) 26   C) 44   D) 120",
           "respuesta": "C) 44",
           "pasos": [
-            "Primero resuelve lo del paréntesis: 6 + 5 = 11.",
-            "Después multiplica ese resultado por 4: 11 × 4 = 44.",
+            "Primero el paréntesis: 6 + 5 = 11.",
+            "Luego multiplica: 11 × 4 = 44.",
             "Respuesta: 44."
           ]
         },
@@ -1819,8 +1819,8 @@
           "enunciado": "(11 + 3) × 5 = ?\n\nA) 70   B) 26   C) 165   D) 19",
           "respuesta": "A) 70",
           "pasos": [
-            "Primero resuelve lo del paréntesis: 11 + 3 = 14.",
-            "Después multiplica ese resultado por 5: 14 × 5 = 70.",
+            "Primero el paréntesis: 11 + 3 = 14.",
+            "Luego multiplica: 14 × 5 = 70.",
             "Respuesta: 70."
           ]
         },
@@ -1828,8 +1828,8 @@
           "enunciado": "(12 + 8) × 2 = ?\n\nA) 28   B) 22   C) 40   D) 192",
           "respuesta": "C) 40",
           "pasos": [
-            "Primero resuelve lo del paréntesis: 12 + 8 = 20.",
-            "Después multiplica ese resultado por 2: 20 × 2 = 40.",
+            "Primero el paréntesis: 12 + 8 = 20.",
+            "Luego multiplica: 20 × 2 = 40.",
             "Respuesta: 40."
           ]
         },
@@ -1837,8 +1837,8 @@
           "enunciado": "(7 + 9) × 3 = ?\n\nA) 189   B) 34   C) 19   D) 48",
           "respuesta": "D) 48",
           "pasos": [
-            "Primero resuelve lo del paréntesis: 7 + 9 = 16.",
-            "Después multiplica ese resultado por 3: 16 × 3 = 48.",
+            "Primero el paréntesis: 7 + 9 = 16.",
+            "Luego multiplica: 16 × 3 = 48.",
             "Respuesta: 48."
           ]
         },
@@ -1846,8 +1846,8 @@
           "enunciado": "(15 + 5) × 4 = ?\n\nA) 300   B) 80   C) 24   D) 35",
           "respuesta": "B) 80",
           "pasos": [
-            "Primero resuelve lo del paréntesis: 15 + 5 = 20.",
-            "Después multiplica ese resultado por 4: 20 × 4 = 80.",
+            "Primero el paréntesis: 15 + 5 = 20.",
+            "Luego multiplica: 20 × 4 = 80.",
             "Respuesta: 80."
           ]
         },
@@ -1855,8 +1855,8 @@
           "enunciado": "(10 + 6) × 3 = ?\n\nA) 28   B) 48   C) 180   D) 19",
           "respuesta": "B) 48",
           "pasos": [
-            "Primero resuelve lo del paréntesis: 10 + 6 = 16.",
-            "Después multiplica ese resultado por 3: 16 × 3 = 48.",
+            "Primero el paréntesis: 10 + 6 = 16.",
+            "Luego multiplica: 16 × 3 = 48.",
             "Respuesta: 48."
           ]
         },
@@ -1864,8 +1864,8 @@
           "enunciado": "13 × 4 = ?\n\nA) 52   B) 17   C) 39   D) 65",
           "respuesta": "A) 52",
           "pasos": [
-            "Multiplica: 13 × 4 = 52.",
-            "Si te ayuda: 13 × 3 = 39, y sumas otro 13 → 52.",
+            "Multiplica 13 por 4.",
+            "13 × 4 = 52.",
             "Respuesta: 52."
           ]
         },
@@ -1873,8 +1873,8 @@
           "enunciado": "14 × 6 = ?\n\nA) 20   B) 98   C) 70   D) 84",
           "respuesta": "D) 84",
           "pasos": [
-            "Multiplica: 14 × 6 = 84.",
-            "Si te ayuda: 14 × 5 = 70, y sumas otro 14 → 84.",
+            "Multiplica 14 por 6.",
+            "14 × 6 = 84.",
             "Respuesta: 84."
           ]
         },
@@ -1882,8 +1882,8 @@
           "enunciado": "16 × 3 = ?\n\nA) 19   B) 48   C) 32   D) 64",
           "respuesta": "B) 48",
           "pasos": [
-            "Multiplica: 16 × 3 = 48.",
-            "Si te ayuda: 16 × 2 = 32, y sumas otro 16 → 48.",
+            "Multiplica 16 por 3.",
+            "16 × 3 = 48.",
             "Respuesta: 48."
           ]
         },
@@ -1891,8 +1891,8 @@
           "enunciado": "18 × 5 = ?\n\nA) 72   B) 23   C) 90   D) 108",
           "respuesta": "C) 90",
           "pasos": [
-            "Multiplica: 18 × 5 = 90.",
-            "Si te ayuda: 18 × 4 = 72, y sumas otro 18 → 90.",
+            "×5: primero 18 × 10 = 180, luego divide entre 2 → 180 ÷ 2 = 90.",
+            "O directo: 18 × 5 = 90.",
             "Respuesta: 90."
           ]
         },
@@ -1900,8 +1900,8 @@
           "enunciado": "20 × 4 = ?\n\nA) 100   B) 24   C) 80   D) 60",
           "respuesta": "C) 80",
           "pasos": [
-            "Multiplica: 20 × 4 = 80.",
-            "Si te ayuda: 20 × 3 = 60, y sumas otro 20 → 80.",
+            "Multiplica 20 por 4.",
+            "20 × 4 = 80.",
             "Respuesta: 80."
           ]
         },
@@ -1909,8 +1909,8 @@
           "enunciado": "21 × 3 = ?\n\nA) 42   B) 63   C) 24   D) 84",
           "respuesta": "B) 63",
           "pasos": [
-            "Multiplica: 21 × 3 = 63.",
-            "Si te ayuda: 21 × 2 = 42, y sumas otro 21 → 63.",
+            "Multiplica 21 por 3.",
+            "21 × 3 = 63.",
             "Respuesta: 63."
           ]
         },
@@ -1918,8 +1918,8 @@
           "enunciado": "17 × 5 = ?\n\nA) 102   B) 68   C) 85   D) 22",
           "respuesta": "C) 85",
           "pasos": [
-            "Multiplica: 17 × 5 = 85.",
-            "Si te ayuda: 17 × 4 = 68, y sumas otro 17 → 85.",
+            "×5: primero 17 × 10 = 170, luego divide entre 2 → 170 ÷ 2 = 85.",
+            "O directo: 17 × 5 = 85.",
             "Respuesta: 85."
           ]
         },
@@ -1927,8 +1927,8 @@
           "enunciado": "19 × 4 = ?\n\nA) 57   B) 23   C) 95   D) 76",
           "respuesta": "D) 76",
           "pasos": [
-            "Multiplica: 19 × 4 = 76.",
-            "Si te ayuda: 19 × 3 = 57, y sumas otro 19 → 76.",
+            "Multiplica 19 por 4.",
+            "19 × 4 = 76.",
             "Respuesta: 76."
           ]
         },
@@ -1936,8 +1936,8 @@
           "enunciado": "(5 + 3) × 6 = ?\n\nA) 48   B) 14   C) 21   D) 23",
           "respuesta": "A) 48",
           "pasos": [
-            "Primero resuelve lo del paréntesis: 5 + 3 = 8.",
-            "Después multiplica ese resultado por 6: 8 × 6 = 48.",
+            "Primero el paréntesis: 5 + 3 = 8.",
+            "Luego multiplica: 8 × 6 = 48.",
             "Respuesta: 48."
           ]
         },
@@ -1945,8 +1945,8 @@
           "enunciado": "(8 + 2) × 9 = ?\n\nA) 26   B) 19   C) 90   D) 25",
           "respuesta": "C) 90",
           "pasos": [
-            "Primero resuelve lo del paréntesis: 8 + 2 = 10.",
-            "Después multiplica ese resultado por 9: 10 × 9 = 90.",
+            "Primero el paréntesis: 8 + 2 = 10.",
+            "Luego multiplica: 10 × 9 = 90.",
             "Respuesta: 90."
           ]
         },
@@ -1954,8 +1954,8 @@
           "enunciado": "(7 + 4) × 5 = ?\n\nA) 27   B) 33   C) 16   D) 55",
           "respuesta": "D) 55",
           "pasos": [
-            "Primero resuelve lo del paréntesis: 7 + 4 = 11.",
-            "Después multiplica ese resultado por 5: 11 × 5 = 55.",
+            "Primero el paréntesis: 7 + 4 = 11.",
+            "Luego multiplica: 11 × 5 = 55.",
             "Respuesta: 55."
           ]
         },
@@ -1963,8 +1963,8 @@
           "enunciado": "(9 + 1) × 8 = ?\n\nA) 18   B) 80   C) 68   D) 17",
           "respuesta": "B) 80",
           "pasos": [
-            "Primero resuelve lo del paréntesis: 9 + 1 = 10.",
-            "Después multiplica ese resultado por 8: 10 × 8 = 80.",
+            "Primero el paréntesis: 9 + 1 = 10.",
+            "Luego multiplica: 10 × 8 = 80.",
             "Respuesta: 80."
           ]
         },
@@ -1972,8 +1972,8 @@
           "enunciado": "(6 + 6) × 3 = ?\n\nA) 39   B) 15   C) 36   D) 24",
           "respuesta": "C) 36",
           "pasos": [
-            "Primero resuelve lo del paréntesis: 6 + 6 = 12.",
-            "Después multiplica ese resultado por 3: 12 × 3 = 36.",
+            "Primero el paréntesis: 6 + 6 = 12.",
+            "Luego multiplica: 12 × 3 = 36.",
             "Respuesta: 36."
           ]
         },
@@ -1981,8 +1981,8 @@
           "enunciado": "(4 + 8) × 4 = ?\n\nA) 36   B) 48   C) 28   D) 16",
           "respuesta": "B) 48",
           "pasos": [
-            "Primero resuelve lo del paréntesis: 4 + 8 = 12.",
-            "Después multiplica ese resultado por 4: 12 × 4 = 48.",
+            "Primero el paréntesis: 4 + 8 = 12.",
+            "Luego multiplica: 12 × 4 = 48.",
             "Respuesta: 48."
           ]
         },
@@ -1990,73 +1990,73 @@
           "enunciado": "5% de 120 = ?\n\nA) 6   B) 5   C) 9   D) 4",
           "respuesta": "A) 6",
           "pasos": [
-            "La pregunta pide el 5% de 120.",
-            "Eso es (5 ÷ 100) × 120 = 6.",
-            "Camino fácil: 1% de 120 = 1,2; luego 1,2 × 5 = 6."
+            "Quieres el 5 por ciento de 120.",
+            "Cuenta: 5 ÷ 100 = 0,05; luego 0,05 × 120 = 6.",
+            "Más fácil: 1% de 120 = 1,2. Multiplica por 5: 1,2 × 5 = 6."
           ]
         },
         {
           "enunciado": "20% de 85 = ?\n\nA) 17   B) 20   C) 15   D) 17",
           "respuesta": "A) 17",
           "pasos": [
-            "La pregunta pide el 20% de 85.",
-            "Eso es (20 ÷ 100) × 85 = 17.",
-            "Camino fácil: 1% de 85 = 0,85; luego 0,85 × 20 = 17."
+            "Quieres el 20 por ciento de 85.",
+            "Cuenta: 20 ÷ 100 = 0,2; luego 0,2 × 85 = 17.",
+            "Más fácil: 10% = 8,5; el doble (20%) = 17."
           ]
         },
         {
           "enunciado": "50% de 36 = ?\n\nA) 18   B) 21   C) 16   D) 50",
           "respuesta": "A) 18",
           "pasos": [
-            "La pregunta pide el 50% de 36.",
-            "Eso es (50 ÷ 100) × 36 = 18.",
-            "Camino fácil: 50% es la mitad → 36 ÷ 2 = 18."
+            "Quieres el 50 por ciento de 36.",
+            "Cuenta: 50 ÷ 100 = 0,5; luego 0,5 × 36 = 18.",
+            "Más fácil: 50% es la mitad → 36 ÷ 2 = 18."
           ]
         },
         {
           "enunciado": "60% de 45 = ?\n\nA) 60   B) 27   C) 25   D) 30",
           "respuesta": "B) 27",
           "pasos": [
-            "La pregunta pide el 60% de 45.",
-            "Eso es (60 ÷ 100) × 45 = 27.",
-            "Camino fácil: 1% de 45 = 0,45; luego 0,45 × 60 = 27."
+            "Quieres el 60 por ciento de 45.",
+            "Cuenta: 60 ÷ 100 = 0,6; luego 0,6 × 45 = 27.",
+            "Más fácil: 1% de 45 = 0,45. Multiplica por 60: 0,45 × 60 = 27."
           ]
         },
         {
           "enunciado": "12% de 75 = ?\n\nA) 7   B) 68   C) 12   D) 9",
           "respuesta": "D) 9",
           "pasos": [
-            "La pregunta pide el 12% de 75.",
-            "Eso es (12 ÷ 100) × 75 = 9.",
-            "Camino fácil: 1% de 75 = 0,75; luego 0,75 × 12 = 9."
+            "Quieres el 12 por ciento de 75.",
+            "Cuenta: 12 ÷ 100 = 0,12; luego 0,12 × 75 = 9.",
+            "Más fácil: 1% de 75 = 0,75. Multiplica por 12: 0,75 × 12 = 9."
           ]
         },
         {
           "enunciado": "18% de 50 = ?\n\nA) 12   B) 7   C) 18   D) 9",
           "respuesta": "D) 9",
           "pasos": [
-            "La pregunta pide el 18% de 50.",
-            "Eso es (18 ÷ 100) × 50 = 9.",
-            "Camino fácil: 1% de 50 = 0,5; luego 0,5 × 18 = 9."
+            "Quieres el 18 por ciento de 50.",
+            "Cuenta: 18 ÷ 100 = 0,18; luego 0,18 × 50 = 9.",
+            "Más fácil: 1% de 50 = 0,5. Multiplica por 18: 0,5 × 18 = 9."
           ]
         },
         {
           "enunciado": "22% de 50 = ?\n\nA) 9   B) 11   C) 22   D) 14",
           "respuesta": "B) 11",
           "pasos": [
-            "La pregunta pide el 22% de 50.",
-            "Eso es (22 ÷ 100) × 50 = 11.",
-            "Camino fácil: 1% de 50 = 0,5; luego 0,5 × 22 = 11."
+            "Quieres el 22 por ciento de 50.",
+            "Cuenta: 22 ÷ 100 = 0,22; luego 0,22 × 50 = 11.",
+            "Más fácil: 1% de 50 = 0,5. Multiplica por 22: 0,5 × 22 = 11."
           ]
         },
         {
           "enunciado": "9% de 80 = ?\n\nA) 9   B) 5,2   C) 10,2   D) 7,2",
           "respuesta": "D) 7,2",
           "pasos": [
-            "La pregunta pide el 9% de 80.",
-            "Eso es (9 ÷ 100) × 80 = 7,2.",
-            "Camino fácil: 1% de 80 = 0,8; luego 0,8 × 9 = 7,2.",
-            "Da decimal: la respuesta exacta es 7,2 (no la redondees)."
+            "Quieres el 9 por ciento de 80.",
+            "Cuenta: 9 ÷ 100 = 0,09; luego 0,09 × 80 = 7,2.",
+            "Más fácil: 1% de 80 = 0,8. Multiplica por 9: 0,8 × 9 = 7,2.",
+            "Importante: la respuesta exacta lleva decimal → 7,2."
           ]
         }
       ]

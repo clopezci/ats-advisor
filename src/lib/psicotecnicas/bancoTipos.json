@@ -2626,9 +2626,12 @@
           "enunciado": "Hoy Ana tiene 20 y su madre 44. ¿En cuántos años la madre tendrá el doble de la edad de Ana?\n\nA) 4   B) 12   C) 24   D) 8",
           "respuesta": "A) 4",
           "pasos": [
-            "En x años: madre = 44+x y hija = 20+x; madre = 2 × hija.",
-            "44 + x = 2 × (20 + x).",
-            "44 + x = 40 + 2x → 44 − 40 = x → x = 4.",
+            "Atajo para memorizar: la diferencia de edades NUNCA cambia.",
+            "Hoy: 44 − 20 = 24 años de diferencia.",
+            "Cuando el mayor tenga el DOBLE del menor, esa diferencia será exactamente la edad del menor (porque 2A − A = A).",
+            "Entonces el menor tendrá 24 años. Hoy tiene 20 → faltan 24 − 20 = 4 años.",
+            "Fórmula flash: años = edad_mayor − 2 × edad_menor = 44 − 2×20 = 4.",
+            "Comprueba: en 4 años → 20+4=24 y 44+4=48 (= 2×24).",
             "Respuesta: 4."
           ]
         },
@@ -2636,9 +2639,12 @@
           "enunciado": "Hoy Luis tiene 15 y su padre 40. ¿En cuántos años el padre tendrá el doble de la edad de Luis?\n\nA) 10   B) 5   C) 25   D) 15",
           "respuesta": "A) 10",
           "pasos": [
-            "En x años: madre = 40+x y hija = 15+x; madre = 2 × hija.",
-            "40 + x = 2 × (15 + x).",
-            "40 + x = 30 + 2x → 40 − 30 = x → x = 10.",
+            "Atajo para memorizar: la diferencia de edades NUNCA cambia.",
+            "Hoy: 40 − 15 = 25 años de diferencia.",
+            "Cuando el mayor tenga el DOBLE del menor, esa diferencia será exactamente la edad del menor (porque 2A − A = A).",
+            "Entonces el menor tendrá 25 años. Hoy tiene 15 → faltan 25 − 15 = 10 años.",
+            "Fórmula flash: años = edad_mayor − 2 × edad_menor = 40 − 2×15 = 10.",
+            "Comprueba: en 10 años → 15+10=25 y 40+10=50 (= 2×25).",
             "Respuesta: 10."
           ]
         },

@@ -512,13 +512,17 @@ function explainAgeDouble(enunciado: string): string[] | null {
   if (!m) return null;
   const young = Number(m[1]);
   const old = Number(m[2]);
-  // old + x = 2 (young + x) => old + x = 2young + 2x => old - 2young = x
+  const diff = old - young;
   const x = old - 2 * young;
   if (x <= 0) return null;
+  const youngThen = young + x;
   return [
-    `En x años: madre = ${old}+x y hija = ${young}+x; madre = 2 × hija.`,
-    `${old} + x = 2 × (${young} + x).`,
-    `${old} + x = ${2 * young} + 2x → ${old} − ${2 * young} = x → x = ${x}.`,
+    `Atajo para memorizar: la diferencia de edades NUNCA cambia.`,
+    `Hoy: ${old} − ${young} = ${diff} años de diferencia.`,
+    `Cuando el mayor tenga el DOBLE del menor, esa diferencia será exactamente la edad del menor (porque 2A − A = A).`,
+    `Entonces el menor tendrá ${diff} años. Hoy tiene ${young} → faltan ${diff} − ${young} = ${x} años.`,
+    `Fórmula flash: años = edad_mayor − 2 × edad_menor = ${old} − 2×${young} = ${x}.`,
+    `Comprueba: en ${x} años → ${young}+${x}=${youngThen} y ${old}+${x}=${old + x} (= 2×${youngThen}).`,
     `Respuesta: ${x}.`,
   ];
 }

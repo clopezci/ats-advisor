@@ -1,13 +1,10 @@
 /**
- * Regenera pasos de cálculo mental a×b / a÷b con técnicas (no «multiplica y ya»).
+ * Regenera pasos de cálculo mental (× ÷ y %) con técnicas.
  * Uso: npx tsx scripts/patch-calculo-mental-explain.ts
  */
 import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
-import {
-  explainSimpleBinary,
-  isWeakMulExplain,
-} from "../src/lib/psicotecnicas/explainMentalMul";
+import { explainCalculoMental } from "../src/lib/psicotecnicas/explainMentalMul";
 
 const path = join(process.cwd(), "src/lib/psicotecnicas/bancoTipos.json");
 const bank = JSON.parse(readFileSync(path, "utf8")) as {
@@ -26,24 +23,27 @@ if (!tipo) {
 let patched = 0;
 let skipped = 0;
 for (const item of tipo.items) {
-  const next = explainSimpleBinary(item.enunciado);
+  const next = explainCalculoMental(item.enunciado);
   if (!next) {
     skipped += 1;
     continue;
   }
-  // Siempre regenerar ops simples; mejora también las que ya tenían un atajo flojo
-  if (isWeakMulExplain(item.pasos) || true) {
-    const before = item.pasos.join(" | ");
-    item.pasos = next;
-    if (before !== next.join(" | ")) patched += 1;
-  }
+  const before = item.pasos.join(" | ");
+  item.pasos = next;
+  if (before !== next.join(" | ")) patched += 1;
 }
 
 writeFileSync(path, JSON.stringify(bank, null, 2) + "\n", "utf8");
-console.log(`patched ${patched} items; non-binary skipped ${skipped}; total ${tipo.items.length}`);
+console.log(`patched ${patched}; skipped ${skipped}; total ${tipo.items.length}`);
 
-// Spot-check
-for (const sample of ["15 × 14 = ?", "125 × 0,4 = ?", "64 × 0,25 = ?", "36 × 1,5 = ?", "9 × 6 = ?"]) {
+for (const sample of [
+  "5% de 120 = ?",
+  "15% de 80 = ?",
+  "12,5% de 80 = ?",
+  "75% de 48 = ?",
+  "9% de 80 = ?",
+  "125 × 0,4 = ?",
+]) {
   console.log("\n" + sample);
-  console.log((explainSimpleBinary(sample) || []).map((p, i) => `${i + 1}. ${p}`).join("\n"));
+  console.log((explainCalculoMental(sample) || []).map((p, i) => `${i + 1}. ${p}`).join("\n"));
 }

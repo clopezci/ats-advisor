@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import {
+  explainCalculoMental,
   explainSimpleBinary,
+  parsePercentOf,
   parseSimpleBinaryOp,
 } from "../src/lib/psicotecnicas/explainMentalMul";
 
@@ -22,5 +24,16 @@ assert.ok(oneFive.some((p) => /\b54\b/.test(p)));
 
 assert.equal(parseSimpleBinaryOp("80 × 0,4 = ?\n\nA) 1")?.b, 0.4);
 assert.equal(explainSimpleBinary("12 ÷ 3 + 4 × 2 = ?"), null);
+
+const five = explainCalculoMental("5% de 120 = ?")!;
+assert.ok(five.some((p) => /10%/.test(p)), five.join(" | "));
+assert.ok(five.some((p) => /÷ 2|mitad/i.test(p)), five.join(" | "));
+assert.ok(!five.some((p) => /0,05/.test(p)), "no usar 0,05: " + five.join(" | "));
+assert.ok(five.some((p) => /\b6\b/.test(p)));
+
+assert.equal(parsePercentOf("12,5% de 80 = ?")?.pct, 12.5);
+const p125 = explainCalculoMental("12,5% de 80 = ?")!;
+assert.ok(p125.some((p) => /÷ 8|25%/.test(p)));
+assert.ok(p125.some((p) => /\b10\b/.test(p)));
 
 console.log("explainMentalMul ok");

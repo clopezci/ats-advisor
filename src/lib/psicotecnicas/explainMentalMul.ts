@@ -505,3 +505,275 @@ export function isWeakMulExplain(pasos: string[] | undefined): boolean {
   const p0 = (pasos?.[0] || "").trim();
   return /^Multiplica\s+.+\s+por\s+/i.test(p0) || /^Divide\s+/i.test(p0);
 }
+
+/** Parsea «5% de 120 = ?» / «12,5% de 80». */
+export function parsePercentOf(enunciado: string): { pct: number; base: number } | null {
+  const line = String(enunciado || "").split(/\n/)[0] || "";
+  const m = line.match(/^\s*(-?\d+(?:[.,]\d+)?)\s*%\s*de\s*(-?\d+(?:[.,]\d+)?)/i);
+  if (!m) return null;
+  const pct = parseEsNumber(m[1]);
+  const base = parseEsNumber(m[2]);
+  if (pct == null || base == null) return null;
+  return { pct, base };
+}
+
+function pctOf(base: number, pct: number) {
+  return (base * pct) / 100;
+}
+
+function tenPct(base: number) {
+  return base / 10;
+}
+
+function onePct(base: number) {
+  return base / 100;
+}
+
+function techniquePercent(pct: number, base: number): string[] {
+  const result = pctOf(base, pct);
+  const ten = tenPct(base);
+  const five = ten / 2;
+  const one = onePct(base);
+  const fin = `Respuesta: ${formatEsNumber(result)}.`;
+
+  // 50%
+  if (nearlyEq(pct, 50)) {
+    return [
+      `El 50% es la mitad de ${formatEsNumber(base)}.`,
+      `${formatEsNumber(base)} ÷ 2 = ${formatEsNumber(result)}.`,
+      fin,
+    ];
+  }
+
+  // 10%
+  if (nearlyEq(pct, 10)) {
+    return [
+      `El 10% se saca dividiendo entre 10 (corre la coma un lugar).`,
+      `${formatEsNumber(base)} ÷ 10 = ${formatEsNumber(ten)}.`,
+      fin,
+    ];
+  }
+
+  // 5% = mitad del 10%
+  if (nearlyEq(pct, 5)) {
+    return [
+      `Primero el 10% de ${formatEsNumber(base)}: ${formatEsNumber(base)} ÷ 10 = ${formatEsNumber(ten)}.`,
+      `El 5% es la mitad de ese 10%: ${formatEsNumber(ten)} ÷ 2 = ${formatEsNumber(five)}.`,
+      fin,
+    ];
+  }
+
+  // 20% = doble del 10%
+  if (nearlyEq(pct, 20)) {
+    return [
+      `Primero el 10%: ${formatEsNumber(base)} ÷ 10 = ${formatEsNumber(ten)}.`,
+      `El 20% es el doble: ${formatEsNumber(ten)} × 2 = ${formatEsNumber(ten * 2)}.`,
+      fin,
+    ];
+  }
+
+  // 25% = ÷4
+  if (nearlyEq(pct, 25)) {
+    return [
+      `El 25% es repartir en 4 partes iguales (÷4).`,
+      `${formatEsNumber(base)} ÷ 4 = ${formatEsNumber(result)}.`,
+      fin,
+    ];
+  }
+
+  // 75% = 3/4
+  if (nearlyEq(pct, 75)) {
+    const q = base / 4;
+    return [
+      `El 75% son tres cuartos: primero ${formatEsNumber(base)} ÷ 4 = ${formatEsNumber(q)}.`,
+      `Luego ×3: ${formatEsNumber(q)} × 3 = ${formatEsNumber(q * 3)}.`,
+      `(O: 50% = ${formatEsNumber(base / 2)} + 25% = ${formatEsNumber(base / 4)} → ${formatEsNumber(result)}.)`,
+      fin,
+    ];
+  }
+
+  // 15% = 10% + 5%
+  if (nearlyEq(pct, 15)) {
+    return [
+      `10% de ${formatEsNumber(base)} = ${formatEsNumber(ten)}.`,
+      `5% = mitad del 10% = ${formatEsNumber(five)}.`,
+      `Suma: ${formatEsNumber(ten)} + ${formatEsNumber(five)} = ${formatEsNumber(ten + five)}.`,
+      fin,
+    ];
+  }
+
+  // 30% = 10% × 3
+  if (nearlyEq(pct, 30)) {
+    return [
+      `10% = ${formatEsNumber(ten)}.`,
+      `30% = tres veces ese 10%: ${formatEsNumber(ten)} × 3 = ${formatEsNumber(ten * 3)}.`,
+      fin,
+    ];
+  }
+
+  // 40% = 10% × 4
+  if (nearlyEq(pct, 40)) {
+    return [
+      `10% = ${formatEsNumber(ten)}.`,
+      `40% = cuatro veces: ${formatEsNumber(ten)} × 4 = ${formatEsNumber(ten * 4)}.`,
+      fin,
+    ];
+  }
+
+  // 60% = 50% + 10%
+  if (nearlyEq(pct, 60)) {
+    return [
+      `50% (la mitad) = ${formatEsNumber(base / 2)}.`,
+      `10% = ${formatEsNumber(ten)}.`,
+      `Suma: ${formatEsNumber(base / 2)} + ${formatEsNumber(ten)} = ${formatEsNumber(base / 2 + ten)}.`,
+      fin,
+    ];
+  }
+
+  // 12,5% = mitad del 25% = ÷8
+  if (nearlyEq(pct, 12.5)) {
+    return [
+      `12,5% es la mitad del 25% (o dividir entre 8).`,
+      `${formatEsNumber(base)} ÷ 8 = ${formatEsNumber(result)}.`,
+      `(Comprueba: 25% = ${formatEsNumber(base / 4)}; mitad → ${formatEsNumber(result)}.)`,
+      fin,
+    ];
+  }
+
+  // 2,5% = mitad del 5% = 10% ÷ 4
+  if (nearlyEq(pct, 2.5)) {
+    return [
+      `10% = ${formatEsNumber(ten)}.`,
+      `2,5% es la cuarta parte del 10%: ${formatEsNumber(ten)} ÷ 4 = ${formatEsNumber(ten / 4)}.`,
+      fin,
+    ];
+  }
+
+  // 7,5% = 5% + 2,5%
+  if (nearlyEq(pct, 7.5)) {
+    const twoFive = ten / 4;
+    return [
+      `10% = ${formatEsNumber(ten)} → 5% = ${formatEsNumber(five)}.`,
+      `2,5% = mitad del 5% = ${formatEsNumber(twoFive)}.`,
+      `Suma: ${formatEsNumber(five)} + ${formatEsNumber(twoFive)} = ${formatEsNumber(five + twoFive)}.`,
+      fin,
+    ];
+  }
+
+  // 17,5% = 10% + 5% + 2,5%
+  if (nearlyEq(pct, 17.5)) {
+    const twoFive = ten / 4;
+    return [
+      `10% = ${formatEsNumber(ten)}; 5% = ${formatEsNumber(five)}; 2,5% = ${formatEsNumber(twoFive)}.`,
+      `Suma: ${formatEsNumber(ten)} + ${formatEsNumber(five)} + ${formatEsNumber(twoFive)} = ${formatEsNumber(ten + five + twoFive)}.`,
+      fin,
+    ];
+  }
+
+  // 35% = 25% + 10%
+  if (nearlyEq(pct, 35)) {
+    const q = base / 4;
+    return [
+      `25% = ${formatEsNumber(base)} ÷ 4 = ${formatEsNumber(q)}.`,
+      `10% = ${formatEsNumber(ten)}.`,
+      `Suma: ${formatEsNumber(q)} + ${formatEsNumber(ten)} = ${formatEsNumber(q + ten)}.`,
+      fin,
+    ];
+  }
+
+  // 9% = 10% − 1%
+  if (nearlyEq(pct, 9)) {
+    return [
+      `10% = ${formatEsNumber(ten)}.`,
+      `1% = ${formatEsNumber(one)} (corre la coma dos lugares).`,
+      `9% = 10% − 1%: ${formatEsNumber(ten)} − ${formatEsNumber(one)} = ${formatEsNumber(ten - one)}.`,
+      fin,
+    ];
+  }
+
+  // 8% = 10% − 2%
+  if (nearlyEq(pct, 8)) {
+    const two = one * 2;
+    return [
+      `10% = ${formatEsNumber(ten)}.`,
+      `2% = dos veces el 1% = ${formatEsNumber(two)}.`,
+      `8% = 10% − 2%: ${formatEsNumber(ten)} − ${formatEsNumber(two)} = ${formatEsNumber(ten - two)}.`,
+      fin,
+    ];
+  }
+
+  // 12% = 10% + 2%
+  if (nearlyEq(pct, 12)) {
+    const two = one * 2;
+    return [
+      `10% = ${formatEsNumber(ten)}.`,
+      `2% = ${formatEsNumber(two)}.`,
+      `Suma: ${formatEsNumber(ten)} + ${formatEsNumber(two)} = ${formatEsNumber(ten + two)}.`,
+      fin,
+    ];
+  }
+
+  // 18% = 20% − 2%
+  if (nearlyEq(pct, 18)) {
+    const twenty = ten * 2;
+    const two = one * 2;
+    return [
+      `20% = doble del 10% = ${formatEsNumber(twenty)}.`,
+      `2% = ${formatEsNumber(two)}.`,
+      `18% = 20% − 2%: ${formatEsNumber(twenty)} − ${formatEsNumber(two)} = ${formatEsNumber(twenty - two)}.`,
+      fin,
+    ];
+  }
+
+  // 22% = 20% + 2%
+  if (nearlyEq(pct, 22)) {
+    const twenty = ten * 2;
+    const two = one * 2;
+    return [
+      `20% = ${formatEsNumber(twenty)}.`,
+      `2% = ${formatEsNumber(two)}.`,
+      `Suma: ${formatEsNumber(twenty)} + ${formatEsNumber(two)} = ${formatEsNumber(twenty + two)}.`,
+      fin,
+    ];
+  }
+
+  // Genérico: armar desde 10% y 1% (sin pasar por 0,xx)
+  if (Number.isInteger(pct) && pct > 0 && pct < 100) {
+    const tens = Math.floor(pct / 10);
+    const ones = pct % 10;
+    const pasos: string[] = [`10% de ${formatEsNumber(base)} = ${formatEsNumber(ten)}.`];
+    if (tens > 0) {
+      pasos.push(
+        `${tens}0% = ${formatEsNumber(ten)} × ${tens} = ${formatEsNumber(ten * tens)}.`
+      );
+    }
+    if (ones > 0) {
+      pasos.push(
+        `1% = ${formatEsNumber(one)} → ${ones}% = ${formatEsNumber(one * ones)}.`
+      );
+      if (tens > 0) {
+        pasos.push(
+          `Suma: ${formatEsNumber(ten * tens)} + ${formatEsNumber(one * ones)} = ${formatEsNumber(result)}.`
+        );
+      }
+    }
+    pasos.push(fin);
+    return pasos;
+  }
+
+  // Decimal % genérico: 10% y fracciones
+  return [
+    `10% de ${formatEsNumber(base)} = ${formatEsNumber(ten)}.`,
+    `Necesitas el ${formatEsNumber(pct)}%: piensa cuántas décimas/partes de ese 10% son.`,
+    `Cuenta: (${formatEsNumber(pct)} ÷ 10) × ${formatEsNumber(ten)} = ${formatEsNumber(result)}.`,
+    fin,
+  ];
+}
+
+/** Unifica multiplicación/división y porcentajes para cálculo mental. */
+export function explainCalculoMental(enunciado: string): string[] | null {
+  const pct = parsePercentOf(enunciado);
+  if (pct) return techniquePercent(pct.pct, pct.base);
+  return explainSimpleBinary(enunciado);
+}
+

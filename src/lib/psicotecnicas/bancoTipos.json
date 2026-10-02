@@ -1248,184 +1248,191 @@
           "enunciado": "10% de 80 = ?\n\nA) 80   B) 6   C) 8   D) 10",
           "respuesta": "C) 8",
           "pasos": [
-            "Quieres el 10 por ciento de 80.",
-            "Cuenta: 10 ÷ 100 = 0,1; luego 0,1 × 80 = 8.",
-            "Más fácil: para el 10% divides entre 10 → 80 ÷ 10 = 8."
+            "El 10% se saca dividiendo entre 10 (corre la coma un lugar).",
+            "80 ÷ 10 = 8.",
+            "Respuesta: 8."
           ]
         },
         {
           "enunciado": "20% de 45 = ?\n\nA) 11   B) 90   C) 9   D) 7",
           "respuesta": "C) 9",
           "pasos": [
-            "Quieres el 20 por ciento de 45.",
-            "Cuenta: 20 ÷ 100 = 0,2; luego 0,2 × 45 = 9.",
-            "Más fácil: 10% = 4,5; el doble (20%) = 9."
+            "Primero el 10%: 45 ÷ 10 = 4,5.",
+            "El 20% es el doble: 4,5 × 2 = 9.",
+            "Respuesta: 9."
           ]
         },
         {
           "enunciado": "25% de 84 = ?\n\nA) 23   B) 210   C) 19   D) 21",
           "respuesta": "D) 21",
           "pasos": [
-            "Quieres el 25 por ciento de 84.",
-            "Cuenta: 25 ÷ 100 = 0,25; luego 0,25 × 84 = 21.",
-            "Más fácil: 25% es repartir 84 en 4 partes → 84 ÷ 4 = 21."
+            "El 25% es repartir en 4 partes iguales (÷4).",
+            "84 ÷ 4 = 21.",
+            "Respuesta: 21."
           ]
         },
         {
           "enunciado": "15% de 80 = ?\n\nA) 12   B) 14   C) 10   D) 120",
           "respuesta": "A) 12",
           "pasos": [
-            "Quieres el 15 por ciento de 80.",
-            "Cuenta: 15 ÷ 100 = 0,15; luego 0,15 × 80 = 12.",
-            "Más fácil: 10% de 80 es 8, 5% es 4. Suma: 8 + 4 = 12."
+            "10% de 80 = 8.",
+            "5% = mitad del 10% = 4.",
+            "Suma: 8 + 4 = 12.",
+            "Respuesta: 12."
           ]
         },
         {
           "enunciado": "15% de 60 = ?\n\nA) 9   B) 90   C) 11   D) 7",
           "respuesta": "A) 9",
           "pasos": [
-            "Quieres el 15 por ciento de 60.",
-            "Cuenta: 15 ÷ 100 = 0,15; luego 0,15 × 60 = 9.",
-            "Más fácil: 10% de 60 es 6, 5% es 3. Suma: 6 + 3 = 9."
+            "10% de 60 = 6.",
+            "5% = mitad del 10% = 3.",
+            "Suma: 6 + 3 = 9.",
+            "Respuesta: 9."
           ]
         },
         {
           "enunciado": "15% de 40 = ?\n\nA) 60   B) 6   C) 8   D) 4",
           "respuesta": "B) 6",
           "pasos": [
-            "Quieres el 15 por ciento de 40.",
-            "Cuenta: 15 ÷ 100 = 0,15; luego 0,15 × 40 = 6.",
-            "Más fácil: 10% de 40 es 4, 5% es 2. Suma: 4 + 2 = 6."
+            "10% de 40 = 4.",
+            "5% = mitad del 10% = 2.",
+            "Suma: 4 + 2 = 6.",
+            "Respuesta: 6."
           ]
         },
         {
           "enunciado": "15% de 50 = ?\n\nA) 75   B) 7,5   C) 5,5   D) 9,5",
           "respuesta": "B) 7,5",
           "pasos": [
-            "Quieres el 15 por ciento de 50.",
-            "Cuenta: 15 ÷ 100 = 0,15; luego 0,15 × 50 = 7,5.",
-            "Más fácil: 10% de 50 es 5, 5% es 2,5. Suma: 5 + 2,5 = 7,5.",
-            "Importante: la respuesta exacta lleva decimal → 7,5."
+            "10% de 50 = 5.",
+            "5% = mitad del 10% = 2,5.",
+            "Suma: 5 + 2,5 = 7,5.",
+            "Respuesta: 7,5."
           ]
         },
         {
           "enunciado": "12% de 50 = ?\n\nA) 60   B) 8   C) 4   D) 6",
           "respuesta": "D) 6",
           "pasos": [
-            "Quieres el 12 por ciento de 50.",
-            "Cuenta: 12 ÷ 100 = 0,12; luego 0,12 × 50 = 6.",
-            "Más fácil: 1% de 50 = 0,5. Multiplica por 12: 0,5 × 12 = 6."
+            "10% = 5.",
+            "2% = 1.",
+            "Suma: 5 + 1 = 6.",
+            "Respuesta: 6."
           ]
         },
         {
           "enunciado": "5% de 90 = ?\n\nA) 4,5   B) 2,5   C) 6,5   D) 45",
           "respuesta": "A) 4,5",
           "pasos": [
-            "Quieres el 5 por ciento de 90.",
-            "Cuenta: 5 ÷ 100 = 0,05; luego 0,05 × 90 = 4,5.",
-            "Más fácil: 1% de 90 = 0,9. Multiplica por 5: 0,9 × 5 = 4,5.",
-            "Importante: la respuesta exacta lleva decimal → 4,5."
+            "Primero el 10% de 90: 90 ÷ 10 = 9.",
+            "El 5% es la mitad de ese 10%: 9 ÷ 2 = 4,5.",
+            "Respuesta: 4,5."
           ]
         },
         {
           "enunciado": "30% de 70 = ?\n\nA) 23   B) 21   C) 210   D) 19",
           "respuesta": "B) 21",
           "pasos": [
-            "Quieres el 30 por ciento de 70.",
-            "Cuenta: 30 ÷ 100 = 0,3; luego 0,3 × 70 = 21.",
-            "Más fácil: 1% de 70 = 0,7. Multiplica por 30: 0,7 × 30 = 21."
+            "10% = 7.",
+            "30% = tres veces ese 10%: 7 × 3 = 21.",
+            "Respuesta: 21."
           ]
         },
         {
           "enunciado": "40% de 55 = ?\n\nA) 220   B) 24   C) 20   D) 22",
           "respuesta": "D) 22",
           "pasos": [
-            "Quieres el 40 por ciento de 55.",
-            "Cuenta: 40 ÷ 100 = 0,4; luego 0,4 × 55 = 22.",
-            "Más fácil: 1% de 55 = 0,55. Multiplica por 40: 0,55 × 40 = 22."
+            "10% = 5,5.",
+            "40% = cuatro veces: 5,5 × 4 = 22.",
+            "Respuesta: 22."
           ]
         },
         {
           "enunciado": "75% de 48 = ?\n\nA) 34   B) 36   C) 360   D) 38",
           "respuesta": "B) 36",
           "pasos": [
-            "Quieres el 75 por ciento de 48.",
-            "Cuenta: 75 ÷ 100 = 0,75; luego 0,75 × 48 = 36.",
-            "Más fácil: 1% de 48 = 0,48. Multiplica por 75: 0,48 × 75 = 36."
+            "El 75% son tres cuartos: primero 48 ÷ 4 = 12.",
+            "Luego ×3: 12 × 3 = 36.",
+            "(O: 50% = 24 + 25% = 12 → 36.)",
+            "Respuesta: 36."
           ]
         },
         {
           "enunciado": "8% de 25 = ?\n\nA) 7   B) 2   C) 4   D) 20",
           "respuesta": "B) 2",
           "pasos": [
-            "Quieres el 8 por ciento de 25.",
-            "Cuenta: 8 ÷ 100 = 0,08; luego 0,08 × 25 = 2.",
-            "Más fácil: 1% de 25 = 0,25. Multiplica por 8: 0,25 × 8 = 2."
+            "10% = 2,5.",
+            "2% = dos veces el 1% = 0,5.",
+            "8% = 10% − 2%: 2,5 − 0,5 = 2.",
+            "Respuesta: 2."
           ]
         },
         {
           "enunciado": "35% de 20 = ?\n\nA) 70   B) 9   C) 5   D) 7",
           "respuesta": "D) 7",
           "pasos": [
-            "Quieres el 35 por ciento de 20.",
-            "Cuenta: 35 ÷ 100 = 0,35; luego 0,35 × 20 = 7.",
-            "Más fácil: 1% de 20 = 0,2. Multiplica por 35: 0,2 × 35 = 7."
+            "25% = 20 ÷ 4 = 5.",
+            "10% = 2.",
+            "Suma: 5 + 2 = 7.",
+            "Respuesta: 7."
           ]
         },
         {
           "enunciado": "15% de 70 = ?\n\nA) 10,5   B) 12,5   C) 105   D) 8,5",
           "respuesta": "A) 10,5",
           "pasos": [
-            "Quieres el 15 por ciento de 70.",
-            "Cuenta: 15 ÷ 100 = 0,15; luego 0,15 × 70 = 10,5.",
-            "Más fácil: 10% de 70 es 7, 5% es 3,5. Suma: 7 + 3,5 = 10,5.",
-            "Importante: la respuesta exacta lleva decimal → 10,5."
+            "10% de 70 = 7.",
+            "5% = mitad del 10% = 3,5.",
+            "Suma: 7 + 3,5 = 10,5.",
+            "Respuesta: 10,5."
           ]
         },
         {
           "enunciado": "25% de 50 = ?\n\nA) 12,5   B) 14,5   C) 10,5   D) 125",
           "respuesta": "A) 12,5",
           "pasos": [
-            "Quieres el 25 por ciento de 50.",
-            "Cuenta: 25 ÷ 100 = 0,25; luego 0,25 × 50 = 12,5.",
-            "Más fácil: 25% es repartir 50 en 4 partes → 50 ÷ 4 = 12,5.",
-            "Importante: la respuesta exacta lleva decimal → 12,5."
+            "El 25% es repartir en 4 partes iguales (÷4).",
+            "50 ÷ 4 = 12,5.",
+            "Respuesta: 12,5."
           ]
         },
         {
           "enunciado": "12,5% de 80 = ?\n\nA) 8   B) 12   C) 100   D) 10",
           "respuesta": "D) 10",
           "pasos": [
-            "Quieres el 12,5 por ciento de 80.",
-            "Cuenta: 12,5 ÷ 100 = 0,12; luego 0,12 × 80 = 10.",
-            "Más fácil: 1% de 80 = 0,8. Multiplica por 12,5: 0,8 × 12,5 = 10."
+            "12,5% es la mitad del 25% (o dividir entre 8).",
+            "80 ÷ 8 = 10.",
+            "(Comprueba: 25% = 20; mitad → 10.)",
+            "Respuesta: 10."
           ]
         },
         {
           "enunciado": "17,5% de 40 = ?\n\nA) 9   B) 7   C) 5   D) 70",
           "respuesta": "B) 7",
           "pasos": [
-            "Quieres el 17,5 por ciento de 40.",
-            "Cuenta: 17,5 ÷ 100 = 0,17; luego 0,17 × 40 = 7.",
-            "Más fácil: 1% de 40 = 0,4. Multiplica por 17,5: 0,4 × 17,5 = 7."
+            "10% = 4; 5% = 2; 2,5% = 1.",
+            "Suma: 4 + 2 + 1 = 7.",
+            "Respuesta: 7."
           ]
         },
         {
           "enunciado": "2,5% de 200 = ?\n\nA) 50   B) 7   C) 3   D) 5",
           "respuesta": "D) 5",
           "pasos": [
-            "Quieres el 2,5 por ciento de 200.",
-            "Cuenta: 2,5 ÷ 100 = 0,03; luego 0,03 × 200 = 5.",
-            "Más fácil: 1% de 200 = 2. Multiplica por 2,5: 2 × 2,5 = 5."
+            "10% = 20.",
+            "2,5% es la cuarta parte del 10%: 20 ÷ 4 = 5.",
+            "Respuesta: 5."
           ]
         },
         {
           "enunciado": "7,5% de 80 = ?\n\nA) 6   B) 4   C) 8   D) 60",
           "respuesta": "A) 6",
           "pasos": [
-            "Quieres el 7,5 por ciento de 80.",
-            "Cuenta: 7,5 ÷ 100 = 0,07; luego 0,07 × 80 = 6.",
-            "Más fácil: 1% de 80 = 0,8. Multiplica por 7,5: 0,8 × 7,5 = 6."
+            "10% = 8 → 5% = 4.",
+            "2,5% = mitad del 5% = 2.",
+            "Suma: 4 + 2 = 6.",
+            "Respuesta: 6."
           ]
         },
         {
@@ -1993,73 +2000,77 @@
           "enunciado": "5% de 120 = ?\n\nA) 6   B) 5   C) 9   D) 4",
           "respuesta": "A) 6",
           "pasos": [
-            "Quieres el 5 por ciento de 120.",
-            "Cuenta: 5 ÷ 100 = 0,05; luego 0,05 × 120 = 6.",
-            "Más fácil: 1% de 120 = 1,2. Multiplica por 5: 1,2 × 5 = 6."
+            "Primero el 10% de 120: 120 ÷ 10 = 12.",
+            "El 5% es la mitad de ese 10%: 12 ÷ 2 = 6.",
+            "Respuesta: 6."
           ]
         },
         {
           "enunciado": "20% de 85 = ?\n\nA) 17   B) 20   C) 15   D) 17",
           "respuesta": "A) 17",
           "pasos": [
-            "Quieres el 20 por ciento de 85.",
-            "Cuenta: 20 ÷ 100 = 0,2; luego 0,2 × 85 = 17.",
-            "Más fácil: 10% = 8,5; el doble (20%) = 17."
+            "Primero el 10%: 85 ÷ 10 = 8,5.",
+            "El 20% es el doble: 8,5 × 2 = 17.",
+            "Respuesta: 17."
           ]
         },
         {
           "enunciado": "50% de 36 = ?\n\nA) 18   B) 21   C) 16   D) 50",
           "respuesta": "A) 18",
           "pasos": [
-            "Quieres el 50 por ciento de 36.",
-            "Cuenta: 50 ÷ 100 = 0,5; luego 0,5 × 36 = 18.",
-            "Más fácil: 50% es la mitad → 36 ÷ 2 = 18."
+            "El 50% es la mitad de 36.",
+            "36 ÷ 2 = 18.",
+            "Respuesta: 18."
           ]
         },
         {
           "enunciado": "60% de 45 = ?\n\nA) 60   B) 27   C) 25   D) 30",
           "respuesta": "B) 27",
           "pasos": [
-            "Quieres el 60 por ciento de 45.",
-            "Cuenta: 60 ÷ 100 = 0,6; luego 0,6 × 45 = 27.",
-            "Más fácil: 1% de 45 = 0,45. Multiplica por 60: 0,45 × 60 = 27."
+            "50% (la mitad) = 22,5.",
+            "10% = 4,5.",
+            "Suma: 22,5 + 4,5 = 27.",
+            "Respuesta: 27."
           ]
         },
         {
           "enunciado": "12% de 75 = ?\n\nA) 7   B) 68   C) 12   D) 9",
           "respuesta": "D) 9",
           "pasos": [
-            "Quieres el 12 por ciento de 75.",
-            "Cuenta: 12 ÷ 100 = 0,12; luego 0,12 × 75 = 9.",
-            "Más fácil: 1% de 75 = 0,75. Multiplica por 12: 0,75 × 12 = 9."
+            "10% = 7,5.",
+            "2% = 1,5.",
+            "Suma: 7,5 + 1,5 = 9.",
+            "Respuesta: 9."
           ]
         },
         {
           "enunciado": "18% de 50 = ?\n\nA) 12   B) 7   C) 18   D) 9",
           "respuesta": "D) 9",
           "pasos": [
-            "Quieres el 18 por ciento de 50.",
-            "Cuenta: 18 ÷ 100 = 0,18; luego 0,18 × 50 = 9.",
-            "Más fácil: 1% de 50 = 0,5. Multiplica por 18: 0,5 × 18 = 9."
+            "20% = doble del 10% = 10.",
+            "2% = 1.",
+            "18% = 20% − 2%: 10 − 1 = 9.",
+            "Respuesta: 9."
           ]
         },
         {
           "enunciado": "22% de 50 = ?\n\nA) 9   B) 11   C) 22   D) 14",
           "respuesta": "B) 11",
           "pasos": [
-            "Quieres el 22 por ciento de 50.",
-            "Cuenta: 22 ÷ 100 = 0,22; luego 0,22 × 50 = 11.",
-            "Más fácil: 1% de 50 = 0,5. Multiplica por 22: 0,5 × 22 = 11."
+            "20% = 10.",
+            "2% = 1.",
+            "Suma: 10 + 1 = 11.",
+            "Respuesta: 11."
           ]
         },
         {
           "enunciado": "9% de 80 = ?\n\nA) 9   B) 5,2   C) 10,2   D) 7,2",
           "respuesta": "D) 7,2",
           "pasos": [
-            "Quieres el 9 por ciento de 80.",
-            "Cuenta: 9 ÷ 100 = 0,09; luego 0,09 × 80 = 7,2.",
-            "Más fácil: 1% de 80 = 0,8. Multiplica por 9: 0,8 × 9 = 7,2.",
-            "Importante: la respuesta exacta lleva decimal → 7,2."
+            "10% = 8.",
+            "1% = 0,8 (corre la coma dos lugares).",
+            "9% = 10% − 1%: 8 − 0,8 = 7,2.",
+            "Respuesta: 7,2."
           ]
         }
       ]

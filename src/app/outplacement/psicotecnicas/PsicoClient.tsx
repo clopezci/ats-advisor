@@ -29,7 +29,7 @@ import { createBrowserSupabase } from "@/lib/supabase/client";
 import { readEntitlement } from "@/lib/entitlements";
 import { formatCop } from "@/lib/channels/pricing";
 import bancoTiposData from "@/lib/psicotecnicas/bancoTipos.json";
-import { explainSimpleBinary } from "@/lib/psicotecnicas/explainMentalMul";
+import { explainCalculoMental } from "@/lib/psicotecnicas/explainMentalMul";
 
 type Mode = "fichas" | "pruebas" | "banco";
 
@@ -150,7 +150,7 @@ export function PsicoClient() {
   const tipoItem = useMemo(() => {
     if (!tipoItemRaw) return tipoItemRaw;
     if (tipo?.id !== "calculo-mental") return tipoItemRaw;
-    const smart = explainSimpleBinary(tipoItemRaw.enunciado);
+    const smart = explainCalculoMental(tipoItemRaw.enunciado);
     if (!smart?.length) return tipoItemRaw;
     return { ...tipoItemRaw, pasos: smart };
   }, [tipo?.id, tipoItemRaw]);

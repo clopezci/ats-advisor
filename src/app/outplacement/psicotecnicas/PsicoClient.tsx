@@ -19,25 +19,36 @@ import {
 import { AbstractFigure } from "@/components/psicotecnicas/AbstractFigures";
 import { ejercicioSpeakScript, fichaSpeakScript, stopSpeaking } from "@/lib/psicotecnicas/speak";
 import { writeFocusPath } from "@/lib/engagement/focusPath";
+import { hasPsicoPracticaLocal, PSICO_PRACTICA_PRICE_COP } from "@/lib/psicotecnicas/practicaAccess";
+import { readEntitlement } from "@/lib/entitlements";
+import { formatCop } from "@/lib/channels/pricing";
+import bancoTiposData from "@/lib/psicotecnicas/bancoTipos.json";
 
 type Mode = "fichas" | "pruebas" | "banco";
 
-type BancoHoja = {
-  id: string;
-  nombre: string;
-  materiaHint: string;
-  imagenes: string[];
-  count: number;
+type BancoItem = {
+  enunciado: string;
+  respuesta: string;
+  pasos: string[];
 };
 
-type BancoIndex = {
-  fuente: string;
+type BancoTipo = {
+  id: string;
+  nombre: string;
+  descripcion: string;
+  items: BancoItem[];
+};
+
+const BANCO = bancoTiposData as {
+  titulo: string;
   nota: string;
-  hojas: BancoHoja[];
+  tipos: BancoTipo[];
 };
 
 const INTRO =
-  "Estudia gratis: fichas de método, pruebas guiadas y el banco del Excel (421 láminas por tipo). Lo de pago es practicar con el método IA.";
+  "Estudia gratis: fichas de método, pruebas guiadas y pruebas por tipo. La explicación paso a paso y la respuesta completa van con la práctica de pago.";
+
+const PRECIOS_PRACTICA = `/precios?plan=psico_practica&next=${encodeURIComponent("/outplacement/psicotecnicas")}`;
 
 export function PsicoClient() {
   const [mode, setMode] = useState<Mode>("fichas");
@@ -51,20 +62,23 @@ export function PsicoClient() {
   const [bankEjercicios, setBankEjercicios] = useState<PsicoEjercicio[] | null>(null);
   const [bankMsg, setBankMsg] = useState("");
   const [publicFichas, setPublicFichas] = useState<PsicoFicha[] | null>(null);
-  const [excelBank, setExcelBank] = useState<BancoIndex | null>(null);
-  const [excelHoja, setExcelHoja] = useState(0);
-  const [excelImg, setExcelImg] = useState(0);
+  const [tipoI, setTipoI] = useState(0);
+  const [itemI, setItemI] = useState(0);
+  const [tipoAnswer, setTipoAnswer] = useState("");
+  const [tipoChecked, setTipoChecked] = useState(false);
+  const [showExplain, setShowExplain] = useState(false);
+  const [paid, setPaid] = useState(false);
 
   useJsonDraft(
     "ats_psico_draft",
-    { answer, revealed, materia, mode, excelHoja, excelImg },
+    { answer, revealed, materia, mode, tipoI, itemI },
     (saved) => {
       if (typeof saved.answer === "string" && saved.answer) setAnswer(saved.answer);
       if (saved.revealed === true) setRevealed(true);
       if (typeof saved.materia === "string" && saved.materia) setMateria(saved.materia);
       if (saved.mode === "fichas" || saved.mode === "pruebas" || saved.mode === "banco") setMode(saved.mode);
-      if (typeof saved.excelHoja === "number") setExcelHoja(saved.excelHoja);
-      if (typeof saved.excelImg === "number") setExcelImg(saved.excelImg);
+      if (typeof saved.tipoI === "number") setTipoI(saved.tipoI);
+      if (typeof saved.itemI === "number") setItemI(saved.itemI);
     }
   );
 
@@ -73,7 +87,8 @@ export function PsicoClient() {
   useEffect(() => {
     writeFocusPath("gratis");
     setDone(loadTrialDone());
-    // Un solo fetch (bank incluye fichas). Evita parsear el catálogo dos veces.
+    const plan = readEntitlement().plan;
+    setPaid(hasPsicoPracticaLocal() || plan === "tester" || plan === "plus");
     fetch("/api/psicotecnicas/bank")
       .then(async (res) => {
         const data = await res.json().catch(() => ({}));
@@ -86,15 +101,6 @@ export function PsicoClient() {
         setPublicFichas(data.fichas || []);
       })
       .catch(() => setBankMsg("No se pudo abrir el banco."));
-    fetch("/psicotecnicas/banco-excel/index.json")
-      .then(async (res) => {
-        if (!res.ok) return;
-        const data = (await res.json()) as BancoIndex;
-        setExcelBank(data);
-      })
-      .catch(() => {
-        /* optional */
-      });
     return () => stopSpeaking();
   }, []);
 
@@ -115,13 +121,20 @@ export function PsicoClient() {
   );
   const ficha = fichas[Math.min(fichaI, Math.max(0, fichas.length - 1))];
   const bancoItem = banco[Math.min(bancoI, Math.max(0, banco.length - 1))];
-  const hojaExcel = excelBank?.hojas[Math.min(excelHoja, Math.max(0, (excelBank?.hojas.length || 1) - 1))];
-  const excelCount = hojaExcel?.imagenes.length || 0;
-  const excelSrc = excelCount ? hojaExcel!.imagenes[Math.min(excelImg, excelCount - 1)] : null;
-  const excelTotal = excelBank?.hojas.reduce((n, h) => n + h.count, 0) || 0;
+
+  const tipo = BANCO.tipos[Math.min(tipoI, BANCO.tipos.length - 1)];
+  const tipoItem = tipo?.items[Math.min(itemI, Math.max(0, (tipo?.items.length || 1) - 1))];
+  const tipoTotal = BANCO.tipos.reduce((n, t) => n + t.items.length, 0);
+  const tipoOk = tipoChecked && tipoItem ? answersMatch(tipoAnswer, tipoItem.respuesta) : false;
 
   function markDone(index: number) {
     if (!done.includes(index)) setDone(saveTrialDone([...done, index]));
+  }
+
+  function resetTipoAttempt() {
+    setTipoAnswer("");
+    setTipoChecked(false);
+    setShowExplain(false);
   }
 
   return (
@@ -137,7 +150,7 @@ export function PsicoClient() {
         <p className="text-sm muted leading-relaxed">{INTRO}</p>
         <p className="text-xs muted">
           {bankFichas
-            ? `${bankFichas.length} fichas · ${bankEjercicios?.length || PSICO_BANK_COUNTS.ejercicios} pruebas guiadas · ${excelTotal || "…"} láminas del Excel · gratis para estudiar`
+            ? `${bankFichas.length} fichas · ${bankEjercicios?.length || PSICO_BANK_COUNTS.ejercicios} guiadas · ${tipoTotal} por tipo`
             : bankMsg || "Cargando material…"}
         </p>
       </section>
@@ -164,18 +177,21 @@ export function PsicoClient() {
         <button
           type="button"
           className={mode === "banco" ? "btn-primary" : "btn-secondary"}
-          onClick={() => setMode("banco")}
+          onClick={() => {
+            setMode("banco");
+            resetTipoAttempt();
+          }}
         >
-          3. Banco Excel ({excelTotal || "…"})
+          3. Pruebas por tipo
         </button>
       </div>
 
       <section className="bento-card space-y-2 text-sm leading-relaxed">
         <h2 className="font-semibold text-sm">Concursos del Estado (CNSC / patrulleros)</h2>
         <p className="text-xs muted leading-relaxed">
-          El método de juicio situacional, atención y Acciones/Actitudes está en la materia{" "}
-          <strong>Psico y entrevista</strong> (fichas + pruebas guiadas). No es un simulacro oficial CNSC
-          completo: son fichas de formato colombiano y casos de práctica. Abre esa materia para verlos.
+          Juicio situacional, atención y Acciones/Actitudes están en{" "}
+          <strong>Psico y entrevista</strong>. Son fichas de formato colombiano y casos de práctica (no un
+          simulacro oficial completo).
         </p>
         <button
           type="button"
@@ -195,46 +211,50 @@ export function PsicoClient() {
         className="btn-secondary w-full text-center"
         style={{ flexDirection: "column", gap: "0.15rem", minHeight: "3.5rem", lineHeight: 1.3 }}
       >
-        <span>Practicar con método IA (de pago)</span>
-        <span className="text-xs font-normal muted">Perfil · foto · pistas personalizadas</span>
+        <span>Práctica con método IA ({formatCop(PSICO_PRACTICA_PRICE_COP)}/mes)</span>
+        <span className="text-xs font-normal muted">Perfil · pistas · explicación personalizada</span>
       </Link>
 
-      <section className="bento-card space-y-2 text-sm leading-relaxed">
-        <h2 className="font-semibold text-sm">El método (7 reglas)</h2>
-        <ol className="list-decimal pl-4 space-y-1 muted">
-          <li>Trabaja desde las opciones hacia atrás, no desde la ecuación.</li>
-          <li>Descarta antes de calcular: una pista tumba tres opciones.</li>
-          <li>Compara en torneo: dos contra dos, no todas contra todas.</li>
-          <li>Cada familia tiene una receta de tres pasos.</li>
-          <li>Una palabra del enunciado decide la fórmula (cruzan vs alcanzan).</li>
-          <li>Si se puede dibujar, dibújalo y cuenta.</li>
-          <li>Comprueba hacia atrás en cinco segundos.</li>
-        </ol>
-      </section>
+      {mode !== "banco" && (
+        <>
+          <section className="bento-card space-y-2 text-sm leading-relaxed">
+            <h2 className="font-semibold text-sm">El método (7 reglas)</h2>
+            <ol className="list-decimal pl-4 space-y-1 muted">
+              <li>Trabaja desde las opciones hacia atrás, no desde la ecuación.</li>
+              <li>Descarta antes de calcular: una pista tumba tres opciones.</li>
+              <li>Compara en torneo: dos contra dos, no todas contra todas.</li>
+              <li>Cada familia tiene una receta de tres pasos.</li>
+              <li>Una palabra del enunciado decide la fórmula (cruzan vs alcanzan).</li>
+              <li>Si se puede dibujar, dibújalo y cuenta.</li>
+              <li>Comprueba hacia atrás en cinco segundos.</li>
+            </ol>
+          </section>
 
-      <div className="flex flex-wrap gap-2">
-        {PSICO_MATERIAS.map((m) => (
-          <button
-            key={m.id}
-            type="button"
-            className="btn-secondary"
-            onClick={() => {
-              setMateria(m.id);
-              setFichaI(0);
-              setBancoI(0);
-              setRevealed(false);
-              setAnswer("");
-            }}
-            style={
-              materia === m.id
-                ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
-                : undefined
-            }
-          >
-            {m.corto}
-          </button>
-        ))}
-      </div>
+          <div className="flex flex-wrap gap-2">
+            {PSICO_MATERIAS.map((m) => (
+              <button
+                key={m.id}
+                type="button"
+                className="btn-secondary"
+                onClick={() => {
+                  setMateria(m.id);
+                  setFichaI(0);
+                  setBancoI(0);
+                  setRevealed(false);
+                  setAnswer("");
+                }}
+                style={
+                  materia === m.id
+                    ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
+                    : undefined
+                }
+              >
+                {m.corto}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
 
       {mode === "fichas" && ficha && (
         <section className="bento-card space-y-2">
@@ -247,8 +267,8 @@ export function PsicoClient() {
           </div>
           {materia === "exa.psico-personalidad" && fichaI === 0 ? (
             <p className="text-xs muted leading-relaxed rounded-lg border border-black/10 bg-black/[0.02] p-3">
-              Aquí estudias cómo son los test de empresas (atención, juicio situacional, Acciones/Actitudes, sinceridad).
-              El assessment de intereses RIASEC (tu código + roles) está aparte en{" "}
+              Aquí estudias cómo son los test de empresas (atención, juicio situacional, Acciones/Actitudes,
+              sinceridad). El assessment RIASEC está en{" "}
               <Link href="/outplacement/assessment" className="underline">
                 /outplacement/assessment
               </Link>
@@ -316,77 +336,124 @@ export function PsicoClient() {
         />
       )}
 
-      {mode === "banco" && (
+      {mode === "banco" && tipo && tipoItem && (
         <section className="bento-card space-y-3">
           <div>
-            <p className="text-xs muted">Banco del Excel · {excelBank?.fuente || "Pruebas_Psicot.xlsx"}</p>
-            <h2 className="text-lg font-semibold">Láminas por tipo de prueba</h2>
-            <p className="text-xs muted mt-1 leading-relaxed">
-              {excelBank?.nota ||
-                "Estas son las pruebas del Excel de muchas hojas. Son imágenes (el archivo original casi no traía texto)."}
-            </p>
+            <p className="text-xs muted">{BANCO.titulo}</p>
+            <h2 className="text-lg font-semibold">{tipo.nombre}</h2>
+            <p className="text-xs muted mt-1 leading-relaxed">{tipo.descripcion}</p>
+            <p className="text-xs muted mt-1">{BANCO.nota}</p>
           </div>
-          {!excelBank ? (
-            <p className="text-sm muted">Cargando banco del Excel…</p>
+
+          <div className="flex flex-wrap gap-2">
+            {BANCO.tipos.map((t, i) => (
+              <button
+                key={t.id}
+                type="button"
+                className="btn-secondary text-xs"
+                onClick={() => {
+                  setTipoI(i);
+                  setItemI(0);
+                  resetTipoAttempt();
+                }}
+                style={
+                  i === tipoI
+                    ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
+                    : undefined
+                }
+              >
+                {t.nombre} ({t.items.length})
+              </button>
+            ))}
+          </div>
+
+          <p className="text-sm font-medium">
+            Ítem {itemI + 1} / {tipo.items.length}
+          </p>
+          <p className="text-sm whitespace-pre-wrap leading-relaxed">{tipoItem.enunciado}</p>
+
+          <label className="block text-sm">
+            Tu respuesta
+            <input
+              className="field mt-1"
+              value={tipoAnswer}
+              onChange={(e) => setTipoAnswer(e.target.value)}
+              placeholder="Letra o texto (ej. B o 400)"
+              disabled={tipoChecked && showExplain && paid}
+            />
+          </label>
+
+          {!tipoChecked ? (
+            <button
+              type="button"
+              className="btn-primary"
+              disabled={!tipoAnswer.trim()}
+              onClick={() => setTipoChecked(true)}
+            >
+              Comprobar
+            </button>
           ) : (
-            <>
-              <div className="flex flex-wrap gap-2">
-                {excelBank.hojas.map((h, i) => (
-                  <button
-                    key={h.id}
-                    type="button"
-                    className="btn-secondary text-xs"
-                    onClick={() => {
-                      setExcelHoja(i);
-                      setExcelImg(0);
-                    }}
-                    style={
-                      i === excelHoja
-                        ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
-                        : undefined
-                    }
-                  >
-                    {h.nombre} ({h.count})
+            <div className="space-y-2 text-sm">
+              <p className="font-medium">{tipoOk ? "Cuadra." : "No cuadra todavía."}</p>
+
+              {!showExplain ? (
+                paid ? (
+                  <button type="button" className="btn-primary" onClick={() => setShowExplain(true)}>
+                    Ver respuesta y paso a paso
                   </button>
-                ))}
-              </div>
-              {hojaExcel && excelSrc ? (
-                <>
-                  <p className="text-sm font-medium">
-                    {hojaExcel.nombre} · lámina {excelImg + 1} / {excelCount}
-                  </p>
-                  <div className="overflow-auto rounded-lg border border-black/10 bg-white p-2">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={excelSrc}
-                      alt={`${hojaExcel.nombre} ${excelImg + 1}`}
-                      className="mx-auto max-h-[70vh] w-auto max-w-full object-contain"
-                    />
+                ) : (
+                  <div className="rounded-lg border border-black/10 bg-black/[0.02] p-3 space-y-2">
+                    <p className="text-xs muted leading-relaxed">
+                      La explicación paso a paso y la respuesta correcta forman parte de la práctica de pago (
+                      {formatCop(PSICO_PRACTICA_PRICE_COP)}/mes).
+                    </p>
+                    <Link href={PRECIOS_PRACTICA} className="btn-primary inline-flex">
+                      Activar práctica con explicación
+                    </Link>
+                    <Link href="/outplacement/psicotecnicas/practica" className="btn-secondary inline-flex ml-2">
+                      Ir a práctica IA
+                    </Link>
                   </div>
-                  <div className="flex gap-2">
-                    <button
-                      type="button"
-                      className="btn-secondary"
-                      disabled={excelImg <= 0}
-                      onClick={() => setExcelImg((n) => Math.max(0, n - 1))}
-                    >
-                      Anterior
-                    </button>
-                    <button
-                      type="button"
-                      className="btn-secondary"
-                      disabled={excelImg >= excelCount - 1}
-                      onClick={() => setExcelImg((n) => Math.min(excelCount - 1, n + 1))}
-                    >
-                      {`Siguiente (${excelImg + 1}/${excelCount})`}
-                    </button>
-                  </div>
-                </>
+                )
               ) : (
-                <p className="text-sm muted">No hay láminas en esta hoja.</p>
+                <div className="space-y-2">
+                  <p>
+                    Respuesta correcta: <strong>{tipoItem.respuesta}</strong>
+                  </p>
+                  <ol className="list-decimal pl-4 space-y-1 muted">
+                    {tipoItem.pasos.map((p) => (
+                      <li key={p.slice(0, 48)}>{p}</li>
+                    ))}
+                  </ol>
+                </div>
               )}
-            </>
+            </div>
           )}
+
+          <div className="flex gap-2">
+            <button
+              type="button"
+              className="btn-secondary"
+              disabled={itemI <= 0}
+              onClick={() => {
+                setItemI((n) => Math.max(0, n - 1));
+                resetTipoAttempt();
+              }}
+            >
+              Anterior
+            </button>
+            <button
+              type="button"
+              className="btn-secondary"
+              disabled={itemI >= tipo.items.length - 1}
+              onClick={() => {
+                setItemI((n) => Math.min(tipo.items.length - 1, n + 1));
+                resetTipoAttempt();
+              }}
+            >
+              {`Siguiente (${itemI + 1}/${tipo.items.length})`}
+            </button>
+          </div>
         </section>
       )}
 

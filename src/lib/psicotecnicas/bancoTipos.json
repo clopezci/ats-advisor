@@ -1,0 +1,567 @@
+{
+  "titulo": "Pruebas por tipo",
+  "nota": "Banco de práctica reescrito por categorías. Puedes intentar gratis; la explicación paso a paso y la respuesta completa son parte de la práctica de pago.",
+  "tipos": [
+    {
+      "id": "analogias",
+      "nombre": "Analogías",
+      "descripcion": "Relación A es a B como C es a ¿?. Busca la misma relación, no la palabra parecida.",
+      "items": [
+        {
+          "enunciado": "LIBRO es a BIBLIOTECA como CUADRO es a:\n\nA) Pintor   B) Marco   C) Museo   D) Lienzo",
+          "respuesta": "C) Museo",
+          "pasos": [
+            "Un libro se guarda/exhibe en una biblioteca.",
+            "Un cuadro se guarda/exhibe en un museo.",
+            "Pintor y lienzo son causa/material; marco es accesorio. La relación de lugar es museo."
+          ]
+        },
+        {
+          "enunciado": "MÉDICO es a HOSPITAL como MAESTRO es a:\n\nA) Pupitre   B) Escuela   C) Estudiante   D) Pizarra",
+          "respuesta": "B) Escuela",
+          "pasos": [
+            "Médico trabaja en el hospital (lugar de ejercicio).",
+            "Maestro trabaja en la escuela.",
+            "Estudiante es el «paciente» del maestro, no el lugar."
+          ]
+        },
+        {
+          "enunciado": "AGUA es a SED como COMIDA es a:\n\nA) Plato   B) Hambre   C) Cocina   D) Sabor",
+          "respuesta": "B) Hambre",
+          "pasos": [
+            "El agua alivia la sed.",
+            "La comida alivia el hambre.",
+            "Misma relación: remedio → necesidad."
+          ]
+        },
+        {
+          "enunciado": "OJO es a VER como OÍDO es a:\n\nA) Sonido   B) Escuchar   C) Oreja   D) Música",
+          "respuesta": "B) Escuchar",
+          "pasos": [
+            "Ojo → función: ver.",
+            "Oído → función: escuchar (oír).",
+            "Sonido/música son objetos, no la acción del órgano."
+          ]
+        },
+        {
+          "enunciado": "SEMILLA es a ÁRBOL como HUEVO es a:\n\nA) Nido   B) Ave   C) Cáscara   D) Volár",
+          "respuesta": "B) Ave",
+          "pasos": [
+            "De la semilla nace el árbol.",
+            "Del huevo nace el ave.",
+            "Nido y cáscara son contenedores, no el resultado."
+          ]
+        },
+        {
+          "enunciado": "RÁPIDO es a LENTO como CLARO es a:\n\nA) Brillante   B) Oscuro   C) Luz   D) Visible",
+          "respuesta": "B) Oscuro",
+          "pasos": [
+            "Rápido y lento son antónimos.",
+            "Claro y oscuro son antónimos.",
+            "No busques sinónimo (brillante); busca el opuesto."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "antonimos",
+      "nombre": "Antónimos",
+      "descripcion": "Elige la palabra de significado opuesto. Cuidado con trampas casi-sinónimas.",
+      "items": [
+        {
+          "enunciado": "Antónimo de ESCASO:\n\nA) Poco   B) Abundante   C) Raro   D) Breve",
+          "respuesta": "B) Abundante",
+          "pasos": [
+            "Escaso = poca cantidad.",
+            "Abundante = mucha cantidad (opuesto).",
+            "Poco y raro refuerzan la misma idea; no son opuestos."
+          ]
+        },
+        {
+          "enunciado": "Antónimo de PERMANENTE:\n\nA) Fijo   B) Continuo   C) Temporal   D) Estable",
+          "respuesta": "C) Temporal",
+          "pasos": [
+            "Permanente = que dura sin cambio.",
+            "Temporal = que dura un tiempo limitado.",
+            "Fijo/continuo/estable van en la misma línea."
+          ]
+        },
+        {
+          "enunciado": "Antónimo de GENEROSO:\n\nA) Bondadoso   B) Tacaño   C) Amable   D) Solidario",
+          "respuesta": "B) Tacaño",
+          "pasos": [
+            "Generoso da con facilidad.",
+            "Tacaño retiene / da poco.",
+            "Las otras son cercanas a generoso."
+          ]
+        },
+        {
+          "enunciado": "Antónimo de INCLUIR:\n\nA) Contener   B) Agregar   C) Excluir   D) Sumar",
+          "respuesta": "C) Excluir",
+          "pasos": [
+            "Incluir = meter dentro.",
+            "Excluir = dejar fuera."
+          ]
+        },
+        {
+          "enunciado": "Antónimo de AVANZAR:\n\nA) Progresar   B) Retroceder   C) Seguir   D) Marchar",
+          "respuesta": "B) Retroceder",
+          "pasos": [
+            "Avanzar = ir hacia adelante.",
+            "Retroceder = ir hacia atrás."
+          ]
+        },
+        {
+          "enunciado": "Antónimo de COMPLEJO:\n\nA) Difícil   B) Enredado   C) Simple   D) Elaborado",
+          "respuesta": "C) Simple",
+          "pasos": [
+            "Complejo = con muchas partes / difícil de entender.",
+            "Simple = fácil / sin complicaciones."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "calculo-mental",
+      "nombre": "Cálculo mental",
+      "descripcion": "Cuentas rápidas sin calculadora. Usa atajos (×10, mitades, porcentajes).",
+      "items": [
+        {
+          "enunciado": "¿Cuánto es 25 × 16?\n\nA) 350   B) 400   C) 420   D) 380",
+          "respuesta": "B) 400",
+          "pasos": [
+            "25 × 16 = 25 × (10 + 6) o mejor: 25 × 4 × 4.",
+            "25 × 4 = 100; 100 × 4 = 400.",
+            "Atajo: 25 × 16 = (100/4) × 16 = 100 × 4 = 400."
+          ]
+        },
+        {
+          "enunciado": "El 15 % de 240 es:\n\nA) 24   B) 30   C) 36   D) 48",
+          "respuesta": "C) 36",
+          "pasos": [
+            "10 % de 240 = 24.",
+            "5 % = la mitad = 12.",
+            "15 % = 24 + 12 = 36."
+          ]
+        },
+        {
+          "enunciado": "48 ÷ 0,5 = ?\n\nA) 24   B) 96   C) 9,6   D) 0,96",
+          "respuesta": "B) 96",
+          "pasos": [
+            "Dividir entre 0,5 es lo mismo que multiplicar por 2.",
+            "48 × 2 = 96."
+          ]
+        },
+        {
+          "enunciado": "12² − 8² = ?\n\nA) 80   B) 64   C) 96   D) 20",
+          "respuesta": "A) 80",
+          "pasos": [
+            "Diferencia de cuadrados: a² − b² = (a−b)(a+b).",
+            "(12−8)(12+8) = 4 × 20 = 80.",
+            "O: 144 − 64 = 80."
+          ]
+        },
+        {
+          "enunciado": "3/4 de 160 = ?\n\nA) 100   B) 120   C) 140   D) 80",
+          "respuesta": "B) 120",
+          "pasos": [
+            "1/4 de 160 = 40.",
+            "3/4 = 3 × 40 = 120."
+          ]
+        },
+        {
+          "enunciado": "¿Cuánto es 999 + 47?\n\nA) 1.036   B) 1.046   C) 1.056   D) 1.016",
+          "respuesta": "B) 1.046",
+          "pasos": [
+            "999 + 47 = 1.000 + 47 − 1 = 1.046."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "problemas-matematicos",
+      "nombre": "Problemas matemáticos",
+      "descripcion": "Enunciados con datos. Traduce a una cuenta corta; comprueba el resultado.",
+      "items": [
+        {
+          "enunciado": "Un artículo costaba $80.000 y bajó 25 %. ¿Cuánto cuesta ahora?\n\nA) 60.000   B) 55.000   C) 20.000   D) 65.000",
+          "respuesta": "A) 60.000",
+          "pasos": [
+            "25 % de 80.000 = 20.000.",
+            "Precio nuevo = 80.000 − 20.000 = 60.000.",
+            "O: pagas el 75 % → 0,75 × 80.000 = 60.000."
+          ]
+        },
+        {
+          "enunciado": "Ana tiene el triple de lo que tiene Luis. Entre los dos suman $48.000. ¿Cuánto tiene Luis?\n\nA) 12.000   B) 16.000   C) 24.000   D) 36.000",
+          "respuesta": "A) 12.000",
+          "pasos": [
+            "Si Luis = x, Ana = 3x.",
+            "x + 3x = 48.000 → 4x = 48.000 → x = 12.000."
+          ]
+        },
+        {
+          "enunciado": "Un tren recorre 180 km en 3 horas a velocidad constante. ¿Cuántos km hará en 5 horas?\n\nA) 250   B) 300   C) 360   D) 280",
+          "respuesta": "B) 300",
+          "pasos": [
+            "Velocidad = 180 ÷ 3 = 60 km/h.",
+            "En 5 h: 60 × 5 = 300 km."
+          ]
+        },
+        {
+          "enunciado": "Reparten $90.000 en partes proporcionales a 2, 3 y 4. ¿Cuánto le toca a la parte de 3?\n\nA) 27.000   B) 30.000   C) 36.000   D) 24.000",
+          "respuesta": "B) 30.000",
+          "pasos": [
+            "Suma de partes: 2+3+4 = 9.",
+            "Una parte = 90.000 ÷ 9 = 10.000.",
+            "A la de 3: 3 × 10.000 = 30.000."
+          ]
+        },
+        {
+          "enunciado": "Si 6 obreros terminan un muro en 10 días, ¿cuántos días tardan 10 obreros (mismo ritmo)?\n\nA) 4   B) 5   C) 6   D) 8",
+          "respuesta": "C) 6",
+          "pasos": [
+            "Trabajo total = 6 × 10 = 60 «obrero-días».",
+            "Con 10 obreros: 60 ÷ 10 = 6 días.",
+            "Es regla inversa: más gente → menos días."
+          ]
+        },
+        {
+          "enunciado": "La edad de Carla es el doble de la de su hijo. Juntas suman 54 años. ¿Cuántos años tiene el hijo?\n\nA) 14   B) 18   C) 27   D) 36",
+          "respuesta": "B) 18",
+          "pasos": [
+            "Hijo = x; Carla = 2x.",
+            "x + 2x = 54 → 3x = 54 → x = 18."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "razonamiento-diagramatico",
+      "nombre": "Razonamiento diagramático",
+      "descripcion": "Símbolos = órdenes sobre una fila. Aplica una por una y anota el resultado intermedio.",
+      "items": [
+        {
+          "enunciado": "Fila inicial: ■ ▲ ●\nOrden 1: invertir el orden.\nOrden 2: quitar la figura del medio.\n¿Cómo queda la fila?\n\nA) ● ■   B) ■ ●   C) ▲ ●   D) ● ▲",
+          "respuesta": "A) ● ■",
+          "pasos": [
+            "Después de invertir: ● ▲ ■.",
+            "Quitar la del medio (▲): quedan ● ■.",
+            "Si haces las dos órdenes de memoria sin anotar, es fácil equivocarte el orden."
+          ]
+        },
+        {
+          "enunciado": "Fila: A B C D\nOrden: intercambiar el primero con el último.\nResultado:\n\nA) D B C A   B) A D C B   C) D C B A   D) B A C D",
+          "respuesta": "A) D B C A",
+          "pasos": [
+            "Primero = A, último = D.",
+            "Tras el intercambio: D B C A."
+          ]
+        },
+        {
+          "enunciado": "Fila: 2 4 6 8\nOrden: duplicar cada número.\nLuego: sumar 1 al primero.\n¿Cuál es el primero de la fila final?\n\nA) 4   B) 5   C) 3   D) 2",
+          "respuesta": "B) 5",
+          "pasos": [
+            "Duplicar: 4 8 12 16.",
+            "Sumar 1 al primero: 5 8 12 16.",
+            "El primero queda en 5."
+          ]
+        },
+        {
+          "enunciado": "Fila: ○ □ △\nOrden: girar la fila una posición a la izquierda (el primero pasa al final).\nResultado:\n\nA) □ △ ○   B) △ ○ □   C) ○ △ □   D) □ ○ △",
+          "respuesta": "A) □ △ ○",
+          "pasos": [
+            "El primero (○) sale y va al final.",
+            "Queda □ △ ○."
+          ]
+        },
+        {
+          "enunciado": "Dos órdenes sobre [1 2 3]: (1) invertir; (2) invertir otra vez. Resultado final:\n\nA) 3 2 1   B) 1 2 3   C) 2 1 3   D) 1 3 2",
+          "respuesta": "B) 1 2 3",
+          "pasos": [
+            "Invertir: 3 2 1.",
+            "Invertir otra vez: vuelve a 1 2 3.",
+            "Dos inversiones se anulan."
+          ]
+        },
+        {
+          "enunciado": "Fila: X Y Z\nOrden: borrar la última letra y repetir la primera al final.\nResultado:\n\nA) X Y X   B) X X Y   C) Y Z X   D) X Y Z",
+          "respuesta": "A) X Y X",
+          "pasos": [
+            "Quitar Z → X Y.",
+            "Repetir la primera (X) al final → X Y X."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "razonamiento-espacial",
+      "nombre": "Razonamiento espacial",
+      "descripcion": "Cubos, giros y vistas. Piensa qué caras se tocan y qué se vería desde un vértice.",
+      "items": [
+        {
+          "enunciado": "En un cubo, ¿cuántas caras se ven como máximo desde un solo vértice?\n\nA) 2   B) 3   C) 4   D) 6",
+          "respuesta": "B) 3",
+          "pasos": [
+            "Desde una esquina siempre ves exactamente tres caras.",
+            "Nunca cuatro a la vez desde un solo punto de vista de vértice."
+          ]
+        },
+        {
+          "enunciado": "Si en un dado estándar arriba está el 6, ¿qué número está abajo?\n\nA) 1   B) 2   C) 3   D) 5",
+          "respuesta": "A) 1",
+          "pasos": [
+            "Caras opuestas suman 7.",
+            "6 + 1 = 7 → abajo es 1."
+          ]
+        },
+        {
+          "enunciado": "Un desarrollo de cubo muestra la cara A pegada a la derecha de B. Al armar el cubo, A y B:\n\nA) Quedan opuestas   B) Quedan contiguas   C) No pueden tocarse   D) Quedan en diagonal",
+          "respuesta": "B) Quedan contiguas",
+          "pasos": [
+            "Si en el desarrollo comparten un lado, al armar quedan juntas (contiguas).",
+            "Opuestas son las que en el desarrollo quedan separadas por una cara en línea."
+          ]
+        },
+        {
+          "enunciado": "Una flecha apunta arriba. Tras un giro de 90° a la derecha, apunta:\n\nA) Izquierda   B) Derecha   C) Abajo   D) Arriba",
+          "respuesta": "B) Derecha",
+          "pasos": [
+            "Giro 90° horario: arriba → derecha → abajo → izquierda."
+          ]
+        },
+        {
+          "enunciado": "Tras un giro de 180°, una letra R asimétrica:\n\nA) Se ve igual que en espejo vertical   B) Queda boca abajo, distinta al espejo   C) No cambia   D) Solo cambia de color",
+          "respuesta": "B) Queda boca abajo, distinta al espejo",
+          "pasos": [
+            "Espejo y giro 180° no son lo mismo.",
+            "Sigue un detalle (la panza de la R) para distinguirlos."
+          ]
+        },
+        {
+          "enunciado": "¿Cuántas aristas tiene un cubo?\n\nA) 6   B) 8   C) 12   D) 16",
+          "respuesta": "C) 12",
+          "pasos": [
+            "Un cubo tiene 12 aristas (3 por cada una de 4 «pisos» de esquinas, o 4×3).",
+            "8 vértices, 6 caras, 12 aristas."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "razonamiento-inductivo",
+      "nombre": "Razonamiento inductivo",
+      "descripcion": "Series y patrones: encuentra qué cambia y proyecta el siguiente término.",
+      "items": [
+        {
+          "enunciado": "Serie: 3, 6, 12, 24, ?\n\nA) 36   B) 48   C) 30   D) 42",
+          "respuesta": "B) 48",
+          "pasos": [
+            "Cada término se multiplica por 2.",
+            "24 × 2 = 48."
+          ]
+        },
+        {
+          "enunciado": "Serie: 2, 5, 10, 17, 26, ?\n\nA) 35   B) 37   C) 38   D) 39",
+          "respuesta": "B) 37",
+          "pasos": [
+            "Saltos: +3, +5, +7, +9 (impares consecutivos).",
+            "Siguiente salto +11: 26 + 11 = 37."
+          ]
+        },
+        {
+          "enunciado": "Serie: 1, 1, 2, 3, 5, 8, ?\n\nA) 11   B) 12   C) 13   D) 10",
+          "respuesta": "C) 13",
+          "pasos": [
+            "Cada uno es la suma de los dos anteriores (Fibonacci).",
+            "5 + 8 = 13."
+          ]
+        },
+        {
+          "enunciado": "Letras: A, C, F, J, ?\n\nA) M   B) N   C) O   D) L",
+          "respuesta": "C) O",
+          "pasos": [
+            "Saltos en el abecedario: +2, +3, +4…",
+            "A→C (+2), C→F (+3), F→J (+4), J→O (+5)."
+          ]
+        },
+        {
+          "enunciado": "Serie intercalada: 4, 9, 5, 8, 6, 7, 7, ?\n\nA) 6   B) 8   C) 5   D) 9",
+          "respuesta": "A) 6",
+          "pasos": [
+            "Impares: 4, 5, 6, 7… (+1).",
+            "Pares: 9, 8, 7, ?… (−1) → 6.",
+            "El ? es posición par → 6."
+          ]
+        },
+        {
+          "enunciado": "Serie: 81, 27, 9, 3, ?\n\nA) 1   B) 0   C) 2   D) 1/3",
+          "respuesta": "A) 1",
+          "pasos": [
+            "Se divide entre 3 en cada paso.",
+            "3 ÷ 3 = 1."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "razonamiento-numerico",
+      "nombre": "Razonamiento numérico",
+      "descripcion": "Proporciones, promedios y lectura de datos numéricos.",
+      "items": [
+        {
+          "enunciado": "Si 5 lapiceros cuestan $12.500, ¿cuánto cuestan 8?\n\nA) 18.000   B) 20.000   C) 22.500   D) 15.000",
+          "respuesta": "B) 20.000",
+          "pasos": [
+            "Uno: 12.500 ÷ 5 = 2.500.",
+            "Ocho: 2.500 × 8 = 20.000."
+          ]
+        },
+        {
+          "enunciado": "Promedio de 4, 6, 10 y 12:\n\nA) 7   B) 8   C) 9   D) 10",
+          "respuesta": "B) 8",
+          "pasos": [
+            "Suma = 32.",
+            "32 ÷ 4 = 8."
+          ]
+        },
+        {
+          "enunciado": "Una razón 2:5 equivale a ¿qué fracción?\n\nA) 2/5   B) 5/2   C) 2/7   D) 5/7",
+          "respuesta": "A) 2/5",
+          "pasos": [
+            "a:b = a/b.",
+            "2:5 = 2/5."
+          ]
+        },
+        {
+          "enunciado": "El 40 % de un número es 80. ¿Cuál es el número?\n\nA) 160   B) 200   C) 240   D) 320",
+          "respuesta": "B) 200",
+          "pasos": [
+            "0,40 × N = 80 → N = 80 ÷ 0,40 = 200."
+          ]
+        },
+        {
+          "enunciado": "En una urna hay 3 bolas rojas y 5 azules. Probabilidad de sacar azul:\n\nA) 3/8   B) 5/8   C) 5/3   D) 1/5",
+          "respuesta": "B) 5/8",
+          "pasos": [
+            "Total = 8.",
+            "Favorables azules = 5 → 5/8."
+          ]
+        },
+        {
+          "enunciado": "Un precio sube 10 % y luego baja 10 %. Sobre el original:\n\nA) Queda igual   B) Baja   C) Sube   D) Sube 1 %",
+          "respuesta": "B) Baja",
+          "pasos": [
+            "Empieza en 100 → +10 % = 110.",
+            "−10 % de 110 = 11 → 110 − 11 = 99.",
+            "Queda por debajo del original (99 < 100)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "razonamiento-verbal",
+      "nombre": "Razonamiento verbal",
+      "descripcion": "Comprensión de enunciados cortos y vocabulario en contexto.",
+      "items": [
+        {
+          "enunciado": "«Aunque llovía, salieron a caminar.» La palabra Aunque indica:\n\nA) Causa   B) Contraste / concesión   C) Tiempo   D) Lugar",
+          "respuesta": "B) Contraste / concesión",
+          "pasos": [
+            "Aunque introduce una idea que no impide la otra.",
+            "Es concesión/contraste, no causa."
+          ]
+        },
+        {
+          "enunciado": "Sinónimo de BREVE en «una reunión breve»:\n\nA) Larga   B) Corta   C) Aburrida   D) Importante",
+          "respuesta": "B) Corta",
+          "pasos": [
+            "Breve = de poca duración → corta."
+          ]
+        },
+        {
+          "enunciado": "«El informe fue exhaustivo.» Exhaustivo significa:\n\nA) Superficial   B) Incompleto   C) Muy completo / detallado   D) Confuso",
+          "respuesta": "C) Muy completo / detallado",
+          "pasos": [
+            "Exhaustivo = que no deja nada importante por fuera."
+          ]
+        },
+        {
+          "enunciado": "¿Cuál oración está mejor puntuada?\n\nA) Cuando llegue avísame.   B) Cuando llegue, avísame.   C) Cuando, llegue avísame.   D) Cuando llegue avísame,",
+          "respuesta": "B) Cuando llegue, avísame.",
+          "pasos": [
+            "La subordinada temporal al inicio lleva coma: Cuando…, …"
+          ]
+        },
+        {
+          "enunciado": "En «No solo estudió, sino que también trabajó», la correlación correcta es:\n\nA) no solo / sino que también   B) no solo / pero   C) solo / también   D) no / sino",
+          "respuesta": "A) no solo / sino que también",
+          "pasos": [
+            "La pareja fija es «no solo… sino (que) también…»."
+          ]
+        },
+        {
+          "enunciado": "La idea principal de: «El sueño mejora la memoria; por eso conviene dormir bien antes de un examen.»\n\nA) Los exámenes son difíciles   B) Dormir bien ayuda a recordar   C) La memoria no importa   D) Hay que estudiar de noche",
+          "respuesta": "B) Dormir bien ayuda a recordar",
+          "pasos": [
+            "La primera cláusula da el hecho; «por eso» da la conclusión práctica."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "secuencias-numericas",
+      "nombre": "Secuencias numéricas",
+      "descripcion": "Completa el término que falta. Anota diferencias o factores debajo de la serie.",
+      "items": [
+        {
+          "enunciado": "7, 14, 28, 56, ?\n\nA) 84   B) 112   C) 98   D) 70",
+          "respuesta": "B) 112",
+          "pasos": [
+            "×2 en cada paso.",
+            "56 × 2 = 112."
+          ]
+        },
+        {
+          "enunciado": "100, 95, 85, 70, ?\n\nA) 60   B) 50   C) 55   D) 45",
+          "respuesta": "B) 50",
+          "pasos": [
+            "Saltos: −5, −10, −15…",
+            "Siguiente −20: 70 − 20 = 50."
+          ]
+        },
+        {
+          "enunciado": "1, 4, 9, 16, 25, ?\n\nA) 30   B) 36   C) 49   D) 32",
+          "respuesta": "B) 36",
+          "pasos": [
+            "Cuadrados: 1², 2², 3², 4², 5² → siguiente 6² = 36."
+          ]
+        },
+        {
+          "enunciado": "2, 3, 5, 8, 12, ?\n\nA) 15   B) 16   C) 17   D) 18",
+          "respuesta": "C) 17",
+          "pasos": [
+            "Saltos +1, +2, +3, +4…",
+            "Siguiente +5: 12 + 5 = 17."
+          ]
+        },
+        {
+          "enunciado": "5, 10, 8, 16, 14, 28, ?\n\nA) 26   B) 24   C) 30   D) 32",
+          "respuesta": "A) 26",
+          "pasos": [
+            "Patrón: ×2, −2, ×2, −2…",
+            "28 vino de 14×2; sigue −2 → 26."
+          ]
+        },
+        {
+          "enunciado": "64, 32, 16, 8, ?\n\nA) 2   B) 4   C) 6   D) 1",
+          "respuesta": "B) 4",
+          "pasos": [
+            "Mitad en cada paso.",
+            "8 ÷ 2 = 4."
+          ]
+        }
+      ]
+    }
+  ]
+}

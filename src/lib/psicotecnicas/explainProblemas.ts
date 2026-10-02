@@ -343,6 +343,17 @@ function explainRemainder(enunciado: string): string[] | null {
   ];
 }
 
+function gcd(a: number, b: number): number {
+  let x = Math.abs(Math.round(a));
+  let y = Math.abs(Math.round(b));
+  while (y) {
+    const t = y;
+    y = x % y;
+    x = t;
+  }
+  return x || 1;
+}
+
 function explainProfit(enunciado: string): string[] | null {
   const m = enunciado.match(
     /[Cc]ompra\s+a\s*\$?\s*([\d.]+).*vende\s+a\s*\$?\s*([\d.]+).*%/i
@@ -352,12 +363,43 @@ function explainProfit(enunciado: string): string[] | null {
   const sell = Number(m[2].replace(/\./g, ""));
   const gain = sell - buy;
   const pct = (gain / buy) * 100;
-  return [
-    `% de ganancia = (ganancia ÷ costo) × 100.`,
-    `Ganancia = ${money(sell)} − ${money(buy)} = ${money(gain)}.`,
-    `(${money(gain)} ÷ ${money(buy)}) × 100 = ${formatEsNumber(pct)}%.`,
-    `Respuesta: ${formatEsNumber(pct)}.`,
+  const g = gcd(gain, buy);
+  const num = gain / g;
+  const den = buy / g;
+  const pasos: string[] = [
+    `Atajo: % de ganancia = qué parte es la ganancia del COSTO (no del precio de venta).`,
+    `Ganas ${money(gain)} sobre un costo de ${money(buy)}.`,
   ];
+  if (den === 4 && num === 1) {
+    pasos.push(`Eso es 1 de cada 4 del costo → 1/4 = 25%.`);
+  } else if (den === 5 && num === 1) {
+    pasos.push(`Eso es 1 de cada 5 del costo → 1/5 = 20%.`);
+  } else if (den === 2 && num === 1) {
+    pasos.push(`Eso es la mitad del costo → 50%.`);
+  } else if (Number.isInteger(pct)) {
+    pasos.push(
+      `Simplifica la fracción ganancia/costo: ${money(gain)}/${money(buy)} = ${num}/${den}.`
+    );
+    if (den !== 0 && 100 % den === 0) {
+      pasos.push(`${num}/${den} = ${formatEsNumber(pct)}% (porque ${den} × ${formatEsNumber(pct / num)} = 100).`);
+    } else {
+      pasos.push(`(${num} ÷ ${den}) × 100 = ${formatEsNumber(pct)}%.`);
+    }
+  } else {
+    pasos.push(`(${money(gain)} ÷ ${money(buy)}) × 100 = ${formatEsNumber(pct)}%.`);
+  }
+  // Extra shortcut: venta/costo
+  const ratio = sell / buy;
+  if (Number.isInteger(pct) && Math.abs(ratio - (1 + pct / 100)) < 1e-9) {
+    pasos.push(
+      `Otro atajo: venta ÷ costo = ${money(sell)} ÷ ${money(buy)} = ${formatEsNumber(ratio)} → eso es un ${formatEsNumber(pct)}% encima del costo.`
+    );
+  }
+  pasos.push(
+    `Trampa típica: dividir la ganancia entre el precio de venta (${money(gain)}÷${money(sell)}=${formatEsNumber(round2((gain / sell) * 100))}%) — eso NO es % de ganancia sobre costo.`
+  );
+  pasos.push(`Respuesta: ${formatEsNumber(pct)}.`);
+  return pasos;
 }
 
 function explainMinutes(enunciado: string): string[] | null {

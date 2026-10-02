@@ -2468,9 +2468,11 @@
           "enunciado": "Compra a $40.000 y vende a $50.000. ¿% de ganancia?\n\nA) 25   B) 10   C) 20   D) 50",
           "respuesta": "A) 25",
           "pasos": [
-            "% de ganancia = (ganancia ÷ costo) × 100.",
-            "Ganancia = 50.000 − 40.000 = 10.000.",
-            "(10.000 ÷ 40.000) × 100 = 25%.",
+            "Atajo: % de ganancia = qué parte es la ganancia del COSTO (no del precio de venta).",
+            "Ganas 10.000 sobre un costo de 40.000.",
+            "Eso es 1 de cada 4 del costo → 1/4 = 25%.",
+            "Otro atajo: venta ÷ costo = 50.000 ÷ 40.000 = 1,25 → eso es un 25% encima del costo.",
+            "Trampa típica: dividir la ganancia entre el precio de venta (10.000÷50.000=20%) — eso NO es % de ganancia sobre costo.",
             "Respuesta: 25."
           ]
         },
@@ -2478,9 +2480,11 @@
           "enunciado": "Compra a $80.000 y vende a $100.000. ¿% de ganancia?\n\nA) 25   B) 20   C) 80   D) 12,5",
           "respuesta": "A) 25",
           "pasos": [
-            "% de ganancia = (ganancia ÷ costo) × 100.",
-            "Ganancia = 100.000 − 80.000 = 20.000.",
-            "(20.000 ÷ 80.000) × 100 = 25%.",
+            "Atajo: % de ganancia = qué parte es la ganancia del COSTO (no del precio de venta).",
+            "Ganas 20.000 sobre un costo de 80.000.",
+            "Eso es 1 de cada 4 del costo → 1/4 = 25%.",
+            "Otro atajo: venta ÷ costo = 100.000 ÷ 80.000 = 1,25 → eso es un 25% encima del costo.",
+            "Trampa típica: dividir la ganancia entre el precio de venta (20.000÷100.000=20%) — eso NO es % de ganancia sobre costo.",
             "Respuesta: 25."
           ]
         },

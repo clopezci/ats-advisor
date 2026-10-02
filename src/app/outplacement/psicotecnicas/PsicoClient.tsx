@@ -21,11 +21,12 @@ import { ejercicioSpeakScript, fichaSpeakScript, stopSpeaking } from "@/lib/psic
 import { writeFocusPath } from "@/lib/engagement/focusPath";
 import {
   canExplainTipoItem,
-  hasPsicoPracticaLocal,
+  hasPsicoPracticaAccess,
   PSICO_PRACTICA_PRICE_COP,
 } from "@/lib/psicotecnicas/practicaAccess";
 import { applySessionPrivileges } from "@/lib/client/sessionPrivileges";
 import { createBrowserSupabase } from "@/lib/supabase/client";
+import { readEntitlement } from "@/lib/entitlements";
 import { formatCop } from "@/lib/channels/pricing";
 import bancoTiposData from "@/lib/psicotecnicas/bancoTipos.json";
 
@@ -105,7 +106,7 @@ export function PsicoClient() {
       } catch {
         /* ignore */
       }
-      if (alive) setPaid(hasPsicoPracticaLocal());
+      if (alive) setPaid(hasPsicoPracticaAccess(readEntitlement().plan));
     })();
     fetch("/api/psicotecnicas/bank")
       .then(async (res) => {

@@ -3,7 +3,6 @@
 import {
   CHANNEL_CHOICE_INTRO,
   channelQuotes,
-  formatCop,
   type LearningChannel,
   type WhatsappCostModel,
 } from "@/lib/channels/pricing";
@@ -12,29 +11,16 @@ export function ChannelChooser({
   value,
   onChange,
   waModel,
-  whatsappPriceCop,
   showIntro = true,
 }: {
   value: LearningChannel;
   onChange: (c: LearningChannel) => void;
   waModel?: WhatsappCostModel;
+  /** @deprecated WhatsApp ya no se cobra aparte. */
   whatsappPriceCop?: number;
   showIntro?: boolean;
 }) {
-  const quotes = channelQuotes(waModel).map((q) => {
-    if (q.channel !== "whatsapp" || whatsappPriceCop == null) return q;
-    return {
-      ...q,
-      priceCop: whatsappPriceCop,
-      shortBadge: `${formatCop(whatsappPriceCop)}/mes`,
-      userMessage: [
-        `WhatsApp: ${formatCop(whatsappPriceCop)} al mes.`,
-        "Ese valor ya incluye el sobrecosto de la mensajería que cobra Meta (y la operación del canal).",
-        "Por eso WhatsApp no es gratis: Meta factura cada mensaje/plantilla que te enviamos.",
-        "Si prefieres el mismo contenido sin ese sobrecosto, elige Telegram (gratis) o solo la app.",
-      ].join(" "),
-    };
-  });
+  const quotes = channelQuotes(waModel);
   const selected = quotes.find((q) => q.channel === value) || quotes[0];
 
   return (

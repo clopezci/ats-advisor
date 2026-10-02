@@ -102,7 +102,8 @@ assert(byDomain.company?.name === "Bancolombia", "company name");
 
 assert(localTfidfScore(cv, job) > 0, "tfidf");
 assert(analyzeBullets(cv).total > 0, "bullets");
-assert(whatsappFinalPriceCop() === 28800, `wa price ${whatsappFinalPriceCop()}`);
+// Costo interno estimado Meta (no es precio de venta: WA va incluido en Carrera).
+assert(whatsappFinalPriceCop() === 28800, `wa cost model ${whatsappFinalPriceCop()}`);
 
 const reflowed = reflowExtractedCv(
   "CARLOS EMILIO LÓPEZ\nTransformación Digital | IA\nana@mail.com\nMás de 20 años liderando áreas de transformación digital, operaciones y TI en sectores de alta transaccionalidad y\nmúltiples sedes tecnológicas."

@@ -8,8 +8,8 @@ import { ChannelChooser } from "@/components/ChannelChooser";
 import { canAccessOutplacement, planLabel, readEntitlement, setPlan, type PlanId } from "@/lib/entitlements";
 import {
   CHANNEL_CHOICE_INTRO,
+  CARRERA_PRICE_COP,
   formatCop,
-  whatsappFinalPriceCop,
   type LearningChannel,
 } from "@/lib/channels/pricing";
 import { CAREER_MODULE_PITCH, CAREER_PATH_LABEL } from "@/lib/outplacement/labels";
@@ -17,8 +17,6 @@ import { isValidEmail, safeAppPath } from "@/lib/validation";
 import { grantPsicoPractica, PSICO_PRACTICA_PRICE_COP } from "@/lib/psicotecnicas/practicaAccess";
 import { createBrowserSupabase } from "@/lib/supabase/client";
 import { applySessionPrivileges } from "@/lib/client/sessionPrivileges";
-
-const waPrice = whatsappFinalPriceCop();
 
 function isLocalHost() {
   if (typeof window === "undefined") return false;
@@ -58,11 +56,11 @@ export default function PreciosPage() {
   const [dummyPhase, setDummyPhase] = useState<"idle" | "processing" | "done">("idle");
   const [channel, setChannel] = useState<LearningChannel>("telegram");
   const [prices, setPrices] = useState({
-    carrera: 79000,
+    carrera: CARRERA_PRICE_COP,
     plus: 99000,
     out09_extra: 22000,
     psico_practica: PSICO_PRACTICA_PRICE_COP,
-    whatsapp_addon: waPrice,
+    whatsapp_addon: 0,
   });
   const [returnNext, setReturnNext] = useState("/guia?recorrido=1");
   const [demoAllowed, setDemoAllowed] = useState(false);
@@ -142,11 +140,11 @@ export default function PreciosPage() {
       .then((d) => {
         if (d.pricing) {
           setPrices({
-            carrera: d.pricing.carrera,
+            carrera: d.pricing.carrera || CARRERA_PRICE_COP,
             plus: d.pricing.plus,
             out09_extra: d.pricing.out09_extra,
             psico_practica: d.pricing.psico_practica || PSICO_PRACTICA_PRICE_COP,
-            whatsapp_addon: d.pricing.whatsapp_addon || waPrice,
+            whatsapp_addon: 0,
           });
         }
       })
@@ -247,14 +245,13 @@ export default function PreciosPage() {
     setMsg("");
     await new Promise((r) => setTimeout(r, 1200));
     const next = setPlan(plan, "demo_checkout");
-    const addon = channel === "whatsapp" ? prices.whatsapp_addon : 0;
     localStorage.setItem(
       "ats_last_checkout",
       JSON.stringify({
         mode: "dummy",
         plan,
         channel,
-        whatsappAddon: addon,
+        whatsappAddon: 0,
         reference: `DUMMY-${plan.toUpperCase()}-${Date.now()}`,
         paidAt: new Date().toISOString(),
       })
@@ -262,11 +259,7 @@ export default function PreciosPage() {
     setCurrentPlan(next.plan);
     setDummyPhase("done");
     setLoading(null);
-    setMsg(
-      `Pago simulado OK. Plan ${planLabel(plan)} activo${
-        addon ? ` + WhatsApp ${formatCop(addon)}/mes (registrado)` : ""
-      }.`
-    );
+    setMsg(`Pago simulado OK. Plan ${planLabel(plan)} activo (incluye psicotécnicas y WhatsApp).`);
     returnAfterPay();
   }
 
@@ -382,18 +375,16 @@ export default function PreciosPage() {
       <section className="bento-card space-y-2">
         <div className="flex items-start justify-between">
           <h1 className="text-2xl font-semibold">Precios</h1>
-          <SpeakButton text="Gratis solo el analizador ATS, el encaje rápido y el tracker. Un solo plan: Carrera, con la ruta de 8 módulos y todas las herramientas de acompañamiento. El curso a tu medida se compra aparte." />
+          <SpeakButton text="Gratis solo el analizador ATS, el encaje rápido y el tracker. Un solo plan: Carrera, con la ruta de 8 módulos, psicotécnicas y WhatsApp incluidos. El curso a tu medida se compra aparte." />
         </div>
         <p className="text-sm muted">
-          Gratis (3): analizador ATS, encaje rápido, tracker. Todo lo demás es Carrera.
+          Gratis (3): analizador ATS, encaje rápido, tracker. El resto va en Carrera o en add-ons
+          sueltos.
         </p>
         <p className="text-sm leading-relaxed">
-          Un solo plan: <strong>Carrera</strong>. El corazón es la {CAREER_PATH_LABEL}. Si necesitas un
-          curso puntual sobre un tema tuyo, lo compras como add-on.
-        </p>
-        <p className="text-sm muted leading-relaxed">
-          Carrera cuesta una mínima fracción del outplacement empresarial: la misma idea de guía,
-          al alcance de una persona.
+          <strong>Carrera</strong> incluye la {CAREER_PATH_LABEL}, herramientas, psicotécnicas con
+          explicación/IA y WhatsApp (hasta 5 recordatorios/día). También puedes tomar solo práctica
+          psicotécnica o un curso a medida (add-ons).
         </p>
         <p className="text-sm">
           Plan actual:{" "}
@@ -401,35 +392,37 @@ export default function PreciosPage() {
             {planLabel(currentPlan)}
           </span>
         </p>
-        {privileged ? (
-          <section
-            className="rounded-xl border p-3 space-y-2"
-            style={{ borderColor: "var(--brand)", background: "rgba(124, 58, 237, 0.06)" }}
-          >
-            <p className="text-sm font-medium">Acceso dueño / tester</p>
-            <p className="text-xs muted leading-relaxed">
-              Este correo no necesita pagar. Activa Carrera y la práctica psicotécnica en este
-              navegador.
-            </p>
-            <button type="button" className="btn-primary" onClick={() => activatePrivileged("both")}>
-              Activar Carrera + práctica (sin pago)
-            </button>
-            <button
-              type="button"
-              className="btn-secondary"
-              onClick={() => activatePrivileged("carrera")}
-            >
-              Solo Carrera / Tester
-            </button>
-            <button
-              type="button"
-              className="btn-secondary"
-              onClick={() => activatePrivileged("psico_practica")}
-            >
-              Solo práctica psicotécnica
-            </button>
-          </section>
-        ) : null}
+      </section>
+
+      <section
+        className="bento-card space-y-4"
+        style={{ borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }}
+      >
+        <div className="flex flex-wrap items-baseline justify-between gap-3">
+          <h2 className="text-3xl font-semibold" style={{ color: "var(--brand)" }}>
+            Plan Carrera
+          </h2>
+          <p className="text-4xl font-semibold tabular-nums" style={{ color: "var(--brand)" }}>
+            {formatCop(prices.carrera)}
+            <span className="text-base font-medium muted"> /mes</span>
+          </p>
+        </div>
+        <p className="text-sm muted">Único plan completo · incluye {CAREER_PATH_LABEL}</p>
+        <p className="text-sm font-medium">Qué incluye la ruta de 8 módulos</p>
+        <ul className="space-y-2 text-sm muted">
+          {CAREER_MODULE_PITCH.map((m) => (
+            <li key={m.code}>
+              <strong style={{ color: "var(--text)" }}>{m.short}</strong> — {m.value}
+            </li>
+          ))}
+        </ul>
+        <p className="text-sm font-medium">También incluido en Carrera</p>
+        <ul className="space-y-1 text-sm muted">
+          <li>• Cuadernillo, LinkedIn, carta, plantilla CV, multi-oferta, pack ZIP</li>
+          <li>• Coach IA, filtro telefónico, red de contactos, negociación</li>
+          <li>• Psicotécnicas: fichas + explicaciones + práctica con método IA</li>
+          <li>• WhatsApp o Telegram: hasta 5 recordatorios/día (WhatsApp ya no se paga aparte)</li>
+        </ul>
         <input
           className="field"
           type="email"
@@ -439,7 +432,7 @@ export default function PreciosPage() {
           required
         />
         <details className="rounded-xl border p-3" style={{ borderColor: "var(--border)" }}>
-          <summary className="cursor-pointer text-sm font-medium">Cupón o pasarela</summary>
+          <summary className="cursor-pointer text-sm font-medium muted">Cupón o pasarela</summary>
           <div className="mt-3 space-y-2">
             <input
               className="field"
@@ -468,45 +461,17 @@ export default function PreciosPage() {
             ))}
           </div>
         </details>
-      </section>
-
-      <section className="bento-card space-y-3">
-        <div className="flex items-center justify-between">
-          <h2 className="font-semibold">Carrera</h2>
-          <span className="pill-brand">{formatCop(prices.carrera)}/mes</span>
-        </div>
-        <p className="text-xs muted">Único plan · incluye {CAREER_PATH_LABEL}</p>
-        <p className="text-sm font-medium">Qué incluye la ruta de 8 módulos</p>
-        <ul className="space-y-2 text-sm muted">
-          {CAREER_MODULE_PITCH.map((m) => (
-            <li key={m.code}>
-              <strong style={{ color: "var(--text)" }}>{m.short}</strong> — {m.value}
-            </li>
-          ))}
-        </ul>
-        <p className="text-sm font-medium">También con Carrera</p>
-        <ul className="space-y-1 text-sm muted">
-          <li>• Cuadernillo guiado (mapa, SOAR, guiones, mercado, red, finanzas, oferta)</li>
-          <li>• Repaso del rol completo (curso del aviso, retos, 1:1)</li>
-          <li>• LinkedIn, carta, plantilla CV, multi-oferta, pack ZIP</li>
-          <li>• Coach IA, filtro telefónico, red de contactos, negociación</li>
-          <li>
-            • Psicotécnicas: estudiar fichas y pruebas (también en ruta gratis); práctica con método
-            IA es add-on
-          </li>
-          <li>• Cápsulas por Telegram (incluido) o WhatsApp (add-on)</li>
-        </ul>
         <button
           type="button"
           className="btn-primary"
           disabled={loading === "carrera"}
           onClick={() => checkout("carrera")}
         >
-          {loading === "carrera" ? "Preparando…" : "Pagar Carrera"}
+          {loading === "carrera" ? "Preparando…" : `Pagar Carrera · ${formatCop(prices.carrera)}/mes`}
         </button>
         {demoAllowed && (
           <details className="rounded-xl border p-3" style={{ borderColor: "var(--border)" }}>
-            <summary className="cursor-pointer text-sm">Probar sin cobro</summary>
+            <summary className="cursor-pointer text-sm">Probar sin cobro (localhost)</summary>
             <button
               type="button"
               className="btn-secondary mt-3"
@@ -524,18 +489,20 @@ export default function PreciosPage() {
       </section>
 
       <section className="bento-card space-y-3">
-        <div className="flex items-center justify-between">
-          <h2 className="font-semibold">Práctica psicotécnica</h2>
-          <span className="pill-brand">{formatCop(prices.psico_practica)}/mes</span>
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <h2 className="font-semibold">Solo práctica psicotécnica</h2>
+          <span className="text-lg font-semibold" style={{ color: "var(--brand)" }}>
+            {formatCop(prices.psico_practica)}
+            <span className="text-sm font-medium muted"> /mes</span>
+          </span>
         </div>
-        <p className="text-xs muted">Add-on. No va incluido en Carrera.</p>
+        <p className="text-xs muted">
+          Add-on si no tomas Carrera. Con Carrera ya viene incluido: no pagues esto dos veces.
+        </p>
         <ul className="space-y-1 text-sm muted">
-          <li>• En «Pruebas por tipo»: 4 explicaciones gratis por categoría; desde la 5.ª, respuesta y paso a paso con este plan</li>
-          <li>• Simulacro en vivo: pegas la pregunta o la foto y sale la respuesta</li>
-          <li>• Las mismas preguntas, con 3 pistas antes de la respuesta</li>
-          <li>• Casos aleatorios: la IA inventa el ítem y tú lo resuelves</li>
-          <li>• Hasta 180 preguntas al mes con IA de pago (foto incluida)</li>
-          <li>• Fichas de método y el enunciado de cada ítem siguen gratis</li>
+          <li>• Explicaciones desde la 5.ª pregunta en «Pruebas por tipo»</li>
+          <li>• Simulacro en vivo (texto/foto), pistas y casos aleatorios con IA</li>
+          <li>• Hasta {180} preguntas/mes con IA</li>
         </ul>
         {demoAllowed && (
           <button
@@ -551,23 +518,24 @@ export default function PreciosPage() {
         )}
         <button
           type="button"
-          className="btn-primary"
+          className="btn-secondary"
           disabled={loading === "psico_practica"}
           onClick={() => checkout("psico_practica")}
         >
-          {loading === "psico_practica" ? "Preparando…" : "Pagar práctica"}
+          {loading === "psico_practica" ? "Preparando…" : "Pagar solo práctica"}
         </button>
       </section>
 
       <section className="bento-card space-y-3">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
           <h2 className="font-semibold">Curso a tu medida</h2>
-          <span className="pill-brand">{formatCop(prices.out09_extra)}</span>
+          <span className="text-lg font-semibold" style={{ color: "var(--brand)" }}>
+            {formatCop(prices.out09_extra)}
+          </span>
         </div>
-        <p className="text-xs muted">Add-on (no es otro plan mensual)</p>
+        <p className="text-xs muted">Add-on (no es otro plan mensual). Requiere Carrera.</p>
         <ul className="space-y-1 text-sm muted">
           <li>• Un curso sobre el tema que tú elijas</li>
-          <li>• Requiere tener Carrera activo</li>
           <li>• Lecciones cortas, las mismas del acompañamiento</li>
         </ul>
         <button
@@ -594,20 +562,34 @@ export default function PreciosPage() {
               /* ignore */
             }
           }}
-          whatsappPriceCop={prices.whatsapp_addon}
           showIntro={false}
         />
-        {channel === "whatsapp" && (
-          <p className="text-sm font-medium" style={{ color: "var(--brand)" }}>
-            Addon WhatsApp: {formatCop(prices.whatsapp_addon)}/mes. Se suma al checkout de Carrera.
-          </p>
-        )}
-        <p className="text-xs muted">
-          Total orientativo Carrera
-          {channel === "whatsapp" ? " + WhatsApp" : ""}:{" "}
-          {formatCop(prices.carrera + (channel === "whatsapp" ? prices.whatsapp_addon : 0))}
-        </p>
       </section>
+
+      {privileged ? (
+        <details className="bento-card space-y-2">
+          <summary className="cursor-pointer text-sm font-medium muted">Acceso dueño / tester</summary>
+          <p className="text-xs muted leading-relaxed mt-2">
+            Atajos sin cobro en este navegador. La whitelist de práctica ilimitada se gestiona en
+            /admin.
+          </p>
+          <div className="flex flex-wrap gap-2 mt-2">
+            <button type="button" className="btn-secondary" onClick={() => activatePrivileged("both")}>
+              Activar Carrera + práctica
+            </button>
+            <button type="button" className="btn-secondary" onClick={() => activatePrivileged("carrera")}>
+              Solo Carrera / Tester
+            </button>
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() => activatePrivileged("psico_practica")}
+            >
+              Solo práctica
+            </button>
+          </div>
+        </details>
+      ) : null}
 
       {demoAllowed && (
         <section className="bento-card space-y-2">

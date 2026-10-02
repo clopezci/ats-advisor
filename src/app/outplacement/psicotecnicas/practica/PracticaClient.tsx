@@ -19,10 +19,11 @@ import {
 import {
   PSICO_PRACTICA_MONTHLY_CAP,
   PSICO_PRACTICA_PRICE_COP,
-  hasPsicoPracticaLocal,
+  hasPsicoPracticaAccess,
 } from "@/lib/psicotecnicas/practicaAccess";
 import { TIPOS_CASO } from "@/lib/psicotecnicas/practicaScope";
 import { formatCop } from "@/lib/channels/pricing";
+import { readEntitlement } from "@/lib/entitlements";
 
 type Tab = "perfil" | "simulacro" | "aprendizaje" | "aleatorias" | "resumen";
 
@@ -67,7 +68,7 @@ export function PracticaClient() {
       } catch {
         /* ignore */
       }
-      if (alive) setPaid(hasPsicoPracticaLocal());
+      if (alive) setPaid(hasPsicoPracticaAccess(readEntitlement().plan));
     })();
     return () => {
       alive = false;

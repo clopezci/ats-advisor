@@ -24,19 +24,39 @@ function deepMerge(base: AppSettings, patch: Partial<AppSettings>): AppSettings 
   };
 }
 
+/** Una sola vez: Carrera 94.500 + WhatsApp incluido (addon 0). */
+function migrateProductPricing(s: AppSettings): AppSettings {
+  const pricing = { ...s.pricing };
+  const whatsapp_cost = { ...s.whatsapp_cost };
+  let changed = false;
+  if (pricing.carrera === 79000 || pricing.carrera === 79900) {
+    pricing.carrera = 94500;
+    changed = true;
+  }
+  if (pricing.whatsapp_addon === 28800) {
+    pricing.whatsapp_addon = 0;
+    changed = true;
+  }
+  if (whatsapp_cost.msgs_per_month === 30 || whatsapp_cost.msgs_per_month === 60) {
+    whatsapp_cost.msgs_per_month = 150;
+    changed = true;
+  }
+  return changed ? { ...s, pricing, whatsapp_cost } : s;
+}
+
 /** Hydrate settings from Supabase app_settings when available. */
 export async function hydrateSettingsFromCloud() {
   const sb = createServiceSupabase();
-  if (!sb) return readSettings();
+  if (!sb) return migrateProductPricing(readSettings());
   try {
     const { data } = await sb.from("app_settings").select("value").eq("key", "main").maybeSingle();
     if (data?.value) {
-      writeSettings(deepMerge(defaultSettings(), data.value as Partial<AppSettings>));
+      writeSettings(migrateProductPricing(deepMerge(defaultSettings(), data.value as Partial<AppSettings>)));
     }
   } catch {
     /* ignore */
   }
-  return readSettings();
+  return migrateProductPricing(readSettings());
 }
 
 export async function persistSettingsToCloud(settings: AppSettings) {

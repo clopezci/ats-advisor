@@ -5,7 +5,7 @@ import { clampText } from "@/lib/validation";
 import { completePractice } from "@/lib/psicotecnicas/practiceAi";
 import {
   PSICO_PRACTICA_MONTHLY_CAP,
-  hasPsicoPracticaCookie,
+  hasPsicoPracticaFromRequest,
 } from "@/lib/psicotecnicas/practicaAccess";
 import {
   TIPOS_CASO,
@@ -48,10 +48,11 @@ export async function POST(req: Request) {
 
   try {
     const cookie = req.headers.get("cookie") || "";
-    if (!hasPsicoPracticaCookie(cookie)) {
+    if (!hasPsicoPracticaFromRequest(cookie)) {
       return NextResponse.json(
         {
-          error: "La práctica con tu perfil es un add-on de pago. Las fichas se leen gratis.",
+          error:
+            "La práctica con IA va incluida en Carrera, o como add-on de práctica psicotécnica. Las fichas se leen gratis.",
           code: "PAYWALL",
         },
         { status: 402 }

@@ -14,8 +14,7 @@ import {
   readEntitlement,
   type PlanId,
 } from "@/lib/entitlements";
-import { whatsappFinalPriceCop, type LearningChannel } from "@/lib/channels/pricing";
-import { CHANNEL_CHOICE_INTRO } from "@/lib/channels/pricing";
+import { type LearningChannel, CHANNEL_CHOICE_INTRO } from "@/lib/channels/pricing";
 import { CAREER_PATH_LABEL } from "@/lib/outplacement/labels";
 import { writeFocusPath } from "@/lib/engagement/focusPath";
 import { nextWorkbookModule, readWorkbook, workbookProgress } from "@/lib/workbook/types";
@@ -30,7 +29,6 @@ export default function OutplacementPage() {
   const [continueLabel, setContinueLabel] = useState("Continuar: mi cuadernillo");
   const [pct, setPct] = useState(0);
   const unlocked = canAccessOutplacement(plan);
-  const waPrice = whatsappFinalPriceCop();
 
   useEffect(() => {
     writeFocusPath("carrera");
@@ -155,7 +153,6 @@ export default function OutplacementPage() {
                 /* ignore */
               }
             }}
-            whatsappPriceCop={waPrice}
             showIntro={false}
           />
         </section>

@@ -94,17 +94,17 @@ const g = globalThis as unknown as { __atsSettings?: AppSettings };
 export function defaultSettings(): AppSettings {
   return {
     pricing: {
-      carrera: 79000,
+      carrera: 94500,
       plus: 99000,
       out09_extra: 22000,
       psico_practica: 39000,
-      whatsapp_addon: 0, // 0 = calcular: meta_mid × 1.5
+      whatsapp_addon: 0, // incluido en Carrera (hasta 5 recordatorios/día); 0 = no vender aparte
       currency: "COP",
     },
     whatsapp_cost: {
       meta_mid_monthly_cop: 16000,
       margin_percent: 80,
-      msgs_per_month: 60,
+      msgs_per_month: 150, // ~5 recordatorios/día × 30
     },
     ai_limits: {
       free_ats_per_day: 5,
@@ -202,10 +202,9 @@ function deepMerge(base: AppSettings, patch: Partial<AppSettings>): AppSettings 
   };
 }
 
-/** Precio final WhatsApp al usuario (solo el número público). */
+/** Precio final WhatsApp al usuario. Con Carrera va incluido → 0 al cobrar aparte. */
 export function resolveWhatsappAddonCop(settings = readSettings()): number {
-  if (settings.pricing.whatsapp_addon > 0) return settings.pricing.whatsapp_addon;
-  const mid = settings.whatsapp_cost.meta_mid_monthly_cop;
-  const margin = settings.whatsapp_cost.margin_percent;
-  return Math.round(mid * (1 + margin / 100));
+  // Producto: WhatsApp incluido en Carrera (hasta 5 recordatorios/día).
+  if ((settings.pricing.whatsapp_addon ?? 0) <= 0) return 0;
+  return settings.pricing.whatsapp_addon;
 }

@@ -172,7 +172,12 @@ export default function AdminPage() {
         <h2 className="font-semibold">Precios COP</h2>
         {(["carrera", "plus", "out09_extra", "psico_practica", "whatsapp_addon"] as const).map((k) => (
           <label key={k} className="block text-sm">
-            {k} {k === "whatsapp_addon" ? "(0 = fórmula costo Meta)" : ""}
+            {k}{" "}
+            {k === "whatsapp_addon"
+              ? "(0 = incluido en Carrera; no se vende aparte)"
+              : k === "carrera"
+                ? "(plan completo: psico + WS hasta 5/día)"
+                : ""}
             <input
               className="field mt-1"
               type="number"

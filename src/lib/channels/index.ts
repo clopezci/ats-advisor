@@ -23,13 +23,15 @@ export function liveChannelQuotes() {
       ? {
           ...q,
           priceCop: finalWa,
-          shortBadge: `${formatCop(finalWa)}/mes`,
-          userMessage: [
-            `WhatsApp: ${formatCop(finalWa)} al mes.`,
-            "Ese valor ya incluye el sobrecosto de la mensajería que cobra Meta (y la operación del canal).",
-            "Por eso WhatsApp no es gratis: Meta factura cada mensaje/plantilla que te enviamos.",
-            "Si prefieres el mismo contenido sin ese sobrecosto, elige Telegram (gratis) o solo la app.",
-          ].join(" "),
+          shortBadge: finalWa > 0 ? `${formatCop(finalWa)}/mes` : "Incluido en Carrera",
+          userMessage:
+            finalWa > 0
+              ? [
+                  `WhatsApp: ${formatCop(finalWa)} al mes.`,
+                  "Ese valor ya incluye el sobrecosto de Meta.",
+                  "Si prefieres sin ese sobrecosto, elige Telegram o solo la app.",
+                ].join(" ")
+              : q.userMessage,
         }
       : q
   );

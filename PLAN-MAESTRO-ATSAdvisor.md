@@ -303,7 +303,7 @@ El mercado de outplacement corporativo está en **millones**. Incluso cobrando *
 | Plan | Precio COP/mes | Incluye | Margen est. (uso medio) |
 |------|----------------|---------|-------------------------|
 | **ATS Free** | $0 + ads | ATS ultra-pro limitado + ads | Ads ≥ costo |
-| **Carrera (Outplacement)** | **$79.000**/mes | OUT-01…08 + Telegram/PWA + coach/simulador. **Sin OUT-09 incluido**. | ~70–85% |
+| **Carrera (Outplacement)** | **$94.500**/mes | OUT-01…08 + Telegram/PWA + WhatsApp (≤5/día) + psicotécnicas + coach. **Sin OUT-09 incluido**. | ~70–85% |
 | **Carrera Plus** | **$99.000**/mes | Todo Carrera + **2× OUT-09**/mes + más simulador | ~65–80% |
 | **OUT-09 extra** | **$22.000** / curso | 1 curso personalizado adicional | ≥50% |
 | **Modo 90 días (post-empleo)** | **$0** (pausa de suscripción) | Checklist onboarding al nuevo empleo — **no es SKU de $39k** | Alto |
@@ -432,8 +432,8 @@ Curar y versionar (RAG):
 | Capa | Precio | Monetización |
 |------|--------|--------------|
 | ATS ultra-pro | Gratis (límites) | Ads + upsell |
-| Carrera | **$79.000 COP/mes** (sugerido) | OUT-01…08 + 1× OUT-09 + Telegram |
-| Carrera Plus | **$99.000 COP/mes** | + WhatsApp + 2× OUT-09 |
+| Carrera | **$94.500 COP/mes** | OUT-01…08 + psico + WhatsApp (≤5/día) + Telegram |
+| Carrera Plus | **$99.000 COP/mes** | + 2× OUT-09 |
 | OUT-09 extra | **$19.000–25.000** | Curso personalizado adicional |
 | Analytics Pro / B2B RH | Futuro | Margen alto |
 

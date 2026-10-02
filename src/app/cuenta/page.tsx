@@ -15,7 +15,7 @@ import {
 import { createBrowserSupabase } from "@/lib/supabase/client";
 import { applySessionPrivileges } from "@/lib/client/sessionPrivileges";
 import { ChannelChooser } from "@/components/ChannelChooser";
-import { whatsappFinalPriceCop, type LearningChannel } from "@/lib/channels/pricing";
+import { type LearningChannel } from "@/lib/channels/pricing";
 import {
   readFocusPath,
   writeFocusPath,
@@ -32,7 +32,6 @@ export default function CuentaPage() {
   const [sessionReady, setSessionReady] = useState(false);
   const [allowLocalPlans, setAllowLocalPlans] = useState(false);
   const [focusPath, setFocusPath] = useState<FocusPath | null>(null);
-  const waPrice = whatsappFinalPriceCop();
 
   useEffect(() => {
     try {
@@ -285,7 +284,7 @@ export default function CuentaPage() {
           />
         </label>
         <p className="text-sm font-medium">Canal de microlearning</p>
-        <ChannelChooser value={channel} onChange={setChannel} whatsappPriceCop={waPrice} />
+        <ChannelChooser value={channel} onChange={setChannel} />
         <button type="button" className="btn-primary" onClick={save}>
           Guardar
         </button>

@@ -854,7 +854,7 @@
       "descripcion": "Transcrito del Excel: cálculo mental.",
       "items": [
         {
-          "enunciado": "Elija la respuesta correcta.\n\n30 ÷ (18 * 1/3) - 15 * 1/3 = ?\n\nOpciones: 0 | -130/27 | -40/9 | 3 | 5",
+          "enunciado": "Elija la respuesta correcta.\n\n30 ÷ (18 * 1/3) - 15 * 1/3 = ?\n\nOpciones: −130/27 | 3 | 5 | 0 | −40/9",
           "respuesta": "0",
           "pasos": [
             "1) Paréntesis: 18×(1/3)=6.",
@@ -865,7 +865,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n(60 ÷ (−20)) + (3 × 5/3 × 5) = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n(60 ÷ (−20)) + (3 × 5/3 × 5) = ?\n\nOpciones: 23 | 12 | 22 | 32 | 44",
           "respuesta": "22",
           "pasos": [
             "1) 60÷(−20)=−3.",
@@ -875,7 +875,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n3 + 6 ÷ 3 * 2 = ?\n\nOpciones: 7 | 6 | 4 | 1.5 | 3",
+          "enunciado": "Elija la respuesta correcta.\n\n3 + 6 ÷ 3 * 2 = ?\n\nOpciones: 6 | 3 | 7 | 4 | 1.5",
           "respuesta": "7",
           "pasos": [
             "1) De izquierda a derecha ×÷: 6÷3=2.",
@@ -885,7 +885,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n(5 × 4) − (2 × 3) + 4 = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n(5 × 4) − (2 × 3) + 4 = ?\n\nOpciones: 17 | 20 | −18 | 18 | 16",
           "respuesta": "18",
           "pasos": [
             "1) 5×4=20; 2×3=6.",
@@ -894,7 +894,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n26 × ? − 110 = 384\n\nOpciones: 14 | 13 | 17 | 15 | 19",
+          "enunciado": "Elija la respuesta correcta.\n\n26 × ? − 110 = 384\n\nOpciones: 14 | 15 | 17 | 19 | 13",
           "respuesta": "19",
           "pasos": [
             "1) Aísla el producto: 26×?=384+110=494.",
@@ -904,7 +904,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n546 ÷ 91 = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n546 ÷ 91 = ?\n\nOpciones: 6 | 5 | 3 | −4 | 16",
           "respuesta": "6",
           "pasos": [
             "1) 91×6=546.",
@@ -913,7 +913,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n90 + 46 − 63 = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n90 + 46 − 63 = ?\n\nOpciones: 75 | 71 | 83 | 72 | 73",
           "respuesta": "73",
           "pasos": [
             "1) 90+46=136.",
@@ -922,7 +922,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n52 × 35 − 64 + ? = 829\n\nOpciones: −920 | −925 | −923 | −929 | −927",
+          "enunciado": "Elija la respuesta correcta.\n\n52 × 35 − 64 + ? = 829\n\nOpciones: −927 | −929 | −920 | −925 | −923",
           "respuesta": "-927",
           "pasos": [
             "1) 52×35=1820.",
@@ -932,7 +932,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n12 + 6 + (30 ÷ 15) + 50 = ?\n\nOpciones: 70 | 100 | 150 | 135 | 85",
+          "enunciado": "Elija la respuesta correcta.\n\n12 + 6 + (30 ÷ 15) + 50 = ?\n\nOpciones: 150 | 135 | 85 | 100 | 70",
           "respuesta": "70",
           "pasos": [
             "1) 30÷15=2.",
@@ -941,7 +941,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n311 − 22 + 10 = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n311 − 22 + 10 = ?\n\nOpciones: 300 | 299 | 299/2 | 449 | 0",
           "respuesta": "299",
           "pasos": [
             "1) 311−22=289.",
@@ -950,7 +950,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n(30 ÷ 15 − 10) × (−1) = ?\n\nOpciones: −8 | 6 | −6 | −9 | 8",
+          "enunciado": "Elija la respuesta correcta.\n\n(30 ÷ 15 − 10) × (−1) = ?\n\nOpciones: −9 | 6 | −6 | −8 | 8",
           "respuesta": "8",
           "pasos": [
             "1) 30÷15=2.",
@@ -960,7 +960,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n10 − (3 ÷ 2) = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n10 − (3 ÷ 2) = ?\n\nOpciones: 8.5 | 37/2 | 13/2 | 21/2 | 17",
           "respuesta": "8.5",
           "pasos": [
             "1) 3÷2=1.5.",
@@ -969,7 +969,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n? × 5 = 80\n\nOpciones: 19 | 13 | 15 | 16 | 17",
+          "enunciado": "Elija la respuesta correcta.\n\n? × 5 = 80\n\nOpciones: 15 | 17 | 19 | 13 | 16",
           "respuesta": "16",
           "pasos": [
             "1) ?=80÷5.",
@@ -978,7 +978,7 @@
           ]
         },
         {
-          "enunciado": "Halla el valor de X:\n\n6X/4 = 9.",
+          "enunciado": "Elija la respuesta correcta.\n\n6X/4 = 9 = ?\n\nOpciones: 6 | 4 | −6 | 12 | 5",
           "respuesta": "6",
           "pasos": [
             "1) 6X/4=9 → X=(4×9)/6.",
@@ -987,7 +987,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n27 × 3 = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n27 × 3 = ?\n\nOpciones: 81 | 71 | 82 | 162 | 80",
           "respuesta": "81",
           "pasos": [
             "1) 27×3=81.",
@@ -995,7 +995,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n68 × 7 ÷ ? + 11 = 79\n\nOpciones: 6 | 9 | 7 | 8 | 10",
+          "enunciado": "Elija la respuesta correcta.\n\n68 × 7 ÷ ? + 11 = 79\n\nOpciones: 9 | 10 | 7 | 8 | 6",
           "respuesta": "7",
           "pasos": [
             "1) 68×7=476.",
@@ -1005,7 +1005,7 @@
           ]
         },
         {
-          "enunciado": "Halla el valor de X:\n\n91X/73 = 91.",
+          "enunciado": "Elija la respuesta correcta.\n\n91X/73 = 91 = ?\n\nOpciones: 74 | −73 | 73 | 73/2 | 72",
           "respuesta": "73",
           "pasos": [
             "1) 91X/73=91 → X=(91×73)/91.",
@@ -1014,7 +1014,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n25 − {5 ÷ 5} = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n25 − {5 ÷ 5} = ?\n\nOpciones: 48 | 25 | 0 | 22 | 24",
           "respuesta": "24",
           "pasos": [
             "1) 5÷5=1.",
@@ -1023,7 +1023,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n? × 34 − 100 + 66 = 34\n\nOpciones: 4 | 3 | 2 | 1 | 0",
+          "enunciado": "Elija la respuesta correcta.\n\n? × 34 − 100 + 66 = 34\n\nOpciones: 0 | 2 | 3 | 4 | 1",
           "respuesta": "2",
           "pasos": [
             "1) −100+66=−34 → ?×34 − 34 = 34.",
@@ -1033,7 +1033,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n(10 × (−7) × 25/4) − 23/2 = ?\n\nOpciones: −426 | −921/4 | 0 | −449 | 426",
+          "enunciado": "Elija la respuesta correcta.\n\n(10 × (−7) × 25/4) − 23/2 = ?\n\nOpciones: 0 | −449 | −921/4 | −426 | 426",
           "respuesta": "-449",
           "pasos": [
             "1) 10×(−7)=−70.",
@@ -1043,7 +1043,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n30 − (5 × 2³ − 15) = ?\n\nOpciones: −25 | 5 | 15 | −15 | 12",
+          "enunciado": "Elija la respuesta correcta.\n\n30 − (5 × 2³ − 15) = ?\n\nOpciones: 15 | 12 | −25 | −15 | 5",
           "respuesta": "5",
           "pasos": [
             "1) 2³=8.",
@@ -1054,7 +1054,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n515 × 8 ÷ x = 40\n\nOpciones: 103 | 113 | 102 | 109 | 104",
+          "enunciado": "Elija la respuesta correcta.\n\n515 × 8 ÷ x = 40 = ?\n\nOpciones: 113 | 104 | 103 | 109 | 102",
           "respuesta": "103",
           "pasos": [
             "1) 515×8=4120.",
@@ -1063,7 +1063,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n? × 75 = 600\n\nOpciones: 4 | 5 | 7 | 3 | 8",
+          "enunciado": "Elija la respuesta correcta.\n\n? × 75 = 600\n\nOpciones: 5 | 4 | 8 | 3 | 7",
           "respuesta": "8",
           "pasos": [
             "1) ?=600÷75.",
@@ -1072,7 +1072,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n4 + 6 − 7 + 3 = ?\n\nOpciones: −1 | 6 | 7 | 15 | 20",
+          "enunciado": "Elija la respuesta correcta.\n\n4 + 6 − 7 + 3 = ?\n\nOpciones: 6 | −1 | 15 | 20 | 7",
           "respuesta": "6",
           "pasos": [
             "1) 4+6=10.",
@@ -1082,7 +1082,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n−63 − 1 + 5 + 81 = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n−63 − 1 + 5 + 81 = ?\n\nOpciones: 20 | 12 | 22 | 23 | 11",
           "respuesta": "22",
           "pasos": [
             "1) Agrupa positivos: 5+81=86.",
@@ -1092,7 +1092,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n33 − 27 × (4 + 6) ÷ (−3) = ?\n\nOpciones: 5 | 110 | 123 | −20 | −110",
+          "enunciado": "Elija la respuesta correcta.\n\n33 − 27 × (4 + 6) ÷ (−3) = ?\n\nOpciones: 110 | 5 | 123 | −110 | −20",
           "respuesta": "123",
           "pasos": [
             "1) 4+6=10.",
@@ -1103,7 +1103,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n5 × 4 − 2 × 3 + 4 = ?\n\nOpciones: 10 | 11.5 | 18 | 58 | 15",
+          "enunciado": "Elija la respuesta correcta.\n\n5 × 4 − 2 × 3 + 4 = ?\n\nOpciones: 10 | 11.5 | 15 | 58 | 18",
           "respuesta": "18",
           "pasos": [
             "1) 5×4=20; 2×3=6.",
@@ -1112,7 +1112,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n? ÷ 8 + 67 − 40 = 75\n\nOpciones: 350 | 384 | 364 | 378 | 392",
+          "enunciado": "Elija la respuesta correcta.\n\n? ÷ 8 + 67 − 40 = 75\n\nOpciones: 392 | 378 | 350 | 364 | 384",
           "respuesta": "384",
           "pasos": [
             "1) 67−40=27 → ?/8 + 27 = 75.",
@@ -1122,7 +1122,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n? × 91 = 546\n\nOpciones: 7 | 6 | 5 | 3 | 2",
+          "enunciado": "Elija la respuesta correcta.\n\n? × 91 = 546\n\nOpciones: 5 | 7 | 3 | 2 | 6",
           "respuesta": "6",
           "pasos": [
             "1) ?=546÷91.",
@@ -1131,7 +1131,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n60 ÷ (−20) + 3 × 5/3 × 5 = ?\n\nOpciones: 50 | 25/3 | 65 | 25 | 22",
+          "enunciado": "Elija la respuesta correcta.\n\n60 ÷ (−20) + 3 × 5/3 × 5 = ?\n\nOpciones: 25/3 | 65 | 25 | 50 | 22",
           "respuesta": "22",
           "pasos": [
             "1) 60÷(−20)=−3.",
@@ -1141,7 +1141,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n7 + (6 × 25 + 3) = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n7 + (6 × 25 + 3) = ?\n\nOpciones: 160 | 320 | 158 | 161 | 240",
           "respuesta": "160",
           "pasos": [
             "1) 6×25=150.",
@@ -1151,7 +1151,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n28/56 = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n28/56 = ?\n\nOpciones: 9004 | 9001 | 1/2 | 9002 | 9003",
           "respuesta": "1/2",
           "pasos": [
             "1) Divide num.",
@@ -1161,7 +1161,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n856 ÷ 8 − 53 + ? = 212\n\nOpciones: 158 | 168 | 122 | 136 | 142",
+          "enunciado": "Elija la respuesta correcta.\n\n856 ÷ 8 − 53 + ? = 212\n\nOpciones: 142 | 136 | 122 | 168 | 158",
           "respuesta": "158",
           "pasos": [
             "1) 856÷8=107.",
@@ -1171,7 +1171,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n? ÷ 1 + 63 − 46 = 90\n\nOpciones: 53 | 63 | 73 | 93 | 83",
+          "enunciado": "Elija la respuesta correcta.\n\n? ÷ 1 + 63 − 46 = 90\n\nOpciones: 83 | 93 | 73 | 63 | 53",
           "respuesta": "73",
           "pasos": [
             "1) ?÷1=?.",
@@ -1181,7 +1181,7 @@
           ]
         },
         {
-          "enunciado": "Halla el valor de X:\n\n95X = 850 + 575.",
+          "enunciado": "Elija la respuesta correcta.\n\n95X = 850 + 575 = ?\n\nOpciones: 0 | 17 | 16 | 25 | 15",
           "respuesta": "15",
           "pasos": [
             "1) 850+575=1425.",
@@ -1190,7 +1190,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n? × 98 = 588\n\nOpciones: 2 | 4 | 5 | 1 | 6",
+          "enunciado": "Elija la respuesta correcta.\n\n? × 98 = 588\n\nOpciones: 4 | 5 | 1 | 2 | 6",
           "respuesta": "6",
           "pasos": [
             "1) ?=588÷98.",
@@ -1199,7 +1199,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n10 + 6 × (1 + 10) = ?\n\nOpciones: 176 | 6 | 76 | 26 | 20",
+          "enunciado": "Elija la respuesta correcta.\n\n10 + 6 × (1 + 10) = ?\n\nOpciones: 26 | 6 | 176 | 20 | 76",
           "respuesta": "76",
           "pasos": [
             "1) 1+10=11.",
@@ -1209,7 +1209,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n4 × 5 = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n4 × 5 = ?\n\nOpciones: 20 | 22 | 10 | 21 | 19",
           "respuesta": "20",
           "pasos": [
             "1) 4×5=20.",
@@ -1217,7 +1217,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n8 × 15 + 12 × 3/36 − 18 = ?\n\nOpciones: 106 | 103 | −97 | −108 | 97",
+          "enunciado": "Elija la respuesta correcta.\n\n8 × 15 + 12 × 3/36 − 18 = ?\n\nOpciones: −108 | 103 | 106 | −97 | 97",
           "respuesta": "103",
           "pasos": [
             "1) 8×15=120.",
@@ -1227,7 +1227,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n10 - 3 ÷ 2 = ?\n\nA) 3.5\nB) 1.5\nC) 8.5\nD) 4.5\nE) 2.5",
+          "enunciado": "Elija la respuesta correcta.\n\n10 - 3 ÷ 2 = ?\n\nOpciones: 8.5 | 4.5 | 1.5 | 2.5 | 3.5",
           "respuesta": "8.5",
           "pasos": [
             "División primero: 3 ÷ 2 = 1.5.",
@@ -1236,7 +1236,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n30 − (5 × 8 − 15) = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n30 − (5 × 8 − 15) = ?\n\nOpciones: 3 | 4 | 6 | 7 | 5",
           "respuesta": "5",
           "pasos": [
             "Dentro del paréntesis: 5 × 8 = 40.",
@@ -1246,7 +1246,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n? × 6 ÷ 4 = 9\n\nA) 6\nB) 12\nC) 26\nD) 20\nE) 22",
+          "enunciado": "Elija la respuesta correcta.\n\n? × 6 ÷ 4 = 9\n\nOpciones: 12 | 22 | 26 | 6 | 20",
           "respuesta": "6",
           "pasos": [
             "×6 ÷4 equivale a ×(6/4) = ×1.5.",
@@ -1256,7 +1256,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n(105 + 206) − 550 ÷ 5² + 10 = ?\n\nA) 100\nB) 289\nC) 219\nD) 0\nE) 299",
+          "enunciado": "Elija la respuesta correcta.\n\n(105 + 206) − 550 ÷ 5² + 10 = ?\n\nOpciones: 0 | 219 | 299 | 289 | 100",
           "respuesta": "299",
           "pasos": [
             "Paréntesis: 105 + 206 = 311.",
@@ -1266,7 +1266,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n25 ÷ 2 + 6 ÷ 3 = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n25 ÷ 2 + 6 ÷ 3 = ?\n\nOpciones: 29/2 | 9001 | 9002 | 9003 | 9004",
           "respuesta": "29/2",
           "pasos": [
             "25 ÷ 2 = 25/2.",
@@ -1276,7 +1276,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n5 × 3 − 12 ÷ 4 + 8 = ?\n\nA) 4\nB) 3\nC) 14\nD) 20\nE) 1",
+          "enunciado": "Elija la respuesta correcta.\n\n5 × 3 − 12 ÷ 4 + 8 = ?\n\nOpciones: 14 | 4 | 1 | 3 | 20",
           "respuesta": "20",
           "pasos": [
             "Multiplicación y división: 5 × 3 = 15; 12 ÷ 4 = 3.",
@@ -1285,7 +1285,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n? ÷ 8 = 75 + 40 − 67 = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n? ÷ 8 = 75 + 40 − 67\n\nOpciones: 383 | 382 | 386 | 384 | −384",
           "respuesta": "384",
           "pasos": [
             "Lado derecho: 75 + 40 − 67 = 48.",
@@ -1294,7 +1294,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n75 × 98 − 60 + ? = 387\n\nA) -6,705\nB) -6,903\nC) -7,002\nD) -6,808\nE) -7,107",
+          "enunciado": "Elija la respuesta correcta.\n\n75 × 98 − 60 + ? = 387\n\nOpciones: −6903 | −7107 | −6705 | −7002 | −6808",
           "respuesta": "-6903",
           "pasos": [
             "75 × 98 = 75 × (100 − 2) = 7,500 − 150 = 7,350.",
@@ -1304,7 +1304,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n? ÷ 3 = 27\n\nA) 72\nB) 84\nC) 81\nD) 99\nE) 96",
+          "enunciado": "Elija la respuesta correcta.\n\n? ÷ 3 = 27\n\nOpciones: 99 | 96 | 81 | 72 | 84",
           "respuesta": "81",
           "pasos": [
             "x ÷ 3 = 27 ⇒ x = 27 × 3 = 81.",
@@ -1312,7 +1312,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n69 ÷ 3 = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n69 ÷ 3 = ?\n\nOpciones: 24 | 46 | 13 | 23 | 0",
           "respuesta": "23",
           "pasos": [
             "69 ÷ 3 = 23.",
@@ -1320,7 +1320,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n? × 4 ÷ 3 = 64\n\nA) 93\nB) 75\nC) 72\nD) 57\nE) 48",
+          "enunciado": "Elija la respuesta correcta.\n\n? × 4 ÷ 3 = 64\n\nOpciones: 72 | 48 | 93 | 75 | 57",
           "respuesta": "48",
           "pasos": [
             "x × 4 ÷ 3 = 64 ⇒ 4x = 64 × 3 = 192.",
@@ -1330,7 +1330,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n600 ÷ 75 = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n600 ÷ 75 = ?\n\nOpciones: 8 | 9 | 16 | 7 | 6",
           "respuesta": "8",
           "pasos": [
             "600 ÷ 75: 75 × 8 = 600.",
@@ -1338,7 +1338,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n(571 × 7) ÷ ? = 571 = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n(571 × 7) ÷ ? = 571\n\nOpciones: 6 | −3 | 14 | 7 | −7",
           "respuesta": "7",
           "pasos": [
             "(571 × 7) ÷ x = 571 ⇒ x = 7 (se cancela 571).",
@@ -1346,7 +1346,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n137 ÷ 10 − 22 + ? = 155\n\nA) 146.3\nB) 154.8\nC) 163.3\nD) 163.7\nE) 146.7",
+          "enunciado": "Elija la respuesta correcta.\n\n137 ÷ 10 − 22 + ? = 155\n\nOpciones: 146.7 | 146.3 | 163.3 | 163.7 | 154.8",
           "respuesta": "163.3",
           "pasos": [
             "137 ÷ 10 = 13.7.",
@@ -1356,7 +1356,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n91 × ? ÷ 73 = 91\n\nA) 72\nB) 76\nC) 71\nD) 73\nE) 75",
+          "enunciado": "Elija la respuesta correcta.\n\n91 × ? ÷ 73 = 91\n\nOpciones: 75 | 72 | 71 | 76 | 73",
           "respuesta": "73",
           "pasos": [
             "91 × x ÷ 73 = 91 ⇒ x ÷ 73 = 1 ⇒ x = 73.",
@@ -1364,7 +1364,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n25 − 5 ÷ (3 + 2) = ?\n\nA) 15\nB) 5\nC) 0\nD) 24\nE) 4",
+          "enunciado": "Elija la respuesta correcta.\n\n25 − 5 ÷ (3 + 2) = ?\n\nOpciones: 24 | 4 | 15 | 5 | 0",
           "respuesta": "24",
           "pasos": [
             "Paréntesis: 3 + 2 = 5.",
@@ -1374,7 +1374,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n5 (3 + 2) + 5² = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n5 (3 + 2) + 5² = ?\n\nOpciones: 51 | 50 | −50 | 75 | 60",
           "respuesta": "50",
           "pasos": [
             "Paréntesis: 3 + 2 = 5 → 5 × 5 = 25.",
@@ -1384,7 +1384,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n4 + 6 − 7 + 3 = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n4 + 6 − 7 + 3 = ?\n\nOpciones: 6 | 9 | −6 | 5 | 7",
           "respuesta": "6",
           "pasos": [
             "4 + 6 = 10.",
@@ -1394,7 +1394,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n3 + 3 − 75 − 5 × (−89) = ?\n\nA) -325\nB) 376\nC) 100\nD) 299\nE) 199",
+          "enunciado": "Elija la respuesta correcta.\n\n3 + 3 − 75 − 5 × (−89) = ?\n\nOpciones: −325 | 199 | 376 | 100 | 299",
           "respuesta": "376",
           "pasos": [
             "Multiplicación: 5 × (−89) = −445.",
@@ -1404,7 +1404,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n33 − 27 × 10 ÷ (−3) = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n33 − 27 × 10 ÷ (−3) = ?\n\nOpciones: 185 | 123 | −123 | 122 | 123/2",
           "respuesta": "123",
           "pasos": [
             "27 × 10 = 270.",
@@ -1414,7 +1414,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n15 − 12 × 6 ÷ (7 + 5) = ?\n\nA) 4\nB) 15\nC) 53/7\nD) 13\nE) 9",
+          "enunciado": "Elija la respuesta correcta.\n\n15 − 12 × 6 ÷ (7 + 5) = ?\n\nOpciones: 53/7 | 13 | 4 | 9 | 15",
           "respuesta": "9",
           "pasos": [
             "Paréntesis: 7 + 5 = 12.",
@@ -1424,7 +1424,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n(3 + 2)² − 5 × 3 + 2³ = ?\n\nA) 2\nB) 6\nC) 18\nD) 38\nE) 25",
+          "enunciado": "Elija la respuesta correcta.\n\n(3 + 2)² − 5 × 3 + 2³ = ?\n\nOpciones: 2 | 6 | 18 | 25 | 38",
           "respuesta": "18",
           "pasos": [
             "Paréntesis y potencias: (5)² = 25; 2³ = 8.",
@@ -1434,7 +1434,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n79 × 10 ÷ ? + 81 = 71\n\nA) 66\nB) 61\nC) 79\nD) -66\nE) -79",
+          "enunciado": "Elija la respuesta correcta.\n\n79 × 10 ÷ ? + 81 = 71\n\nOpciones: 61 | −66 | 79 | −79 | 66",
           "respuesta": "-79",
           "pasos": [
             "790 ÷ x + 81 = 71 ⇒ 790 ÷ x = −10.",
@@ -1443,7 +1443,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n107 − 53 + ? = 212 = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n107 − 53 + ? = 212\n\nOpciones: 158 | 156 | 79 | 159 | 168",
           "respuesta": "158",
           "pasos": [
             "107 − 53 = 54.",
@@ -1452,7 +1452,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n? ÷ 7 = 688\n\nA) 4,810\nB) 4,115\nC) 4,816\nD) 4,158\nE) 6,415",
+          "enunciado": "Elija la respuesta correcta.\n\n? ÷ 7 = 688\n\nOpciones: 4816 | 6415 | 4115 | 4158 | 4810",
           "respuesta": "4816",
           "pasos": [
             "x ÷ 7 = 688 ⇒ x = 688 × 7.",
@@ -1461,7 +1461,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n10 + (6 × 11) = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n10 + (6 × 11) = ?\n\nOpciones: 152 | 77 | 76 | 75 | 74",
           "respuesta": "76",
           "pasos": [
             "6 × 11 = 66.",
@@ -1470,7 +1470,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n? × 56 − 69 + 78 = 177\n\nA) 4\nB) 2\nC) 6\nD) 3\nE) 5",
+          "enunciado": "Elija la respuesta correcta.\n\n? × 56 − 69 + 78 = 177\n\nOpciones: 3 | 6 | 4 | 5 | 2",
           "respuesta": "3",
           "pasos": [
             "56x − 69 + 78 = 177 ⇒ 56x + 9 = 177.",
@@ -1479,7 +1479,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n588 ÷ 98 = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n588 ÷ 98 = ?\n\nOpciones: 8 | −4 | 0 | 7 | 6",
           "respuesta": "6",
           "pasos": [
             "98 × 6 = 588.",
@@ -1487,7 +1487,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n3 + 20 × 3 = ?\n\nA) 69\nB) 63\nC) 65\nD) 25\nE) 35",
+          "enunciado": "Elija la respuesta correcta.\n\n3 + 20 × 3 = ?\n\nOpciones: 35 | 25 | 65 | 69 | 63",
           "respuesta": "63",
           "pasos": [
             "Multiplicación primero: 20 × 3 = 60.",
@@ -1496,7 +1496,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n120 + 1 − 18 = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n120 + 1 − 18 = ?\n\nOpciones: 0 | 113 | 105 | 103 | 103/2",
           "respuesta": "103",
           "pasos": [
             "120 + 1 = 121.",
@@ -1505,7 +1505,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n9 × (−7) − 1 + 5 + 81 = ?\n\nA) 148\nB) 6\nC) 22\nD) 26\nE) -150",
+          "enunciado": "Elija la respuesta correcta.\n\n9 × (−7) − 1 + 5 + 81 = ?\n\nOpciones: 26 | −150 | 22 | 6 | 148",
           "respuesta": "22",
           "pasos": [
             "9 × (−7) = −63.",
@@ -1514,7 +1514,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n7 + (6 × 5² + 3) = ?\n\nA) 160\nB) 40\nC) 150\nD) 110\nE) 120",
+          "enunciado": "Elija la respuesta correcta.\n\n7 + (6 × 5² + 3) = ?\n\nOpciones: 110 | 40 | 160 | 150 | 120",
           "respuesta": "160",
           "pasos": [
             "5² = 25.",
@@ -1524,7 +1524,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n95 × ? − 575 = 850\n\nA) 35\nB) 15\nC) 85\nD) 45\nE) 22",
+          "enunciado": "Elija la respuesta correcta.\n\n95 × ? − 575 = 850\n\nOpciones: 22 | 85 | 35 | 15 | 45",
           "respuesta": "15",
           "pasos": [
             "95x = 850 + 575 = 1,425.",
@@ -1533,7 +1533,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\nx × 56 = 28\n\nA) 1/2\nB) 2/7\nC) 5/7\nD) 6/7\nE) 3/4",
+          "enunciado": "Elija la respuesta correcta.\n\nx × 56 = 28 = ?\n\nOpciones: 6/7 | 2/7 | 1/2 | 5/7 | 3/4",
           "respuesta": "1/2",
           "pasos": [
             "x = 28 ÷ 56 = 1/2.",
@@ -1541,7 +1541,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n4 × (3 + 2) = ?\n\nA) 50\nB) 30\nC) 20\nD) 35\nE) 25",
+          "enunciado": "Elija la respuesta correcta.\n\n4 × (3 + 2) = ?\n\nOpciones: 50 | 35 | 20 | 30 | 25",
           "respuesta": "20",
           "pasos": [
             "Paréntesis: 3 + 2 = 5.",
@@ -1550,7 +1550,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n25 ÷ 2 + 6 ÷ 3 = ?\n\nA) 29/2\nB) 37/6\nC) 27/2\nD) 25\nE) 1",
+          "enunciado": "Elija la respuesta correcta.\n\n25 ÷ 2 + 6 ÷ 3 = ?\n\nOpciones: 29/2 | 37/6 | 27/2 | 25 | 1",
           "respuesta": "29/2",
           "pasos": [
             "25 ÷ 2 = 25/2; 6 ÷ 3 = 2.",
@@ -1559,7 +1559,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n? × 3 = 69\n\nA) 22\nB) 23\nC) 24\nD) 25\nE) 26",
+          "enunciado": "Elija la respuesta correcta.\n\n? × 3 = 69\n\nOpciones: 24 | 23 | 25 | 22 | 26",
           "respuesta": "23",
           "pasos": [
             "x = 69 ÷ 3 = 23.",
@@ -1567,7 +1567,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n5 (3 + 2) + 5² = ?\n\nA) 50\nB) 30\nC) 45\nD) 35\nE) 25",
+          "enunciado": "Elija la respuesta correcta.\n\n5 (3 + 2) + 5² = ?\n\nOpciones: 50 | 35 | 45 | 25 | 30",
           "respuesta": "50",
           "pasos": [
             "3 + 2 = 5 → 5 × 5 = 25.",
@@ -1577,7 +1577,7 @@
           ]
         },
         {
-          "enunciado": "Calcula:\n\n(571 × 7) ÷ ? = 571\n\nA) 7\nB) 6\nC) 4\nD) 5\nE) 3 = ?",
+          "enunciado": "Elija la respuesta correcta.\n\n(571 × 7) ÷ ? = 571\n\nOpciones: 3=? | 5 | 7 | 4 | 6",
           "respuesta": "7",
           "pasos": [
             "(571 × 7) ÷ x = 571 ⇒ x = 7.",

@@ -8,6 +8,8 @@ import {
   answersMatch,
   loadTrialDone,
   materiaNombre,
+  parseChoiceOptions,
+  stemWithoutOptions,
   PSICO_BANK_COUNTS,
   PSICO_MATERIAS,
   PSICO_PREVIEW_FICHAS,
@@ -163,6 +165,14 @@ export function PsicoClient() {
   }, [tipo?.id, tipoItemRaw]);
   const tipoTotal = BANCO.tipos.reduce((n, t) => n + t.items.length, 0);
   const tipoOk = tipoChecked && tipoItem ? answersMatch(tipoAnswer, tipoItem.respuesta) : false;
+  const tipoChoices = useMemo(
+    () => (tipoItem ? parseChoiceOptions(tipoItem.enunciado) : []),
+    [tipoItem],
+  );
+  const tipoStem = useMemo(
+    () => (tipoItem ? (tipoChoices.length ? stemWithoutOptions(tipoItem.enunciado) : tipoItem.enunciado) : ""),
+    [tipoItem, tipoChoices.length],
+  );
   const explainUnlocked = canExplainTipoItem(itemI, paid, FREE_EXPLAIN);
   const isPaywalledItem = !explainUnlocked;
 
@@ -430,18 +440,53 @@ export function PsicoClient() {
             )}
           </p>
           {tipoItem.figura ? <AbstractFigure id={tipoItem.figura} /> : null}
-          <p className="text-sm whitespace-pre-wrap leading-relaxed">{tipoItem.enunciado}</p>
+          <p className="text-sm whitespace-pre-wrap leading-relaxed">{tipoStem}</p>
 
-          <label className="block text-sm">
-            Tu respuesta
-            <input
-              className="field mt-1"
-              value={tipoAnswer}
-              onChange={(e) => setTipoAnswer(e.target.value)}
-              placeholder="Letra o texto (ej. B o 400)"
-              disabled={showExplain && explainUnlocked}
-            />
-          </label>
+          {tipoChoices.length > 0 ? (
+            <div className="grid gap-2 sm:grid-cols-1">
+              <p className="text-sm font-medium">Elige una opción</p>
+              <div className="flex flex-col gap-2">
+                {tipoChoices.map((opt) => {
+                  const selected =
+                    tipoAnswer === opt.value ||
+                    tipoAnswer === opt.letter ||
+                    tipoAnswer.toUpperCase() === `${opt.letter})` ||
+                    answersMatch(tipoAnswer, opt.value);
+                  return (
+                    <button
+                      key={opt.letter}
+                      type="button"
+                      className="btn-secondary text-left text-sm"
+                      disabled={showExplain && explainUnlocked}
+                      onClick={() => {
+                        setTipoAnswer(opt.value);
+                        setTipoChecked(false);
+                      }}
+                      style={
+                        selected
+                          ? { borderColor: "var(--brand)", boxShadow: "var(--shadow-brand)" }
+                          : undefined
+                      }
+                    >
+                      <span className="font-semibold mr-2">{opt.letter})</span>
+                      {opt.value}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
+            <label className="block text-sm">
+              Tu respuesta
+              <input
+                className="field mt-1"
+                value={tipoAnswer}
+                onChange={(e) => setTipoAnswer(e.target.value)}
+                placeholder="Letra o texto (ej. B o 400)"
+                disabled={showExplain && explainUnlocked}
+              />
+            </label>
+          )}
 
           <div className="flex flex-wrap gap-2">
             <button

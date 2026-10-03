@@ -101,3 +101,35 @@ export function answersMatch(given: string, expected: string): boolean {
   if (gn != null && en != null && Math.abs(gn - en) < 1e-9) return true;
   return false;
 }
+
+export type ChoiceOption = { letter: string; value: string };
+
+/** Extrae opciones A–E desde "Opciones: a | b | …" o líneas "A) …". */
+export function parseChoiceOptions(enunciado: string): ChoiceOption[] {
+  const letters = "ABCDE";
+  const pipe = enunciado.match(/Opciones:\s*([^\n]+)/i);
+  if (pipe) {
+    const parts = pipe[1]
+      .split("|")
+      .map((p) => p.replace(/^[A-E]\)\s*/i, "").trim())
+      .filter(Boolean);
+    return parts.slice(0, 5).map((value, i) => ({ letter: letters[i], value }));
+  }
+  const fromLines = [...enunciado.matchAll(/^([A-E])\)\s*(.+)$/gim)];
+  if (fromLines.length >= 2) {
+    return fromLines.slice(0, 5).map((m) => ({
+      letter: m[1].toUpperCase(),
+      value: m[2].trim(),
+    }));
+  }
+  return [];
+}
+
+/** Enunciado sin el bloque de opciones (para mostrar botones aparte). */
+export function stemWithoutOptions(enunciado: string): string {
+  return enunciado
+    .replace(/\n*Opciones:\s*[^\n]+/gi, "")
+    .replace(/\n*(?:^[A-E]\)\s*.+\n?){2,}/gim, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}

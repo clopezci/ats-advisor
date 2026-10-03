@@ -295,26 +295,16 @@ const diag = bank.tipos.find((t) => t.id === "razonamiento-diagramatico");
 const esp = bank.tipos.find((t) => t.id === "razonamiento-espacial");
 if (!diag || !esp) throw new Error("tipos faltantes");
 
-diag.descripcion =
-  "Patrones con figura: giros, colores, tamaños y series. Lee el atajo de la imagen y luego el enunciado.";
-diag.items = diag.items.map(assignDiag);
-
+// Diagramático: usar scripts/rebuild-diagramatico.ts (único, progresivo).
 esp.descripcion =
   "Espacio con figura: cubos, dados, caminos y vistas. Usa el dibujo + el atajo corto.";
 esp.items = esp.items.map(assignEspacial);
 
-const missingDiag = diag.items.filter((i) => !i.figura).length;
 const missingEsp = esp.items.filter((i) => !i.figura).length;
-const badLetter = diag.items.filter((i) => /A→C/i.test(i.enunciado) && i.figura !== "diag-letras");
 writeFileSync(path, JSON.stringify(bank, null, 2) + "\n", "utf8");
 console.log({
-  diag: diag.items.length,
-  withFigDiag: diag.items.filter((i) => i.figura).length,
-  missingDiag,
+  diagKept: diag.items.length,
   esp: esp.items.length,
   withFigEsp: esp.items.filter((i) => i.figura).length,
   missingEsp,
-  badLetter: badLetter.length,
-  letterFig: diag.items.find((i) => /A→C/i.test(i.enunciado))?.figura,
-  letterPaso0: diag.items.find((i) => /A→C/i.test(i.enunciado))?.pasos[0],
 });

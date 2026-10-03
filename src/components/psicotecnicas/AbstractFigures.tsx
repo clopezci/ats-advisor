@@ -1221,6 +1221,301 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
       </Frame>
     ),
   },
+  "diag-doble-regla": {
+    caption: "Atajo: busca DOS cambios a la vez (p. ej. giro + relleno). Ambos deben cumplirse.",
+    node: (
+      <Frame caption="Serie: giro + relleno" w={360} h={160}>
+        {[0, 1, 2, 3].map((i) => (
+          <g key={i} transform={`translate(${40 + i * 80} 70)`}>
+            <rect
+              x={-22}
+              y={-22}
+              width="44"
+              height="44"
+              fill={i % 2 === 0 ? fill : "#1e293b"}
+              stroke={stroke}
+              strokeWidth="2"
+              transform={`rotate(${i * 45})`}
+            />
+          </g>
+        ))}
+        <text x="340" y="75" textAnchor="middle" fontSize="22" fill={accent}>
+          ?
+        </text>
+        <text x="180" y="140" textAnchor="middle" fontSize="11" fill={muted}>
+          cada paso: +45° y alterna relleno
+        </text>
+      </Frame>
+    ),
+  },
+  "diag-lados": {
+    caption: "Atajo: cuenta lados (o puntas). Suele subir de 1 en 1.",
+    node: (
+      <Frame caption="¿Cuántos lados?" w={340} h={150}>
+        <polygon points="50,110 70,50 90,110" fill={fill} stroke={stroke} strokeWidth="2" />
+        <rect x="120" y="55" width="50" height="50" fill={fill} stroke={stroke} strokeWidth="2" />
+        <polygon points="220,55 250,75 240,110 200,110 190,75" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="300" y="90" textAnchor="middle" fontSize="22" fill={accent}>
+          ?
+        </text>
+        <text x="70" y="135" textAnchor="middle" fontSize="11" fill={muted}>
+          3
+        </text>
+        <text x="145" y="135" textAnchor="middle" fontSize="11" fill={muted}>
+          4
+        </text>
+        <text x="220" y="135" textAnchor="middle" fontSize="11" fill={muted}>
+          5
+        </text>
+      </Frame>
+    ),
+  },
+  "diag-impar": {
+    caption: "Atajo odd-one-out: busca la regla que cumplen 3 y rompe 1.",
+    node: (
+      <Frame caption="¿Cuál no encaja?" w={340} h={140}>
+        {[
+          { x: 40, fill: fill },
+          { x: 110, fill: fill },
+          { x: 180, fill: "#1e293b" },
+          { x: 250, fill: fill },
+        ].map((c, i) => (
+          <g key={i}>
+            <circle cx={c.x + 20} cy={60} r={22} fill={c.fill} stroke={stroke} strokeWidth="2" />
+            <text x={c.x + 20} y={110} textAnchor="middle" fontSize="12" fill={muted}>
+              {String.fromCharCode(65 + i)}
+            </text>
+          </g>
+        ))}
+      </Frame>
+    ),
+  },
+  "diag-analogia": {
+    caption: "Atajo: A es a B como C es a ?. Traduce el cambio A→B y aplícalo a C.",
+    node: (
+      <Frame caption="Analogía de figuras" w={340} h={150}>
+        <rect x="20" y="40" width="40" height="40" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="75" y="65" fontSize="16" fill={accent}>
+          →
+        </text>
+        <rect x="95" y="40" width="40" height="40" fill="#1e293b" stroke={stroke} strokeWidth="2" />
+        <text x="155" y="65" fontSize="18" fill={muted}>
+          ::
+        </text>
+        <circle cx="200" cy={60} r={20} fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="240" y="65" fontSize="16" fill={accent}>
+          →
+        </text>
+        <text x="280" y="68" fontSize="22" fill={accent}>
+          ?
+        </text>
+        <text x="170" y="130" textAnchor="middle" fontSize="11" fill={muted}>
+          mismo cambio de relleno
+        </text>
+      </Frame>
+    ),
+  },
+  "diag-punto-esquina": {
+    caption: "Atajo: el marcador suele avanzar una esquina por paso (horario o antihorario).",
+    node: (
+      <Frame caption="Punto en el borde" w={340} h={150}>
+        {[0, 1, 2].map((i) => {
+          const corners = [
+            [18, 18],
+            [52, 18],
+            [52, 52],
+            [18, 52],
+          ];
+          const [dx, dy] = corners[i % 4];
+          return (
+            <g key={i} transform={`translate(${30 + i * 100} 35)`}>
+              <rect x="0" y="0" width="70" height="70" fill={fill} stroke={stroke} strokeWidth="2" />
+              <circle cx={dx} cy={dy} r="7" fill={accent} />
+            </g>
+          );
+        })}
+        <text x="320" y="75" fontSize="22" fill={accent}>
+          ?
+        </text>
+      </Frame>
+    ),
+  },
+  "diag-operador": {
+    caption: "Atajo operadores: deduce qué hace cada caja con los ejemplos; luego aplícalo.",
+    node: (
+      <Frame caption="Entrada → operador → salida" w={340} h={150}>
+        <polygon points="40,40 70,90 10,90" fill="#1e293b" stroke={stroke} strokeWidth="2" />
+        <text x="90" y="70" fontSize="16" fill={muted}>
+          →
+        </text>
+        <rect x="110" y="45" width="70" height="40" rx="6" fill="#ede9fe" stroke={accent} strokeWidth="2" />
+        <text x="145" y="70" textAnchor="middle" fontSize="11" fill={accent}>
+          ? regla
+        </text>
+        <text x="200" y="70" fontSize="16" fill={muted}>
+          →
+        </text>
+        <polygon points="250,90 280,40 220,40" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="170" y="130" textAnchor="middle" fontSize="11" fill={muted}>
+          ejemplo: negro↑ → blanco↓ (¿qué hizo?)
+        </text>
+      </Frame>
+    ),
+  },
+  "diag-matriz-suma": {
+    caption: "Atajo matriz: prueba fila y columna. A menudo la 3ª celda combina las dos primeras.",
+    node: (
+      <Frame caption="Matriz 2×2 → falta una" w={260} h={200}>
+        {[
+          ["2", "3", "5"],
+          ["4", "1", "5"],
+          ["6", "4", "?"],
+        ].map((row, r) =>
+          row.map((v, c) => (
+            <g key={`${r}-${c}`}>
+              <rect
+                x={30 + c * 70}
+                y={20 + r * 55}
+                width="58"
+                height="48"
+                fill={v === "?" ? "#ede9fe" : fill}
+                stroke={v === "?" ? accent : stroke}
+                strokeWidth="2"
+              />
+              <text
+                x={59 + c * 70}
+                y={50 + r * 55}
+                textAnchor="middle"
+                fontSize="16"
+                fill={stroke}
+                fontWeight="700"
+              >
+                {v}
+              </text>
+            </g>
+          ))
+        )}
+      </Frame>
+    ),
+  },
+  "diag-xor": {
+    caption: "Atajo combinación: lo que está en ambas se cancela; lo único se queda.",
+    node: (
+      <Frame caption="A + B = ?" w={340} h={150}>
+        <circle cx="50" cy="60" r="18" fill={fill} stroke={stroke} strokeWidth="2" />
+        <rect x="80" y="42" width="36" height="36" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="140" y="68" fontSize="18" fill={accent}>
+          +
+        </text>
+        <rect x="170" y="42" width="36" height="36" fill={fill} stroke={stroke} strokeWidth="2" />
+        <polygon points="230,42 248,78 212,78" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="270" y="68" fontSize="18" fill={accent}>
+          =
+        </text>
+        <text x="310" y="72" fontSize="22" fill={accent}>
+          ?
+        </text>
+        <text x="170" y="130" textAnchor="middle" fontSize="11" fill={muted}>
+          el cuadrado se repite → se cancela
+        </text>
+      </Frame>
+    ),
+  },
+  "diag-180-color": {
+    caption: "Atajo: a veces el giro y el color cambian en pasos distintos (uno cada vez / uno cada dos).",
+    node: (
+      <Frame caption="Serie mixta" w={360} h={140}>
+        {[0, 1, 2].map((i) => (
+          <g key={i} transform={`translate(${50 + i * 100} 55)`}>
+            <ArrowUp x={0} y={0} rot={i * 180} />
+            <circle cx="0" cy="0" r="28" fill={i % 2 === 0 ? fill : "#cbd5e1"} stroke={stroke} strokeWidth="2" opacity={0.35} />
+          </g>
+        ))}
+        <text x="340" y="60" fontSize="22" fill={accent}>
+          ?
+        </text>
+      </Frame>
+    ),
+  },
+  "diag-simetria": {
+    caption: "Atajo simetría: dobla mentalmente por el eje; si coinciden las mitades, es simétrica.",
+    node: (
+      <Frame caption="¿Cuál es simétrica vertical?" w={300} h={140}>
+        <path d="M40,40 L70,100 L10,100 Z" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="40" y="125" textAnchor="middle" fontSize="11" fill={muted}>
+          A
+        </text>
+        <rect x="120" y="40" width="50" height="60" fill={fill} stroke={stroke} strokeWidth="2" />
+        <line x1="145" y1="40" x2="145" y2="100" stroke={accent} strokeWidth="2" strokeDasharray="3 2" />
+        <text x="145" y="125" textAnchor="middle" fontSize="11" fill={muted}>
+          B
+        </text>
+        <path d="M220,50 L260,40 L250,100 L210,90 Z" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="235" y="125" textAnchor="middle" fontSize="11" fill={muted}>
+          C
+        </text>
+      </Frame>
+    ),
+  },
+  "diag-conteo": {
+    caption: "Atajo: cuenta solo lo que pide (triángulos, líneas, cuadrados). Marca para no repetir.",
+    node: (
+      <Frame caption="¿Cuántos triángulos?" w={260} h={180}>
+        <polygon points="130,20 220,150 40,150" fill={fill} stroke={stroke} strokeWidth="2" />
+        <line x1="130" y1="20" x2="130" y2="150" stroke={stroke} strokeWidth="2" />
+        <line x1="85" y1="85" x2="175" y2="85" stroke={stroke} strokeWidth="2" />
+        <text x="130" y="170" textAnchor="middle" fontSize="11" fill={muted}>
+          grande + mitades + pequeños
+        </text>
+      </Frame>
+    ),
+  },
+  "diag-borde-anillo": {
+    caption: "Atajo: mira figura exterior e interior por separado (forma y relleno).",
+    node: (
+      <Frame caption="Exterior + interior" w={340} h={140}>
+        {[0, 1, 2].map((i) => (
+          <g key={i} transform={`translate(${40 + i * 100} 30)`}>
+            <rect x="0" y="0" width="70" height="70" fill={fill} stroke={stroke} strokeWidth="2" />
+            <circle
+              cx="35"
+              cy="35"
+              r={12 + i * 2}
+              fill={i === 1 ? "#1e293b" : fill}
+              stroke={stroke}
+              strokeWidth="2"
+            />
+          </g>
+        ))}
+        <text x="320" y="70" fontSize="22" fill={accent}>
+          ?
+        </text>
+      </Frame>
+    ),
+  },
+  "diag-posiciones": {
+    caption: "Atajo posición: numera celdas 1–4 o usa reloj; avanza fijo cada paso.",
+    node: (
+      <Frame caption="Ficha que se mueve" w={300} h={160}>
+        {[0, 1, 2].map((step) => (
+          <g key={step} transform={`translate(${20 + step * 95} 25)`}>
+            <rect x="0" y="0" width="70" height="70" fill={fill} stroke={stroke} strokeWidth="2" />
+            <line x1="35" y1="0" x2="35" y2="70" stroke="#e2e8f0" strokeWidth="1" />
+            <line x1="0" y1="35" x2="70" y2="35" stroke="#e2e8f0" strokeWidth="1" />
+            <circle
+              cx={step % 2 === 0 ? 17 : 52}
+              cy={step < 2 ? 17 : 52}
+              r="10"
+              fill={accent}
+            />
+          </g>
+        ))}
+        <text x="285" y="65" fontSize="22" fill={accent}>
+          ?
+        </text>
+      </Frame>
+    ),
+  },
 };
 
 export function AbstractFigure({ id }: { id?: string | null }) {

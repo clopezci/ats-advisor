@@ -1,0 +1,152 @@
+[
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 98, 50, 26, 14, 8, ?. Opciones: 4, 5, 6, 7, 3",
+    "respuesta": "5",
+    "pasos": "Atajo: cada término = (anterior ÷ 2) + 1. 98→50, 50→26, 26→14, 14→8, (8÷2)+1=5. Equivale a restar diferencias que se dividen por 2: −48, −24, −12, −6, −3.",
+    "fuente": "001_image403.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 183, 305, 527, 849, 1271, ?. Opciones: 1393, 1493, 1593, 1693, 1793",
+    "respuesta": "1793",
+    "pasos": "Atajo: diferencias crecientes +122, +222, +322, +422 (aumentan +100). Siguiente diferencia +522. 1271+522=1793.",
+    "fuente": "002_image408.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 8, −6, −26, −52, −84, ?. Opciones: −98, −104, −110, −116, −122",
+    "respuesta": "-122",
+    "pasos": "Atajo: diferencias −14, −20, −26, −32 (cada una −6 respecto a la anterior). Siguiente diferencia −38. −84+(−38)=−122.",
+    "fuente": "003_image413.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 243, 255, 268, 280, 293, ?. Opciones: 309, 308, 307, 306, 305",
+    "respuesta": "305",
+    "pasos": "Atajo: suma intercalada +12, +13, +12, +13. Siguiente paso +12. 293+12=305.",
+    "fuente": "004_image421.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 40, 43, 37, 49, 25, ?. Opciones: 73, −20, −50, 45, −53",
+    "respuesta": "73",
+    "pasos": "Atajo: diferencias ×(−2) cada vez: +3, −6, +12, −24. Siguiente +48. 25+48=73.",
+    "fuente": "005_image398.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 0, 3, 8, 15, 24, ?. Opciones: 27, 29, 31, 35, 33",
+    "respuesta": "35",
+    "pasos": "Atajo: diferencias impares crecientes +3, +5, +7, +9 → siguiente +11. 24+11=35. También n²−1 (n=1…6): 6²−1=35.",
+    "fuente": "006_image416.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 4, 8, 18, 36, 46, ?. Opciones: 92, 56, 66, 76, 86",
+    "respuesta": "92",
+    "pasos": "Atajo: alternancia ×2, +10. 4×2=8; 8+10=18; 18×2=36; 36+10=46; 46×2=92.",
+    "fuente": "007_image402.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 2, 4, 12, 48, 240, ?. Opciones: 1540, 1440, 1240, 840, 740",
+    "respuesta": "1440",
+    "pasos": "Atajo: ×k con k creciente: ×2, ×3, ×4, ×5, ×6. 240×6=1440.",
+    "fuente": "008_image407.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 0, 9, 36, 81, 144, ?. Opciones: 153, 180, 369, 225, 288",
+    "respuesta": "225",
+    "pasos": "Atajo: cuadrados de múltiplos de 3: 0², 3², 6², 9², 12² → 15²=225.",
+    "fuente": "009_image412.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: −972, 324, −108, 36, −12, ?. Opciones: 4, −4, 3, −3, 5",
+    "respuesta": "4",
+    "pasos": "Atajo: cada término ÷ (−3). −12÷(−3)=4. Alterna signo y se divide el valor absoluto entre 3.",
+    "fuente": "010_image420.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 4, 8, 32, 256, 3584, ?. Opciones: 68960, 53600, 61440, 78848, 46080",
+    "respuesta": "78848",
+    "pasos": "Atajo: ×k con incrementos crecientes en el factor: ×2, ×4, ×8, ×14, ×22 (deltas del factor +2, +4, +6, +8). 3584×22=78848.",
+    "fuente": "011_image397.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 2, 6, 15, 31, 56, ?. Opciones: 60, 92, 65, 71, 81",
+    "respuesta": "92",
+    "pasos": "Atajo: sumar cuadrados consecutivos desde 2²: +4, +9, +16, +25 → +36. 56+36=92.",
+    "fuente": "012_image411.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 8, 10, 14, 20, 28, ?. Opciones: 36, 34, 38, 40, 32",
+    "respuesta": "38",
+    "pasos": "Atajo: diferencias pares crecientes +2, +4, +6, +8 → +10. 28+10=38.",
+    "fuente": "013_image415.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 2, 10, 15, 75, 80, ?. Opciones: 400, 85, 100, 90, 105",
+    "respuesta": "400",
+    "pasos": "Atajo: intercalada ×5, +5. 2×5=10; 10+5=15; 15×5=75; 75+5=80; 80×5=400.",
+    "fuente": "015_image401.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 75, 15, 25, 5, 15, ?. Opciones: 7, 3, 5, 2, 1",
+    "respuesta": "3",
+    "pasos": "Atajo: intercalada ÷5, +10. 75÷5=15; 15+10=25; 25÷5=5; 5+10=15; 15÷5=3.",
+    "fuente": "016_image406.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 30, 28, 25, 21, 16, ?. Opciones: 15, 11, 13, 10, 14",
+    "respuesta": "10",
+    "pasos": "Atajo: diferencias decrecientes −2, −3, −4, −5 → −6. 16−6=10.",
+    "fuente": "017_image419.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 5, 20, 50, 100, 175, ?. Opciones: 254, 260, 224, 280, 238",
+    "respuesta": "280",
+    "pasos": "Atajo: diferencias de 2.º orden. 1.ª diferencias: +15, +30, +50, +75. 2.ª diferencias: +15, +20, +25 (+5). Siguiente 2.ª = +30 → 1.ª = +105. 175+105=280.",
+    "fuente": "018_image400.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 95, 76, 59, 44, 31, ?. Opciones: 20, 12, 14, 16, 18",
+    "respuesta": "20",
+    "pasos": "Atajo: restar impares decrecientes −19, −17, −15, −13 → −11. 31−11=20.",
+    "fuente": "019_image410.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 1, 7, 23, 55, 109, ?. Opciones: 191, 115, 125, 141, 161",
+    "respuesta": "191",
+    "pasos": "Atajo: diferencias de 3.er orden. 1.ª: +6, +16, +32, +54. 2.ª: +10, +16, +22 (+6 constante en 3.ª). Siguiente 2.ª=+28 → 1.ª=+82. 109+82=191.",
+    "fuente": "020_image418.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 4, 11, 32, 95, 284, ?. Opciones: 852, 855, 850, 851, 857",
+    "respuesta": "851",
+    "pasos": "Atajo: regla ×3 − 1. 4×3−1=11; 11×3−1=32; 32×3−1=95; 95×3−1=284; 284×3−1=851.",
+    "fuente": "021_image405.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 2, 12, 21, 29, 36, ?. Opciones: 42, 46, 44, 45, 39",
+    "respuesta": "42",
+    "pasos": "Atajo: diferencias decrecientes +10, +9, +8, +7 → +6. 36+6=42.",
+    "fuente": "022_image414.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 5, 10, 1, 2, 1/5, ?. Opciones: 4/5, 1/25, 2, 2/5, 5",
+    "respuesta": "2/5",
+    "pasos": "Atajo: intercalada ×2, ÷10. 5×2=10; 10÷10=1; 1×2=2; 2÷10=1/5; (1/5)×2=2/5.",
+    "fuente": "023_image399.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 18, 6, 24, 8, 32, ?. Opciones: 9, 10, 11, 8, 10.7",
+    "respuesta": "10.7",
+    "pasos": "Atajo: intercalada ÷3, ×4. 18÷3=6; 6×4=24; 24÷3=8; 8×4=32; 32÷3≈10.666… → opción 10.7.",
+    "fuente": "024_image404.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 629, 501, 437, 405, 389, ?. Opciones: 381, 373, 357, 325, 261",
+    "respuesta": "381",
+    "pasos": "Atajo: restar potencias de 2 decrecientes −128, −64, −32, −16 → −8. 389−8=381.",
+    "fuente": "025_image409.png"
+  },
+  {
+    "enunciado": "¿Qué número tiene que reemplazar al signo de interrogación? Serie: 3, 9, 18, 30, 45, ?. Opciones: 51, 63, 60, 57, 54",
+    "respuesta": "63",
+    "pasos": "Atajo: diferencias +6, +9, +12, +15 (aumentan +3) → +18. 45+18=63. También números triangulares ×3: 1×3, 3×3, 6×3, 10×3, 15×3, 21×3=63.",
+    "fuente": "026_image417.png"
+  }
+]

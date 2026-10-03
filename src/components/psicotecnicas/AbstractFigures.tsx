@@ -1970,6 +1970,95 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
       </Frame>
     ),
   },
+  "ind-triangulares": {
+    caption: "Atajo: triangulares = 1+2+3+…+n = n(n+1)/2.",
+    node: (
+      <Frame caption="Números triangulares" w={320} h={150}>
+        {[1, 2, 3, 4].map((n, i) => (
+          <g key={n} transform={`translate(${30 + i * 75} 30)`}>
+            {Array.from({ length: n }).map((_, r) =>
+              Array.from({ length: r + 1 }).map((_, c) => (
+                <circle
+                  key={`${r}-${c}`}
+                  cx={20 + c * 12 - r * 6}
+                  cy={20 + r * 14}
+                  r="5"
+                  fill={accent}
+                />
+              ))
+            )}
+            <text x="20" y="100" textAnchor="middle" fontSize="12" fill={muted}>
+              {[(n * (n + 1)) / 2]}
+            </text>
+          </g>
+        ))}
+      </Frame>
+    ),
+  },
+  "ind-logica-flecha": {
+    caption: "Atajo: «si A entonces B» no implica «si B entonces A».",
+    node: (
+      <Frame caption="Implicación" w={300} h={130}>
+        <text x="50" y="50" fontSize="14" fill={stroke}>
+          A
+        </text>
+        <text x="90" y="50" fontSize="18" fill={accent}>
+          ⇒
+        </text>
+        <text x="130" y="50" fontSize="14" fill={stroke}>
+          B
+        </text>
+        <text x="50" y="95" fontSize="12" fill={muted}>
+          B cierto
+        </text>
+        <text x="130" y="95" fontSize="12" fill={accent}>
+          ¿A? no seguro
+        </text>
+      </Frame>
+    ),
+  },
+  "seq-intercalada": {
+    caption: "Atajo intercalada: mira posiciones impares y pares por separado.",
+    node: (
+      <Frame caption="Dos series en una" w={340} h={120}>
+        {["1", "2", "3", "4", "5", "6", "?"].map((t, i) => (
+          <g key={i}>
+            <circle
+              cx={30 + i * 45}
+              cy={50}
+              r="16"
+              fill={i % 2 === 0 ? "#ede9fe" : fill}
+              stroke={stroke}
+              strokeWidth="2"
+            />
+            <text x={30 + i * 45} y={55} textAnchor="middle" fontSize="13" fill={stroke}>
+              {t}
+            </text>
+          </g>
+        ))}
+        <text x="170" y="100" textAnchor="middle" fontSize="11" fill={muted}>
+          morado = serie A · blanco = serie B
+        </text>
+      </Frame>
+    ),
+  },
+  "seq-diferencias": {
+    caption: "Atajo: anota las diferencias; si crecen, el patrón está ahí.",
+    node: (
+      <Frame caption="Diferencias crecientes" w={340} h={130}>
+        {["3", "4", "6", "9", "13", "?"].map((t, i) => (
+          <text key={i} x={30 + i * 55} y={50} textAnchor="middle" fontSize="18" fill={stroke} fontWeight="700">
+            {t}
+          </text>
+        ))}
+        {["+1", "+2", "+3", "+4", "+?"].map((t, i) => (
+          <text key={t} x={55 + i * 55} y={90} textAnchor="middle" fontSize="12" fill={accent}>
+            {t}
+          </text>
+        ))}
+      </Frame>
+    ),
+  },
 };
 
 export function AbstractFigure({ id }: { id?: string | null }) {

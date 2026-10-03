@@ -1,0 +1,343 @@
+[
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nÉxodo\n\nA) Bienvenida\nB) Huida\nC) Regreso\nD) Migración",
+    "respuesta": "C) Regreso",
+    "pasos": [
+      "Éxodo = salida masiva / partida de un lugar.",
+      "Descartar Huida y Migración: son sinónimos o cercanos a la partida.",
+      "Bienvenida es recepción, no el movimiento contrario de volver.",
+      "Atajo: opuesto de salir en masa → volver → Regreso."
+    ],
+    "fuente": "Ant_nimos/001_image29.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nValor\n\nA) Audaz\nB) Pesado\nC) Cobardía\nD) Bravo",
+    "respuesta": "C) Cobardía",
+    "pasos": [
+      "Valor (sentido moral) = coraje / valentía.",
+      "Audaz y Bravo son sinónimos o cercanos a valiente.",
+      "Pesado no es antónimo de valor.",
+      "Atajo: opuesto de valentía → Cobardía."
+    ],
+    "fuente": "Ant_nimos/002_image34.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nEspeso\n\nA) Palpable\nB) Diluido\nC) Pleno\nD) Denso",
+    "respuesta": "B) Diluido",
+    "pasos": [
+      "Espeso = denso, concentrado, poco fluido.",
+      "Denso es sinónimo; Palpable y Pleno no son opuestos.",
+      "Diluido = adelgazado / menos concentrado.",
+      "Atajo: espeso ↔ diluido."
+    ],
+    "fuente": "Ant_nimos/003_image39.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nCómico\n\nA) Gracioso\nB) Trágico\nC) Doloroso\nD) Emocional",
+    "respuesta": "B) Trágico",
+    "pasos": [
+      "Cómico = que provoca risa / perteneciente a la comedia.",
+      "Gracioso es sinónimo; Doloroso y Emocional no son el par clásico.",
+      "Trágico es el género/tono opuesto a cómico.",
+      "Atajo: cómico ↔ trágico."
+    ],
+    "fuente": "Ant_nimos/004_image47.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nInstigar\n\nA) Disuadir\nB) Ayudar\nC) Tranquilizar\nD) Riesgo",
+    "respuesta": "A) Disuadir",
+    "pasos": [
+      "Instigar = incitar / empujar a hacer algo.",
+      "Ayudar y Tranquilizar no niegan la incitación; Riesgo es sustantivo.",
+      "Disuadir = convencer de no hacerlo.",
+      "Atajo: instigar ↔ disuadir."
+    ],
+    "fuente": "Ant_nimos/005_image24.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nApaciguador\n\nA) Conciliador\nB) Instigador\nC) Humillante\nD) Moroso",
+    "respuesta": "B) Instigador",
+    "pasos": [
+      "Apaciguador = quien calma / pacifica un conflicto.",
+      "Conciliador es sinónimo cercano; Humillante y Moroso no aplican.",
+      "Instigador = quien provoca o agita.",
+      "Atajo: apaciguar ↔ instigar → Instigador."
+    ],
+    "fuente": "Ant_nimos/006_image42.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nMortal\n\nA) Espiritual\nB) Eterno\nC) Inmortal\nD) Divino",
+    "respuesta": "C) Inmortal",
+    "pasos": [
+      "Mortal = sujeto a la muerte.",
+      "Espiritual, Eterno y Divino son afines pero no el antónimo léxico directo.",
+      "Inmortal = que no muere / no sujeto a la muerte.",
+      "Atajo: mortal ↔ inmortal (mismo lexema con prefijo negativo)."
+    ],
+    "fuente": "Ant_nimos/007_image28.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nFresco\n\nA) Inusual\nB) Lento\nC) Ajado\nD) Defectuoso",
+    "respuesta": "C) Ajado",
+    "pasos": [
+      "Fresco (sentido físico/visual) = reciente, lozano, no marchito.",
+      "Inusual, Lento y Defectuoso no son opuestos de lozanía.",
+      "Ajado = marchito, consumido por el uso o el tiempo.",
+      "Atajo: fresco ↔ ajado."
+    ],
+    "fuente": "Ant_nimos/008_image33.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nAdaptable\n\nA) Rígido\nB) Dúctil\nC) Manejable\nD) Perezoso",
+    "respuesta": "A) Rígido",
+    "pasos": [
+      "Adaptable = que se ajusta con facilidad.",
+      "Dúctil y Manejable son cercanos; Perezoso no es antónimo.",
+      "Rígido = inflexible, que no se adapta.",
+      "Atajo: adaptable ↔ rígido."
+    ],
+    "fuente": "Ant_nimos/009_image38.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nProgenitor\n\nA) Descendiente\nB) Precursor\nC) Pionero\nD) Salvador",
+    "respuesta": "A) Descendiente",
+    "pasos": [
+      "Progenitor = antepasado / padre o madre.",
+      "Precursor y Pionero son afines a «quien precede»; Salvador no aplica.",
+      "Descendiente = quien viene después en la línea familiar.",
+      "Atajo: progenitor ↔ descendiente."
+    ],
+    "fuente": "Ant_nimos/010_image46.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nRetraerse\n\nA) Reducir\nB) Necesitar\nC) Avanzar\nD) Querer",
+    "respuesta": "C) Avanzar",
+    "pasos": [
+      "Retraerse = echarse atrás / retraerse.",
+      "Reducir es cercano; Necesitar y Querer no son opuestos de movimiento.",
+      "Avanzar = ir hacia adelante.",
+      "Atajo: retraerse ↔ avanzar."
+    ],
+    "fuente": "Ant_nimos/011_image23.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nFilisteo\n\nA) Intelectual\nB) Bárbaro\nC) Novato\nD) Debutante",
+    "respuesta": "A) Intelectual",
+    "pasos": [
+      "Filisteo (sentido cultural) = persona de gusto vulgar / indiferente a la cultura.",
+      "Bárbaro, Novato y Debutante no son el contraste cultural clásico.",
+      "Intelectual = cultivado / interesado en lo culto.",
+      "Atajo: filisteo ↔ intelectual."
+    ],
+    "fuente": "Ant_nimos/012_image37.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nDesistir\n\nA) Renunciar\nB) Perseverar\nC) Ganar\nD) Abdicar",
+    "respuesta": "B) Perseverar",
+    "pasos": [
+      "Desistir = abandonar un intento.",
+      "Renunciar y Abdicar son sinónimos cercanos; Ganar no es antónimo directo.",
+      "Perseverar = insistir pese a la dificultad.",
+      "Atajo: desistir ↔ perseverar."
+    ],
+    "fuente": "Ant_nimos/013_image41.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nEcuanimidad\n\nA) Resentimiento\nB) Subjetivo\nC) Equilibrio\nD) Emoción",
+    "respuesta": "B) Subjetivo",
+    "pasos": [
+      "Ecuanimidad = imparcialidad / serenidad de juicio (objetivo frente a sesgos).",
+      "Equilibrio es sinónimo; Resentimiento y Emoción son afines pero no el contraste marcado.",
+      "La clave del ítem marca Subjetivo (juicio parcial / sesgado) como opuesto.",
+      "Atajo: según respuesta marcada en verde → Subjetivo."
+    ],
+    "fuente": "Ant_nimos/014_image50.png"
+  },
+  {
+    "enunciado": "DESCRIPCIÓN (pantalla de instrucciones, no es ítem de ejercicio).\n\nUn antónimo es una palabra que tiene un significado contrario a otra palabra, por ejemplo, caliente es el antónimo de frío. En las siguientes preguntas elige la palabra que tenga el significado opuesto a las palabras dadas.\n\nIMPORTANTE: El test de antónimos está compuesto por 15 preguntas, y tendrás 7.5 minutos, o 30 segundos por pregunta, para contestar correctamente la mayor cantidad posible. Si no sabes la respuesta de la pregunta o si te está tomando mucho tiempo, déjala y regresa a ella si tienes tiempo restante al final del test. Puedes regresar a preguntas anteriores y también saltarte preguntas. Puedes enviar la prueba en cualquier momento. Si el tiempo límite ha concluido el test será enviado automáticamente con las respuestas que hayas seleccionado.",
+    "respuesta": "",
+    "pasos": [
+      "No aplica: es la diapositiva de descripción/reglas del bloque.",
+      "Parámetros: 15 preguntas, 7.5 minutos (≈30 s por pregunta).",
+      "Puedes saltar y volver a preguntas anteriores.",
+      "Atajo: saltar al primer ítem con palabra y opciones A–D."
+    ],
+    "fuente": "Ant_nimos/015_image22.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nFraudulento\n\nA) Franco\nB) Genuino\nC) Cándido\nD) Directo",
+    "respuesta": "B) Genuino",
+    "pasos": [
+      "Fraudulento = falso / engañoso.",
+      "Franco, Cándido y Directo son afines a sinceridad pero no el par más exacto.",
+      "Genuino = auténtico, no falso.",
+      "Atajo: fraudulento ↔ genuino."
+    ],
+    "fuente": "Ant_nimos/016_image27.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nSobresaltado\n\nA) Divertido\nB) Alarmado\nC) Relajado\nD) Asombrado",
+    "respuesta": "C) Relajado",
+    "pasos": [
+      "Sobresaltado = asustado / alterado de golpe.",
+      "Alarmado y Asombrado son cercanos; Divertido no es antónimo.",
+      "Relajado = en calma, sin sobresalto.",
+      "Atajo: sobresaltado ↔ relajado."
+    ],
+    "fuente": "Ant_nimos/017_image32.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nCompendio\n\nA) Resumen\nB) Abstracto\nC) Edición\nD) Ampliación",
+    "respuesta": "D) Ampliación",
+    "pasos": [
+      "Compendio = resumen / versión condensada.",
+      "Resumen y Abstracto son sinónimos; Edición no es opuesto.",
+      "Ampliación = expansión / desarrollo más amplio.",
+      "Atajo: compendio ↔ ampliación."
+    ],
+    "fuente": "Ant_nimos/018_image45.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nNexo\n\nA) Separación\nB) Conexión\nC) Vínculo\nD) Distraccion",
+    "respuesta": "A) Separación",
+    "pasos": [
+      "Nexo = enlace / vínculo entre partes.",
+      "Conexión y Vínculo son sinónimos; Distraccion no aplica.",
+      "Separación = ruptura del enlace.",
+      "Atajo: nexo ↔ separación."
+    ],
+    "fuente": "Ant_nimos/019_image26.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nEvasivo\n\nA) Ambiguo\nB) Liberal\nC) Franco\nD) Honesto",
+    "respuesta": "D) Honesto",
+    "pasos": [
+      "Evasivo = que elude / no responde de frente.",
+      "Ambiguo es cercano; Liberal no aplica; Franco es candidato cercano.",
+      "La clave marcada en verde es Honesto (directo / sin evasivas).",
+      "Atajo: según respuesta marcada → Honesto."
+    ],
+    "fuente": "Ant_nimos/020_image36.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nPuntiagudo\n\nA) Romo\nB) Agudo\nC) Arrogante\nD) Obtuso",
+    "respuesta": "A) Romo",
+    "pasos": [
+      "Puntiagudo = con punta afilada.",
+      "Agudo es sinónimo; Arrogante no aplica; Obtuso es cercano pero la clave marca Romo.",
+      "Romo = sin punta / desafilado.",
+      "Atajo: puntiagudo ↔ romo."
+    ],
+    "fuente": "Ant_nimos/021_image44.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nSagaz\n\nA) Ingenuo\nB) Perspicaz\nC) Prudente\nD) Imaginativo",
+    "respuesta": "A) Ingenuo",
+    "pasos": [
+      "Sagaz = astuto / perspicaz.",
+      "Perspicaz es sinónimo (distractora); Prudente e Imaginativo no son opuestos exactos.",
+      "Ingenuo = sin malicia / crédulo.",
+      "Atajo: sagaz ↔ ingenuo."
+    ],
+    "fuente": "Ant_nimos/022_image49.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nObedecer\n\nA) Contradecir\nB) Ordenar\nC) Adoptar\nD) Rechazar",
+    "respuesta": "B) Ordenar",
+    "pasos": [
+      "Obedecer = cumplir una orden (rol de quien recibe).",
+      "Contradecir, Adoptar y Rechazar no son el par rol-opuesto marcado.",
+      "Ordenar = dar la orden (rol contrario).",
+      "Atajo: según clave marcada → Ordenar (obedece ↔ quien ordena)."
+    ],
+    "fuente": "Ant_nimos/023_image31.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nExcitación\n\nA) Agitación\nB) Viveza\nC) Serenidad\nD) Precipitarse",
+    "respuesta": "C) Serenidad",
+    "pasos": [
+      "Excitación = estado de agitación / excitación.",
+      "Agitación y Viveza son cercanos; Precipitarse es verbo distinto.",
+      "Serenidad = calma / quietud.",
+      "Atajo: excitación ↔ serenidad."
+    ],
+    "fuente": "Ant_nimos/024_image40.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nFrugal\n\nA) Glotón\nB) Providente\nC) Copioso\nD) Descuidado",
+    "respuesta": "D) Descuidado",
+    "pasos": [
+      "Frugal = austero / cuidadoso en el gasto o consumo.",
+      "Glotón y Copioso son candidatos semánticos; Providente es afín.",
+      "La clave del ítem marca Descuidado como respuesta correcta.",
+      "Atajo: según respuesta marcada en verde → Descuidado."
+    ],
+    "fuente": "Ant_nimos/025_image52.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nFacilitar\n\nA) Enviar\nB) Imposibilitar\nC) Precipitar\nD) Examinar",
+    "respuesta": "B) Imposibilitar",
+    "pasos": [
+      "Facilitar = hacer posible / más fácil.",
+      "Enviar, Precipitar y Examinar no niegan la facilitación.",
+      "Imposibilitar = hacer imposible.",
+      "Atajo: facilitar ↔ imposibilitar."
+    ],
+    "fuente": "Ant_nimos/026_image25.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nMalvado\n\nA) Ignorante\nB) Frívolo\nC) Bondadoso\nD) Atroz",
+    "respuesta": "C) Bondadoso",
+    "pasos": [
+      "Malvado = perverso / de mala índole.",
+      "Atroz es sinónimo; Ignorante y Frívolo no son opuestos morales.",
+      "Bondadoso = de buena índole / bondad.",
+      "Atajo: malvado ↔ bondadoso."
+    ],
+    "fuente": "Ant_nimos/027_image30.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nImaginativo\n\nA) Ingenioso\nB) Jugueton\nC) Realista\nD) Escrito",
+    "respuesta": "C) Realista",
+    "pasos": [
+      "Imaginativo = que inventa / fantasea.",
+      "Ingenioso y Jugueton son afines; Escrito no aplica.",
+      "Realista = anclado a lo real / no fantasioso.",
+      "Atajo: imaginativo ↔ realista."
+    ],
+    "fuente": "Ant_nimos/028_image35.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nDiscrepancia\n\nA) Entendimiento\nB) Desacuerdo\nC) Incorrecto\nD) Ingenio",
+    "respuesta": "A) Entendimiento",
+    "pasos": [
+      "Discrepancia = desacuerdo / divergencia.",
+      "Desacuerdo es sinónimo; Incorrecto e Ingenio no son opuestos.",
+      "Entendimiento = acuerdo / comprensión mutua.",
+      "Atajo: discrepancia ↔ entendimiento."
+    ],
+    "fuente": "Ant_nimos/029_image43.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nNebuloso\n\nA) Oscuro\nB) Ambiguo\nC) Claro\nD) Deseable",
+    "respuesta": "C) Claro",
+    "pasos": [
+      "Nebuloso = confuso / poco nítido.",
+      "Oscuro y Ambiguo son cercanos; Deseable no aplica.",
+      "Claro = nítido / comprensible.",
+      "Atajo: nebuloso ↔ claro."
+    ],
+    "fuente": "Ant_nimos/030_image48.png"
+  },
+  {
+    "enunciado": "Por favor elija la palabra que tiene el significado opuesto exacto que la siguiente palabra:\n\nProteico\n\nA) Elástico\nB) Mudable\nC) Constante\nD) Talentoso",
+    "respuesta": "C) Constante",
+    "pasos": [
+      "Proteico = cambiante / de muchas formas.",
+      "Elástico y Mudable son cercanos; Talentoso no aplica.",
+      "Constante = estable / sin cambio.",
+      "Atajo: proteico ↔ constante."
+    ],
+    "fuente": "Ant_nimos/031_image51.png"
+  }
+]

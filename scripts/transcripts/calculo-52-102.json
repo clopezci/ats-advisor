@@ -1,0 +1,515 @@
+[
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n10 - 3 ÷ 2 = ?\n\nA) 3.5\nB) 1.5\nC) 8.5\nD) 4.5\nE) 2.5",
+    "respuesta": "C) 8.5",
+    "pasos": [
+      "División primero: 3 ÷ 2 = 1.5.",
+      "Resta: 10 − 1.5 = 8.5.",
+      "Atajo: no restes 10−3 antes; la ÷ va antes que −."
+    ],
+    "fuente": "C_clculo_Mental/052_image88.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n30 − (5 × 8 − 15) = ?\n\nOpciones: … B) 5 …",
+    "respuesta": "B) 5",
+    "pasos": [
+      "Dentro del paréntesis: 5 × 8 = 40.",
+      "40 − 15 = 25.",
+      "30 − 25 = 5.",
+      "Atajo: 5×8−15 = 40−15 = 25; 30−25 = 5."
+    ],
+    "fuente": "C_clculo_Mental/053_image101.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n? × 6 ÷ 4 = 9\n\nA) 6\nB) 12\nC) 26\nD) 20\nE) 22",
+    "respuesta": "A) 6",
+    "pasos": [
+      "×6 ÷4 equivale a ×(6/4) = ×1.5.",
+      "Si x × 1.5 = 9 → x = 9 ÷ 1.5 = 6.",
+      "Comprobar: 6 × 6 ÷ 4 = 36 ÷ 4 = 9.",
+      "Atajo: 9 × 4 ÷ 6 = 36 ÷ 6 = 6."
+    ],
+    "fuente": "C_clculo_Mental/054_image109.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n(105 + 206) − 550 ÷ 5² + 10 = ?\n\nA) 100\nB) 289\nC) 219\nD) 0\nE) 299",
+    "respuesta": "E) 299",
+    "pasos": [
+      "Paréntesis: 105 + 206 = 311.",
+      "Exponente: 5² = 25; 550 ÷ 25 = 22.",
+      "311 − 22 + 10 = 299.",
+      "Atajo: 311 + 10 − 22 = 321 − 22 = 299."
+    ],
+    "fuente": "C_clculo_Mental/055_image62.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n25 ÷ 2 + 6 ÷ 3 = ?\n\nSolución UI: 25/2 + 2 = 29/2.\n\nOpciones: A) 29/2 …",
+    "respuesta": "A) 29/2",
+    "pasos": [
+      "25 ÷ 2 = 25/2.",
+      "6 ÷ 3 = 2.",
+      "25/2 + 2 = 25/2 + 4/2 = 29/2.",
+      "Atajo: 12.5 + 2 = 14.5 = 29/2."
+    ],
+    "fuente": "C_clculo_Mental/056_image83.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n5 × 3 − 12 ÷ 4 + 8 = ?\n\nA) 4\nB) 3\nC) 14\nD) 20\nE) 1",
+    "respuesta": "D) 20",
+    "pasos": [
+      "Multiplicación y división: 5 × 3 = 15; 12 ÷ 4 = 3.",
+      "15 − 3 + 8 = 20.",
+      "Atajo: 15 + 8 − 3 = 20."
+    ],
+    "fuente": "C_clculo_Mental/057_image96.png"
+  },
+  {
+    "enunciado": "DESCRIPCIÓN (pantalla de instrucciones, no es ítem de ejercicio).\n\nEn este test de Cálculo Mental necesitarás resolver diferentes tipos de problemas matemáticos usando las operaciones aritméticas básicas (suma, resta, multiplicación y división).\n\nIMPORTANTE: Este test matemático está compuesto por 25 preguntas, y tendrás 12.5 minutos para contestar correctamente la mayor cantidad posible. Si no sabes la respuesta o te toma mucho tiempo, déjala y regresa si queda tiempo. Puedes regresar o saltarte preguntas. Puedes enviar en cualquier momento; al acabarse el tiempo se envía automáticamente. El test inicia en la siguiente pantalla.",
+    "respuesta": "",
+    "pasos": "No aplica: diapositiva de reglas del bloque (25 preguntas, 12.5 minutos), no un ejercicio. Atajo: saltar al primer ítem con expresión.",
+    "fuente": "C_clculo_Mental/058_image104.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n? ÷ 8 = 75 + 40 − 67\n\nSi el desconocido es x: x/8 = 75 + 40 − 67 = 48 ⇒ x = 48 × 8 = 384.\n\nOpciones: … B) 384 …",
+    "respuesta": "B) 384",
+    "pasos": [
+      "Lado derecho: 75 + 40 − 67 = 48.",
+      "x / 8 = 48 ⇒ x = 48 × 8 = 384.",
+      "Atajo: 50×8=400; resta 2×8=16 → 384."
+    ],
+    "fuente": "C_clculo_Mental/059_image112.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n75 × 98 − 60 + ? = 387\n\nA) -6,705\nB) -6,903\nC) -7,002\nD) -6,808\nE) -7,107",
+    "respuesta": "B) -6,903",
+    "pasos": [
+      "75 × 98 = 75 × (100 − 2) = 7,500 − 150 = 7,350.",
+      "7,350 − 60 + x = 387 ⇒ 7,290 + x = 387.",
+      "x = 387 − 7,290 = −6,903.",
+      "Atajo: 7,350 + x ≈ 387 + 60 = 447 → x = 447 − 7,350 = −6,903."
+    ],
+    "fuente": "C_clculo_Mental/060_image117.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n? ÷ 3 = 27\n\nA) 72\nB) 84\nC) 81\nD) 99\nE) 96",
+    "respuesta": "C) 81",
+    "pasos": [
+      "x ÷ 3 = 27 ⇒ x = 27 × 3 = 81.",
+      "Atajo: 30×3=90; resta 3×3=9 → 81."
+    ],
+    "fuente": "C_clculo_Mental/061_image125.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n69 ÷ 3 = ?  (o ? × 3 = 69)\n\nSolución UI: 69/3 = 23.\n\nOpciones: … B) 23 …",
+    "respuesta": "B) 23",
+    "pasos": [
+      "69 ÷ 3 = 23.",
+      "Atajo: 60÷3=20; 9÷3=3 → 23."
+    ],
+    "fuente": "C_clculo_Mental/062_image130.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n? × 4 ÷ 3 = 64\n\nA) 93\nB) 75\nC) 72\nD) 57\nE) 48",
+    "respuesta": "E) 48",
+    "pasos": [
+      "x × 4 ÷ 3 = 64 ⇒ 4x = 64 × 3 = 192.",
+      "x = 192 ÷ 4 = 48.",
+      "Comprobar: 48 × 4 ÷ 3 = 192 ÷ 3 = 64.",
+      "Atajo: 64 × 3 ÷ 4 = 192 ÷ 4 = 48."
+    ],
+    "fuente": "C_clculo_Mental/063_image133.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n600 ÷ 75 = ?\n\nSolución UI: 600/75 = 8.\n\nOpciones: … E) 8 …",
+    "respuesta": "E) 8",
+    "pasos": [
+      "600 ÷ 75: 75 × 8 = 600.",
+      "Atajo: 600 ÷ 75 = (600 ÷ 25) ÷ 3 = 24 ÷ 3 = 8."
+    ],
+    "fuente": "C_clculo_Mental/064_image138.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n(571 × 7) ÷ ? = 571\n\nSi el desconocido es x: (571 × 7) ÷ x = 571 ⇒ x = 7.\n\nOpciones: A) 7 …",
+    "respuesta": "A) 7",
+    "pasos": [
+      "(571 × 7) ÷ x = 571 ⇒ x = 7 (se cancela 571).",
+      "Atajo: dividir por el mismo factor que multiplicaste deja el número igual → el divisor es 7."
+    ],
+    "fuente": "C_clculo_Mental/065_image146.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n137 ÷ 10 − 22 + ? = 155\n\nA) 146.3\nB) 154.8\nC) 163.3\nD) 163.7\nE) 146.7",
+    "respuesta": "C) 163.3",
+    "pasos": [
+      "137 ÷ 10 = 13.7.",
+      "13.7 − 22 = −8.3.",
+      "−8.3 + x = 155 ⇒ x = 155 + 8.3 = 163.3.",
+      "Atajo: x = 155 − 13.7 + 22 = 163.3."
+    ],
+    "fuente": "C_clculo_Mental/066_image151.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n91 × ? ÷ 73 = 91\n\nA) 72\nB) 76\nC) 71\nD) 73\nE) 75",
+    "respuesta": "D) 73",
+    "pasos": [
+      "91 × x ÷ 73 = 91 ⇒ x ÷ 73 = 1 ⇒ x = 73.",
+      "Atajo: para que 91 quede igual, multiplicar y dividir por el mismo número → ? = 73."
+    ],
+    "fuente": "C_clculo_Mental/067_image153.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n25 − 5 ÷ (3 + 2) = ?\n\nA) 15\nB) 5\nC) 0\nD) 24\nE) 4",
+    "respuesta": "D) 24",
+    "pasos": [
+      "Paréntesis: 3 + 2 = 5.",
+      "5 ÷ 5 = 1.",
+      "25 − 1 = 24.",
+      "Atajo: 5÷(3+2)=1; 25−1=24."
+    ],
+    "fuente": "C_clculo_Mental/068_image56.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n5 (3 + 2) + 5² = ?\n\nSolución UI: 5(5) + 5² = 25 + 25 = 50.\n\nOpciones: A) 50 …",
+    "respuesta": "A) 50",
+    "pasos": [
+      "Paréntesis: 3 + 2 = 5 → 5 × 5 = 25.",
+      "5² = 25.",
+      "25 + 25 = 50.",
+      "Atajo: 5×5 + 25 = 50."
+    ],
+    "fuente": "C_clculo_Mental/069_image61.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n4 + 6 − 7 + 3 = ?\n\nSolución UI: 4 + 6 − 7 + 3 = 6.\n\nOpciones: … B) 6 …",
+    "respuesta": "B) 6",
+    "pasos": [
+      "4 + 6 = 10.",
+      "10 − 7 = 3.",
+      "3 + 3 = 6.",
+      "Atajo: (4+6+3) − 7 = 13 − 7 = 6."
+    ],
+    "fuente": "C_clculo_Mental/070_image65.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n3 + 3 − 75 − 5 × (−89) = ?\n\nA) -325\nB) 376\nC) 100\nD) 299\nE) 199",
+    "respuesta": "B) 376",
+    "pasos": [
+      "Multiplicación: 5 × (−89) = −445.",
+      "Restar un negativo: − (−445) = +445.",
+      "3 + 3 − 75 + 445 = 6 − 75 + 445 = 376.",
+      "Atajo: −75 − 5(−89) = −75 + 445 = 370; +6 = 376."
+    ],
+    "fuente": "C_clculo_Mental/071_image70.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n33 − 27 × 10 ÷ (−3) = ?\n\nSolución UI: 33 − 270 ÷ (−3) = 33 + 90 = 123.\n\nOpciones: … C) 123 …",
+    "respuesta": "C) 123",
+    "pasos": [
+      "27 × 10 = 270.",
+      "270 ÷ (−3) = −90.",
+      "33 − (−90) = 33 + 90 = 123.",
+      "Atajo: ÷(−3) hace positivo el 270→90; 33+90=123."
+    ],
+    "fuente": "C_clculo_Mental/072_image91.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n15 − 12 × 6 ÷ (7 + 5) = ?\n\nA) 4\nB) 15\nC) 53/7\nD) 13\nE) 9",
+    "respuesta": "E) 9",
+    "pasos": [
+      "Paréntesis: 7 + 5 = 12.",
+      "12 × 6 ÷ 12 = 6.",
+      "15 − 6 = 9.",
+      "Atajo: 12÷12=1; 1×6=6; 15−6=9."
+    ],
+    "fuente": "C_clculo_Mental/073_image86.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n(3 + 2)² − 5 × 3 + 2³ = ?\n\nA) 2\nB) 6\nC) 18\nD) 38\nE) 25",
+    "respuesta": "C) 18",
+    "pasos": [
+      "Paréntesis y potencias: (5)² = 25; 2³ = 8.",
+      "5 × 3 = 15.",
+      "25 − 15 + 8 = 18.",
+      "Atajo: 25 + 8 − 15 = 18."
+    ],
+    "fuente": "C_clculo_Mental/074_image102.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n79 × 10 ÷ ? + 81 = 71\n\nA) 66\nB) 61\nC) 79\nD) -66\nE) -79",
+    "respuesta": "E) -79",
+    "pasos": [
+      "790 ÷ x + 81 = 71 ⇒ 790 ÷ x = −10.",
+      "x = 790 ÷ (−10) = −79.",
+      "Atajo: necesitas −10 antes de +81 para llegar a 71; 790/−10 = −79."
+    ],
+    "fuente": "C_clculo_Mental/075_image107.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n107 − 53 + ? = 212\n\nSi el desconocido es x: 107 − 53 + x = 212 ⇒ x = 212 − 107 + 53 = 158.\n\nOpciones: A) 158 …",
+    "respuesta": "A) 158",
+    "pasos": [
+      "107 − 53 = 54.",
+      "54 + x = 212 ⇒ x = 158.",
+      "Atajo: 212 − 107 + 53 = 105 + 53 = 158."
+    ],
+    "fuente": "C_clculo_Mental/076_image128.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n? ÷ 7 = 688\n\nA) 4,810\nB) 4,115\nC) 4,816\nD) 4,158\nE) 6,415",
+    "respuesta": "C) 4,816",
+    "pasos": [
+      "x ÷ 7 = 688 ⇒ x = 688 × 7.",
+      "688 × 7 = 688 × (10 − 3) no; mejor: 700×7=4,900; 12×7=84 → 4,900 − 84 = 4,816.",
+      "Atajo: 688×7: 600×7=4,200; 88×7=616; suma 4,816."
+    ],
+    "fuente": "C_clculo_Mental/077_image149.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n10 + (6 × 11) = ?\n\nSolución UI: 10 + 66 = 76.\n\nOpciones: … C) 76 …",
+    "respuesta": "C) 76",
+    "pasos": [
+      "6 × 11 = 66.",
+      "10 + 66 = 76.",
+      "Atajo: 10 + 66 = 76."
+    ],
+    "fuente": "C_clculo_Mental/078_image59.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n? × 56 − 69 + 78 = 177\n\nA) 4\nB) 2\nC) 6\nD) 3\nE) 5",
+    "respuesta": "D) 3",
+    "pasos": [
+      "56x − 69 + 78 = 177 ⇒ 56x + 9 = 177.",
+      "56x = 168 ⇒ x = 168 ÷ 56 = 3.",
+      "Atajo: 177 − 78 + 69 = 168; 168÷56=3."
+    ],
+    "fuente": "C_clculo_Mental/079_image123.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n588 ÷ 98 = ?\n\nSolución UI: 588/98 = 6.\n\nOpciones: … E) 6 …",
+    "respuesta": "E) 6",
+    "pasos": [
+      "98 × 6 = 588.",
+      "Atajo: 100×6=600; resta 2×6=12 → 588."
+    ],
+    "fuente": "C_clculo_Mental/080_image144.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n3 + 20 × 3 = ?\n\nA) 69\nB) 63\nC) 65\nD) 25\nE) 35",
+    "respuesta": "B) 63",
+    "pasos": [
+      "Multiplicación primero: 20 × 3 = 60.",
+      "3 + 60 = 63.",
+      "Atajo: no sumes 3+20 antes; × va primero → 63."
+    ],
+    "fuente": "C_clculo_Mental/081_image54.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n120 + 1 − 18 = ?\n\nSolución UI: 120 + 1 − 18 = 103.\n\nOpciones: … B) 103 …",
+    "respuesta": "B) 103",
+    "pasos": [
+      "120 + 1 = 121.",
+      "121 − 18 = 103.",
+      "Atajo: 120 − 18 + 1 = 103."
+    ],
+    "fuente": "C_clculo_Mental/082_image81.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n9 × (−7) − 1 + 5 + 81 = ?\n\nA) 148\nB) 6\nC) 22\nD) 26\nE) -150",
+    "respuesta": "C) 22",
+    "pasos": [
+      "9 × (−7) = −63.",
+      "−63 − 1 + 5 + 81 = −64 + 86 = 22.",
+      "Atajo: −63 + 81 = 18; 18 − 1 + 5 = 22."
+    ],
+    "fuente": "C_clculo_Mental/083_image76.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n7 + (6 × 5² + 3) = ?\n\nA) 160\nB) 40\nC) 150\nD) 110\nE) 120",
+    "respuesta": "A) 160",
+    "pasos": [
+      "5² = 25.",
+      "6 × 25 = 150; 150 + 3 = 153.",
+      "7 + 153 = 160.",
+      "Atajo: 6×25=150; +3+7=160."
+    ],
+    "fuente": "C_clculo_Mental/084_image92.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; mismo ítem que 5 × 3 − 12 ÷ 4 + 8).\n\n(5 × 3) − (12 ÷ 4) + 8 → 15 − 3 + 8 = 20.\n\nOpciones: … D) 20 …",
+    "respuesta": "D) 20",
+    "pasos": [
+      "5 × 3 = 15; 12 ÷ 4 = 3.",
+      "15 − 3 + 8 = 20.",
+      "Atajo: 15 + 8 − 3 = 20."
+    ],
+    "fuente": "C_clculo_Mental/085_image97.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; mismo ítem que 75 × 98 − 60 + ? = 387).\n\nSi el desconocido es x: 7,350 + x = 387 + 60 = 447 ⇒ x = 447 − 7,350 = −6,903.\n\nOpciones: … B) -6,903 …",
+    "respuesta": "B) -6,903",
+    "pasos": [
+      "75 × 98 = 7,350.",
+      "7,350 + x = 387 + 60 = 447.",
+      "x = 447 − 7,350 = −6,903.",
+      "Atajo: resultado muy negativo cerca de −7,000 → opción −6,903."
+    ],
+    "fuente": "C_clculo_Mental/086_image118.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n95 × ? − 575 = 850\n\nA) 35\nB) 15\nC) 85\nD) 45\nE) 22",
+    "respuesta": "B) 15",
+    "pasos": [
+      "95x = 850 + 575 = 1,425.",
+      "x = 1,425 ÷ 95 = 15.",
+      "Atajo: 95×15 = 95×10 + 95×5 = 950 + 475 = 1,425; 1,425 − 575 = 850."
+    ],
+    "fuente": "C_clculo_Mental/087_image139.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\nx × 56 = 28\n\nA) 1/2\nB) 2/7\nC) 5/7\nD) 6/7\nE) 3/4",
+    "respuesta": "A) 1/2",
+    "pasos": [
+      "x = 28 ÷ 56 = 1/2.",
+      "Atajo: 28 es la mitad de 56 → x = 1/2."
+    ],
+    "fuente": "C_clculo_Mental/088_image113.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; mismo ítem que ? × 4 ÷ 3 = 64).\n\nSi el desconocido es x: 4x/3 = 64 ⇒ x = 16 × 3 = 48.\n\nOpciones: … E) 48 …",
+    "respuesta": "E) 48",
+    "pasos": [
+      "4x/3 = 64 ⇒ 4x = 192 ⇒ x = 48.",
+      "Atajo: 64 × 3/4 = 48."
+    ],
+    "fuente": "C_clculo_Mental/089_image134.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; mismo ítem que 3 + 3 − 75 − 5 × (−89)).\n\n−69 − 5(−89) = −69 + 445 = 376.\n\nOpciones: … B) 376 …",
+    "respuesta": "B) 376",
+    "pasos": [
+      "5 × (−89) = −445; restar eso suma 445.",
+      "−69 + 445 = 376.",
+      "Atajo: 445 − 69 = 376."
+    ],
+    "fuente": "C_clculo_Mental/090_image71.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n4 × (3 + 2) = ?\n\nA) 50\nB) 30\nC) 20\nD) 35\nE) 25",
+    "respuesta": "C) 20",
+    "pasos": [
+      "Paréntesis: 3 + 2 = 5.",
+      "4 × 5 = 20.",
+      "Atajo: 4×5=20."
+    ],
+    "fuente": "C_clculo_Mental/091_image66.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n25 ÷ 2 + 6 ÷ 3 = ?\n\nA) 29/2\nB) 37/6\nC) 27/2\nD) 25\nE) 1",
+    "respuesta": "A) 29/2",
+    "pasos": [
+      "25 ÷ 2 = 25/2; 6 ÷ 3 = 2.",
+      "25/2 + 2 = 29/2.",
+      "Atajo: 12.5 + 2 = 14.5 = 29/2."
+    ],
+    "fuente": "C_clculo_Mental/092_image82.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; mismo ítem que 15 − 12 × 6 ÷ (7 + 5)).\n\n15 − (12 × 6)/12 = 15 − 6 = 9.\n\nOpciones: … E) 9 …",
+    "respuesta": "E) 9",
+    "pasos": [
+      "(7+5)=12; 12×6÷12=6.",
+      "15 − 6 = 9.",
+      "Atajo: el 12 se cancela → resta 6."
+    ],
+    "fuente": "C_clculo_Mental/093_image87.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; mismo ítem que 79 × 10 ÷ ? + 81 = 71).\n\nSi el desconocido es x: (790 ÷ x) − 71 − 81…; UI: x = 790/−10 = −79.\n\nOpciones: … E) -79 …",
+    "respuesta": "E) -79",
+    "pasos": [
+      "790 ÷ x = 71 − 81 = −10.",
+      "x = 790 ÷ (−10) = −79.",
+      "Atajo: cociente −10 → divisor −79."
+    ],
+    "fuente": "C_clculo_Mental/094_image108.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n? × 3 = 69\n\nA) 22\nB) 23\nC) 24\nD) 25\nE) 26",
+    "respuesta": "B) 23",
+    "pasos": [
+      "x = 69 ÷ 3 = 23.",
+      "Atajo: 60÷3=20; 9÷3=3 → 23."
+    ],
+    "fuente": "C_clculo_Mental/095_image129.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; mismo ítem que 137 ÷ 10 − 22 + ? = 155).\n\nSi el desconocido es x: 13.7 − 22 + x = 155 ⇒ x = 155 + 22 − 13.7 = 163.3.\n\nOpciones: … C) 163.3 …",
+    "respuesta": "C) 163.3",
+    "pasos": [
+      "13.7 − 22 = −8.3.",
+      "x = 155 + 8.3 = 163.3.",
+      "Atajo: 155 + 22 − 13.7 = 163.3."
+    ],
+    "fuente": "C_clculo_Mental/096_image152.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n5 (3 + 2) + 5² = ?\n\nA) 50\nB) 30\nC) 45\nD) 35\nE) 25",
+    "respuesta": "A) 50",
+    "pasos": [
+      "3 + 2 = 5 → 5 × 5 = 25.",
+      "5² = 25.",
+      "25 + 25 = 50.",
+      "Atajo: 25 + 25 = 50."
+    ],
+    "fuente": "C_clculo_Mental/097_image60.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; mismo ítem que (3 + 2)² − 5 × 3 + 2³).\n\n(3 + 2)² − (5 × 3) + 2³ → 25 − 15 + 8 = 18.\n\nOpciones: … C) 18 …",
+    "respuesta": "C) 18",
+    "pasos": [
+      "5² = 25; 2³ = 8; 5×3 = 15.",
+      "25 − 15 + 8 = 18.",
+      "Atajo: 25 + 8 − 15 = 18."
+    ],
+    "fuente": "C_clculo_Mental/098_image103.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; mismo ítem que ? × 56 − 69 + 78 = 177).\n\nSi el desconocido es x: 56x = 177 − 78 + 69 = 168 ⇒ x = 168 ÷ 56 = 3.\n\nOpciones: … D) 3 …",
+    "respuesta": "D) 3",
+    "pasos": [
+      "56x = 177 − 78 + 69 = 168.",
+      "x = 168 ÷ 56 = 3.",
+      "Atajo: 56×3=168."
+    ],
+    "fuente": "C_clculo_Mental/099_image124.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n[Pregunta no visible en la captura; reconstruida desde EXPLICACIÓN 065.]\n\n(571 × 7) ÷ ? = 571\n\nA) 7\nB) 6\nC) 4\nD) 5\nE) 3",
+    "respuesta": "A) 7",
+    "pasos": [
+      "(571 × 7) ÷ x = 571 ⇒ x = 7.",
+      "Atajo: el factor que cancela el ×7 es 7.",
+      "UI marca A) 7 en verde."
+    ],
+    "fuente": "C_clculo_Mental/100_image145.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; mismo ítem que ? ÷ 7 = 688).\n\n688 × 7 = 4,816.\n\nOpciones: … C) 4,816 …",
+    "respuesta": "C) 4,816",
+    "pasos": [
+      "x = 688 × 7 = 4,816.",
+      "Atajo: 700×7 − 12×7 = 4,900 − 84 = 4,816."
+    ],
+    "fuente": "C_clculo_Mental/101_image150.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; mismo ítem que 3 + 20 × 3).\n\n3 + (20 × 3) = 3 + 60 = 63.\n\nOpciones: … B) 63 …",
+    "respuesta": "B) 63",
+    "pasos": [
+      "20 × 3 = 60.",
+      "3 + 60 = 63.",
+      "Atajo: × antes que + → 63 (no 69)."
+    ],
+    "fuente": "C_clculo_Mental/102_image55.png"
+  }
+]

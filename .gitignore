@@ -52,3 +52,5 @@ Thumbs.db
 scripts/.tmp*
 scripts/**/.tmp*
 .tmp-cv*
+tmp-psico-excel/
+tmp-psico-by-sheet/

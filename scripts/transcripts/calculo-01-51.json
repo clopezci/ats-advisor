@@ -1,0 +1,308 @@
+[
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n30 ÷ (18 * 1/3) - 15 * 1/3 = ?\n\nOpciones: 0 | -130/27 | -40/9 | 3 | 5",
+    "respuesta": "0",
+    "pasos": "1) Paréntesis: 18×(1/3)=6. 2) 30÷6=5. 3) 15×(1/3)=5. 4) 5−5=0. Atajo: ambos términos dan 5 → diferencia 0.",
+    "fuente": "001_image78.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN; enunciado no visible.] Evalúa (60 ÷ (−20)) + (3 × 5/3 × 5).\nOpciones numeradas A–E; UI marca E.",
+    "respuesta": "E) 22",
+    "pasos": "1) 60÷(−20)=−3. 2) 3×(5/3)×5: se cancelan los 3 → 5×5=25. 3) −3+25=22. Atajo: segundo bloque = 5×5; solo suma −3.",
+    "fuente": "002_image73.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n3 + 6 ÷ 3 * 2 = ?\n\nOpciones: 7 | 6 | 4 | 1.5 | 3",
+    "respuesta": "7",
+    "pasos": "1) De izquierda a derecha ×÷: 6÷3=2. 2) 2×2=4. 3) 3+4=7. Atajo: no hagas (3+6) primero; solo ÷ y × antes de +.",
+    "fuente": "003_image94.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] Evalúa (5 × 4) − (2 × 3) + 4.\nUI marca C.",
+    "respuesta": "C) 18",
+    "pasos": "1) 5×4=20; 2×3=6. 2) 20−6+4=18. Atajo: 20−6=14; +4=18.",
+    "fuente": "004_image99.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n26 × ? − 110 = 384\n\nOpciones: 14 | 13 | 17 | 15 | 19",
+    "respuesta": "19",
+    "pasos": "1) Aísla el producto: 26×?=384+110=494. 2) ?=494÷26. 3) 26×19=494. Atajo: 26×20=520; 520−26=494 → 19.",
+    "fuente": "005_image115.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] Calcula 546 ÷ 91.\nUI marca B.",
+    "respuesta": "B) 6",
+    "pasos": "1) 91×6=546. 2) Por tanto 546/91=6. Atajo: 90×6=540; sobra 6 → un 6 más.",
+    "fuente": "006_image120.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] Calcula 90 + 46 − 63.\nUI marca C.",
+    "respuesta": "C) 73",
+    "pasos": "1) 90+46=136. 2) 136−63=73. Atajo: 90−63=27; 27+46=73.",
+    "fuente": "007_image136.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n52 × 35 − 64 + ? = 829\n\nOpciones: −920 | −925 | −923 | −929 | −927",
+    "respuesta": "−927",
+    "pasos": "1) 52×35=1820. 2) 1820−64=1756. 3) 1756+?=829 → ?=829−1756=−927. Atajo: 1820−64≈1756; falta ~927 por debajo de 829.",
+    "fuente": "008_image141.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n[Expresión en imagen; recuperada de EXPLICACIÓN 030.] 12 + 6 + (30 ÷ 15) + 50 = ?\n\nOpciones: 70 | 100 | 150 | 135 | 85",
+    "respuesta": "70",
+    "pasos": "1) 30÷15=2. 2) 12+6+2+50=70. Atajo: 12+6=18; 18+50=68; +2=70.",
+    "fuente": "009_image68.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] Calcula 311 − 22 + 10.\nUI marca E.",
+    "respuesta": "E) 299",
+    "pasos": "1) 311−22=289. 2) 289+10=299. Atajo: 311+10=321; 321−22=299.",
+    "fuente": "010_image63.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n(30 ÷ 15 − 10) × (−1) = ?\n\nOpciones: −8 | 6 | −6 | −9 | 8",
+    "respuesta": "8",
+    "pasos": "1) 30÷15=2. 2) 2−10=−8. 3) (−8)×(−1)=8. Atajo: el signo negativo del paréntesis se cancela con ×(−1).",
+    "fuente": "011_image84.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] Evalúa 10 − (3 ÷ 2).\nUI marca C.",
+    "respuesta": "C) 8.5",
+    "pasos": "1) 3÷2=1.5. 2) 10−1.5=8.5. Atajo: mitad de 3 bajo 10 → 8.5.",
+    "fuente": "012_image89.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n? × 5 = 80\n\nOpciones: 19 | 13 | 15 | 16 | 17",
+    "respuesta": "16",
+    "pasos": "1) ?=80÷5. 2) 80÷5=16. Atajo: 5×16=80.",
+    "fuente": "013_image105.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] Si el desconocido es X: 6X/4 = 9.\nUI marca A.",
+    "respuesta": "A) 6",
+    "pasos": "1) 6X/4=9 → X=(4×9)/6. 2) 36/6=6. Atajo: 6/4=1.5 → 1.5X=9 → X=6.",
+    "fuente": "014_image110.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] Calcula 27 × 3.\nUI marca C.",
+    "respuesta": "C) 81",
+    "pasos": "1) 27×3=81. Atajo: 30×3=90; resta 3×3=9 → 81.",
+    "fuente": "015_image126.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n68 × 7 ÷ ? + 11 = 79\n\nOpciones: 6 | 9 | 7 | 8 | 10",
+    "respuesta": "7",
+    "pasos": "1) 68×7=476. 2) 476÷? = 79−11=68. 3) ?=476÷68=7. Atajo: tras −11 queda 68; 476/68=7.",
+    "fuente": "016_image131.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] Si el desconocido es X: 91X/73 = 91.\nUI marca D.",
+    "respuesta": "D) 73",
+    "pasos": "1) 91X/73=91 → X=(91×73)/91. 2) Se cancelan los 91 → X=73. Atajo: si 91X/73=91, entonces X=73.",
+    "fuente": "017_image154.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] Evalúa 25 − {5 ÷ 5}.\nUI marca D.",
+    "respuesta": "D) 24",
+    "pasos": "1) 5÷5=1. 2) 25−1=24. Atajo: cualquier n÷n=1; 25−1=24.",
+    "fuente": "018_image57.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN; pareja de 008.] Si el desconocido es X: 1,820 − 64 + X = 829.\nUI marca E.",
+    "respuesta": "E) −927",
+    "pasos": "1) X=829−1820+64. 2) 829+64=893; 893−1820=−927. Atajo: 1820−64=1756; 829−1756=−927.",
+    "fuente": "019_image142.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n? × 34 − 100 + 66 = 34\n\nOpciones: 4 | 3 | 2 | 1 | 0",
+    "respuesta": "2",
+    "pasos": "1) −100+66=−34 → ?×34 − 34 = 34. 2) ?×34=68. 3) ?=68÷34=2. Atajo: factor común 34: 34(?−1)=34 → ?=2.",
+    "fuente": "020_image147.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n[Expresión en imagen; recuperada de EXPLICACIÓN 050.] (10 × (−7) × 25/4) − 23/2 = ?\n\nOpciones: −426 | −921/4 | 0 | −449 | 426",
+    "respuesta": "−449",
+    "pasos": "1) 10×(−7)=−70. 2) −70×(25/4)=−1750/4=−437.5. 3) −437.5 − 11.5 = −449. Atajo: −875/2 − 23/2 = −898/2 = −449.",
+    "fuente": "021_image74.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN; pareja simplificada de 001.] Evalúa 30 ÷ 6 − 5.\nUI marca A.",
+    "respuesta": "A) 0",
+    "pasos": "1) 30÷6=5. 2) 5−5=0. Atajo: mismo minuendo y sustraendo tras la división.",
+    "fuente": "022_image79.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN; pareja de 003.] Evalúa 3 + (6 ÷ 3 × 2).\nUI marca A.",
+    "respuesta": "A) 7",
+    "pasos": "1) 6÷3×2=2×2=4. 2) 3+4=7. Atajo: paréntesis deja 4; 3+4=7.",
+    "fuente": "023_image95.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n30 − (5 × 2³ − 15) = ?\n\nOpciones: −25 | 5 | 15 | −15 | 12",
+    "respuesta": "5",
+    "pasos": "1) 2³=8. 2) 5×8=40. 3) 40−15=25. 4) 30−25=5. Atajo: dentro del paréntesis queda 25; 30−25=5.",
+    "fuente": "024_image100.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN; pareja de 005.] Si el desconocido es X: 26X = 384 + 110.\nUI marca E.",
+    "respuesta": "E) 19",
+    "pasos": "1) 384+110=494. 2) X=494÷26=19. Atajo: 26×19=494.",
+    "fuente": "025_image116.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n515 × 8 ÷ x = 40\n\nOpciones: 103 | 113 | 102 | 109 | 104",
+    "respuesta": "103",
+    "pasos": "1) 515×8=4120. 2) 4120÷x=40 → x=4120÷40=103. Atajo: 4120/40=103.",
+    "fuente": "026_image121.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN; pareja de 016.] Si el desconocido es X: 476 ÷ X = 79 − 11.\nUI marca C.",
+    "respuesta": "C) 7",
+    "pasos": "1) 79−11=68. 2) X=476÷68=7. Atajo: 68×7=476.",
+    "fuente": "027_image132.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n? × 75 = 600\n\nOpciones: 4 | 5 | 7 | 3 | 8",
+    "respuesta": "8",
+    "pasos": "1) ?=600÷75. 2) 75×8=600. Atajo: 75×8=(75×10)−(75×2)=750−150=600.",
+    "fuente": "028_image137.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n4 + 6 − 7 + 3 = ?\n\nOpciones: −1 | 6 | 7 | 15 | 20",
+    "respuesta": "6",
+    "pasos": "1) 4+6=10. 2) 10−7=3. 3) 3+3=6. Atajo: (4+6+3)−7=13−7=6.",
+    "fuente": "029_image64.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN; pareja de 009.] Evalúa 12 + 6 + (30 ÷ 15) + 50.\nUI marca A.",
+    "respuesta": "A) 70",
+    "pasos": "1) 30÷15=2. 2) 12+6+2+50=70. Atajo: 18+52=70.",
+    "fuente": "030_image69.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] Evalúa −63 − 1 + 5 + 81.\nUI marca C.",
+    "respuesta": "C) 22",
+    "pasos": "1) Agrupa positivos: 5+81=86. 2) Negativos: −63−1=−64. 3) 86−64=22 (UI: 85−63=22). Atajo: 81−63=18; 18+(5−1)=22.",
+    "fuente": "031_image77.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN; pareja de 011.] Evalúa (2 − 10) × (−1).\nUI marca E.",
+    "respuesta": "E) 8",
+    "pasos": "1) 2−10=−8. 2) (−8)×(−1)=8. Atajo: negativo × negativo = positivo.",
+    "fuente": "032_image85.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n33 − 27 × (4 + 6) ÷ (−3) = ?\n\nOpciones: 5 | 110 | 123 | −20 | −110",
+    "respuesta": "123",
+    "pasos": "1) 4+6=10. 2) 27×10=270. 3) 270÷(−3)=−90. 4) 33−(−90)=123. Atajo: restar un negativo = sumar 90 → 33+90=123.",
+    "fuente": "033_image90.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n5 × 4 − 2 × 3 + 4 = ?\n\nOpciones: 10 | 11.5 | 18 | 58 | 15",
+    "respuesta": "18",
+    "pasos": "1) 5×4=20; 2×3=6. 2) 20−6+4=18. Atajo: 20−6=14; +4=18.",
+    "fuente": "034_image98.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n? ÷ 8 + 67 − 40 = 75\n\nOpciones: 350 | 384 | 364 | 378 | 392",
+    "respuesta": "384",
+    "pasos": "1) 67−40=27 → ?/8 + 27 = 75. 2) ?/8=48. 3) ?=48×8=384. Atajo: 50×8=400; resta 2×8=16 → 384.",
+    "fuente": "035_image111.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n? × 91 = 546\n\nOpciones: 7 | 6 | 5 | 3 | 2",
+    "respuesta": "6",
+    "pasos": "1) ?=546÷91. 2) 91×6=546. Atajo: misma división que 546/91=6.",
+    "fuente": "036_image119.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n60 ÷ (−20) + 3 × 5/3 × 5 = ?\n\nOpciones: 50 | 25/3 | 65 | 25 | 22",
+    "respuesta": "22",
+    "pasos": "1) 60÷(−20)=−3. 2) 3×(5/3)×5=25. 3) −3+25=22. Atajo: cancela 3 en el producto; queda −3+25.",
+    "fuente": "037_image72.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] Evalúa 7 + (6 × 25 + 3).\nUI marca A.",
+    "respuesta": "A) 160",
+    "pasos": "1) 6×25=150. 2) 150+3=153. 3) 7+153=160. Atajo: 7+150+3=160.",
+    "fuente": "038_image93.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN; pareja de 013.] Si el desconocido es X: X = 80/5.\nUI marca D.",
+    "respuesta": "D) 16",
+    "pasos": "1) 80÷5=16. Atajo: 5×16=80.",
+    "fuente": "039_image106.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] Simplifica 28/56.\nUI marca A.",
+    "respuesta": "A) 1/2",
+    "pasos": "1) Divide num. y den. entre 28: 28/56=1/2. Atajo: la mitad de 56 es 28 → 1/2.",
+    "fuente": "040_image114.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN; pareja de 026.] Si el desconocido es X: 4120 ÷ X = 40.\nUI marca A.",
+    "respuesta": "A) 103",
+    "pasos": "1) X=4120÷40=103. Atajo: 40×100=4000; 40×3=120; total 4120 → 103.",
+    "fuente": "041_image122.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n856 ÷ 8 − 53 + ? = 212\n\nOpciones: 158 | 168 | 122 | 136 | 142",
+    "respuesta": "158",
+    "pasos": "1) 856÷8=107. 2) 107−53=54. 3) 54+?=212 → ?=158. Atajo: 212−54=158.",
+    "fuente": "042_image127.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n? ÷ 1 + 63 − 46 = 90\n\nOpciones: 53 | 63 | 73 | 93 | 83",
+    "respuesta": "73",
+    "pasos": "1) ?÷1=?. 2) 63−46=17 → ?+17=90. 3) ?=90−17=73. Atajo: 90−17=73 (misma suma que 90+46−63).",
+    "fuente": "043_image135.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] Si el desconocido es X: 95X = 850 + 575.\nUI marca B.",
+    "respuesta": "B) 15",
+    "pasos": "1) 850+575=1425. 2) X=1425÷95=15. Atajo: 95×15=95×10+95×5=950+475=1425.",
+    "fuente": "044_image140.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n? × 98 = 588\n\nOpciones: 2 | 4 | 5 | 1 | 6",
+    "respuesta": "6",
+    "pasos": "1) ?=588÷98. 2) 98×6=588. Atajo: 100×6=600; resta 2×6=12 → 588.",
+    "fuente": "045_image143.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN; pareja de 020.] Si el desconocido es X: 34X = 34 − 66 + 100.\nUI marca C.",
+    "respuesta": "C) 2",
+    "pasos": "1) 34−66+100=68. 2) X=68÷34=2. Atajo: lado derecho = 68; 34×2=68.",
+    "fuente": "046_image148.png"
+  },
+  {
+    "enunciado": "DESCRIPCIÓN (pantalla de instrucciones, no es ítem de ejercicio).\n\nEn este test de Cálculo Mental necesitarás resolver diferentes tipos de problemas matemáticos usando las operaciones aritméticas básicas (suma, resta, multiplicación y división).\n\nIMPORTANTE: Este test matemático está compuesto por 25 preguntas, y tendrás 12.5 minutos para contestar correctamente la mayor cantidad posible. Si no sabes la respuesta o te toma mucho tiempo, déjala y regresa si queda tiempo. Puedes regresar o saltarte preguntas. Puedes enviar en cualquier momento; al acabarse el tiempo se envía automáticamente. El test inicia en la siguiente pantalla.",
+    "respuesta": "N/A",
+    "pasos": "Pantalla de instrucciones del test (25 preguntas, 12.5 minutos). No hay cálculo.",
+    "fuente": "047_image53.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n10 + 6 × (1 + 10) = ?\n\nOpciones: 176 | 6 | 76 | 26 | 20",
+    "respuesta": "76",
+    "pasos": "1) 1+10=11. 2) 6×11=66. 3) 10+66=76. Atajo: no sumes 10+6 antes del producto.",
+    "fuente": "048_image58.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] Calcula 4 × 5.\nUI marca C.",
+    "respuesta": "C) 20",
+    "pasos": "1) 4×5=20. Atajo: tabla del 5.",
+    "fuente": "049_image67.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN; pareja de 021.] Evalúa (10 × (−7) × 25/4) − 23/2.\nUI marca D.",
+    "respuesta": "D) −449",
+    "pasos": "1) 10×(−7)×(25/4)=−875/2. 2) −875/2 − 23/2 = −898/2 = −449. Atajo: misma fracción /2: (−875−23)/2=−449.",
+    "fuente": "050_image75.png"
+  },
+  {
+    "enunciado": "Elija la respuesta correcta.\n\n8 × 15 + 12 × 3/36 − 18 = ?\n\nOpciones: 106 | 103 | −97 | −108 | 97",
+    "respuesta": "103",
+    "pasos": "1) 8×15=120. 2) 12×3/36=36/36=1. 3) 120+1−18=103. Atajo: 120−18=102; +1=103.",
+    "fuente": "051_image80.png"
+  }
+]

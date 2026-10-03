@@ -1,0 +1,440 @@
+[
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\nSi la población de Sha al final de 2015 es un 4% mayor que al final de 2013, ¿cuál es la tasa de crecimiento de la población en 2015 respecto a 2014?\n\nDatos: población final 2014 = 5.89 millones; cambio 2014 = 101,500.\n\nOpciones: A) …  B) 2.2%  C) …  D) …  E) …",
+    "respuesta": "B) 2.2%",
+    "pasos": [
+      "Población final 2013: 5,890,000 − 101,500 = 5,788,500.",
+      "Población final 2015 con +4% sobre 2013: 5,788,500 × 1.04 = 6,020,040.",
+      "Tasa 2015 vs 2014: (6,020,040 − 5,890,000) / 5,890,000 = 2.2%.",
+      "Atajo: el +4% se aplica a la base 2013 (menor que 2014), así el crecimiento vs 2014 queda claramente por debajo de 4% → encaja 2.2%."
+    ],
+    "fuente": "Razonamiento_numerico/041_image323.png"
+  },
+  {
+    "enunciado": "Si la tasa de crecimiento registrada en cada ciudad en 2014 se mantiene en el 2015. ¿Cuál será la población total de todas las ciudades al final del 2015?\n\nTasa de crecimiento (%): Sbu 2.5/2.5/2.4/2.4; Sha 1.9×4; Mdw 3.2×4; Sre 0.2/0.3/0.4/0.5; Szv 4.9/3.2/1.9/1.1 (2010–2013).\nPoblación final 2014 (millones): Sbu 4.57, Sha 5.89, Mdw 2.75, Sre 8.58, Szv 1.69.\nCambio vs año anterior: 103,000; 101,500; 64,200; 40,100; 14,800.\n\nOpciones: A) 23,410,017  B) 23,815,240  C) 21,005,000  D) 23,156,400  E) 23,480,000",
+    "respuesta": "B) 23,815,240",
+    "pasos": [
+      "Hallar población 2013 por ciudad: pob2014 − cambio (p. ej. Sbu 4,570,000 − 103,000 = 4,467,000).",
+      "Tasa 2014 = cambio / pob2013 (Sbu ≈ 2.3%, Sha ≈ 1.8%, Mdw ≈ 2.4%, Sre ≈ 0.5%, Szv ≈ 0.9%).",
+      "Proyectar 2015: pob2014 × (1 + tasa) y sumar → 23,815,240.",
+      "Atajo: total 2014 = 23,480,000; crecimiento 2014 ≈ 323,600; en 2015 el mismo % sobre base mayor supera 23,803,600 → opción B."
+    ],
+    "fuente": "Razonamiento_numerico/042_image328.png"
+  },
+  {
+    "enunciado": "¿En cuál de los años mostrados la proporción del PIB del Reino Unido al PIB de Canadá fue más cercana a 2:1?\n\nGDP (mil millones) Canadá / Reino Unido / EE.UU.:\n2005: 1,164 / 2,412 / 13,093\n2006: 1,311 / 2,583 / 13,856\n2007: 1,458 / 2,963 / 14,478\n2008: 1,543 / 2,792 / 14,719\n2009: 1,371 / 2,309 / 14,419\n\nOpciones: A) No hay suficiente información  B) 2006 y 2008  C) 2006 y 2007  D) 2005 y 2008  E) 2007 y 2009",
+    "respuesta": "C) 2006 y 2007",
+    "pasos": [
+      "Calcular UK/Canadá por año: 2005≈2.07; 2006≈1.97; 2007≈2.03; 2008≈1.81; 2009≈1.68.",
+      "Comparar desviación respecto a 2.0: 2006 y 2007 son las más cercanas (±0.03).",
+      "Descartar pares que incluyen 2008 o 2009 (lejos de 2).",
+      "Atajo: duplica Canadá; si casi iguala UK → candidato. 2006 (2.62≈2.58) y 2007 (2.92≈2.96)."
+    ],
+    "fuente": "Razonamiento_numerico/043_image336.png"
+  },
+  {
+    "enunciado": "¿Cuál es el promedio aproximado de número de estudiantes admitidos en los estudios de posgrado en los cinco programas mostrados?\n\nPosgrado (TC H/M + MT H/M) Berd University Otoño 2013:\nAgricultura 40/25/0/2; Ciencias computacionales 16/0/0/0; Humanidades 34/36/1/7; Otros artes y ciencias 8/9/0/0; Negocios y comercio 236/308/24/12.\n\nOpciones: A) No hay suficiente información  B) 236  C) 161  D) 148  E) 152",
+    "respuesta": "E) 152",
+    "pasos": [
+      "Totales posgrado por programa: 67, 16, 78, 17, 580.",
+      "Suma: 67+16+78+17+580 = 758.",
+      "Promedio: 758/5 = 151.6 ≈ 152.",
+      "Atajo: Negocios (~580) domina; (580+≈180)/5 ≈ 152."
+    ],
+    "fuente": "Razonamiento_numerico/044_image349.png"
+  },
+  {
+    "enunciado": "Si las cinco acciones muestran la misma tendencia como el promedio del cambio en porcentaje anual de la ganancia en capital de las acciones al final del 2006. ¿Cuál sería el costo de adquirir 1,000 unidades por cada una de las acciones al final del 2006?\n\nCambio % anual (gráfico): 2001 −13.40%; 2002 −23.37%; 2003 26.38%; 2004 8.99%; 2005 3%; 2006 13.62%.\nPrecios final 2005: VAL 8.55; BA 16.98; VX 31.98; MSF 47.19; SIR 3.53.\n\nOpciones: no visibles en la captura.",
+    "respuesta": "122,970.93",
+    "pasos": [
+      "Sumar precios 2005: 8.55+16.98+31.98+47.19+3.53 = 108.23.",
+      "Aplicar tendencia 2006 (+13.62%): 108.23 × 1.1362 ≈ 122.9709.",
+      "Costo de 1,000 de cada una = 122.9709 × 1,000 ≈ 122,970.93.",
+      "Atajo: 108.23 × 1,136.2 (equivale a ×1.1362 y luego ×1000)."
+    ],
+    "fuente": "Razonamiento_numerico/045_image357.png"
+  },
+  {
+    "enunciado": "¿Cuántas personas entre las edades de 50 – 64 se registraron para el reto en 2014?\n\nDistribución edad 2014: <18 18%; 18–29 22%; 30–49 20%; 50–64 21%; 65+ 19%.\nTotal registrados: 2011 152,776; 2012 302,018; 2013 439,932; 2014 538,137; 2015 proy. 1,191,495.\n\nOpciones: no visibles en la captura.",
+    "respuesta": "113,009",
+    "pasos": [
+      "Total 2014 = 538,137.",
+      "Porcentaje 50–64 = 21%.",
+      "538,137 × 0.21 = 113,008.77 ≈ 113,009.",
+      "Atajo: 10%≈53,814; 20%≈107,627; +1%≈5,381 → ≈113,009."
+    ],
+    "fuente": "Razonamiento_numerico/046_image310.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n¿Cuál fue el total de ventas globales de vehículos (Larborg + Ferri + Maseti) en 2014? (millones)\n\nDatos del gráfico: 2014 → Larborg 14, Ferri 13, Maseti 13.\n\nOpciones: … C) 40 millones …",
+    "respuesta": "C) 40 millones",
+    "pasos": [
+      "Leer ventas 2014 de las tres marcas: 14, 13 y 13.",
+      "Sumar: 14+13+13 = 40.",
+      "Comprobar unidades: el gráfico está en millones → 40 millones.",
+      "Atajo: 13+13+14; unidades 3+3+4=10 → total termina en 0 → 40."
+    ],
+    "fuente": "Razonamiento_numerico/047_image331.png"
+  },
+  {
+    "enunciado": "¿Cuál programa tiene el porcentaje más alto de estudiantes de posgrado de tiempo completo comparado a estudiantes de grado de tiempo completo?\n\nGrado TC (H/M) / Posgrado TC (H/M):\nAgricultura 265/342 → 40/25; Ciencias comp. 180/23 → 16/0; Humanidades 716/1085 → 34/36; Otros artes 820/1007 → 8/9; Negocios 1645/961 → 236/308.\n\nOpciones: A) Agricultura  B) Humanidades  C) Negocios y Comercio  D) Otros Artes y ciencias  E) Ciencias computacionales",
+    "respuesta": "C) Negocios y Comercio",
+    "pasos": [
+      "Posgrado TC / Grado TC: Agr 65/607≈10.7%; Comp 16/203≈7.9%; Hum 70/1801≈3.9%; Otros 17/1827≈0.9%; Neg 544/2606≈20.9%.",
+      "Comparar: Negocios es el máximo (~21%).",
+      "Descartar filas con posgrado TC muy pequeño frente a grado.",
+      "Atajo: Negocios tiene ~544 vs ~2606 ≈ 1/5; ningún otro se acerca."
+    ],
+    "fuente": "Razonamiento_numerico/048_image344.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n¿Cuál acción tuvo el mayor incremento porcentual de precio de 2003 a 2004?\n\nPrecios 2003→2004: VAL 20.32→13.72; BA 11.63→16.77; VX 105.84→40.84; MSF 26.83→36.04; SIR 3.16→3.70.\n\nOpciones: A) VAL  B) BA  C) VX  D) MSF  E) SIR",
+    "respuesta": "B) BA",
+    "pasos": [
+      "Calcular variación % 2004 vs 2003 por acción.",
+      "Incrementos positivos: BA +44.20%, MSF +34.33%, SIR +17.09%; VAL y VX caen.",
+      "El mayor incremento es BA (44.20%).",
+      "Atajo: BA sube ~5 sobre base ~12 ≈ 40%+; supera claramente a MSF (~1/3)."
+    ],
+    "fuente": "Razonamiento_numerico/049_image352.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n¿Cuál es el cambio porcentual promedio de los precios de las acciones BA y VX del 2001 al 2003?\n\nBA: 14.25 → 11.63; VX: 576.80 → 105.84.\n\nOpciones: A) 50%  B) 52%  C) 27%  D) 20%  E) 35%",
+    "respuesta": "A) 50%",
+    "pasos": [
+      "BA: (14.25−11.63)/14.25 × 100 ≈ 18.39%.",
+      "VX: (576.80−105.84)/576.80 × 100 ≈ 81.65%.",
+      "Promedio: (18.39+81.65)/2 ≈ 50%.",
+      "Atajo: ≈18% + ≈82% = 100%; mitad = 50%."
+    ],
+    "fuente": "Razonamiento_numerico/050_image360.png"
+  },
+  {
+    "enunciado": "¿Cuál de estas opciones representan la aproximación más cercana a la proporción de gastos de seguros a gastos por depreciación?\n\nGastos Sam Ventures: Operacionales 464,495; Generales 34,000; Otros 21,600.\nComponentes operación: Publicidad 149,670; Seguros 56,125; Depreciación 27,700; Salarios 224,500; Viajes 6,500.\n\nOpciones: A) 51:25  B) 31:15  C) 21:10  D) 15:7  E) 11:5",
+    "respuesta": "A) 51:25",
+    "pasos": [
+      "Razón: 56,125 / 27,700 ≈ 2.026.",
+      "Convertir opciones: 51/25=2.04; 31/15≈2.067; 21/10=2.1; 15/7≈2.14; 11/5=2.2.",
+      "La más cercana a 2.026 es 51:25.",
+      "Atajo: ≈56k/28k ≈ 2:1; descarta ≥2.1 y elige 2.04."
+    ],
+    "fuente": "Razonamiento_numerico/051_image365.png"
+  },
+  {
+    "enunciado": "DESCRIPCIÓN (pantalla de instrucciones, no es ítem de ejercicio).\n\nEl razonamiento numérico forma parte del test de habilidades, en donde tu comprensión numérica es evaluada. En el test de razonamiento numérico debes de responder preguntas usando datos y números basándose en gráficas y tablas. Estos tests contienen preguntas que ponen a prueba tu conocimiento de razones, costos y análisis de ventas, conversión de divisas, incremento/decremento de porcentajes, tarifas y tendencias.\n\nSe permite el uso de calculadoras en estos exámenes y se recomienda que también tengas papel para trabajar. Tendrás que trabajar rápida y precisamente para tener un buen desempeño en este test. Tu cometido es responder correctamente todas las preguntas posibles.\n\nIMPORTANTE: Este test de Razonamiento Numérico se compone de 20 preguntas, y tendrás 20 minutos para responder correctamente todas las que puedas. Si no sabes la respuesta de la pregunta o si te está tomando mucho tiempo, déjala y regresa a ella si tienes tiempo restante al final del test. Puedes regresar a preguntas anteriores y también saltarte preguntas. Puedes dar enviar a la prueba en cualquier momento. Si el tiempo límite ha concluido el test será enviado automáticamente con las respuestas que hayas seleccionado.\n\nEl test empezará en la siguiente pantalla.",
+    "respuesta": "",
+    "pasos": [
+      "No aplica: es la diapositiva de descripción/reglas del bloque (20 preguntas, 20 minutos), no un ejercicio con opciones.",
+      "Atajo: saltar al primer ítem con gráfica o tabla."
+    ],
+    "fuente": "Razonamiento_numerico/052_image291.png"
+  },
+  {
+    "enunciado": "La administración AM decidió aumentar sus barcos propios en un 9% en 2012, ¿cuántas órdenes adicionales tienen que colocar?\n\nNúmero de barcos AM al 31/12/2011: Rentados 358; Propios 257; Pedidos 20.\n(Gráfico de operadores %: AM 32.8, MC 28.2, CG 18.6, HL 10.4, EL 10 — no necesario para esta pregunta.)\n\nOpciones: A) 1  B) 6  C) 3  D) 10  E) 15",
+    "respuesta": "C) 3",
+    "pasos": [
+      "Meta de propios: 257 × 1.09 ≈ 280.",
+      "Incremento necesario: 280 − 257 = 23.",
+      "Órdenes adicionales: 23 − 20 (ya pedidos) = 3.",
+      "Atajo: (257 × 0.09) − 20 ≈ 23 − 20 = 3."
+    ],
+    "fuente": "Razonamiento_numerico/053_image296.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\nSi las ventas de Larborg, Ferri y Maseti en 2013 (11 + 14 + 13) representan el 64% del total de automóviles vendidos, ¿cuál fue el número total de automóviles vendidos en 2013?\n\nOpciones: A) 59,400,000  B) 59,375,000  C) 62,500,000  D) 60,937,500  E) 59,695,000",
+    "respuesta": "B) 59,375,000",
+    "pasos": [
+      "Suma parcial 2013: 11+14+13 = 38 (millones en el gráfico).",
+      "Si 38 = 64%, entonces 100% = 38/0.64 = 59.375.",
+      "En unidades: 59,375,000.",
+      "Atajo: 38 ÷ 0.64 = 59.375 → opción B."
+    ],
+    "fuente": "Razonamiento_numerico/054_image305.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n¿Cuál es la diferencia entre el número de participantes de 30–49 años y los menores de 18 en 2014?\n\nTotal 2014 = 538,137; 30–49 = 20%; <18 = 18%.\n\nOpciones: A) 5,382  B) 16,145  C) 21,525  D) 10,763  E) 8,799",
+    "respuesta": "D) 10,763",
+    "pasos": [
+      "30–49: 0.20 × 538,137 = 107,627.",
+      "<18: 0.18 × 538,137 = 96,865.",
+      "Diferencia: 107,627 − 96,865 = 10,762 ≈ 10,763.",
+      "Atajo: diferencia de 2% → 538,137 × 0.02 ≈ 10,763."
+    ],
+    "fuente": "Razonamiento_numerico/055_image313.png"
+  },
+  {
+    "enunciado": "Si el doble de personas de edades 18-29 que se registraron en 2014 participaron en 2015, ¿qué porcentaje del total de participantes del 2015 representarán las personas de edad 18-29?\n\nDistribución 2014: 18–29 = 22%. Totales: 2014 = 538,137; 2015 proy. = 1,191,495.\n\nOpciones: A) 18%  B) 22%  C) 21%  D) 19%  E) 20%",
+    "respuesta": "E) 20%",
+    "pasos": [
+      "18–29 en 2014: 0.22 × 538,137 = 118,390.",
+      "En 2015 (doble): 118,390 × 2 = 236,780.",
+      "Porcentaje 2015: 236,780 / 1,191,495 × 100% ≈ 20%.",
+      "Atajo: ((0.22×538,137)×2)/1,191,495 ≈ 0.20."
+    ],
+    "fuente": "Razonamiento_numerico/056_image318.png"
+  },
+  {
+    "enunciado": "¿Cuál es la población de Szv al final del 2011?\n\nTasas Szv: 2010 4.9%; 2011 3.2%; 2012 1.9%; 2013 1.1%.\nPoblación final 2014: 1.69 millones; cambio 2014: 14,800.\n\nOpciones: A) 1,241,425  B) 1,350,048  C) 1,285,101  D) 1,626,077  E) No se puede decir",
+    "respuesta": "D) 1,626,077",
+    "pasos": [
+      "Pob 2013: 1,690,000 − 14,800 = 1,675,200.",
+      "Pob 2012: 1,675,200 / 1.011 ≈ 1,656,973.",
+      "Pob 2011: 1,656,973 / 1.019 ≈ 1,626,077.",
+      "Atajo: (1,690,000−14,800)/(1.011×1.019)."
+    ],
+    "fuente": "Razonamiento_numerico/057_image326.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n¿Cuál es el PIB per cápita combinado de Canadá, Reino Unido y Estados Unidos en 2009?\n\nPIB 2009 (mil millones): Can 1,371; UK 2,309; EE.UU. 14,419. Población combinada: 403 millones.\n\nOpciones: … D) $44,910 …",
+    "respuesta": "D) $44,910",
+    "pasos": [
+      "PIB total: 1,371+2,309+14,419 = 18,099 mil millones.",
+      "Convertir y dividir: 18,099,000 millones / 403 millones = 44,910.",
+      "Seleccionar la opción D.",
+      "Atajo: ≈18,100/403 ≈ 45,000 → cerca de 44,910."
+    ],
+    "fuente": "Razonamiento_numerico/058_image339.png"
+  },
+  {
+    "enunciado": "Los departamentos de Agricultura y Humanidades reservaron un espacio del 10% para estudiantes internacionales y otros programas reservaron un 15% para sus estudios de grado de tiempo completo. Si estos espacios se usaron completamente, ¿cuántos estudiantes internacionales fueron admitidos en los estudios de grado de tiempo completo para los cinco programas combinados?\n\nGrado TC (H/M): Agr 265/342; Comp 180/23; Hum 716/1085; Otros 820/1007; Neg 1645/961.\n\nOpciones: A) 1,701  B) 801  C) 902  D) 936  E) 1,002",
+    "respuesta": "D) 936",
+    "pasos": [
+      "Grupo 10% (Agr+Hum): 607+1,801 = 2,408 → 2,408×0.10 = 240.8.",
+      "Grupo 15% (Comp+Otros+Neg): 203+1,827+2,606 = 4,636 → 4,636×0.15 = 695.4.",
+      "Total internacionales: 240.8+695.4 ≈ 936.",
+      "Atajo: 0.1×(Agr+Hum) + 0.15×(resto TC)."
+    ],
+    "fuente": "Razonamiento_numerico/059_image347.png"
+  },
+  {
+    "enunciado": "Si CG, HL y EL combinados tiene 121 barcos menos que cargaron en Puerto Laguna que AM y MC combinados. ¿Cuántos barcos cargaron en Puerto Laguna en 2011?\n\n% operadores: AM 32.8; MC 28.2; CG 18.6; HL 10.4; EL 10.\n\nOpciones: no todas visibles; respuesta calculada 550.",
+    "respuesta": "550",
+    "pasos": [
+      "AM+MC = 61%; CG+HL+EL = 39%.",
+      "Diferencia = 22% = 121 barcos.",
+      "Total = 121 / 0.22 = 550.",
+      "Atajo: 121 ÷ 0.22 = 550."
+    ],
+    "fuente": "Razonamiento_numerico/060_image300.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n¿Qué ciudad tuvo el mayor aumento absoluto de población entre finales de 2011 y finales de 2014?\n\nSe usan tasas 2012 y 2013 (producto) para retroceder desde pob2013 = pob2014 − cambio, y luego se compara con pob2014.\n\nOpciones: A) Sbu  B) Sha  C) Mdw  D) Sre  E) Szv",
+    "respuesta": "A) Sbu",
+    "pasos": [
+      "Factor 2012×2013 (método del examen): Sbu 5.76%; Sha 3.61%; Mdw 10.24%; Sre 0.2%; Szv 2.09%.",
+      "Pob 2011 ≈ (pob2014 − cambio) / (1 + factor).",
+      "Incremento 2011→2014: Sbu 346,286; Sha 303,184; Mdw 313,679; Sre 57,146; Szv 49,095.",
+      "Atajo: el mayor incremento absoluto es Sbu (346,286)."
+    ],
+    "fuente": "Razonamiento_numerico/061_image321.png"
+  },
+  {
+    "enunciado": "¿En qué año el PIB combinado de Canadá y Reino Unido representa aproximadamente 22.75% del PIB total de los tres países combinados?\n\nGDP (mil millones) Can/UK/EE.UU. 2005–2009 como en la gráfica de barras.\n\nOpciones: A) 2005  B) 2006  C) 2007  D) 2008  E) 2009",
+    "respuesta": "D) 2008",
+    "pasos": [
+      "2008: Can+UK = 1,543+2,792 = 4,335; total = 4,335+14,719 = 19,054.",
+      "4,335 / 19,054 × 100 ≈ 22.75%.",
+      "Verificar que otros años no dan ~22.75%.",
+      "Atajo: prueba primero 2008 con la cifra objetivo 22.75%."
+    ],
+    "fuente": "Razonamiento_numerico/062_image334.png"
+  },
+  {
+    "enunciado": "¿Qué programa tiene la proporción más grande de hombres a mujeres admitidos para sus programas de grado y posgrado?\n\nTabla Berd University Otoño 2013 (todas las columnas H/M de grado y posgrado).\n\nOpciones: A) Agricultura  B) Negocios y Comercio  C) Otras Artes y ciencias  D) Ciencias computacionales  E) Humanidades",
+    "respuesta": "D) Ciencias computacionales",
+    "pasos": [
+      "Sumar hombres y mujeres de todas las columnas por programa.",
+      "Ciencias computacionales: H≈233, M≈30 → razón ≈7.8:1.",
+      "Otros programas tienen ratios mucho menores (o más mujeres).",
+      "Atajo: Comp es la única fila con hombres muy por encima de mujeres en casi todas las celdas."
+    ],
+    "fuente": "Razonamiento_numerico/063_image342.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; mismo ítem que promedio de posgrado).\n\n¿Cuál es el número promedio de estudiantes de posgrado admitidos en los cinco programas?\n\nTotales posgrado: Agr 67; Comp 16; Hum 78; Otros 17; Neg 580.\n\nOpciones: … E) 152",
+    "respuesta": "E) 152",
+    "pasos": [
+      "Sumar posgrado por programa: 67+16+78+17+580 = 758.",
+      "Promedio: 758/5 = 151.6 ≈ 152.",
+      "Coincide con la opción E.",
+      "Atajo: (≈180 + 580)/5 = 152."
+    ],
+    "fuente": "Razonamiento_numerico/064_image350.png"
+  },
+  {
+    "enunciado": "¿Cuál de las acciones sigue la misma tendencia como la mostrada por el promedio del cambio en porcentaje anual de la ganancia en capital de las acciones del 2002?\n\nGráfico: 2002 −23.37%, luego 2003–2005 positivos.\nPrecios: VAL baja siempre; BA baja 2002 y sube 2003–2005; VX baja siempre; MSF baja también en 2003; SIR sube en 2002.\n\nOpciones: VAL, BA, VX, MSF, SIR (no todas visibles; respuesta BA).",
+    "respuesta": "BA",
+    "pasos": [
+      "Tendencia del promedio desde 2002: caída en 2002 y recuperación positiva después.",
+      "BA: 14.25→6.18 (baja) y luego sube 11.63, 16.77, 16.98.",
+      "Descartar VAL/VX (solo bajan), MSF (baja en 2003), SIR (sube en 2002).",
+      "Atajo: busca la única acción con valle en 2002 y subidas posteriores → BA."
+    ],
+    "fuente": "Razonamiento_numerico/065_image355.png"
+  },
+  {
+    "enunciado": "¿Cuáles dos categorías de gastos de operación representan aproximadamente el 50% del total de gastos de operación?\n\nTotal operación 464,495. Componentes: Publicidad 149,670; Seguros 56,125; Depreciación 27,700; Salarios 224,500; Viajes y entretenimiento 6,500.\n\nOpciones: A) Salarios y Viajes y Entretenimiento  B) Publicidad y Viajes y Entretenimiento  C) Publicidad y Seguros  D) Seguros y Salarios  E) Ninguna de las anteriores",
+    "respuesta": "A) Salarios y Viajes y Entretenimiento",
+    "pasos": [
+      "50% del total ≈ 232,248.",
+      "Salarios+Viajes = 224,500+6,500 = 231,000 ≈ 50%.",
+      "Comprobar otras sumas (p. ej. Seguros+Salarios ≈ 280k > 50%).",
+      "Atajo: el sector amarillo (salarios) ya es casi la mitad; +viajes completa el 50%."
+    ],
+    "fuente": "Razonamiento_numerico/066_image363.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\nSi los gastos de operación bajan un 8% el próximo año y los salarios mantienen la misma proporción del total, ¿en cuánto disminuyen los gastos salariales? (al millar más cercano)\n\nOperación actual 464,495; salarios 224,500.\n\nOpciones: … D) $18,000 …",
+    "respuesta": "D) $18,000",
+    "pasos": [
+      "Nueva operación: 464,495 × 0.92 = 427,335.40.",
+      "Peso salarios: 224,500/464,495 ≈ 48.33%.",
+      "Nuevos salarios ≈ 206,531; diferencia ≈ 17,969 ≈ 18,000.",
+      "Atajo: 8% de 224,500 ≈ 17,960 → redondeo a 18,000."
+    ],
+    "fuente": "Razonamiento_numerico/067_image368.png"
+  },
+  {
+    "enunciado": "¿Cuántos barcos etiquetados HL salieron del Puerto Laguna, si 323 barcos AM salieron del Puerto en 2011?\n\n% operadores: AM 32.8; MC 28.2; CG 18.6; HL 10.4; EL 10.\n(También aparece en el gráfico: si 915 salieron, ¿cuántos CG? → 915×0.186=170.19.)\n\nOpciones: no visibles en la captura.",
+    "respuesta": "102.41",
+    "pasos": [
+      "AM = 32.8% ↔ 323 barcos.",
+      "HL = 10.4%.",
+      "(323 × 10.4) / 32.8 = 102.41.",
+      "Atajo: 10.4 ≈ 32.8/3.15 → ≈323/3 ≈ 108 (cerca de 102)."
+    ],
+    "fuente": "Razonamiento_numerico/068_image294.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\nSi el 64% de los barcos rentados y el 86% de los barcos propios de AM cargaron en Puerto Laguna, ¿cuántos barcos AM cargaron en total?\n\nRentados 358; Propios 257.\n\nOpciones: A) 470  B) 450  C) 490  D) 420  E) 410",
+    "respuesta": "B) 450",
+    "pasos": [
+      "Rentados que cargan: 0.64 × 358 = 229.",
+      "Propios que cargan: 0.86 × 257 = 221.",
+      "Total AM: 229+221 = 450.",
+      "Atajo: suma los dos productos parciales → 450."
+    ],
+    "fuente": "Razonamiento_numerico/069_image299.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; enunciado reconstruido).\n\n¿Cuál es el cambio porcentual proyectado de las ventas de Larborg de 2014 a 2015?\n\nVentas (millones): Larborg 2014=14 → 2015 proy.=13; también se muestran Ferri 2/13=15.38% y Maseti 1/13=7.69%.\n\nOpciones: A) 7.14%  B) 7.69%  C) 8.10%  D) 5.10%  E) 6.10%",
+    "respuesta": "A) 7.14%",
+    "pasos": [
+      "Cambio Larborg: 1 sobre base 14 → 1/14 × 100% = 7.14%.",
+      "Ferri: 2/13 ≈ 15.38%; Maseti: 1/13 ≈ 7.69%.",
+      "La opción marcada es 7.14% (Larborg).",
+      "Atajo: 1/14 ≈ 7.14% → opción A directa."
+    ],
+    "fuente": "Razonamiento_numerico/070_image303.png"
+  },
+  {
+    "enunciado": "¿Cuál es la proporción de ventas de Maseti en 2013 con el total de ventas de 2012?\n\nVentas (millones): 2012 Larborg 7, Ferri 18, Maseti 14; 2013 Maseti 13.\n\nOpciones: no visibles en la captura.",
+    "respuesta": "1/3",
+    "pasos": [
+      "Maseti 2013 = 13.",
+      "Total 2012 = 7+18+14 = 39.",
+      "Proporción 13/39 = 1/3.",
+      "Atajo: 39 = 3×13 → 1:3 o 1/3."
+    ],
+    "fuente": "Razonamiento_numerico/071_image308.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; mismo ítem que proyección 2015 con tasas 2014).\n\nSi la tasa de crecimiento de 2014 se mantiene en 2015, ¿cuál es la población total de las cinco ciudades al final de 2015?\n\nOpciones: … B) 23,815,240 …",
+    "respuesta": "B) 23,815,240",
+    "pasos": [
+      "Pob 2013 = pob2014 − cambio por ciudad.",
+      "Tasa 2014 = cambio / pob2013.",
+      "Pob 2015 = pob2014 × (1+tasa); sumar las cinco ciudades.",
+      "Atajo: suma de proyecciones = 23,815,240 → B."
+    ],
+    "fuente": "Razonamiento_numerico/072_image329.png"
+  },
+  {
+    "enunciado": "Si hubieron 12,476 nacimientos y una migración neta de 12,822 en Szv en el 2013, ¿cuántas muertes se registraron en el 2013?\n\nSzv tasa 2013 = 1.1%; pob final 2014 = 1.69 M; cambio 2014 = 14,800.\n\nOpciones: A) 7,055  B) 6,900  C) 7,071  D) 7,520  E) 6,014",
+    "respuesta": "C) 7,071",
+    "pasos": [
+      "Pob final 2013 = 1,690,000 − 14,800 = 1,675,200.",
+      "Crecimiento 2013 ≈ 1,675,200 × 0.011/1.011 ≈ 18,227.",
+      "Muertes = nacimientos + migración − crecimiento = 12,476+12,822−18,227 = 7,071.",
+      "Atajo: crecimiento = P_fin × r/(1+r); luego despeja muertes del balance."
+    ],
+    "fuente": "Razonamiento_numerico/073_image324.png"
+  },
+  {
+    "enunciado": "Si el PIB por cada país se ordena en un orden decreciente en los años mostrados, ¿que año tendrá el mismo orden para los tres países mostrados?\n\nGDP 2005–2009 Canadá, Reino Unido y Estados Unidos (gráfica de barras).\n\nOpciones: A) 2005  B) 2007  C) Ninguna de las respuestas  D) 2009  E) 2006",
+    "respuesta": "C) Ninguna de las respuestas",
+    "pasos": [
+      "Ordenar años por PIB decreciente para cada país.",
+      "Canadá y EE.UU.: 2008, 2007, 2009, 2006, 2005.",
+      "Reino Unido: 2007, 2008, 2006, 2005, 2009 — distinto.",
+      "Atajo: el máximo es 2008 para dos países pero 2007 para UK → ninguna coincidencia total."
+    ],
+    "fuente": "Razonamiento_numerico/074_image340.png"
+  },
+  {
+    "enunciado": "¿Cuál de los siguientes enunciados es verdadero?\n\nTabla Berd University Otoño 2013 (grado/posgrado, TC/MT, H/M).\n\nOpciones:\nA) La proporción de estudiantes de Humanidades a estudiantes de Ciencias Computacionales es 1:7.\nB) Hay menos estudiantes de Negocios y Comercio que estudiantes de Ciencias Computacionales y Humanidades combinados.\nC) Más hombres que mujeres fueron admitidos a programas de Humanidades.\nD) Hay más estudiantes de medio tiempo de Humanidades que estudiantes de medio tiempo de Ciencias computacionales.\nE) Hay 4 veces más estudiantes de Negocios y Comercio que estudiantes de Agricultura.",
+    "respuesta": "D) Hay más estudiantes de medio tiempo de Humanidades que estudiantes de medio tiempo de Ciencias computacionales",
+    "pasos": [
+      "MT Humanidades: 63+84+1+7 = 155.",
+      "MT Ciencias comp.: 37+7+0+0 = 44.",
+      "155 > 44 → D es verdadero; las demás fallan al verificar.",
+      "Atajo: solo Grado MT ya muestra Hum (147) >> Comp (44)."
+    ],
+    "fuente": "Razonamiento_numerico/075_image345.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; mismo ítem que seguros:depreciación).\n\n¿Cuál es la aproximación más cercana a la proporción de gastos de seguros a gastos por depreciación?\n\nSeguros 56,125; Depreciación 27,700.\n\nOpciones: A) 51:25  B) 31:15  C) 21:10  D) 15:7  E) 11:5",
+    "respuesta": "A) 51:25",
+    "pasos": [
+      "56,125:27,700 ≈ 2.026:1.",
+      "Comparar con 2.04, 2.067, 2.1, 2.14, 2.2.",
+      "La más cercana es 51:25.",
+      "Atajo: ≈2:1 → elige 2.04."
+    ],
+    "fuente": "Razonamiento_numerico/076_image366.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; mismo ítem que órdenes adicionales AM +9%).\n\nLa administración AM decidió aumentar sus barcos propios en un 9% en 2012; ¿cuántas órdenes adicionales deben colocar? (Propios 257, Pedidos 20.)\n\nOpciones: A) 1  B) 6  C) 3  D) 10  E) 15",
+    "respuesta": "C) 3",
+    "pasos": [
+      "257 × 1.09 = 280.",
+      "Incremento: 280 − 257 = 23.",
+      "Adicionales: 23 − 20 = 3.",
+      "Atajo: 257×0.09 − 20 ≈ 3."
+    ],
+    "fuente": "Razonamiento_numerico/077_image297.png"
+  },
+  {
+    "enunciado": "¿Los gastos de viajes y entretenimiento representan qué porcentaje de los gastos totales?\n\nOperacionales 464,495; Generales 34,000; Otros 21,600. Viajes y entretenimiento 6,500.\n\nOpciones: A) 1.46%  B) 1.44%  C) 1.95%  D) 1.25%  E) 1.34%",
+    "respuesta": "D) 1.25%",
+    "pasos": [
+      "Gastos totales: 464,495+34,000+21,600 = 520,095.",
+      "Viajes = 6,500.",
+      "6,500/520,095 × 100% ≈ 1.25%.",
+      "Atajo: 6,500/520,000 = 1/80 = 1.25%."
+    ],
+    "fuente": "Razonamiento_numerico/078_image361.png"
+  },
+  {
+    "enunciado": "Si un total de 915 barcos salieron del Puerto Laguna en 2011, ¿cuántos de ellos fueron marcados CG?\n\n% operadores: AM 32.8; MC 28.2; CG 18.6; HL 10.4; EL 10.\nTabla AM: Rentados 358; Propios 257; Pedidos 20.\n\nOpciones: no visibles en la captura.",
+    "respuesta": "170.19",
+    "pasos": [
+      "CG = 18.6% del total.",
+      "915 × 0.186 = 170.19.",
+      "Redondear según opciones si las hubiera (~170).",
+      "Atajo: 20% de 915 = 183; resta ~1.4% (~13) → ≈170."
+    ],
+    "fuente": "Razonamiento_numerico/079_image292.png"
+  },
+  {
+    "enunciado": "EXPLICACIÓN (pantalla de solución; mismo ítem que % 18–29 en 2015).\n\nSi el doble de personas de 18–29 registradas en 2014 participan en 2015, ¿qué % del total 2015 representan?\n\nOpciones: A) 18%  B) 22%  C) 21%  D) 19%  E) 20%",
+    "respuesta": "E) 20%",
+    "pasos": [
+      "0.22 × 538,137 = 118,390.",
+      "×2 = 236,780 en 2015.",
+      "236,780 / 1,191,495 × 100% = 20%.",
+      "Atajo: cadena ((0.22×538,137)×2)/1,191,495 = 0.20."
+    ],
+    "fuente": "Razonamiento_numerico/080_image319.png"
+  }
+]

@@ -1,0 +1,242 @@
+[
+  {
+    "enunciado": "En 2014, la proporción de ingresos a costos de la escenografía del evento es 9:7. Si el organizador cobra una tarifa de registro de £15 para los menores 18 años y de £20 para mayores de 18 años. ¿Qué ganancia se obtuvo por el evento de 2014 (a los £1,000 más cercanos)?\n\nGráfico circular — Distribución de Edad de los Participantes 2014: Menos de 18: 18%; 18-29: 22%; 30-49: 20%; 50-64: 21%; 65+: 19%.\nTabla Total de Participantes Registrados: 2011: 152,776; 2012: 302,018; 2013: 439,932; 2014: 538,137; 2015 (Proyectado): 1,191,495.\n\nOpciones (en 024): £4,497,000 | £2,284,000 | £3,629,000 | £1,645,000 | £1,766,000",
+    "respuesta": "£2,284,000",
+    "pasos": "1) Menores 18: 0.18×538,137=96,865; mayores 18: 441,272. 2) Ingresos: (15×96,865)+(20×441,272)=£10,278,415. 3) Con ratio ingresos:costos 9:7, ganancia = 2/9 del ingreso: 10,278,415×(2/9)≈2,284,092. 4) Redondear al millar: £2,284,000. Atajo: ingreso promedio ponderado × total × 2/9 → 538,137×(0.18×15+0.82×20)×(2/9).",
+    "fuente": "001_image316.png"
+  },
+  {
+    "enunciado": "[Pantalla de opciones + explicación; enunciado completo no visible.] ¿Cuántos participantes de edad 50–64 hubo en 2014?\nDatos de la serie: total 2014 = 538,137; grupo 50–64 = 21% del circular.\n\nOpciones: A) 96,864  B) 102,246  C) 107,627  D) 113,009  E) 538,137",
+    "respuesta": "113,009",
+    "pasos": "1) Localizar el % del grupo 50–64 en el circular: 21%. 2) Multiplicar por el total de 2014: 0.21×538,137. 3) Resultado: 113,008.77 ≈ 113,009. Atajo: 20% de 538,137≈107,627; suma ~1% más (~5,381) → ~113,009 (opción D).",
+    "fuente": "002_image311.png"
+  },
+  {
+    "enunciado": "Si el porcentaje total de la contribución de agricultura al PIB en 2010 representa un incremento del 5% con respecto al 2009, ¿cuál fue el [valor] total de la contribución de agricultura al PIB en el 2010 en los tres países (a los mil millones más cercanos)?\n\nBarras GDP (mil millones) 2009: Canadá ~1,371; Reino Unido ~2,309; EE.UU. ~14,419.\nLíneas % agricultura 2009: Canadá 1.6%; Reino Unido 0.6%; EE.UU. 1.1%.\n\nOpciones: $343.6 | $373.8 | $201.0 | $204.1 | $191.4 (mil millones)",
+    "respuesta": "$204.1 mil millones",
+    "pasos": "1) Contribución 2009: RU 0.006×2,309=13.854; EE.UU. 0.011×14,419=158.609; Canadá 0.016×1,371=21.936. 2) Total 2009: 13.854+158.609+21.936=194.399. 3) 2010 = 194.399×1.05≈204.1. Atajo: ~194.4×1.05 ≈ 204 → opción $204.1.",
+    "fuente": "003_image332.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN; enunciado no visible.] Calcula la proporción del PIB del Reino Unido al PIB de Canadá para 2005–2009 y elige los años cuya razón es ≈2:1 (o 4:2).\nCálculos de la UI: 2005≈2.07:1; 2006≈1.97:1; 2007≈2.03:1; 2008≈1.81:1; 2009≈1.68:1.",
+    "respuesta": "(C) 2006 y 2007",
+    "pasos": "1) Dividir PIB RU ÷ PIB Canadá cada año. 2) Buscar razón ≈2:1 (equiv. 4:2). 3) 2006 (≈1.97) y 2007 (≈2.03) son los más cercanos. Atajo: estima 2600/1300≈2 y 3000/1500≈2; descarta años claramente <1.8.",
+    "fuente": "004_image337.png"
+  },
+  {
+    "enunciado": "Un inversionista al final del 2001 usó el promedio del cambio en porcentaje anual de la ganancia en capital de las acciones para predecir el precio de BA al final del 2005. ¿Cuál es el incremento o disminución del precio actual respecto del precio previsto?\n\nBarras % anual: 2001 −13.40%; 2002 −23.37%; 2003 26.38%; 2004 8.99%; 2005 3%; 2006 13.62%.\nTabla precios BA: 2001 $14.25 … 2005 $16.98.",
+    "respuesta": "$2.69 incremento",
+    "pasos": "1) Promedio 2001–2005 (5 años, sin 2006): (−13.4−23.37+26.38+8.99+3)/5=0.32%. 2) Precio previsto: 14.25×1.0032≈14.29. 3) Diferencia: 16.98−14.29=$2.69 incremento. Atajo: con tasa casi 0, el previsto ≈14.25; 16.98−14.25≈2.73 → opción $2.69.",
+    "fuente": "005_image353.png"
+  },
+  {
+    "enunciado": "[Opciones + explicación; enunciado no visible.] Costo de adquirir 1,000 unidades de cada acción (VAL, BA, VX, MSF, SIR) al final de 2006, aplicando el factor 1.1362 a los precios de cierre 2005.\nPrecios 2005: VAL 8.55; BA 16.98; VX 31.98; MSF 47.19; SIR 3.53.\n\nOpciones: $113,620 | $155,970 | $122,970 | $136,210 | $169,810",
+    "respuesta": "$122,970",
+    "pasos": "1) Nuevo precio = precio 2005 × 1.1362 (VAL 9.71; BA 19.29; VX 36.34; MSF 53.62; SIR 4.01). 2) ×1,000 por ticker. 3) Suma: 9,710+19,290+36,340+53,620+4,010=$122,970. Atajo: suma precios 2005 (108.23)×1.1362×1,000≈122,970.",
+    "fuente": "006_image358.png"
+  },
+  {
+    "enunciado": "Si las ventas objetivo para Ferri para el periodo de 5 años es de 75 millones. ¿En cuánto tienen que exceder las ventas de 2015 para alcanzar el objetivo?\n\nGráfico ventas (millones) Ferri: 2011:14; 2012:18; 2013:14; 2014:13; 2015 proy.:15. (También Larborg y Maseti en el mismo gráfico.)",
+    "respuesta": "1 millón",
+    "pasos": "1) Sumar Ferri 5 años: 14+18+14+13+15=74. 2) Objetivo=75. 3) Déficit=75−74=1 millón (hay que exceder la proyección 2015 en 1). Atajo: suma mental; si el total acaba en 4 y el objetivo en 5 → falta 1.",
+    "fuente": "007_image306.png"
+  },
+  {
+    "enunciado": "[Opciones + explicación; enunciado no visible.] Sobre operadores de barcos en Puerto Laguna: AM 32.8%, MC 28.2%, CG 18.6%, HL 10.4%, EL 10.0%. Dada una diferencia de 121 barcos entre (AM+MC) y (CG+HL+EL), ¿cuál es el total de barcos?\n\nOpciones: 600 | 550 | 450 | 500 | 400",
+    "respuesta": "550",
+    "pasos": "1) (32.8+28.2)−(18.6+10.4+10.0)=61−39=22 puntos porcentuales. 2) Esos 22% equivalen a 121 barcos → total=121/0.22=550. Atajo: 121÷0.22=550 directamente (opción B).",
+    "fuente": "008_image301.png"
+  },
+  {
+    "enunciado": "En 2015, se estima que los participantes menores de 18 años aumenten en 5/4, los participantes de edades 18-29 aumenten un 6/5 y de edades 30-49 aumenten un 112%. ¿Cuál será el número de participantes menores de 50 años en el 2015?\n\nCircular 2014: <18 18%; 18-29 22%; 30-49 20%; … Total 2014: 538,137.",
+    "respuesta": "706,573",
+    "pasos": "1) Bases 2014: <18=96,865; 18–29=118,390; 30–49=107,627. 2) Aplicar factores: ×9/4, ×11/5 y ×2.12 → 217,946; 260,458; 228,169. 3) Suma=706,573. Atajo: «aumenten en 5/4» → ×(1+5/4)=×9/4; «aumenten un 6/5» → ×11/5.",
+    "fuente": "009_image314.png"
+  },
+  {
+    "enunciado": "Se predijo que la población de Sha al final de 2015 tendría un 4% de aumento comparado al 2013. ¿Cuál es la tasa de crecimiento aproximada de la población en 2015 que hará que la predicción se convierta en realidad?\n\nTasas Sha 2010–2013: 1.9% c/u. Población fin 2014: 5.89 millones; cambio vs año anterior: 101,500.\n\nOpciones: 3.9% | 2.2% | 2.5% | 1.9% | 3.6%",
+    "respuesta": "2.2%",
+    "pasos": "1) Pob. fin 2013: 5,890,000−101,500=5,788,500. 2) Crecimiento 2014≈101,500/5,788,500≈1.75%. 3) (1.0175)×(1+r)=1.04 → r≈2.2%. Atajo: 4%−≈1.8%≈2.2% (suma aproximada de tasas bajas).",
+    "fuente": "010_image322.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] Calcula la población de Szv al final del 2011 trabajando hacia atrás desde 2014.\nDatos: pob. fin 2014=1.69 millones; cambio 2014=14,800; tasas 2013=1.1%, 2012=1.9%.",
+    "respuesta": "(D) 1,626,077",
+    "pasos": "1) Fin 2013: 1,690,000−14,800=1,675,200. 2) Fin 2012: 1,675,200/1.011≈1,656,973. 3) Fin 2011: 1,656,973/1.019≈1,626,077. Atajo: dividir sucesivamente por (1+tasa) hacia atrás.",
+    "fuente": "011_image327.png"
+  },
+  {
+    "enunciado": "¿Cuáles son las ventas totales para las tres marcas en 2014?\n\nGráfico ventas (millones) 2014: Larborg 14; Ferri 13; Maseti 13.\n\nOpciones: 38 | 39 | 40 | 41 | 42 millones",
+    "respuesta": "40 millones",
+    "pasos": "1) Leer 2014 en el gráfico. 2) Larborg=14; Ferri=Maseti=13. 3) 14+13+13=40. Atajo: 13×2+14=40.",
+    "fuente": "012_image330.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] Calcula, para 2005–2009, el % del PIB de Canadá y Reino Unido combinados respecto al PIB total de los tres países; identifica el año según la clave (UI marca 2008).\nPorcentajes calculados: 2005 21.45%; 2006 21.94%; 2007 23.39%; 2008 22.75%; 2009 20.33%.",
+    "respuesta": "(D) 2008",
+    "pasos": "1) Sumar Canadá+RU cada año. 2) Sumar el tercer país (EE.UU.) para el total. 3) %=(C+RU)/total×100. 4) Según la UI la respuesta es 2008 (22.75%; segundo valor alto tras 2007). Atajo: compara solo años altos; 2007 es máximo, 2008 el siguiente.",
+    "fuente": "013_image335.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] ¿Qué programa tiene la mayor proporción hombres:mujeres (grado+posgrado)?\nTotales hombres/mujeres por programa (UI): Agricultura 322/388; CC 233/30; Humanidades 814/1,212; Otros 1,016/1,144; Negocios 2,131/1,423.",
+    "respuesta": "(D) Ciencias computacionales",
+    "pasos": "1) Sumar hombres por programa. 2) Sumar mujeres por programa. 3) Ratio H/M: CC≈7.77:1 (máximo). Atajo: CC tiene 233 vs 30 → salto enorme sin calcular el resto.",
+    "fuente": "014_image343.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] Número total de estudiantes internacionales admitidos en estudios de grado de tiempo completo (cinco programas).\nCálculo UI: Agr (265+342)×0.1=61; CC (180+23)×0.15=30; Hum (716+1,085)×0.1=180; Otros (820+1,007)×0.15=274; Neg (1,645+961)×0.15=391.",
+    "respuesta": "(D) 936",
+    "pasos": "1) Por programa: (hombres+mujeres grado)×% internacional. 2) Sumar: 61+30+180+274+391=936. Atajo: agrupa tasas 10% y 15% antes de multiplicar.",
+    "fuente": "015_image348.png"
+  },
+  {
+    "enunciado": "[Opciones + explicación; enunciado no visible.] ¿Qué acción muestra la misma tendencia (inc/dec) que el promedio del cambio % anual de ganancias de capital?\nTendencias UI: VAL D-D-D-D; BA D-I-I-I; VX D-D-D-D; MSF D-D-I-I; SIR I-I-I-D. Promedio: D-I-I-I.\n\nOpciones: BA | MSF | SIR | VAL | VX",
+    "respuesta": "BA",
+    "pasos": "1) Marcar inc/dec año a año por ticker. 2) Obtener patrón del promedio del gráfico: D, I, I, I. 3) Solo BA coincide. Atajo: busca D-I-I-I; elimina series monótonas o con D al final.",
+    "fuente": "016_image356.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] ¿Qué par de categorías representa el 50% de los gastos de operación?\nComponentes (sobre $464,495): Publicidad 149,670; Seguros 56,125; Depreciación 27,700; Salarios 224,500; Viajes y entretenimiento 6,500.",
+    "respuesta": "(A) Salarios y Viajes y Entretenimiento",
+    "pasos": "1) Probar cada par de opciones: (suma del par)/464,495×100. 2) Salarios+Viajes=(224,500+6,500)/464,495=50%. 3) Otros pares dan 34%, 44%, 60%, 54%. Atajo: mitad de 464,495≈232,250 ≈ 224,500+6,500.",
+    "fuente": "017_image364.png"
+  },
+  {
+    "enunciado": "Si otros gastos se incrementan en un 12%, ¿en qué porcentaje los gastos de operación deben de ser reducidos para que los gastos totales permanezcan iguales?\n\nBarras: Operacionales $464,495; Generales $34,000; Otros $21,600. Circular de operación: Publicidad/Seguros/Depreciación/Salarios/Viajes.\n\nOpciones: 0.464% | 0.495% | 0.340% | 0.558% | 1.21%",
+    "respuesta": "0.558%",
+    "pasos": "1) Aumento otros: 21,600×0.12=2,592. 2) Misma reducción en operación para mantener el total. 3) % = 2,592/464,495×100≈0.558%. Atajo: (21,600×0.12)/464,495.",
+    "fuente": "018_image369.png"
+  },
+  {
+    "enunciado": "[Opciones + explicación; enunciado no visible.] Con AM=32.8% equivalente a 323 barcos, ¿cuántos barcos HL (10.4%) hay?\n\nOpciones: 144 | 104 | 124 | 244 | 102",
+    "respuesta": "102",
+    "pasos": "1) Total=323/0.328=985. 2) HL=0.104×985=102. Atajo: (323/0.328)×0.104≈102.",
+    "fuente": "019_image295.png"
+  },
+  {
+    "enunciado": "¿Qué acción experimentó el segundo cambio más grande en 2004 con respecto a 2003?\n\nPrecios 2003→2004: VAL 20.32→13.72; BA 11.63→16.77; VX 105.84→40.84; MSF 26.83→36.04; SIR 3.16→3.70.",
+    "respuesta": "BA",
+    "pasos": "1) % cambio |Δ|/base: VX≈61%; BA≈44%; MSF≈34%; VAL≈32%; SIR≈17%. 2) Mayor=VX; segundo=BA. Atajo: VX pierde >50%; BA sube ~5/11.6≈44%; el resto ≤~34%.",
+    "fuente": "020_image351.png"
+  },
+  {
+    "enunciado": "[Opciones + explicación; enunciado no visible.] Razón ventas totales 2013 : ventas totales 2012.\nExplicación UI: 13 : 39 = 1 : 3.\n\nOpciones: 3:1 | 2:5 | 5:2 | 1:3 | 3:7",
+    "respuesta": "1 : 3",
+    "pasos": "1) Tomar totales (o cifras de la UI) 2013=13 y 2012=39. 2) Razón 13:39. 3) Simplificar ÷13 → 1:3. Atajo: 39=3×13 → 1:3 (opción D).",
+    "fuente": "021_image309.png"
+  },
+  {
+    "enunciado": "En el 2013, Larborg, Ferri and Maseti representaron el 64% de las ventas globales de automóviles. ¿Cuántos automóviles se vendieron en 2013?\n\nGráfico 2013 (millones): Larborg 11; Ferri 14; Maseti 13.",
+    "respuesta": "59.375 millones",
+    "pasos": "1) Suma marcas 2013: 11+14+13=38. 2) 38 = 64% del global → total=38/0.64. 3) 59.375 millones. Atajo: 38÷0.64 = 3800/64 = 59.375.",
+    "fuente": "022_image304.png"
+  },
+  {
+    "enunciado": "¿En el 2014, en qué cantidad el número de participantes de edad 30-49 es mayor que el número de participantes de edad menor a 18?\n\nCircular: 30–49=20%; <18=18%. Total 2014=538,137.",
+    "respuesta": "10,763",
+    "pasos": "1) Diferencia de %: 20−18=2%. 2) 0.02×538,137=10,762.74≈10,763. Atajo: 2% del total ≈ 0.02×538k ≈ 10.8k.",
+    "fuente": "023_image312.png"
+  },
+  {
+    "enunciado": "[Opciones + explicación de la ganancia 2014 del concurso de lectura / escenografía; enunciado en 001.]\n\nOpciones: £4,497,000 | £2,284,000 | £3,629,000 | £1,645,000 | £1,766,000",
+    "respuesta": "£2,284,000",
+    "pasos": "1) 96,865 menores y 441,272 mayores. 2) Ingreso £10,278,415. 3) Costo=×7/9 → £7,994,323. 4) Ganancia≈£2,284,000. Atajo: ingreso×(2/9) y redondear al millar.",
+    "fuente": "024_image317.png"
+  },
+  {
+    "enunciado": "¿Qué ciudad tiene el mayor aumento de población del 2012 al 2014?\n\nTasas 2010–2013 y pob. fin 2014 + cambio anual (Sbu 4.57M / +103,000; Sha 5.89M / +101,500; Mdw 2.75M / +64,200; Sre 8.58M / +40,100; Szv 1.69M / +14,800).\n\nOpciones: Sbu | Sha | Mdw | Sre | Szv",
+    "respuesta": "Sbu",
+    "pasos": "1) Aumento 2012→2014 = Δ2013+Δ2014. 2) Δ2014 de tabla; Δ2013 vía pob.2013×tasa2013. 3) Sbu lidera (mayor Δ2014 y tasa 2.4% > Sha 1.9%). Atajo: entre Sbu y Sha, Sbu gana en ambos tramos.",
+    "fuente": "025_image320.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] Número de muertes en Szv en 2013 dados nacimientos/inmigración 12,476 y 12,822 y el cambio neto de población 2012→2013.",
+    "respuesta": "(C) 7,071",
+    "pasos": "1) Fin 2013: 1,690,000−14,800=1,675,200. 2) Fin 2012: 1,675,200/1.011≈1,656,973. 3) Δ pob.=18,227. 4) Muertes=12,476+12,822−18,227=7,071. Atajo: muertes = nacimientos + inmigración − Δpoblación.",
+    "fuente": "026_image325.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN de la pregunta de agricultura/PIB 2010; enunciado en 003.] Incremento 5% sobre contribución agrícola 2009 de RU, EE.UU. y Canadá.",
+    "respuesta": "(D) $204.1 mil millones",
+    "pasos": "1) 2009: 13.854+158.609+21.936=194.399. 2) ×1.05 → 204.1. Atajo: ~194×1.05≈204.",
+    "fuente": "027_image333.png"
+  },
+  {
+    "enunciado": "Si la población total de los tres países combinados en 2009 es de 403 millones, ¿cuál es el PIB per cápita para los tres países combinados en 2009?\n\nGDP 2009 (mil millones): Canadá 1,371; Reino Unido 2,309; EE.UU. 14,419.\n\nOpciones: $80,750 | $70,650 | $56,440 | $44,910 | $34,600",
+    "respuesta": "$44,910",
+    "pasos": "1) PIB total=1,371+2,309+14,419=18,099 mil millones. 2) Per cápita: 18,099,000 millones $ / 403 millones ≈ 44,910. Atajo: 18,000/400=45 → opción $44,910.",
+    "fuente": "028_image338.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] ¿Cuál de las siguientes afirmaciones es verdadera? (admisiones por programa)\nA) Humanidades:CC = 1:7 — falso (≈1:7.7 al revés).\nB) Negocios < CC+Humanidades — falso (2,689 > 2,289).\nC) Más hombres que mujeres en Humanidades — falso (814 < 1,212).\nD) Más medio tiempo en Humanidades que en CC — verdadero (155 > 44).\nE) Negocios = 4× Agricultura — falso (≈3.79).",
+    "respuesta": "(D) Hay más estudiantes de medio tiempo de Humanidades que de Ciencias computacionales",
+    "pasos": "1) Verificar cada afirmación con sumas de la tabla. 2) Medio tiempo Hum=63+84+1+7=155; CC=37+7=44. 3) Solo D es verdadera. Atajo: ojea columnas de medio tiempo; Hum >> CC.",
+    "fuente": "029_image346.png"
+  },
+  {
+    "enunciado": "[Opciones + explicación de la predicción BA 2005; enunciado en 005.]\n\nOpciones: $2.50 decremento | $2.46 incremento | $2.33 decremento | $2.69 incremento | £2.13 incremento",
+    "respuesta": "$2.69 incremento",
+    "pasos": "1) Promedio % 2001–2005=0.32%. 2) Previsto 14.25×1.0032≈14.29. 3) 16.98−14.29=$2.69 incremento. Atajo: tasa≈0 → diferencia ≈16.98−14.25≈2.7.",
+    "fuente": "030_image354.png"
+  },
+  {
+    "enunciado": "¿Cuál es el cambio en porcentaje promedio de las acciones de BA y de VX del 2001 al 2003?\n\nPrecios: BA 14.25→11.63; VX 576.80→105.84.",
+    "respuesta": "≈ −50%",
+    "pasos": "1) BA: (11.63−14.25)/14.25≈−18.4%. 2) VX: (105.84−576.80)/576.80≈−81.7%. 3) Promedio (−18.4−81.7)/2≈−50%. Atajo: VX cae ~5/6; BA ~−1/5; media cerca de −50%.",
+    "fuente": "031_image359.png"
+  },
+  {
+    "enunciado": "Sam Ventures planea recortar en gastos de operación un 8% en el próximo año. Si el porcentaje de contribución de todos los componentes de los gastos de operación permanece igual, ¿cuánto serán recortados los gastos de salarios (a los $1,000 más cercanos) para alcanzar el objetivo?\n\nSalarios actuales: $224,500 (dentro de operación $464,495).\n\nOpciones: $14,000 | $16,000 | $15,000 | $18,000 | $20,000",
+    "respuesta": "$18,000",
+    "pasos": "1) Salarios=224,500. 2) Recorte 8%: 224,500×0.08=17,960. 3) Redondeo a $1,000 → $18,000. Atajo: ~225k×0.08≈18k.",
+    "fuente": "032_image367.png"
+  },
+  {
+    "enunciado": "¿Si un total de 915 salieron del Puerto Laguna en 2011, cuántos de ellos eran de la marca CG?\n\nBarras operadores (%): AM 32.8; MC 28.2; CG 18.6; HL 10.4; EL 10.\n(También aparece en la captura tabla AM: Rentados 358; Propios 257; Pedidos 20, y texto sobre % AM en Laguna.)",
+    "respuesta": "170",
+    "pasos": "1) CG=18.6% del total. 2) 0.186×915≈170.19. 3) Redondear a 170. Atajo: ~0.19×900=171 → marca 170.",
+    "fuente": "033_image298.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] Ordena el PIB de cada país (EE.UU., Reino Unido, Canadá) en orden decreciente a través de los años 2005–2009 y compara con las opciones.\nÓrdenes UI: EE.UU. 2008>2007>2009>2006>2005; RU 2007>2008>2006>2005>2009; Canadá 2008>2007>2009>2006>2005.",
+    "respuesta": "(C) Ninguna de las respuestas",
+    "pasos": "1) Ordenar años por PIB descendente por país. 2) Contrastar con cada opción de orden propuesto. 3) Ninguna coincide → C. Atajo: basta un año mal colocado en cada opción para descartarlas.",
+    "fuente": "034_image341.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN.] ¿Qué % representan los gastos de viajes y entretenimiento ($6,500) respecto a los gastos totales de Sam Ventures?",
+    "respuesta": "(D) 1.25%",
+    "pasos": "1) Totales≈464,495+34,000+21,000=519,495 (cifras de la UI). 2) 6,500/519,495×100≈1.25%. Atajo: 6,500/520,000≈1.25%.",
+    "fuente": "035_image362.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN de la reducción de gastos de operación; enunciado en 018.] Otros gastos +12% manteniendo gastos totales iguales.",
+    "respuesta": "(D) 0.558%",
+    "pasos": "1) Total=520,095. 2) Otros nuevos=21,600×1.12=24,192. 3) Operación nueva=520,095−(34,000+24,192)=461,903. 4) Reducción %=(464,495−461,903)/464,495×100=0.558%. Atajo: 2,592/464,495×100.",
+    "fuente": "036_image370.png"
+  },
+  {
+    "enunciado": "[Opciones + explicación; enunciado en 033.] 18.6% de 915 barcos (marca CG).\n\nOpciones: 170 | 258 | 95 | 92 | 155",
+    "respuesta": "170",
+    "pasos": "1) Tomar 18.6% y total 915. 2) 0.186×915=170. 3) Opción A. Atajo: 915×0.2=183; resta ~0.014×915≈13 → ~170.",
+    "fuente": "037_image293.png"
+  },
+  {
+    "enunciado": "¿Cuál es el menor cambio en porcentaje proyectado en ventas para 2015 en relación al 2014?\n\n2014→2015: Larborg 14→13; Ferri 13→15; Maseti 13→12.",
+    "respuesta": "Larborg (≈7.14%)",
+    "pasos": "1) |Δ|/base: Larborg 1/14≈7.14%; Ferri 2/13≈15.4%; Maseti 1/13≈7.69%. 2) El menor es Larborg. Atajo: misma caída de 1 en Larborg y Maseti → gana la base mayor (14).",
+    "fuente": "038_image302.png"
+  },
+  {
+    "enunciado": "[Opciones + explicación del objetivo Ferri 75 millones; enunciado en 007.]\n\nOpciones: 4 million | 3 million | 2 million | 1 million | Ninguna de las anteriores",
+    "respuesta": "1 million",
+    "pasos": "1) Ferri 5 años=74. 2) 75−74=1. Atajo: suma acaba en 4 → falta 1 al objetivo 75.",
+    "fuente": "039_image307.png"
+  },
+  {
+    "enunciado": "[Opciones + explicación de participantes <50 en 2015; enunciado en 009.]\n\nOpciones: 706,285 | 706,333 | 706,573 | 706,433 | 706,613",
+    "respuesta": "706,573",
+    "pasos": "1) Bases 2014: 96,865; 118,390; 107,627. 2) ×9/4, ×11/5, ×2.12 → 217,946; 260,458; 228,169. 3) Suma=706,573 (opción C). Atajo: factores 2.25 / 2.2 / 2.12 sobre los tres grupos <50.",
+    "fuente": "040_image315.png"
+  }
+]

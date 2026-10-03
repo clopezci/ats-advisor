@@ -1,0 +1,266 @@
+[
+  {
+    "enunciado": "La familia Vallejo se va de vacaciones con su vehículo. Ellos conducen a una velocidad promedio de 91 kilómetros por hora. Tienen que conducir 364 kilómetros para llegar a su destino de vacaciones. En el camino, se detienen una vez para un descanso de 11 minutos y una vez más para comer, lo que les cuesta 19 minutos. Estas paradas no se han incluido en el cálculo de la velocidad promedio. Llegan a su destino de vacaciones a las 12:35. ¿A qué hora dejó la familia Vallejo su hogar?\n\nOpciones: 07.05 | 07.35 | 08.05 | 08.35 | 09.05",
+    "respuesta": "08.05",
+    "pasos": "1) Tiempo de viaje: 364 ÷ 91 = 4 horas = 240 minutos. 2) Sumar paradas: 240 + 11 + 19 = 270 minutos = 4.5 horas. 3) Salida = 12:35 − 4.5 h = 08:05. Atajo: 4 h de viaje + 30 min de paradas → restar 4:30 a 12:35.",
+    "fuente": "001_image167.png"
+  },
+  {
+    "enunciado": "Miranda tiene aproximadamente tantos días como Nina tiene semanas de edad y Miranda tiene aproximadamente tantos meses como Olga tiene años. En total, Miranda, Nina y Olga tienen 120 años. ¿Cuántos años tiene Nina?\n\nOpciones: 6 años | 72 años | 78 años | 42 años | 52 años",
+    "respuesta": "42 años",
+    "pasos": "1) Relación: N ≈ 7M (semanas vs días) y O = 12M (años vs meses). 2) M + 7M + 12M = 120 → 20M = 120 → M = 6. 3) N = 7×6 = 42. Atajo: edades 6, 42 y 72 suman 120.",
+    "fuente": "002_image172.png"
+  },
+  {
+    "enunciado": "Wendy se compró una bufanda en su tienda favorita a $8.45, dos blusas por $19.95 la pieza, un par de zapatos $39.95 y un suéter de $35.60. La bufanda, una de las blusas y el suéter tenían una etiqueta de rebaja, por lo que Wendy puede obtener un descuento del 25% en estos artículos. ¿Cuánto pagó Wendy?\n\nOpciones: $92.95 | $107.90 | $108.95 | $64 | $123.90",
+    "respuesta": "$107.90",
+    "pasos": "1) Artículos con 25% dto: 8.45 + 19.95 + 35.60 = 64; dto = 0.25×64 = 16 → quedan 48. 2) Sumar el resto: 48 + 19.95 + 39.95 = 107.90. Atajo: total sin dto − 16.",
+    "fuente": "003_image180.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN; enunciado en 044.] Comparar costos de salones para 140 personas y elegir el más económico.\nSalón Panorama: $1200 + 140×$8; Encino: 140×$22; Café: $1100 + 140×$10; Playa: $800 + 140×$14; América: $950 + 140×$12.",
+    "respuesta": "Salón Panorama",
+    "pasos": "1) Panorama = 1200 + 1120 = 2320. 2) Encino = 3080; Café = 2500; Playa = 2760; América = 2630. 3) El mínimo es Panorama ($2320). Atajo: fija baja + tarifa baja por persona gana con n grande.",
+    "fuente": "004_image193.png"
+  },
+  {
+    "enunciado": "Rolando compra 45 piezas de fruta en el mercado por $10.50. 15 piezas de esto fueron peras por las que pagó $3. El resto de las frutas eran naranjas. ¿Cuánto pagó por naranja?\n\nOpciones: $0.20 | $0.25 | $0.50 | $1.00 | $1.25",
+    "respuesta": "$0.25",
+    "pasos": "1) Naranjas: 45 − 15 = 30. 2) Costo naranjas: 10.50 − 3 = 7.50. 3) 7.50 ÷ 30 = 0.25 (o 4 naranjas por dólar → 1/4). Atajo: 30:7.5 = 4 → $0.25 c/u.",
+    "fuente": "005_image175.png"
+  },
+  {
+    "enunciado": "El estanque de Diego mide cinco metros de largo, dos metros de ancho y medio metro de profundidad. El viernes se fue de vacaciones y el lago estaba lleno a un 75%. Durante ese fin de semana se registraron lluvias por lo que cuando regresó el nivel subió 2.5 cm. En porcentaje, ¿qué tan lleno estaba el estanque cuando Diego regresó de sus vacaciones?\n\nOpciones: 90% | 85% | 78% | 93% | 80%",
+    "respuesta": "80%",
+    "pasos": "1) Profundidad total = 0.5 m = 50 cm. 2) Subida 2.5 cm = (2.5/50)×100 = 5%. 3) 75% + 5% = 80%. Atajo: 2.5 es 5% de 50.",
+    "fuente": "006_image188.png"
+  },
+  {
+    "enunciado": "Juan establece la temperatura del jacuzzi a 38 grados Celsius. La temperatura está actualmente a 30 grados Celsius y sube un promedio de 1.2 grados Celsius cada hora. ¿Cuánto tardará el jacuzzi en llegar a la temperatura establecida?\n\nOpciones: 5 horas y 50 minutos | 6 horas y 40 minutos | 7 horas y 10 minutos | 6 horas y 30 minutos | 6 horas y 20 minutos",
+    "respuesta": "6 horas y 40 minutos",
+    "pasos": "1) Incremento necesario: 38 − 30 = 8 °C. 2) Tiempo: 8 ÷ 1.2 = 6⅔ horas. 3) ⅔×60 = 40 min → 6 h 40 min. Atajo: 1.2×6 = 7.2; falta 0.8 → 0.8/1.2 = ⅔ h = 40 min.",
+    "fuente": "007_image196.png"
+  },
+  {
+    "enunciado": "Ana vende galletas de puerta en puerta. En el 25% de las 52 casas en su calle, no recibió una respuesta, lo que significa que no podía vender sus galletas allí. En una casa vendió cinco paquetes de galletas. En 28 de las casas restantes vendió un paquete en cada casa. En el resto de las casas vendió dos paquetes por casa. ¿Cuántos paquetes de galletas vendió en total?\n\nOpciones: 33 | 39 | 43 | 53 | 60",
+    "respuesta": "53",
+    "pasos": "1) Sin respuesta: 25% de 52 = 13 → casas con venta = 39. 2) Una casa: 5; 28 casas: 1 c/u → 33. 3) Restan 39 − 1 − 28 = 10 casas × 2 = 20. 4) Total 33 + 20 = 53. Atajo: 5 + 28 + 20 = 53.",
+    "fuente": "008_image161.png"
+  },
+  {
+    "enunciado": "Juan sale a correr cada tercer día y cada sábado va al gimnasio. Si él va al gimnasio y también corre hoy, ¿cuánto tiempo tomará antes de que haya otro día en que él haga ambas cosas?\n\nOpciones: 28 días | 7 días | 21 días | 15 días | 5 días",
+    "respuesta": "21 días",
+    "pasos": "1) Corre cada 3 días; gimnasio cada 7 (sábado). 2) MCM(3,7) = 21. Atajo: múltiplos de 3 y 7 → 21.",
+    "fuente": "009_image156.png"
+  },
+  {
+    "enunciado": "Inés y sus amigas Julia y Karina alquilaron una limusina para una fiesta. En total les costó $395. Como Inés vive más alejada de la ubicación de la fiesta, paga más que sus amigas. Ella tiene que pagar una 2/5 parte del total. Julia y Karina pagan cada una la mitad del monto restante. ¿Cuánto pagó Julia por la limusina?\n\nOpciones: (varias) | $118.50 | (otras)",
+    "respuesta": "$118.50",
+    "pasos": "1) 1/5 de 395 = 79 → Inés paga 2×79 = 158. 2) Resta 395 − 158 = 237. 3) Julia = 237 ÷ 2 = 118.50. Atajo: 3/5 restantes a partes iguales.",
+    "fuente": "010_image170.png"
+  },
+  {
+    "enunciado": "Enrique compra llaveros a $4 por un set de 5. Luego los revende a $3 por un set de 3. Si generó un beneficio de $9 por día, ¿cuántos llaveros vendió?\n\nOpciones: 15 | 9 | 30 | 45 | 35",
+    "respuesta": "45",
+    "pasos": "1) MCM de 5 y 3 = 15 llaveros: costo 3×4 = 12; venta 5×3 = 15; ganancia $3 por 15. 2) $9 ÷ $3 = 3 lotes. 3) 3×15 = 45. Atajo: beneficio unitario por lote de 15.",
+    "fuente": "011_image174.png"
+  },
+  {
+    "enunciado": "¿Cuánto es 11 kg + 132 mg − 436 g?\n\nOpciones: 10,564.132 kg | 1,056.4132 kg | 105.64132 kg | 10.564132 kg | 1.0564132 kg",
+    "respuesta": "10.564132 kg",
+    "pasos": "1) Convertir a gramos: 11,000 + 0.132 − 436 = 10,564.132 g. 2) ÷ 1,000 = 10.564132 kg. Atajo: 11 − 0.436 + 0.000132.",
+    "fuente": "012_image183.png"
+  },
+  {
+    "enunciado": "Linda fabrica y vende joyas. El material necesario para producir una pulsera cuesta $3.75 y por collar que paga $4.50. Ella vende estas piezas en conjuntos de dos brazaletes y un collar a un precio de $15. Un sábado decidió llevar sus joyas a un mercado de pulgas. Ese día hizo una ganancia de $69 con las ventas de sus joyas. ¿Cuántos juegos vendió ese día?\n\nOpciones: 10 sets | 21 sets | 15 sets | 30 sets | 23 sets",
+    "respuesta": "23 sets",
+    "pasos": "1) Costo por set: 2×3.75 + 4.50 = 12. 2) Ganancia por set: 15 − 12 = 3. 3) 69 ÷ 3 = 23. Atajo: $3 de margen → sets = ganancia/3.",
+    "fuente": "013_image195.png"
+  },
+  {
+    "enunciado": "[DESCRIPCIÓN / instrucciones del test.] Los tests de Problemas Matemáticos miden análisis, visualización e aptitud numérica. Sin calculadora; papel y lápiz recomendados. 20 preguntas en 20 minutos; se puede saltar y volver; envío automático al acabar el tiempo. El test empieza en la siguiente pantalla.",
+    "respuesta": "N/A",
+    "pasos": "Pantalla de instrucciones únicamente; no hay problema matemático que resolver.",
+    "fuente": "014_image155.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN; enunciado en 021.] Juan ahorra $2 en enero, $4 en febrero, $8 en marzo, $16 en abril y duplica cada mes hasta julio. ¿Cuánto tiene en 7 meses?",
+    "respuesta": "$254",
+    "pasos": "1) Serie: 2, 4, 8, 16, 32, 64, 128. 2) Suma = 2+4+8+16+32+64+128 = 254. 3) Alternativa: potencias 2^1…2^7. Atajo: suma geométrica 2(2^7−1)/(2−1) = 254.",
+    "fuente": "015_image160.png"
+  },
+  {
+    "enunciado": "Hoy es sábado 27 de febrero. Eva celebrará su cumpleaños el 4 de marzo. ¿En qué día de la semana estará celebrando su cumpleaños?\n\nOpciones: Miércoles | Jueves | Viernes | Sábado | No se puede determinar",
+    "respuesta": "No se puede determinar",
+    "pasos": "1) Año normal: feb 28 → 1 mar = lunes → 4 mar = jueves. 2) Bisiesto: feb 29 → 1 mar = martes → 4 mar = viernes. 3) Sin saber si es bisiesto, no se puede determinar. Atajo: ambigüedad feb 28/29.",
+    "fuente": "016_image165.png"
+  },
+  {
+    "enunciado": "La señora Ojeda hizo una bolsa de regalos para los invitados a un festival local. En esta bolsa de regalos puso 31 barras de chocolate, 22 portaretratos, 16 bolígrafos y 27 tazas decoradas. El vecino recibió uno de estos regalos. ¿Cuál es la probabilidad de que obtenga un bolígrafo?\n\nOpciones: 1/16 | 1/4 | 3/17 | 1/6 | 2/5",
+    "respuesta": "1/6",
+    "pasos": "1) Total: 31+22+16+27 = 96. 2) P(bolígrafo) = 16/96 = 1/6. Atajo: simplificar ÷16.",
+    "fuente": "017_image178.png"
+  },
+  {
+    "enunciado": "Hoy es miércoles, 17 de febrero. Bernardo tiene un evento en 24 días. ¿En qué día se llevará a cabo este evento?\n\nOpciones: Viernes | Sábado | Domingo | Lunes | No se puede determinar",
+    "respuesta": "Sábado",
+    "pasos": "1) 24 = 3 semanas + 3 días. 2) Miércoles + 3 = sábado. Atajo: resto 24÷7 = 3.",
+    "fuente": "018_image186.png"
+  },
+  {
+    "enunciado": "Laura quiere llenar su nuevo estanque con agua. El estanque mide 3 metros de largo, 1.5 metros de ancho y 1 metro de profundidad. Laura no quiere llenar el estanque completamente. Solo quiere llenarlo a un 90% de capacidad. ¿Cuánta agua necesita Laura para lograr esto?\n\nOpciones: 4,050 litros | 4,500 litros | 40,500 litros | 4,100 litros | No se puede determinar",
+    "respuesta": "4,050 litros",
+    "pasos": "1) Volumen: 3×1.5×1 = 4.5 m³ = 4,500 L. 2) 90%: 0.9×4,500 = 4,050 L. Atajo: 4.5×900 = 4,050.",
+    "fuente": "019_image191.png"
+  },
+  {
+    "enunciado": "Harry compra un set de jardín a su vecino. Al ver que ya tiene un set propio, decide renovar el que acaba de comprar y revenderlo. Le costó $64.65 para renovar el set, pero desafortunadamente, no tuvo éxito en conseguir un buen precio por ello. Se ve obligado a revenderlo por $121.50 y al hacerlo se queda con una pérdida de $32.15. ¿Cuánto pagó Harry a su vecino por el set en primer lugar?\n\nOpciones: $64.30 | $89.35 | $56.85 | $89 | $96.80",
+    "respuesta": "$89",
+    "pasos": "1) Sin precio de compra: 121.50 − 64.65 = 56.85. 2) Con pérdida 32.15: precio compra = 56.85 + 32.15 = 89. Atajo: compra + renovación − venta = pérdida → compra = venta − renovación + pérdida.",
+    "fuente": "020_image194.png"
+  },
+  {
+    "enunciado": "¡Juan finalmente recibe una mesada! Puso $2 en el banco en enero, $4 en febrero, $8 en marzo, $16 en abril y siguió este patrón de ahorros hasta julio. ¿Cuánto dinero tiene en 7 meses?\n\nOpciones: $250 | $254 | $180 | $260 | $300",
+    "respuesta": "$254",
+    "pasos": "1) Duplica cada mes: 2, 4, 8, 16, 32, 64, 128. 2) Suma = 254. Atajo: 2^8 − 2 = 254.",
+    "fuente": "021_image159.png"
+  },
+  {
+    "enunciado": "Una clase tiene 35 alumnos. El lunes, debido a un programa sustituto, el 40% de la clase está ausente. El martes, 3/7 de los alumnos restantes faltan debido a una enfermedad. ¿Cuántos de los alumnos asisten el martes?\n\nOpciones: 9 | 12 | 14 | 18 | 21",
+    "respuesta": "12",
+    "pasos": "1) Ausentes lunes: 0.4×35 = 14 → asistentes 21. 2) Martes enfermos: (3/7)×21 = 9. 3) Asisten: 21 − 9 = 12. Atajo: 60% de 35 = 21; 4/7 de 21 = 12.",
+    "fuente": "022_image169.png"
+  },
+  {
+    "enunciado": "Hoy es lunes, 11 de agosto. Teresa tiene un examen de presentación que se llevará a cabo dentro de 45 días. ¿Qué día se llevará a cabo el examen de presentación de Teresa?\n\nOpciones: Viernes 26 de septiembre | Miércoles 25 de septiembre | Miércoles 24 de septiembre | Martes 24 de septiembre | Jueves 25 septiembre",
+    "respuesta": "Jueves 25 septiembre",
+    "pasos": "1) Agosto tiene 31 → del 11 ago al 11 sep = 31 días; faltan 14 → 25 sep. 2) 45 = 6 semanas + 3 días; lunes + 3 = jueves. Atajo: fecha 25 sep + día jueves.",
+    "fuente": "023_image177.png"
+  },
+  {
+    "enunciado": "Juan puede pagar su automóvil en tres pagos. El vehículo le costó $19,050. El primer pago será por el valor de la mitad del costo total. El segundo pago será 2/5 de la cantidad restante. El resto se pagará en el último pago. ¿Cuánto tendrá que pagar Juan en el último pago?\n\nOpciones: $4,762.50 | $5,715 | $2,857.50 | $3,810 | $9,525",
+    "respuesta": "$5,715",
+    "pasos": "1) Primer pago: 19,050÷2 = 9,525. 2) Segundo: (2/5)×9,525 = 3,810. 3) Último: 9,525 − 3,810 = 5,715. Atajo: resto = (3/5) de la mitad = 3/10 del total = 5,715.",
+    "fuente": "024_image182.png"
+  },
+  {
+    "enunciado": "Erica se encontraba en el automóvil con sus padres y empezó a contar cuántos otros automóviles observaba en el camino. En el viaje completo contó 113 automóviles, de los cuales 18 eran rojos. De los automóviles restantes, 2/5 eran plateados y 1/5 blancos. De los automóviles restantes, 14 eran azules. Finalmente de los automóviles que sobraban el 25% eran verdes. El resto eran negros. ¿Cuántos automóviles negros contó Erica?\n\nOpciones: 18 | 24 | 19 | 6 | 14",
+    "respuesta": "18",
+    "pasos": "1) Tras rojos: 113−18=95. 2) Blancos 19, plateados 38 → quedan 38. 3) Azules 14 → quedan 24; verdes 25%=6 → negros 18. Atajo: ir restando fracciones y enteros en orden.",
+    "fuente": "025_image190.png"
+  },
+  {
+    "enunciado": "El 17 de mayo, Diana plantó un girasol en su jardín. La flor crece poco a poco cada día y para el 19 de agosto está completamente desarrollada. Alcanzó una altura de 1,88 metros. ¿Cuántos centímetros de crecimiento tuvo el girasol en promedio por día desde el momento en que Diana lo plantó?\n\nOpciones: 2 cm | 3 cm | 0.2 cm | 0.6 cm | 0.8 cm",
+    "respuesta": "2 cm",
+    "pasos": "1) Días 17 may→17 ago: may(14)+jun(30)+jul(31)+ago(17)… (UI: 31+30+31=92 hasta 17 ago) +2 = 94 días. 2) 1.88 m = 188 cm. 3) 188÷94 = 2 cm/día. Atajo: 188/94=2.",
+    "fuente": "026_image164.png"
+  },
+  {
+    "enunciado": "Pablo trabaja como aparcacoches en un hotel y hace un seguimiento de cuántos invitados llegan por la noche. Esta noche recibió un total de 16 vehículos con invitados. Dos de estos vehículos eran limusinas que trajeron diez invitados. 3/7 de los vehículos restantes llegaron con dos invitados. El 25% del total de vehículos trajo 3 invitados cada uno. Los vehículos restantes llevaban cada uno a un invitado. ¿Cuántos invitados vio Pablo en total?\n\nOpciones: 48 invitados | 46 invitados | 44 invitados | 38 invitados | 36 invitados",
+    "respuesta": "48 invitados",
+    "pasos": "1) 2 limos ×10 = 20; quedan 14. 2) 3/7 de 14 = 6 ×2 = 12. 3) 25% de 16 = 4 ×3 = 12. 4) Restan 4 ×1 = 4. Total 20+12+12+4 = 48. Atajo: sumar por grupos.",
+    "fuente": "027_image173.png"
+  },
+  {
+    "enunciado": "El agua en la piscina tiene una temperatura de 25 grados Celsius. Arturo establece la temperatura a 32 grados Celsius. Después de 3 horas y 20 minutos, el agua alcanza la temperatura necesaria. ¿Cuántos grados aumentó la temperatura por hora?\n\nOpciones: 2 2/3 grados | 3.5 grados | 2 grados | 2.1 grados | 3 2/3 grados",
+    "respuesta": "2.1 grados",
+    "pasos": "1) Tiempo = 3⅓ h. 2) ΔT = 32−25 = 7 °C. 3) 7 ÷ (10/3) = 7×0.3 = 2.1. Atajo: 7 ÷ 3.333… = 2.1.",
+    "fuente": "028_image185.png"
+  },
+  {
+    "enunciado": "Un barco está listo para ser anclado en un canal. El ancla cuelga 5 metros sobre la superficie del agua y cae a una velocidad media de 5 metros por segundo. Desde el momento en que el ancla comienza a caer, llegan al fondo 7 segundos. ¿Qué tan profundo es el canal?\n\nOpciones: 15 metros | 35 metros | 40 metros | 25 metros | 30 metros",
+    "respuesta": "30 metros",
+    "pasos": "1) En 7 s cae 7×5 = 35 m totales. 2) Los primeros 5 m están sobre el agua (1 s). 3) Profundidad = 6×5 = 30 m. Atajo: 35 − 5 = 30.",
+    "fuente": "029_image198.png"
+  },
+  {
+    "enunciado": "[Figura: escalera de cubos con 3 peldaños (1+2+3=6).] ¿Cuántos cubos se necesitan para una escalera de 10 pasos siguiendo el mismo patrón?\n\nOpciones: 20 | 30 | 40 | 50 | 55",
+    "respuesta": "55",
+    "pasos": "1) 3 pasos: 1+2+3=6. 2) 10 pasos: 1+…+10 = (1+10)×5 = 55. Atajo: n(n+1)/2 con n=10.",
+    "fuente": "030_image158.png"
+  },
+  {
+    "enunciado": "Chris tiene una granja donde guarda cabras y gansos. En total tiene 17 animales que tienen un total de 48 patas. ¿Cuántas cabras tiene Chris?\n\nOpciones: 6 | 7 | 10 | 13 | 14",
+    "respuesta": "7",
+    "pasos": "1) Si todos gansos: 17×2=34 patas; faltan 14. 2) Cada cabra añade 2 patas: 14÷2=7 cabras. 3) Verifica: 7×4 + 10×2 = 48. Atajo: método «todos de 2 patas».",
+    "fuente": "031_image163.png"
+  },
+  {
+    "enunciado": "El estanque de Hank mide cinco metros de largo, dos metros de ancho y medio de profundidad. ¿Cuántos litros de agua necesitará llenar el estanque hasta el borde?\n\nOpciones: 500 litros | 1,000 litros | 5,000 litros | 10,000 litros | 50,000 litros",
+    "respuesta": "5,000 litros",
+    "pasos": "1) Volumen: 5×2×0.5 = 5 m³. 2) 5×1,000 = 5,000 L. Atajo: 1 m³ = 1,000 L.",
+    "fuente": "032_image168.png"
+  },
+  {
+    "enunciado": "¿Cuánto mide 4 metros − 3 cm − 6\" − 9 mm?\n\nOpciones: 0.03809 metros | 0.3809 metros | 3,809 metros | 38.09 metros | 380.9 metros",
+    "respuesta": "3,809 metros",
+    "pasos": "1) A mm: 4000 − 30 − 152 − 9 = 3809 mm. 2) = 3,809 m (coma decimal). Atajo: 6\" ≈ 152 mm.",
+    "fuente": "033_image176.png"
+  },
+  {
+    "enunciado": "Julia tiene un estanque grande y en él hay 75 peces y otros 1/6 del número total. ¿Cuántos peces hay en el estanque de Julia?\n\nOpciones: 80 | 85 | 90 | 95 | 100",
+    "respuesta": "90",
+    "pasos": "1) 75 = 5/6 del total. 2) 75÷5 = 15 = 1/6. 3) Total = 6×15 = 90. Atajo: total = 75 ÷ (5/6) = 90.",
+    "fuente": "034_image181.png"
+  },
+  {
+    "enunciado": "A la edad de doce años, Samuel mide 1.53 metros de altura. Durante los siguientes tres años creció 0.07 metros por año. En los siguientes dos años creció otros 0.03 metros al año. En este momento ya tiene diecisiete años. A los diecinueve años, Samuel es un 5% más alto de cuando tenía diecisiete años. ¿Qué altura tiene Samuel a los diecinueve años?\n\nOpciones: 1.74 metros | 1.80 metros | 1.89 metros | 1.93 metros | 1.98 metros",
+    "respuesta": "1.89 metros",
+    "pasos": "1) +3×0.07: 1.53+0.21=1.74. 2) +2×0.03: 1.74+0.06=1.80 (a los 17). 3) +5%: 1.80×1.05=1.89. Atajo: 5% de 1.80 = 0.09.",
+    "fuente": "035_image184.png"
+  },
+  {
+    "enunciado": "[Solo EXPLICACIÓN; enunciado en 006.] Estanque de Diego 5×2×0.5 m, 75% lleno; nivel sube 2.5 cm. ¿% de llenado al regresar?",
+    "respuesta": "80%",
+    "pasos": "1) Volumen 5 m³ = 5,000 L; 75% = 3,750 L → profundidad 0.375 m. 2) +2.5 cm → 0.40 m → 4 m³ = 4,000 L. 3) 4,000/5,000 = 80%. Atajo: +2.5 cm sobre 50 cm = +5%.",
+    "fuente": "036_image189.png"
+  },
+  {
+    "enunciado": "Katia pesa 60 kilogramos. A través de los años gana 40% de su peso original. Ella se da cuenta de que tiene sobrepeso y decide hacer una dieta y también hacer ejercicio, con lo que finalmente perdió 1/4 de lo que pesó en ese momento. ¿Cuánto pesó Katia después de perder peso?\n\nOpciones: 69 kg | 84 kg | 60 kg | 63 kg | 65 kg",
+    "respuesta": "63 kg",
+    "pasos": "1) Gana 0.4×60=24 → 84 kg. 2) Pierde 1/4 de 84 = 21 → 84−21=63. Atajo: 60×1.4×0.75 = 63.",
+    "fuente": "037_image197.png"
+  },
+  {
+    "enunciado": "Alberto compra un vehículo de segunda mano por $6,050. Gastó $1,870 en repuestos para hacer algunas reparaciones en el vehículo y luego lo revende a otra persona. Obtuvo un beneficio de $3,330, con el acuerdo. ¿A cuánto revendió Alberto el vehículo?\n\nOpciones: $9,380 | $11,250 | $12,090 | $7,920 | $4,590",
+    "respuesta": "$11,250",
+    "pasos": "1) Costo total: 6,050+1,870=7,920. 2) Venta = 7,920+3,330=11,250. Atajo: compra + reparaciones + ganancia.",
+    "fuente": "038_image162.png"
+  },
+  {
+    "enunciado": "Alex dejó 1/2 de su pizza en la nevera. A la mañana siguiente, ella comió 1/3 de ella. ¿Qué fracción de la pizza queda?\n\nOpciones: 1/6 | 5/6 | 5/9 | 1/3 | 4/6",
+    "respuesta": "1/3",
+    "pasos": "1) Come (1/2)×(1/3)=1/6. 2) Queda 1/2 − 1/6 = 3/6 − 1/6 = 2/6 = 1/3. Atajo: come un sexto; queda un tercio.",
+    "fuente": "039_image157.png"
+  },
+  {
+    "enunciado": "El granjero Félix tiene dos vacas. Por cada 2,5 litros de leche que produce la vaca A, la vaca B produce 3. En la última semana, las vacas produjeron 407 litros de leche juntas. ¿Cuánto de esta leche proviene de la vaca A?\n\nOpciones: 222 litros | 195 litros | 74 litros | 147 liters | 185 liters",
+    "respuesta": "185 liters",
+    "pasos": "1) Ratio A:B = 2.5:3 → por cada 5.5 L, A aporta 2.5. 2) 407÷5.5=74. 3) 74×2.5=185. Atajo: A = 2.5/5.5 × 407.",
+    "fuente": "040_image166.png"
+  },
+  {
+    "enunciado": "Laura compra cuatro libros a $15.95 cada uno. Ella también compra dos marcadores a $1.25 cada uno. La librería tiene un especial en sus libros, es decir 'lleva 3, paga 2'. Debido a que Laura es tan buena cliente, también obtiene uno de los marcadores gratis. ¿Cuánto tendrá que pagar en total?\n\nOpciones: $47.85 | $49.10 | $50.35 | $63.80 | $66.30",
+    "respuesta": "$49.10",
+    "pasos": "1) Lleva 3 paga 2 con 4 libros → paga 3×15.95=47.85. 2) Un marcador gratis → paga 1×1.25. 3) Total 47.85+1.25=49.10. Atajo: 3 libros + 1 marcador.",
+    "fuente": "041_image171.png"
+  },
+  {
+    "enunciado": "Vicente participará en una carrera deportiva. Todos los participantes tienen que completar 30 kilómetros. En la primera hora y media corre a 12 km/hour. Después su velocidad disminuye a un ritmo de 2 km/hour cada media hora. ¿Cuánto tardará Vicente en llegar al final de la ruta?\n\nOpciones: 3 horas exactamente | 2 horas y 30 minutos | 2 horas exactamente | 1 hora y 30 minutos | Nunca llega al final de la ruta",
+    "respuesta": "3 horas exactamente",
+    "pasos": "1) 1.5 h × 12 = 18 km; faltan 12. 2) Medias horas a 10, 8 y 6 km/h: 5+4+3=12 km. 3) 1.5 + 1.5 = 3 h. Atajo: tres tramos de ½ h tras el inicio.",
+    "fuente": "042_image179.png"
+  },
+  {
+    "enunciado": "Carla invita a su familia completa a almorzar a un restaurante. La orden consiste en 3 bocadillos fríos que cuestan $5.95 cada uno, 3 ensaladas que cuestan $7.50 cada una y dos bocadillos tostados que cuestan $4.95 cada uno, 5 tazas de té que cuestan $2.50 cada una y 3 cafés a $2.95 cada uno. El restaurante tiene una oferta especial que le permite pagar un paquete de bocadillo frío y un té por $7.95. ¿Cuál es el total que pagará Carla por el almuerzo?\n\nOpciones: $60.10 | $56.25 | $71.60 | $70.10 | $81",
+    "respuesta": "$70.10",
+    "pasos": "1) 3 paquetes frío+té: 3×7.95=23.85; +2 tés: 5 → 28.85. 2) +3 ensaladas 22.50 → 51.35. 3) +2 tostados 9.90 → 61.25. 4) +3 cafés 8.85 → 70.10. Atajo: aplicar oferta solo a min(fríos, tés).",
+    "fuente": "043_image187.png"
+  },
+  {
+    "enunciado": "Se cumple el 50 aniversario de casados del matrimonio Sánchez y están organizando una fiesta. Tienen las siguientes opciones:\nSalón Panorama: $1200 por la renta + $8 p.p.\nSalón Encino: $22 p.p.\nSalón Café: $1100 por la renta + $10 p.p.\nSalón Playa: $800 por la renta + $14 p.p.\nSalón América: $950 por la renta + $12 p.p.\nLos Sánchez quieren invitar a 140 personas a la fiesta. ¿Cuál es la mejor opción para ellos?\n\nOpciones: Salón Panorama | Salón Encino | Salón Café | Salón Playa | Salón América",
+    "respuesta": "Salón Panorama",
+    "pasos": "1) Calcular costo para 140: Panorama 2320; Encino 3080; Café 2500; Playa 2760; América 2630. 2) El más barato es Panorama. Atajo: comparar totales, no solo p.p.",
+    "fuente": "044_image192.png"
+  }
+]

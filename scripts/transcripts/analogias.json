@@ -1,0 +1,233 @@
+[
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación con la palabra dada como la relación entre el primer par.\n\nPregunta: Cataplasma : Medicina :: (_______) : Ingeniería\n\nOpciones:\nA) Cámara\nB) Calibrador de tensión\nC) Despachador\nD) Pizarrón\nE) Martillo",
+    "respuesta": "B) Calibrador de tensión",
+    "pasos": [
+      "Relación del primer par: cataplasma es un instrumento/aplicación propia de la medicina.",
+      "Buscar el instrumento/aplicación propia de la ingeniería entre las opciones.",
+      "Calibrador de tensión es herramienta de ingeniería; el resto no encaja en ese campo.",
+      "Atajo: herramienta/uso del oficio A → herramienta/uso del oficio B."
+    ],
+    "fuente": "Analog_as/001_image8.png"
+  },
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación con la palabra dada como la relación entre el primer par.\n\nPregunta: Templado : Caliente :: (_______) : Divertidísimo\n\nOpciones:\nA) Húmedo\nB) Estridente\nC) Entretenido\nD) Verano\nE) Gracioso",
+    "respuesta": "E) Gracioso",
+    "pasos": [
+      "Templado es un grado menor de intensidad térmica respecto de caliente.",
+      "Divertidísimo es el grado intenso; hace falta el grado menor equivalente.",
+      "Gracioso es a divertidísimo lo que templado es a caliente (escala de intensidad).",
+      "Atajo: adjetivo suave → adjetivo intenso; descarta sinónimos exactos y campos ajenos (húmedo, verano)."
+    ],
+    "fuente": "Analog_as/002_image13.png"
+  },
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación con la palabra dada como la relación entre el primer par.\n\nPregunta: Pantano : (_______) :: Sueño : Fantasía\n\nOpciones:\nA) Fangal\nB) Incursión\nC) Ideal\nD) Noche\nE) Saco",
+    "respuesta": "A) Fangal",
+    "pasos": [
+      "Sueño y fantasía son términos cercanos/sinónimos en el plano imaginativo.",
+      "Pantano necesita un sinónimo o término equivalente de terreno pantanoso.",
+      "Fangal es sinónimo de pantano; el resto no mantiene esa relación.",
+      "Atajo: si el segundo par es sinonimia, busca el sinónimo del primer término."
+    ],
+    "fuente": "Analog_as/003_image18.png"
+  },
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación con la palabra dada como la relación entre el primer par.\n\nPregunta: Pistola : Disparar :: Bomba : (_______)\n\nOpciones:\nA) Detonar\nB) Ruina\nC) Jugar\nD) Exhausto\nE) Explosión",
+    "respuesta": "A) Detonar",
+    "pasos": [
+      "Pistola se relaciona con disparar: objeto → acción verbal típica.",
+      "Bomba debe emparejarse con el verbo de su acción típica.",
+      "Detonar es el verbo paralelo; explosión es sustantivo y rompe el patrón gramatical.",
+      "Atajo: mantén la misma categoría gramatical (verbo ↔ verbo)."
+    ],
+    "fuente": "Analog_as/004_image3.png"
+  },
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación a la palabra dada como la relación entre el primer par.\n\nPregunta: Avaro : Tacaño :: Homogéneo : (_______)\n\nOpciones:\nA) Extravagante\nB) Grosero\nC) Uniforme\nD) Amigable\nE) Distante",
+    "respuesta": "C) Uniforme",
+    "pasos": [
+      "Avaro y tacaño son sinónimos.",
+      "Hay que hallar el sinónimo de homogéneo.",
+      "Uniforme expresa igualdad/homogeneidad; las demás opciones no.",
+      "Atajo: par 1 = sinonimia → elige sinónimo del tercer término."
+    ],
+    "fuente": "Analog_as/005_image21.png"
+  },
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación con la palabra dada como la relación entre el primer par.\n\nPregunta: Tenis : Deporte :: Doctor : (_______)\n\nOpciones:\nA) Profesión\nB) Médico\nC) Receta\nD) Dentista\nE) Epecialista",
+    "respuesta": "A) Profesión",
+    "pasos": [
+      "Tenis es un tipo/miembro de la categoría deporte.",
+      "Doctor es un tipo/miembro de la categoría profesión.",
+      "Médico es sinónimo, no la categoría; dentista/especialista son pares, no el hiperónimo.",
+      "Atajo: ejemplo → categoría (hipónimo → hiperónimo)."
+    ],
+    "fuente": "Analog_as/006_image7.png"
+  },
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación con la palabra dada como la relación entre el primer par.\n\nPregunta: Monja : Monje :: (_______) : Duque\n\nOpciones:\nA) Reina\nB) Noble\nC) Capataz\nD) Duquesa\nE) Ducado",
+    "respuesta": "D) Duquesa",
+    "pasos": [
+      "Monja es la forma femenina de monje (mismo rol, distinto género).",
+      "Duque necesita su correspondiente femenino.",
+      "Duquesa es el par de género; reina/noble/ducado no mantienen ese vínculo exacto.",
+      "Atajo: femenino ↔ masculino del mismo título/rol."
+    ],
+    "fuente": "Analog_as/007_image12.png"
+  },
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación con la palabra dada como la relación entre el primer par.\n\nPregunta: (_______) : Cenit :: Miedo : Calma\n\nOpciones:\nA) Apéndice\nB) Cielo\nC) Alturas\nD) Nadir\nE) Asustado",
+    "respuesta": "D) Nadir",
+    "pasos": [
+      "Miedo y calma son antónimos.",
+      "Cenit (punto más alto) necesita su antónimo.",
+      "Nadir es el punto opuesto/más bajo; cielo/alturas refuerzan cenit, no lo oponen.",
+      "Atajo: si el par conocido es antonimia, busca el antónimo del término dado."
+    ],
+    "fuente": "Analog_as/008_image17.png"
+  },
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación con la palabra dada como la relación entre el primer par.\n\nPregunta: Propiedad : (_______) :: Chatarra : Desechar\n\nOpciones:\nA) Acceso\nB) Descartar\nC) Perder\nD) Adquirir\nE) Renunciar",
+    "respuesta": "D) Adquirir",
+    "pasos": [
+      "Chatarra se relaciona con desechar: objeto → acción típica que se hace con él.",
+      "Con la propiedad la acción típica opuesta/complementaria es adquirirla.",
+      "Descartar es trampa por sinonimia con desechar, pero no encaja con propiedad.",
+      "Atajo: objeto valioso → adquirir; objeto de desecho → desechar."
+    ],
+    "fuente": "Analog_as/009_image2.png"
+  },
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación con la palabra dada como la relación entre el primer par.\n\nPregunta: Nativo : Aborigen :: Ingenuo : (_______)\n\nOpciones:\nA) Aprendido\nB) Árido\nC) Candoroso\nD) Tribu\nE) Esfuerzo",
+    "respuesta": "C) Candoroso",
+    "pasos": [
+      "Nativo y aborigen son sinónimos.",
+      "Ingenuo necesita un sinónimo de candidez/ingenuidad.",
+      "Candoroso es el sinónimo; aprendido tiende a lo contrario.",
+      "Atajo: sinonimia del primer par → sinonimia del segundo."
+    ],
+    "fuente": "Analog_as/010_image16.png"
+  },
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación a la palabra dada como la relación entre el primer par.\n\nPregunta: Choza : Sucia :: Centro de actividades : (_______)\n\nOpciones:\nA) Impredecible\nB) Concurrido\nC) Fiesta\nD) Eventos\nE) Taberna",
+    "respuesta": "B) Concurrido",
+    "pasos": [
+      "Choza se asocia con el adjetivo sucia (lugar → cualidad típica).",
+      "Centro de actividades se asocia con estar concurrido (lleno de gente).",
+      "Fiesta/eventos son sustantivos relacionados, no el adjetivo paralelo.",
+      "Atajo: lugar/objeto → adjetivo característico."
+    ],
+    "fuente": "Analog_as/011_image20.png"
+  },
+  {
+    "enunciado": "[PANTALLA DE INSTRUCCIONES — sin ítem de pregunta]\n\nDESCRIPCIÓN\n\nCada pregunta consiste en un par de palabras relacionadas, seguido de otra palabra a la que falta su par. Debes seleccionar la palabra que mantiene la misma relación que el primer par.\n\nCómo leer analogías verbales simples:\n- ( : ) significa «es a»\n- ( :: ) significa «como»\nEjemplo: Cachorro : Perro :: Becerro : Vaca → «Cachorro es a Perro como Becerro es a Vaca». La relación del primer par es la misma que la del segundo.\n\nIMPORTANTE: El test tiene 10 preguntas y 5 minutos en total (aprox. 30 segundos por pregunta). Responde correctamente tantas como puedas. Puedes enviar el test en cualquier momento; al acabarse el tiempo se envía automáticamente con las respuestas seleccionadas.\n\nEl test empezará en la siguiente pantalla.",
+    "respuesta": "N/A",
+    "pasos": [
+      "Esta captura no es un ejercicio: es la pantalla de reglas del bloque de analogías.",
+      "Define la notación «:» = es a y «::» = como, con ejemplo Cachorro : Perro :: Becerro : Vaca.",
+      "Indica 10 preguntas y 5 minutos (~30 s por ítem).",
+      "Atajo: ignorar esta imagen al armar el banco de ítems; solo sirve como metadato del formato."
+    ],
+    "fuente": "Analog_as/012_image1.png"
+  },
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación con la palabra dada como la relación entre el primer par.\n\nPregunta: (_______) : Trivial :: Rico : Pobre\n\nOpciones:\nA) Atomico\nB) Significativo\nC) Endeble\nD) Anormal\nE) Elegante",
+    "respuesta": "B) Significativo",
+    "pasos": [
+      "Rico y pobre son antónimos.",
+      "Trivial necesita su antónimo.",
+      "Significativo (importante) es lo opuesto de trivial; las demás no lo son.",
+      "Atajo: antonimia del par conocido → antónimo del término suelto."
+    ],
+    "fuente": "Analog_as/013_image6.png"
+  },
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación con la palabra dada como la relación entre el primer par.\n\nPregunta: (_______) : Calma :: Sacudida : Violencia\n\nOpciones:\nA) Sorpresa\nB) Soplar\nC) Mecerse\nD) Saltar\nE) Rebotar",
+    "respuesta": "C) Mecerse",
+    "pasos": [
+      "Sacudida se caracteriza por violencia (movimiento → cualidad).",
+      "Hace falta un movimiento caracterizado por calma.",
+      "Mecerse es movimiento suave/tranquilo; saltar/rebotar son bruscos.",
+      "Atajo: movimiento : cualidad intensa :: movimiento suave : cualidad calma."
+    ],
+    "fuente": "Analog_as/014_image11.png"
+  },
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación con la palabra dada como la relación entre el primer par.\n\nPregunta: Tejer : Entrelazar :: (_______) : Decorar\n\nOpciones:\nA) Conectar\nB) Bordar\nC) Romper\nD) Simplificar\nE) Separar",
+    "respuesta": "B) Bordar",
+    "pasos": [
+      "Tejer y entrelazar son acciones afines (tejer implica entrelazar hilos).",
+      "Se busca la acción afín a decorar.",
+      "Bordar es una forma típica de decorar con hilo; conectar/romper no decoran.",
+      "Atajo: verbo específico ↔ verbo más general de la misma familia semántica."
+    ],
+    "fuente": "Analog_as/015_image5.png"
+  },
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación con la palabra dada como la relación entre el primer par.\n\nPregunta: Pastilla : Píldora :: Núcleo : (_______)\n\nOpciones:\nA) Centro\nB) Taza\nC) Bar\nD) Placebo\nE) Fuerte",
+    "respuesta": "A) Centro",
+    "pasos": [
+      "Pastilla y píldora son sinónimos.",
+      "Núcleo necesita un sinónimo.",
+      "Centro es sinónimo de núcleo; placebo/taza son distracciones del campo médico.",
+      "Atajo: sinonimia → sinonimia."
+    ],
+    "fuente": "Analog_as/016_image15.png"
+  },
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación con la palabra dada como la relación entre el primer par.\n\nPregunta: Declaración : Decir :: (_______) : Hacer\n\nOpciones:\nA) Cita\nB) Negocio\nC) Acción\nD) Actividad\nE) Labor",
+    "respuesta": "C) Acción",
+    "pasos": [
+      "Una declaración es el sustantivo del acto de decir.",
+      "El sustantivo del acto de hacer es acción.",
+      "Actividad/labor son cercanos pero menos directos que acción frente a hacer.",
+      "Atajo: sustantivo del acto ↔ verbo correspondiente."
+    ],
+    "fuente": "Analog_as/017_image10.png"
+  },
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación a la palabra dada como la relación entre el primer par.\n\nPregunta: (_______) : Cambio :: Multitud : Turba\n\nOpciones:\nA) Metro\nB) Iglesia\nC) Transición\nD) Línea\nE) Medios",
+    "respuesta": "C) Transición",
+    "pasos": [
+      "Multitud y turba son términos cercanos/sinónimos (grupo de gente).",
+      "Cambio necesita un sinónimo o término equivalente.",
+      "Transición es un tipo/sinónimo cercano de cambio.",
+      "Atajo: sinonimia del segundo par → sinonimia con el término suelto."
+    ],
+    "fuente": "Analog_as/018_image19.png"
+  },
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación con la palabra dada como la relación entre el primer par.\n\nPregunta: Oveja : rebaño :: (_______) : Abeja\n\nOpciones:\nA) Miel\nB) Oruga\nC) Colmena\nD) Insecto\nE) Picadura",
+    "respuesta": "C) Colmena",
+    "pasos": [
+      "Oveja se relaciona con rebaño como individuo/miembro con su colectivo (o hábitat grupal).",
+      "Entre las opciones, colmena es el colectivo/hábitat asociado a la abeja.",
+      "Miel/picadura son productos o efectos; insecto es categoría; oruga es otro ciclo vital.",
+      "Atajo: individuo ↔ colectivo/hábitat del grupo."
+    ],
+    "fuente": "Analog_as/019_image4.png"
+  },
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación con la palabra dada como la relación entre el primer par.\n\nPregunta: Ducto : Líquido :: Conductor : (_______)\n\nOpciones:\nA) Acompañar\nB) Chofer\nC) Electricidad\nD) Sólido\nE) Aislar",
+    "respuesta": "C) Electricidad",
+    "pasos": [
+      "Un ducto transporta/conduce líquido.",
+      "Un conductor (eléctrico) transporta/conduce electricidad.",
+      "Chofer es trampa por el otro sentido de «conductor»; sólido/aislar no paralelizan el contenido transportado.",
+      "Atajo: medio de conducción → lo que conduce."
+    ],
+    "fuente": "Analog_as/020_image9.png"
+  },
+  {
+    "enunciado": "Selecciona la palabra que tiene la misma relación don la palabra dada como la relación entre el primer par.\n\nPregunta: Especial : Exigente :: (_______) : Servil\n\nOpciones:\nA) Manso\nB) Superior\nC) Maniático\nD) Tenso\nE) Específico",
+    "respuesta": "A) Manso",
+    "pasos": [
+      "Especial y exigente forman una escala de carácter (particular → muy demandante).",
+      "Servil es el extremo de sumisión; el grado base paralelo es manso.",
+      "Específico es distracción por cercanía a especial; no encaja con servil.",
+      "Atajo: rasgo moderado → rasgo extremo (misma familia semántica)."
+    ],
+    "fuente": "Analog_as/021_image14.png"
+  }
+]

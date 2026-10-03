@@ -1,7 +1,9 @@
 import { readFileSync } from "fs";
 
 const b = JSON.parse(readFileSync("src/lib/psicotecnicas/bancoTipos.json", "utf8"));
-const figsSrc = readFileSync("src/components/psicotecnicas/AbstractFigures.tsx", "utf8");
+const figsSrc =
+  readFileSync("src/components/psicotecnicas/AbstractFigures.tsx", "utf8") +
+  readFileSync("src/components/psicotecnicas/diagramaticoFigures.tsx", "utf8");
 
 const ids = [
   "razonamiento-inductivo",
@@ -25,7 +27,7 @@ for (const id of ids) {
       m[2].trim()
     );
     // simpler split
-    const m = it.enunciado.match(/\n\n(.+)$/s);
+    const m = it.enunciado.match(/\n\n([\s\S]+)$/);
     if (m) {
       const parts = m[1].split(/\s{2,}/).map((p: string) => p.replace(/^[A-D]\)\s*/, "").trim());
       if (parts.length >= 4 && new Set(parts.slice(0, 4)).size < 4) dupOpts++;

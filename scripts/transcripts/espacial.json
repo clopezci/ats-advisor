@@ -1,0 +1,114 @@
+[
+  {
+    "enunciado": "Selecciona el objeto en 3D correcto.\n\nDespliegue (net) del cubo — fila horizontal de 4 caras + 1 arriba y 1 abajo del 2.º cuadrado:\n• Fila: [franja negra vertical en el tercio izquierdo] — [blanco] — [blanco] — [blanco]\n• Arriba del 2.º: blanco partido por una línea vertical fina al centro\n• Abajo del 2.º: negro sólido\n\nOpciones (vista isométrica: frente / arriba / lateral):\nA) frente negro; arriba partido por línea vertical; lateral blanco\nB) frente blanco; arriba blanco; lateral izquierdo negro sólido\nC) frente blanco; arriba blanco; lateral con negro (configuración incongruente con una sola cara negra sólida)\nD) frente blanco; arriba partido por línea; lateral izquierdo con franja negra\n\nOpciones: A, B, C, D",
+    "respuesta": "B",
+    "pasos": "1) En el net, la cara partida (arriba) y la negra sólida (abajo) están en extremos opuestos respecto al 2.º cuadrado → son caras opuestas y nunca pueden verse juntas. 2) Descarta A (muestra negra + partida adyacentes). 3) Comprueba B: con una cara blanca como frente y otra blanca como tapa, la negra queda en un lateral — coherente con el net. 4) C y D fallan por vecindades u orientación de la franja. Atajo: opuestas = negra ↔ partida; cualquier opción que las muestre juntas es imposible → queda B.",
+    "fuente": "001_image257.png",
+    "figuraHint": "Net cruz: franja|blanco|blanco|blanco; arriba del 2.º partido por línea; abajo del 2.º negro sólido. Correcta B: blanco-blanco-negro lateral."
+  },
+  {
+    "enunciado": "Selecciona el objeto en 3D correcto.\n\nCubo de referencia (3 caras visibles):\n• Superior: cruz (+) (línea H + V)\n• Frontal-izq: punto negro arriba-izq + diagonal de abajo-izq a arriba-der\n• Frontal-der: diagonal de arriba-izq a abajo-der\n(Las dos diagonales frontales convergen en el vértice superior central.)\n\nOpciones tras rotación:\nA) superior: diagonal; front-izq: punto abajo-izq + diagonal; front-der: X\nB) superior: X; front-izq: cruz (+); front-der: punto abajo-izq + diagonal\nC) superior: diagonal; front-izq: punto abajo-izq + diagonal; front-der: cruz (+)\nD) superior: cruz (+); front-izq: diagonal; front-der: punto + diagonal\n\nOpciones: A, B, C, D",
+    "respuesta": "A",
+    "pasos": "1) Anota las tres caras visibles del modelo: (+), (punto+diagonal), (diagonal simple). 2) Al rotar aparecen caras antes ocultas (p. ej. la X). 3) Conserva la relación punto↔diagonal al girar: el punto pasa de arriba-izq a abajo-izq tras media vuelta. 4) Solo A mantiene símbolos del mismo cubo sin contradicción. Atajo: sigue el vértice donde se tocan las dos diagonales del modelo; en A la geometría del punto respecto a su diagonal encaja tras la rotación.",
+    "fuente": "002_image262.png",
+    "figuraHint": "Referencia: top(+), FL(punto+diag), FR(diag). Correcta A: top(diag), FL(punto abajo+diag), FR(X)."
+  },
+  {
+    "enunciado": "Selecciona el objeto en 3D correcto.\n\nDespliegue tipo cruz (dados con puntos):\n• Columna vertical: [blanco] / [5 puntos] / [1 punto]\n• A la izq del 5: blanco\n• A la der del 5: [3 puntos en diagonal] — [blanco]\n\nOpciones:\nA) frente 1; arriba blanco; der 2 puntos verticales\nB) frente 1; arriba blanco; der 3 en diagonal\nC) frente con cuadrado de puntos; arriba blanco; der con cuadrado de puntos (marcada correcta en UI)\nD) frente 4 puntos; arriba 3 en diagonal; der blanco\n\nOpciones: A, B, C, D",
+    "respuesta": "C",
+    "pasos": "1) Localiza opuestas en el net: 1 ↔ blanco superior; 5 ↔ blanco extremo der; 3 ↔ blanco izq. 2) Descarta vistas que junten caras opuestas o introduzcan caras inexistentes (p. ej. un 2). 3) La UI marca C como correcta. Atajo: opuestas nunca juntas; elimina A/B/D por caras o adyacencias imposibles.",
+    "fuente": "003_image252.png",
+    "figuraHint": "Net dados: columna blanco-5-1; izq blanco; der 3 luego blanco. Respuesta UI: C. Posible ambigüedad 4 vs 5 en el dibujo de opciones."
+  },
+  {
+    "enunciado": "Selecciona el objeto en 3D correcto.\n\nDespliegue (T/cruz):\n• Columna: [diagonal / BL→TR] / [blanco] / [negro sólido]\n• Fila desde el blanco central: [negro sólido] — [blanco central] — [blanco] — [diagonal \\ TL→BR]\n(Dos negras, dos blancas lisas, dos con diagonal.)\n\nOpciones:\nA) frente negro; arriba diagonal; der diagonal\nB) frente diagonal /; arriba blanco; der diagonal \\\nC) frente diagonal \\; arriba blanco; izq negro\nD) frente negro; arriba diagonal TL→BR; izq diagonal BL→TR\n\nOpciones: A, B, C, D",
+    "respuesta": "D",
+    "pasos": "1) Las dos negras no son opuestas (ambas tocan el blanco central) → pueden verse juntas. 2) Comprueba orientación de las dos diagonales respecto a la negra del extremo izq del net. 3) En D, negra al frente + diagonales arriba e izq coinciden con el plegado. Atajo: fija una negra al frente y mira cómo deben «apuntar» las diagonales en el vértice común; solo D encaja.",
+    "fuente": "004_image256.png",
+    "figuraHint": "Net: diag/ | blanco | negro; fila negro—blanco—blanco—diag\\. Correcta D: negro frente + dos diagonales."
+  },
+  {
+    "enunciado": "Selecciona el objeto en 3D correcto.\n\nCubo de referencia:\n• Superior: segmento horizontal centrado\n• Front-izq: línea horizontal pegada al borde inferior\n• Front-der: 2 puntos en diagonal (arriba-der y abajo-izq)\n\nOpciones:\nA) superior: línea H; front-izq: línea V centrada; front-der: X\nB) superior: 2 puntos horizontales; front-izq: línea inferior; front-der: línea V\nC) superior: X; front-izq: línea V; front-der: 2 puntos en diagonal\nD) superior: línea H + punto debajo; front-izq: 2 puntos H; front-der: diagonal\n\nOpciones: A, B, C, D",
+    "respuesta": "A",
+    "pasos": "1) Marca las tres caras del modelo (línea H, línea en base, 2 puntos). 2) Al rotar aparecen caras ocultas (X, línea V). 3) Descarta B/C/D si introducen combos o posiciones de puntos imposibles. 4) La UI marca A. Atajo: conserva la línea H superior del modelo como ancla y busca la rotación que revela X + V sin contradecir adyacencias.",
+    "fuente": "005_image261.png",
+    "figuraHint": "Referencia: top(línea H), FL(línea base), FR(2 puntos diag). Correcta A: top(H), FL(V), FR(X)."
+  },
+  {
+    "enunciado": "Selecciona el objeto en 3D correcto.\n\nDespliegue cruz:\n• Columna: [negro] / [blanco] / [blanco]\n• Izq del blanco central: [negro]\n• Der del blanco central: [blanco con 2 puntos en diagonal] — [blanco]\n\nOpuestas: negro superior ↔ blanco inferior; negro izq ↔ cara de 2 puntos; blanco central ↔ blanco extremo der.\n\nOpciones:\nA) arriba negro; frente negro; der blanco con 2 puntos\nB) tres caras blancas visibles\nC) arriba blanco; frente blanco con 2 puntos; izq negro\nD) arriba negro; frente blanco; izq blanco con 2 puntos\n\nOpciones: A, B, C, D",
+    "respuesta": "D",
+    "pasos": "1) Negro lateral y cara de 2 puntos son opuestas → no pueden tocarse en la vista. 2) Descarta A (y similares) si juntan negro con puntos. 3) D muestra negro (el de la columna) arriba, blanco al frente y puntos al lado — el otro negro queda oculto/opuesto a los puntos. Atajo: «negro lateral ↔ puntos» nunca juntos → elimina A/C problemáticas; confirma D.",
+    "fuente": "006_image251.png",
+    "figuraHint": "Net: negro/blanco/blanco; izq negro; der 2-puntos luego blanco. Correcta D: negro arriba, blanco frente, puntos lateral."
+  },
+  {
+    "enunciado": "Selecciona el objeto en 3D correcto.\n\nCubo de referencia:\n• Superior: diagonal BL→TR\n• Front-izq: punto negro centrado\n• Front-der: forma en V invertida (ápices en esquinas superiores, vértice en centro del borde inferior)\n\nOpciones:\nA) top diag TL→BR; FL diag; FR línea H\nB) top punto + línea V; FL diagonal pequeña; FR línea V\nC) top punto + diagonal; FL con marcas en esquinas; FR misma V del modelo\nD) top línea H + diag; FL diag; FR diag\n\nOpciones: A, B, C, D",
+    "respuesta": "C",
+    "pasos": "1) Elemento distintivo: la V de la cara derecha. 2) Descarta opciones sin V o con símbolos nuevos. 3) C conserva la V y muestra caras coherentes tras rotación. Atajo: busca la V idéntica; solo C la mantiene.",
+    "fuente": "007_image265.png",
+    "figuraHint": "Referencia: top(diag), FL(punto), FR(V abajo). Correcta C conserva la V."
+  },
+  {
+    "enunciado": "DESCRIPCIÓN (pantalla de instrucciones, no es ítem de ejercicio).\n\nEs muy común que las pruebas de razonamiento espacial formen parte del test psicométrico de aptitudes. Este test mide tu habilidad mental de acomodar, rotar y manipular formas y objetos sin tocarlos físicamente.\n\nIMPORTANTE: Este test de razonamiento espacial se compone de 8 preguntas y tendrás 8 minutos para contestar correctamente la mayor cantidad posible. Si no sabes la respuesta o te toma mucho tiempo, déjala y regresa si queda tiempo. Puedes regresar o saltarte preguntas. Puedes enviar en cualquier momento; al acabarse el tiempo se envía automáticamente. El test inicia en la siguiente pantalla.",
+    "respuesta": "",
+    "pasos": "No aplica: es la diapositiva de descripción/reglas del bloque (8 preguntas, 8 minutos), no un ejercicio con opciones A–D. Atajo: saltar al primer ítem con figura.",
+    "fuente": "008_image250.png",
+    "figuraHint": "Sin figura espacial: solo texto de instrucciones del test."
+  },
+  {
+    "enunciado": "Selecciona el objeto en 3D correcto.\n\nDespliegue cruz + cara extra a la der:\n• Centro: blanco\n• Arriba del centro: triángulo negro (base toca el centro, punta hacia afuera/arriba)\n• Izq del centro: triángulo negro (base toca el centro, punta a la izq)\n• Der del centro: triángulo negro (base toca el centro, punta a la der)\n• Abajo del centro: blanco\n• Extremo der (tras el triángulo der): blanco\n(3 triángulos apuntando hacia afuera desde un blanco común; 3 blancas.)\n\nOpciones A–D: variantes de cubos con 0–3 triángulos visibles en distintas orientaciones; A es la marcada correcta.\n\nOpciones: A, B, C, D",
+    "respuesta": "A",
+    "pasos": "1) Los tres triángulos comparten el blanco central → al plegar, sus bases rodean esa cara blanca. 2) Descarta vistas con tres triángulos mal orientados o dos triángulos compartiendo arista imposible. 3) A respeta bases hacia el blanco y puntas hacia afuera. Atajo: las tres bases «abrazan» la misma cara blanca; busca esa vecindad en A.",
+    "fuente": "009_image255.png",
+    "figuraHint": "Net: 3 triángulos negros con base al blanco central (arriba/izq/der); 3 blancas. Correcta A."
+  },
+  {
+    "enunciado": "Selecciona el objeto en 3D correcto.\n\nCubo de referencia:\n• Superior: línea fina vertical centrada\n• Front-izq: barra negra gruesa vertical centrada\n• Front-der: X grande (dos diagonales)\n\nOpciones:\nA) idéntica al modelo (línea fina / barra / X)\nB) top barra H gruesa; FL X; FR diagonal simple\nC) top blanco; FL X; FR barra gruesa vertical\nD) top línea fina; FL cruz (+); FR X\n\nOpciones: A, B, C, D",
+    "respuesta": "C",
+    "pasos": "1) Símbolos del modelo: línea fina, barra gruesa, X (adyacentes barra↔X). 2) Descarta B (diagonal nueva) y D (cruz + nueva). 3) C es rotación: X pasa a la izq, barra a la der, tapa blanca (cara antes oculta). Atajo: gira 90° para que la X quede a la izq; la tapa debe cambiar → C.",
+    "fuente": "010_image260.png",
+    "figuraHint": "Referencia: top(línea V fina), FL(barra gruesa), FR(X). Correcta C: top blanco, FL X, FR barra."
+  },
+  {
+    "enunciado": "Selecciona el objeto en 3D correcto.\n\nDespliegue — fila de 4 + arriba y abajo del 2.º:\n• Fila: [blanco] — [triángulo negro punta a la der, base en borde izq] — [blanco] — [triángulo negro punta a la izq, base en borde der]\n• Arriba y abajo del 2.º: blancos\n(Los dos triángulos están separados por un blanco en la fila → caras opuestas.)\n\nOpciones:\nA) cara con patrón «pajarita» (dos triángulos en una sola cara) — no existe en el net\nB) dos triángulos visibles a la vez — imposible (son opuestos)\nC) solo un triángulo visible, orientación coherente con blancas adyacentes\nD) dos triángulos visibles — imposible\n\nOpciones: A, B, C, D",
+    "respuesta": "C",
+    "pasos": "1) Triángulos separados por un cuadrado → opuestos → nunca juntos. 2) Elimina B y D. 3) Elimina A (cara inventada). 4) Queda C. Atajo: opuestos = no se ven juntos; solo C muestra un triángulo.",
+    "fuente": "011_image254.png",
+    "figuraHint": "Net: blanco|△→|blanco|△← + blancos arriba/abajo del 2.º. Correcta C (un solo △)."
+  },
+  {
+    "enunciado": "Selecciona el objeto en 3D correcto.\n\nCubo de referencia:\n• Superior: punto negro cerca de la esquina trasera-derecha\n• Front-izq: línea horizontal cerca del borde superior + diagonal TL→BR\n• Front-der: línea vertical centrada\n\nOpciones A–C: rotaciones con punto y líneas en posiciones inconsistentes (punto mal colocado, símbolos nuevos tipo V, etc.).\nD) superior: línea H + diagonal (rotación de la cara FL del modelo); front-izq: punto en borde; front-der: diagonal\n\nOpciones: A, B, C, D",
+    "respuesta": "D",
+    "pasos": "1) Tres diseños: punto en esquina, (H+diag), línea V. 2) Descarta A–C por punto mal situado o caras inventadas. 3) D corresponde a rotar la cara (H+diag) hacia arriba y revelar el punto en un lateral. Atajo: sigue el punto de esquina; solo D lo coloca de forma coherente tras el giro.",
+    "fuente": "012_image264.png",
+    "figuraHint": "Referencia: top(punto esquina), FL(H+diag), FR(V). Correcta D."
+  },
+  {
+    "enunciado": "Selecciona el objeto en 3D correcto.\n\nCubo de referencia:\n• Superior: dos diagonales → 4 triángulos; el triángulo del borde trasero es negro\n• Front-izq: rejilla 2×2; cuadrante abajo-der negro\n• Front-der: blanco con punto negro en esquina arriba-der\n\nOpciones:\nA) top punto centro; FL 2×2 abajo-izq negro; FR una diagonal\nB) top punto centro; FL 4 triángulos con negro a la izq; FR blanco\nC) top blanco; FL línea V; FR punto no en esquina\nD) top punto en esquina; FL 4 triángulos con negro abajo; FR 2×2 con negro arriba-der\n\nOpciones: A, B, C, D",
+    "respuesta": "D",
+    "pasos": "1) Tres patrones reales: (4 triángulos con 1 negro), (2×2 con 1 negro), (punto en esquina). 2) A/B ponen el punto al centro; C inventa línea simple → descarte. 3) D reúne los tres diseños originales tras rotación. Atajo: descarta todo lo que no sea «punto en esquina + 2×2 + 4 triángulos».",
+    "fuente": "013_image259.png",
+    "figuraHint": "Referencia: top(4△, trasero negro), FL(2×2 abajo-der negro), FR(punto esquina). Correcta D."
+  },
+  {
+    "enunciado": "Selecciona el objeto en 3D correcto.\n\nDespliegue:\n• Arriba (sobre el 2.º de la fila): △ negro base arriba, punta abajo\n• Fila: [blanco] — [△ base abajo, punta arriba] — [△ base izq, punta der] — [△ base arriba, punta abajo]\n• Abajo (bajo el 2.º): blanco\n(4 caras con triángulo isósceles negro, 2 blancas.)\n\nOpciones A–C: distintas orientaciones de bases de triángulos.\nD) superior: △ base atrás; frente: △ base izq; izq: △ base abajo\n\nOpciones: A, B, C, D",
+    "respuesta": "D",
+    "pasos": "1) Toma el △ «punta arriba» (2.º de la fila) y el △ a su der (base izq) — comparten arista. 2) Coloca el 2.º como cara izq y el 3.º como frente: bases coinciden con D. 3) El △ superior del net, al plegarse como tapa, deja la base atrás. Atajo: verifica el vértice común de las tres caras visibles en D (colores/bases en cada esquina).",
+    "fuente": "014_image253.png",
+    "figuraHint": "Net: △arriba; fila blanco|△↑|△→|△↓; blanco abajo. Correcta D."
+  },
+  {
+    "enunciado": "Selecciona el objeto en 3D correcto.\n\nDespliegue cruz + cara extra:\n• Columna: [flecha →] / [círculo abierto ○] / [blanco]\n• Izq del ○: blanco; der del ○: blanco; extremo der: diana ⊙ (punto dentro de anillo)\n\nOpuestas: flecha ↔ blanco inferior; blanco izq ↔ blanco der; ○ ↔ ⊙.\n\nOpciones:\nA) superior: flecha ←; frente: ⊙; der: blanco\nB) superior: flecha →; frente blanco; ⊙ visible abajo\nC) superior: ○; frente blanco; ⊙ abajo (imposible: ○ y ⊙ opuestos)\nD) superior: flecha hacia atrás; frente y der blancos\n\nOpciones: A, B, C, D",
+    "respuesta": "A",
+    "pasos": "1) ○ y ⊙ son opuestos → no juntos (elimina C). 2) Si ⊙ va al frente (giro 180° respecto a ○ al frente), la flecha de la tapa pasa de → a ←. 3) Eso es exactamente A. Atajo: opuestos ○↔⊙; 180° invierte la flecha → A.",
+    "fuente": "015_image258.png",
+    "figuraHint": "Net: → / ○ / blanco; izq blanco; der blanco; extremo ⊙. Correcta A: ← arriba, ⊙ frente."
+  },
+  {
+    "enunciado": "Selecciona el objeto en 3D correcto.\n\nCubo de referencia:\n• Superior: dividida por una línea horizontal\n• Front-izq: X grande con punto negro en el triángulo izquierdo de la X\n• Front-der: línea horizontal con punto negro en la mitad superior\n\nOpciones:\nA) top H+punto izq; FL H+punto abajo; FR X con punto abajo\nB) top cruz (+) en 4 cuadrantes; FL línea V con punto abajo-izq; FR X con punto a la der\nC) top H+punto der; FL X con punto abajo; FR línea V\nD) top cruz (+); FL línea H; FR casi blanco con punto esquina\n\nOpciones: A, B, C, D",
+    "respuesta": "B",
+    "pasos": "1) Ancla: X con punto a un lado de la X, y caras con línea + punto. 2) Compara posición del punto dentro de la X en cada opción. 3) La UI marca B como la rotación válida. Atajo: descarta opciones donde el punto «salta» de sector dentro de la X o inventan caras sin el patrón del modelo.",
+    "fuente": "016_image263.png",
+    "figuraHint": "Referencia: top(línea H), FL(X+punto izq), FR(H+punto arriba). Correcta B."
+  }
+]

@@ -295,16 +295,11 @@ const diag = bank.tipos.find((t) => t.id === "razonamiento-diagramatico");
 const esp = bank.tipos.find((t) => t.id === "razonamiento-espacial");
 if (!diag || !esp) throw new Error("tipos faltantes");
 
-// Diagramático: usar scripts/rebuild-diagramatico.ts (único, progresivo).
-esp.descripcion =
-  "Espacio con figura: cubos, dados, caminos y vistas. Usa el dibujo + el atajo corto.";
-esp.items = esp.items.map(assignEspacial);
-
-const missingEsp = esp.items.filter((i) => !i.figura).length;
-writeFileSync(path, JSON.stringify(bank, null, 2) + "\n", "utf8");
+// Diagramático → scripts/rebuild-diagramatico.ts
+// Espacial → scripts/rebuild-espacial.ts
+// Este patch queda solo como referencia histórica de mapeos; no reescribe bancos.
 console.log({
   diagKept: diag.items.length,
-  esp: esp.items.length,
-  withFigEsp: esp.items.filter((i) => i.figura).length,
-  missingEsp,
+  espKept: esp.items.length,
+  note: "Usar rebuild-diagramatico.ts / rebuild-espacial.ts",
 });

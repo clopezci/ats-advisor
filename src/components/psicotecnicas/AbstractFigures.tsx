@@ -91,6 +91,98 @@ function ArrowUp({ x, y, rot = 0 }: { x: number; y: number; rot?: number }) {
   );
 }
 
+/** Desarrollo (net) de cubo: celdas en grilla col/fila. */
+function CubeNet({
+  cells,
+  size = 34,
+  ox = 40,
+  oy = 20,
+}: {
+  cells: Array<{ c: number; r: number; label?: string; fill?: string; ink?: string }>;
+  size?: number;
+  ox?: number;
+  oy?: number;
+}) {
+  return (
+    <g>
+      {cells.map((cell, i) => {
+        const x = ox + cell.c * size;
+        const y = oy + cell.r * size;
+        return (
+          <g key={i}>
+            <rect
+              x={x}
+              y={y}
+              width={size}
+              height={size}
+              fill={cell.fill || fill}
+              stroke={stroke}
+              strokeWidth="2"
+            />
+            {cell.label ? (
+              <text
+                x={x + size / 2}
+                y={y + size / 2 + 5}
+                textAnchor="middle"
+                fontSize={size > 30 ? 13 : 11}
+                fill={cell.ink || stroke}
+                fontWeight="700"
+              >
+                {cell.label}
+              </text>
+            ) : null}
+          </g>
+        );
+      })}
+    </g>
+  );
+}
+
+function DiceFace({ x, y, n, size = 56 }: { x: number; y: number; n: number; size?: number }) {
+  const s = size;
+  const dots: Record<number, Array<[number, number]>> = {
+    1: [[0.5, 0.5]],
+    2: [
+      [0.28, 0.28],
+      [0.72, 0.72],
+    ],
+    3: [
+      [0.28, 0.28],
+      [0.5, 0.5],
+      [0.72, 0.72],
+    ],
+    4: [
+      [0.28, 0.28],
+      [0.72, 0.28],
+      [0.28, 0.72],
+      [0.72, 0.72],
+    ],
+    5: [
+      [0.28, 0.28],
+      [0.72, 0.28],
+      [0.5, 0.5],
+      [0.28, 0.72],
+      [0.72, 0.72],
+    ],
+    6: [
+      [0.28, 0.25],
+      [0.72, 0.25],
+      [0.28, 0.5],
+      [0.72, 0.5],
+      [0.28, 0.75],
+      [0.72, 0.75],
+    ],
+  };
+  return (
+    <g>
+      <rect x={x} y={y} width={s} height={s} rx="6" fill={fill} stroke={stroke} strokeWidth="2.5" />
+      {(dots[n] || []).map(([px, py], i) => (
+        <circle key={i} cx={x + px * s} cy={y + py * s} r={s * 0.08} fill={stroke} />
+      ))}
+    </g>
+  );
+}
+
 function Gear({
   x,
   y,
@@ -1513,6 +1605,368 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
         <text x="285" y="65" fontSize="22" fill={accent}>
           ?
         </text>
+      </Frame>
+    ),
+  },
+  "esp-net-cruz-letras": {
+    caption: "Atajo: en línea recta, caras con 1 en medio suelen ser opuestas al plegar.",
+    node: (
+      <Frame caption="Dado desarmado (cruz)" w={260} h={220}>
+        <CubeNet
+          ox={70}
+          oy={15}
+          size={40}
+          cells={[
+            { c: 1, r: 0, label: "A", fill: "#ede9fe" },
+            { c: 0, r: 1, label: "B" },
+            { c: 1, r: 1, label: "C" },
+            { c: 2, r: 1, label: "D" },
+            { c: 1, r: 2, label: "E" },
+            { c: 1, r: 3, label: "F" },
+          ]}
+        />
+      </Frame>
+    ),
+  },
+  "esp-net-opuesta-a": {
+    caption: "Atajo: A—C—E en columna: A opuesta a E (C en el medio).",
+    node: (
+      <Frame caption="¿Opuesta a A?" w={240} h={220}>
+        <CubeNet
+          ox={60}
+          oy={15}
+          size={40}
+          cells={[
+            { c: 1, r: 0, label: "A", fill: "#ede9fe", ink: accent },
+            { c: 0, r: 1, label: "B" },
+            { c: 1, r: 1, label: "C" },
+            { c: 2, r: 1, label: "D" },
+            { c: 1, r: 2, label: "E" },
+            { c: 1, r: 3, label: "F" },
+          ]}
+        />
+      </Frame>
+    ),
+  },
+  "esp-net-invalida-2x2": {
+    caption: "Atajo: un bloque 2×2 en el desarrollo NO forma cubo (las caras se solapan).",
+    node: (
+      <Frame caption="¿Cuál NO forma cubo?" w={320} h={160}>
+        <text x="70" y="18" textAnchor="middle" fontSize="11" fill={muted}>
+          A (válida)
+        </text>
+        <CubeNet
+          ox={20}
+          oy={28}
+          size={28}
+          cells={[
+            { c: 1, r: 0 },
+            { c: 0, r: 1 },
+            { c: 1, r: 1 },
+            { c: 2, r: 1 },
+            { c: 1, r: 2 },
+            { c: 1, r: 3 },
+          ]}
+        />
+        <text x="220" y="18" textAnchor="middle" fontSize="11" fill={accent}>
+          B (inválida)
+        </text>
+        <CubeNet
+          ox={170}
+          oy={40}
+          size={28}
+          cells={[
+            { c: 0, r: 0, fill: "#fee2e2" },
+            { c: 1, r: 0, fill: "#fee2e2" },
+            { c: 0, r: 1, fill: "#fee2e2" },
+            { c: 1, r: 1, fill: "#fee2e2" },
+            { c: 2, r: 1 },
+            { c: 3, r: 1 },
+          ]}
+        />
+      </Frame>
+    ),
+  },
+  "esp-net-zigzag": {
+    caption: "Atajo: 6 caras unidas por lados; revisa que no haya solapes al plegar.",
+    node: (
+      <Frame caption="Desarrollo en Z" w={280} h={180}>
+        <CubeNet
+          ox={40}
+          oy={30}
+          size={36}
+          cells={[
+            { c: 0, r: 0, label: "1" },
+            { c: 1, r: 0, label: "2" },
+            { c: 1, r: 1, label: "3" },
+            { c: 2, r: 1, label: "4" },
+            { c: 2, r: 2, label: "5" },
+            { c: 3, r: 2, label: "6" },
+          ]}
+        />
+      </Frame>
+    ),
+  },
+  "esp-net-t": {
+    caption: "Atajo forma T: opuestos = caras con exactamente una en medio en línea recta.",
+    node: (
+      <Frame caption="Desarrollo en T" w={260} h={200}>
+        <CubeNet
+          ox={50}
+          oy={20}
+          size={38}
+          cells={[
+            { c: 0, r: 0, label: "P" },
+            { c: 1, r: 0, label: "Q", fill: "#ede9fe" },
+            { c: 2, r: 0, label: "R" },
+            { c: 1, r: 1, label: "S" },
+            { c: 1, r: 2, label: "T" },
+            { c: 1, r: 3, label: "U" },
+          ]}
+        />
+      </Frame>
+    ),
+  },
+  "esp-net-numeros": {
+    caption: "Atajo: en el net, opuestos no se tocan; en dado clásico además suman 7.",
+    node: (
+      <Frame caption="Net de dado (opuestos = 7)" w={260} h={220}>
+        <CubeNet
+          ox={70}
+          oy={15}
+          size={40}
+          cells={[
+            { c: 1, r: 0, label: "1" },
+            { c: 0, r: 1, label: "2" },
+            { c: 1, r: 1, label: "3" },
+            { c: 2, r: 1, label: "5" },
+            { c: 1, r: 2, label: "6", fill: "#ede9fe" },
+            { c: 1, r: 3, label: "4" },
+          ]}
+        />
+      </Frame>
+    ),
+  },
+  "esp-dado-abierto": {
+    caption: "Atajo: 3 caras visibles se tocan en un vértice; ninguna es opuesta a otra visible.",
+    node: (
+      <Frame caption="Dado: 3 caras visibles" w={260} h={180}>
+        <DiceFace x={90} y={30} n={1} size={70} />
+        <DiceFace x={40} y={90} n={2} size={55} />
+        <DiceFace x={150} y={90} n={3} size={55} />
+        <text x={130} y={170} textAnchor="middle" fontSize="11" fill={muted}>
+          1 arriba · 2 y 3 laterales
+        </text>
+      </Frame>
+    ),
+  },
+  "esp-dado-opuesta-vista": {
+    caption: "Atajo: caras visibles nunca son opuestas entre sí; usa suma 7 para las ocultas.",
+    node: (
+      <Frame caption="Caras visibles 5, 3, 4" w={280} h={170}>
+        <DiceFace x={110} y={20} n={5} size={60} />
+        <DiceFace x={55} y={85} n={3} size={50} />
+        <DiceFace x={165} y={85} n={4} size={50} />
+      </Frame>
+    ),
+  },
+  "esp-cubo-pintado-2": {
+    caption: "Atajo n×n×n: cubitos con 1 cara = (n−2)² × 6.",
+    node: (
+      <Frame caption="Cubo 4×4×4 pintado" w={280} h={200}>
+        {[0, 1, 2, 3].map((r) =>
+          [0, 1, 2, 3].map((c) => {
+            const edge = r === 0 || r === 3 || c === 0 || c === 3;
+            const corner = (r === 0 || r === 3) && (c === 0 || c === 3);
+            return (
+              <rect
+                key={`${r}-${c}`}
+                x={70 + c * 32}
+                y={30 + r * 32}
+                width="28"
+                height="28"
+                fill={corner ? "#94a3b8" : edge ? "#cbd5e1" : accent}
+                stroke={stroke}
+                strokeWidth="1.5"
+              />
+            );
+          })
+        )}
+        <text x={140} y={175} textAnchor="middle" fontSize="11" fill={accent}>
+          morado ≈ zona de 1 cara
+        </text>
+      </Frame>
+    ),
+  },
+  "esp-cubo-pintado-0": {
+    caption: "Atajo: 0 caras pintadas = interior = (n−2)³.",
+    node: (
+      <Frame caption="Núcleo sin pintura" w={240} h={160}>
+        <rect x="50" y="30" width="140" height="100" fill="#e2e8f0" stroke={stroke} strokeWidth="2" />
+        <rect x="85" y="55" width="70" height="50" fill={accent} stroke={stroke} strokeWidth="2" />
+        <text x="120" y={145} textAnchor="middle" fontSize="11" fill={muted}>
+          interior
+        </text>
+      </Frame>
+    ),
+  },
+  "esp-vistas-orto": {
+    caption: "Atajo: planta = arriba; alzado = frente; perfil = lado.",
+    node: (
+      <Frame caption="Vistas" w={320} h={150}>
+        <rect x="30" y="40" width="50" height="50" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="55" y="120" textAnchor="middle" fontSize="11" fill={muted}>
+          frente
+        </text>
+        <ellipse cx="160" cy={65} rx="30" ry="30" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="160" y="120" textAnchor="middle" fontSize="11" fill={muted}>
+          arriba
+        </text>
+        <polygon points="260,35 290,90 230,90" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="260" y="120" textAnchor="middle" fontSize="11" fill={muted}>
+          lado
+        </text>
+      </Frame>
+    ),
+  },
+  "esp-estructura-cubos": {
+    caption: "Atajo: cuenta por capas; incluye cubos ocultos detrás.",
+    node: (
+      <Frame caption="Estructura de cubitos" w={260} h={180}>
+        <rect x="80" y="100" width="40" height="40" fill={fill} stroke={stroke} strokeWidth="2" />
+        <rect x="120" y="100" width="40" height="40" fill={fill} stroke={stroke} strokeWidth="2" />
+        <rect x="160" y="100" width="40" height="40" fill={fill} stroke={stroke} strokeWidth="2" />
+        <rect x="120" y="60" width="40" height="40" fill="#ede9fe" stroke={accent} strokeWidth="2" />
+        <rect x="120" y="20" width="40" height="40" fill="#ede9fe" stroke={accent} strokeWidth="2" />
+        <text x="130" y="165" textAnchor="middle" fontSize="11" fill={muted}>
+          base 3 + torre 2
+        </text>
+      </Frame>
+    ),
+  },
+  "esp-papel-agujeros": {
+    caption: "Atajo: cada doblez puede duplicar el agujero al desplegar.",
+    node: (
+      <Frame caption="Papel doblado + agujero" w={300} h={160}>
+        <rect x="30" y="30" width="90" height="90" fill={fill} stroke={stroke} strokeWidth="2" />
+        <line x1="30" y1="75" x2="120" y2="75" stroke={accent} strokeWidth="2" strokeDasharray="4 3" />
+        <circle cx="75" cy="55" r="8" fill="#ede9fe" stroke={accent} strokeWidth="2" />
+        <text x="75" y="140" textAnchor="middle" fontSize="11" fill={muted}>
+          1 doblez
+        </text>
+        <text x="160" y="80" fontSize="18" fill={accent}>
+          →
+        </text>
+        <rect x="190" y="30" width="90" height="90" fill={fill} stroke={stroke} strokeWidth="2" />
+        <circle cx="235" cy="55" r="8" fill="#ede9fe" stroke={accent} strokeWidth="2" />
+        <circle cx="235" cy="95" r="8" fill="#ede9fe" stroke={accent} strokeWidth="2" strokeDasharray="3 2" />
+        <text x="235" y="140" textAnchor="middle" fontSize="11" fill={muted}>
+          al abrir
+        </text>
+      </Frame>
+    ),
+  },
+  "esp-giro-objeto": {
+    caption: "Atajo: gira el objeto el ángulo pedido; no lo confundas con un espejo.",
+    node: (
+      <Frame caption="Giro 90° horario" w={300} h={150}>
+        <polygon points="50,40 90,40 90,100 50,100" fill={fill} stroke={stroke} strokeWidth="2" />
+        <polygon points="50,40 70,20 90,40" fill={accent} stroke={stroke} strokeWidth="2" />
+        <text x="130" y="75" fontSize="18" fill={accent}>
+          ⟳90°
+        </text>
+        <text x="220" y="80" fontSize="22" fill={accent}>
+          ?
+        </text>
+      </Frame>
+    ),
+  },
+  "esp-sombra": {
+    caption: "Atajo: la sombra es la proyección según la dirección de la luz.",
+    node: (
+      <Frame caption="Luz desde arriba" w={280} h={150}>
+        <polygon points="80,30 120,50 120,110 80,90" fill="#cbd5e1" stroke={stroke} strokeWidth="2" />
+        <polygon points="80,30 140,30 180,50 120,50" fill={fill} stroke={stroke} strokeWidth="2" />
+        <text x="200" y="40" fontSize="12" fill={accent}>
+          luz ↓
+        </text>
+        <rect x="90" y="120" width="80" height="18" fill="#ede9fe" stroke={accent} strokeWidth="2" />
+      </Frame>
+    ),
+  },
+  "esp-net-letra": {
+    caption: "Atajo: al plegar, respeta la orientación de cada letra en su cara.",
+    node: (
+      <Frame caption="Net F/L/U/R/B/D" w={260} h={200}>
+        <CubeNet
+          ox={70}
+          oy={20}
+          size={38}
+          cells={[
+            { c: 1, r: 0, label: "F" },
+            { c: 0, r: 1, label: "L" },
+            { c: 1, r: 1, label: "U" },
+            { c: 2, r: 1, label: "R" },
+            { c: 1, r: 2, label: "B" },
+            { c: 1, r: 3, label: "D" },
+          ]}
+        />
+      </Frame>
+    ),
+  },
+  "esp-net-cinco-linea": {
+    caption: "Atajo: 5+ cuadrados en una sola fila recta → no forma cubo.",
+    node: (
+      <Frame caption="Fila demasiado larga" w={320} h={120}>
+        <CubeNet
+          ox={20}
+          oy={35}
+          size={32}
+          cells={[
+            { c: 0, r: 0, fill: "#fee2e2" },
+            { c: 1, r: 0, fill: "#fee2e2" },
+            { c: 2, r: 0, fill: "#fee2e2" },
+            { c: 3, r: 0, fill: "#fee2e2" },
+            { c: 4, r: 0, fill: "#fee2e2" },
+            { c: 2, r: 1 },
+          ]}
+        />
+      </Frame>
+    ),
+  },
+  "esp-dado-suma7": {
+    caption: "Atajo clásico: 1↔6, 2↔5, 3↔4 (suman 7).",
+    node: (
+      <Frame caption="Pares opuestos del dado" w={300} h={140}>
+        <DiceFace x={30} y={40} n={1} size={50} />
+        <text x="95" y="75" fontSize="16" fill={accent}>
+          ↔
+        </text>
+        <DiceFace x={120} y={40} n={6} size={50} />
+        <DiceFace x={200} y={40} n={3} size={50} />
+        <text x="265" y="75" fontSize="16" fill={accent}>
+          ↔4
+        </text>
+      </Frame>
+    ),
+  },
+  "esp-net-opuesta-q": {
+    caption: "Atajo T: Q—S—T—U en columna; Q opuesta a T (una en medio: S).",
+    node: (
+      <Frame caption="Opuesta a Q" w={260} h={200}>
+        <CubeNet
+          ox={50}
+          oy={20}
+          size={38}
+          cells={[
+            { c: 0, r: 0, label: "P" },
+            { c: 1, r: 0, label: "Q", fill: "#ede9fe", ink: accent },
+            { c: 2, r: 0, label: "R" },
+            { c: 1, r: 1, label: "S" },
+            { c: 1, r: 2, label: "T" },
+            { c: 1, r: 3, label: "U" },
+          ]}
+        />
       </Frame>
     ),
   },

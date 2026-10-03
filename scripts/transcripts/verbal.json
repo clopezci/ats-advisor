@@ -1,0 +1,277 @@
+[
+  {
+    "enunciado": "Una feromona es una molécula señalizadora que transfiere mensajes entre individuos de la misma especie. Las señales entre las diferentes especies se llaman allelomonas y se pueden dividir en alomonas y kairomones. Las feromonas y las alelomonas se disponen bajo semióticos. Semiquímicos son los productos químicos que organizan la transmisión de información entre diferentes tipos de organismos. Las abejas melíferas liberan isopentilacetato como agresión cuando su colmena está en peligro. De esta manera las abejas obreras pueden preparar un ataque en cuanto detectan un intruso. El humo puede anular su sensibilidad a esta feromona de la agresión, de modo que el apicultor pueda entrar con seguridad al panal de abejas sin ser picado.\n\nPregunta: ¿Puedes calmar una abeja al soplarle humo de cigarrillo directamente?\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "C) No se puede determinar",
+    "pasos": [
+      "Localizar en el texto la mención al humo: anula la sensibilidad a la feromona de agresión y permite al apicultor entrar sin ser picado.",
+      "Comparar con la pregunta: introduce «humo de cigarrillo» y «soplarle directamente», detalles que el pasaje no menciona.",
+      "El texto habla de humo en general y de seguridad del apicultor, no de calmar a una abeja soplándole cigarrillo.",
+      "Atajo: si la premisa añade especificaciones ausentes en el texto (tipo de humo, forma de aplicar), marca «No se puede determinar»."
+    ],
+    "fuente": "Razonamiento_verbal/001_image378.png"
+  },
+  {
+    "enunciado": "Un texto puede tener tres objetivos diferentes. Un texto puede ser persuasivo, instructivo o informativo. Estos objetivos están estrechamente relacionados con los géneros: cada objetivo de un texto pertenece a un género diferente. Los textos informativos, por ejemplo, incluyen los géneros de artículos periodísticos y textos educativos. Cada género tiene sus propias convenciones con respecto al contenido, estilo, estructura y diseño del texto. Estas convenciones forman una cierta expectativa de un texto y nos ayudan a procesar textos también. Cuando se está preparando un texto, hay varios niveles de creación de un modelo mental dependiendo del código de la superficie, la base de texto y el modelo de situación. Otra característica importante para el procesamiento de un texto es su coherencia. Sin coherencia, un texto no tiene sentido lógico.\n\nPregunta: Las convenciones nos facilitan procesar un texto.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "A) Verdadero",
+    "pasos": [
+      "Buscar la palabra clave «convenciones» en el pasaje.",
+      "Leer la oración: «Estas convenciones… nos ayudan a procesar textos también».",
+      "Relacionar «ayudan a procesar» con «facilitan procesar»: mismo sentido que la afirmación.",
+      "Atajo: localiza el término de la pregunta y comprueba si el verbo del texto (ayudan) equivale al de la afirmación (facilitan)."
+    ],
+    "fuente": "Razonamiento_verbal/002_image383.png"
+  },
+  {
+    "enunciado": "Atenas es la capital y la ciudad más grande de Grecia. Atenas domina la región del Ática y es una de las ciudades más antiguas del mundo y en la que hubo la presencia humana más temprana alrededor de los milenios 11mo-7mo AC. Atenas clásica era una ciudad-estado de gran alcance que emergió junto con el desarrollo marítimo del puerto El Pireo. Un centro para las artes, el aprendizaje y la filosofía, hogar de la Academia de Platón y el Liceo de Aristóteles, es ampliamente conocido como la cuna de la civilización occidental y el lugar de nacimiento de la democracia, en gran parte debido a su impacto cultural y político en el continente europeo, particularmente por los romanos.\n\nEn los tiempos modernos, Atenas es una gran metrópoli cosmopolita y central para la vida económica, financiera, industrial, marítima, política y cultural en Grecia. En 2015, Atenas fue clasificada como la 29ª ciudad más rica del mundo por el poder adquisitivo y la 67ª más cara en un estudio de UBS. Atenas es reconocida como una ciudad global por su ubicación geo-estratégica y su importancia en el transporte marítimo, las finanzas, el comercio, los medios de comunicación, el entretenimiento, las artes, el comercio internacional, la cultura, la educación y el turismo. Es uno de los mayores centros económicos del sureste de Europa, con un gran sector financiero y su puerto El Pireo es el mayor puerto de pasajeros del mundo.\n\nPregunta: Atenas es la ciudad más antigua de la región del Ática.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "C) No se puede determinar",
+    "pasos": [
+      "Buscar datos de antigüedad: el texto dice que Atenas es «una de las ciudades más antiguas del mundo».",
+      "La afirmación exige el superlativo absoluto «la más antigua» dentro del Ática.",
+      "No hay comparación con otras ciudades de esa región; falta información.",
+      "Atajo: «una de las más…» en el texto ≠ «la más…» en la pregunta → indeterminado."
+    ],
+    "fuente": "Razonamiento_verbal/003_image388.png"
+  },
+  {
+    "enunciado": "\"Wie Van de Drie\" fue la versión holandesa del programa de televisión estadounidense \"To Tell The Truth\" y fue transmitido por RTL, entre otros en 1991 y 1994. El programa consistía en un panel de cuatro personalidades holandesas famosas. El programa se enfocaba en tres candidatos, que decían tener la misma profesión. Correspondía al panel adivinar quién era el verdadero candidato, haciendo preguntas inteligentes. Cada miembro del panel tenía un minuto para interrogar a los candidatos. Después de eso, los miembros del panel tenían que adivinar quién era el candidato real, sosteniendo un cartel con el número 1, 2 o 3. El verdadero candidato se levantaba, seguido por los otros candidatos, indicando su verdadero nombre y profesión real. La recompensa consistía en 400 f, y se compartía entre los tres candidatos. Cada vez que un miembro del panel adivinaba correctamente, el premio se reducía 100 f. Por lo tanto, era importante engañar al panel tanto como fuera posible.\n\nPregunta: El programa fue difundido por última vez en 1994.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "C) No se puede determinar",
+    "pasos": [
+      "Localizar fechas: se emitió «entre otros en 1991 y 1994».",
+      "La frase «entre otros» indica que puede haber más periodos no listados.",
+      "«Por última vez» exige que 1994 sea el cierre definitivo; el texto no lo afirma.",
+      "Atajo: fechas parciales + «entre otros» → no basta para «última vez»."
+    ],
+    "fuente": "Razonamiento_verbal/004_image373.png"
+  },
+  {
+    "enunciado": "Atenas es la capital y la ciudad más grande de Grecia. Atenas domina la región del Ática y es una de las ciudades más antiguas del mundo y en la que hubo la presencia humana más temprana alrededor de los milenios 11mo-7mo AC. Atenas clásica era una ciudad-estado de gran alcance que emergió junto con el desarrollo marítimo del puerto El Pireo. Un centro para las artes, el aprendizaje y la filosofía, hogar de la Academia de Platón y el Liceo de Aristóteles, es ampliamente conocido como la cuna de la civilización occidental y el lugar de nacimiento de la democracia, en gran parte debido a su impacto cultural y político en el continente europeo, particularmente por los romanos.\n\nEn los tiempos modernos, Atenas es una gran metrópoli cosmopolita y central para la vida económica, financiera, industrial, marítima, política y cultural en Grecia. En 2015, Atenas fue clasificada como la 29ª ciudad más rica del mundo por el poder adquisitivo y la 67ª más cara en un estudio de UBS. Atenas es reconocida como una ciudad global por su ubicación geo-estratégica y su importancia en el transporte marítimo, las finanzas, el comercio, los medios de comunicación, el entretenimiento, las artes, el comercio internacional, la cultura, la educación y el turismo. Es uno de los mayores centros económicos del sureste de Europa, con un gran sector financiero y su puerto El Pireo es el mayor puerto de pasajeros del mundo.\n\nPregunta: La filosofía se practicó por primera vez en Atenas.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "C) No se puede determinar",
+    "pasos": [
+      "El texto presenta a Atenas como centro de filosofía (Platón, Aristóteles).",
+      "«Por primera vez» exige primacía histórica frente a otras ciudades.",
+      "No hay fechas ni comparación que demuestren que allí nació la práctica filosófica.",
+      "Atajo: centro/cuna cultural ≠ prueba de «primera vez» → indeterminado."
+    ],
+    "fuente": "Razonamiento_verbal/005_image391.png"
+  },
+  {
+    "enunciado": "Una feromona es una molécula señalizadora que transfiere mensajes entre individuos de la misma especie. Las señales entre las diferentes especies se llaman allelomonas y se pueden dividir en alomonas y kairomones. Las feromonas y las alelomonas se disponen bajo semióticos. Semiquímicos son los productos químicos que organizan la transmisión de información entre diferentes tipos de organismos. Las abejas melíferas liberan isopentilacetato como agresión cuando su colmena está en peligro. De esta manera las abejas obreras pueden preparar un ataque en cuanto detectan un intruso. El humo puede anular su sensibilidad a esta feromona de la agresión, de modo que el apicultor pueda entrar con seguridad al panal de abejas sin ser picado.\n\nPregunta: Las feromonas pueden transferir información a cualquier tipo de especie.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "B) Falso",
+    "pasos": [
+      "Definición del texto: feromona = mensajes entre individuos de la misma especie.",
+      "Señales entre especies distintas se llaman allelomonas, no feromonas.",
+      "«Cualquier tipo de especie» contradice «misma especie».",
+      "Atajo: si el texto acota el alcance («misma especie») y la pregunta lo amplía a todos, es Falso."
+    ],
+    "fuente": "Razonamiento_verbal/006_image377.png"
+  },
+  {
+    "enunciado": "Un texto puede tener tres objetivos diferentes. Un texto puede ser persuasivo, instructivo o informativo. Estos objetivos están estrechamente relacionados con los géneros: cada objetivo de un texto pertenece a un género diferente. Los textos informativos, por ejemplo, incluyen los géneros de artículos periodísticos y textos educativos. Cada género tiene sus propias convenciones con respecto al contenido, estilo, estructura y diseño del texto. Estas convenciones forman una cierta expectativa de un texto y nos ayudan a procesar textos también. Cuando se está preparando un texto, hay varios niveles de creación de un modelo mental dependiendo del código de la superficie, la base de texto y el modelo de situación. Otra característica importante para el procesamiento de un texto es su coherencia. Sin coherencia, un texto no tiene sentido lógico.\n\nPregunta: Uno de los modelos mentales es la coherencia.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "B) Falso",
+    "pasos": [
+      "Listar los niveles del modelo mental: código de la superficie, base de texto y modelo de situación.",
+      "La coherencia aparece después como «otra característica» del procesamiento, no como modelo mental.",
+      "Por tanto, la afirmación identifica mal la coherencia.",
+      "Atajo: busca la enumeración tras «modelo mental» y comprueba si «coherencia» está en esa lista."
+    ],
+    "fuente": "Razonamiento_verbal/007_image382.png"
+  },
+  {
+    "enunciado": "Cuando se trata de la televisión, la distinción clásica entre lo intelectual y lo popular no parece tener mucho sentido. Esta clasificación jerárquica del gusto parece perder gran parte de su validez ante la fragmentada y ecléctica mezcla de información, entretenimiento, arte, juego y comercio de la televisión. La mayor parte de la oferta de la televisión consiste en lo que ha subsumido generalmente bajo el título de la cultura popular, géneros del ocio tales como comedia, telenovelas, música pop o deportes. Hay una tendencia, tanto en el sentido común como en el pensamiento académico, a descalificar a todo el medio bajo y popular. Un ejemplo llamativo, tanto del bajo estatus de la televisión como del prejuicio (académico) contra el medio, se puede encontrar en \"Distinción\" de Pierre Bourdieu, probablemente el trabajo más influyente sobre las jerarquías del gusto, que describe las diferencias gustativas entre las clases alta, media y obrera en Francia. Una figura central del libro muestra la relación entre el gusto, el capital económico (riqueza) y el capital cultural (educación). En esta figura, los periódicos, la música y los actores de la película se mencionan individualmente y ocupan posiciones muy diferentes. Sin embargo, no hay programas de televisión. En su lugar, sólo el medio está en la figura: cerca de las patatas fritas, los deportes, la pesca y el vino tinto ordinario, y muy por debajo de otros entretenimientos populares como ferias de diversión, historias de aventuras e historias de amor.\n\nPregunta: Los entretenimientos populares tales como ferias de diversión, historias de aventura e historias de amor pertenecen a la cultura intelectual.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "B) Falso",
+    "pasos": [
+      "Localizar al final del pasaje las «ferias de diversión, historias de aventuras e historias de amor».",
+      "El texto las etiqueta explícitamente como «entretenimientos populares».",
+      "La pregunta las sitúa en la «cultura intelectual», lo opuesto a esa etiqueta.",
+      "Atajo: antónimo popular vs. intelectual en la misma frase del texto → Falso."
+    ],
+    "fuente": "Razonamiento_verbal/008_image387.png"
+  },
+  {
+    "enunciado": "El edificio Empire State es un rascacielos de 102 pisos situado en la parte central de Manhattan, Nueva York, en la Quinta Avenida, entre las calles 33 y 34. Su nombre se deriva del apodo de Nueva York, el Empire State (Estado Imperio en español). Se mantuvo como el edificio más alto del mundo durante casi 40 años, desde su finalización a principios de 1931 hasta cuando se edificó la cima de la Torre Norte del World Trade Center original a finales de 1970. Al ser medida por la altura del pináculo, es el cuarto edificio más alto de los Estados Unidos. El Empire State Building es generalmente considerado como un icono cultural estadounidense. Está diseñado en el distintivo estilo Art Deco y fue nombrado como una de las Siete Maravillas del Mundo Moderno por la Sociedad Americana de Ingenieros Civiles. William F. Lamb diseñó el Empire State Building. El proyecto involucró a 3,400 trabajadores, en su mayoría inmigrantes de Europa, junto con cientos de trabajadores conocidos como \"Mohawk ironworkers\". Según las cuentas oficiales, cinco trabajadores murieron durante la construcción. La construcción fue parte de una intensa competencia en Nueva York por el título del \"Edificio más alto del mundo\".\n\nPregunta: El Empire State Building es una de las Siete Maravillas del Mundo.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "B) Falso",
+    "pasos": [
+      "El texto dice «Siete Maravillas del Mundo Moderno», no «del Mundo» a secas.",
+      "Omite el calificativo «Moderno», que cambia la categoría.",
+      "Por precisión literal del pasaje, la afirmación es falsa.",
+      "Atajo: si la pregunta suelta un adjetivo clave del texto («Moderno»), suele ser trampa → Falso."
+    ],
+    "fuente": "Razonamiento_verbal/009_image395.png"
+  },
+  {
+    "enunciado": "\"Wie Van de Drie\" fue la versión holandesa del programa de televisión estadounidense \"To Tell The Truth\" y fue transmitido por RTL, entre otros en 1991 y 1994. El programa consistía en un panel de cuatro personalidades holandesas famosas. El programa se enfocaba en tres candidatos, que decían tener la misma profesión. Correspondía al panel adivinar quién era el verdadero candidato, haciendo preguntas inteligentes. Cada miembro del panel tenía un minuto para interrogar a los candidatos. Después de eso, los miembros del panel tenían que adivinar quién era el candidato real, sosteniendo un cartel con el número 1, 2 o 3. El verdadero candidato se levantaba, seguido por los otros candidatos, indicando su verdadero nombre y profesión real. La recompensa consistía en 400 f, y se compartía entre los tres candidatos. Cada vez que un miembro del panel adivinaba correctamente, el premio se reducía 100 f. Por lo tanto, era importante engañar al panel tanto como fuera posible.\n\nPregunta: \"Wie van de Drie\" fue transmitido por Radio Verónica.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "C) No se puede determinar",
+    "pasos": [
+      "El texto nombra a RTL y añade «entre otros», sin listar todos los medios.",
+      "«Radio Verónica» no aparece en el pasaje.",
+      "Por «entre otros» no se puede afirmar ni negar que también emitiera allí.",
+      "Atajo: medio concreto no citado + lista abierta («entre otros») → indeterminado."
+    ],
+    "fuente": "Razonamiento_verbal/010_image372.png"
+  },
+  {
+    "enunciado": "Cuando se trata de la televisión, la distinción clásica entre lo intelectual y lo popular no parece tener mucho sentido. Esta clasificación jerárquica del gusto parece perder gran parte de su validez ante la fragmentada y ecléctica mezcla de información, entretenimiento, arte, juego y comercio de la televisión. La mayor parte de la oferta de la televisión consiste en lo que ha subsumido generalmente bajo el título de la cultura popular, géneros del ocio tales como comedia, telenovelas, música pop o deportes. Hay una tendencia, tanto en el sentido común como en el pensamiento académico, a descalificar a todo el medio bajo y popular. Un ejemplo llamativo, tanto del bajo estatus de la televisión como del prejuicio (académico) contra el medio, se puede encontrar en \"Distinción\" de Pierre Bourdieu, probablemente el trabajo más influyente sobre las jerarquías del gusto, que describe las diferencias gustativas entre las clases alta, media y obrera en Francia. Una figura central del libro muestra la relación entre el gusto, el capital económico (riqueza) y el capital cultural (educación). En esta figura, los periódicos, la música y los actores de la película se mencionan individualmente y ocupan posiciones muy diferentes. Sin embargo, no hay programas de televisión. En su lugar, sólo el medio está en la figura: cerca de las patatas fritas, los deportes, la pesca y el vino tinto ordinario, y muy por debajo de otros entretenimientos populares como ferias de diversión, historias de aventuras e historias de amor.\n\nPregunta: \"Distinción\" describe mejor quién mira qué tipo de programas de televisión.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "B) Falso",
+    "pasos": [
+      "Localizar la figura de Distinción en el texto.",
+      "El pasaje dice explícitamente que «no hay programas de televisión» en esa figura; solo el medio en bloque.",
+      "Por tanto, no describe quién mira qué tipo de programas.",
+      "Atajo: busca «programas de televisión» y la negación «no hay» → Falso."
+    ],
+    "fuente": "Razonamiento_verbal/011_image386.png"
+  },
+  {
+    "enunciado": "Atenas es la capital y la ciudad más grande de Grecia. Atenas domina la región del Ática y es una de las ciudades más antiguas del mundo y en la que hubo la presencia humana más temprana alrededor de los milenios 11mo-7mo AC. Atenas clásica era una ciudad-estado de gran alcance que emergió junto con el desarrollo marítimo del puerto El Pireo. Un centro para las artes, el aprendizaje y la filosofía, hogar de la Academia de Platón y el Liceo de Aristóteles, es ampliamente conocido como la cuna de la civilización occidental y el lugar de nacimiento de la democracia, en gran parte debido a su impacto cultural y político en el continente europeo, particularmente por los romanos.\n\nEn los tiempos modernos, Atenas es una gran metrópoli cosmopolita y central para la vida económica, financiera, industrial, marítima, política y cultural en Grecia. En 2015, Atenas fue clasificada como la 29ª ciudad más rica del mundo por el poder adquisitivo y la 67ª más cara en un estudio de UBS. Atenas es reconocida como una ciudad global por su ubicación geo-estratégica y su importancia en el transporte marítimo, las finanzas, el comercio, los medios de comunicación, el entretenimiento, las artes, el comercio internacional, la cultura, la educación y el turismo. Es uno de los mayores centros económicos del sureste de Europa, con un gran sector financiero y su puerto El Pireo es el mayor puerto de pasajeros del mundo.\n\nPregunta: Atenas era la ciudad más rica de Europa.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "C) No se puede determinar",
+    "pasos": [
+      "Datos económicos: 29ª más rica del mundo (2015) y centro importante del sureste de Europa.",
+      "Ningún dato afirma que fuera la más rica de Europa.",
+      "Sin ranking europeo no se puede confirmar ni refutar el superlativo.",
+      "Atajo: ranking mundial/regional ≠ «la más rica de Europa» → indeterminado."
+    ],
+    "fuente": "Razonamiento_verbal/012_image390.png"
+  },
+  {
+    "enunciado": "[PANTALLA DE INSTRUCCIONES — sin ítem de pregunta]\n\nEn esta prueba de razonamiento verbal, usualmente se proporciona un pasaje de texto seguido de declaraciones. Tienes que responder si estas declaraciones son verdaderas, falsas o no se puede saber.\n\nVerdadero: La afirmación sigue lógicamente la información contenida en el pasaje.\nFalso: La declaración es lógicamente falsa de la información contenida en el pasaje.\nNo se puede saber: No se puede determinar si la declaración es verdadera o falsa ya que el texto no lo menciona o se necesita más información para determinarlo.\n\nRecuerda que tienes que basar tus respuestas sólo en la información dada en el texto.\n\nIMPORTANTE: El test de razonamiento verbal está compuesto por 12 preguntas, y tendrás 1 minuto por pregunta. Si no sabes la respuesta, déjala y regresa si tienes tiempo. Puedes enviar la prueba en cualquier momento; si se acaba el tiempo se envía automáticamente.\n\nEl test empezará en la siguiente pantalla.",
+    "respuesta": "N/A",
+    "pasos": [
+      "Esta captura no es un ejercicio: es la pantalla de reglas del test.",
+      "Define las tres opciones: Verdadero, Falso y No se puede saber/determinar.",
+      "Indica 12 preguntas y 1 minuto por pregunta.",
+      "Atajo: ignorar esta imagen al armar el banco de ítems; solo sirve como metadato del formato."
+    ],
+    "fuente": "Razonamiento_verbal/013_image371.png"
+  },
+  {
+    "enunciado": "Una feromona es una molécula señalizadora que transfiere mensajes entre individuos de la misma especie. Las señales entre las diferentes especies se llaman allelomonas y se pueden dividir en alomonas y kairomones. Las feromonas y las alelomonas se disponen bajo semióticos. Semiquímicos son los productos químicos que organizan la transmisión de información entre diferentes tipos de organismos. Las abejas melíferas liberan isopentilacetato como agresión cuando su colmena está en peligro. De esta manera las abejas obreras pueden preparar un ataque en cuanto detectan un intruso. El humo puede anular su sensibilidad a esta feromona de la agresión, de modo que el apicultor pueda entrar con seguridad al panal de abejas sin ser picado.\n\nPregunta: Las abejas melíferas transfieren las feromonas cuando su colmena está en peligro.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "A) Verdadero",
+    "pasos": [
+      "Frase clave: liberan isopentilacetato como agresión cuando la colmena está en peligro.",
+      "El isopentilacetato se presenta como feromona de agresión (señal entre la misma especie).",
+      "Liberar esa feromona en peligro equivale a transferir el mensaje feromonal.",
+      "Atajo: une «abejas» + «peligro» + «liberan… feromona» → Verdadero."
+    ],
+    "fuente": "Razonamiento_verbal/014_image376.png"
+  },
+  {
+    "enunciado": "Un texto puede tener tres objetivos diferentes. Un texto puede ser persuasivo, instructivo o informativo. Estos objetivos están estrechamente relacionados con los géneros: cada objetivo de un texto pertenece a un género diferente. Los textos informativos, por ejemplo, incluyen los géneros de artículos periodísticos y textos educativos. Cada género tiene sus propias convenciones con respecto al contenido, estilo, estructura y diseño del texto. Estas convenciones forman una cierta expectativa de un texto y nos ayudan a procesar textos también. Cuando se está preparando un texto, hay varios niveles de creación de un modelo mental dependiendo del código de la superficie, la base de texto y el modelo de situación. Otra característica importante para el procesamiento de un texto es su coherencia. Sin coherencia, un texto no tiene sentido lógico.\n\nPregunta: Un género puede contener múltiples objetivos de texto.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "C) No se puede determinar",
+    "pasos": [
+      "El texto dice que cada objetivo pertenece a un género diferente (relación objetivo → género).",
+      "No afirma ni niega la relación inversa: un género con varios objetivos.",
+      "Falta información para decidir.",
+      "Atajo: si solo hay sentido unidireccional y la pregunta pide el inverso, → indeterminado."
+    ],
+    "fuente": "Razonamiento_verbal/015_image381.png"
+  },
+  {
+    "enunciado": "El edificio Empire State es un rascacielos de 102 pisos situado en la parte central de Manhattan, Nueva York, en la Quinta Avenida, entre las calles 33 y 34. Su nombre se deriva del apodo de Nueva York, el Empire State (Estado Imperio en español). Se mantuvo como el edificio más alto del mundo durante casi 40 años, desde su finalización a principios de 1931 hasta cuando se edificó la cima de la Torre Norte del World Trade Center original a finales de 1970. Al ser medida por la altura del pináculo, es el cuarto edificio más alto de los Estados Unidos. El Empire State Building es generalmente considerado como un icono cultural estadounidense. Está diseñado en el distintivo estilo Art Deco y fue nombrado como una de las Siete Maravillas del Mundo Moderno por la Sociedad Americana de Ingenieros Civiles. William F. Lamb diseñó el Empire State Building. El proyecto involucró a 3,400 trabajadores, en su mayoría inmigrantes de Europa, junto con cientos de trabajadores conocidos como \"Mohawk ironworkers\". Según las cuentas oficiales, cinco trabajadores murieron durante la construcción. La construcción fue parte de una intensa competencia en Nueva York por el título del \"Edificio más alto del mundo\".\n\nPregunta: El Empire State Building ganó la intensa competencia en Nueva York por el título de \"World's Tallest Building\".\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "A) Verdadero",
+    "pasos": [
+      "El texto menciona la intensa competencia en Nueva York por el edificio más alto del mundo.",
+      "También afirma que se mantuvo como el más alto del mundo casi 40 años desde 1931.",
+      "Quien ostentó ese título ganó esa competencia local.",
+      "Atajo: une «competencia» + «se mantuvo como el más alto» → Verdadero."
+    ],
+    "fuente": "Razonamiento_verbal/016_image394.png"
+  },
+  {
+    "enunciado": "\"Wie Van de Drie\" fue la versión holandesa del programa de televisión estadounidense \"To Tell The Truth\" y fue transmitido por RTL, entre otros en 1991 y 1994. El programa consistía en un panel de cuatro personalidades holandesas famosas. El programa se enfocaba en tres candidatos, que decían tener la misma profesión. Correspondía al panel adivinar quién era el verdadero candidato, haciendo preguntas inteligentes. Cada miembro del panel tenía un minuto para interrogar a los candidatos. Después de eso, los miembros del panel tenían que adivinar quién era el candidato real, sosteniendo un cartel con el número 1, 2 o 3. El verdadero candidato se levantaba, seguido por los otros candidatos, indicando su verdadero nombre y profesión real. La recompensa consistía en 400 f, y se compartía entre los tres candidatos. Cada vez que un miembro del panel adivinaba correctamente, el premio se reducía 100 f. Por lo tanto, era importante engañar al panel tanto como fuera posible.\n\nPregunta: Los miembros del panel podían cuestionar a los candidatos durante 16 minutos durante el show.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "B) Falso",
+    "pasos": [
+      "Panel: 4 miembros; cada uno tiene 1 minuto para interrogar.",
+      "Total: 4 × 1 = 4 minutos, no 16.",
+      "La afirmación de 16 minutos contradice el cálculo del texto.",
+      "Atajo: 4 jueces × 1 min = 4 min; cualquier otro total es Falso."
+    ],
+    "fuente": "Razonamiento_verbal/017_image375.png"
+  },
+  {
+    "enunciado": "Cuando se trata de la televisión, la distinción clásica entre lo intelectual y lo popular no parece tener mucho sentido. Esta clasificación jerárquica del gusto parece perder gran parte de su validez ante la fragmentada y ecléctica mezcla de información, entretenimiento, arte, juego y comercio de la televisión. La mayor parte de la oferta de la televisión consiste en lo que ha subsumido generalmente bajo el título de la cultura popular, géneros del ocio tales como comedia, telenovelas, música pop o deportes. Hay una tendencia, tanto en el sentido común como en el pensamiento académico, a descalificar a todo el medio bajo y popular. Un ejemplo llamativo, tanto del bajo estatus de la televisión como del prejuicio (académico) contra el medio, se puede encontrar en \"Distinción\" de Pierre Bourdieu, probablemente el trabajo más influyente sobre las jerarquías del gusto, que describe las diferencias gustativas entre las clases alta, media y obrera en Francia. Una figura central del libro muestra la relación entre el gusto, el capital económico (riqueza) y el capital cultural (educación). En esta figura, los periódicos, la música y los actores de la película se mencionan individualmente y ocupan posiciones muy diferentes. Sin embargo, no hay programas de televisión. En su lugar, sólo el medio está en la figura: cerca de las patatas fritas, los deportes, la pesca y el vino tinto ordinario, y muy por debajo de otros entretenimientos populares como ferias de diversión, historias de aventuras e historias de amor.\n\nPregunta: Básicamente, todo el contenido televisivo gira en torno a la cultura popular.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "A) Verdadero",
+    "pasos": [
+      "Frase clave: «La mayor parte de la oferta de la televisión» cae bajo «cultura popular».",
+      "El inicio relativiza la distinción intelectual/popular en TV.",
+      "«Básicamente todo» resume esa idea central del pasaje.",
+      "Atajo: busca «mayor parte» + «cultura popular» → Verdadero."
+    ],
+    "fuente": "Razonamiento_verbal/018_image385.png"
+  },
+  {
+    "enunciado": "El edificio Empire State es un rascacielos de 102 pisos situado en la parte central de Manhattan, Nueva York, en la Quinta Avenida, entre las calles 33 y 34. Su nombre se deriva del apodo de Nueva York, el Empire State (Estado Imperio en español). Se mantuvo como el edificio más alto del mundo durante casi 40 años, desde su finalización a principios de 1931 hasta cuando se edificó la cima de la Torre Norte del World Trade Center original a finales de 1970. Al ser medida por la altura del pináculo, es el cuarto edificio más alto de los Estados Unidos. El Empire State Building es generalmente considerado como un icono cultural estadounidense. Está diseñado en el distintivo estilo Art Deco y fue nombrado como una de las Siete Maravillas del Mundo Moderno por la Sociedad Americana de Ingenieros Civiles. William F. Lamb diseñó el Empire State Building. El proyecto involucró a 3,400 trabajadores, en su mayoría inmigrantes de Europa, junto con cientos de trabajadores conocidos como \"Mohawk ironworkers\". Según las cuentas oficiales, cinco trabajadores murieron durante la construcción. La construcción fue parte de una intensa competencia en Nueva York por el título del \"Edificio más alto del mundo\".\n\nPregunta: El Empire State Building es considerado el icono de la ciudad de Nueva York.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "B) Falso",
+    "pasos": [
+      "El texto dice «icono cultural estadounidense», no «el icono de la ciudad de Nueva York».",
+      "Cambia el alcance (nacional vs. ciudad) y el artículo/superlativo implícito.",
+      "Por discrepancia con el pasaje, la afirmación es falsa.",
+      "Atajo: localiza «icono» y comprueba el adjetivo geográfico exacto."
+    ],
+    "fuente": "Razonamiento_verbal/019_image393.png"
+  },
+  {
+    "enunciado": "Un texto puede tener tres objetivos diferentes. Un texto puede ser persuasivo, instructivo o informativo. Estos objetivos están estrechamente relacionados con los géneros: cada objetivo de un texto pertenece a un género diferente. Los textos informativos, por ejemplo, incluyen los géneros de artículos periodísticos y textos educativos. Cada género tiene sus propias convenciones con respecto al contenido, estilo, estructura y diseño del texto. Estas convenciones forman una cierta expectativa de un texto y nos ayudan a procesar textos también. Cuando se está preparando un texto, hay varios niveles de creación de un modelo mental dependiendo del código de la superficie, la base de texto y el modelo de situación. Otra característica importante para el procesamiento de un texto es su coherencia. Sin coherencia, un texto no tiene sentido lógico.\n\nPregunta: Los géneros de texto son los mismos que los objetivos de texto.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "B) Falso",
+    "pasos": [
+      "El texto relaciona objetivos y géneros: «cada objetivo pertenece a un género diferente».",
+      "«Pertenecer a» implica conceptos distintos, no identidad.",
+      "Afirmar que «son los mismos» contradice esa relación.",
+      "Atajo: «pertenece a / relacionado con» ≠ «son los mismos» → Falso."
+    ],
+    "fuente": "Razonamiento_verbal/020_image380.png"
+  },
+  {
+    "enunciado": "Atenas es la capital y la ciudad más grande de Grecia. Atenas domina la región del Ática y es una de las ciudades más antiguas del mundo y en la que hubo la presencia humana más temprana alrededor de los milenios 11mo-7mo AC. Atenas clásica era una ciudad-estado de gran alcance que emergió junto con el desarrollo marítimo del puerto El Pireo. Un centro para las artes, el aprendizaje y la filosofía, hogar de la Academia de Platón y el Liceo de Aristóteles, es ampliamente conocido como la cuna de la civilización occidental y el lugar de nacimiento de la democracia, en gran parte debido a su impacto cultural y político en el continente europeo, particularmente por los romanos.\n\nEn los tiempos modernos, Atenas es una gran metrópoli cosmopolita y central para la vida económica, financiera, industrial, marítima, política y cultural en Grecia. En 2015, Atenas fue clasificada como la 29ª ciudad más rica del mundo por el poder adquisitivo y la 67ª más cara en un estudio de UBS. Atenas es reconocida como una ciudad global por su ubicación geo-estratégica y su importancia en el transporte marítimo, las finanzas, el comercio, los medios de comunicación, el entretenimiento, las artes, el comercio internacional, la cultura, la educación y el turismo. Es uno de los mayores centros económicos del sureste de Europa, con un gran sector financiero y su puerto El Pireo es el mayor puerto de pasajeros del mundo.\n\nPregunta: La Atenas clásica se hizo popular debido al desarrollo marítimo del puerto de Piraeus.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "B) Falso",
+    "pasos": [
+      "El puerto se asocia a que Atenas clásica «emergió» como ciudad-estado.",
+      "Su renombre («ampliamente conocido») se atribuye al impacto cultural y político / democracia.",
+      "La pregunta confunde causa del surgimiento con causa de la popularidad.",
+      "Atajo: busca «conocido»/fama y verifica la causa citada; no es el puerto → Falso."
+    ],
+    "fuente": "Razonamiento_verbal/021_image389.png"
+  },
+  {
+    "enunciado": "\"Wie Van de Drie\" fue la versión holandesa del programa de televisión estadounidense \"To Tell The Truth\" y fue transmitido por RTL, entre otros en 1991 y 1994. El programa consistía en un panel de cuatro personalidades holandesas famosas. El programa se enfocaba en tres candidatos, que decían tener la misma profesión. Correspondía al panel adivinar quién era el verdadero candidato, haciendo preguntas inteligentes. Cada miembro del panel tenía un minuto para interrogar a los candidatos. Después de eso, los miembros del panel tenían que adivinar quién era el candidato real, sosteniendo un cartel con el número 1, 2 o 3. El verdadero candidato se levantaba, seguido por los otros candidatos, indicando su verdadero nombre y profesión real. La recompensa consistía en 400 f, y se compartía entre los tres candidatos. Cada vez que un miembro del panel adivinaba correctamente, el premio se reducía 100 f. Por lo tanto, era importante engañar al panel tanto como fuera posible.\n\nPregunta: Había una posibilidad de que los candidatos fueran a casa sin dinero.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "A) Verdadero",
+    "pasos": [
+      "Premio inicial: 400 f; cada acierto del panel resta 100 f.",
+      "Hay 4 miembros del panel → máximo 4 × 100 = 400 f de reducción.",
+      "Si los cuatro aciertan, el premio llega a 0.",
+      "Atajo: 4 × 100 = 400 = premio total → pueden irse sin dinero → Verdadero."
+    ],
+    "fuente": "Razonamiento_verbal/022_image374.png"
+  },
+  {
+    "enunciado": "Una feromona es una molécula señalizadora que transfiere mensajes entre individuos de la misma especie. Las señales entre las diferentes especies se llaman allelomonas y se pueden dividir en alomonas y kairomones. Las feromonas y las alelomonas se disponen bajo semióticos. Semiquímicos son los productos químicos que organizan la transmisión de información entre diferentes tipos de organismos. Las abejas melíferas liberan isopentilacetato como agresión cuando su colmena está en peligro. De esta manera las abejas obreras pueden preparar un ataque en cuanto detectan un intruso. El humo puede anular su sensibilidad a esta feromona de la agresión, de modo que el apicultor pueda entrar con seguridad al panal de abejas sin ser picado.\n\nPregunta: El isopentilacetato es un químico semiótico.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "A) Verdadero",
+    "pasos": [
+      "El isopentilacetato es la feromona de agresión de las abejas.",
+      "El texto: feromonas (y alelomonas) se disponen bajo semióticos / semiquímicos.",
+      "Cadena: isopentilacetato → feromona → semiótico.",
+      "Atajo: sigue la jerarquía del texto (sustancia → feromona → semiótico) → Verdadero."
+    ],
+    "fuente": "Razonamiento_verbal/023_image379.png"
+  },
+  {
+    "enunciado": "Cuando se trata de la televisión, la distinción clásica entre lo intelectual y lo popular no parece tener mucho sentido. Esta clasificación jerárquica del gusto parece perder gran parte de su validez ante la fragmentada y ecléctica mezcla de información, entretenimiento, arte, juego y comercio de la televisión. La mayor parte de la oferta de la televisión consiste en lo que ha subsumido generalmente bajo el título de la cultura popular, géneros del ocio tales como comedia, telenovelas, música pop o deportes. Hay una tendencia, tanto en el sentido común como en el pensamiento académico, a descalificar a todo el medio bajo y popular. Un ejemplo llamativo, tanto del bajo estatus de la televisión como del prejuicio (académico) contra el medio, se puede encontrar en \"Distinción\" de Pierre Bourdieu, probablemente el trabajo más influyente sobre las jerarquías del gusto, que describe las diferencias gustativas entre las clases alta, media y obrera en Francia. Una figura central del libro muestra la relación entre el gusto, el capital económico (riqueza) y el capital cultural (educación). En esta figura, los periódicos, la música y los actores de la película se mencionan individualmente y ocupan posiciones muy diferentes. Sin embargo, no hay programas de televisión. En su lugar, sólo el medio está en la figura: cerca de las patatas fritas, los deportes, la pesca y el vino tinto ordinario, y muy por debajo de otros entretenimientos populares como ferias de diversión, historias de aventuras e historias de amor.\n\nPregunta: La distinción clásica entre lo intelectual y lo popular tiene sentido cuando se escucha la radio.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "C) No se puede determinar",
+    "pasos": [
+      "El pasaje habla solo de la televisión respecto a esa distinción.",
+      "La radio no se menciona en el texto.",
+      "No hay base para afirmar o negar el sentido de la distinción en radio.",
+      "Atajo: elemento nuevo no citado (radio) → No se puede determinar."
+    ],
+    "fuente": "Razonamiento_verbal/024_image384.png"
+  },
+  {
+    "enunciado": "El edificio Empire State es un rascacielos de 102 pisos situado en la parte central de Manhattan, Nueva York, en la Quinta Avenida, entre las calles 33 y 34. Su nombre se deriva del apodo de Nueva York, el Empire State (Estado Imperio en español). Se mantuvo como el edificio más alto del mundo durante casi 40 años, desde su finalización a principios de 1931 hasta cuando se edificó la cima de la Torre Norte del World Trade Center original a finales de 1970. Al ser medida por la altura del pináculo, es el cuarto edificio más alto de los Estados Unidos. El Empire State Building es generalmente considerado como un icono cultural estadounidense. Está diseñado en el distintivo estilo Art Deco y fue nombrado como una de las Siete Maravillas del Mundo Moderno por la Sociedad Americana de Ingenieros Civiles. William F. Lamb diseñó el Empire State Building. El proyecto involucró a 3,400 trabajadores, en su mayoría inmigrantes de Europa, junto con cientos de trabajadores conocidos como \"Mohawk ironworkers\". Según las cuentas oficiales, cinco trabajadores murieron durante la construcción. La construcción fue parte de una intensa competencia en Nueva York por el título del \"Edificio más alto del mundo\".\n\nPregunta: Desde los ataques en 2001 en las Torres del World Trade Center, el Empire State Building es de nuevo el edificio más alto de la ciudad de Nueva York.\n\nA) Verdadero\nB) Falso\nC) No se puede determinar",
+    "respuesta": "C) No se puede determinar",
+    "pasos": [
+      "El texto cubre altura mundial hasta 1970 y ranking actual de EE. UU. (4.º por pináculo).",
+      "No menciona los ataques de 2001 ni el ranking posterior en la ciudad de Nueva York.",
+      "Falta información para esa afirmación temporal/local.",
+      "Atajo: dato post-2001 / ranking NYC ausente → No se puede determinar."
+    ],
+    "fuente": "Razonamiento_verbal/025_image392.png"
+  }
+]

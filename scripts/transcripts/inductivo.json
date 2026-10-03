@@ -1,0 +1,277 @@
+[
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nSecuencia de balanzas con bloques verdes (conteo izq vs der):\n1) 2 vs 3\n2) 1 vs 1 (equilibrada)\n3) 2 vs 3\n4) 1 vs 4\n5) 2 vs 3\n\nA) 2 bloques izq, 3 der (pila)   B) 4 bloques izq, 3 der   C) 2 bloques izq, 2 der (equilibrada)   D) 4 bloques izq, 2 der",
+    "respuesta": "C) 2 bloques izq, 2 der (equilibrada)",
+    "pasos": [
+      "Separar posiciones impares y pares: las impares (1,3,5) mantienen 2 a la izquierda y 3 a la derecha.",
+      "La posición par 2 es una balanza equilibrada (1=1).",
+      "El siguiente cuadro es la posición 6 (par), así que debe volver a equilibrarse.",
+      "Atajo: busca la única opción equilibrada (mismo número a ambos lados) → C."
+    ],
+    "fuente": "001_image273.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nCada cuadro combina flechas onduladas y una cuadrícula 3×2 de círculos (algunos azules):\n1) 3 flechas arriba a la derecha; cuadrícula izquierda con fila inferior azul\n2) 4 flechas abajo a la izquierda; cuadrícula derecha con fila media azul\n3) 3 flechas arriba a la derecha; cuadrícula izquierda con fila media azul\n4) 4 flechas abajo a la izquierda; cuadrícula derecha con filas superior e inferior azules\n5) 3 flechas arriba a la derecha; cuadrícula izquierda con fila superior azul\n\nA) 4 flechas abajo izq; cuadrícula der con fila media azul   B) Cuadrícula izq; 4 flechas abajo der   C) 4 flechas abajo izq; cuadrícula der con extremos (arriba+abajo) azules   D) 4 flechas abajo izq; cuadrícula der con filas arriba+media azules",
+    "respuesta": "C) 4 flechas abajo izq; cuadrícula der con extremos (arriba+abajo) azules",
+    "pasos": [
+      "Las flechas alternan: 3 arriba a la derecha ↔ 4 abajo a la izquierda. Tras el cuadro 5 toca 4 abajo a la izquierda.",
+      "La cuadrícula alterna de lado; tras estar a la izquierda toca a la derecha.",
+      "En los cuadros pares, el azul pasa del centro (cuadro 2) a los extremos (cuadro 4); el siguiente par mantiene/repite extremos.",
+      "Atajo: descarta flechas a la derecha; entre A/C/D elige la que copia los extremos azules del último cuadro par → C."
+    ],
+    "fuente": "002_image278.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nFiguras negras sólidas:\n1) polígono irregular con muesca\n2) forma de cuña/diamante redondeado\n3) superposición de (1)+(2)\n4) semicírculo tipo «D» (lado plano izq)\n5) triángulo/cuña apuntando a la derecha\n\nA) Forma blanca con contorno tipo creciente   B) Superposición del semicírculo (4) + triángulo (5)   C) Superposición cuadrado + círculo   D) Solo el triángulo/cuña del cuadro 5",
+    "respuesta": "B) Superposición del semicírculo (4) + triángulo (5)",
+    "pasos": [
+      "Ver los tres primeros: el tercero es la unión/superposición de los dos anteriores.",
+      "Aplicar la misma regla a los cuadros 4 y 5 para obtener el sexto.",
+      "Buscar la figura que combine el semicírculo «D» con el triángulo.",
+      "Atajo: patrón A+B=C; la respuesta es la suma visual de las dos últimas → B."
+    ],
+    "fuente": "003_image283.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nEstrella naranja de 5 puntas con aguja negra interna y punto negro externo:\n1) Aguja abajo-izq; punto arriba\n2) Aguja arriba-izq; punto abajo-der\n3) Aguja arriba; punto arriba-izq\n4) Aguja arriba-der; punto arriba-der\n5) Aguja abajo-der; punto abajo-izq\n\nA) Aguja abajo-der, punto abajo-izq   B) Aguja abajo-der, punto arriba-izq   C) Aguja arriba, punto arriba   D) Aguja abajo-izq, punto arriba",
+    "respuesta": "D) Aguja abajo-izq, punto arriba",
+    "pasos": [
+      "La aguja avanza una punta en sentido horario cada cuadro: tras abajo-der vuelve a abajo-izq.",
+      "El punto externo avanza dos puntas en sentido horario (salta una) cada paso.",
+      "Desde abajo-izq, +2 puntas horarias lleva el punto a la punta superior.",
+      "Atajo: aguja completa ciclo de 5 → vuelve al inicio; el punto sigue saltando de 2 en 2 → D."
+    ],
+    "fuente": "004_image268.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nCada cuadro tiene: círculo partido (azul/blanco), punto negro y trazo corto:\n1) Círculo arriba-izq (azul izq vertical); punto centro-izq; trazo \\ abajo-der\n2) Círculo arriba-der (azul abajo horizontal); punto centro-izq; trazo | borde der\n3) Círculo abajo-izq (azul abajo horizontal); punto arriba-der; trazo / centro\n4) Círculo abajo-der (azul izq vertical); punto centro-izq; trazo - centro\n5) Círculo abajo-der (azul izq vertical); punto arriba-der; trazo \\ borde izq\n\nA) Círculo horizontal (azul abajo) abajo-izq; punto arriba-der; trazo | borde izq   B) Círculo horizontal (azul arriba) arriba-der; sin punto; trazo / borde izq   C) Círculo vertical (azul izq) abajo-der; punto centro-izq; trazo | borde izq   D) Círculo vertical (azul izq) abajo-izq; punto arriba-der; trazo | centro",
+    "respuesta": "A) Círculo horizontal (azul abajo) abajo-izq; punto arriba-der; trazo | borde izq",
+    "pasos": [
+      "El trazo corto rota 45° antihorario cada paso: tras \\ toca |.",
+      "El círculo cambia orientación cada dos cuadros (V,H,H,V,V…); el siguiente debe ser horizontal con azul abajo.",
+      "El punto alterna; tras arriba-der en el 5, la opción coherente lo mantiene arriba-der con el resto del patrón.",
+      "Atajo: fija primero la rotación del trazo a vertical (|); elimina B y opciones sin esa orientación → A."
+    ],
+    "fuente": "005_image286.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nFigura (triángulo/cuadrado) + círculo con línea interna:\n1) Triángulo centro-izq; círculo con / a la derecha\n2) Cuadrado abajo-izq; círculo con \\ arriba-centro\n3) Triángulo abajo-der; círculo con - arriba-izq\n4) Cuadrado arriba-der; círculo con | abajo-izq\n5) Triángulo arriba-izq; círculo con / abajo-der\n\nA) Cuadrado abajo-izq; círculo / abajo-der   B) Círculo | arriba-izq; triángulo abajo-der   C) Cuadrado centro-izq; círculo \\ centro-der   D) Cuadrado arriba-izq; círculo - abajo-der",
+    "respuesta": "C) Cuadrado centro-izq; círculo \\ centro-der",
+    "pasos": [
+      "Alternan triángulo y cuadrado; tras triángulo toca cuadrado.",
+      "La figura principal recorre el borde en sentido horario y vuelve al centro-izquierda.",
+      "El círculo va antihorario por el borde (tras abajo-der → centro-der) y la línea cicla /, \\, -, | → siguiente \\.",
+      "Atajo: posición de reinicio centro-izq + forma cuadrado solo coincide en C."
+    ],
+    "fuente": "006_image272.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nTexto + icono pixelado:\n1) !@#$! + flecha de 3 bloques\n2) @#$!@ + 2 bloques horizontales\n3) #$!@# + forma W de 5 bloques\n4) $!@#$ + diamante de 4 bloques\n5) !@#$! + flecha de 3 bloques (igual al 1)\n\nA) $!@#$ + diamante   B) @#$!@ + 2 bloques horizontales   C) @#$!@ + forma M (W invertida)   D) $!@#$ + 2 bloques horizontales",
+    "respuesta": "B) @#$!@ + 2 bloques horizontales",
+    "pasos": [
+      "El texto rota el primer carácter al final en cada paso.",
+      "Los iconos ciclan: flecha → 2 puntos → W → diamante → (repite).",
+      "El cuadro 5 = cuadro 1, así que el 6 debe = cuadro 2.",
+      "Atajo: si el 5 copia al 1, el siguiente copia al 2 → B."
+    ],
+    "fuente": "007_image277.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nTriángulo negro + círculo + cruz (+) (a veces en rojo):\n1) △ punta arriba medio-izq; ○ rojo medio-der; + rojo abajo-izq\n2) △ punta arriba arriba-izq; ○ hueco abajo-der; + hueco arriba-der\n3) △ punta abajo arriba-centro; ○ hueco abajo-centro; + hueco abajo-izq\n4) △ punta abajo arriba-der; ○ hueco abajo-izq; + hueco arriba-der\n5) △ punta abajo medio-der; ○ rojo medio-izq; + hueco abajo-izq\n\nA) ○ hueco arriba-izq; + hueco arriba-der; △ punta arriba abajo-der   B) △ punta arriba medio-izq; ○ hueco arriba-centro; + rojo arriba-der   C) ○ hueco arriba-izq; △ punta abajo abajo-der; + rojo abajo-der   D) ○ hueco arriba-izq; + rojo arriba-der; △ punta abajo abajo-der",
+    "respuesta": "D) ○ hueco arriba-izq; + rojo arriba-der; △ punta abajo abajo-der",
+    "pasos": [
+      "El triángulo recorre el borde en sentido horario; tras medio-der toca abajo-der (sigue apuntando abajo).",
+      "El círculo también avanza horario; tras medio-izq toca arriba-izq.",
+      "La cruz alterna abajo-izq ↔ arriba-der; tras abajo-izq toca arriba-der (y vuelve el rojo).",
+      "Atajo: solo una opción junta ○ arriba-izq + △ abajo (abajo-der) + cruz roja arriba-der → D."
+    ],
+    "fuente": "008_image282.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nFigura roja (puntas/lados) + arcos negros; rotan de posición:\n1) Roja 2 trazos )( a la izq; 6 arcos a la der\n2) Estrella roja 4 puntas arriba; 3 arcos abajo\n3) 5 arcos izq; triángulo rojo (3) der\n4) 2 arcos arriba; estrella roja 5 puntas abajo\n5) Estrella roja 4 puntas izq; 4 arcos der\n\nA) Estrella 4 puntas arriba, 4 arcos abajo   B) Estrella 6 puntas arriba, 2 arcos abajo   C) Estrella 6 puntas arriba, 3 arcos abajo   D) Estrella 6 puntas der, 2 arcos izq",
+    "respuesta": "B) Estrella 6 puntas arriba, 2 arcos abajo",
+    "pasos": [
+      "Puntas/lados de la figura roja: 2,4,3,5,4 con saltos +2,−1,+2,−1 → siguiente +2 → 6 puntas.",
+      "La pareja figura/arcos rota de orientación; tras izq/der toca arriba/abajo.",
+      "Arcos: 6,3,5,2,4 con −3,+2,−3,+2…; el siguiente −3 desde 4 sugiere pocos arcos (2 en B).",
+      "Atajo: estrella de 6 arriba aparece en B y C; elige la de menos arcos (2) → B."
+    ],
+    "fuente": "009_image290.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nDos anillos concéntricos con una brecha cada uno:\n1) Ambas brechas a las 3:00\n2) Exterior ~1:30; interior ~4:30\n3) Exterior 12:00; interior 6:00\n4) Exterior ~10:30; interior ~7:30\n5) Ambas brechas a las 9:00\n\nA) Exterior 12:00, interior 6:00   B) Exterior ~7:30 (abajo-izq), interior ~10:30 (arriba-izq)   C) Exterior 6:00, interior 12:00   D) Exterior 9:00, interior 3:00",
+    "respuesta": "B) Exterior ~7:30 (abajo-izq), interior ~10:30 (arriba-izq)",
+    "pasos": [
+      "Hay dos brechas independientes: anillo exterior e interior.",
+      "La exterior gira 45° antihorario cada cuadro; desde las 9:00 va a ~7:30.",
+      "La interior gira 45° horario cada cuadro; desde las 9:00 va a ~10:30.",
+      "Atajo: en el 5 están juntas a la izquierda; luego la exterior baja y la interior sube → B."
+    ],
+    "fuente": "010_image267.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nPentágono con diagonales (estrella interna) y punto rojo en un vértice; en cada paso se quita un lado del contorno exterior (antihorario):\n1) Contorno completo; punto en extremo der\n2) Falta lado arriba-der; punto arriba\n3) Faltan más lados superiores; punto abajo-der\n4) Casi sin contorno; punto otra vez en extremo der\n5) Solo queda borde izq; punto abajo-izq\n\nA) Sin bordes externos; punto abajo-der   B) Sin bordes externos; punto en extremo der   C) Con borde izq; punto en extremo der   D) Sin bordes externos; punto a la izq",
+    "respuesta": "B) Sin bordes externos; punto en extremo der",
+    "pasos": [
+      "Cada paso elimina un lado del contorno exterior; el sexto ya no debe tener bordes externos.",
+      "El punto rojo salta por vértices y en los cuadros 1 y 4 vuelve al extremo derecho.",
+      "Tras el 5 (abajo-izq), el ciclo lo lleva de nuevo al extremo derecho.",
+      "Atajo: elimina opciones con borde restante; elige punto en el extremo derecho → B."
+    ],
+    "fuente": "011_image281.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nFlores naranjas (centro + tallo) y brotes verdes de dos hojas:\n1) 1 flor\n2) 1 flor, 1 brote\n3) 2 flores, 1 brote\n4) 2 flores, 2 brotes\n5) 3 flores, 2 brotes\n\nA) 5 flores, 3 brotes   B) 3 flores, 3 brotes   C) 6 flores, 3 brotes   D) 3 flores, 2 brotes",
+    "respuesta": "B) 3 flores, 3 brotes",
+    "pasos": [
+      "Contar flores y brotes en cada cuadro.",
+      "En cada paso se añade exactamente un elemento, alternando brote y flor.",
+      "El último paso sumó una flor (3,2); el siguiente debe sumar un brote → (3,3).",
+      "Atajo: +1 brote / +1 flor alternados; tras +flor toca +brote → B."
+    ],
+    "fuente": "012_image285.png"
+  },
+  {
+    "enunciado": "DESCRIPCIÓN (pantalla de instrucciones, no es ítem de ejercicio).\n\nEn los ejercicios de razonamiento inductivo observarás una serie de figuras que representan una secuencia lógica de cinco recuadros. Tu tarea es decidir cuál completa la secuencia. Se miden habilidades de razonamiento conceptual y analítico.\n\nIMPORTANTE: El test tiene 12 preguntas y 15 minutos. Si no sabes o te demoras, déjala y regresa si queda tiempo. Puedes regresar o saltarte preguntas. Puedes enviar en cualquier momento; al acabar el tiempo se envía automáticamente. El test empieza en la siguiente pantalla.",
+    "respuesta": "",
+    "pasos": [
+      "No aplica: es la diapositiva de descripción/reglas del bloque.",
+      "Parámetros: 12 preguntas, 15 minutos.",
+      "Puedes saltar y volver a preguntas anteriores.",
+      "Atajo: saltar al primer ítem con figura y opciones A–D."
+    ],
+    "fuente": "013_image266.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nPentágono tipo «etiqueta» con 3 círculos internos (1 verde, 2 huecos):\n1) Punta SE; verde en esquina opuesta (ciclo pos. 1)\n2) Punta E; verde en otra esquina (ciclo pos. 2)\n3) Punta NE; verde en la punta (ciclo pos. 3)\n4) Punta N; verde vuelve a ciclo pos. 1\n5) Punta NW; verde en ciclo pos. 2\n\nA) Punta N, verde en la punta   B) Punta S, verde en la punta   C) Punta SE, verde en la punta   D) Punta Oeste (izq), verde en la punta",
+    "respuesta": "D) Punta Oeste (izq), verde en la punta",
+    "pasos": [
+      "La etiqueta rota 45° antihorario cada cuadro: SE→E→NE→N→NW → siguiente Oeste.",
+      "El punto verde cicla en 3 posiciones relativas: esquina1 → esquina2 → punta →…",
+      "Tras el cuadro 5 (posición 2 del ciclo) toca la punta.",
+      "Atajo: solo una opción apunta a la izquierda (Oeste) → D."
+    ],
+    "fuente": "014_image271.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nSímbolo tipo «pino/flecha ramificada» + grupo de 6 círculos (negros/blancos):\n1) Pino ↑ a la der; 3 negros abajo-izq (triángulo)\n2) Pino → a la izq; 4 negros a la der (columnas)\n3) Pino ↓ abajo; 5 negros arriba (filas)\n4) Pino ← a la der; 3 negros a la izq\n5) Pino ↑ arriba; 4 negros abajo (triángulo)\n\nA) Pino → a la izq; 5 negros a la der   B) Pino ↓; puntos arriba   C) Pino ↑; puntos abajo   D) Pino → a la der; 4 negros a la izq",
+    "respuesta": "A) Pino → a la izq; 5 negros a la der",
+    "pasos": [
+      "El pino gira 90° horario: ↑→→↓→←→↑; el siguiente apunta a la derecha (→).",
+      "Negros: 3,4,5,3,4…; el siguiente vuelve a 5 negros (1 blanco).",
+      "La disposición alterna vertical/horizontal; tras pino arriba toca layout horizontal (pino izq, puntos der).",
+      "Atajo: dirección → y 5 negros solo coinciden en A."
+    ],
+    "fuente": "015_image276.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nSilueta de piano de cola + notas musicales:\n1) Teclado abajo; 1 nota arriba-der\n2) Teclado izq; 2 notas arriba-der\n3) Teclado izq; 1 nota abajo-der\n4) Teclado arriba; 2 notas abajo-der\n5) Teclado arriba; 1 nota abajo-izq\n\nA) Teclado abajo; 1 nota abajo-izq   B) Teclado der; 1 nota abajo-izq   C) Teclado der; 2 notas abajo-izq   D) Teclado abajo; 2 notas abajo-der",
+    "respuesta": "C) Teclado der; 2 notas abajo-izq",
+    "pasos": [
+      "El piano gira 90° horario cada dos pasos; tras dos cuadros con teclado arriba toca teclado a la derecha.",
+      "Las notas cambian de esquina horario cada dos pasos; tras moverse a abajo-izq se quedan ahí un paso.",
+      "El número de notas alterna 1,2,1,2,1 → siguiente 2.",
+      "Atajo: teclado a la derecha + dos notas abajo-izq solo en C."
+    ],
+    "fuente": "016_image289.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nCírculo dividido en 8 sectores; bloque azul se mueve:\n1) 1 sector Norte\n2) 2 sectores NE+E\n3) 2 sectores E+SE\n4) 3 sectores SO+O+NO\n5) 2 sectores O+NO\n\nA) 3 sectores NO+O+SO   B) 3 sectores S+SO+O   C) 3 sectores O+NO+N   D) 4 sectores NO+O+SO+S",
+    "respuesta": "C) 3 sectores O+NO+N",
+    "pasos": [
+      "El bloque sombreado avanza en sentido horario.",
+      "Cantidad de sectores: 1,2,2,3,2 → el siguiente lógico es 3.",
+      "Desde O+NO, crecer horario añade el Norte → O, NO y N.",
+      "Atajo: borde delantero del azul avanza a la derecha/arriba; busca el trio que incluye Norte → C."
+    ],
+    "fuente": "017_image270.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nRejilla 2×3 de círculos; cada uno con un cuadrante azul (SI, II, SD, ID):\n1) Fila sup: SI, II, SD | Fila inf: ID, II, SD\n2) Fila sup: II, SD, ID | Fila inf: SI, SD, ID\n3) Fila sup: SD, ID, SI | Fila inf: II, ID, SI\n4) Fila sup: ID, SI, II | Fila inf: SD, SI, II\n5) Igual al cuadro 1\n\nA) Sup II,SD,SI | Inf SI,SD,ID   B) Sup II,SD,ID | Inf SI,SD,UL-errado   C) Sup II,SD,ID | Inf SI,SD,SI   D) Sup II,SD,ID | Inf SI,SD,ID (igual al cuadro 2)",
+    "respuesta": "D) Sup II,SD,ID | Inf SI,SD,ID (igual al cuadro 2)",
+    "pasos": [
+      "La serie se repite cada 4 cuadros; el 5 = el 1.",
+      "Por tanto el 6 debe ser igual al 2.",
+      "Cada círculo cicla SI→II→SD→ID en su propio desfase.",
+      "Atajo: 5=1 ⇒ siguiente =2; elige la copia exacta del segundo cuadro → D."
+    ],
+    "fuente": "018_image280.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nOctágono salmón con círculo blanco fijo arriba y punto negro unido por una cuerda:\n1) Punto en vértice arriba-izq (distancia 1)\n2) Punto abajo-der (distancia 3)\n3) Punto arriba-der (distancia 1)\n4) Punto abajo-izq (distancia 3)\n5) Punto medio-der (distancia 2)\n\nA) Punto en vértice inferior   B) Punto medio-der (repite 5)   C) Punto en el vértice superior (sobre el círculo blanco)   D) Punto arriba-der (repite 3)",
+    "respuesta": "C) Punto en el vértice superior (sobre el círculo blanco)",
+    "pasos": [
+      "El círculo blanco queda fijo arriba; solo se mueve el punto negro.",
+      "Distancias en aristas al vértice superior: 1,3,1,3,2…",
+      "Tras el par 1-3 y el 2 intermedio, el cierre natural es distancia 0 (coinciden).",
+      "Atajo: cuando el punto «cae» sobre el círculo blanco, es C."
+    ],
+    "fuente": "019_image288.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nCuadrícula 3×3 con dos cuadrados y un círculo mitad sombreada:\n1) Dos □ arriba-izq/centro; ○ sombreado der en arriba-der\n2) Dos □ arriba; ○ sombreado abajo en medio-der\n3) Dos □ en fila media; ○ sombreado izq en medio-der\n4) Dos □ abajo; ○ sombreado arriba en abajo-der\n5) ○ sombreado der en medio-izq; dos □ abajo\n\nA) Dos □ en fila media; ○ sombreado abajo medio-der   B) Sin □; ○ sombreado abajo en abajo-izq   C) Un □ abajo-centro; ○ sombreado abajo abajo-izq   D) Sin □; ○ sombreado izq en abajo-izq",
+    "respuesta": "B) Sin □; ○ sombreado abajo en abajo-izq",
+    "pasos": [
+      "Los dos cuadrados bajan de fila cada dos pasos; tras la fila inferior salen del tablero.",
+      "El círculo recorre el borde; tras medio-izq toca abajo-izq.",
+      "El sombreado rota 90° horario: der→abajo→izq→arriba→der → siguiente abajo.",
+      "Atajo: sombreado abajo + sin cuadrados → solo B."
+    ],
+    "fuente": "020_image275.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nCuadrículas 3×3 con celdas negras, grises y blancas. La serie oscila:\n1) Patrón A\n2) Patrón B (negros en (1,1),(2,2),(3,2))\n3) Patrón C\n4) Igual al patrón B\n5) Igual al patrón A\n\nA) Patrón nuevo (no aparece en la serie)   B) Patrón C   C) Patrón B (negros (1,1),(2,2),(3,2))   D) Otro patrón nuevo",
+    "respuesta": "C) Patrón B (negros (1,1),(2,2),(3,2))",
+    "pasos": [
+      "La secuencia es A-B-C-B-A (va y vuelve).",
+      "Tras A al final, el siguiente paso del rebote es B otra vez.",
+      "Busca entre las opciones la copia del cuadro 2/4.",
+      "Atajo: espejo A-B-C-B-A-(B) → C."
+    ],
+    "fuente": "021_image284.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nChevrones + figuras geométricas:\n1) 6 «<»; 3 figuras (cuadrado, círculo, rombo)\n2) 5 «>»; 3 figuras (triángulo, círculo, rombo)\n3) 4 «<»; 5 figuras\n4) 3 «>»; 6 figuras\n5) 2 «<»; 8 figuras (siempre 1 rombo)\n\nA) 0 flechas; 9 figuras (1 rombo)   B) 1 «>»; 9 figuras (2 rombos)   C) 1 «<»; 7 figuras   D) 2 «>»; 7 figuras",
+    "respuesta": "A) 0 flechas; 9 figuras (1 rombo)",
+    "pasos": [
+      "Las flechas bajan 6→5→4→3→2; el siguiente puede ser 1 o 0.",
+      "El total de figuras crece hacia 9 en el sexto cuadro.",
+      "En toda la serie hay exactamente 1 rombo; B rompe esa constante.",
+      "Atajo: 9 figuras + un solo rombo + sin flechas → A."
+    ],
+    "fuente": "022_image269.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nCuadro con dos barras horizontales centrales y círculo bicolor rojo/blanco en el borde:\n1) Círculo arriba-izq; rojo arriba (división horizontal)\n2) Círculo medio-izq (entre barras); rojo a la izq (división vertical)\n3) Círculo arriba-der; rojo arriba\n4) Círculo medio-der; rojo arriba\n5) Círculo abajo-der; rojo abajo\n\nA) Círculo abajo-der; rojo abajo (igual al 5)   B) Círculo abajo-centro (bajo las barras); rojo a la izq   C) Círculo abajo-izq; rojo arriba   D) Círculo medio-der; rojo abajo",
+    "respuesta": "B) Círculo abajo-centro (bajo las barras); rojo a la izq",
+    "pasos": [
+      "El círculo recorre el perímetro: baja por la izq y luego por la der.",
+      "Tras la esquina abajo-der, el avance natural es hacia el centro de la base.",
+      "Al pasar a esa posición, el rojo gira a la izquierda (división vertical).",
+      "Atajo: sigue el borde; después de la esquina der solo avanza el centro inferior → B."
+    ],
+    "fuente": "023_image274.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nTres cápsulas diagonales (pequeña arriba-izq, central larga, pequeña abajo-der):\n1) Pequeñas: mitad inferior negra; central: ambos extremos negros\n2) Pequeñas: mitad superior negra; central: tramo medio negro\n3) Pequeñas: mitad inferior negra; central: solo extremo inferior negro\n4) Sup-izq: mitad superior negra; central e inferior blancas\n5) Pequeñas: mitad inferior negra; central: solo extremo superior negro\n\nA) Pequeñas arriba negras; central con extremos negros   B) Pequeñas abajo negras; central medio negro   C) Pequeñas abajo negras; central extremo inferior negro   D) Sup-izq arriba negra; resto blanco (como el cuadro 4)",
+    "respuesta": "D) Sup-izq arriba negra; resto blanco (como el cuadro 4)",
+    "pasos": [
+      "Impares (1,3,5): pequeñas con base negra; la central va «apagando» extremos.",
+      "Pares (2,4): pequeñas con tope negro o casi ausentes; la central se limpia (medio → blanca).",
+      "El cuadro 6 es par y continúa la progresión de limpieza del 4.",
+      "Atajo: en pares la base de las pequeñas no es negra; entre A y D, D sigue el vaciado del 4."
+    ],
+    "fuente": "024_image279.png"
+  },
+  {
+    "enunciado": "¿Qué viene después en la secuencia?\n\nPolígono con punto interno:\n1) Pentágono (5) arriba-izq; punto abajo-der\n2) Cuadrado (4) centro; punto abajo-der\n3) Triángulo (3) abajo-izq; punto abajo-der\n4) Cuadrado (4) centro; punto arriba-izq\n5) Pentágono (5) arriba-der; punto arriba-izq\n\nA) Hexágono (6) arriba-der; punto abajo-der   B) Cuadrado (4) arriba-der; punto arriba-izq   C) Pentágono (5) centro; punto arriba-izq   D) Triángulo (3) abajo-der; punto abajo-der",
+    "respuesta": "A) Hexágono (6) arriba-der; punto abajo-der",
+    "pasos": [
+      "Lados: 5,4,3,4,5 → simétrico; el siguiente es 6 (hexágono).",
+      "La posición sigue un recorrido en V/U por el cuadro.",
+      "El punto estuvo abajo-der tres veces y luego arriba-izq; en A vuelve a abajo-der.",
+      "Atajo: solo A tiene 6 lados; el resto no puede continuar 5-4-3-4-5 → A."
+    ],
+    "fuente": "025_image287.png"
+  }
+]

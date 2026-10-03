@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { DIAGRAMATICO_FIGURES } from "@/components/psicotecnicas/diagramaticoFigures";
 
 const stroke = "#1e293b";
 const muted = "#64748b";
@@ -2059,6 +2060,10 @@ const FIGURES: Record<string, { caption: string; node: ReactNode }> = {
       </Frame>
     ),
   },
+  // Figuras SHL/Kenexa: el caption vive dentro del Frame (sin spoiler duplicado aquí).
+  ...Object.fromEntries(
+    Object.entries(DIAGRAMATICO_FIGURES).map(([id, fig]) => [id, { node: fig.node, caption: undefined as string | undefined }]),
+  ),
 };
 
 export function AbstractFigure({ id }: { id?: string | null }) {

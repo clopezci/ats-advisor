@@ -2210,520 +2210,468 @@
     {
       "id": "razonamiento-diagramatico",
       "nombre": "Razonamiento diagramático",
-      "descripcion": "Transcrito del Excel: sets, operadores y series diagramáticas en texto.",
+      "descripcion": "Razonamiento diagramático nivel assessment (conjuntos, operadores, series y matrices). Las reglas no se revelan en el enunciado: dedúcelas del diagrama.",
       "items": [
         {
-          "enunciado": "¿A cuál set pertenece la figura?\n\nSET A (5 relojes): manecilla corta en número impar y manecilla larga en número par.\n1) corta 9, larga 12\n2) corta ~7, larga 4\n3) corta ~11, larga 6\n4) corta ~9, larga 6\n5) corta ~7, larga 2\n\nSET B (5 relojes): ambas manecillas en números pares.\n1) corta ~4, larga 2\n2) corta ~10, larga 4\n3) corta 10, larga 12\n4) corta 6, larga 12\n5) corta ~10, larga 8\n\nFIGURA: manecilla corta en 6 (par), manecilla larga en 9 (impar).\n\nOpciones: Set A | Set B | Ningún set",
-          "respuesta": "Ningún set",
+          "figura": "dpro-set-clock-parity",
+          "enunciado": "Observa los conjuntos A y B y la figura de prueba (?).\n¿A qué conjunto pertenece?\n\nA) Conjunto A\nB) Conjunto B\nC) Ninguno",
+          "respuesta": "A) Conjunto A",
           "pasos": [
-            "1) Set A = corta impar + larga par.",
-            "2) Set B = corta par + larga par.",
-            "3) FIGURA = corta par (6) + larga impar (9): no encaja en A ni en B.",
-            "Atajo: paridad de las dos manecillas; H:par/M:impar no tiene set → Ningún set."
-          ],
-          "figura": "espacial-reloj"
-        },
-        {
-          "enunciado": "Operadores (Descripción):\n1) Barra diagonal naranja: Cambia el sombreado de las figuras pequeñas.\n2) Sol/estrella naranja: Reemplaza los triángulos por círculos.\n3) Cuadrado partido vertical (mitad blanco/naranja): Cambia el sombreado de las figuras.\n4) Tres barras verticales: Intercambia la primera y tercera figura.\n\nProblema: hallar la ENTRADA (?) que, con el operador de tres barras, da la SALIDA:\n[pieza de puzzle blanca grande, cuadrado gris pequeño, estrella de 8 puntas blanca grande].\n\nOpciones:\nA) [puzzle blanca, cuadrado gris grande, estrella blanca]\nB) [estrella blanca, cuadrado gris pequeño, puzzle blanca]\nC) [puzzle blanca, cuadrado blanco pequeño, estrella blanca]\nD) [estrella blanca, cuadrado blanco pequeño, puzzle blanca]",
-          "respuesta": "B) [estrella blanca, cuadrado gris pequeño, puzzle blanca]",
-          "pasos": [
-            "1) Operador = intercambiar 1ª y 3ª.",
-            "2) Salida = [puzzle, cuadrado pequeño gris, estrella].",
-            "3) Invertir el intercambio: entrada = [estrella, cuadrado pequeño gris, puzzle].",
-            "4) Solo B conserva tamaño y sombreado del cuadrado central.",
-            "Atajo: extremos invertidos de la salida + centro idéntico (pequeño y gris) → B."
-          ],
-          "figura": "diag-operador"
-        },
-        {
-          "enunciado": "¿A cuál set pertenece la figura?\n\nSET A: en cada cuadro, dos piezas idénticas en espejo (simetría H o V); una gris sólida y la otra blanca con contorno azul.\n(Ej.: escuadras L enfrentadas, semicírculos, trapecios, etc.)\n\nSET B: pares de formas distintas o no espejadas (triángulos distintos, Pac-Man no espejo, etc.).\n\nFIGURA: dos semicírculos verticales espalda con espalda; izq gris sólido (arco a la izq), der blanco con contorno azul (arco a la der) — espejo perfecto.\n\nOpciones: Set A | Set B | Ningún set",
-          "respuesta": "Set A",
-          "pasos": [
-            "1) Regla A = mismas formas en espejo + una gris / una contorno.",
-            "2) Regla B = sin simetría consistente.",
-            "3) FIGURA es espejo perfecto de semicírculos con colores A.",
-            "Atajo: busca espejo + gris/contorno → Set A."
-          ],
-          "figura": "diag-impar"
-        },
-        {
-          "enunciado": "Operadores:\n1) Escuadra/flecha L: Rota todas las figuras 90° antihorario.\n2) Arcos dobles (m): Mueve cada figura un lugar a la izquierda.\n3) Triángulo contorno: Intercambia la segunda y tercera figura.\n4) Círculo con punto: Reduce el tamaño de la figura de en medio.\n\nEntrada: [rectángulo horizontal contorno azul, cuadrado grande vacío, bocadillo dentado/estrella irregular].\nOperador: círculo con punto.\n¿Salida?\n\nA) [rectángulo vertical, cuadrado pequeño, bocadillo]\nB) [cuadrado grande, bocadillo, rectángulo horizontal]\nC) [rectángulo horizontal, bocadillo, cuadrado grande]\nD) [rectángulo horizontal, cuadrado pequeño, bocadillo]",
-          "respuesta": "D) [rectángulo horizontal, cuadrado pequeño, bocadillo]",
-          "pasos": [
-            "1) Operador solo reduce el tamaño del centro.",
-            "2) Cuadrado grande → cuadrado pequeño; extremos iguales.",
-            "3) Descartar rotaciones o permutas (A/B/C).",
-            "Atajo: solo cambia el tamaño del medio → D."
+            "Compara las manecillas de A y de B: no mires la hora «legible», mira paridad (impar/par) de cada número señalado.",
+            "En A, exactamente una manecilla cae en número impar; en B, ninguna (ambas en par).",
+            "La prueba (6 y 9) tiene exactamente una en impar → pertenece a A.",
+            "Atajo assessment: anota I/P bajo cada manecilla; clasifica el patrón, no inventes una regla de «hora exacta»."
           ]
         },
         {
-          "enunciado": "¿A cuál set pertenece la figura?\n\nCada cuadro tiene cuadrícula 2×2, una barra rectangular y círculos pequeños.\nSET A: exactamente 1 celda gris en la 2×2 (barra horizontal; círculos varios).\nSET B: las 4 celdas de la 2×2 grises (barras H o V; círculos varios).\n\nFIGURA: 2×2 con columna izquierda gris (2 celdas), barra vertical a la izq, 3 círculos a la der (gris, gris, blanco).\n\nOpciones: Set A | Set B | Ningún set",
-          "respuesta": "Ningún set",
+          "figura": "dpro-set-clock-sum",
+          "enunciado": "Observa los conjuntos A y B y la figura de prueba (?).\n¿A qué conjunto pertenece?\n\nA) Conjunto A\nB) Conjunto B\nC) Ninguno",
+          "respuesta": "A) Conjunto A",
           "pasos": [
-            "1) A = 1 celda gris.",
-            "2) B = 4 celdas grises.",
-            "3) FIGURA tiene 2 grises → no A ni B.",
-            "Atajo: contar celdas grises de la 2×2 (1 vs 4 vs 2) → Ningún set."
-          ],
-          "figura": "diag-operador"
-        },
-        {
-          "enunciado": "Operadores:\n1) Rectángulo partido vertical: Cambia el sombreado de todas las figuras.\n2) Círculo con punto: Cambia el tamaño de la figura de en medio.\n3) Triángulo invertido: Mueve cada figura un lugar a la derecha.\n4) Rombo con X: Cambia la primera figura.\n\nEntrada: [estrella 8 puntas contorno, cuadrado pequeño gris, cuadrado grande contorno]\n→ Op partido → Op círculo-punto → ?\n\nA) [estrella gris, sq pequeño contorno, sq gris]\nB) [estrella contorno, sq grande contorno, sq contorno]\nC) [estrella gris, sq grande gris, sq gris]\nD) [estrella gris, sq grande contorno, sq gris]",
-          "respuesta": "D) [estrella gris, sq grande contorno, sq gris]",
-          "pasos": [
-            "1) Partición invierte sombreado: [estrella gris, sq pequeño contorno, sq grande gris].",
-            "2) Círculo-punto cambia tamaño del medio: sq pequeño contorno → sq grande contorno.",
-            "3) Final = [estrella gris, sq grande contorno, sq gris] = D.",
-            "Atajo: tras invertir, extremos deben quedar grises y el medio contorno → solo D."
+            "Suma los dos números a los que apuntan las manecillas en cada reloj.",
+            "A: sumas impares. B: sumas pares.",
+            "Prueba 10+5=15 impar → A.",
+            "Atajo: ignora la longitud de la manecilla; solo suma los números."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Arcos dobles: Mueve cada figura un lugar a la izquierda.\n2) Círculo con chevron: Reemplaza figuras de tamaño normal por círculos (las pequeñas no cambian).\n3) Escuadra: Rota 90° antihorario.\n4) Bucles verticales: Refleja verticalmente cada figura.\n\nHallar ENTRADA (?) que con op círculo-chevron da SALIDA:\n[círculo gris grande, círculo blanco grande, cuadrado azul pequeño con marca x].\n\nA) [diamante blanco, diamante gris, sq azul pequeño con #]\nB) [diamante blanco, diamante gris, sq azul pequeño con x]\nC) [diamante gris, diamante blanco, sq azul pequeño con #]\nD) [diamante gris, diamante blanco, sq azul pequeño con x]",
-          "respuesta": "D) [diamante gris, diamante blanco, sq azul pequeño con x]",
+          "figura": "dpro-set-mirror",
+          "enunciado": "Observa los conjuntos A y B y la figura de prueba (?).\n¿A qué conjunto pertenece?\n\nA) Conjunto A\nB) Conjunto B\nC) Ninguno",
+          "respuesta": "A) Conjunto A",
           "pasos": [
-            "1) Op convierte normales en círculos manteniendo color; pequeñas igual.",
-            "2) Salida: círculos gris luego blanco + sq pequeño con x → entrada: normales gris luego blanco + mismo sq con x.",
-            "3) Entre C/D solo D tiene marca x.",
-            "Atajo: marca x elimina A/C; orden gris→blanco elimina B → D."
+            "En A cada par es el mismo glifo en espejo horizontal (uno relleno, uno contorno).",
+            "En B los pares no son espejo (copia, giro 180° o volteo vertical).",
+            "La prueba son dos semicírculos espejados → A.",
+            "Atajo: dobla mentalmente por el eje vertical del par; si coinciden, es A."
           ]
         },
         {
-          "enunciado": "¿A cuál set pertenece la figura?\n\nFiguras tipo flor/ventilador: círculo azul, núcleo gris, pétalos blancos o grises.\nSET A: siempre hay un pétalo exactamente a las 12:00 (arriba). Conteos variables (3–12 pétalos).\nSET B: siempre hay un hueco a las 12:00 (ningún pétalo arriba).\n\nFIGURA: 4 pétalos en cruz (12, 3, 6, 9); gris solo el de las 3:00; blanco en 12/6/9. Tiene pétalo a las 12 pero no encaja con el resto de restricciones de A (p. ej. conteos/gris típicos del set).\n\nOpciones: Set A | Set B | Ningún set",
-          "respuesta": "Ningún set",
+          "figura": "dpro-set-petal",
+          "enunciado": "Observa los conjuntos A y B y la figura de prueba (?).\n¿A qué conjunto pertenece?\n\nA) Conjunto A\nB) Conjunto B\nC) Ninguno",
+          "respuesta": "A) Conjunto A",
           "pasos": [
-            "1) A = pétalo a las 12.",
-            "2) B = hueco a las 12.",
-            "3) FIGURA tiene pétalo a las 12 (no B) pero tampoco cumple el patrón completo de A (p.",
-            "ej.",
-            "1 gris / 4 pétalos atípicos).",
-            "Atajo: 12:00 con pétalo descarta B; inconsistencia con A → Ningún set."
-          ],
-          "figura": "diag-impar"
-        },
-        {
-          "enunciado": "¿A cuál set pertenece la figura?\n\nSET A: formas de 3 segmentos de línea + 2 círculos; exactamente 1 círculo dentro de la concavidad y 1 fuera.\nSET B: formas de 4 segmentos + 2 círculos; ambos círculos dentro de las concavidades/área.\n\nFIGURA: forma de 5 segmentos; 1 círculo dentro y 1 fuera.\n\nOpciones: Set A | Set B | Ningún set",
-          "respuesta": "Ningún set",
-          "pasos": [
-            "1) A = 3 segmentos + 1 dentro/1 fuera.",
-            "2) B = 4 segmentos + 2 dentro.",
-            "3) FIGURA = 5 segmentos → no A ni B.",
-            "Atajo: contar segmentos primero (3/4/5) → Ningún set."
-          ],
-          "figura": "diag-impar"
-        },
-        {
-          "enunciado": "Operadores:\n1) Cuadrado partido (naranja/blanco): Cambia el sombreado de todas las figuras.\n2) Tres barras: Intercambia la primera y la tercera figura.\n3) Sol 8 puntas: Reemplaza los triángulos por círculos.\n4) Triángulo invertido: Mueve cada figura un lugar a la derecha.\n\nEntrada: [cuadrado gris con esquina superior-derecha truncada, estrella 8 puntas blanca, triángulo gris]\n→ Op sombreado-todas → Op sol → ?\n\nA) [sq truncado blanco, estrella gris, triángulo blanco]\nB) [sq truncado gris, estrella blanca, círculo gris]\nC) [círculo blanco, estrella gris, sq truncado blanco]\nD) [sq truncado blanco, estrella gris, círculo blanco]",
-          "respuesta": "D) [sq truncado blanco, estrella gris, círculo blanco]",
-          "pasos": [
-            "1) Invertir sombreado: [sq blanco truncado, estrella gris, triángulo blanco].",
-            "2) Sol: triángulo → círculo (blanco).",
-            "3) Final = D.",
-            "Atajo: debe terminar en círculo (descarta A); primer op invierte colores (descarta B); sin movimiento (descarta C) → D."
+            "Fíjate solo en las 12:00 (arriba del núcleo).",
+            "A siempre tiene pétalo arriba. B siempre tiene hueco arriba.",
+            "La prueba tiene pétalo a las 12 → A.",
+            "Atajo: no cuentes pétalos totales primero; mira la posición clave."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Escuadra L: Rota todas 90° antihorario.\n2) Arcos (m): Desplaza un lugar a la izquierda.\n3) Triángulo: Intercambia 2ª y 3ª figura.\n4) Punto en círculo: Reduce tamaño del medio.\n\nSecuencia: [cuadrado, triángulo punta arriba, flecha punta derecha] → (?) → (L rotación) → [cuadrado, flecha punta arriba, triángulo punta izquierda].\n¿Qué operador es (?)\n\nA) L (rotación)\nB) Arcos (desplazamiento)\nC) Triángulo (intercambia 2ª–3ª)\nD) Punto (reduce medio)",
-          "respuesta": "C) Triángulo (intercambia 2ª–3ª)",
+          "figura": "dpro-set-polyline",
+          "enunciado": "Observa los conjuntos A y B y la figura de prueba (?).\n¿A qué conjunto pertenece?\n\nA) Conjunto A\nB) Conjunto B\nC) Ninguno",
+          "respuesta": "C) Ninguno",
           "pasos": [
-            "1) Invertir la rotación final (90° horario) sobre la salida → estado intermedio [cuadrado, flecha derecha, triángulo arriba].",
-            "2) Comparar con entrada [cuadrado, triángulo arriba, flecha derecha]: solo se intercambiaron 2ª y 3ª.",
-            "3) Eso es el triángulo → C.",
-            "Atajo: deshacer rotación y ver permuta 2↔3 → C."
+            "Cuenta segmentos de la polilínea (n puntos → n−1 segmentos) y si cada punto está dentro/fuera de la concavidad.",
+            "A: 3 segmentos + 1 punto dentro y 1 fuera. B: 4 segmentos + ambos dentro.",
+            "La prueba tiene 5 segmentos → no cumple A ni B → Ninguno.",
+            "Atajo típico SHL: «ni A ni B» es opción real; no fuerces encaje."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Punto en círculo: Cambia el tamaño de la figura de en medio.\n2) Flechas circulares: Refleja verticalmente cada figura.\n3) Triángulo en círculo: Cambia el tamaño de la primera y tercera figura.\n4) Cuadrado bicolor: Cambia el sombreado de todas las figuras.\n\nEntrada: [figura pequeña con diagonal, círculo grande blanco, cuadrado azul pequeño]\nOperador: triángulo en círculo.\n¿Salida?\n\nA) tamaños iguales a la entrada\nB) 1ª grande, círculo grande blanco igual, 3ª azul grande\nC) solo cambia tamaño de la 1ª\nD) extremos grandes pero círculo central gris (sombreado alterado)",
-          "respuesta": "B) 1ª grande, círculo grande blanco igual, 3ª azul grande",
+          "figura": "dpro-set-grid",
+          "enunciado": "Observa los conjuntos A y B y la figura de prueba (?).\n¿A qué conjunto pertenece?\n\nA) Conjunto A\nB) Conjunto B\nC) Ninguno",
+          "respuesta": "B) Conjunto B",
           "pasos": [
-            "1) Op = cambia tamaño de 1ª y 3ª.",
-            "2) Pequeñas → grandes; centro intacto (grande blanco).",
-            "3) D falla por sombrear el círculo.",
-            "Atajo: solo crecen extremos; centro idéntico → B."
+            "En la cuadrícula 2×2 cuenta celdas grises (barra y puntos son distractores).",
+            "A: exactamente 1 celda gris. B: más de una.",
+            "La prueba tiene 2 grises (columna izquierda) → B.",
+            "Atajo: separa atributos; primero la 2×2, luego valida que barra/puntos no definen el set."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Triángulo naranja relleno: Cambia el sombreado de los triángulos.\n2) Círculos concéntricos: Cambia el tamaño de las figuras sin sombrear.\n3) Flecha doble vertical: Refleja verticalmente cada figura.\n4) Triángulo contorno: Intercambia la segunda y tercera figura.\n\nEntrada: [estrella 5 puntas contorno, bocadillo/nube contorno, cuadrado mitad-izq gris]\nOperador: triángulo contorno.\n¿Salida?\n\nA) [nube, estrella, sq mitad]\nB) [sq mitad, nube, estrella]\nC) [estrella, sq mitad, nube]\nD) [estrella, nube alterada, sq mitad]",
-          "respuesta": "C) [estrella, sq mitad, nube]",
+          "figura": "dpro-set-colinear",
+          "enunciado": "Observa los conjuntos A y B y la figura de prueba (?).\n¿A qué conjunto pertenece?\n\nA) Conjunto A\nB) Conjunto B\nC) Ninguno",
+          "respuesta": "A) Conjunto A",
           "pasos": [
-            "1) Op = intercambia 2ª y 3ª.",
-            "2) 1ª (estrella) fija; nube ↔ sq.",
-            "3) Resultado = C.",
-            "Atajo: 1ª igual → C o D; D no intercambia → C."
+            "Los tres símbolos ¿están en una línea recta?",
+            "A: siempre colineales. B: nunca (forman «L» o triángulo).",
+            "La prueba está en horizontal recta → A.",
+            "Atajo: ignora forma/relleno al clasificar; la geometría de posición manda."
           ]
         },
         {
-          "enunciado": "¿A cuál set pertenece la figura?\n\nSET A (relojes): suma de números señalados siempre impar.\n(9+12=21, 7+4=11, 11+6=17, 9+6=15, 7+8=15)\n\nSET B: suma siempre par.\n(8+2=10, 10+4=14, 11+1=12, 12+6=18, 10+4=14)\n\nFIGURA: manecillas en 10 y 5 → suma 15 (impar).\n\nOpciones: Set A | Set B | Ningún set",
-          "respuesta": "Set A",
+          "figura": "dpro-set-stars",
+          "enunciado": "Observa los conjuntos A y B y la figura de prueba (?).\n¿A qué conjunto pertenece?\n\nA) Conjunto A\nB) Conjunto B\nC) Ninguno",
+          "respuesta": "B) Conjunto B",
           "pasos": [
-            "1) A = suma impar.",
-            "2) B = suma par.",
-            "3) 10+5=15 impar → Set A.",
-            "Atajo: paridad de la suma de las dos puntas → A."
-          ],
-          "figura": "diag-impar"
-        },
-        {
-          "enunciado": "Operadores:\n1) Trayectoria/flecha: Cambia la tercera figura.\n2) Arcos: Mueve cada figura un lugar a la izquierda.\n3) Triángulo: Intercambia primera y tercera.\n4) Cuadrado concéntrico: Cambia el sombreado de figuras con bordes rectos.\n\nEntrada: [nube/bocadillo contorno, triángulo rectángulo contorno, paralelogramo gris]\n→ Op4 (sombreado bordes rectos) → Op1 (cambia 3ª) → ?\n\nA) [nube, △ rectángulo gris, paralelogramo contorno]\nB) [nube, △ contorno, triángulo contorno]\nC) [nube, △ gris, trapecio gris]\nD) [nube, △ gris, trapecio contorno]",
-          "respuesta": "D) [nube, △ gris, trapecio contorno]",
-          "pasos": [
-            "1) Op4: nube (curva) igual; △ contorno→gris; paralelogramo gris→contorno.",
-            "2) Op1 cambia la 3ª forma: paralelogramo contorno → trapecio contorno.",
-            "3) Final = D.",
-            "Atajo: △ debe quedar gris y la 3ª debe cambiar de forma manteniendo contorno → D."
+            "Cuenta solo estrellas grises (los arcos distraen).",
+            "A: 0 o 3 grises. B: exactamente 1 gris.",
+            "La prueba tiene 1 gris → B.",
+            "Atajo: anota el conteo; reglas de «0 o 3» vs «exactamente 1» son clásicas."
           ]
         },
         {
-          "enunciado": "¿A cuál set pertenece la figura?\n\nSET A: polígono exterior cerrado; figura interior sombreada centrada.\nSET B: polígono exterior con apertura/interrupción en la base; figura interior apoyada abajo sobre esa base.\n\nFIGURA: cuadrado exterior con pentágono gris interior desplazado hacia abajo (cerca de la base).\n\nOpciones: A | B | C | D (B = Set B)",
+          "figura": "dpro-set-nest",
+          "enunciado": "Observa los conjuntos A y B y la figura de prueba (?).\n¿A qué conjunto pertenece?\n\nA) Conjunto A\nB) Conjunto B\nC) Ninguno",
+          "respuesta": "B) Conjunto B",
+          "pasos": [
+            "Mira el contorno exterior y dónde apoya la figura interior.",
+            "A: contorno cerrado + interior centrado. B: contorno abierto abajo + interior apoyado en la base.",
+            "La prueba tiene apertura inferior e interior abajo → B.",
+            "Atajo: «¿reposa en la base abierta?» sí → B."
+          ]
+        },
+        {
+          "figura": "dpro-set-blackcount",
+          "enunciado": "Observa los conjuntos A y B y la figura de prueba (?).\n¿A qué conjunto pertenece?\n\nA) Conjunto A\nB) Conjunto B\nC) Ninguno",
+          "respuesta": "A) Conjunto A",
+          "pasos": [
+            "Cuenta regiones/negras (relleno oscuro), no el tipo de forma.",
+            "A: cantidad impar. B: cantidad par.",
+            "La prueba tiene 3 negras → A.",
+            "Atajo: paridad del conteo; las formas cambian a propósito para despistar."
+          ]
+        },
+        {
+          "figura": "dpro-set-arrow-dir",
+          "enunciado": "Observa los conjuntos A y B y la figura de prueba (?).\n¿A qué conjunto pertenece?\n\nA) Conjunto A\nB) Conjunto B\nC) Ninguno",
+          "respuesta": "A) Conjunto A",
+          "pasos": [
+            "En cada trío, mira si los ángulos crecen o decrecen de izquierda a derecha.",
+            "A: rotación creciente (sentido horario en el SVG). B: decreciente.",
+            "La prueba 330→30→90 crece (+60) → A.",
+            "Atajo: anota los tres ángulos y resta; el signo del salto define el set."
+          ]
+        },
+        {
+          "figura": "dpro-set-dot-parity",
+          "enunciado": "Observa los conjuntos A y B y la figura de prueba (?).\n¿A qué conjunto pertenece?\n\nA) Conjunto A\nB) Conjunto B\nC) Ninguno",
+          "respuesta": "B) Conjunto B",
+          "pasos": [
+            "Cuenta los puntos en las esquinas del cuadrado (la figura central es distractor).",
+            "A: número par de puntos. B: número impar.",
+            "La prueba tiene 3 → B.",
+            "Atajo: no inventes reglas sobre «qué esquina»; la paridad basta."
+          ]
+        },
+        {
+          "figura": "dpro-set-cond",
+          "enunciado": "Observa los conjuntos A y B y la figura de prueba (?).\n¿A qué conjunto pertenece?\n\nA) Conjunto A\nB) Conjunto B\nC) Ninguno",
+          "respuesta": "B) Conjunto B",
+          "pasos": [
+            "Regla condicional por forma: en A, todo triángulo va relleno y el resto contorno; en B es al revés.",
+            "Comprueba cada celda de A y B con esa lectura.",
+            "Prueba: triángulo contorno + hexágono relleno → encaja en B.",
+            "Atajo: «si X entonces Y» es frecuente en diagramático avanzado."
+          ]
+        },
+        {
+          "figura": "dpro-op-swap-ends",
+          "enunciado": "Observa el ejemplo y aplica el mismo operador a la segunda fila.\n¿Cuál opción (A–D) es el resultado correcto?",
           "respuesta": "B)",
           "pasos": [
-            "1) A = interiores centrados + marco cerrado.",
-            "2) B = interiores abajo + base abierta.",
-            "3) FIGURA tiene el pentágono abajo → Set B.",
-            "Atajo: mira si la figura interna «reposa» en la base → B."
-          ],
-          "figura": "diag-impar"
-        },
-        {
-          "enunciado": "¿A cuál set pertenece la figura?\n\nCada cuadro: marco con diagonales sólidas en X + rejilla de rombos discontinuos; símbolos círculo/cuadrado/triángulo (blancos o grises) + flechas/puntos.\n\nSET A: los tres símbolos geométricos siempre colineales (línea recta).\nSET B: los tres símbolos nunca colineales (disposición en L/triángulo).\n\nFIGURA: cuadrado, círculo y triángulo blancos en línea horizontal recta.\n\nOpciones: Set A | Set B | Ningún set",
-          "respuesta": "Set A",
-          "pasos": [
-            "1) A = colineales.",
-            "2) B = no colineales.",
-            "3) FIGURA alineada en horizontal → Set A.",
-            "Atajo: ¿están en línea recta? Sí → A."
+            "El ejemplo intercambia la 1.ª y la 3.ª barra; la del medio no se mueve.",
+            "Aplica lo mismo: [26,38,18] → [18,38,26] en alturas/rellenos.",
+            "Eso es la opción B.",
+            "Atajo: marca 1-2-3 y reescribe 3-2-1."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Estrella 4 puntas: Reemplaza todas las estrellas con cuadrados.\n2) Rombo con línea: Cambia la primera figura.\n3) Flecha en L: Rota todas 90° antihorario.\n4) Triángulo con círculo: Cambia tamaño de 1ª y 3ª.\n\nEntrada: [signo + gris, cuadrado gris, estrella dentada azul]\nOperador: L (rotación 90° CCW).\n¿Salida?\n\nA–D: variantes de rotación; + y cuadrado son simétricos; la estrella cambia orientación según la opción.\nRespuesta UI: D.",
+          "figura": "dpro-op-shade-all",
+          "enunciado": "Observa el ejemplo y aplica el mismo operador a la segunda fila.\n¿Cuál opción (A–D) es el resultado correcto?",
+          "respuesta": "C)",
+          "pasos": [
+            "El operador invierte el relleno de cada sector.",
+            "Entrada [oscuro,oscuro,claro,oscuro] → [claro,claro,oscuro,claro].",
+            "Opción C.",
+            "Atajo: togglear bit a bit; no muevas piezas de sitio."
+          ]
+        },
+        {
+          "figura": "dpro-op-resize-mid",
+          "enunciado": "Observa el ejemplo y aplica el mismo operador a la segunda fila.\n¿Cuál opción (A–D) es el resultado correcto?",
+          "respuesta": "A)",
+          "pasos": [
+            "Solo cambia el tamaño del círculo central (grande↔pequeño).",
+            "En la pregunta el centro ya es grande → debe quedar pequeño.",
+            "Opción A.",
+            "Atajo: extremos iguales al ejemplo; solo inspecciona el medio."
+          ]
+        },
+        {
+          "figura": "dpro-op-tri-to-circ",
+          "enunciado": "Observa qué hace cada operador en los ejemplos superiores.\nAplícalos en cadena a la fila inferior. ¿Cuál es el resultado (A–D)?",
           "respuesta": "D)",
           "pasos": [
-            "1) Op = rotar todas 90° CCW.",
-            "2) + y cuadrado se ven iguales por simetría.",
-            "3) La orientación de la estrella dentada debe coincidir con D (marcada).",
-            "Atajo: descarta opciones que giren el + 45° (B) o dejen la estrella mal → D."
+            "Arriba: sombreado invierte rellenos; sol sustituye triángulos por círculos (mismo relleno).",
+            "Fila: [sq oscuro, △ claro, △ oscuro] → sombreado → [sq claro, △ oscuro, △ claro] → sol → [sq claro, ○ oscuro, ○ claro].",
+            "Opción D.",
+            "Atajo: aplica operadores de izquierda a derecha; no combines en un solo paso mental."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Sol: Reemplaza triángulos por círculos.\n2) Tres barras: Intercambia 1ª y 3ª.\n3) Triángulo invertido: Mueve cada figura un lugar a la derecha.\n4) Estrella 4 puntas: Reemplaza estrellas por cuadrados.\n\nEntrada: [estrella 8 puntas blanca, cuadrado gris oscuro, rectángulo blanco con icono azul]\n→ Triángulo invertido → (?) → Salida: [rectángulo con icono, cuadrado blanco, cuadrado gris]\n¿Operador (?)\n\nA) Sol\nB) Estrella 4 puntas\nC) Triángulo invertido\nD) Tres barras",
-          "respuesta": "B) Estrella 4 puntas",
+          "figura": "dpro-op-rotate-ccw",
+          "enunciado": "Observa el ejemplo y aplica el mismo operador a la segunda fila.\n¿Cuál opción (A–D) es el resultado correcto?",
+          "respuesta": "C)",
           "pasos": [
-            "1) Tras mover a la derecha: [rectángulo, estrella, sq gris].",
-            "2) Final: [rectángulo, sq blanco, sq gris] → solo la estrella → cuadrado.",
-            "3) Op = estrella 4 puntas → B.",
-            "Atajo: único cambio estrella→cuadrado → B."
+            "Cada escuadra gira 90° antihorario (resta 90° al ángulo).",
+            "[180,0,270] → [90,270,180].",
+            "Opción C.",
+            "Atajo: dibuja una L mental y gírala un cuarto a la izquierda."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Cuadro con diagonal: Cambia sombreado de figuras pequeñas.\n2) Sol: Reemplaza triángulos por círculos.\n3) Rectángulo bicolor: Cambia sombreado de todas.\n4) Tres barras: Intercambia 1ª y 3ª.\n\nEntrada: [sq grande blanco con diagonal, sq pequeño gris, círculo grande blanco]\n→ (?) → Op diagonal (sombreado pequeñas) → Salida: [sq grande gris con diagonal, sq pequeño gris, círculo grande gris]\n¿Operador (?)\n\nA) Diagonal\nB) Sol\nC) Rectángulo bicolor\nD) Tres barras",
-          "respuesta": "C) Rectángulo bicolor",
+          "figura": "dpro-op-shift-left",
+          "enunciado": "Observa el ejemplo y aplica el mismo operador a la segunda fila.\n¿Cuál opción (A–D) es el resultado correcto?",
+          "respuesta": "A)",
           "pasos": [
-            "1) Último op solo afecta pequeñas: si la pequeña termina gris, antes del último paso era blanca.",
-            "2) Estado intermedio [gris, blanco, gris].",
-            "3) Desde [blanco, gris, blanco] se invirtió todo → bicolor = C.",
-            "Atajo: todo-gris al final + último solo toca la pequeña → antes todo invertido → C."
+            "Cada arco se desplaza una posición a la izquierda; el primero pasa al final.",
+            "[180,0,270,90] → [0,270,90,180].",
+            "Opción A.",
+            "Atajo: escribe la cola y pega la cabeza al final."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Flechas circulares: Refleja horizontalmente cada figura.\n2) Dos barras: Cambia sombreado de 2ª y 3ª.\n3) Tres barras: Intercambia 1ª y 3ª.\n4) Cuadrado concéntrico: Cambia sombreado de figuras con bordes rectos.\n\nEntrada: [flecha bloque abajo blanca, círculo con barra horizontal blanca, paralelogramo blanco]\n→ (?) → Salida: [igual, igual, paralelogramo gris]\n¿Operador (?)\n\nA) Tres barras\nB) Cuadrado (bordes rectos)\nC) Dos barras\nD) Flechas circulares",
-          "respuesta": "B) Cuadrado (bordes rectos)",
+          "figura": "dpro-op-find-op-swap",
+          "enunciado": "En ambas filas falta el operador (?).\n¿Cuál icono (A–D) transforma la entrada en la salida en ambos casos?",
+          "respuesta": "C)",
           "pasos": [
-            "1) Solo cambia el sombreado de la 3ª.",
-            "2) Op bordes rectos (B) también habría sombreado la flecha.",
-            "3) A/D mueven o reflejan.",
-            "4) Dos barras (C) encaja (como en la ilustración, puede afectar la 3ª).",
-            "Atajo: único cambio = sombreado de la 3ª → C."
+            "En ambas filas solo se intercambian extremos; el centro queda igual.",
+            "Eso corresponde al icono de flechas de intercambio (opción C).",
+            "Rotación o sombreado alterarían orientación/relleno, no solo el orden.",
+            "Atajo: si 1↔3 y 2 fijo → swap."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Rectángulo bipartido: Cambia sombreado de todas.\n2) Rombo con cruz: Cambia la primera figura.\n3) Círculos concéntricos: Cambia el tamaño solo de figuras no sombreadas.\n4) Flechas circulares: Refleja horizontalmente 1ª y 2ª.\n\nEntrada: [cuadrado grande gris sombreado, hoja/página pequeña blanca no sombreada, círculo pequeño azul sombreado]\nOperador: círculos concéntricos.\n¿Salida?\n\nA) sq pequeño gris, hoja pequeña, ○ pequeño azul\nB) sq grande gris, hoja grande, ○ grande azul\nC) sq grande gris, hoja pequeña, polígono grande azul\nD) sq grande gris, hoja grande blanca, ○ pequeño azul",
-          "respuesta": "D) sq grande gris, hoja grande blanca, ○ pequeño azul",
+          "figura": "dpro-op-find-op-reflect",
+          "enunciado": "En ambas filas falta el operador (?).\n¿Cuál icono (A–D) transforma la entrada en la salida en ambos casos?",
+          "respuesta": "D)",
           "pasos": [
-            "1) Op solo cambia tamaño de no sombreadas.",
-            "2) Solo la hoja (blanca) crece; sq y círculo sombreados iguales.",
-            "3) = D.",
-            "Atajo: única no sombreada es la 2ª → solo ella cambia de tamaño → D."
+            "El resultado invierte el orden y espeja cada glifo horizontalmente.",
+            "Eso es un reflejo del grupo respecto a un eje vertical (opción D).",
+            "Un swap sin espejo no voltearía cada pieza; el reflejo vertical voltearía arriba/abajo.",
+            "Atajo: orden invertido + sx−1 ⇒ reflect horizontal del conjunto."
           ]
         },
         {
-          "enunciado": "¿A cuál set pertenece la figura?\n\nSET A: manecilla corta siempre en número impar.\n(1+4, 5+10, 1+11, 5+9, 5+9)\n\nSET B: manecilla corta siempre en número par.\n(12+2, 10+2, 10+2, 8+4, 4+8)\n\nFIGURA: corta en 11 (impar), larga en 4.\n\nOpciones: Set A | Set B | Ningún set",
-          "respuesta": "Set A",
+          "figura": "dpro-op-find-input",
+          "enunciado": "Observa el ejemplo del operador. En la segunda fila falta la entrada.\n¿Cuál opción (A–D) es la entrada correcta?",
+          "respuesta": "C)",
           "pasos": [
-            "1) A = corta impar.",
-            "2) B = corta par.",
-            "3) FIGURA corta=11 impar → Set A.",
-            "Atajo: mira solo la manecilla corta → A."
-          ],
-          "figura": "diag-impar"
-        },
-        {
-          "enunciado": "Operadores:\n1) Escuadra L: Rota 90° antihorario.\n2) Círculo con flechas horizontales: Refleja horizontalmente cada figura.\n3) Cuadrado en cuadrado: Cambia sombreado de figuras con bordes rectos.\n4) Punto en círculo: Cambia tamaño del medio.\n\nEntrada: [flecha abajo gruesa con sombra 3D a la izq, icono 4 flechas, paralelogramo inclinado a la der]\n→ (?) → Salida: [flecha abajo con sombra a la der, icono 4 flechas, paralelogramo inclinado a la izq]\n¿Operador (?)\n\nA) Cuadrado en cuadrado\nB) Punto en círculo\nC) Flechas horizontales (reflejo H)\nD) Escuadra L",
-          "respuesta": "A) Cuadrado en cuadrado",
-          "pasos": [
-            "1) Sombra de la flecha y la inclinación del paralelogramo se invierten L↔R.",
-            "2) Eso es reflexión horizontal.",
-            "3) = C.",
-            "Atajo: paralelogramo cambia de lado → reflejo H → C."
+            "El operador solo cambia el tamaño del centro.",
+            "La salida tiene centro pequeño ⇒ la entrada tenía centro grande (mismos extremos y rellenos).",
+            "Opción C.",
+            "Atajo: trabaja el operador al revés desde la salida."
           ]
         },
         {
-          "enunciado": "¿A cuál set pertenece la figura?\n\nElementos: arcos tipo «n» y estrellas de 5 puntas (blancos/grises).\nSET A: 0 o 3 estrellas grises (nunca exactamente 1).\nSET B: exactamente 1 estrella gris en cada cuadro.\n\nFIGURA: 5 arcos (4 grises, 1 blanco) + 2 estrellas (1 gris, 1 blanca).\n\nOpciones: A | B | … (B = Set B)",
+          "figura": "dpro-op-double-chain",
+          "enunciado": "Observa qué hace cada operador en los ejemplos superiores.\nAplícalos en cadena a la fila inferior. ¿Cuál es el resultado (A–D)?",
           "respuesta": "B)",
           "pasos": [
-            "1) B = siempre 1 estrella gris.",
-            "2) A = 0 o 3 estrellas grises.",
-            "3) FIGURA tiene 1 estrella gris → Set B.",
-            "Atajo: contar estrellas grises (1) → B."
+            "Sombreado invierte rellenos; tamaño solo afecta el centro.",
+            "[oscuro,claro,oscuro] + centro grande → sombreado → [claro,oscuro,claro] mismo tamaño → tamaño → centro pequeño.",
+            "Opción B.",
+            "Atajo: dos atributos distintos; resuélvelos en orden."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Cuadrado concéntrico: Cambia sombreado de figuras con bordes rectos.\n2) Diamante: Cambia la tercera figura.\n3) Arcos (m): Mueve cada figura un lugar a la izquierda.\n4) Flechas circulares: Refleja horizontalmente 1ª y 2ª.\n\nEntrada: [△ rectángulo blanco, flecha gris arriba, cruz X blanca]\n→ (?) → Diamante → Cuadrado concéntrico → Salida: [flecha blanca arriba, cruz X gris, rombo gris]\n¿Operador (?)\n\nA) Flechas circulares\nB) Diamante\nC) Cuadrado concéntrico\nD) Arcos (m)",
-          "respuesta": "B) Diamante",
+          "figura": "dpro-op-replace-star",
+          "enunciado": "Observa el ejemplo y aplica el mismo operador a la segunda fila.\n¿Cuál opción (A–D) es el resultado correcto?",
+          "respuesta": "C)",
           "pasos": [
-            "1) Deshacer último (sombreado bordes rectos) sobre la salida → [flecha gris, cruz blanca, rombo blanco].",
-            "2) Deshacer diamante (cambia 3ª): la 3ª original del paso es el △ de la entrada → [flecha gris, cruz blanca, △].",
-            "3) Comparar con entrada [△, flecha gris, cruz]: desplazamiento a la izquierda = arcos → D.",
-            "Atajo: trabajar en reversa; el primer paso es rotación cíclica izq → D."
+            "El operador sustituye estrellas por cuadrados (mismo relleno); el resto no cambia.",
+            "[○, ★ oscura, ★ clara] → [○, ■ oscuro, ■ claro].",
+            "Opción C.",
+            "Atajo: busca qué forma desaparece y cuál aparece."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Tres barras: Intercambia 1ª y 3ª.\n2) Sol: Reemplaza triángulos por círculos.\n3) Círculos concéntricos: Cambia el tamaño de la figura de en medio.\n4) Diagonal: Cambia sombreado de figuras pequeñas.\n\nEntrada: [flecha abajo blanca grande, paralelogramo blanco pequeño, signo división blanco grande]\n→ Op círculos concéntricos (cambio tamaño del medio) → ?\n\nA) igual a la entrada (medio pequeño)\nB) flecha abajo, paralelogramo grande, división\nC) intercambio 1↔3\nD) paralelogramo pequeño gris",
-          "respuesta": "B) flecha abajo, paralelogramo grande, división",
+          "figura": "dpro-op-shade-straight",
+          "enunciado": "Observa el ejemplo y aplica el mismo operador a la segunda fila.\n¿Cuál opción (A–D) es el resultado correcto?",
+          "respuesta": "B)",
           "pasos": [
-            "1) Op cambia tamaño del medio.",
-            "2) Paralelogramo pequeño → grande.",
-            "3) Extremos iguales → B (marcada).",
-            "Atajo: solo el tamaño del centro cambia → B."
+            "El ejemplo invierte relleno solo en figuras de bordes rectos (cuadrado, triángulo), no en el círculo.",
+            "En la pregunta: círculos iguales; el rombo (rectos) cambia de claro a oscuro.",
+            "Opción B.",
+            "Atajo: clasifica «curva vs recta» antes de togglear."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Tres barras: Intercambia 1ª y 3ª.\n2) Sol: Triángulos → círculos.\n3) Diana/círculo-punto: Cambia tamaño del medio.\n4) Diagonal: Cambia sombreado de figuras pequeñas.\n\nEntrada: [K grande sombreada, sq pequeño blanco, △ pequeño blanco]\n→ Diana → (?) → Salida: [K grande sombreada, sq grande blanco, △ pequeño sombreado]\n¿Operador (?)\n\nA) Tres barras\nB) Diagonal\nC) Diana\nD) Sol",
-          "respuesta": "B) Diagonal",
+          "figura": "dpro-op-swap-23",
+          "enunciado": "Observa el ejemplo y aplica el mismo operador a la segunda fila.\n¿Cuál opción (A–D) es el resultado correcto?",
+          "respuesta": "A)",
           "pasos": [
-            "1) Tras diana: [K, sq grande blanco, △ pequeño blanco].",
-            "2) Final sombrea el △ pequeño → op diagonal (sombreado de pequeñas).",
-            "3) = B.",
-            "Atajo: solo cambia el sombreado de la pequeña 3ª → B."
+            "El operador intercambia la 2.ª y la 3.ª figura; la 1.ª no se mueve.",
+            "[◆, ○, ★] → [◆, ★, ○].",
+            "Opción A.",
+            "Atajo: distinto del swap de extremos; aquí mueve el bloque derecho."
           ]
         },
         {
-          "enunciado": "¿A cuál set pertenece la figura?\n\nIconos = mini cuadrículas 2×2 con celdas grises.\nSET A: patrones de 1 celda, fila, columna o 2×2 completa — nunca diagonales (esquinas opuestas).\nSET B: cada cuadro incluye al menos una 2×2 con sombreado diagonal.\n\nFIGURA: 5 iconos; uno de ellos (abajo-izq) tiene diagonal (celdas opuestas grises).\n\nOpciones: Set A | Set B | Ningún set",
-          "respuesta": "Set B",
+          "figura": "dpro-op-mirror-v",
+          "enunciado": "Observa el ejemplo y aplica el mismo operador a la segunda fila.\n¿Cuál opción (A–D) es el resultado correcto?",
+          "respuesta": "C)",
           "pasos": [
-            "1) A = sin diagonales.",
-            "2) B = al menos una diagonal.",
-            "3) FIGURA tiene diagonal → Set B.",
-            "Atajo: ¿hay 2×2 en diagonal? Sí → B."
+            "Cada glifo se refleja verticalmente (arriba↔abajo), sin cambiar el orden.",
+            "La opción con sy−1 en todas y mismo orden es C.",
+            "A es espejo horizontal; D además reordena.",
+            "Atajo: compara una punta asimétrica (gancho) arriba vs abajo."
           ]
         },
         {
-          "enunciado": "¿A cuál set pertenece la figura?\n\nCruces azules con símbolos en N/S/E/O y X central.\nSET A: en cada cruz hay al menos un par de formas del mismo tipo en un eje (p. ej. dos cuadrados, dos flechas, dos +).\nSET B: incluye ejemplos sin ningún par de formas iguales.\n\nFIGURA: arriba gota gris, abajo gota blanca, izq cuadrado gris, der cuadrado blanco (dos pares: gotas y cuadrados).\n\nOpciones: Set A | Set B | Ningún set",
-          "respuesta": "Set A",
+          "figura": "dpro-op-triple-chain",
+          "enunciado": "Observa qué hace cada operador en los ejemplos superiores.\nAplícalos en cadena a la fila inferior. ¿Cuál es el resultado (A–D)?",
+          "respuesta": "B)",
           "pasos": [
-            "1) A requiere pares de formas iguales en algún eje.",
-            "2) FIGURA tiene gotas en vertical y cuadrados en horizontal.",
-            "3) Encaja en A (marcada).",
-            "Atajo: busca pares iguales en ejes → Set A."
-          ],
-          "figura": "diag-impar"
-        },
-        {
-          "enunciado": "¿A cuál set pertenece la figura?\n\nFormas: cuadrados, triángulos, sectores (cuartos de círculo); blancos o grises.\nSET A: todas las figuras grises de un cuadro son del mismo tipo geométrico.\nSET B: cuando hay >1 gris, son de tipos distintos (mezcla).\n\nFIGURA: 2 cuadrados grises + sectores/cuadrado/triángulo blancos.\n\nOpciones: Set A | Set B | Ningún set",
-          "respuesta": "Set A",
-          "pasos": [
-            "1) A = grises homogéneas en tipo.",
-            "2) B = grises heterogéneas.",
-            "3) Dos cuadrados grises → Set A.",
-            "Atajo: ignora blancas; ¿grises del mismo tipo? Sí → A."
+            "Orden: sombreado → intercambio extremos → sol (△→○).",
+            "Partida [△ oscuro, ◆ claro, ■ oscuro] → sombreado [△ claro, ◆ oscuro, ■ claro] → swap [■ claro, ◆ oscuro, △ claro] → sol [■ claro, ◆ oscuro, ○ claro].",
+            "Opción B.",
+            "Atajo: escribe tres columnas y aplica una transformación por línea."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Franja diagonal: Cambia sombreado de figuras pequeñas.\n2) Sol: Triángulos → círculos.\n3) División vertical: Cambia sombreado de las figuras.\n4) Tres barras: Intercambia 1ª y 3ª.\n\nEntrada: [sq grande hueco, rombo pequeño sólido, rombo grande hueco]\n→ Tres barras → Diagonal → ?\n\nA) [sq hueco, rombo pequeño sólido, rombo hueco]\nB) [rombo hueco, rombo pequeño sólido, sq hueco]\nC) [sq hueco, rombo pequeño hueco, rombo hueco]\nD) [rombo hueco, rombo pequeño hueco, sq hueco]",
-          "respuesta": "D) [rombo hueco, rombo pequeño hueco, sq hueco]",
+          "figura": "dpro-ser-dual",
+          "enunciado": "¿Qué figura continúa la serie?\nElige entre A–D.",
+          "respuesta": "C)",
           "pasos": [
-            "1) Intercambio 1↔3: [rombo grande hueco, rombo pequeño sólido, sq grande hueco].",
-            "2) Diagonal invierte sombreado del pequeño: sólido→hueco.",
-            "3) = D.",
-            "Atajo: tras swap el rombo grande va primero (elimina A/C); luego el pequeño debe quedar hueco (elimina B) → D."
+            "Dos reglas a la vez: +45° cada paso y alternancia de relleno.",
+            "Tras 135° claro viene 180° oscuro.",
+            "Opción C.",
+            "Atajo: resuelve ángulo y relleno por separado; luego cruza."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Escuadra: Rota 90° antihorario.\n2) Arcos: Mueve un lugar a la izquierda.\n3) Triángulo: Intercambia 2ª y 3ª.\n4) Círculo-punto: Reduce tamaño del medio.\n\nEntrada: [bocadillo, cuadrado con △ interior derecha, rectángulo/folio con esquina doblada]\n→ Círculo-punto → Triángulo → ?\n\nA) [bocadillo, sq-△ pequeño, folio] (solo reducción)\nB) [bocadillo, folio, sq-△ pequeño]\nC) figuras incorrectas\nD) igual a la entrada",
-          "respuesta": "B) [bocadillo, folio, sq-△ pequeño]",
+          "figura": "dpro-ser-dotwalk",
+          "enunciado": "¿Qué figura continúa la serie?\nElige entre A–D.",
+          "respuesta": "B)",
           "pasos": [
-            "1) Reduce el sq-△ del centro.",
-            "2) Intercambia 2ª↔3ª: folio al centro, sq-△ pequeño al final.",
-            "3) = B.",
-            "Atajo: folio pasa al centro y el medio reducido al final → B."
+            "El punto recorre esquinas en sentido horario: 0→1→2→3→0→1…",
+            "El relleno va en pares: oscuro,oscuro,claro,claro,oscuro,oscuro…",
+            "Siguiente: esquina 1 y oscuro → B.",
+            "Atajo: periodos distintos (4 vs 2); no los sincronices mal."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Flechas verticales en círculo: Refleja verticalmente cada figura.\n2) Triángulos anidados: Cambia tamaño de la 3ª.\n3) Círculo con punto: Cambia tamaño del medio.\n4) Flechas horizontales: Refleja horizontalmente 1ª y 2ª.\n\nEntrada: [disquete, estrella 6 puntas, cuadrado con diagonal \\ ]\nOperador: reflejo vertical.\n¿Salida?\n\nA) [disquete invertido, estrella invertida, sq con /]\nB) [disquete invertido, estrella normal, sq con /]\nC) igual a la entrada\nD) [disquete invertido, estrella normal, sq con \\ ]",
-          "respuesta": "A) [disquete invertido, estrella invertida, sq con /]",
+          "figura": "dpro-ser-nested",
+          "enunciado": "¿Qué figura continúa la serie?\nElige entre A–D.",
+          "respuesta": "C)",
           "pasos": [
-            "1) Reflejo vertical afecta a las tres.",
-            "2) Disquete se invierte; estrella se invierte; \\ → /.",
-            "3) Solo A invierte las tres.",
-            "Atajo: diagonal debe pasar a / y la estrella también debe invertirse → A."
+            "Lados del polígono exterior: 3→4→5→6.",
+            "Relleno del interior: claro→oscuro→claro→oscuro.",
+            "Hexágono con interior oscuro → C.",
+            "Atajo: una serie numérica + una binaria."
           ]
         },
         {
-          "enunciado": "¿A cuál set pertenece la figura?\n\nElementos: círculos, hexágonos y flechas → (blancos/grises).\nSET A: cada cuadro tiene exactamente 3 círculos grises y 1 hexágono gris.\nSET B: cada cuadro tiene exactamente 4 círculos grises y 2 hexágonos grises.\n\nFIGURA: 3 círculos grises, 5 blancos, 1 hexágono gris, 3 hexágonos blancos, 4 flechas grises.\n\nOpciones: Set A | Set B | Ningún set",
-          "respuesta": "Set A",
+          "figura": "dpro-ser-binary",
+          "enunciado": "¿Qué figura continúa la serie?\nElige entre A–D.",
+          "respuesta": "B)",
           "pasos": [
-            "1) A = 3○ gris + 1 hex gris.",
-            "2) B = 4○ gris + 2 hex gris.",
-            "3) FIGURA = 3○ + 1 hex → Set A.",
-            "Atajo: contar hexágonos grises (1 → A, 2 → B)."
+            "Las marcas codifican 1,2,3,4… en binario (lectura de bits).",
+            "Siguiente es 5.",
+            "Opción B.",
+            "Atajo: asigna 1/0 a cada marca fija y convierte a decimal."
           ]
         },
         {
-          "enunciado": "¿A cuál set pertenece la figura?\n\nCuadrícula con X sólida + rombos discontinuos; símbolos △/□/○ (blancos/grises) + flecha y línea-con-punto.\nSET A: las tres figuras geométricas siempre en el área central; al menos una blanca.\nSET B: al menos una figura geométrica en una esquina; al menos una blanca.\n\nFIGURA: círculo en esquina derecha (como B) pero △, □ y ○ todos grises (cero blancas).\n\nOpciones: Set A | Set B | Ningún set",
-          "respuesta": "Ningún set",
+          "figura": "dpro-ser-layer",
+          "enunciado": "¿Qué figura continúa la serie?\nElige entre A–D.",
+          "respuesta": "D)",
           "pasos": [
-            "1) Posición sugiere B (figura en esquina).",
-            "2) Ambos sets exigen ≥1 figura blanca.",
-            "3) FIGURA sin blancas → Ningún set.",
-            "Atajo: contar blancas; si hay 0 → Ningún set."
+            "Tres capas con periodos distintos: borde continuo/discontinuo (2), forma media (c→s→t ciclo 3), punto en esquina (ciclo 4).",
+            "Siguiente: borde discontinuo, triángulo, punto en esquina 1.",
+            "Opción D.",
+            "Atajo: anota tres secuencias cortas; es el truco de series «multicapa»."
           ]
         },
         {
-          "enunciado": "¿A cuál set pertenece la figura?\n\nMatrices 5×5 de celdas blancas/grises.\nSET A: exactamente 6 celdas grises.\nSET B: exactamente 8 celdas grises (típicamente un borde completo de 5 + 3 en el borde paralelo opuesto).\n\nFIGURA: columna izq completa (5) + 3 en columna der = 8 grises.\n\nOpciones: Set A | Set B | Ningún set",
-          "respuesta": "Set B",
+          "figura": "dpro-mtx-xor",
+          "enunciado": "Completa la celda marcada con ?. Elige entre A–D.",
+          "respuesta": "C)",
           "pasos": [
-            "1) Contar grises en A → 6.",
-            "2) En B → 8.",
-            "3) FIGURA = 8 → Set B.",
-            "Atajo: cuenta primero (6 vs 8) → B."
+            "En cada fila, la 3.ª celda es la XOR de presencia de formas de las dos primeras (lo común se cancela).",
+            "Fila 3: {c,s,t} XOR {c,t} = {s}.",
+            "Opción C (solo cuadrado).",
+            "Atajo: piensa conjuntos, no dibujo «bonito»."
           ]
         },
         {
-          "enunciado": "¿A cuál set pertenece la figura?\n\nEstrellas de 16 puntas (8 largas + 8 cortas alternadas) con puntas grises.\nSET A: exactamente 6 puntas grises en dos grupos opuestos de 3 contiguas.\nSET B: exactamente 4 puntas grises en dos grupos opuestos de 2 contiguas.\n\nFIGURA: 4 puntas grises en dos grupos opuestos de 2.\n\nOpciones: Set A | Set B | Ningún set",
-          "respuesta": "Set B",
+          "figura": "dpro-mtx-add",
+          "enunciado": "Completa la celda marcada con ?. Elige entre A–D.",
+          "respuesta": "A)",
           "pasos": [
-            "1) A = 6 (3+3 opuestos).",
-            "2) B = 4 (2+2 opuestos).",
-            "3) FIGURA = 4 (2+2) → Set B.",
-            "Atajo: contar puntas grises (4 → B)."
+            "Cada lado del cuadrado es un bit; la 3.ª celda es XOR de lados de las dos primeras.",
+            "Fila 3: LRT XOR RB = LT B (R se cancela) → TLB.",
+            "Opción A.",
+            "Atajo: dibuja T/R/B/L como cuatro interruptores."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Arcos (m): Mueve cada figura un lugar a la izquierda.\n2) Flechas circulares: Refleja verticalmente cada figura.\n3) Tres barras: Intercambia 1ª y 3ª.\n4) Flecha vertical doble: Rota 180° la figura del medio.\n\nEntrada: [pentágono azul, cruz de 4 flechas, cruz + gruesa azul]\nOperador: arcos (m).\n¿Salida?\n\nA) [cruz 4 flechas, cruz +, pentágono]\nB) [cruz +, pentágono, cruz 4 flechas]\nC) igual a la entrada\nD) [cruz +, cruz 4 flechas, pentágono]",
-          "respuesta": "A) [cruz 4 flechas, cruz +, pentágono]",
+          "figura": "dpro-mtx-rowcol",
+          "enunciado": "Completa la celda marcada con ?. Elige entre A–D.",
+          "respuesta": "B)",
           "pasos": [
-            "1) Desplazamiento izq cíclico: 1→final.",
-            "2) [2, 3, 1] = [4-flechas, +, pentágono] = A.",
-            "Atajo: la 1ª (pentágono) debe quedar al final → solo A."
+            "Filas: la flecha gira 0°, 90°, 180°… Según la fila.",
+            "Columnas: el relleno sigue 0→1→2 (claro→oscuro→gris).",
+            "Celda inferior derecha: rot 180° y relleno de columna 2 (gris) → B.",
+            "Atajo: una regla en filas, otra en columnas (Raven clásico)."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Círculo con chevron: Reemplaza figuras de tamaño normal por círculos (pequeñas no cambian).\n2) Rectángulo bipartido: Cambia sombreado de todas.\n3) Estrella 4 puntas: Estrellas → cuadrados.\n4) Escuadra L: Rota 90° antihorario.\n\nEntrada: [cuadrado partido H (arriba gris / abajo blanco), estrella azul pequeña, bocadillo blanco]\n→ Rotación 90° CCW → Normal→círculos → ?\n\nA) sin cambios\nB) semicírculo + estrella + círculo (incompleto)\nC) rotación parcial sin convertir bocadillo\nD) [círculo partido V (izq gris / der blanco), estrella pequeña, círculo blanco]",
-          "respuesta": "D) [círculo partido V (izq gris / der blanco), estrella pequeña, círculo blanco]",
+          "figura": "dpro-mtx-prog",
+          "enunciado": "Completa la celda marcada con ?. Elige entre A–D.",
+          "respuesta": "D)",
           "pasos": [
-            "1) Rotar 90° CCW: franja H → franja V (gris a la izq).",
-            "2) Convertir normales a círculos: sq y bocadillo → círculos; estrella pequeña intacta.",
-            "3) = D.",
-            "Atajo: estrella pequeña no se convierte; extremos sí → D."
+            "Por fila aumenta el número de puntos (1,2,3).",
+            "Por columna gira el triángulo 0°, 90°, 180°.",
+            "Falta: 3 puntos y 180° → D.",
+            "Atajo: no mezcles el contador de puntos con el giro."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Zigzag/flecha: Cambia la tercera figura.\n2) Arcos: Mueve un lugar a la izquierda.\n3) Triángulo: Intercambia 1ª y 3ª.\n4) Cuadrado concéntrico: Cambia sombreado de figuras con bordes rectos.\n\nEntrada: [cuadrado blanco, círculo gris, trapecio gris]\nOperador: cuadrado concéntrico (sombreado bordes rectos).\n¿Salida?\n\nA) [□ blanco, ○ blanco, △ blanco]\nB) [□ blanco, ○ gris, △ blanco]\nC) igual a la entrada\nD) [□ gris, ○ gris, △ blanco]\n\n(UI marca B.)",
-          "respuesta": "B) [□ blanco, ○ gris, △ blanco]",
+          "figura": "dpro-ana-transform",
+          "enunciado": "A es a B como C es a ?\nElige entre A–D.",
+          "respuesta": "D)",
           "pasos": [
-            "1) Op de sombreado en bordes rectos (y/o cambio de 3ª según opciones).",
-            "2) Resultado marcado: cuadrado blanco, círculo gris, triángulo blanco.",
-            "3) Respuesta UI = B.",
-            "Atajo: seguir la opción verde B; círculo gris se mantiene."
+            "A→B: giro 180° e inversión de relleno.",
+            "Aplica a C (oscuro): 180° + claro → contorno.",
+            "Opción D.",
+            "Atajo: traduce el cambio a verbos («girar + invertir») y applícalos a C."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Arcos (m): Mueve un lugar a la izquierda.\n2) Flechas circulares verticales: Refleja verticalmente cada figura.\n3) Tres barras: Intercambia 1ª y 3ª.\n4) Flecha vertical doble: Rota 180° el medio.\n\nHallar ENTRADA (?) que con reflejo vertical da SALIDA:\n[documento con pliegue arriba-der, estrella 8 puntas, sq gris con barras horizontales arriba].\n\nA) [estrella, sq barras arriba, doc pliegue arriba-der]\nB) [sq barras abajo, doc pliegue abajo-der, estrella]\nC) igual a la salida\nD) [doc pliegue abajo-der, estrella, sq barras abajo]",
-          "respuesta": "D) [doc pliegue abajo-der, estrella, sq barras abajo]",
+          "figura": "dpro-ana-parts",
+          "enunciado": "A es a B como C es a ?\nElige entre A–D.",
+          "respuesta": "C)",
           "pasos": [
-            "1) Op = reflejo vertical; invertir = reflejar la salida.",
-            "2) Pliegue arriba-der → abajo-der; barras arriba → abajo; estrella igual.",
-            "3) = D.",
-            "Atajo: deshacer flip-V de la salida → D."
+            "A→B: la diagonal parte el cuadrado en dos triángulos iguales.",
+            "C tiene un diámetro: debe partir el círculo en dos semicírculos iguales.",
+            "Opción C (no un solo semi, ni partes desiguales).",
+            "Atajo: analogía de partición, no de «quitar una mitad»."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Círculos concéntricos: Cambia tamaño del medio.\n2) Flechas ciclo: Refleja verticalmente.\n3) Triángulos anidados: Cambia tamaño de 1ª y 3ª.\n4) Cuadrado bicolor: Cambia el sombreado de las figuras.\n\nHallar ENTRADA (?) que con op sombreado da SALIDA:\n[pentágono gris, diamante-cruz blanco, cuadrado gris].\n\nA/B) [pentágono blanco, diamante-cruz gris, cuadrado gris]\nC) [pentágono blanco, diamante-cruz gris, cuadrado blanco]\nD) [pentágono blanco, diamante-cruz blanco, cuadrado blanco]",
-          "respuesta": "C) [pentágono blanco, diamante-cruz gris, cuadrado blanco]",
+          "figura": "dpro-odd-orient",
+          "enunciado": "¿Cuál figura no pertenece al grupo?\nElige entre A–E.",
+          "respuesta": "C)",
           "pasos": [
-            "1) Op invierte sombreado.",
-            "2) Invertir la salida: gris↔blanco → [pentágono blanco, diamante-cruz gris, cuadrado blanco].",
-            "3) = C.",
-            "Atajo: invertir cada relleno de la salida → C."
+            "Regla del grupo: flecha rellena solo si apunta arriba o abajo (0°/180°); si apunta a un lado, va en contorno.",
+            "A, B, D y E cumplen. C está rellena apuntando a la derecha → rompe la regla.",
+            "Respuesta C.",
+            "Atajo odd-one-out: formula una regla que cumplan 4; la que falle es la respuesta."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Cuadrado: Cambia sombreado de figuras con bordes rectos.\n2) Flechas circulares: Refleja horizontalmente todas.\n3) Cruz/plus: Rota 90° CCW la 1ª y 3ª.\n4) Estrella 4 puntas: Reemplaza estrellas por cuadrados.\n\nEntrada: [rectángulo pequeño con franja azul superior, estrella 5 puntas gris, cuadrado blanco grande]\nOperador: estrella 4 puntas.\n¿Salida?\n\nA) [rect, sq gris, estrella gris]\nB) [rect, sq blanco, sq blanco]\nC) [rect, sq gris, sq blanco]\nD) [rect, estrella gris, estrella gris]",
-          "respuesta": "C) [rect, sq gris, sq blanco]",
+          "figura": "dpro-odd-count",
+          "enunciado": "¿Cuál figura no pertenece al grupo?\nElige entre A–E.",
+          "respuesta": "D)",
           "pasos": [
-            "1) Op: estrellas → cuadrados (mismo color).",
-            "2) Estrella gris → sq gris; extremos iguales.",
-            "3) = C.",
-            "Atajo: solo la 2ª cambia de forma (gris) → C."
+            "Cuenta piezas en cada panel: 5,2,3,4,3.",
+            "Cuatro conteos son primos; 4 es compuesto.",
+            "La D no pertenece.",
+            "Atajo: cuando las formas varían mucho, prueba conteo/paridad/primo."
           ]
         },
         {
-          "enunciado": "Operadores:\n1) Círculo: Reemplaza figuras de tamaño normal por círculos.\n2) Cuadrado bipartido: Cambia sombreado de todas.\n3) Estrella: Estrellas → cuadrados.\n4) Ángulo L: Rota todas 90° antihorario.\n\nHallar ENTRADA (?) que con rotación 90° CCW da SALIDA:\n[△ azul punta izq, □ blanco, △ azul punta arriba].\n\nA) [△ arriba, □, △ izq]\nB) [△ arriba, □, △ der]\nC) [△ abajo, □, △ der]\nD) [△ izq, □, △ der]",
-          "respuesta": "B) [△ arriba, □, △ der]",
+          "figura": "dpro-odd-symmetry",
+          "enunciado": "¿Cuál figura no pertenece al grupo?\nElige entre A–E.",
+          "respuesta": "E)",
           "pasos": [
-            "1) Invertir rotación CCW = rotar la salida 90° horario.",
-            "2) △ izq → arriba; □ igual; △ arriba → der.",
-            "3) = B.",
-            "Atajo: deshacer rotación de la salida → B."
-          ]
-        },
-        {
-          "enunciado": "Operadores:\n1) Sol: Triángulos → círculos.\n2) Punto en cuadrado: Cambia tamaño del medio.\n3) Ondas/arcos: Mueve un lugar a la izquierda.\n4) Cuadrado dividido: Cambia sombreado de todas.\n\nEntrada: [sq gris sólido, estrella contorno azul, sq gris sólido]\n→ Ondas → (?) → Salida: [estrella contorno azul, sq contorno azul, sq contorno azul]\n¿Operador (?)\n\nA) Sol\nB) Cuadrado dividido\nC) Ondas\nD) Punto en cuadrado",
-          "respuesta": "B) Cuadrado dividido",
-          "pasos": [
-            "1) Tras ondas: [estrella contorno, sq sólido, sq sólido].",
-            "2) Final: ambos sq en contorno → invertir sombreado.",
-            "3) = cuadrado dividido B.",
-            "Atajo: tras el shift solo falta invertir rellenos → B."
-          ]
-        },
-        {
-          "enunciado": "Operadores:\n1) Escuadra L: Rota 90° CCW.\n2) Flechas circulares: Refleja horizontalmente.\n3) Cuadrado en cuadrado: Cambia sombreado de figuras con bordes rectos.\n4) Círculos concéntricos: Cambia tamaño del medio.\n\nEntrada: [estrella 5 puntas vacía, nube/nube-gris pequeña, cuadrado vacío]\n→ Cuadrado (sombreado bordes rectos) → Círculos (tamaño medio) → ?\n\nA) estrella sombreada, nube grande vacía, sq sombreado\nB) estrella sombreada, nube grande gris, sq sombreado\nC) estrella sombreada, nube pequeña gris, sq sombreado\nD) estrella vacía, nube grande gris, sq vacío",
-          "respuesta": "B) estrella sombreada, nube grande gris, sq sombreado",
-          "pasos": [
-            "1) Bordes rectos: estrella y sq se sombrean; nube curva igual.",
-            "2) Tamaño del medio: nube pequeña → grande (sigue gris).",
-            "3) = B.",
-            "Atajo: estrella/sq deben sombrearse y la nube debe crecer sin perder gris → B."
-          ]
-        },
-        {
-          "enunciado": "¿A cuál set pertenece la figura?\n\nSET A: al menos una manecilla en número impar.\n(4+1, 7+5, 11+12, 9+5, 9+5)\n\nSET B: ambas manecillas en números pares.\n(12+2, 10+2, 10+2, 8+4, 8+4)\n\nFIGURA: manecillas en 8 y 2 (ambos pares).\n\nOpciones: Set A | Set B | Ningún set",
-          "respuesta": "Set B",
-          "pasos": [
-            "1) B = ambas pares.",
-            "2) A = ≥1 impar.",
-            "3) 8 y 2 pares → Set B.",
-            "Atajo: paridad de ambas puntas → B."
-          ],
-          "figura": "diag-impar"
-        },
-        {
-          "enunciado": "Operadores:\n1) Tres barras: Intercambia 1ª y 3ª.\n2) Sol: Triángulos → círculos.\n3) Círculo-punto: Cambia tamaño del medio.\n4) Diagonal: Cambia sombreado de figuras pequeñas.\n\nHallar ENTRADA (?) que con Sol → Círculo-punto da SALIDA:\n[estrella grande, nube grande, círculo grande] (todos contorno/blancos).\n\nA) [estrella grande, nube pequeña, triángulo grande]\nB) [estrella grande, nube grande, círculo grande]\nC) [estrella grande, nube grande, triángulo grande]\nD) [estrella grande, nube pequeña, círculo grande]",
-          "respuesta": "A) [estrella grande, nube pequeña, triángulo grande]",
-          "pasos": [
-            "1) Deshacer tamaño del medio: nube grande ← nube pequeña.",
-            "2) Deshacer sol: círculo ← triángulo.",
-            "3) Entrada = [estrella grande, nube pequeña, △ grande] = A.",
-            "Atajo: reversa tamaño luego Δ←○ → A."
-          ]
-        },
-        {
-          "enunciado": "¿A cuál set pertenece la figura?\n\nCruces con símbolos en N/S/E/O.\nSET A: formas básicas; el par vertical (arriba/abajo) siempre es la misma forma.\nSET B: el par vertical son formas distintas; usa formas irregulares (gotas, semicírculos, D).\n\nFIGURA: D hueca arriba y abajo (mismo tipo en vertical) + gota izq + semicírculo der — estructura de A pero con formas irregulares de B.\n\nOpciones: Set A | Set B | Ningún set",
-          "respuesta": "Ningún set",
-          "pasos": [
-            "1) A = verticales iguales + formas simples.",
-            "2) B = verticales distintas + formas complejas.",
-            "3) FIGURA: verticales iguales (como A) pero formas complejas (como B) → Ningún set.",
-            "Atajo: mezcla de reglas A+B → Ningún set."
+            "Cuatro figuras tienen simetría vertical (espejo izquierda-derecha).",
+            "La E está torcida a propósito y no coincide al doblar.",
+            "Respuesta E.",
+            "Atajo: dobla mentalmente por el eje central de cada una."
           ]
         }
       ]

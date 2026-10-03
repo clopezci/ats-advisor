@@ -1230,11 +1230,11 @@ function AnaFig({
 }
 
 /* Impares */
-const ODD_H = 116;
+const ODD_H = 150;
 function OddFig({ items }: { items: ReactNode[] }) {
   return (
     <Frame caption={CAP_ODD} h={ODD_H}>
-      <Opts items={items} y={52} />
+      <Opts items={items} y={58} />
     </Frame>
   );
 }
@@ -1280,7 +1280,8 @@ const SYM: Record<string, string> = {
   house: "M-18,24 V-2 L0,-24 L18,-2 V24 Z",
   crown: "M-22,20 V-6 L-11,6 L0,-16 L11,6 L22,-6 V20 Z",
   cross: "M-6,-24 H6 V-6 H26 V6 H6 V24 H-6 V6 H-14 V-6 H-6 Z",
-  chevron: "M-22,12 L0,-14 L22,12 L13,16 L0,2 L-13,16 Z",
+  // Asimétrica a propósito (rompe espejo vertical) — odd-one-out.
+  chevron: "M-24,10 L-2,-16 L22,14 L8,18 L0,2 L-14,16 Z",
 };
 function SymShape({ d, f }: { d: string; f: F }) {
   return <path d={SYM[d]} fill={fillOf(f)} stroke={stroke} strokeWidth={2.5} strokeLinejoin="round" />;

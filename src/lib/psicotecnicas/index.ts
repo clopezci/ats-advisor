@@ -199,6 +199,59 @@ export function fallbackLetterChoices(enunciado: string, respuesta: string): Cho
     .map((letter) => ({ letter, value: letter }));
 }
 
+export type StemPart = { text: string; emphasis: boolean };
+
+/** Separa la palabra o la línea que hay que resolver para resaltarla. */
+export function stemSegments(stem: string): StemPart[] {
+  const text = stem.trim();
+  if (!text) return [];
+  const lines = text.split("\n");
+
+  const pregunta = lines.findIndex((l) => /^\s*Pregunta\s*:/i.test(l));
+  if (pregunta >= 0) {
+    return lines.map((line, i) => ({
+      text: i < lines.length - 1 ? `${line}\n` : line,
+      emphasis: i === pregunta,
+    }));
+  }
+
+  const word = lines.findIndex((l) => {
+    const t = l.trim();
+    return (
+      t.length >= 2 &&
+      t.length <= 40 &&
+      /^[\p{L}][\p{L}\s'-]*$/u.test(t) &&
+      !/^(elige|calcula|halla|observa|selecciona|por favor|completa)/i.test(t)
+    );
+  });
+  if (word >= 0 && lines.some((l, i) => i !== word && l.trim())) {
+    return lines.map((line, i) => ({
+      text: i < lines.length - 1 ? `${line}\n` : line,
+      emphasis: i === word,
+    }));
+  }
+
+  const syn = text.match(/(\bde\s+)([\p{L}][\p{L}\s'-]{1,40}?)(\s*:)/iu);
+  if (syn && /sin[oó]nimo|ant[oó]nimo|opuesto|significado/i.test(text) && syn.index != null) {
+    const at = syn.index + syn[1].length;
+    return [
+      { text: text.slice(0, at), emphasis: false },
+      { text: syn[2], emphasis: true },
+      { text: text.slice(at + syn[2].length), emphasis: false },
+    ];
+  }
+
+  const equation = lines.findIndex((l) => /=\s*\?|Serie:/.test(l));
+  if (equation >= 0) {
+    return lines.map((line, i) => ({
+      text: i < lines.length - 1 ? `${line}\n` : line,
+      emphasis: i === equation,
+    }));
+  }
+
+  return [{ text, emphasis: false }];
+}
+
 /** Enunciado sin el bloque de opciones (para mostrar botones aparte). */
 export function stemWithoutOptions(enunciado: string): string {
   const opts = parseChoiceOptions(enunciado);

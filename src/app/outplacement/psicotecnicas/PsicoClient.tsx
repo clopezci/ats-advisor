@@ -10,6 +10,7 @@ import {
   materiaNombre,
   fallbackLetterChoices,
   parseChoiceOptions,
+  stemSegments,
   stemWithoutOptions,
   PSICO_BANK_COUNTS,
   PSICO_MATERIAS,
@@ -443,7 +444,7 @@ export function PsicoClient() {
             )}
           </p>
           {tipoItem.figura ? <AbstractFigure id={tipoItem.figura} /> : null}
-          <p className="text-sm whitespace-pre-wrap leading-relaxed">{tipoStem}</p>
+          <StemText stem={tipoStem} />
 
           {tipoChoices.length > 0 ? (
             <div className="grid gap-2 sm:grid-cols-1">
@@ -576,6 +577,29 @@ export function PsicoClient() {
   );
 }
 
+function StemText({ stem }: { stem: string }) {
+  const parts = stemSegments(stem);
+  if (!parts.some((p) => p.emphasis)) {
+    return <p className="text-sm whitespace-pre-wrap leading-relaxed">{stem}</p>;
+  }
+  return (
+    <div className="text-sm whitespace-pre-wrap leading-relaxed">
+      {parts.map((part, i) =>
+        part.emphasis ? (
+          <strong
+            key={i}
+            className="my-2 block rounded-lg border border-[#c4b5fd] bg-[#ede9fe] px-3 py-2 text-center text-lg font-semibold text-[#4c1d95]"
+          >
+            {part.text.trim()}
+          </strong>
+        ) : (
+          <span key={i}>{part.text}</span>
+        ),
+      )}
+    </div>
+  );
+}
+
 function ExerciseCard(props: {
   nLabel: string;
   item: PsicoEjercicio;
@@ -617,7 +641,7 @@ function ExerciseCard(props: {
         />
       </div>
       <AbstractFigure id={item.figura} />
-      <p className="text-sm whitespace-pre-wrap leading-relaxed">{item.enunciado}</p>
+      <StemText stem={item.enunciado} />
       <label className="block text-sm">
         Tu respuesta
         <input

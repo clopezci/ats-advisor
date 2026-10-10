@@ -241,13 +241,36 @@ export function stemSegments(stem: string): StemPart[] {
     ];
   }
 
-  const equation = lines.findIndex((l) => /=\s*\?|Serie:/.test(l));
-  if (equation >= 0) {
-    return lines.map((line, i) => ({
+  const markLine = (index: number): StemPart[] =>
+    lines.map((line, i) => ({
       text: i < lines.length - 1 ? `${line}\n` : line,
-      emphasis: i === equation,
+      emphasis: i === index,
     }));
+
+  // 26 × ? − 110 = 384, igual que 30 ÷ 6 = ? o una serie
+  const math = lines.findIndex((l) => /\?/.test(l) && /[\d×÷+\-−=*/]/.test(l));
+  if (math >= 0) return markLine(math);
+
+  const question = lines.findIndex((l) => {
+    const t = l.trim();
+    return /^¿/.test(t) || (/¿[^?\n]{6,}\?/.test(t) && t.length <= 180);
+  });
+  if (question >= 0) return markLine(question);
+
+  const inline = text.match(/([\s\S]*?)(¿[^?\n]{6,}\?)(\s*)$/);
+  if (inline && inline[1].trim()) {
+    return [
+      { text: inline[1], emphasis: false },
+      { text: inline[2], emphasis: true },
+      { text: inline[3] || "", emphasis: false },
+    ];
   }
+
+  const lead = lines.findIndex((l) => {
+    const t = l.trim();
+    return t.length >= 8 && t.length <= 110;
+  });
+  if (lead >= 0 && lines.some((l, i) => i > lead && l.trim())) return markLine(lead);
 
   return [{ text, emphasis: false }];
 }

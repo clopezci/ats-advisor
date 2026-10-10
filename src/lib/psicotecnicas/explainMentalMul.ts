@@ -774,6 +774,169 @@ function techniquePercent(pct: number, base: number): string[] {
 export function explainCalculoMental(enunciado: string): string[] | null {
   const pct = parsePercentOf(enunciado);
   if (pct) return techniquePercent(pct.pct, pct.base);
-  return explainSimpleBinary(enunciado);
+  const unknown = explainFindUnknown(enunciado);
+  if (unknown) return unknown;
+  const line = mathLineOf(enunciado);
+  return explainSimpleBinary(line || enunciado);
+}
+
+function mathLineOf(enunciado: string): string | null {
+  const lines = String(enunciado || "")
+    .split(/\n/)
+    .map((s) => s.trim())
+    .filter((s) => s && !/^Elija|^Elige|^Opciones/i.test(s));
+  return lines.find((l) => /\?/.test(l) && /\d/.test(l)) || null;
+}
+
+function evalExpr(expr: string, q: number): number | null {
+  let e = expr
+    .replace(/×/g, "*")
+    .replace(/÷/g, "/")
+    .replace(/−/g, "-")
+    .replace(/–/g, "-")
+    .replace(/\{/g, "(")
+    .replace(/\}/g, ")")
+    .replace(/²/g, "**2")
+    .replace(/³/g, "**3")
+    .replace(/(\d)\s*\(/g, "$1*(")
+    .replace(/(\d)[xX]/g, `$1*(${q})`)
+    .replace(/[?]/g, `(${q})`)
+    .replace(/\b[xX]\b/g, `(${q})`);
+  e = e.replace(/(\d)\s*\(/g, "$1*(");
+  if (!/^[\d+\-*/().\s]+$/.test(e.replace(/\*\*/g, ""))) return null;
+  try {
+    const v = Function(`"use strict"; return (${e});`)();
+    return typeof v === "number" && Number.isFinite(v) ? v : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Por qué un cociente entero sale de un número redondo cercano. */
+export function atajoDivision(dividend: number, divisor: number): string {
+  if (!Number.isInteger(dividend) || !Number.isInteger(divisor) || divisor === 0) {
+    return `Atajo: divide ${formatEsNumber(dividend)} entre ${formatEsNumber(divisor)} y comprueba multiplicando al revés.`;
+  }
+  const q = dividend / divisor;
+  if (!Number.isInteger(q)) {
+    return `Atajo: ${formatEsNumber(dividend)} ÷ ${formatEsNumber(divisor)} = ${formatEsNumber(q)}. Comprueba al revés: ${formatEsNumber(divisor)} × ${formatEsNumber(q)} = ${formatEsNumber(dividend)}.`;
+  }
+  const up = q >= 10 ? Math.ceil(q / 10) * 10 : q + 1;
+  if (up !== q && up > q && up - q <= 3) {
+    const prod = divisor * up;
+    const extra = prod - dividend;
+    const times = extra / divisor;
+    if (Number.isInteger(times) && times > 0) {
+      return `Atajo: prueba el redondo ${up}. ${formatEsNumber(divisor)} × ${up} = ${formatEsNumber(prod)}. Te pasas por ${formatEsNumber(prod)} − ${formatEsNumber(dividend)} = ${formatEsNumber(extra)}, y ${formatEsNumber(extra)} es ${times} vez ${formatEsNumber(divisor)}. Bajas ${times}: ${up} − ${times} = ${q}.`;
+    }
+  }
+  const down = q >= 10 ? Math.floor(q / 10) * 10 : 0;
+  if (down > 0 && down < q && q - down <= 3) {
+    const prod = divisor * down;
+    const missing = dividend - prod;
+    const times = missing / divisor;
+    if (Number.isInteger(times) && times > 0) {
+      return `Atajo: ${formatEsNumber(divisor)} × ${down} = ${formatEsNumber(prod)}. Faltan ${formatEsNumber(missing)}, que son ${times} × ${formatEsNumber(divisor)}. Subes ${times}: ${down} + ${times} = ${q}.`;
+    }
+  }
+  return `Atajo: comprueba al revés. ${formatEsNumber(divisor)} × ${q} = ${formatEsNumber(dividend)}, por eso ${formatEsNumber(dividend)} ÷ ${formatEsNumber(divisor)} = ${q}.`;
+}
+
+/**
+ * Ecuaciones con ? o x en medio (no solo «= ?» al final).
+ * El atajo dice de dónde sale el número redondo y por qué se suma o se resta.
+ */
+export function explainFindUnknown(enunciado: string): string[] | null {
+  const line = mathLineOf(enunciado);
+  if (!line) return null;
+  if (/=\s*\?\s*$/.test(line) && !/[?xX]/.test(line.replace(/=\s*\?\s*$/, ""))) return null;
+
+  const bits = line
+    .split("=")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  if (bits.length < 2) return null;
+  const left = bits[0];
+  const right = /^\?$/.test(bits[bits.length - 1]) && bits.length >= 3 ? bits[1] : bits[1];
+  const f = (q: number) => {
+    const L = evalExpr(left, q);
+    const R = evalExpr(right, q);
+    if (L == null || R == null) return null;
+    return L - R;
+  };
+  const f0 = f(0);
+  const f1 = f(1);
+  if (f0 == null || f1 == null) return null;
+  const slope = f1 - f0;
+  if (!slope) return null;
+  const q = -f0 / slope;
+  if (!Number.isFinite(q)) return null;
+
+  const shown = line.replace(/\s*=\s*\?\s*$/, "").trim();
+
+  const mulSub = shown.match(
+    /^(-?\d+(?:[.,]\d+)?)\s*[×*]\s*\?\s*[−-]\s*(\d+(?:[.,]\d+)?)\s*=\s*(-?\d+(?:[.,]\d+)?)$/
+  );
+  if (mulSub) {
+    const a = parseEsNumber(mulSub[1])!;
+    const b = parseEsNumber(mulSub[2])!;
+    const c = parseEsNumber(mulSub[3])!;
+    const prod = c + b;
+    return [
+      `El −${formatEsNumber(b)} está restando. Pásalo al otro lado sumando: ${formatEsNumber(a)} × ? = ${formatEsNumber(c)} + ${formatEsNumber(b)} = ${formatEsNumber(prod)}.`,
+      `Ahora solo falta dividir: ? = ${formatEsNumber(prod)} ÷ ${formatEsNumber(a)}.`,
+      atajoDivision(prod, a),
+      `Respuesta: ${formatEsNumber(q)}.`,
+    ];
+  }
+
+  const mulAdd = shown.match(
+    /^(-?\d+(?:[.,]\d+)?)\s*[×*]\s*\?\s*\+\s*(\d+(?:[.,]\d+)?)\s*=\s*(-?\d+(?:[.,]\d+)?)$/
+  );
+  if (mulAdd) {
+    const a = parseEsNumber(mulAdd[1])!;
+    const b = parseEsNumber(mulAdd[2])!;
+    const c = parseEsNumber(mulAdd[3])!;
+    const prod = c - b;
+    return [
+      `El +${formatEsNumber(b)} pasa restando: ${formatEsNumber(a)} × ? = ${formatEsNumber(c)} − ${formatEsNumber(b)} = ${formatEsNumber(prod)}.`,
+      `? = ${formatEsNumber(prod)} ÷ ${formatEsNumber(a)}.`,
+      atajoDivision(prod, a),
+      `Respuesta: ${formatEsNumber(q)}.`,
+    ];
+  }
+
+  const plainMul = shown.match(
+    /^(?:(-?\d+(?:[.,]\d+)?)\s*[×*]\s*\?|\?\s*[×*]\s*(-?\d+(?:[.,]\d+)?))\s*=\s*(-?\d+(?:[.,]\d+)?)$/
+  );
+  if (plainMul) {
+    const a = parseEsNumber(plainMul[1] || plainMul[2])!;
+    const c = parseEsNumber(plainMul[3])!;
+    return [
+      `? está multiplicado por ${formatEsNumber(a)}. Para dejarlo solo, divide: ? = ${formatEsNumber(c)} ÷ ${formatEsNumber(a)}.`,
+      atajoDivision(c, a),
+      `Respuesta: ${formatEsNumber(q)}.`,
+    ];
+  }
+
+  const plainDiv = shown.match(/^\?\s*[÷/]\s*(-?\d+(?:[.,]\d+)?)\s*=\s*(-?\d+(?:[.,]\d+)?)$/);
+  if (plainDiv) {
+    const a = parseEsNumber(plainDiv[1])!;
+    const c = parseEsNumber(plainDiv[2])!;
+    return [
+      `? está dividido entre ${formatEsNumber(a)}. Multiplica al otro lado: ? = ${formatEsNumber(c)} × ${formatEsNumber(a)} = ${formatEsNumber(c * a)}.`,
+      `Atajo: dividir y luego multiplicar por el mismo número se cancelan. El ? es el producto ${formatEsNumber(c)} × ${formatEsNumber(a)}.`,
+      `Respuesta: ${formatEsNumber(q)}.`,
+    ];
+  }
+
+  if (!Number.isInteger(q) && Math.abs(q * 2 - Math.round(q * 2)) > 1e-6 && Math.abs(q * 10 - Math.round(q * 10)) > 1e-6) {
+    return null;
+  }
+  return [
+    `Deja solo el ?. Lo que está sumando pasa restando, y lo que está restando pasa sumando.`,
+    `El valor que cumple la ecuación es ${formatEsNumber(q)}. Comprueba reemplazando el ? y viendo que ambos lados coinciden.`,
+    `Respuesta: ${formatEsNumber(q)}.`,
+  ];
 }
 

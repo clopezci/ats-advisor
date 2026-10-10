@@ -534,7 +534,7 @@ export function PsicoClient() {
               </p>
               <ol className="list-decimal pl-4 space-y-1 muted">
                 {tipoItem.pasos.map((p, idx) => (
-                  <li key={`${idx}-${p.slice(0, 40)}`}>{p}</li>
+                  <li key={`${idx}-${p.slice(0, 40)}`}>{p.replace(/^\d+\)\s*/, "")}</li>
                 ))}
               </ol>
             </div>
@@ -670,7 +670,7 @@ function ExerciseCard(props: {
           </p>
           <ol className="list-decimal pl-4 space-y-1 muted">
             {item.pasos.map((p) => (
-              <li key={p.slice(0, 40)}>{p}</li>
+              <li key={p.slice(0, 40)}>{p.replace(/^\d+\)\s*/, "")}</li>
             ))}
           </ol>
           {item.errorComun && (

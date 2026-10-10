@@ -16,10 +16,12 @@ export function parseEsNumber(raw: string): number | null {
 
 export function formatEsNumber(n: number): string {
   if (!Number.isFinite(n)) return String(n);
-  if (Number.isInteger(n)) return String(n);
-  // Hasta 4 decimales útiles; coma española
-  const s = String(Math.round(n * 10000) / 10000);
-  return s.replace(".", ",");
+  const sign = n < 0 ? "−" : "";
+  const a = Math.abs(n);
+  if (Number.isInteger(a)) return sign + String(a);
+  if (Math.abs(a - 0.5) < 1e-8) return sign + "1/2";
+  const s = String(Math.round(a * 10000) / 10000);
+  return sign + s.replace(".", ",");
 }
 
 function nearlyEq(a: number, b: number, eps = 1e-9) {
@@ -785,7 +787,11 @@ function mathLineOf(enunciado: string): string | null {
     .split(/\n/)
     .map((s) => s.trim())
     .filter((s) => s && !/^Elija|^Elige|^Opciones/i.test(s));
-  return lines.find((l) => /\?/.test(l) && /\d/.test(l)) || null;
+  return (
+    lines.find((l) => /\?/.test(l) && /\d/.test(l)) ||
+    lines.find((l) => /[xX]/.test(l) && /=/.test(l) && /\d/.test(l)) ||
+    null
+  );
 }
 
 function evalExpr(expr: string, q: number): number | null {
@@ -864,12 +870,21 @@ export function explainFindUnknown(enunciado: string): string[] | null {
     if (L == null || R == null) return null;
     return L - R;
   };
-  const f0 = f(0);
-  const f1 = f(1);
-  if (f0 == null || f1 == null) return null;
-  const slope = f1 - f0;
+  // q = 0 revienta si el ? está en un divisor. Prueba otro par.
+  let qA = 0;
+  let qB = 1;
+  let fA = f(qA);
+  let fB = f(qB);
+  if (fA == null || fB == null) {
+    qA = 1;
+    qB = 2;
+    fA = f(qA);
+    fB = f(qB);
+  }
+  if (fA == null || fB == null) return null;
+  const slope = (fB - fA) / (qB - qA);
   if (!slope) return null;
-  const q = -f0 / slope;
+  const q = qA - fA / slope;
   if (!Number.isFinite(q)) return null;
 
   const shown = line.replace(/\s*=\s*\?\s*$/, "").trim();
@@ -930,13 +945,202 @@ export function explainFindUnknown(enunciado: string): string[] | null {
     ];
   }
 
-  if (!Number.isInteger(q) && Math.abs(q * 2 - Math.round(q * 2)) > 1e-6 && Math.abs(q * 10 - Math.round(q * 10)) > 1e-6) {
-    return null;
+  const detailed = explainStructuredUnknown(shown);
+  if (detailed) return detailed;
+
+  // Sin patrón claro: no inventar un texto vacío. El banco trae los pasos.
+  return null;
+}
+
+/** Pasos concretos para X, «+ ?» y «÷ ?». */
+function explainStructuredUnknown(shown: string): string[] | null {
+  const norm = shown.replace(/\s+/g, " ").trim();
+
+  const fracX = norm.match(/^(-?\d+)\s*[xX]\s*\/\s*(-?\d+)\s*=\s*(-?\d+(?:[.,]\d+)?)$/);
+  if (fracX) {
+    const a = Number(fracX[1]);
+    const b = Number(fracX[2]);
+    const c = parseEsNumber(fracX[3])!;
+    if (a === c) {
+      return [
+        `A la izquierda ${formatEsNumber(a)}X está dividido entre ${formatEsNumber(b)}, y a la derecha está el mismo ${formatEsNumber(a)}.`,
+        `Divide los dos lados entre ${formatEsNumber(a)}: X ÷ ${formatEsNumber(b)} = 1. Entonces X = ${formatEsNumber(b)}.`,
+        `Comprueba: ${formatEsNumber(a)} × ${formatEsNumber(b)} ÷ ${formatEsNumber(b)} = ${formatEsNumber(a)}.`,
+        `Respuesta: ${formatEsNumber(b)}.`,
+      ];
+    }
+    const prod = c * b;
+    return [
+      `${formatEsNumber(a)}X está dividido entre ${formatEsNumber(b)}. Multiplica los dos lados por ${formatEsNumber(b)}: ${formatEsNumber(a)}X = ${formatEsNumber(c)} × ${formatEsNumber(b)} = ${formatEsNumber(prod)}.`,
+      `Ahora X está multiplicado por ${formatEsNumber(a)}. Divide: X = ${formatEsNumber(prod)} ÷ ${formatEsNumber(a)} = ${formatEsNumber(prod / a)}.`,
+      `Atajo: X = (${formatEsNumber(c)} × ${formatEsNumber(b)}) ÷ ${formatEsNumber(a)}.`,
+      `Comprueba: ${formatEsNumber(a)} × ${formatEsNumber(prod / a)} ÷ ${formatEsNumber(b)} = ${formatEsNumber(c)}.`,
+      `Respuesta: ${formatEsNumber(prod / a)}.`,
+    ];
   }
-  return [
-    `Deja solo el ?. Lo que está sumando pasa restando, y lo que está restando pasa sumando.`,
-    `El valor que cumple la ecuación es ${formatEsNumber(q)}. Comprueba reemplazando el ? y viendo que ambos lados coinciden.`,
-    `Respuesta: ${formatEsNumber(q)}.`,
-  ];
+
+  const timesX = norm.match(/^(-?\d+)\s*[xX]\s*=\s*(.+)$/);
+  if (timesX && !/[?xX]/.test(timesX[2])) {
+    const a = Number(timesX[1]);
+    const right = evalExpr(timesX[2], 0);
+    if (right == null) return null;
+    return [
+      `Calcula el lado derecho: ${timesX[2].trim()} = ${formatEsNumber(right)}.`,
+      `${formatEsNumber(a)}X = ${formatEsNumber(right)}. Divide entre ${formatEsNumber(a)}: X = ${formatEsNumber(right)} ÷ ${formatEsNumber(a)} = ${formatEsNumber(right / a)}.`,
+      atajoDivision(right, a),
+      `Respuesta: ${formatEsNumber(right / a)}.`,
+    ];
+  }
+
+  const xTimes = norm.match(/^[xX]\s*[×*]\s*(-?\d+(?:[.,]\d+)?)\s*=\s*(-?\d+(?:[.,]\d+)?)$/);
+  if (xTimes) {
+    const a = parseEsNumber(xTimes[1])!;
+    const c = parseEsNumber(xTimes[2])!;
+    return [
+      `X está multiplicado por ${formatEsNumber(a)}. Divide: X = ${formatEsNumber(c)} ÷ ${formatEsNumber(a)} = ${formatEsNumber(c / a)}.`,
+      atajoDivision(c, a),
+      `Respuesta: ${formatEsNumber(c / a)}.`,
+    ];
+  }
+
+  const divUnknown = norm.match(/^(.+?)\s*[÷/]\s*\?\s*=\s*(-?\d+(?:[.,]\d+)?)$/);
+  if (divUnknown && !/[?]/.test(divUnknown[1])) {
+    const numer = evalExpr(divUnknown[1], 0);
+    const c = parseEsNumber(divUnknown[2])!;
+    if (numer == null || c === 0) return null;
+    const ans = numer / c;
+    const cancels = Math.abs(ans - Math.round(ans)) < 1e-6 && divUnknown[1].includes(String(Math.round(ans)));
+    return [
+      `Calcula el numerador: ${divUnknown[1].trim()} = ${formatEsNumber(numer)}.`,
+      `${formatEsNumber(numer)} ÷ ? = ${formatEsNumber(c)}. Entonces ? = ${formatEsNumber(numer)} ÷ ${formatEsNumber(c)} = ${formatEsNumber(ans)}.`,
+      cancels
+        ? `Atajo: el numerador ya incluye × ${formatEsNumber(ans)}. Dividir entre ese mismo número lo cancela y deja ${formatEsNumber(c)}. Por eso ? = ${formatEsNumber(ans)}.`
+        : `Atajo: ? = ${formatEsNumber(numer)} ÷ ${formatEsNumber(c)}. Comprueba: ${formatEsNumber(c)} × ${formatEsNumber(ans)} = ${formatEsNumber(numer)}.`,
+      `Respuesta: ${formatEsNumber(ans)}.`,
+    ];
+  }
+
+  const mulDiv = norm.match(
+    /^(?:(-?\d+(?:[.,]\d+)?)\s*[×*]\s*\?|\?\s*[×*]\s*(-?\d+(?:[.,]\d+)?))\s*[÷/]\s*(-?\d+(?:[.,]\d+)?)\s*=\s*(-?\d+(?:[.,]\d+)?)$/
+  );
+  if (mulDiv) {
+    const a = parseEsNumber(mulDiv[1] || mulDiv[2])!;
+    const b = parseEsNumber(mulDiv[3])!;
+    const c = parseEsNumber(mulDiv[4])!;
+    if (a === c) {
+      return [
+        `${formatEsNumber(a)} multiplica al ? y el resultado, después de ÷ ${formatEsNumber(b)}, vuelve a ser ${formatEsNumber(a)}.`,
+        `Ese ${formatEsNumber(a)} se cancela: ? ÷ ${formatEsNumber(b)} = 1, así que ? = ${formatEsNumber(b)}.`,
+        `Comprueba: ${formatEsNumber(a)} × ${formatEsNumber(b)} ÷ ${formatEsNumber(b)} = ${formatEsNumber(a)}.`,
+        `Respuesta: ${formatEsNumber(b)}.`,
+      ];
+    }
+    const prod = c * b;
+    return [
+      `? está multiplicado por ${formatEsNumber(a)} y dividido entre ${formatEsNumber(b)}.`,
+      `Multiplica el resultado por ${formatEsNumber(b)}: ${formatEsNumber(a)} × ? = ${formatEsNumber(c)} × ${formatEsNumber(b)} = ${formatEsNumber(prod)}.`,
+      `Divide entre ${formatEsNumber(a)}: ? = ${formatEsNumber(prod)} ÷ ${formatEsNumber(a)} = ${formatEsNumber(prod / a)}.`,
+      `Atajo: ? = ${formatEsNumber(c)} × ${formatEsNumber(b)} ÷ ${formatEsNumber(a)}.`,
+      `Respuesta: ${formatEsNumber(prod / a)}.`,
+    ];
+  }
+
+  const plusUnknown = norm.match(/^(.+?)\s*\+\s*\?\s*=\s*(-?\d+(?:[.,]\d+)?)$/);
+  if (plusUnknown && !/[?]/.test(plusUnknown[1])) {
+    const known = evalExpr(plusUnknown[1], 0);
+    const c = parseEsNumber(plusUnknown[2])!;
+    if (known == null) return null;
+    const knownTxt = known < 0 ? `(${formatEsNumber(known)})` : formatEsNumber(known);
+    return [
+      `Calcula lo que no tiene ?: ${plusUnknown[1].trim()} = ${formatEsNumber(known)}.`,
+      `Eso más ? da ${formatEsNumber(c)}. Entonces ? = ${formatEsNumber(c)} − ${knownTxt} = ${formatEsNumber(c - known)}.`,
+      `Atajo: el ? es lo que falta para llegar de ${formatEsNumber(known)} a ${formatEsNumber(c)}.`,
+      `Respuesta: ${formatEsNumber(c - known)}.`,
+    ];
+  }
+
+  const qMulRest = norm.match(/^\?\s*[×*]\s*(-?\d+(?:[.,]\d+)?)\s*(.+)\s*=\s*(-?\d+(?:[.,]\d+)?)$/);
+  if (qMulRest) {
+    const a = parseEsNumber(qMulRest[1])!;
+    const rest = qMulRest[2].trim();
+    const c = parseEsNumber(qMulRest[3])!;
+    const restVal = evalExpr(rest, 0);
+    if (restVal == null) return null;
+    const isolated = c - restVal;
+    return [
+      `Aparte de ? × ${formatEsNumber(a)} está ${rest}, que vale ${formatEsNumber(restVal)}.`,
+      `Pásalo al otro lado (cambia de signo): ${formatEsNumber(a)} × ? = ${formatEsNumber(c)} − (${formatEsNumber(restVal)}) = ${formatEsNumber(isolated)}.`,
+      `? = ${formatEsNumber(isolated)} ÷ ${formatEsNumber(a)} = ${formatEsNumber(isolated / a)}.`,
+      atajoDivision(isolated, a),
+      `Respuesta: ${formatEsNumber(isolated / a)}.`,
+    ];
+  }
+
+  const qDivRest = norm.match(/^\?\s*[÷/]\s*(-?\d+(?:[.,]\d+)?)\s*(.+)\s*=\s*(-?\d+(?:[.,]\d+)?)$/);
+  if (qDivRest) {
+    const a = parseEsNumber(qDivRest[1])!;
+    const rest = qDivRest[2].trim();
+    const c = parseEsNumber(qDivRest[3])!;
+    const restVal = evalExpr(rest, 0);
+    if (restVal == null) return null;
+    const isolated = c - restVal;
+    return [
+      `Lo que acompaña a ? ÷ ${formatEsNumber(a)} es ${rest} = ${formatEsNumber(restVal)}.`,
+      `Pásalo: ? ÷ ${formatEsNumber(a)} = ${formatEsNumber(c)} − (${formatEsNumber(restVal)}) = ${formatEsNumber(isolated)}.`,
+      `? = ${formatEsNumber(isolated)} × ${formatEsNumber(a)} = ${formatEsNumber(isolated * a)}.`,
+      `Respuesta: ${formatEsNumber(isolated * a)}.`,
+    ];
+  }
+
+  const prodDivX = norm.match(/^(-?\d+(?:[.,]\d+)?)\s*[×*]\s*(-?\d+(?:[.,]\d+)?)\s*[÷/]\s*[xX]\s*=\s*(-?\d+(?:[.,]\d+)?)$/);
+  if (prodDivX) {
+    const a = parseEsNumber(prodDivX[1])!;
+    const b = parseEsNumber(prodDivX[2])!;
+    const c = parseEsNumber(prodDivX[3])!;
+    const prod = a * b;
+    return [
+      `Primero el producto: ${formatEsNumber(a)} × ${formatEsNumber(b)} = ${formatEsNumber(prod)}.`,
+      `Queda ${formatEsNumber(prod)} ÷ X = ${formatEsNumber(c)}. Entonces X = ${formatEsNumber(prod)} ÷ ${formatEsNumber(c)} = ${formatEsNumber(prod / c)}.`,
+      atajoDivision(prod, c),
+      `Respuesta: ${formatEsNumber(prod / c)}.`,
+    ];
+  }
+
+  const parenDiv = norm.match(/^\((.+)\)\s*[÷/]\s*\?\s*=\s*(-?\d+(?:[.,]\d+)?)$/);
+  if (parenDiv && !/[?]/.test(parenDiv[1])) {
+    const numer = evalExpr(parenDiv[1], 0);
+    const c = parseEsNumber(parenDiv[2])!;
+    if (numer != null && numer !== 0) {
+      const factor = numer / c;
+      const cancel =
+        Math.abs(factor - Math.round(factor)) < 1e-6
+          ? ` ${parenDiv[1].trim()} ya incluye el factor ${formatEsNumber(factor)}, y al dividir entre ese mismo factor el ${formatEsNumber(c)} se queda igual. Por eso ? = ${formatEsNumber(factor)}.`
+          : "";
+      return [
+        `Calcula el paréntesis: ${parenDiv[1].trim()} = ${formatEsNumber(numer)}.`,
+        `${formatEsNumber(numer)} ÷ ? = ${formatEsNumber(c)}, así que ? = ${formatEsNumber(numer)} ÷ ${formatEsNumber(c)} = ${formatEsNumber(numer / c)}.${cancel}`,
+        `Respuesta: ${formatEsNumber(numer / c)}.`,
+      ];
+    }
+  }
+
+  const divThenAdd = norm.match(/^(-?\d+(?:[.,]\d+)?)\s*[×*]\s*(-?\d+(?:[.,]\d+)?)\s*[÷/]\s*\?\s*\+\s*(-?\d+(?:[.,]\d+)?)\s*=\s*(-?\d+(?:[.,]\d+)?)$/);
+  if (divThenAdd) {
+    const a = parseEsNumber(divThenAdd[1])!;
+    const b = parseEsNumber(divThenAdd[2])!;
+    const add = parseEsNumber(divThenAdd[3])!;
+    const c = parseEsNumber(divThenAdd[4])!;
+    const prod = a * b;
+    const isolated = c - add;
+    const isoTxt = isolated < 0 ? `(${formatEsNumber(isolated)})` : formatEsNumber(isolated);
+    return [
+      `${formatEsNumber(a)} × ${formatEsNumber(b)} = ${formatEsNumber(prod)}. La ecuación queda ${formatEsNumber(prod)} ÷ ? + ${formatEsNumber(add)} = ${formatEsNumber(c)}.`,
+      `Quita el +${formatEsNumber(add)}: ${formatEsNumber(prod)} ÷ ? = ${formatEsNumber(c)} − ${formatEsNumber(add)} = ${isoTxt}.`,
+      `? = ${formatEsNumber(prod)} ÷ ${isoTxt} = ${formatEsNumber(prod / isolated)}.`,
+      `Respuesta: ${formatEsNumber(prod / isolated)}.`,
+    ];
+  }
+
+  return null;
 }
 

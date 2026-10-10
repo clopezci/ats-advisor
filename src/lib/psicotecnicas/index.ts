@@ -248,7 +248,11 @@ export function stemSegments(stem: string): StemPart[] {
     }));
 
   // 26 × ? − 110 = 384, igual que 30 ÷ 6 = ? o una serie
-  const math = lines.findIndex((l) => /\?/.test(l) && /[\d×÷+\-−=*/]/.test(l));
+  const math = lines.findIndex((l) => {
+    const t = l.trim();
+    if (!/[\d×÷+\-−=*/]/.test(t)) return false;
+    return /\?/.test(t) || (/[xX]/.test(t) && /=/.test(t));
+  });
   if (math >= 0) return markLine(math);
 
   const question = lines.findIndex((l) => {

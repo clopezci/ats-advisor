@@ -978,7 +978,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n6X/4 = 9 = ?\n\nOpciones: 6 | 4 | −6 | 12 | 5",
+          "enunciado": "Elija la respuesta correcta.\n\n6X/4 = 9\nOpciones: 6 | 4 | −6 | 12 | 5",
           "respuesta": "6",
           "pasos": [
             "1) 6X/4=9 → X=(4×9)/6.",
@@ -1005,7 +1005,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n91X/73 = 91 = ?\n\nOpciones: 74 | −73 | 73 | 73/2 | 72",
+          "enunciado": "Elija la respuesta correcta.\n\n91X/73 = 91\nOpciones: 74 | −73 | 73 | 73/2 | 72",
           "respuesta": "73",
           "pasos": [
             "1) 91X/73=91 → X=(91×73)/91.",
@@ -1054,7 +1054,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n515 × 8 ÷ x = 40 = ?\n\nOpciones: 113 | 104 | 103 | 109 | 102",
+          "enunciado": "Elija la respuesta correcta.\n\n515 × 8 ÷ x = 40\nOpciones: 113 | 104 | 103 | 109 | 102",
           "respuesta": "103",
           "pasos": [
             "1) 515×8=4120.",
@@ -1181,7 +1181,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\n95X = 850 + 575 = ?\n\nOpciones: 0 | 17 | 16 | 25 | 15",
+          "enunciado": "Elija la respuesta correcta.\n\n95X = 850 + 575\nOpciones: 0 | 17 | 16 | 25 | 15",
           "respuesta": "15",
           "pasos": [
             "1) 850+575=1425.",
@@ -1533,7 +1533,7 @@
           ]
         },
         {
-          "enunciado": "Elija la respuesta correcta.\n\nx × 56 = 28 = ?\n\nOpciones: 6/7 | 2/7 | 1/2 | 5/7 | 3/4",
+          "enunciado": "Elija la respuesta correcta.\n\nx × 56 = 28\n\nOpciones: 6/7 | 2/7 | 1/2 | 5/7 | 3/4",
           "respuesta": "1/2",
           "pasos": [
             "x = 28 ÷ 56 = 1/2.",

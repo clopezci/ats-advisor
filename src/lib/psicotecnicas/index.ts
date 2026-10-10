@@ -104,32 +104,115 @@ export function answersMatch(given: string, expected: string): boolean {
 
 export type ChoiceOption = { letter: string; value: string };
 
-/** Extrae opciones A–E desde "Opciones: a | b | …" o líneas "A) …". */
+const CHOICE_LETTERS = "ABCDE";
+
+function cleanChoiceValue(s: string): string {
+  return s.replace(/\s+/g, " ").replace(/[|]\s*$/g, "").trim();
+}
+
+/** Parte un texto en opciones etiquetadas A) … B) … (misma línea o varias). */
+function splitLabeledChoices(text: string): ChoiceOption[] {
+  const re = /(?:^|[\s])([A-E])\)\s*/gi;
+  const marks = [...text.matchAll(re)];
+  if (marks.length < 2) return [];
+  const out: ChoiceOption[] = [];
+  for (let i = 0; i < marks.length && out.length < 5; i++) {
+    const letter = marks[i][1].toUpperCase();
+    const start = (marks[i].index ?? 0) + marks[i][0].length;
+    const end = i + 1 < marks.length ? (marks[i + 1].index ?? text.length) : text.length;
+    const value = cleanChoiceValue(text.slice(start, end).replace(/\n*Opciones\b[\s\S]*$/i, ""));
+    if (!value || value === "…" || value === "...") continue;
+    if (out.some((o) => o.letter === letter)) continue;
+    out.push({ letter, value });
+  }
+  return out.length >= 2 ? out : [];
+}
+
+function optionsTail(enunciado: string): string | null {
+  const re = /Opciones\b[^:\n]*:\s*/gi;
+  let last: RegExpExecArray | null = null;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(enunciado))) last = m;
+  if (!last || last.index == null) return null;
+  return enunciado.slice(last.index + last[0].length).trim();
+}
+
+/**
+ * Extrae opciones para botones.
+ * Cubre: "Opciones:" en varias líneas (A)…), misma línea con |,
+ * "A) x  B) y", y listas "Opciones: 4, 5, 6".
+ */
 export function parseChoiceOptions(enunciado: string): ChoiceOption[] {
-  const letters = "ABCDE";
-  const pipe = enunciado.match(/Opciones:\s*([^\n]+)/i);
-  if (pipe) {
-    const parts = pipe[1]
+  const labeled = splitLabeledChoices(enunciado);
+  if (labeled.length >= 2) return labeled;
+
+  const tail = optionsTail(enunciado);
+  if (!tail) return [];
+
+  if (tail.includes("|")) {
+    const parts = tail
       .split("|")
-      .map((p) => p.replace(/^[A-E]\)\s*/i, "").trim())
+      .map((p) => cleanChoiceValue(p.replace(/^[A-E]\)\s*/i, "")))
+      .filter((p) => p && p !== "…" && p !== "...");
+    if (parts.length >= 2) {
+      return parts.slice(0, 5).map((value, i) => ({ letter: CHOICE_LETTERS[i], value }));
+    }
+  }
+
+  const firstLine = tail.split("\n")[0].trim();
+  // "A, B, C, D" sin descripción
+  if (/^[A-E](\s*,\s*[A-E])+$/i.test(firstLine)) {
+    return firstLine
+      .split(",")
+      .map((p) => p.trim().toUpperCase())
+      .filter((p) => CHOICE_LETTERS.includes(p))
+      .map((letter) => ({ letter, value: letter }));
+  }
+
+  // "4, 5, 6, 7, 3" — no partir miles (96,864)
+  if (firstLine.includes(",") && !/[A-E]\)/i.test(firstLine)) {
+    const parts = firstLine
+      .split(",")
+      .map((p) => p.trim().replace(/−/g, "-"))
       .filter(Boolean);
-    return parts.slice(0, 5).map((value, i) => ({ letter: letters[i], value }));
+    const simple = parts.every((p) => /^-?[\d.]+%?$/.test(p) || /^-?[\d.]+\/[\d.]+$/.test(p));
+    if (simple && parts.length >= 3) {
+      return parts.slice(0, 5).map((value, i) => ({ letter: CHOICE_LETTERS[i], value }));
+    }
   }
-  const fromLines = [...enunciado.matchAll(/^([A-E])\)\s*(.+)$/gim)];
-  if (fromLines.length >= 2) {
-    return fromLines.slice(0, 5).map((m) => ({
-      letter: m[1].toUpperCase(),
-      value: m[2].trim(),
-    }));
-  }
+
   return [];
+}
+
+/** Letras A–D o A–E cuando las alternativas solo están en la figura. */
+export function fallbackLetterChoices(enunciado: string, respuesta: string): ChoiceOption[] {
+  const range = enunciado.match(/A\s*[–-]\s*([B-E])/i);
+  let last = range?.[1]?.toUpperCase() || "";
+  if (!last && /^[A-E]\)/.test(respuesta.trim()) && /[?¿]|opci[oó]n|elige|figura|conjunto|serie/i.test(enunciado)) {
+    last = /no pertenece|A\s*[–-]\s*E|grupo/i.test(enunciado) ? "E" : "D";
+  }
+  if (!last) return [];
+  const n = CHOICE_LETTERS.indexOf(last) + 1;
+  if (n < 2) return [];
+  return CHOICE_LETTERS.slice(0, n)
+    .split("")
+    .map((letter) => ({ letter, value: letter }));
 }
 
 /** Enunciado sin el bloque de opciones (para mostrar botones aparte). */
 export function stemWithoutOptions(enunciado: string): string {
-  return enunciado
-    .replace(/\n*Opciones:\s*[^\n]+/gi, "")
-    .replace(/\n*(?:^[A-E]\)\s*.+\n?){2,}/gim, "\n")
-    .replace(/\n{3,}/g, "\n\n")
-    .trim();
+  const opts = parseChoiceOptions(enunciado);
+  if (!opts.length) return enunciado.trim();
+
+  let s = enunciado;
+  const header = s.search(/\n*Opciones\b[^:\n]*:/i);
+  if (header >= 0) {
+    const before = s.slice(0, header);
+    const letterStart = before.search(/(?:^|\n)\s*A\)\s/);
+    s = letterStart >= 0 ? before.slice(0, letterStart) : before;
+  } else {
+    const letterStart = s.search(/(?:^|\n)\s*A\)\s/);
+    if (letterStart >= 0) s = s.slice(0, letterStart);
+  }
+  return s.replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
 }

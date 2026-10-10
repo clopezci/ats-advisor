@@ -8,6 +8,7 @@ import {
   answersMatch,
   loadTrialDone,
   materiaNombre,
+  fallbackLetterChoices,
   parseChoiceOptions,
   stemWithoutOptions,
   PSICO_BANK_COUNTS,
@@ -165,10 +166,12 @@ export function PsicoClient() {
   }, [tipo?.id, tipoItemRaw]);
   const tipoTotal = BANCO.tipos.reduce((n, t) => n + t.items.length, 0);
   const tipoOk = tipoChecked && tipoItem ? answersMatch(tipoAnswer, tipoItem.respuesta) : false;
-  const tipoChoices = useMemo(
-    () => (tipoItem ? parseChoiceOptions(tipoItem.enunciado) : []),
-    [tipoItem],
-  );
+  const tipoChoices = useMemo(() => {
+    if (!tipoItem) return [];
+    const parsed = parseChoiceOptions(tipoItem.enunciado);
+    if (parsed.length >= 2) return parsed;
+    return fallbackLetterChoices(tipoItem.enunciado, tipoItem.respuesta);
+  }, [tipoItem]);
   const tipoStem = useMemo(
     () => (tipoItem ? (tipoChoices.length ? stemWithoutOptions(tipoItem.enunciado) : tipoItem.enunciado) : ""),
     [tipoItem, tipoChoices.length],
